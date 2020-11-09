@@ -1,0 +1,8 @@
+If the UGen graph is written as an expression to a text file for
+interpretation by rsc3 or hsc3 the graph can be written without
+proxied outputs, without applying multiple-channel-expansion, and
+without applying KR rate editing.
+
+If it is written without assigning unique-identifiers sharing will be
+lost.
+
