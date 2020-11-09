@@ -8,7 +8,8 @@ Object subclass: #UGen
 
 !UGen methodsFor: 'private'!
  setParamNames: x paramNames := x !
- setRate: x rate := x ! !
+ setRate: x rate := x !
+ setNumChan: x numChan := x ! !
 
 !UGen methodsFor: 'accessing'!
  paramNames ^paramNames !
@@ -22,10 +23,11 @@ Object subclass: #OutputProxy
  category: 'SC3' !
 
 !OutputProxy methodsFor: 'private'!
- setSource: s setOutputIndex: i source := s . outputIndex := i ! !
+ setSource: x source := x !
+ setOutputIndex: x outputIndex := x ! !
 
 !OutputProxy class methodsFor: 'instance creation'!
- source: source outputIndex: outputIndex ^self basicNew setSource: source setOutputIndex: outputIndex ! !
+ source: source outputIndex: outputIndex ^self new setSource: source setOutputIndex: outputIndex ! !
 
 Object subclass: #KR
  instanceVariableNames: 'source'
@@ -37,4 +39,4 @@ Object subclass: #KR
  setSource: x source := x ! !
 
 !KR class methodsFor: 'instance creation'!
- source: x ^self basicNew setSource: x ! !
+ source: x ^self new setSource: x ! !
