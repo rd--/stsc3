@@ -11,3 +11,16 @@ o perform: #freq
 o paramNames collect: [:x | o perform: x]
 o class == SinOsc
 o class name == #SinOsc
+
+"UI"
+
+UIManager default chooseClassOrTrait
+UIManager default chooseDirectory
+UIManager default chooseFileMatching: nil
+UIManager default chooseFileMatchingSuffixes: #('st')
+UIManager default saveFilenameRequest: 'save file' initialAnswer: 'x.st'
+UIManager default edit: 'a text'
+UIManager default edit: 'a text' label: 'make changes?' accept: [:x| Transcript show: x ; cr]
+UIManager default request: 'name?'
+UIManager default requestPassword: 'pwd?'
+UIManager default multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type' answerHeight: 600

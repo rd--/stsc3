@@ -1,17 +1,23 @@
 SystemOrganization addCategory: #'SC3'!
 
 Object subclass: #UGen
- instanceVariableNames: 'paramNames rate'
+ instanceVariableNames: 'name paramNames mceNames numChan rate'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3' !
 
 !UGen methodsFor: 'private'!
+ setName: x name := x !
  setParamNames: x paramNames := x !
+ setMceNames: x mceNames := x !
+ setNumChan: x numChan := x !
  setRate: x rate := x ! !
 
 !UGen methodsFor: 'accessing'!
+ name ^name !
  paramNames ^paramNames !
+ mceNames ^mceNames !
+ numChan ^numChan !
  rate ^rate ! !
 
 Object subclass: #OutputProxy

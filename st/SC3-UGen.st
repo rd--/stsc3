@@ -18,8 +18,7 @@ setDecaytime: x decaytime := x !
 !
 
 !CombN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setParamNames: #(in maxdelaytime delaytime decaytime) . u setRate: 'ar' . u setNumChan: 1 . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^u ! !
-
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setName: #CombN . u setParamNames: #(in maxdelaytime delaytime decaytime) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^u ! !
 
 UGen subclass: #LFSaw
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -37,8 +36,7 @@ setIphase: x iphase := x !
 !
 
 !LFSaw class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setParamNames: #(freq iphase) . u setRate: 'ar' . u setNumChan: 1 . u setFreq: freq . u setIphase: iphase . ^u ! !
-
+freq: freq iphase: iphase |u| u := self new . u setName: #LFSaw . u setParamNames: #(freq iphase) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setFreq: freq . u setIphase: iphase . ^u ! !
 
 UGen subclass: #SinOsc
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -56,8 +54,7 @@ setPhase: x phase := x !
 !
 
 !SinOsc class methodsFor: 'instance creation'!
-freq: freq phase: phase |u| u := self new . u setParamNames: #(freq phase) . u setRate: 'ar' . u setNumChan: 1 . u setFreq: freq . u setPhase: phase . ^u ! !
-
+freq: freq phase: phase |u| u := self new . u setName: #SinOsc . u setParamNames: #(freq phase) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setFreq: freq . u setPhase: phase . ^u ! !
 
 UGen subclass: #Pan2
 instanceVariableNames: 'in pos level' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -77,8 +74,7 @@ setLevel: x level := x !
 !
 
 !Pan2 class methodsFor: 'instance creation'!
-in: in pos: pos level: level |u| u := self new . u setParamNames: #(in pos level) . u setRate: 'ar' . u setNumChan: 2 . u setIn: in . u setPos: pos . u setLevel: level . ^{OutputProxy source: u outputIndex: 1 . OutputProxy source: u outputIndex: 2} ! !
-
+in: in pos: pos level: level |u| u := self new . u setName: #Pan2 . u setParamNames: #(in pos level) . u setMceNames: #() . u setRate: #ar . u setNumChan: 2 . u setIn: in . u setPos: pos . u setLevel: level . ^u ! !
 
 UGen subclass: #Out
 instanceVariableNames: 'bus channelsArray' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -96,7 +92,7 @@ setChannelsArray: x channelsArray := x !
 !
 
 !Out class methodsFor: 'instance creation'!
-bus: bus channelsArray: channelsArray |u| u := self new . u setParamNames: #(bus channelsArray) . u setRate: 'ar' . u setNumChan: 0 . u setBus: bus . u setChannelsArray: channelsArray . ^u ! !
+bus: bus channelsArray: channelsArray |u| u := self new . u setName: #Out . u setParamNames: #(bus) . u setMceNames: #(channelsArray) . u setRate: #ar . u setNumChan: 0 . u setBus: bus . u setChannelsArray: channelsArray . ^u ! !
 
 
 UGen subclass: #BinaryOpUGen
@@ -117,7 +113,7 @@ setB: x b := x !
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a b: b |u| u := self new . u setParamNames: #(specialIndex a b) . u setRate: 'ar' . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
+specialIndex: specialIndex a: a b: b |u| u := self new . u setName: #BinaryOpUGen . u setParamNames: #(specialIndex a b) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
 
 
 UGen subclass: #UnaryOpUGen
@@ -136,7 +132,7 @@ setA: x a := x !
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a |u| u := self new . u setParamNames: #(specialIndex a) . u setRate: 'ar' . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . ^u ! !
+specialIndex: specialIndex a: a |u| u := self new . u setName: #UnaryOpUGen . u setParamNames: #(specialIndex a) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . ^u ! !
 
 
 !UGen methodsFor: 'arithmetic'!
@@ -159,3 +155,4 @@ cubed ^ UnaryOpUGen specialIndex: 13 a: self !
 midicps ^ UnaryOpUGen specialIndex: 17 a: self !
 neg ^ UnaryOpUGen specialIndex: 0 a: self !
 !
+

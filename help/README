@@ -6,3 +6,12 @@ without applying KR rate editing.
 If it is written without assigning unique-identifiers sharing will be
 lost.
 
+printLispOn:
+
+UGen ->
+(construct-ugen name:string rate:rate inputs:[node] mce:node|nil outputs:int special:int|nil uid:uid)
+(construct-ugen "Out" ar (list bus) channelsArray 0 nil (uid *hash*))
+
+Array -> (list ...)
+
+KR -> (KR ...)
