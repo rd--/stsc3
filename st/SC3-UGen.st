@@ -60,6 +60,34 @@ new ^ self basicNew initialize ! !
 !BPZ2 class methodsFor: 'instance creation'!
 in: in |u| u := self new . u setIn: in . ^ u ! !
 
+UGen subclass: #CombL
+instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!CombL commentStamp: '<historical>' prior: 0!
+Comb delay line with linear interpolation. !
+
+!CombL methodsFor: 'accessing'!
+in ^in !
+maxdelaytime ^maxdelaytime !
+delaytime ^delaytime !
+decaytime ^decaytime !
+!
+
+!CombL methodsFor: 'private'!
+setIn: x in := x !
+setMaxdelaytime: x maxdelaytime := x !
+setDelaytime: x delaytime := x !
+setDecaytime: x decaytime := x !
+!
+
+!CombL methodsFor: 'private'!
+initialize name := #CombL . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!CombL class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!CombL class methodsFor: 'instance creation'!
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
+
 UGen subclass: #CombN
 instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !CombN commentStamp: '<historical>' prior: 0!
@@ -88,6 +116,52 @@ new ^ self basicNew initialize ! !
 !CombN class methodsFor: 'instance creation'!
 in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
 
+UGen subclass: #Decay
+instanceVariableNames: 'in decayTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Decay commentStamp: '<historical>' prior: 0!
+Exponential decay !
+
+!Decay methodsFor: 'accessing'!
+in ^in !
+decayTime ^decayTime !
+!
+
+!Decay methodsFor: 'private'!
+setIn: x in := x !
+setDecayTime: x decayTime := x !
+!
+
+!Decay methodsFor: 'private'!
+initialize name := #Decay . paramNames := #(in decayTime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Decay class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Decay class methodsFor: 'instance creation'!
+in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u ! !
+
+UGen subclass: #HPZ1
+instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!HPZ1 commentStamp: '<historical>' prior: 0!
+Two point difference filter !
+
+!HPZ1 methodsFor: 'accessing'!
+in ^in !
+!
+
+!HPZ1 methodsFor: 'private'!
+setIn: x in := x !
+!
+
+!HPZ1 methodsFor: 'private'!
+initialize name := #HPZ1 . paramNames := #(in) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!HPZ1 class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!HPZ1 class methodsFor: 'instance creation'!
+in: in |u| u := self new . u setIn: in . ^ u ! !
+
 UGen subclass: #In
 instanceVariableNames: 'bus' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !In commentStamp: '<historical>' prior: 0!
@@ -109,6 +183,30 @@ new ^ self basicNew initialize ! !
 
 !In class methodsFor: 'instance creation'!
 numChan: numChan bus: bus |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u ! !
+
+UGen subclass: #LeakDC
+instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LeakDC commentStamp: '<historical>' prior: 0!
+Remove DC !
+
+!LeakDC methodsFor: 'accessing'!
+in ^in !
+coef ^coef !
+!
+
+!LeakDC methodsFor: 'private'!
+setIn: x in := x !
+setCoef: x coef := x !
+!
+
+!LeakDC methodsFor: 'private'!
+initialize name := #LeakDC . paramNames := #(in coef) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!LeakDC class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LeakDC class methodsFor: 'instance creation'!
+in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u ! !
 
 UGen subclass: #LFPulse
 instanceVariableNames: 'freq iphase width' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -340,6 +438,20 @@ new ^ self basicNew initialize ! !
 !Pan2 class methodsFor: 'instance creation'!
 in: in pos: pos level: level |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u ! !
 
+UGen subclass: #PinkNoise
+instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!PinkNoise commentStamp: '<historical>' prior: 0!
+Pink Noise. !
+
+
+
+!PinkNoise methodsFor: 'private'!
+initialize name := #PinkNoise . paramNames := #() . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!PinkNoise class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+
 UGen subclass: #RHPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !RHPF commentStamp: '<historical>' prior: 0!
@@ -449,9 +561,10 @@ clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b !
 !
 
 !UGen methodsFor: 'arithmetic'!
+negated ^ UnaryOpUGen specialIndex: 0 a: self !
 abs ^ UnaryOpUGen specialIndex: 5 a: self !
 cubed ^ UnaryOpUGen specialIndex: 13 a: self !
+reciprocal ^ UnaryOpUGen specialIndex: 16 a: self !
 midicps ^ UnaryOpUGen specialIndex: 17 a: self !
-neg ^ UnaryOpUGen specialIndex: 0 a: self !
 !
 

@@ -17,10 +17,10 @@ printLispOn: fd '(KR ' putOn: fd . source printLispOn: fd . ')' putOn: fd ! !
 !MCE methodsFor: 'printing'!
 printLispOn: fd source printLispOn: fd . ! !
 
-!SmallInteger methodsFor: 'printing'!
-printLispOn: fd self putOn: fd ! !
+!Fraction methodsFor: 'printing'!
+printLispOn: fd (self asFloat) putOn: fd ! !
 
-!SmallFloat64 methodsFor: 'printing'!
+!Number methodsFor: 'printing'!
 printLispOn: fd self putOn: fd ! !
 
 !Array methodsFor: 'printing'!

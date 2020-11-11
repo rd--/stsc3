@@ -12,6 +12,8 @@ o paramNames collect: [:x | o perform: x]
 o class == SinOsc
 o class name == #SinOsc
 
+69 midicps
+
 "UI"
 
 UIManager default chooseClassOrTrait

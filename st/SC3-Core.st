@@ -92,4 +92,10 @@ UGen subclass: #MCE
  setSource: x source := x ! !
 
 !MCE class methodsFor: 'instance creation'!
- source: x ^self new setSource: x ! !
+ source: x ^ self new setSource: x ! !
+
+!SmallInteger methodsFor: 'enumerating'!
+ mixFill: f ^ ((1 to: self) asArray collect: [:i| f value: i]) sum ! !
+
+!Number methodsFor: 'units'!
+ midicps ^ 440 * (2 ** ((self - 69) * (1 / 12))) ! !
