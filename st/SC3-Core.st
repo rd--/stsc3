@@ -82,6 +82,9 @@ UGen subclass: #KR
 !KR class methodsFor: 'instance creation'!
  source: x ^self new setSource: x ! !
 
+!UGen methodsFor: 'control rate'!
+ kr ^KR source: self ! !
+
 UGen subclass: #MCE
  instanceVariableNames: 'source'
  classVariableNames: ''
@@ -102,3 +105,8 @@ UGen subclass: #MCE
 
 !Number methodsFor: 'units'!
  midicps ^ 440 * (2 ** ((self - 69) * (1 / 12))) ! !
+
+!Float methodsFor: 'randomness'!
+ rand ^ (100000000 atRandom / 100000000.0) * self !
+ rand: n ^ (100000000 atRandom / 100000000.0) * (n - self) + self !
+ rand2 ^ (self negated) rand: self ! !

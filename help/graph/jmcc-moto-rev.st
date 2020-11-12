@@ -1,5 +1,5 @@
 "moto rev (jmcc) #1"
-f := KR source: ((SinOsc freq: 0.2 phase: 0) * 10 + 21) .
+f := ((SinOsc freq: 0.2 phase: 0) * 10 + 21) kr .
 s := LFPulse freq: f iphase: {0 . 0.1} width: 0.1 .
 o := (RLPF in: s freq:100 rq: 0.1) clip2: 0.4 .
 o

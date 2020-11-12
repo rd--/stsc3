@@ -18,6 +18,10 @@ o class name == #SinOsc
 2 mceFill: [:_x| PinkNoise new]
 5 mixFill: [:x| x * x]
 
+5.0 rand      "in 0 to 5"
+2.0 rand: 3.0 "in 2 to 3"
+4.0 rand2     "in -4 to 4"
+
 #{1 . 2 . 3 . 4 . 5} atRandom "choose"
 
 "UI"

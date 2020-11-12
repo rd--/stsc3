@@ -140,6 +140,54 @@ new ^ self basicNew initialize ! !
 !Decay class methodsFor: 'instance creation'!
 in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u ! !
 
+UGen subclass: #Decay2
+instanceVariableNames: 'in attackTime decayTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Decay2 commentStamp: '<historical>' prior: 0!
+Exponential decay !
+
+!Decay2 methodsFor: 'accessing'!
+in ^in !
+attackTime ^attackTime !
+decayTime ^decayTime !
+!
+
+!Decay2 methodsFor: 'private'!
+setIn: x in := x !
+setAttackTime: x attackTime := x !
+setDecayTime: x decayTime := x !
+!
+
+!Decay2 methodsFor: 'private'!
+initialize name := #Decay2 . paramNames := #(in attackTime decayTime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Decay2 class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Decay2 class methodsFor: 'instance creation'!
+in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u ! !
+
+UGen subclass: #Dust
+instanceVariableNames: 'density' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Dust commentStamp: '<historical>' prior: 0!
+Random impulses. !
+
+!Dust methodsFor: 'accessing'!
+density ^density !
+!
+
+!Dust methodsFor: 'private'!
+setDensity: x density := x !
+!
+
+!Dust methodsFor: 'private'!
+initialize name := #Dust . paramNames := #(density) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Dust class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Dust class methodsFor: 'instance creation'!
+density: density |u| u := self new . u setDensity: density . ^ u ! !
+
 UGen subclass: #FSinOsc
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !FSinOsc commentStamp: '<historical>' prior: 0!
@@ -550,6 +598,32 @@ new ^ self basicNew initialize ! !
 !Rand class methodsFor: 'instance creation'!
 lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u ! !
 
+UGen subclass: #Resonz
+instanceVariableNames: 'in freq bwr' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Resonz commentStamp: '<historical>' prior: 0!
+Resonant filter. !
+
+!Resonz methodsFor: 'accessing'!
+in ^in !
+freq ^freq !
+bwr ^bwr !
+!
+
+!Resonz methodsFor: 'private'!
+setIn: x in := x !
+setFreq: x freq := x !
+setBwr: x bwr := x !
+!
+
+!Resonz methodsFor: 'private'!
+initialize name := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Resonz class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Resonz class methodsFor: 'instance creation'!
+in: in freq: freq bwr: bwr |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u ! !
+
 UGen subclass: #RHPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !RHPF commentStamp: '<historical>' prior: 0!
@@ -625,6 +699,34 @@ new ^ self basicNew initialize ! !
 
 !SinOsc class methodsFor: 'instance creation'!
 freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u ! !
+
+UGen subclass: #XLine
+instanceVariableNames: 'start end dur doneAction' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!XLine commentStamp: '<historical>' prior: 0!
+Exponential line generator. !
+
+!XLine methodsFor: 'accessing'!
+start ^start !
+end ^end !
+dur ^dur !
+doneAction ^doneAction !
+!
+
+!XLine methodsFor: 'private'!
+setStart: x start := x !
+setEnd: x end := x !
+setDur: x dur := x !
+setDoneAction: x doneAction := x !
+!
+
+!XLine methodsFor: 'private'!
+initialize name := #XLine . paramNames := #(start end dur doneAction) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!XLine class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!XLine class methodsFor: 'instance creation'!
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u ! !
 
 UGen subclass: #WhiteNoise
 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
