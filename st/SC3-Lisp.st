@@ -17,6 +17,9 @@ printLispOn: fd '(KR ' putOn: fd . source printLispOn: fd . ')' putOn: fd ! !
 !MCE methodsFor: 'printing'!
 printLispOn: fd source printLispOn: fd . ! !
 
+!Mix methodsFor: 'printing'!
+printLispOn: fd '(mix ' putOn: fd . source printLispOn: fd . ')' putOn: fd ! !
+
 !Fraction methodsFor: 'printing'!
 printLispOn: fd (self asFloat) putOn: fd ! !
 

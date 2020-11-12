@@ -14,6 +14,7 @@ o class name == #SinOsc
 
 69 midicps
 
+1 to: 5 do: [:x| Transcript cr ; show x]
 1 to: 5 collect: [:x| x * x]
 2 mceFill: [:_x| PinkNoise new]
 5 mixFill: [:x| x * x]

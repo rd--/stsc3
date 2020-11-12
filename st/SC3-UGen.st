@@ -1,3 +1,31 @@
+UGen subclass: #AllpassN
+instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!AllpassN commentStamp: '<historical>' prior: 0!
+Schroeder allpass delay line with no interpolation. !
+
+!AllpassN methodsFor: 'accessing'!
+in ^in !
+maxdelaytime ^maxdelaytime !
+delaytime ^delaytime !
+decaytime ^decaytime !
+!
+
+!AllpassN methodsFor: 'private'!
+setIn: x in := x !
+setMaxdelaytime: x maxdelaytime := x !
+setDelaytime: x delaytime := x !
+setDecaytime: x decaytime := x !
+!
+
+!AllpassN methodsFor: 'private'!
+initialize name := #AllpassN . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!AllpassN class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!AllpassN class methodsFor: 'instance creation'!
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
+
 UGen subclass: #Amplitude
 instanceVariableNames: 'in attackTime releaseTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Amplitude commentStamp: '<historical>' prior: 0!
@@ -165,6 +193,32 @@ new ^ self basicNew initialize ! !
 
 !Decay2 class methodsFor: 'instance creation'!
 in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u ! !
+
+UGen subclass: #DelayN
+instanceVariableNames: 'in maxdelaytime delaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!DelayN commentStamp: '<historical>' prior: 0!
+Simple delay line with no interpolation. !
+
+!DelayN methodsFor: 'accessing'!
+in ^in !
+maxdelaytime ^maxdelaytime !
+delaytime ^delaytime !
+!
+
+!DelayN methodsFor: 'private'!
+setIn: x in := x !
+setMaxdelaytime: x maxdelaytime := x !
+setDelaytime: x delaytime := x !
+!
+
+!DelayN methodsFor: 'private'!
+initialize name := #DelayN . paramNames := #(in maxdelaytime delaytime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!DelayN class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!DelayN class methodsFor: 'instance creation'!
+in: in maxdelaytime: maxdelaytime delaytime: delaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u ! !
 
 UGen subclass: #Dust
 instanceVariableNames: 'density' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
