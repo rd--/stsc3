@@ -140,6 +140,30 @@ new ^ self basicNew initialize ! !
 !Decay class methodsFor: 'instance creation'!
 in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u ! !
 
+UGen subclass: #FSinOsc
+instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!FSinOsc commentStamp: '<historical>' prior: 0!
+Fast sine oscillator. !
+
+!FSinOsc methodsFor: 'accessing'!
+freq ^freq !
+iphase ^iphase !
+!
+
+!FSinOsc methodsFor: 'private'!
+setFreq: x freq := x !
+setIphase: x iphase := x !
+!
+
+!FSinOsc methodsFor: 'private'!
+initialize name := #FSinOsc . paramNames := #(freq iphase) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!FSinOsc class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!FSinOsc class methodsFor: 'instance creation'!
+freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u ! !
+
 UGen subclass: #HPZ1
 instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !HPZ1 commentStamp: '<historical>' prior: 0!
@@ -208,6 +232,28 @@ new ^ self basicNew initialize ! !
 !LeakDC class methodsFor: 'instance creation'!
 in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u ! !
 
+UGen subclass: #LFNoise1
+instanceVariableNames: 'freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LFNoise1 commentStamp: '<historical>' prior: 0!
+Ramp noise !
+
+!LFNoise1 methodsFor: 'accessing'!
+freq ^freq !
+!
+
+!LFNoise1 methodsFor: 'private'!
+setFreq: x freq := x !
+!
+
+!LFNoise1 methodsFor: 'private'!
+initialize name := #LFNoise1 . paramNames := #(freq) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!LFNoise1 class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LFNoise1 class methodsFor: 'instance creation'!
+freq: freq |u| u := self new . u setFreq: freq . ^ u ! !
+
 UGen subclass: #LFPulse
 instanceVariableNames: 'freq iphase width' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !LFPulse commentStamp: '<historical>' prior: 0!
@@ -257,6 +303,34 @@ new ^ self basicNew initialize ! !
 
 !LFSaw class methodsFor: 'instance creation'!
 freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u ! !
+
+UGen subclass: #Line
+instanceVariableNames: 'start end dur doneAction' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Line commentStamp: '<historical>' prior: 0!
+Line generator. !
+
+!Line methodsFor: 'accessing'!
+start ^start !
+end ^end !
+dur ^dur !
+doneAction ^doneAction !
+!
+
+!Line methodsFor: 'private'!
+setStart: x start := x !
+setEnd: x end := x !
+setDur: x dur := x !
+setDoneAction: x doneAction := x !
+!
+
+!Line methodsFor: 'private'!
+initialize name := #Line . paramNames := #(start end dur doneAction) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Line class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Line class methodsFor: 'instance creation'!
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u ! !
 
 UGen subclass: #LPF
 instanceVariableNames: 'in freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -451,6 +525,30 @@ initialize name := #PinkNoise . paramNames := #() . mceNames := #() . rate := #a
 !PinkNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
 
+
+UGen subclass: #Rand
+instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Rand commentStamp: '<historical>' prior: 0!
+Single random number generator. !
+
+!Rand methodsFor: 'accessing'!
+lo ^lo !
+hi ^hi !
+!
+
+!Rand methodsFor: 'private'!
+setLo: x lo := x !
+setHi: x hi := x !
+!
+
+!Rand methodsFor: 'private'!
+initialize name := #Rand . paramNames := #(lo hi) . mceNames := #() . rate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!Rand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Rand class methodsFor: 'instance creation'!
+lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u ! !
 
 UGen subclass: #RHPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !

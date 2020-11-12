@@ -14,6 +14,12 @@ o class name == #SinOsc
 
 69 midicps
 
+1 to: 5 collect: [:x| x * x]
+2 mceFill: [:_x| PinkNoise new]
+5 mixFill: [:x| x * x]
+
+#{1 . 2 . 3 . 4 . 5} atRandom "choose"
+
 "UI"
 
 UIManager default chooseClassOrTrait
