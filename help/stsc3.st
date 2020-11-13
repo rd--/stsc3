@@ -37,3 +37,25 @@ UIManager default edit: 'a text' label: 'make changes?' accept: [:x| Transcript 
 UIManager default request: 'name?'
 UIManager default requestPassword: 'pwd?'
 UIManager default multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type' answerHeight: 600
+
+'a text' edit
+
+Display writePNGfileNamed: '/tmp/display.png' .
+Form fromUser asMorph openInWorld
+(ImageReadWriter formFromFileNamed: '/tmp/twitter.png') asMorph openInHand
+(Form fromFileNamed: '/tmp/twitter.png') asMorph openInHand
+
+w := SystemWindow new extent: 500@500 .
+w setLabel: 'The Window!' .
+w model: (Model new) .
+t := (TextMorph new string: 'The text!' fontName: 'Bitmap DejaVu Sans' size: 16 ; backgroundColor: Color white) .
+w addMorph: (t extent: 400@400) frame: (0@0 corner: 1@1) .
+w openInWorld .
+
+MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess' .
+MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/CommandShell'.
+
+OSProcess command: 'ls -l /etc'
+OSProcess waitForCommand: 'echo sleeping...; sleep 3; echo I just slept for three seconds'
+OSProcess outputOf: 'ls | cat | wc'
+OSProcess editOutputOf: 'ps -axjf'
