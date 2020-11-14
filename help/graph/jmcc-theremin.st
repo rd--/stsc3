@@ -1,4 +1,5 @@
 "theremin (jmcc)"
+|mod detune x y f a o|
 mod := 7 .
 detune := 0 .
 x := (MouseX minval: 0 maxval: 0.9 warp: 0 lag: 0.2) kr .

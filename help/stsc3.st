@@ -2,7 +2,7 @@ SinOsc freq: 440 phase: 0
 
 SinOsc freq: (KR source: (SinOsc freq: 2 phase: 0)) phase: 0
 
-Out bus: 0 channelsArray: (Pan2 in: (SinOsc freq: 440 phase: 0) pos: 0 level: 1)
+Out bus: 0 channelsArray: (Pan2 in: (SinOsc freq: 440 phase: 0) s: 0 level: 1)
 
 o := SinOsc freq: 440 phase: 0
 o hash
@@ -25,32 +25,60 @@ o class name == #SinOsc
 
 #{1 . 2 . 3 . 4 . 5} atRandom "choose"
 
+Compiler evaluate: '1+1' "evaluate string"
+
+"Dictionary"
+
+d := Dictionary new . d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z' .
+d := Dictionary newFromPairs: #(select x from y list z)
+
+"SC3"
+
+'/tmp/hsc3.png' viewImageFile .
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' readTextFile .
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile .
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile .
+
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile play.
+SC3 reset .
+
+(FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') suffixList: #(st) label: 'select st file') evalTextFile play
+
+GraphBrowser openOn: '/home/rohan/sw/stsc3/help/graph/' .
+
 "UI"
 
 UIManager default chooseClassOrTrait
 UIManager default chooseDirectory
+UIManager default chooseDirectoryFrom: (FileDirectory on: '/home/rohan/sw/stsc3/help/')
 UIManager default chooseFileMatching: nil
 UIManager default chooseFileMatchingSuffixes: #('st')
 UIManager default saveFilenameRequest: 'save file' initialAnswer: 'x.st'
-UIManager default edit: 'a text'
-UIManager default edit: 'a text' label: 'make changes?' accept: [:x| Transcript show: x ; cr]
+UIManager default chooseFrom: #(select from list)
+UIManager default chooseFromLabeledValues: (Dictionary newFromPairs: #(select x from y list z))
+UIManager default chooseMultipleFrom: #(select multiple from list)
+UIManager default confirm: 'really?'
+UIManager default confirm: 'really?' orCancel: [Transcript show: 'cancel' ; cr]
+UIManager default inform: 'information'
+UIManager default edit: 'edit text'
+UIManager default edit: 'edit text' label: 'make changes?' accept: [:x| Transcript show: x ; cr]
 UIManager default request: 'name?'
 UIManager default requestPassword: 'pwd?'
-UIManager default multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type' answerHeight: 600
+UIManager default multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type text' answerHeight: 600
+
+FileList openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/')
 
 'a text' edit
 
-Display writePNGfileNamed: '/tmp/display.png' .
-Form fromUser asMorph openInWorld
-(ImageReadWriter formFromFileNamed: '/tmp/twitter.png') asMorph openInHand
-(Form fromFileNamed: '/tmp/twitter.png') asMorph openInHand
+'/tmp/hsc3.png' viewImageFile "UI image file viewer"
 
-w := SystemWindow new extent: 500@500 .
-w setLabel: 'The Window!' .
-w model: (Model new) .
-t := (TextMorph new string: 'The text!' fontName: 'Bitmap DejaVu Sans' size: 16 ; backgroundColor: Color white) .
-w addMorph: (t extent: 400@400) frame: (0@0 corner: 1@1) .
-w openInWorld .
+Display writePNGfileNamed: '/tmp/display.png' . "screenshot"
+Form fromUser asMorph openInWorld
+(ImageReadWriter formFromFileNamed: '/tmp/hsc3.png') asMorph openInHand
+(Form fromFileNamed: '/tmp/hsc3.png') asMorph openInHand
+
+
+"OS"
 
 MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess' .
 MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/CommandShell'.

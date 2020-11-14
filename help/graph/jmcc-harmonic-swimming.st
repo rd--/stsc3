@@ -1,4 +1,5 @@
 "harmonic swimming (jmcc) #1"
+|a f p l o s|
 a := 0.02 . "amplitude scale"
 f := 50 . "fundamental frequency"
 p := 20 . "number of partials per channel"

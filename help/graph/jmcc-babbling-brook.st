@@ -1,4 +1,5 @@
 "babbling brook (jmcc) #SC3"
+| b o x y |
 b := [:f :m :a :g |
  [|n1 n2|
   n1 := OnePole in: (BrownNoise new) coef: 0.99 .

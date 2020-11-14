@@ -8,7 +8,8 @@
   numChan putOn: fd . fd space .
   '(Special ' putOn: fd . specialIndex notNil ifTrue: [specialIndex putOn: fd] ifFalse: [0 putOn: fd] . ') ' putOn: fd .
   '(UId ' putOn: fd . self hash putOn: fd . ')' putOn: fd . ')' putOn: fd !
- writeHaskellTo: fn |fd| fd := FileStream newFileNamed: fn . self printHaskellOn: fd . fd cr . fd close ! !
+ writeHaskellTo: fn |fd| fd := FileStream forceNewFileNamed: fn . self printHaskellOn: fd . fd cr . fd close !
+ play self writeHaskellTo: '/tmp/st.hs' . OSProcess command: 'hsc3-graphs fragments hs play /tmp/st.hs' ! !
 
 !KR methodsFor: 'printing'!
 printHaskellOn: fd '(rewriteToControlRate ' putOn: fd . source printHaskellOn: fd . ')' putOn: fd ! !

@@ -1,4 +1,5 @@
 "strummable guitar (jmcc) #11"
+|scale str strs o|
 scale := {52 . 57 . 62 . 67 . 71 . 76} .
 str := [:i |
         | x t e n dt s |

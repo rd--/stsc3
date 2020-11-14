@@ -1,4 +1,5 @@
 "pulsing bottles (jmcc) #2"
+|n f o|
 n := 6 . "number of bottles"
 f := [:_x|
       |a l|

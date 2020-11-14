@@ -122,3 +122,15 @@ UGen subclass: #Mix
 
 !Mix class methodsFor: 'instance creation'!
  source: x ^ self new setSource: x ! !
+
+!UGen methodsFor: 'arithmetic'!
+ mix ^ Mix source: self ! !
+
+Object subclass: #SC3
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!SC3 class methodsFor: 'server control'!
+ reset OSProcess command: 'hsc3-scsynth reset' ! !
