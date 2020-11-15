@@ -40,7 +40,6 @@ setB: x b := x !
 !BinaryOpUGen class methodsFor: 'instance creation'!
 specialIndex: specialIndex a: a b: b |u| u := self new . u setName: #BinaryOpUGen . u setParamNames: #(a b) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
 
-
 UGen subclass: #UnaryOpUGen
 instanceVariableNames: 'a' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !UnaryOpUGen commentStamp: '<historical>' prior: 0!
@@ -96,6 +95,9 @@ UGen subclass: #MCE
 
 !MCE class methodsFor: 'instance creation'!
  source: x ^ self new setSource: x ! !
+
+!Array methodsFor: 'multi-channel expansion'!
+ mce ^ MCE source: self ! !
 
 !Number methodsFor: 'enumerating'!
  to: n collect: f ^ ((self to: n) asArray collect: [:i| f value: i]) !

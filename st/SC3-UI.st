@@ -22,13 +22,17 @@ w openInWorldExtent: (i extent + (10@32)) ! !
 
 !String methodsFor: 'user interface'!
 viewTextFile
-|txt t w|
+|txt b t w m|
 w := SystemWindow new extent: 500@500 .
 w setLabel: self .
 w model: (Model new) .
 t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
 t backgroundColor: Color white .
-w addMorph: t fullFrame: (LayoutFrame fractions: (0@0 corner: 1@1) offsets: (0@10 corner: 0@0)) .
+w addMorph: t fullFrame: (LayoutFrame fractions: (0@0 corner: 1.0@0.8) offsets: (0@10 corner: 0@0)) .
+b := AlignmentMorph newRow .
+b color: Color veryVeryLightGray ; rubberBandCells: false ; vResizing: #shrinkWrap ; cellGap: 6@0 .
+{{'Play' . [(Compiler evaluate: (t selection)) play]} . {'Stop' . [SC3 reset]}} do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value)] .
+w addMorph: b fullFrame: (LayoutFrame fractions: (0.0@0.8 corner: 1.0@1.0) offsets: (0@0 corner: 0@0)) .
 w openInWorldExtent: 500@350 ! !
 
 SystemWindow subclass: #GraphBrowser
@@ -43,14 +47,15 @@ index: x index := x . self changed: #index ! !
 !GraphBrowser methodsFor: 'accessing'!
 directoryName ^ directoryName !
 index ^ index !
-files ^ ((FileDirectory on: directoryName) fullNamesOfAllFilesInSubtree) sort ! !
+files ^ ((FileDirectory on: directoryName) fullNamesOfAllFilesInSubtree) sort select: [:x | x endsWith: '.st'] ! !
 
 !GraphBrowser class methodsFor: 'instance creation'!
 openOn: x |v| v := self new . v index: 0 . v directoryName: x . v createWindow . v openInWorld . ^ v ! !
 
 !GraphBrowser methodsFor: 'operating'!
 play (self files at: index) evalTextFile play !
-edit (FileStream fileNamed: (self files at: index)) edit !
+"edit (FileStream fileNamed: (self files at: index)) edit"
+edit (self files at: index) viewTextFile !
 menu: m shifted: _i m add: 'play (p)' target: self selector: #play . m add: 'stop (s)' target: SC3 selector: #reset . m add: 'edit (e)' target: self selector: #edit . ^ m !
 key: k from: _i k == $p ifTrue: [self play] . k == $s ifTrue: [SC3 reset] . k == $e ifTrue: [self edit] ! !
 

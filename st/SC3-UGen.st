@@ -242,6 +242,38 @@ new ^ self basicNew initialize ! !
 !Dust class methodsFor: 'instance creation'!
 density: density |u| u := self new . u setDensity: density . ^ u ! !
 
+UGen subclass: #EnvGen
+instanceVariableNames: 'gate levelScale levelBias timeScale doneAction envelope' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!EnvGen commentStamp: '<historical>' prior: 0!
+Envelope generator !
+
+!EnvGen methodsFor: 'accessing'!
+gate ^gate !
+levelScale ^levelScale !
+levelBias ^levelBias !
+timeScale ^timeScale !
+doneAction ^doneAction !
+envelope ^envelope !
+!
+
+!EnvGen methodsFor: 'private'!
+setGate: x gate := x !
+setLevelScale: x levelScale := x !
+setLevelBias: x levelBias := x !
+setTimeScale: x timeScale := x !
+setDoneAction: x doneAction := x !
+setEnvelope: x envelope := x !
+!
+
+!EnvGen methodsFor: 'private'!
+initialize name := #EnvGen . paramNames := #(gate levelScale levelBias timeScale doneAction) . mceNames := #(envelope) . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!EnvGen class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!EnvGen class methodsFor: 'instance creation'!
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u ! !
+
 UGen subclass: #FSinOsc
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !FSinOsc commentStamp: '<historical>' prior: 0!
@@ -287,6 +319,30 @@ new ^ self basicNew initialize ! !
 
 !HPZ1 class methodsFor: 'instance creation'!
 in: in |u| u := self new . u setIn: in . ^ u ! !
+
+UGen subclass: #Impulse
+instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Impulse commentStamp: '<historical>' prior: 0!
+Impulse oscillator. !
+
+!Impulse methodsFor: 'accessing'!
+freq ^freq !
+phase ^phase !
+!
+
+!Impulse methodsFor: 'private'!
+setFreq: x freq := x !
+setPhase: x phase := x !
+!
+
+!Impulse methodsFor: 'private'!
+initialize name := #Impulse . paramNames := #(freq phase) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Impulse class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Impulse class methodsFor: 'instance creation'!
+freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u ! !
 
 UGen subclass: #In
 instanceVariableNames: 'bus' classVariableNames: '' poolDictionaries: '' category: 'SC3' !

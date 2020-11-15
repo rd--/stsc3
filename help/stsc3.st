@@ -1,6 +1,6 @@
-SinOsc freq: 440 phase: 0
+(SinOsc freq: 440 phase: 0) * 0.1
 
-SinOsc freq: (KR source: (SinOsc freq: 2 phase: 0)) phase: 0
+(SinOsc freq: (KR source: ((SinOsc freq: 1 phase: 0) * 4 + 200)) phase: 0) * 0.1
 
 Out bus: 0 channelsArray: (Pan2 in: (SinOsc freq: 440 phase: 0) s: 0 level: 1)
 
@@ -45,6 +45,14 @@ SC3 reset .
 (FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') suffixList: #(st) label: 'select st file') evalTextFile play
 
 GraphBrowser openOn: '/home/rohan/sw/stsc3/help/graph/' .
+
+
+"Morph"
+
+menu := PopUpMenu labelArray: #('circle' 'oval' 'square' 'rectangle' 'triangle') lines: #(2 4).
+menu startUpWithCaption: 'Choose a shape'
+
+(UpdatingStringMorph on: Time selector: #now) openInHand .
 
 "UI"
 
