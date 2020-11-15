@@ -126,6 +126,7 @@ UGen subclass: #Mix
  source: x ^ self new setSource: x ! !
 
 !UGen methodsFor: 'arithmetic'!
+ mul: mul add: add ^ MulAdd in: self mul: mul add: add !
  mix ^ Mix source: self ! !
 
 Object subclass: #SC3

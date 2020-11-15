@@ -6,7 +6,7 @@ str := [:i |
         x := MouseX minval: 0 maxval: 1 warp: 0 lag: 0.2 .
         t := (HPZ1 in: (x > (0.25 + (i - 1 * 0.1)))) abs .
         e := (Decay in: t decayTime: 0.05) kr .
-        n := PinkNoise new * e .
+        n := PinkNoise mul: e .
         dt := (scale at: i) midicps reciprocal .
         s := CombL in: n maxdelaytime: dt delaytime: dt decaytime: 4 .
         Pan2 in: s pos: (i - 1 * 0.2 - 0.5) level: 1] .

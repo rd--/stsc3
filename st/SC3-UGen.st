@@ -24,7 +24,10 @@ initialize name := #AllpassN . paramNames := #(in maxdelaytime delaytime decayti
 new ^ self basicNew initialize ! !
 
 !AllpassN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+!
 
 UGen subclass: #Amplitude
 instanceVariableNames: 'in attackTime releaseTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -50,7 +53,10 @@ initialize name := #Amplitude . paramNames := #(in attackTime releaseTime) . mce
 new ^ self basicNew initialize ! !
 
 !Amplitude class methodsFor: 'instance creation'!
-in: in attackTime: attackTime releaseTime: releaseTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u ! !
+in: in attackTime: attackTime releaseTime: releaseTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u !
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u * mul !
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u * mul + add !
+!
 
 UGen subclass: #BrownNoise
 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -65,6 +71,10 @@ initialize name := #BrownNoise . paramNames := #() . mceNames := #() . rate := #
 !BrownNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
 
+!BrownNoise class methodsFor: 'instance creation'!
+ mul: mul |u| u := self new .  ^ u * mul !
+ mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
 
 UGen subclass: #BPZ2
 instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -86,7 +96,10 @@ initialize name := #BPZ2 . paramNames := #(in) . mceNames := #() . rate := #ar .
 new ^ self basicNew initialize ! !
 
 !BPZ2 class methodsFor: 'instance creation'!
-in: in |u| u := self new . u setIn: in . ^ u ! !
+in: in |u| u := self new . u setIn: in . ^ u !
+in: in mul: mul |u| u := self new . u setIn: in . ^ u * mul !
+in: in mul: mul add: add |u| u := self new . u setIn: in . ^ u * mul + add !
+!
 
 UGen subclass: #CombL
 instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -114,7 +127,10 @@ initialize name := #CombL . paramNames := #(in maxdelaytime delaytime decaytime)
 new ^ self basicNew initialize ! !
 
 !CombL class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+!
 
 UGen subclass: #CombN
 instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -142,7 +158,10 @@ initialize name := #CombN . paramNames := #(in maxdelaytime delaytime decaytime)
 new ^ self basicNew initialize ! !
 
 !CombN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u ! !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+!
 
 UGen subclass: #Decay
 instanceVariableNames: 'in decayTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -166,7 +185,10 @@ initialize name := #Decay . paramNames := #(in decayTime) . mceNames := #() . ra
 new ^ self basicNew initialize ! !
 
 !Decay class methodsFor: 'instance creation'!
-in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u ! !
+in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u !
+in: in decayTime: decayTime mul: mul |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u * mul !
+in: in decayTime: decayTime mul: mul add: add |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u * mul + add !
+!
 
 UGen subclass: #Decay2
 instanceVariableNames: 'in attackTime decayTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -192,7 +214,10 @@ initialize name := #Decay2 . paramNames := #(in attackTime decayTime) . mceNames
 new ^ self basicNew initialize ! !
 
 !Decay2 class methodsFor: 'instance creation'!
-in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u ! !
+in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u !
+in: in attackTime: attackTime decayTime: decayTime mul: mul |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u * mul !
+in: in attackTime: attackTime decayTime: decayTime mul: mul add: add |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u * mul + add !
+!
 
 UGen subclass: #DelayN
 instanceVariableNames: 'in maxdelaytime delaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -218,7 +243,10 @@ initialize name := #DelayN . paramNames := #(in maxdelaytime delaytime) . mceNam
 new ^ self basicNew initialize ! !
 
 !DelayN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u ! !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u * mul + add !
+!
 
 UGen subclass: #Dust
 instanceVariableNames: 'density' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -240,7 +268,10 @@ initialize name := #Dust . paramNames := #(density) . mceNames := #() . rate := 
 new ^ self basicNew initialize ! !
 
 !Dust class methodsFor: 'instance creation'!
-density: density |u| u := self new . u setDensity: density . ^ u ! !
+density: density |u| u := self new . u setDensity: density . ^ u !
+density: density mul: mul |u| u := self new . u setDensity: density . ^ u * mul !
+density: density mul: mul add: add |u| u := self new . u setDensity: density . ^ u * mul + add !
+!
 
 UGen subclass: #EnvGen
 instanceVariableNames: 'gate levelScale levelBias timeScale doneAction envelope' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -272,7 +303,10 @@ initialize name := #EnvGen . paramNames := #(gate levelScale levelBias timeScale
 new ^ self basicNew initialize ! !
 
 !EnvGen class methodsFor: 'instance creation'!
-gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u ! !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u * mul !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u * mul + add !
+!
 
 UGen subclass: #FSinOsc
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -296,7 +330,10 @@ initialize name := #FSinOsc . paramNames := #(freq iphase) . mceNames := #() . r
 new ^ self basicNew initialize ! !
 
 !FSinOsc class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u ! !
+freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u !
+freq: freq iphase: iphase mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul !
+freq: freq iphase: iphase mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul + add !
+!
 
 UGen subclass: #HPZ1
 instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -318,7 +355,10 @@ initialize name := #HPZ1 . paramNames := #(in) . mceNames := #() . rate := #ar .
 new ^ self basicNew initialize ! !
 
 !HPZ1 class methodsFor: 'instance creation'!
-in: in |u| u := self new . u setIn: in . ^ u ! !
+in: in |u| u := self new . u setIn: in . ^ u !
+in: in mul: mul |u| u := self new . u setIn: in . ^ u * mul !
+in: in mul: mul add: add |u| u := self new . u setIn: in . ^ u * mul + add !
+!
 
 UGen subclass: #Impulse
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -342,7 +382,10 @@ initialize name := #Impulse . paramNames := #(freq phase) . mceNames := #() . ra
 new ^ self basicNew initialize ! !
 
 !Impulse class methodsFor: 'instance creation'!
-freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u ! !
+freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u !
+freq: freq phase: phase mul: mul |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul !
+freq: freq phase: phase mul: mul add: add |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul + add !
+!
 
 UGen subclass: #In
 instanceVariableNames: 'bus' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -364,7 +407,10 @@ initialize name := #In . paramNames := #(bus) . mceNames := #() . rate := #ar . 
 new ^ self basicNew initialize ! !
 
 !In class methodsFor: 'instance creation'!
-numChan: numChan bus: bus |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u ! !
+numChan: numChan bus: bus |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u !
+numChan: numChan bus: bus mul: mul |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul !
+numChan: numChan bus: bus mul: mul add: add |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul + add !
+!
 
 UGen subclass: #LeakDC
 instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -388,7 +434,10 @@ initialize name := #LeakDC . paramNames := #(in coef) . mceNames := #() . rate :
 new ^ self basicNew initialize ! !
 
 !LeakDC class methodsFor: 'instance creation'!
-in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u ! !
+in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u !
+in: in coef: coef mul: mul |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul !
+in: in coef: coef mul: mul add: add |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul + add !
+!
 
 UGen subclass: #LFNoise1
 instanceVariableNames: 'freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -410,7 +459,10 @@ initialize name := #LFNoise1 . paramNames := #(freq) . mceNames := #() . rate :=
 new ^ self basicNew initialize ! !
 
 !LFNoise1 class methodsFor: 'instance creation'!
-freq: freq |u| u := self new . u setFreq: freq . ^ u ! !
+freq: freq |u| u := self new . u setFreq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+!
 
 UGen subclass: #LFPulse
 instanceVariableNames: 'freq iphase width' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -436,7 +488,10 @@ initialize name := #LFPulse . paramNames := #(freq iphase width) . mceNames := #
 new ^ self basicNew initialize ! !
 
 !LFPulse class methodsFor: 'instance creation'!
-freq: freq iphase: iphase width: width |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u ! !
+freq: freq iphase: iphase width: width |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u !
+freq: freq iphase: iphase width: width mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u * mul !
+freq: freq iphase: iphase width: width mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u * mul + add !
+!
 
 UGen subclass: #LFSaw
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -460,7 +515,10 @@ initialize name := #LFSaw . paramNames := #(freq iphase) . mceNames := #() . rat
 new ^ self basicNew initialize ! !
 
 !LFSaw class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u ! !
+freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u !
+freq: freq iphase: iphase mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul !
+freq: freq iphase: iphase mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul + add !
+!
 
 UGen subclass: #Line
 instanceVariableNames: 'start end dur doneAction' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -488,7 +546,10 @@ initialize name := #Line . paramNames := #(start end dur doneAction) . mceNames 
 new ^ self basicNew initialize ! !
 
 !Line class methodsFor: 'instance creation'!
-start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u ! !
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u !
+start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul !
+start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul + add !
+!
 
 UGen subclass: #LPF
 instanceVariableNames: 'in freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -512,7 +573,10 @@ initialize name := #LPF . paramNames := #(in freq) . mceNames := #() . rate := #
 new ^ self basicNew initialize ! !
 
 !LPF class methodsFor: 'instance creation'!
-in: in freq: freq |u| u := self new . u setIn: in . u setFreq: freq . ^ u ! !
+in: in freq: freq |u| u := self new . u setIn: in . u setFreq: freq . ^ u !
+in: in freq: freq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . ^ u * mul !
+in: in freq: freq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . ^ u * mul + add !
+!
 
 UGen subclass: #MouseX
 instanceVariableNames: 'minval maxval warp lag' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -540,7 +604,10 @@ initialize name := #MouseX . paramNames := #(minval maxval warp lag) . mceNames 
 new ^ self basicNew initialize ! !
 
 !MouseX class methodsFor: 'instance creation'!
-minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u ! !
+minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul + add !
+!
 
 UGen subclass: #MouseY
 instanceVariableNames: 'minval maxval warp lag' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -568,7 +635,10 @@ initialize name := #MouseY . paramNames := #(minval maxval warp lag) . mceNames 
 new ^ self basicNew initialize ! !
 
 !MouseY class methodsFor: 'instance creation'!
-minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u ! !
+minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul + add !
+!
 
 UGen subclass: #MulAdd
 instanceVariableNames: 'in mul add' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -594,7 +664,8 @@ initialize name := #MulAdd . paramNames := #(in mul add) . mceNames := #() . rat
 new ^ self basicNew initialize ! !
 
 !MulAdd class methodsFor: 'instance creation'!
-in: in mul: mul add: add |u| u := self new . u setIn: in . u setMul: mul . u setAdd: add . ^ u ! !
+in: in mul: mul add: add |u| u := self new . u setIn: in . u setMul: mul . u setAdd: add . ^ u !
+!
 
 UGen subclass: #OnePole
 instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -618,7 +689,10 @@ initialize name := #OnePole . paramNames := #(in coef) . mceNames := #() . rate 
 new ^ self basicNew initialize ! !
 
 !OnePole class methodsFor: 'instance creation'!
-in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u ! !
+in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u !
+in: in coef: coef mul: mul |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul !
+in: in coef: coef mul: mul add: add |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul + add !
+!
 
 UGen subclass: #Out
 instanceVariableNames: 'bus channelsArray' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -642,7 +716,10 @@ initialize name := #Out . paramNames := #(bus) . mceNames := #(channelsArray) . 
 new ^ self basicNew initialize ! !
 
 !Out class methodsFor: 'instance creation'!
-bus: bus channelsArray: channelsArray |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u ! !
+bus: bus channelsArray: channelsArray |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u !
+bus: bus channelsArray: channelsArray mul: mul |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u * mul !
+bus: bus channelsArray: channelsArray mul: mul add: add |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u * mul + add !
+!
 
 UGen subclass: #Pan2
 instanceVariableNames: 'in pos level' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -668,7 +745,10 @@ initialize name := #Pan2 . paramNames := #(in pos level) . mceNames := #() . rat
 new ^ self basicNew initialize ! !
 
 !Pan2 class methodsFor: 'instance creation'!
-in: in pos: pos level: level |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u ! !
+in: in pos: pos level: level |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u !
+in: in pos: pos level: level mul: mul |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u * mul !
+in: in pos: pos level: level mul: mul add: add |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u * mul + add !
+!
 
 UGen subclass: #PinkNoise
 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -683,6 +763,10 @@ initialize name := #PinkNoise . paramNames := #() . mceNames := #() . rate := #a
 !PinkNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
 
+!PinkNoise class methodsFor: 'instance creation'!
+ mul: mul |u| u := self new .  ^ u * mul !
+ mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
 
 UGen subclass: #Rand
 instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -706,7 +790,10 @@ initialize name := #Rand . paramNames := #(lo hi) . mceNames := #() . rate := #i
 new ^ self basicNew initialize ! !
 
 !Rand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u ! !
+lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+!
 
 UGen subclass: #Resonz
 instanceVariableNames: 'in freq bwr' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -732,7 +819,10 @@ initialize name := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . ra
 new ^ self basicNew initialize ! !
 
 !Resonz class methodsFor: 'instance creation'!
-in: in freq: freq bwr: bwr |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u ! !
+in: in freq: freq bwr: bwr |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u !
+in: in freq: freq bwr: bwr mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u * mul !
+in: in freq: freq bwr: bwr mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u * mul + add !
+!
 
 UGen subclass: #RHPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -758,7 +848,10 @@ initialize name := #RHPF . paramNames := #(in freq rq) . mceNames := #() . rate 
 new ^ self basicNew initialize ! !
 
 !RHPF class methodsFor: 'instance creation'!
-in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u ! !
+in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u !
+in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul !
+in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
+!
 
 UGen subclass: #RLPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -784,7 +877,10 @@ initialize name := #RLPF . paramNames := #(in freq rq) . mceNames := #() . rate 
 new ^ self basicNew initialize ! !
 
 !RLPF class methodsFor: 'instance creation'!
-in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u ! !
+in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u !
+in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul !
+in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
+!
 
 UGen subclass: #SinOsc
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -808,7 +904,10 @@ initialize name := #SinOsc . paramNames := #(freq phase) . mceNames := #() . rat
 new ^ self basicNew initialize ! !
 
 !SinOsc class methodsFor: 'instance creation'!
-freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u ! !
+freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u !
+freq: freq phase: phase mul: mul |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul !
+freq: freq phase: phase mul: mul add: add |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul + add !
+!
 
 UGen subclass: #XLine
 instanceVariableNames: 'start end dur doneAction' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -836,7 +935,10 @@ initialize name := #XLine . paramNames := #(start end dur doneAction) . mceNames
 new ^ self basicNew initialize ! !
 
 !XLine class methodsFor: 'instance creation'!
-start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u ! !
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u !
+start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul !
+start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul + add !
+!
 
 UGen subclass: #WhiteNoise
 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -851,6 +953,10 @@ initialize name := #WhiteNoise . paramNames := #() . mceNames := #() . rate := #
 !WhiteNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
 
+!WhiteNoise class methodsFor: 'instance creation'!
+ mul: mul |u| u := self new .  ^ u * mul !
+ mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
 
 
 !UGen methodsFor: 'arithmetic'!
