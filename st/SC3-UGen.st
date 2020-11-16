@@ -497,6 +497,33 @@ numChan: numChan bus: bus mul: mul |u| u := self new . u setNumChan: numChan . u
 numChan: numChan bus: bus mul: mul add: add |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul + add !
 !
 
+UGen subclass: #IRand
+instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!IRand commentStamp: '<historical>' prior: 0!
+Single integer random number generator. !
+
+!IRand methodsFor: 'accessing'!
+lo ^lo !
+hi ^hi !
+!
+
+!IRand methodsFor: 'private'!
+setLo: x lo := x !
+setHi: x hi := x !
+!
+
+!IRand methodsFor: 'private'!
+initialize name := #IRand . paramNames := #(lo hi) . mceNames := #() . rate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!IRand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!IRand class methodsFor: 'instance creation'!
+lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+!
+
 UGen subclass: #Klank
 instanceVariableNames: 'input freqscale freqoffset decayscale specificationsArrayRef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Klank commentStamp: '<historical>' prior: 0!
@@ -631,6 +658,31 @@ initialize name := #LFNoise1 . paramNames := #(freq) . mceNames := #() . rate :=
 new ^ self basicNew initialize ! !
 
 !LFNoise1 class methodsFor: 'instance creation'!
+freq: freq |u| u := self new . u setFreq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+!
+
+UGen subclass: #LFNoise2
+instanceVariableNames: 'freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LFNoise2 commentStamp: '<historical>' prior: 0!
+Quadratic noise. !
+
+!LFNoise2 methodsFor: 'accessing'!
+freq ^freq !
+!
+
+!LFNoise2 methodsFor: 'private'!
+setFreq: x freq := x !
+!
+
+!LFNoise2 methodsFor: 'private'!
+initialize name := #LFNoise2 . paramNames := #(freq) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!LFNoise2 class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LFNoise2 class methodsFor: 'instance creation'!
 freq: freq |u| u := self new . u setFreq: freq . ^ u !
 freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
 freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !

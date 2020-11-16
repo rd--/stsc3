@@ -117,6 +117,10 @@ UGen subclass: #MCE
 !Number methodsFor: 'units'!
  midicps ^ 440 * (2 ** ((self - 69) * (1 / 12))) ! !
 
+!Integer methodsFor: 'randomness'!
+ rand: n ^ (n - self + 1) atRandom + self - 1 !
+!
+
 !Float methodsFor: 'randomness'!
  rand ^ (100000000 atRandom / 100000000.0) * self !
  rand: n ^ (100000000 atRandom / 100000000.0) * (n - self) + self !
