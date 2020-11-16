@@ -84,6 +84,21 @@ UGen subclass: #KR
 !UGen methodsFor: 'control rate'!
  kr ^KR source: self ! !
 
+UGen subclass: #DR
+ instanceVariableNames: 'source'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!DR methodsFor: 'private'!
+ setSource: x source := x ! !
+
+!DR class methodsFor: 'instance creation'!
+ source: x ^self new setSource: x ! !
+
+!UGen methodsFor: 'control rate'!
+ dr ^DR source: self ! !
+
 UGen subclass: #MCE
  instanceVariableNames: 'source'
  classVariableNames: ''

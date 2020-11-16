@@ -14,6 +14,9 @@
 !KR methodsFor: 'printing'!
 printHaskellOn: fd '(rewriteToControlRate ' putOn: fd . source printHaskellOn: fd . ')' putOn: fd ! !
 
+!DR methodsFor: 'printing'!
+printHaskellOn: fd '(rewriteToDemandRate ' putOn: fd . source printHaskellOn: fd . ')' putOn: fd ! !
+
 !MCE methodsFor: 'printing'!
 printHaskellOn: fd source printHaskellOn: fd . ! !
 

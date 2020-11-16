@@ -306,6 +306,33 @@ trig: trig reset: reset demandUGens: demandUGens mul: mul |u| u := self new . u 
 trig: trig reset: reset demandUGens: demandUGens mul: mul add: add |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u * mul + add !
 !
 
+UGen subclass: #Drand
+instanceVariableNames: 'repeats list' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Drand commentStamp: '<historical>' prior: 0!
+Demand rate random sequence generator. !
+
+!Drand methodsFor: 'accessing'!
+repeats ^repeats !
+list ^list !
+!
+
+!Drand methodsFor: 'private'!
+setRepeats: x repeats := x !
+setList: x list := x !
+!
+
+!Drand methodsFor: 'private'!
+initialize name := #Drand . paramNames := #(repeats) . mceNames := #(list) . rate := #dr . numChan := 1 . specialIndex := 0 ! !
+
+!Drand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Drand class methodsFor: 'instance creation'!
+repeats: repeats list: list |u| u := self new . u setRepeats: repeats . u setList: list . ^ u !
+repeats: repeats list: list mul: mul |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul !
+repeats: repeats list: list mul: mul add: add |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul + add !
+!
+
 UGen subclass: #Dseq
 instanceVariableNames: 'repeats list' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Dseq commentStamp: '<historical>' prior: 0!
@@ -1133,6 +1160,31 @@ in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: f
 in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
 !
 
+UGen subclass: #Saw
+instanceVariableNames: 'freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Saw commentStamp: '<historical>' prior: 0!
+Band limited sawtooth. !
+
+!Saw methodsFor: 'accessing'!
+freq ^freq !
+!
+
+!Saw methodsFor: 'private'!
+setFreq: x freq := x !
+!
+
+!Saw methodsFor: 'private'!
+initialize name := #Saw . paramNames := #(freq) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Saw class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Saw class methodsFor: 'instance creation'!
+freq: freq |u| u := self new . u setFreq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+!
+
 UGen subclass: #SetBuf
 instanceVariableNames: 'buf offset length array' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !SetBuf commentStamp: '<historical>' prior: 0!
@@ -1291,5 +1343,7 @@ abs ^ UnaryOpUGen specialIndex: 5 a: self !
 cubed ^ UnaryOpUGen specialIndex: 13 a: self !
 reciprocal ^ UnaryOpUGen specialIndex: 16 a: self !
 midicps ^ UnaryOpUGen specialIndex: 17 a: self !
+log ^ UnaryOpUGen specialIndex: 25 a: self !
+distort ^ UnaryOpUGen specialIndex: 42 a: self !
 !
 
