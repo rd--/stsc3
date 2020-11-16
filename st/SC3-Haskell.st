@@ -5,7 +5,7 @@
   name asString printHaskellOn: fd . fd space .
   '[' putOn: fd . paramNames do: [:x | (self perform: x) printHaskellOn: fd . fd space] separatedBy: [',' putOn: fd] . '] ' putOn: fd .
   mceNames isEmpty ifTrue: ['Nothing ' putOn: fd] ifFalse: ['(Just [' putOn: fd . mceNames do: [:x | (self perform: x) printHaskellOn: fd . fd space] separatedBy: [',' putOn: fd] . ']) ' putOn: fd ].
-  numChan putOn: fd . fd space .
+  numChan = #mceInput ifTrue: ['(length (mceChannels ' putOn: fd . (self perform: (mceNames at: 1)) printHaskellOn: fd . '))' putOn: fd] ifFalse: [numChan putOn: fd] . fd space .
   '(Special ' putOn: fd . specialIndex notNil ifTrue: [specialIndex putOn: fd] ifFalse: [0 putOn: fd] . ') ' putOn: fd .
   '(UId ' putOn: fd . self hash putOn: fd . ')' putOn: fd . ')' putOn: fd !
  writeHaskellTo: fn |fd| fd := FileStream forceNewFileNamed: fn . self printHaskellOn: fd . fd cr . fd close !
@@ -37,3 +37,18 @@ printHaskellOn: fd self putOn: fd ! !
 
 !String methodsFor: 'printing'!
 printHaskellOn: fd $" putOn: fd . self putOn: fd . $" putOn: fd ! !
+
+!Symbol methodsFor: 'printing'!
+printHaskellOn: fd self putOn: fd ! !
+
+!Splay methodsFor: 'printing'!
+printHaskellOn: fd
+'(splay ' putOn: fd .
+#(input spread level center levelComp) do: [:x| (self perform: x) printHaskellOn: fd] separatedBy: [' ' putOn: fd] .
+') ' putOn: fd ! !
+
+!True methodsFor: 'printing'!
+printHaskellOn: fd #True putOn: fd ! !
+
+!False methodsFor: 'printing'!
+printHaskellOn: fd #False putOn: fd ! !

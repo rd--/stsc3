@@ -93,6 +93,10 @@ UGen subclass: #MCE
 !MCE methodsFor: 'private'!
  setSource: x source := x ! !
 
+!MCE methodsFor: 'accessing'!
+ source ^ source !
+ size ^ source size ! !
+
 !MCE class methodsFor: 'instance creation'!
  source: x ^ self new setSource: x ! !
 
@@ -162,3 +166,30 @@ UGen subclass: #MRG
  p := LocalBuf numChannels: 1 numFrames: x size .
  q := SetBuf buf: p offset: 0 length: x size array: x .
  ^ MRG lhs: p rhs: q ! !
+
+UGen subclass: #Splay
+ instanceVariableNames: 'input spread level center levelComp'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+!Splay commentStamp: '<historical>' prior: 0!
+Pan a set of channels across the stereo field. !
+
+!Splay methodsFor: 'accessing'!
+spread ^spread !
+level ^level !
+center ^center !
+levelComp ^levelComp !
+input ^input !
+!
+
+!Splay methodsFor: 'private'!
+setSpread: x spread := x !
+setLevel: x level := x !
+setCenter: x center := x !
+setLevelComp: x levelComp := x !
+setInput: x input := x !
+!
+
+!Splay class methodsFor: 'instance creation'!
+spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u setSpread: spread . u setLevel: level . u setCenter: center . u setLevelComp: levelComp . u setInput: input . ^ u !

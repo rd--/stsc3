@@ -277,6 +277,62 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul |u| u := self ne
 in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u * mul + add !
 !
 
+UGen subclass: #Demand
+instanceVariableNames: 'trig reset demandUGens' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Demand commentStamp: '<historical>' prior: 0!
+Demand results from demand rate UGens. !
+
+!Demand methodsFor: 'accessing'!
+trig ^trig !
+reset ^reset !
+demandUGens ^demandUGens !
+!
+
+!Demand methodsFor: 'private'!
+setTrig: x trig := x !
+setReset: x reset := x !
+setDemandUGens: x demandUGens := x !
+!
+
+!Demand methodsFor: 'private'!
+initialize name := #Demand . paramNames := #(trig reset) . mceNames := #(demandUGens) . rate := #ar . numChan := nil . specialIndex := 0 ! !
+
+!Demand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Demand class methodsFor: 'instance creation'!
+trig: trig reset: reset demandUGens: demandUGens |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u !
+trig: trig reset: reset demandUGens: demandUGens mul: mul |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u * mul !
+trig: trig reset: reset demandUGens: demandUGens mul: mul add: add |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u * mul + add !
+!
+
+UGen subclass: #Dseq
+instanceVariableNames: 'repeats list' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Dseq commentStamp: '<historical>' prior: 0!
+Demand rate sequence generator. !
+
+!Dseq methodsFor: 'accessing'!
+repeats ^repeats !
+list ^list !
+!
+
+!Dseq methodsFor: 'private'!
+setRepeats: x repeats := x !
+setList: x list := x !
+!
+
+!Dseq methodsFor: 'private'!
+initialize name := #Dseq . paramNames := #(repeats) . mceNames := #(list) . rate := #dr . numChan := 1 . specialIndex := 0 ! !
+
+!Dseq class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Dseq class methodsFor: 'instance creation'!
+repeats: repeats list: list |u| u := self new . u setRepeats: repeats . u setList: list . ^ u !
+repeats: repeats list: list mul: mul |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul !
+repeats: repeats list: list mul: mul add: add |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul + add !
+!
+
 UGen subclass: #Dust
 instanceVariableNames: 'density' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Dust commentStamp: '<historical>' prior: 0!
@@ -430,7 +486,7 @@ setBus: x bus := x !
 !
 
 !In methodsFor: 'private'!
-initialize name := #In . paramNames := #(bus) . mceNames := #() . rate := #ar . numChan := -1 . specialIndex := 0 ! !
+initialize name := #In . paramNames := #(bus) . mceNames := #() . rate := #ar . numChan := nil . specialIndex := 0 ! !
 
 !In class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
