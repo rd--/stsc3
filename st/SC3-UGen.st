@@ -420,6 +420,33 @@ gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale done
 gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u * mul + add !
 !
 
+UGen subclass: #ExpRand
+instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!ExpRand commentStamp: '<historical>' prior: 0!
+Exponential single random number generator. !
+
+!ExpRand methodsFor: 'accessing'!
+lo ^lo !
+hi ^hi !
+!
+
+!ExpRand methodsFor: 'private'!
+setLo: x lo := x !
+setHi: x hi := x !
+!
+
+!ExpRand methodsFor: 'private'!
+initialize name := #ExpRand . paramNames := #(lo hi) . mceNames := #() . rate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!ExpRand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!ExpRand class methodsFor: 'instance creation'!
+lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+!
+
 UGen subclass: #FSinOsc
 instanceVariableNames: 'freq iphase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !FSinOsc commentStamp: '<historical>' prior: 0!
@@ -827,6 +854,56 @@ new ^ self basicNew initialize ! !
 numChannels: numChannels numFrames: numFrames |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u !
 numChannels: numChannels numFrames: numFrames mul: mul |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul !
 numChannels: numChannels numFrames: numFrames mul: mul add: add |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul + add !
+!
+
+UGen subclass: #LocalIn
+instanceVariableNames: 'default' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LocalIn commentStamp: '<historical>' prior: 0!
+Define and read from buses local to a synth. !
+
+!LocalIn methodsFor: 'accessing'!
+default ^default !
+!
+
+!LocalIn methodsFor: 'private'!
+setDefault: x default := x !
+!
+
+!LocalIn methodsFor: 'private'!
+initialize name := #LocalIn . paramNames := #() . mceNames := #(default) . rate := #ar . numChan := nil . specialIndex := 0 ! !
+
+!LocalIn class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LocalIn class methodsFor: 'instance creation'!
+numChan: numChan default: default |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u !
+numChan: numChan default: default mul: mul |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u * mul !
+numChan: numChan default: default mul: mul add: add |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u * mul + add !
+!
+
+UGen subclass: #LocalOut
+instanceVariableNames: 'channelsArray' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LocalOut commentStamp: '<historical>' prior: 0!
+Write to buses local to a synth. !
+
+!LocalOut methodsFor: 'accessing'!
+channelsArray ^channelsArray !
+!
+
+!LocalOut methodsFor: 'private'!
+setChannelsArray: x channelsArray := x !
+!
+
+!LocalOut methodsFor: 'private'!
+initialize name := #LocalOut . paramNames := #() . mceNames := #(channelsArray) . rate := #ar . numChan := 0 . specialIndex := 0 ! !
+
+!LocalOut class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LocalOut class methodsFor: 'instance creation'!
+channelsArray: channelsArray |u| u := self new . u setChannelsArray: channelsArray . ^ u !
+channelsArray: channelsArray mul: mul |u| u := self new . u setChannelsArray: channelsArray . ^ u * mul !
+channelsArray: channelsArray mul: mul add: add |u| u := self new . u setChannelsArray: channelsArray . ^ u * mul + add !
 !
 
 UGen subclass: #LPF

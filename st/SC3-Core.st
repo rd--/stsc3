@@ -212,3 +212,18 @@ setInput: x input := x !
 
 !Splay class methodsFor: 'instance creation'!
 spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u setSpread: spread . u setLevel: level . u setCenter: center . u setLevelComp: levelComp . u setInput: input . ^ u !
+
+"RotateStereo is a composite UGen at hsc3 - it cannot be used with the current haskell printer..."
+
+UGen subclass: #RotateStereo
+ instanceVariableNames: 'in pos'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!RotateStereo methodsFor: 'private'!
+ setIn: x in := x !
+ setPos: x pos := x ! !
+
+!RotateStereo class methodsFor: 'instance creation'!
+ in: p1 pos: p2 |u| u := self new . u setIn: p1 . u setPos: p2 . ^ u ! !
