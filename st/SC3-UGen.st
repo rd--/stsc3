@@ -219,6 +219,35 @@ in: in attackTime: attackTime decayTime: decayTime mul: mul |u| u := self new . 
 in: in attackTime: attackTime decayTime: decayTime mul: mul add: add |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u * mul + add !
 !
 
+UGen subclass: #DegreeToKey
+instanceVariableNames: 'bufnum in octave' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!DegreeToKey commentStamp: '<historical>' prior: 0!
+Convert signal to modal pitch. !
+
+!DegreeToKey methodsFor: 'accessing'!
+bufnum ^bufnum !
+in ^in !
+octave ^octave !
+!
+
+!DegreeToKey methodsFor: 'private'!
+setBufnum: x bufnum := x !
+setIn: x in := x !
+setOctave: x octave := x !
+!
+
+!DegreeToKey methodsFor: 'private'!
+initialize name := #DegreeToKey . paramNames := #(bufnum in octave) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!DegreeToKey class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!DegreeToKey class methodsFor: 'instance creation'!
+bufnum: bufnum in: in octave: octave |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u !
+bufnum: bufnum in: in octave: octave mul: mul |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u * mul !
+bufnum: bufnum in: in octave: octave mul: mul add: add |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u * mul + add !
+!
+
 UGen subclass: #DelayN
 instanceVariableNames: 'in maxdelaytime delaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !DelayN commentStamp: '<historical>' prior: 0!
@@ -412,6 +441,66 @@ numChan: numChan bus: bus mul: mul |u| u := self new . u setNumChan: numChan . u
 numChan: numChan bus: bus mul: mul add: add |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul + add !
 !
 
+UGen subclass: #Klank
+instanceVariableNames: 'input freqscale freqoffset decayscale specificationsArrayRef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Klank commentStamp: '<historical>' prior: 0!
+Bank of resonators !
+
+!Klank methodsFor: 'accessing'!
+input ^input !
+freqscale ^freqscale !
+freqoffset ^freqoffset !
+decayscale ^decayscale !
+specificationsArrayRef ^specificationsArrayRef !
+!
+
+!Klank methodsFor: 'private'!
+setInput: x input := x !
+setFreqscale: x freqscale := x !
+setFreqoffset: x freqoffset := x !
+setDecayscale: x decayscale := x !
+setSpecificationsArrayRef: x specificationsArrayRef := x !
+!
+
+!Klank methodsFor: 'private'!
+initialize name := #Klank . paramNames := #(input freqscale freqoffset decayscale) . mceNames := #(specificationsArrayRef) . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Klank class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Klank class methodsFor: 'instance creation'!
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u !
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u * mul !
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u * mul + add !
+!
+
+UGen subclass: #Lag
+instanceVariableNames: 'in lagTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Lag commentStamp: '<historical>' prior: 0!
+Exponential lag !
+
+!Lag methodsFor: 'accessing'!
+in ^in !
+lagTime ^lagTime !
+!
+
+!Lag methodsFor: 'private'!
+setIn: x in := x !
+setLagTime: x lagTime := x !
+!
+
+!Lag methodsFor: 'private'!
+initialize name := #Lag . paramNames := #(in lagTime) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Lag class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Lag class methodsFor: 'instance creation'!
+in: in lagTime: lagTime |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u !
+in: in lagTime: lagTime mul: mul |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u * mul !
+in: in lagTime: lagTime mul: mul add: add |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u * mul + add !
+!
+
 UGen subclass: #LeakDC
 instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !LeakDC commentStamp: '<historical>' prior: 0!
@@ -549,6 +638,33 @@ new ^ self basicNew initialize ! !
 start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u !
 start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul !
 start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul + add !
+!
+
+UGen subclass: #LocalBuf
+instanceVariableNames: 'numChannels numFrames' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LocalBuf commentStamp: '<historical>' prior: 0!
+Allocate a buffer local to the synth !
+
+!LocalBuf methodsFor: 'accessing'!
+numChannels ^numChannels !
+numFrames ^numFrames !
+!
+
+!LocalBuf methodsFor: 'private'!
+setNumChannels: x numChannels := x !
+setNumFrames: x numFrames := x !
+!
+
+!LocalBuf methodsFor: 'private'!
+initialize name := #LocalBuf . paramNames := #(numChannels numFrames) . mceNames := #() . rate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!LocalBuf class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LocalBuf class methodsFor: 'instance creation'!
+numChannels: numChannels numFrames: numFrames |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u !
+numChannels: numChannels numFrames: numFrames mul: mul |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul !
+numChannels: numChannels numFrames: numFrames mul: mul add: add |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul + add !
 !
 
 UGen subclass: #LPF
@@ -882,6 +998,37 @@ in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: f
 in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
 !
 
+UGen subclass: #SetBuf
+instanceVariableNames: 'buf offset length array' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!SetBuf commentStamp: '<historical>' prior: 0!
+Set local buffer !
+
+!SetBuf methodsFor: 'accessing'!
+buf ^buf !
+offset ^offset !
+length ^length !
+array ^array !
+!
+
+!SetBuf methodsFor: 'private'!
+setBuf: x buf := x !
+setOffset: x offset := x !
+setLength: x length := x !
+setArray: x array := x !
+!
+
+!SetBuf methodsFor: 'private'!
+initialize name := #SetBuf . paramNames := #(buf offset length) . mceNames := #(array) . rate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!SetBuf class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!SetBuf class methodsFor: 'instance creation'!
+buf: buf offset: offset length: length array: array |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u !
+buf: buf offset: offset length: length array: array mul: mul |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u * mul !
+buf: buf offset: offset length: length array: array mul: mul add: add |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u * mul + add !
+!
+
 UGen subclass: #SinOsc
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !SinOsc commentStamp: '<historical>' prior: 0!
@@ -907,6 +1054,33 @@ new ^ self basicNew initialize ! !
 freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u !
 freq: freq phase: phase mul: mul |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul !
 freq: freq phase: phase mul: mul add: add |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul + add !
+!
+
+UGen subclass: #Trig
+instanceVariableNames: 'in dur' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Trig commentStamp: '<historical>' prior: 0!
+Timed trigger. !
+
+!Trig methodsFor: 'accessing'!
+in ^in !
+dur ^dur !
+!
+
+!Trig methodsFor: 'private'!
+setIn: x in := x !
+setDur: x dur := x !
+!
+
+!Trig methodsFor: 'private'!
+initialize name := #Trig . paramNames := #(in dur) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Trig class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Trig class methodsFor: 'instance creation'!
+in: in dur: dur |u| u := self new . u setIn: in . u setDur: dur . ^ u !
+in: in dur: dur mul: mul |u| u := self new . u setIn: in . u setDur: dur . ^ u * mul !
+in: in dur: dur mul: mul add: add |u| u := self new . u setIn: in . u setDur: dur . ^ u * mul + add !
 !
 
 UGen subclass: #XLine

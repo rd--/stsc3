@@ -99,10 +99,15 @@ UGen subclass: #MCE
 !Array methodsFor: 'multi-channel expansion'!
  mce ^ MCE source: self ! !
 
+!Array methodsFor: 'rearranging'!
+ transpose ^ (1 to: self first size) collect: [:c | self collect: [:r | r at: c]] ! !
+
 !Number methodsFor: 'enumerating'!
- to: n collect: f ^ ((self to: n) asArray collect: [:i| f value: i]) !
- mceFill: f ^ MCE source: (1 to: self collect: [:i| f value: i]) !
- mixFill: f ^ (1 to: self collect: [:i| f value: i]) sum !
+ to: n collect: f ^ ((self to: n) asArray) collect: [:i| f value: i] !
+ arrayFill: f ^ 1 to: self collect: [:i| f value: i] !
+ replicate: x ^ self arrayFill: [:_i| x] !
+ mceFill: f ^ (self arrayFill: f) mce !
+ mixFill: f ^ (self arrayFill: f) sum !
 !
 
 !Number methodsFor: 'units'!
@@ -137,3 +142,23 @@ Object subclass: #SC3
 
 !SC3 class methodsFor: 'server control'!
  reset OSProcess command: 'hsc3-scsynth reset' ! !
+
+UGen subclass: #MRG
+ instanceVariableNames: 'lhs rhs'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!MRG methodsFor: 'private'!
+ setLhs: x lhs := x !
+ setRhs: x rhs := x ! !
+
+!MRG class methodsFor: 'instance creation'!
+ lhs: x rhs: y |u| u := self new . u setLhs: x . u setRhs: y . ^ u ! !
+
+!LocalBuf class methodsFor: 'instance creation'!
+ newFrom: x
+ |p q |
+ p := LocalBuf numChannels: 1 numFrames: x size .
+ q := SetBuf buf: p offset: 0 length: x size array: x .
+ ^ MRG lhs: p rhs: q ! !

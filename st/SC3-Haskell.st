@@ -17,6 +17,9 @@ printHaskellOn: fd '(rewriteToControlRate ' putOn: fd . source printHaskellOn: f
 !MCE methodsFor: 'printing'!
 printHaskellOn: fd source printHaskellOn: fd . ! !
 
+!MRG methodsFor: 'printing'!
+printHaskellOn: fd '(mrg2 ' putOn: fd . lhs printHaskellOn: fd . rhs printHaskellOn: fd . ')' putOn: fd ! !
+
 !Mix methodsFor: 'printing'!
 printHaskellOn: fd '(mix ' putOn: fd . source printHaskellOn: fd . ')' putOn: fd ! !
 
