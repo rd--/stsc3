@@ -557,6 +557,33 @@ in: in lagTime: lagTime mul: mul |u| u := self new . u setIn: in . u setLagTime:
 in: in lagTime: lagTime mul: mul add: add |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u * mul + add !
 !
 
+UGen subclass: #Latch
+instanceVariableNames: 'in trig' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Latch commentStamp: '<historical>' prior: 0!
+Sample and hold !
+
+!Latch methodsFor: 'accessing'!
+in ^in !
+trig ^trig !
+!
+
+!Latch methodsFor: 'private'!
+setIn: x in := x !
+setTrig: x trig := x !
+!
+
+!Latch methodsFor: 'private'!
+initialize name := #Latch . paramNames := #(in trig) . mceNames := #() . rate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Latch class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Latch class methodsFor: 'instance creation'!
+in: in trig: trig |u| u := self new . u setIn: in . u setTrig: trig . ^ u !
+in: in trig: trig mul: mul |u| u := self new . u setIn: in . u setTrig: trig . ^ u * mul !
+in: in trig: trig mul: mul add: add |u| u := self new . u setIn: in . u setTrig: trig . ^ u * mul + add !
+!
+
 UGen subclass: #LeakDC
 instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !LeakDC commentStamp: '<historical>' prior: 0!
