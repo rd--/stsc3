@@ -31,7 +31,7 @@ t backgroundColor: Color white .
 w addMorph: t fullFrame: (LayoutFrame fractions: (0@0 corner: 1.0@0.8) offsets: (0@10 corner: 0@0)) .
 b := AlignmentMorph newRow .
 b color: Color veryVeryLightGray ; rubberBandCells: false ; vResizing: #shrinkWrap ; cellGap: 6@0 .
-{{'Play' . [(Compiler evaluate: (t selection)) play]} . {'Stop' . [SC3 reset]}} do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value)] .
+{{'Play' . [(Compiler evaluate: (t selection)) play]} . {'Stop' . [SC3 reset]} . {'Draw' . [(Compiler evaluate: (t selection)) draw]}} do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value)] .
 w addMorph: b fullFrame: (LayoutFrame fractions: (0.0@0.8 corner: 1.0@1.0) offsets: (0@0 corner: 0@0)) .
 w openInWorldExtent: 500@350 ! !
 

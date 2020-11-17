@@ -1,26 +1,26 @@
 SystemOrganization addCategory: #'SC3'!
 
 Object subclass: #UGen
- instanceVariableNames: 'name paramNames mceNames numChan rate specialIndex'
+ instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3' !
 
 !UGen methodsFor: 'private'!
- setName: x name := x !
+ setUGenName: x ugenName := x !
  setParamNames: x paramNames := x !
  setMceNames: x mceNames := x !
  setNumChan: x numChan := x !
- setRate: x rate := x !
+ setUGenRate: x ugenRate := x !
  setSpecialIndex: x specialIndex := x ! !
 
 !UGen methodsFor: 'accessing'!
- name ^name !
+ ugenName ^ugenName !
  paramNames ^paramNames !
  mceNames ^mceNames !
  numChan ^numChan !
  specialIndex ^specialIndex !
- rate ^rate ! !
+ ugenRate ^ugenRate ! !
 
 UGen subclass: #BinaryOpUGen
 instanceVariableNames: 'a b' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -38,7 +38,7 @@ setB: x b := x !
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a b: b |u| u := self new . u setName: #BinaryOpUGen . u setParamNames: #(a b) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
+specialIndex: specialIndex a: a b: b |u| u := self new . u setUGenName: #BinaryOpUGen . u setParamNames: #(a b) . u setMceNames: #() . u setUGenRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
 
 UGen subclass: #UnaryOpUGen
 instanceVariableNames: 'a' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -54,7 +54,7 @@ setA: x a := x !
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a |u| u := self new . u setName: #UnaryOpUGen . u setParamNames: #(a) . u setMceNames: #() . u setRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . ^u ! !
+specialIndex: specialIndex a: a |u| u := self new . u setUGenName: #UnaryOpUGen . u setParamNames: #(a) . u setMceNames: #() . u setUGenRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . ^u ! !
 
 Object subclass: #OutputProxy
  instanceVariableNames: 'source outputIndex'
@@ -81,7 +81,7 @@ UGen subclass: #AR
 !AR class methodsFor: 'instance creation'!
  source: x ^self new setSource: x ! !
 
-!UGen methodsFor: 'control rate'!
+!UGen methodsFor: 'rate control'!
  ar ^AR source: self ! !
 
 UGen subclass: #KR
@@ -113,6 +113,21 @@ UGen subclass: #DR
 
 !UGen methodsFor: 'rate control'!
  dr ^DR source: self ! !
+
+UGen subclass: #IR
+ instanceVariableNames: 'source'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!IR methodsFor: 'private'!
+ setSource: x source := x ! !
+
+!IR class methodsFor: 'instance creation'!
+ source: x ^self new setSource: x ! !
+
+!UGen methodsFor: 'rate control'!
+ ir ^IR source: self ! !
 
 UGen subclass: #MCE
  instanceVariableNames: 'source'
@@ -148,8 +163,9 @@ UGen subclass: #MCE
  midicps ^ 440 * (2 ** ((self - 69) * (1 / 12))) ! !
 
 !Integer methodsFor: 'randomness'!
+ rand ^ self atRandom !
  rand: n ^ (n - self + 1) atRandom + self - 1 !
-!
+ rand2 ^ (self negated) rand: self ! !
 
 !Float methodsFor: 'randomness'!
  rand ^ (100000000 atRandom / 100000000.0) * self !
@@ -170,7 +186,8 @@ UGen subclass: #Mix
 
 !UGen methodsFor: 'arithmetic'!
  mul: mul add: add ^ MulAdd in: self mul: mul add: add !
- mix ^ Mix source: self ! !
+ mix ^ Mix source: self !
+ round ^ self round: 1.0 ! !
 
 Object subclass: #SC3
  instanceVariableNames: ''
