@@ -55,3 +55,6 @@ printHaskellOn: fd #True putOn: fd ! !
 
 !False methodsFor: 'printing'!
 printHaskellOn: fd #False putOn: fd ! !
+
+!Control methodsFor: 'printing'!
+printHaskellOn: fd '(control KR ' putOn: fd . self key asString printHaskellOn: fd . self init putOn: fd . ') ' putOn: fd ! !

@@ -69,6 +69,21 @@ Object subclass: #OutputProxy
 !OutputProxy class methodsFor: 'instance creation'!
  source: source outputIndex: outputIndex ^self new setSource: source setOutputIndex: outputIndex ! !
 
+UGen subclass: #AR
+ instanceVariableNames: 'source'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!AR methodsFor: 'private'!
+ setSource: x source := x ! !
+
+!AR class methodsFor: 'instance creation'!
+ source: x ^self new setSource: x ! !
+
+!UGen methodsFor: 'control rate'!
+ ar ^AR source: self ! !
+
 UGen subclass: #KR
  instanceVariableNames: 'source'
  classVariableNames: ''
@@ -81,7 +96,7 @@ UGen subclass: #KR
 !KR class methodsFor: 'instance creation'!
  source: x ^self new setSource: x ! !
 
-!UGen methodsFor: 'control rate'!
+!UGen methodsFor: 'rate control'!
  kr ^KR source: self ! !
 
 UGen subclass: #DR
@@ -96,7 +111,7 @@ UGen subclass: #DR
 !DR class methodsFor: 'instance creation'!
  source: x ^self new setSource: x ! !
 
-!UGen methodsFor: 'control rate'!
+!UGen methodsFor: 'rate control'!
  dr ^DR source: self ! !
 
 UGen subclass: #MCE
@@ -211,9 +226,9 @@ setInput: x input := x !
 !
 
 !Splay class methodsFor: 'instance creation'!
-spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u setSpread: spread . u setLevel: level . u setCenter: center . u setLevelComp: levelComp . u setInput: input . ^ u !
+spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u setSpread: spread . u setLevel: level . u setCenter: center . u setLevelComp: levelComp . u setInput: input . ^ u ! !
 
-"RotateStereo is a composite UGen at hsc3 - it cannot be used with the current haskell printer..."
+"RotateStereo is a composite UGen at hsc3 - it cannot be used with the current haskell printer"
 
 UGen subclass: #RotateStereo
  instanceVariableNames: 'in pos'
@@ -227,3 +242,22 @@ UGen subclass: #RotateStereo
 
 !RotateStereo class methodsFor: 'instance creation'!
  in: p1 pos: p2 |u| u := self new . u setIn: p1 . u setPos: p2 . ^ u ! !
+
+"Control - UGen has instance variable name"
+
+UGen subclass: #Control
+ instanceVariableNames: 'key init'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!Control methodsFor: 'private'!
+ setKey: x key := x !
+ setInit: x init := x ! !
+
+!Control methodsFor: 'accessing'!
+ key ^key !
+ init ^init ! !
+
+!Control class methodsFor: 'instance creation'!
+ key: p1 init: p2 |u| u := self new . u setKey: p1 . u setInit: p2 . ^ u ! !
