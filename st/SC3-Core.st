@@ -7,12 +7,12 @@ Object subclass: #UGen
  category: 'SC3' !
 
 !UGen methodsFor: 'private'!
- setUGenName: x ugenName := x !
- setParamNames: x paramNames := x !
- setMceNames: x mceNames := x !
- setNumChan: x numChan := x !
- setUGenRate: x ugenRate := x !
- setSpecialIndex: x specialIndex := x ! !
+ ugenName: x ugenName := x !
+ paramNames: x paramNames := x !
+ mceNames: x mceNames := x !
+ numChan: x numChan := x !
+ ugenRate: x ugenRate := x !
+ specialIndex: x specialIndex := x ! !
 
 !UGen methodsFor: 'accessing'!
  ugenName ^ugenName !
@@ -33,12 +33,12 @@ b ^b !
 !
 
 !BinaryOpUGen methodsFor: 'private'!
-setA: x a := x !
-setB: x b := x !
+a: x a := x !
+b: x b := x !
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a b: b |u| u := self new . u setUGenName: #BinaryOpUGen . u setParamNames: #(a b) . u setMceNames: #() . u setUGenRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . u setB: b . ^u ! !
+specialIndex: specialIndex a: a b: b |u| u := self new . u ugenName: #BinaryOpUGen . u paramNames: #(a b) . u mceNames: #() . u ugenRate: #ar . u numChan: 1 . u specialIndex: specialIndex . u a: a . u b: b . ^u ! !
 
 UGen subclass: #UnaryOpUGen
 instanceVariableNames: 'a' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
@@ -50,11 +50,11 @@ a ^a !
 !
 
 !UnaryOpUGen methodsFor: 'private'!
-setA: x a := x !
+a: x a := x !
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a |u| u := self new . u setUGenName: #UnaryOpUGen . u setParamNames: #(a) . u setMceNames: #() . u setUGenRate: #ar . u setNumChan: 1 . u setSpecialIndex: specialIndex . u setA: a . ^u ! !
+specialIndex: specialIndex a: a |u| u := self new . u ugenName: #UnaryOpUGen . u paramNames: #(a) . u mceNames: #() . u ugenRate: #ar . u numChan: 1 . u specialIndex: specialIndex . u a: a . ^u ! !
 
 Object subclass: #OutputProxy
  instanceVariableNames: 'source outputIndex'
@@ -63,11 +63,11 @@ Object subclass: #OutputProxy
  category: 'SC3' !
 
 !OutputProxy methodsFor: 'private'!
- setSource: x source := x !
- setOutputIndex: x outputIndex := x ! !
+ source: x source := x !
+ outputIndex: x outputIndex := x ! !
 
 !OutputProxy class methodsFor: 'instance creation'!
- source: source outputIndex: outputIndex ^self new setSource: source setOutputIndex: outputIndex ! !
+ source: source outputIndex: outputIndex ^self new source: source outputIndex: outputIndex ! !
 
 UGen subclass: #AR
  instanceVariableNames: 'source'
@@ -76,10 +76,10 @@ UGen subclass: #AR
  category: 'SC3' !
 
 !AR methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !AR class methodsFor: 'instance creation'!
- source: x ^self new setSource: x ! !
+ source: x ^self new source: x ! !
 
 !UGen methodsFor: 'rate control'!
  ar ^AR source: self ! !
@@ -91,10 +91,10 @@ UGen subclass: #KR
  category: 'SC3' !
 
 !KR methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !KR class methodsFor: 'instance creation'!
- source: x ^self new setSource: x ! !
+ source: x ^self new source: x ! !
 
 !UGen methodsFor: 'rate control'!
  kr ^KR source: self ! !
@@ -106,10 +106,10 @@ UGen subclass: #DR
  category: 'SC3' !
 
 !DR methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !DR class methodsFor: 'instance creation'!
- source: x ^self new setSource: x ! !
+ source: x ^self new source: x ! !
 
 !UGen methodsFor: 'rate control'!
  dr ^DR source: self ! !
@@ -121,10 +121,10 @@ UGen subclass: #IR
  category: 'SC3' !
 
 !IR methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !IR class methodsFor: 'instance creation'!
- source: x ^self new setSource: x ! !
+ source: x ^self new source: x ! !
 
 !UGen methodsFor: 'rate control'!
  ir ^IR source: self ! !
@@ -136,14 +136,14 @@ UGen subclass: #MCE
  category: 'SC3' !
 
 !MCE methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !MCE methodsFor: 'accessing'!
  source ^ source !
  size ^ source size ! !
 
 !MCE class methodsFor: 'instance creation'!
- source: x ^ self new setSource: x ! !
+ source: x ^ self new source: x ! !
 
 !Array methodsFor: 'multi-channel expansion'!
  mce ^ MCE source: self ! !
@@ -179,10 +179,10 @@ UGen subclass: #Mix
  category: 'SC3' !
 
 !Mix methodsFor: 'private'!
- setSource: x source := x ! !
+ source: x source := x ! !
 
 !Mix class methodsFor: 'instance creation'!
- source: x ^ self new setSource: x ! !
+ source: x ^ self new source: x ! !
 
 !UGen methodsFor: 'arithmetic'!
  mul: mul add: add ^ MulAdd in: self mul: mul add: add !
@@ -205,11 +205,11 @@ UGen subclass: #MRG
  category: 'SC3' !
 
 !MRG methodsFor: 'private'!
- setLhs: x lhs := x !
- setRhs: x rhs := x ! !
+ lhs: x lhs := x !
+ rhs: x rhs := x ! !
 
 !MRG class methodsFor: 'instance creation'!
- lhs: x rhs: y |u| u := self new . u setLhs: x . u setRhs: y . ^ u ! !
+ lhs: x rhs: y |u| u := self new . u lhs: x . u rhs: y . ^ u ! !
 
 !LocalBuf class methodsFor: 'instance creation'!
  newFrom: x
@@ -235,15 +235,15 @@ input ^input !
 !
 
 !Splay methodsFor: 'private'!
-setSpread: x spread := x !
-setLevel: x level := x !
-setCenter: x center := x !
-setLevelComp: x levelComp := x !
-setInput: x input := x !
+spread: x spread := x !
+level: x level := x !
+center: x center := x !
+levelComp: x levelComp := x !
+input: x input := x !
 !
 
 !Splay class methodsFor: 'instance creation'!
-spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u setSpread: spread . u setLevel: level . u setCenter: center . u setLevelComp: levelComp . u setInput: input . ^ u ! !
+spread: spread level: level center: center levelComp: levelComp input: input |u| u := self new . u spread: spread . u level: level . u center: center . u levelComp: levelComp . u input: input . ^ u ! !
 
 "RotateStereo is a composite UGen at hsc3 - it cannot be used with the current haskell printer"
 
@@ -254,11 +254,11 @@ UGen subclass: #RotateStereo
  category: 'SC3' !
 
 !RotateStereo methodsFor: 'private'!
- setIn: x in := x !
- setPos: x pos := x ! !
+ in: x in := x !
+ pos: x pos := x ! !
 
 !RotateStereo class methodsFor: 'instance creation'!
- in: p1 pos: p2 |u| u := self new . u setIn: p1 . u setPos: p2 . ^ u ! !
+ in: p1 pos: p2 |u| u := self new . u in: p1 . u pos: p2 . ^ u ! !
 
 "Control - UGen has instance variable name"
 
@@ -269,12 +269,12 @@ UGen subclass: #Control
  category: 'SC3' !
 
 !Control methodsFor: 'private'!
- setKey: x key := x !
- setInit: x init := x ! !
+ name: x name := x !
+ init: x init := x ! !
 
 !Control methodsFor: 'accessing'!
  key ^key !
  init ^init ! !
 
 !Control class methodsFor: 'instance creation'!
- key: p1 init: p2 |u| u := self new . u setKey: p1 . u setInit: p2 . ^ u ! !
+ key: p1 init: p2 |u| u := self new . u name: p1 . u init: p2 . ^ u ! !

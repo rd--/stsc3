@@ -11,10 +11,10 @@ decaytime ^decaytime !
 !
 
 !AllpassN methodsFor: 'private'!
-setIn: x in := x !
-setMaxdelaytime: x maxdelaytime := x !
-setDelaytime: x delaytime := x !
-setDecaytime: x decaytime := x !
+in: x in := x !
+maxdelaytime: x maxdelaytime := x !
+delaytime: x delaytime := x !
+decaytime: x decaytime := x !
 !
 
 !AllpassN methodsFor: 'private'!
@@ -24,9 +24,9 @@ initialize ugenName := #AllpassN . paramNames := #(in maxdelaytime delaytime dec
 new ^ self basicNew initialize ! !
 
 !AllpassN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul + add !
 !
 
 UGen subclass: #Amplitude
@@ -41,9 +41,9 @@ releaseTime ^releaseTime !
 !
 
 !Amplitude methodsFor: 'private'!
-setIn: x in := x !
-setAttackTime: x attackTime := x !
-setReleaseTime: x releaseTime := x !
+in: x in := x !
+attackTime: x attackTime := x !
+releaseTime: x releaseTime := x !
 !
 
 !Amplitude methodsFor: 'private'!
@@ -53,9 +53,9 @@ initialize ugenName := #Amplitude . paramNames := #(in attackTime releaseTime) .
 new ^ self basicNew initialize ! !
 
 !Amplitude class methodsFor: 'instance creation'!
-in: in attackTime: attackTime releaseTime: releaseTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u !
-in: in attackTime: attackTime releaseTime: releaseTime mul: mul |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u * mul !
-in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setReleaseTime: releaseTime . ^ u * mul + add !
+in: in attackTime: attackTime releaseTime: releaseTime |u| u := self new . u in: in . u attackTime: attackTime . u releaseTime: releaseTime . ^ u !
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul |u| u := self new . u in: in . u attackTime: attackTime . u releaseTime: releaseTime . ^ u * mul !
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add |u| u := self new . u in: in . u attackTime: attackTime . u releaseTime: releaseTime . ^ u * mul + add !
 !
 
 UGen subclass: #BrownNoise
@@ -86,7 +86,7 @@ in ^in !
 !
 
 !BPZ2 methodsFor: 'private'!
-setIn: x in := x !
+in: x in := x !
 !
 
 !BPZ2 methodsFor: 'private'!
@@ -96,9 +96,9 @@ initialize ugenName := #BPZ2 . paramNames := #(in) . mceNames := #() . ugenRate 
 new ^ self basicNew initialize ! !
 
 !BPZ2 class methodsFor: 'instance creation'!
-in: in |u| u := self new . u setIn: in . ^ u !
-in: in mul: mul |u| u := self new . u setIn: in . ^ u * mul !
-in: in mul: mul add: add |u| u := self new . u setIn: in . ^ u * mul + add !
+in: in |u| u := self new . u in: in . ^ u !
+in: in mul: mul |u| u := self new . u in: in . ^ u * mul !
+in: in mul: mul add: add |u| u := self new . u in: in . ^ u * mul + add !
 !
 
 UGen subclass: #CombL
@@ -114,10 +114,10 @@ decaytime ^decaytime !
 !
 
 !CombL methodsFor: 'private'!
-setIn: x in := x !
-setMaxdelaytime: x maxdelaytime := x !
-setDelaytime: x delaytime := x !
-setDecaytime: x decaytime := x !
+in: x in := x !
+maxdelaytime: x maxdelaytime := x !
+delaytime: x delaytime := x !
+decaytime: x decaytime := x !
 !
 
 !CombL methodsFor: 'private'!
@@ -127,9 +127,9 @@ initialize ugenName := #CombL . paramNames := #(in maxdelaytime delaytime decayt
 new ^ self basicNew initialize ! !
 
 !CombL class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul + add !
 !
 
 UGen subclass: #CombN
@@ -145,10 +145,10 @@ decaytime ^decaytime !
 !
 
 !CombN methodsFor: 'private'!
-setIn: x in := x !
-setMaxdelaytime: x maxdelaytime := x !
-setDelaytime: x delaytime := x !
-setDecaytime: x decaytime := x !
+in: x in := x !
+maxdelaytime: x maxdelaytime := x !
+delaytime: x delaytime := x !
+decaytime: x decaytime := x !
 !
 
 !CombN methodsFor: 'private'!
@@ -158,9 +158,9 @@ initialize ugenName := #CombN . paramNames := #(in maxdelaytime delaytime decayt
 new ^ self basicNew initialize ! !
 
 !CombN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . u setDecaytime: decaytime . ^ u * mul + add !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul + add !
 !
 
 UGen subclass: #Decay
@@ -174,8 +174,8 @@ decayTime ^decayTime !
 !
 
 !Decay methodsFor: 'private'!
-setIn: x in := x !
-setDecayTime: x decayTime := x !
+in: x in := x !
+decayTime: x decayTime := x !
 !
 
 !Decay methodsFor: 'private'!
@@ -185,9 +185,9 @@ initialize ugenName := #Decay . paramNames := #(in decayTime) . mceNames := #() 
 new ^ self basicNew initialize ! !
 
 !Decay class methodsFor: 'instance creation'!
-in: in decayTime: decayTime |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u !
-in: in decayTime: decayTime mul: mul |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u * mul !
-in: in decayTime: decayTime mul: mul add: add |u| u := self new . u setIn: in . u setDecayTime: decayTime . ^ u * mul + add !
+in: in decayTime: decayTime |u| u := self new . u in: in . u decayTime: decayTime . ^ u !
+in: in decayTime: decayTime mul: mul |u| u := self new . u in: in . u decayTime: decayTime . ^ u * mul !
+in: in decayTime: decayTime mul: mul add: add |u| u := self new . u in: in . u decayTime: decayTime . ^ u * mul + add !
 !
 
 UGen subclass: #Decay2
@@ -202,9 +202,9 @@ decayTime ^decayTime !
 !
 
 !Decay2 methodsFor: 'private'!
-setIn: x in := x !
-setAttackTime: x attackTime := x !
-setDecayTime: x decayTime := x !
+in: x in := x !
+attackTime: x attackTime := x !
+decayTime: x decayTime := x !
 !
 
 !Decay2 methodsFor: 'private'!
@@ -214,9 +214,9 @@ initialize ugenName := #Decay2 . paramNames := #(in attackTime decayTime) . mceN
 new ^ self basicNew initialize ! !
 
 !Decay2 class methodsFor: 'instance creation'!
-in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u !
-in: in attackTime: attackTime decayTime: decayTime mul: mul |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u * mul !
-in: in attackTime: attackTime decayTime: decayTime mul: mul add: add |u| u := self new . u setIn: in . u setAttackTime: attackTime . u setDecayTime: decayTime . ^ u * mul + add !
+in: in attackTime: attackTime decayTime: decayTime |u| u := self new . u in: in . u attackTime: attackTime . u decayTime: decayTime . ^ u !
+in: in attackTime: attackTime decayTime: decayTime mul: mul |u| u := self new . u in: in . u attackTime: attackTime . u decayTime: decayTime . ^ u * mul !
+in: in attackTime: attackTime decayTime: decayTime mul: mul add: add |u| u := self new . u in: in . u attackTime: attackTime . u decayTime: decayTime . ^ u * mul + add !
 !
 
 UGen subclass: #DegreeToKey
@@ -231,9 +231,9 @@ octave ^octave !
 !
 
 !DegreeToKey methodsFor: 'private'!
-setBufnum: x bufnum := x !
-setIn: x in := x !
-setOctave: x octave := x !
+bufnum: x bufnum := x !
+in: x in := x !
+octave: x octave := x !
 !
 
 !DegreeToKey methodsFor: 'private'!
@@ -243,9 +243,9 @@ initialize ugenName := #DegreeToKey . paramNames := #(bufnum in octave) . mceNam
 new ^ self basicNew initialize ! !
 
 !DegreeToKey class methodsFor: 'instance creation'!
-bufnum: bufnum in: in octave: octave |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u !
-bufnum: bufnum in: in octave: octave mul: mul |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u * mul !
-bufnum: bufnum in: in octave: octave mul: mul add: add |u| u := self new . u setBufnum: bufnum . u setIn: in . u setOctave: octave . ^ u * mul + add !
+bufnum: bufnum in: in octave: octave |u| u := self new . u bufnum: bufnum . u in: in . u octave: octave . ^ u !
+bufnum: bufnum in: in octave: octave mul: mul |u| u := self new . u bufnum: bufnum . u in: in . u octave: octave . ^ u * mul !
+bufnum: bufnum in: in octave: octave mul: mul add: add |u| u := self new . u bufnum: bufnum . u in: in . u octave: octave . ^ u * mul + add !
 !
 
 UGen subclass: #DelayN
@@ -260,9 +260,9 @@ delaytime ^delaytime !
 !
 
 !DelayN methodsFor: 'private'!
-setIn: x in := x !
-setMaxdelaytime: x maxdelaytime := x !
-setDelaytime: x delaytime := x !
+in: x in := x !
+maxdelaytime: x maxdelaytime := x !
+delaytime: x delaytime := x !
 !
 
 !DelayN methodsFor: 'private'!
@@ -272,9 +272,9 @@ initialize ugenName := #DelayN . paramNames := #(in maxdelaytime delaytime) . mc
 new ^ self basicNew initialize ! !
 
 !DelayN class methodsFor: 'instance creation'!
-in: in maxdelaytime: maxdelaytime delaytime: delaytime |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u * mul !
-in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add |u| u := self new . u setIn: in . u setMaxdelaytime: maxdelaytime . u setDelaytime: delaytime . ^ u * mul + add !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . ^ u !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . ^ u * mul !
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . ^ u * mul + add !
 !
 
 UGen subclass: #Demand
@@ -289,9 +289,9 @@ demandUGens ^demandUGens !
 !
 
 !Demand methodsFor: 'private'!
-setTrig: x trig := x !
-setReset: x reset := x !
-setDemandUGens: x demandUGens := x !
+trig: x trig := x !
+reset: x reset := x !
+demandUGens: x demandUGens := x !
 !
 
 !Demand methodsFor: 'private'!
@@ -301,9 +301,9 @@ initialize ugenName := #Demand . paramNames := #(trig reset) . mceNames := #(dem
 new ^ self basicNew initialize ! !
 
 !Demand class methodsFor: 'instance creation'!
-trig: trig reset: reset demandUGens: demandUGens |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u !
-trig: trig reset: reset demandUGens: demandUGens mul: mul |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u * mul !
-trig: trig reset: reset demandUGens: demandUGens mul: mul add: add |u| u := self new . u setNumChan: #mceInput .  u setTrig: trig . u setReset: reset . u setDemandUGens: demandUGens . ^ u * mul + add !
+trig: trig reset: reset demandUGens: demandUGens |u| u := self new . u numChan: #mceInput .  u trig: trig . u reset: reset . u demandUGens: demandUGens . ^ u !
+trig: trig reset: reset demandUGens: demandUGens mul: mul |u| u := self new . u numChan: #mceInput .  u trig: trig . u reset: reset . u demandUGens: demandUGens . ^ u * mul !
+trig: trig reset: reset demandUGens: demandUGens mul: mul add: add |u| u := self new . u numChan: #mceInput .  u trig: trig . u reset: reset . u demandUGens: demandUGens . ^ u * mul + add !
 !
 
 UGen subclass: #Drand
@@ -317,8 +317,8 @@ list ^list !
 !
 
 !Drand methodsFor: 'private'!
-setRepeats: x repeats := x !
-setList: x list := x !
+repeats: x repeats := x !
+list: x list := x !
 !
 
 !Drand methodsFor: 'private'!
@@ -328,9 +328,9 @@ initialize ugenName := #Drand . paramNames := #(repeats) . mceNames := #(list) .
 new ^ self basicNew initialize ! !
 
 !Drand class methodsFor: 'instance creation'!
-repeats: repeats list: list |u| u := self new . u setRepeats: repeats . u setList: list . ^ u !
-repeats: repeats list: list mul: mul |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul !
-repeats: repeats list: list mul: mul add: add |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul + add !
+repeats: repeats list: list |u| u := self new . u repeats: repeats . u list: list . ^ u !
+repeats: repeats list: list mul: mul |u| u := self new . u repeats: repeats . u list: list . ^ u * mul !
+repeats: repeats list: list mul: mul add: add |u| u := self new . u repeats: repeats . u list: list . ^ u * mul + add !
 !
 
 UGen subclass: #Dseq
@@ -344,8 +344,8 @@ list ^list !
 !
 
 !Dseq methodsFor: 'private'!
-setRepeats: x repeats := x !
-setList: x list := x !
+repeats: x repeats := x !
+list: x list := x !
 !
 
 !Dseq methodsFor: 'private'!
@@ -355,9 +355,9 @@ initialize ugenName := #Dseq . paramNames := #(repeats) . mceNames := #(list) . 
 new ^ self basicNew initialize ! !
 
 !Dseq class methodsFor: 'instance creation'!
-repeats: repeats list: list |u| u := self new . u setRepeats: repeats . u setList: list . ^ u !
-repeats: repeats list: list mul: mul |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul !
-repeats: repeats list: list mul: mul add: add |u| u := self new . u setRepeats: repeats . u setList: list . ^ u * mul + add !
+repeats: repeats list: list |u| u := self new . u repeats: repeats . u list: list . ^ u !
+repeats: repeats list: list mul: mul |u| u := self new . u repeats: repeats . u list: list . ^ u * mul !
+repeats: repeats list: list mul: mul add: add |u| u := self new . u repeats: repeats . u list: list . ^ u * mul + add !
 !
 
 UGen subclass: #Dust
@@ -370,7 +370,7 @@ density ^density !
 !
 
 !Dust methodsFor: 'private'!
-setDensity: x density := x !
+density: x density := x !
 !
 
 !Dust methodsFor: 'private'!
@@ -380,9 +380,9 @@ initialize ugenName := #Dust . paramNames := #(density) . mceNames := #() . ugen
 new ^ self basicNew initialize ! !
 
 !Dust class methodsFor: 'instance creation'!
-density: density |u| u := self new . u setDensity: density . ^ u !
-density: density mul: mul |u| u := self new . u setDensity: density . ^ u * mul !
-density: density mul: mul add: add |u| u := self new . u setDensity: density . ^ u * mul + add !
+density: density |u| u := self new . u density: density . ^ u !
+density: density mul: mul |u| u := self new . u density: density . ^ u * mul !
+density: density mul: mul add: add |u| u := self new . u density: density . ^ u * mul + add !
 !
 
 UGen subclass: #EnvGen
@@ -400,12 +400,12 @@ envelope ^envelope !
 !
 
 !EnvGen methodsFor: 'private'!
-setGate: x gate := x !
-setLevelScale: x levelScale := x !
-setLevelBias: x levelBias := x !
-setTimeScale: x timeScale := x !
-setDoneAction: x doneAction := x !
-setEnvelope: x envelope := x !
+gate: x gate := x !
+levelScale: x levelScale := x !
+levelBias: x levelBias := x !
+timeScale: x timeScale := x !
+doneAction: x doneAction := x !
+envelope: x envelope := x !
 !
 
 !EnvGen methodsFor: 'private'!
@@ -415,9 +415,9 @@ initialize ugenName := #EnvGen . paramNames := #(gate levelScale levelBias timeS
 new ^ self basicNew initialize ! !
 
 !EnvGen class methodsFor: 'instance creation'!
-gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u !
-gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u * mul !
-gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add |u| u := self new . u setGate: gate . u setLevelScale: levelScale . u setLevelBias: levelBias . u setTimeScale: timeScale . u setDoneAction: doneAction . u setEnvelope: envelope . ^ u * mul + add !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope |u| u := self new . u gate: gate . u levelScale: levelScale . u levelBias: levelBias . u timeScale: timeScale . u doneAction: doneAction . u envelope: envelope . ^ u !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul |u| u := self new . u gate: gate . u levelScale: levelScale . u levelBias: levelBias . u timeScale: timeScale . u doneAction: doneAction . u envelope: envelope . ^ u * mul !
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add |u| u := self new . u gate: gate . u levelScale: levelScale . u levelBias: levelBias . u timeScale: timeScale . u doneAction: doneAction . u envelope: envelope . ^ u * mul + add !
 !
 
 UGen subclass: #ExpRand
@@ -431,8 +431,8 @@ hi ^hi !
 !
 
 !ExpRand methodsFor: 'private'!
-setLo: x lo := x !
-setHi: x hi := x !
+lo: x lo := x !
+hi: x hi := x !
 !
 
 !ExpRand methodsFor: 'private'!
@@ -442,9 +442,9 @@ initialize ugenName := #ExpRand . paramNames := #(lo hi) . mceNames := #() . uge
 new ^ self basicNew initialize ! !
 
 !ExpRand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
-lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
-lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
 !
 
 UGen subclass: #FSinOsc
@@ -458,8 +458,8 @@ iphase ^iphase !
 !
 
 !FSinOsc methodsFor: 'private'!
-setFreq: x freq := x !
-setIphase: x iphase := x !
+freq: x freq := x !
+iphase: x iphase := x !
 !
 
 !FSinOsc methodsFor: 'private'!
@@ -469,9 +469,9 @@ initialize ugenName := #FSinOsc . paramNames := #(freq iphase) . mceNames := #()
 new ^ self basicNew initialize ! !
 
 !FSinOsc class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u !
-freq: freq iphase: iphase mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul !
-freq: freq iphase: iphase mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul + add !
+freq: freq iphase: iphase |u| u := self new . u freq: freq . u iphase: iphase . ^ u !
+freq: freq iphase: iphase mul: mul |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul !
+freq: freq iphase: iphase mul: mul add: add |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul + add !
 !
 
 UGen subclass: #HPZ1
@@ -484,7 +484,7 @@ in ^in !
 !
 
 !HPZ1 methodsFor: 'private'!
-setIn: x in := x !
+in: x in := x !
 !
 
 !HPZ1 methodsFor: 'private'!
@@ -494,9 +494,9 @@ initialize ugenName := #HPZ1 . paramNames := #(in) . mceNames := #() . ugenRate 
 new ^ self basicNew initialize ! !
 
 !HPZ1 class methodsFor: 'instance creation'!
-in: in |u| u := self new . u setIn: in . ^ u !
-in: in mul: mul |u| u := self new . u setIn: in . ^ u * mul !
-in: in mul: mul add: add |u| u := self new . u setIn: in . ^ u * mul + add !
+in: in |u| u := self new . u in: in . ^ u !
+in: in mul: mul |u| u := self new . u in: in . ^ u * mul !
+in: in mul: mul add: add |u| u := self new . u in: in . ^ u * mul + add !
 !
 
 UGen subclass: #Impulse
@@ -510,8 +510,8 @@ phase ^phase !
 !
 
 !Impulse methodsFor: 'private'!
-setFreq: x freq := x !
-setPhase: x phase := x !
+freq: x freq := x !
+phase: x phase := x !
 !
 
 !Impulse methodsFor: 'private'!
@@ -521,9 +521,9 @@ initialize ugenName := #Impulse . paramNames := #(freq phase) . mceNames := #() 
 new ^ self basicNew initialize ! !
 
 !Impulse class methodsFor: 'instance creation'!
-freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u !
-freq: freq phase: phase mul: mul |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul !
-freq: freq phase: phase mul: mul add: add |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul + add !
+freq: freq phase: phase |u| u := self new . u freq: freq . u phase: phase . ^ u !
+freq: freq phase: phase mul: mul |u| u := self new . u freq: freq . u phase: phase . ^ u * mul !
+freq: freq phase: phase mul: mul add: add |u| u := self new . u freq: freq . u phase: phase . ^ u * mul + add !
 !
 
 UGen subclass: #In
@@ -536,7 +536,7 @@ bus ^bus !
 !
 
 !In methodsFor: 'private'!
-setBus: x bus := x !
+bus: x bus := x !
 !
 
 !In methodsFor: 'private'!
@@ -546,9 +546,9 @@ initialize ugenName := #In . paramNames := #(bus) . mceNames := #() . ugenRate :
 new ^ self basicNew initialize ! !
 
 !In class methodsFor: 'instance creation'!
-numChan: numChan bus: bus |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u !
-numChan: numChan bus: bus mul: mul |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul !
-numChan: numChan bus: bus mul: mul add: add |u| u := self new . u setNumChan: numChan . u setBus: bus . ^ u * mul + add !
+numChan: numChan bus: bus |u| u := self new . u numChan: numChan . u bus: bus . ^ u !
+numChan: numChan bus: bus mul: mul |u| u := self new . u numChan: numChan . u bus: bus . ^ u * mul !
+numChan: numChan bus: bus mul: mul add: add |u| u := self new . u numChan: numChan . u bus: bus . ^ u * mul + add !
 !
 
 UGen subclass: #IRand
@@ -562,8 +562,8 @@ hi ^hi !
 !
 
 !IRand methodsFor: 'private'!
-setLo: x lo := x !
-setHi: x hi := x !
+lo: x lo := x !
+hi: x hi := x !
 !
 
 !IRand methodsFor: 'private'!
@@ -573,9 +573,9 @@ initialize ugenName := #IRand . paramNames := #(lo hi) . mceNames := #() . ugenR
 new ^ self basicNew initialize ! !
 
 !IRand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
-lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
-lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
 !
 
 UGen subclass: #Klank
@@ -592,11 +592,11 @@ specificationsArrayRef ^specificationsArrayRef !
 !
 
 !Klank methodsFor: 'private'!
-setInput: x input := x !
-setFreqscale: x freqscale := x !
-setFreqoffset: x freqoffset := x !
-setDecayscale: x decayscale := x !
-setSpecificationsArrayRef: x specificationsArrayRef := x !
+input: x input := x !
+freqscale: x freqscale := x !
+freqoffset: x freqoffset := x !
+decayscale: x decayscale := x !
+specificationsArrayRef: x specificationsArrayRef := x !
 !
 
 !Klank methodsFor: 'private'!
@@ -606,9 +606,9 @@ initialize ugenName := #Klank . paramNames := #(input freqscale freqoffset decay
 new ^ self basicNew initialize ! !
 
 !Klank class methodsFor: 'instance creation'!
-input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u !
-input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u * mul !
-input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add |u| u := self new . u setInput: input . u setFreqscale: freqscale . u setFreqoffset: freqoffset . u setDecayscale: decayscale . u setSpecificationsArrayRef: specificationsArrayRef . ^ u * mul + add !
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef |u| u := self new . u input: input . u freqscale: freqscale . u freqoffset: freqoffset . u decayscale: decayscale . u specificationsArrayRef: specificationsArrayRef . ^ u !
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul |u| u := self new . u input: input . u freqscale: freqscale . u freqoffset: freqoffset . u decayscale: decayscale . u specificationsArrayRef: specificationsArrayRef . ^ u * mul !
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add |u| u := self new . u input: input . u freqscale: freqscale . u freqoffset: freqoffset . u decayscale: decayscale . u specificationsArrayRef: specificationsArrayRef . ^ u * mul + add !
 !
 
 UGen subclass: #Lag
@@ -622,8 +622,8 @@ lagTime ^lagTime !
 !
 
 !Lag methodsFor: 'private'!
-setIn: x in := x !
-setLagTime: x lagTime := x !
+in: x in := x !
+lagTime: x lagTime := x !
 !
 
 !Lag methodsFor: 'private'!
@@ -633,9 +633,9 @@ initialize ugenName := #Lag . paramNames := #(in lagTime) . mceNames := #() . ug
 new ^ self basicNew initialize ! !
 
 !Lag class methodsFor: 'instance creation'!
-in: in lagTime: lagTime |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u !
-in: in lagTime: lagTime mul: mul |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u * mul !
-in: in lagTime: lagTime mul: mul add: add |u| u := self new . u setIn: in . u setLagTime: lagTime . ^ u * mul + add !
+in: in lagTime: lagTime |u| u := self new . u in: in . u lagTime: lagTime . ^ u !
+in: in lagTime: lagTime mul: mul |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul !
+in: in lagTime: lagTime mul: mul add: add |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul + add !
 !
 
 UGen subclass: #Latch
@@ -649,8 +649,8 @@ trig ^trig !
 !
 
 !Latch methodsFor: 'private'!
-setIn: x in := x !
-setTrig: x trig := x !
+in: x in := x !
+trig: x trig := x !
 !
 
 !Latch methodsFor: 'private'!
@@ -660,9 +660,9 @@ initialize ugenName := #Latch . paramNames := #(in trig) . mceNames := #() . uge
 new ^ self basicNew initialize ! !
 
 !Latch class methodsFor: 'instance creation'!
-in: in trig: trig |u| u := self new . u setIn: in . u setTrig: trig . ^ u !
-in: in trig: trig mul: mul |u| u := self new . u setIn: in . u setTrig: trig . ^ u * mul !
-in: in trig: trig mul: mul add: add |u| u := self new . u setIn: in . u setTrig: trig . ^ u * mul + add !
+in: in trig: trig |u| u := self new . u in: in . u trig: trig . ^ u !
+in: in trig: trig mul: mul |u| u := self new . u in: in . u trig: trig . ^ u * mul !
+in: in trig: trig mul: mul add: add |u| u := self new . u in: in . u trig: trig . ^ u * mul + add !
 !
 
 UGen subclass: #LeakDC
@@ -676,8 +676,8 @@ coef ^coef !
 !
 
 !LeakDC methodsFor: 'private'!
-setIn: x in := x !
-setCoef: x coef := x !
+in: x in := x !
+coef: x coef := x !
 !
 
 !LeakDC methodsFor: 'private'!
@@ -687,9 +687,9 @@ initialize ugenName := #LeakDC . paramNames := #(in coef) . mceNames := #() . ug
 new ^ self basicNew initialize ! !
 
 !LeakDC class methodsFor: 'instance creation'!
-in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u !
-in: in coef: coef mul: mul |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul !
-in: in coef: coef mul: mul add: add |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul + add !
+in: in coef: coef |u| u := self new . u in: in . u coef: coef . ^ u !
+in: in coef: coef mul: mul |u| u := self new . u in: in . u coef: coef . ^ u * mul !
+in: in coef: coef mul: mul add: add |u| u := self new . u in: in . u coef: coef . ^ u * mul + add !
 !
 
 UGen subclass: #LFNoise1
@@ -702,7 +702,7 @@ freq ^freq !
 !
 
 !LFNoise1 methodsFor: 'private'!
-setFreq: x freq := x !
+freq: x freq := x !
 !
 
 !LFNoise1 methodsFor: 'private'!
@@ -712,9 +712,9 @@ initialize ugenName := #LFNoise1 . paramNames := #(freq) . mceNames := #() . uge
 new ^ self basicNew initialize ! !
 
 !LFNoise1 class methodsFor: 'instance creation'!
-freq: freq |u| u := self new . u setFreq: freq . ^ u !
-freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
-freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+freq: freq |u| u := self new . u freq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u freq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u freq: freq . ^ u * mul + add !
 !
 
 UGen subclass: #LFNoise2
@@ -727,7 +727,7 @@ freq ^freq !
 !
 
 !LFNoise2 methodsFor: 'private'!
-setFreq: x freq := x !
+freq: x freq := x !
 !
 
 !LFNoise2 methodsFor: 'private'!
@@ -737,9 +737,9 @@ initialize ugenName := #LFNoise2 . paramNames := #(freq) . mceNames := #() . uge
 new ^ self basicNew initialize ! !
 
 !LFNoise2 class methodsFor: 'instance creation'!
-freq: freq |u| u := self new . u setFreq: freq . ^ u !
-freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
-freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+freq: freq |u| u := self new . u freq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u freq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u freq: freq . ^ u * mul + add !
 !
 
 UGen subclass: #LFPulse
@@ -754,9 +754,9 @@ width ^width !
 !
 
 !LFPulse methodsFor: 'private'!
-setFreq: x freq := x !
-setIphase: x iphase := x !
-setWidth: x width := x !
+freq: x freq := x !
+iphase: x iphase := x !
+width: x width := x !
 !
 
 !LFPulse methodsFor: 'private'!
@@ -766,9 +766,9 @@ initialize ugenName := #LFPulse . paramNames := #(freq iphase width) . mceNames 
 new ^ self basicNew initialize ! !
 
 !LFPulse class methodsFor: 'instance creation'!
-freq: freq iphase: iphase width: width |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u !
-freq: freq iphase: iphase width: width mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u * mul !
-freq: freq iphase: iphase width: width mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . u setWidth: width . ^ u * mul + add !
+freq: freq iphase: iphase width: width |u| u := self new . u freq: freq . u iphase: iphase . u width: width . ^ u !
+freq: freq iphase: iphase width: width mul: mul |u| u := self new . u freq: freq . u iphase: iphase . u width: width . ^ u * mul !
+freq: freq iphase: iphase width: width mul: mul add: add |u| u := self new . u freq: freq . u iphase: iphase . u width: width . ^ u * mul + add !
 !
 
 UGen subclass: #LFSaw
@@ -782,8 +782,8 @@ iphase ^iphase !
 !
 
 !LFSaw methodsFor: 'private'!
-setFreq: x freq := x !
-setIphase: x iphase := x !
+freq: x freq := x !
+iphase: x iphase := x !
 !
 
 !LFSaw methodsFor: 'private'!
@@ -793,9 +793,9 @@ initialize ugenName := #LFSaw . paramNames := #(freq iphase) . mceNames := #() .
 new ^ self basicNew initialize ! !
 
 !LFSaw class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u !
-freq: freq iphase: iphase mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul !
-freq: freq iphase: iphase mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul + add !
+freq: freq iphase: iphase |u| u := self new . u freq: freq . u iphase: iphase . ^ u !
+freq: freq iphase: iphase mul: mul |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul !
+freq: freq iphase: iphase mul: mul add: add |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul + add !
 !
 
 UGen subclass: #LFTri
@@ -809,8 +809,8 @@ iphase ^iphase !
 !
 
 !LFTri methodsFor: 'private'!
-setFreq: x freq := x !
-setIphase: x iphase := x !
+freq: x freq := x !
+iphase: x iphase := x !
 !
 
 !LFTri methodsFor: 'private'!
@@ -820,9 +820,9 @@ initialize ugenName := #LFTri . paramNames := #(freq iphase) . mceNames := #() .
 new ^ self basicNew initialize ! !
 
 !LFTri class methodsFor: 'instance creation'!
-freq: freq iphase: iphase |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u !
-freq: freq iphase: iphase mul: mul |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul !
-freq: freq iphase: iphase mul: mul add: add |u| u := self new . u setFreq: freq . u setIphase: iphase . ^ u * mul + add !
+freq: freq iphase: iphase |u| u := self new . u freq: freq . u iphase: iphase . ^ u !
+freq: freq iphase: iphase mul: mul |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul !
+freq: freq iphase: iphase mul: mul add: add |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul + add !
 !
 
 UGen subclass: #Line
@@ -838,10 +838,10 @@ doneAction ^doneAction !
 !
 
 !Line methodsFor: 'private'!
-setStart: x start := x !
-setEnd: x end := x !
-setDur: x dur := x !
-setDoneAction: x doneAction := x !
+start: x start := x !
+end: x end := x !
+dur: x dur := x !
+doneAction: x doneAction := x !
 !
 
 !Line methodsFor: 'private'!
@@ -851,9 +851,9 @@ initialize ugenName := #Line . paramNames := #(start end dur doneAction) . mceNa
 new ^ self basicNew initialize ! !
 
 !Line class methodsFor: 'instance creation'!
-start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u !
-start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul !
-start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul + add !
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u !
+start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul !
+start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul + add !
 !
 
 UGen subclass: #LocalBuf
@@ -867,8 +867,8 @@ numFrames ^numFrames !
 !
 
 !LocalBuf methodsFor: 'private'!
-setNumChannels: x numChannels := x !
-setNumFrames: x numFrames := x !
+numChannels: x numChannels := x !
+numFrames: x numFrames := x !
 !
 
 !LocalBuf methodsFor: 'private'!
@@ -878,9 +878,9 @@ initialize ugenName := #LocalBuf . paramNames := #(numChannels numFrames) . mceN
 new ^ self basicNew initialize ! !
 
 !LocalBuf class methodsFor: 'instance creation'!
-numChannels: numChannels numFrames: numFrames |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u !
-numChannels: numChannels numFrames: numFrames mul: mul |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul !
-numChannels: numChannels numFrames: numFrames mul: mul add: add |u| u := self new . u setNumChannels: numChannels . u setNumFrames: numFrames . ^ u * mul + add !
+numChannels: numChannels numFrames: numFrames |u| u := self new . u numChannels: numChannels . u numFrames: numFrames . ^ u !
+numChannels: numChannels numFrames: numFrames mul: mul |u| u := self new . u numChannels: numChannels . u numFrames: numFrames . ^ u * mul !
+numChannels: numChannels numFrames: numFrames mul: mul add: add |u| u := self new . u numChannels: numChannels . u numFrames: numFrames . ^ u * mul + add !
 !
 
 UGen subclass: #LocalIn
@@ -893,7 +893,7 @@ default ^default !
 !
 
 !LocalIn methodsFor: 'private'!
-setDefault: x default := x !
+default: x default := x !
 !
 
 !LocalIn methodsFor: 'private'!
@@ -903,9 +903,9 @@ initialize ugenName := #LocalIn . paramNames := #() . mceNames := #(default) . u
 new ^ self basicNew initialize ! !
 
 !LocalIn class methodsFor: 'instance creation'!
-numChan: numChan default: default |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u !
-numChan: numChan default: default mul: mul |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u * mul !
-numChan: numChan default: default mul: mul add: add |u| u := self new . u setNumChan: numChan . u setDefault: default . ^ u * mul + add !
+numChan: numChan default: default |u| u := self new . u numChan: numChan . u default: default . ^ u !
+numChan: numChan default: default mul: mul |u| u := self new . u numChan: numChan . u default: default . ^ u * mul !
+numChan: numChan default: default mul: mul add: add |u| u := self new . u numChan: numChan . u default: default . ^ u * mul + add !
 !
 
 UGen subclass: #LocalOut
@@ -918,7 +918,7 @@ channelsArray ^channelsArray !
 !
 
 !LocalOut methodsFor: 'private'!
-setChannelsArray: x channelsArray := x !
+channelsArray: x channelsArray := x !
 !
 
 !LocalOut methodsFor: 'private'!
@@ -928,9 +928,9 @@ initialize ugenName := #LocalOut . paramNames := #() . mceNames := #(channelsArr
 new ^ self basicNew initialize ! !
 
 !LocalOut class methodsFor: 'instance creation'!
-channelsArray: channelsArray |u| u := self new . u setChannelsArray: channelsArray . ^ u !
-channelsArray: channelsArray mul: mul |u| u := self new . u setChannelsArray: channelsArray . ^ u * mul !
-channelsArray: channelsArray mul: mul add: add |u| u := self new . u setChannelsArray: channelsArray . ^ u * mul + add !
+channelsArray: channelsArray |u| u := self new . u channelsArray: channelsArray . ^ u !
+channelsArray: channelsArray mul: mul |u| u := self new . u channelsArray: channelsArray . ^ u * mul !
+channelsArray: channelsArray mul: mul add: add |u| u := self new . u channelsArray: channelsArray . ^ u * mul + add !
 !
 
 UGen subclass: #LPF
@@ -944,8 +944,8 @@ freq ^freq !
 !
 
 !LPF methodsFor: 'private'!
-setIn: x in := x !
-setFreq: x freq := x !
+in: x in := x !
+freq: x freq := x !
 !
 
 !LPF methodsFor: 'private'!
@@ -955,9 +955,9 @@ initialize ugenName := #LPF . paramNames := #(in freq) . mceNames := #() . ugenR
 new ^ self basicNew initialize ! !
 
 !LPF class methodsFor: 'instance creation'!
-in: in freq: freq |u| u := self new . u setIn: in . u setFreq: freq . ^ u !
-in: in freq: freq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . ^ u * mul !
-in: in freq: freq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . ^ u * mul + add !
+in: in freq: freq |u| u := self new . u in: in . u freq: freq . ^ u !
+in: in freq: freq mul: mul |u| u := self new . u in: in . u freq: freq . ^ u * mul !
+in: in freq: freq mul: mul add: add |u| u := self new . u in: in . u freq: freq . ^ u * mul + add !
 !
 
 UGen subclass: #MouseX
@@ -973,10 +973,10 @@ lag ^lag !
 !
 
 !MouseX methodsFor: 'private'!
-setMinval: x minval := x !
-setMaxval: x maxval := x !
-setWarp: x warp := x !
-setLag: x lag := x !
+minval: x minval := x !
+maxval: x maxval := x !
+warp: x warp := x !
+lag: x lag := x !
 !
 
 !MouseX methodsFor: 'private'!
@@ -986,9 +986,9 @@ initialize ugenName := #MouseX . paramNames := #(minval maxval warp lag) . mceNa
 new ^ self basicNew initialize ! !
 
 !MouseX class methodsFor: 'instance creation'!
-minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u !
-minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul !
-minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul + add !
+minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u * mul !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u * mul + add !
 !
 
 UGen subclass: #MouseY
@@ -1004,10 +1004,10 @@ lag ^lag !
 !
 
 !MouseY methodsFor: 'private'!
-setMinval: x minval := x !
-setMaxval: x maxval := x !
-setWarp: x warp := x !
-setLag: x lag := x !
+minval: x minval := x !
+maxval: x maxval := x !
+warp: x warp := x !
+lag: x lag := x !
 !
 
 !MouseY methodsFor: 'private'!
@@ -1017,9 +1017,9 @@ initialize ugenName := #MouseY . paramNames := #(minval maxval warp lag) . mceNa
 new ^ self basicNew initialize ! !
 
 !MouseY class methodsFor: 'instance creation'!
-minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u !
-minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul !
-minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u setMinval: minval . u setMaxval: maxval . u setWarp: warp . u setLag: lag . ^ u * mul + add !
+minval: minval maxval: maxval warp: warp lag: lag |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u * mul !
+minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add |u| u := self new . u minval: minval . u maxval: maxval . u warp: warp . u lag: lag . ^ u * mul + add !
 !
 
 UGen subclass: #MulAdd
@@ -1034,9 +1034,9 @@ add ^add !
 !
 
 !MulAdd methodsFor: 'private'!
-setIn: x in := x !
-setMul: x mul := x !
-setAdd: x add := x !
+in: x in := x !
+mul: x mul := x !
+add: x add := x !
 !
 
 !MulAdd methodsFor: 'private'!
@@ -1046,7 +1046,7 @@ initialize ugenName := #MulAdd . paramNames := #(in mul add) . mceNames := #() .
 new ^ self basicNew initialize ! !
 
 !MulAdd class methodsFor: 'instance creation'!
-in: in mul: mul add: add |u| u := self new . u setIn: in . u setMul: mul . u setAdd: add . ^ u !
+in: in mul: mul add: add |u| u := self new . u in: in . u mul: mul . u add: add . ^ u !
 !
 
 UGen subclass: #OnePole
@@ -1060,8 +1060,8 @@ coef ^coef !
 !
 
 !OnePole methodsFor: 'private'!
-setIn: x in := x !
-setCoef: x coef := x !
+in: x in := x !
+coef: x coef := x !
 !
 
 !OnePole methodsFor: 'private'!
@@ -1071,9 +1071,9 @@ initialize ugenName := #OnePole . paramNames := #(in coef) . mceNames := #() . u
 new ^ self basicNew initialize ! !
 
 !OnePole class methodsFor: 'instance creation'!
-in: in coef: coef |u| u := self new . u setIn: in . u setCoef: coef . ^ u !
-in: in coef: coef mul: mul |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul !
-in: in coef: coef mul: mul add: add |u| u := self new . u setIn: in . u setCoef: coef . ^ u * mul + add !
+in: in coef: coef |u| u := self new . u in: in . u coef: coef . ^ u !
+in: in coef: coef mul: mul |u| u := self new . u in: in . u coef: coef . ^ u * mul !
+in: in coef: coef mul: mul add: add |u| u := self new . u in: in . u coef: coef . ^ u * mul + add !
 !
 
 UGen subclass: #Out
@@ -1087,8 +1087,8 @@ channelsArray ^channelsArray !
 !
 
 !Out methodsFor: 'private'!
-setBus: x bus := x !
-setChannelsArray: x channelsArray := x !
+bus: x bus := x !
+channelsArray: x channelsArray := x !
 !
 
 !Out methodsFor: 'private'!
@@ -1098,9 +1098,9 @@ initialize ugenName := #Out . paramNames := #(bus) . mceNames := #(channelsArray
 new ^ self basicNew initialize ! !
 
 !Out class methodsFor: 'instance creation'!
-bus: bus channelsArray: channelsArray |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u !
-bus: bus channelsArray: channelsArray mul: mul |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u * mul !
-bus: bus channelsArray: channelsArray mul: mul add: add |u| u := self new . u setBus: bus . u setChannelsArray: channelsArray . ^ u * mul + add !
+bus: bus channelsArray: channelsArray |u| u := self new . u bus: bus . u channelsArray: channelsArray . ^ u !
+bus: bus channelsArray: channelsArray mul: mul |u| u := self new . u bus: bus . u channelsArray: channelsArray . ^ u * mul !
+bus: bus channelsArray: channelsArray mul: mul add: add |u| u := self new . u bus: bus . u channelsArray: channelsArray . ^ u * mul + add !
 !
 
 UGen subclass: #Pan2
@@ -1115,9 +1115,9 @@ level ^level !
 !
 
 !Pan2 methodsFor: 'private'!
-setIn: x in := x !
-setPos: x pos := x !
-setLevel: x level := x !
+in: x in := x !
+pos: x pos := x !
+level: x level := x !
 !
 
 !Pan2 methodsFor: 'private'!
@@ -1127,9 +1127,9 @@ initialize ugenName := #Pan2 . paramNames := #(in pos level) . mceNames := #() .
 new ^ self basicNew initialize ! !
 
 !Pan2 class methodsFor: 'instance creation'!
-in: in pos: pos level: level |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u !
-in: in pos: pos level: level mul: mul |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u * mul !
-in: in pos: pos level: level mul: mul add: add |u| u := self new . u setIn: in . u setPos: pos . u setLevel: level . ^ u * mul + add !
+in: in pos: pos level: level |u| u := self new . u in: in . u pos: pos . u level: level . ^ u !
+in: in pos: pos level: level mul: mul |u| u := self new . u in: in . u pos: pos . u level: level . ^ u * mul !
+in: in pos: pos level: level mul: mul add: add |u| u := self new . u in: in . u pos: pos . u level: level . ^ u * mul + add !
 !
 
 UGen subclass: #Phasor
@@ -1146,11 +1146,11 @@ resetPos ^resetPos !
 !
 
 !Phasor methodsFor: 'private'!
-setTrig: x trig := x !
-setRate: x rate := x !
-setStart: x start := x !
-setEnd: x end := x !
-setResetPos: x resetPos := x !
+trig: x trig := x !
+rate: x rate := x !
+start: x start := x !
+end: x end := x !
+resetPos: x resetPos := x !
 !
 
 !Phasor methodsFor: 'private'!
@@ -1160,9 +1160,9 @@ initialize ugenName := #Phasor . paramNames := #(trig rate start end resetPos) .
 new ^ self basicNew initialize ! !
 
 !Phasor class methodsFor: 'instance creation'!
-trig: trig rate: rate start: start end: end resetPos: resetPos |u| u := self new . u setTrig: trig . u setRate: rate . u setStart: start . u setEnd: end . u setResetPos: resetPos . ^ u !
-trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul |u| u := self new . u setTrig: trig . u setRate: rate . u setStart: start . u setEnd: end . u setResetPos: resetPos . ^ u * mul !
-trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add |u| u := self new . u setTrig: trig . u setRate: rate . u setStart: start . u setEnd: end . u setResetPos: resetPos . ^ u * mul + add !
+trig: trig rate: rate start: start end: end resetPos: resetPos |u| u := self new . u trig: trig . u rate: rate . u start: start . u end: end . u resetPos: resetPos . ^ u !
+trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul |u| u := self new . u trig: trig . u rate: rate . u start: start . u end: end . u resetPos: resetPos . ^ u * mul !
+trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add |u| u := self new . u trig: trig . u rate: rate . u start: start . u end: end . u resetPos: resetPos . ^ u * mul + add !
 !
 
 UGen subclass: #PinkNoise
@@ -1194,8 +1194,8 @@ hi ^hi !
 !
 
 !Rand methodsFor: 'private'!
-setLo: x lo := x !
-setHi: x hi := x !
+lo: x lo := x !
+hi: x hi := x !
 !
 
 !Rand methodsFor: 'private'!
@@ -1205,9 +1205,9 @@ initialize ugenName := #Rand . paramNames := #(lo hi) . mceNames := #() . ugenRa
 new ^ self basicNew initialize ! !
 
 !Rand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u setLo: lo . u setHi: hi . ^ u !
-lo: lo hi: hi mul: mul |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul !
-lo: lo hi: hi mul: mul add: add |u| u := self new . u setLo: lo . u setHi: hi . ^ u * mul + add !
+lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
 !
 
 UGen subclass: #Resonz
@@ -1222,9 +1222,9 @@ bwr ^bwr !
 !
 
 !Resonz methodsFor: 'private'!
-setIn: x in := x !
-setFreq: x freq := x !
-setBwr: x bwr := x !
+in: x in := x !
+freq: x freq := x !
+bwr: x bwr := x !
 !
 
 !Resonz methodsFor: 'private'!
@@ -1234,9 +1234,9 @@ initialize ugenName := #Resonz . paramNames := #(in freq bwr) . mceNames := #() 
 new ^ self basicNew initialize ! !
 
 !Resonz class methodsFor: 'instance creation'!
-in: in freq: freq bwr: bwr |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u !
-in: in freq: freq bwr: bwr mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u * mul !
-in: in freq: freq bwr: bwr mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setBwr: bwr . ^ u * mul + add !
+in: in freq: freq bwr: bwr |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u !
+in: in freq: freq bwr: bwr mul: mul |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul !
+in: in freq: freq bwr: bwr mul: mul add: add |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul + add !
 !
 
 UGen subclass: #RHPF
@@ -1251,9 +1251,9 @@ rq ^rq !
 !
 
 !RHPF methodsFor: 'private'!
-setIn: x in := x !
-setFreq: x freq := x !
-setRq: x rq := x !
+in: x in := x !
+freq: x freq := x !
+rq: x rq := x !
 !
 
 !RHPF methodsFor: 'private'!
@@ -1263,9 +1263,9 @@ initialize ugenName := #RHPF . paramNames := #(in freq rq) . mceNames := #() . u
 new ^ self basicNew initialize ! !
 
 !RHPF class methodsFor: 'instance creation'!
-in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u !
-in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul !
-in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
+in: in freq: freq rq: rq |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u !
+in: in freq: freq rq: rq mul: mul |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul !
+in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul + add !
 !
 
 UGen subclass: #RLPF
@@ -1280,9 +1280,9 @@ rq ^rq !
 !
 
 !RLPF methodsFor: 'private'!
-setIn: x in := x !
-setFreq: x freq := x !
-setRq: x rq := x !
+in: x in := x !
+freq: x freq := x !
+rq: x rq := x !
 !
 
 !RLPF methodsFor: 'private'!
@@ -1292,9 +1292,9 @@ initialize ugenName := #RLPF . paramNames := #(in freq rq) . mceNames := #() . u
 new ^ self basicNew initialize ! !
 
 !RLPF class methodsFor: 'instance creation'!
-in: in freq: freq rq: rq |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u !
-in: in freq: freq rq: rq mul: mul |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul !
-in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u setIn: in . u setFreq: freq . u setRq: rq . ^ u * mul + add !
+in: in freq: freq rq: rq |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u !
+in: in freq: freq rq: rq mul: mul |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul !
+in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul + add !
 !
 
 UGen subclass: #SampleDur
@@ -1325,7 +1325,7 @@ freq ^freq !
 !
 
 !Saw methodsFor: 'private'!
-setFreq: x freq := x !
+freq: x freq := x !
 !
 
 !Saw methodsFor: 'private'!
@@ -1335,9 +1335,9 @@ initialize ugenName := #Saw . paramNames := #(freq) . mceNames := #() . ugenRate
 new ^ self basicNew initialize ! !
 
 !Saw class methodsFor: 'instance creation'!
-freq: freq |u| u := self new . u setFreq: freq . ^ u !
-freq: freq mul: mul |u| u := self new . u setFreq: freq . ^ u * mul !
-freq: freq mul: mul add: add |u| u := self new . u setFreq: freq . ^ u * mul + add !
+freq: freq |u| u := self new . u freq: freq . ^ u !
+freq: freq mul: mul |u| u := self new . u freq: freq . ^ u * mul !
+freq: freq mul: mul add: add |u| u := self new . u freq: freq . ^ u * mul + add !
 !
 
 UGen subclass: #SetBuf
@@ -1353,10 +1353,10 @@ array ^array !
 !
 
 !SetBuf methodsFor: 'private'!
-setBuf: x buf := x !
-setOffset: x offset := x !
-setLength: x length := x !
-setArray: x array := x !
+buf: x buf := x !
+offset: x offset := x !
+length: x length := x !
+array: x array := x !
 !
 
 !SetBuf methodsFor: 'private'!
@@ -1366,9 +1366,9 @@ initialize ugenName := #SetBuf . paramNames := #(buf offset length) . mceNames :
 new ^ self basicNew initialize ! !
 
 !SetBuf class methodsFor: 'instance creation'!
-buf: buf offset: offset length: length array: array |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u !
-buf: buf offset: offset length: length array: array mul: mul |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u * mul !
-buf: buf offset: offset length: length array: array mul: mul add: add |u| u := self new . u setBuf: buf . u setOffset: offset . u setLength: length . u setArray: array . ^ u * mul + add !
+buf: buf offset: offset length: length array: array |u| u := self new . u buf: buf . u offset: offset . u length: length . u array: array . ^ u !
+buf: buf offset: offset length: length array: array mul: mul |u| u := self new . u buf: buf . u offset: offset . u length: length . u array: array . ^ u * mul !
+buf: buf offset: offset length: length array: array mul: mul add: add |u| u := self new . u buf: buf . u offset: offset . u length: length . u array: array . ^ u * mul + add !
 !
 
 UGen subclass: #SinOsc
@@ -1382,8 +1382,8 @@ phase ^phase !
 !
 
 !SinOsc methodsFor: 'private'!
-setFreq: x freq := x !
-setPhase: x phase := x !
+freq: x freq := x !
+phase: x phase := x !
 !
 
 !SinOsc methodsFor: 'private'!
@@ -1393,9 +1393,9 @@ initialize ugenName := #SinOsc . paramNames := #(freq phase) . mceNames := #() .
 new ^ self basicNew initialize ! !
 
 !SinOsc class methodsFor: 'instance creation'!
-freq: freq phase: phase |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u !
-freq: freq phase: phase mul: mul |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul !
-freq: freq phase: phase mul: mul add: add |u| u := self new . u setFreq: freq . u setPhase: phase . ^ u * mul + add !
+freq: freq phase: phase |u| u := self new . u freq: freq . u phase: phase . ^ u !
+freq: freq phase: phase mul: mul |u| u := self new . u freq: freq . u phase: phase . ^ u * mul !
+freq: freq phase: phase mul: mul add: add |u| u := self new . u freq: freq . u phase: phase . ^ u * mul + add !
 !
 
 UGen subclass: #Trig
@@ -1409,8 +1409,8 @@ dur ^dur !
 !
 
 !Trig methodsFor: 'private'!
-setIn: x in := x !
-setDur: x dur := x !
+in: x in := x !
+dur: x dur := x !
 !
 
 !Trig methodsFor: 'private'!
@@ -1420,9 +1420,9 @@ initialize ugenName := #Trig . paramNames := #(in dur) . mceNames := #() . ugenR
 new ^ self basicNew initialize ! !
 
 !Trig class methodsFor: 'instance creation'!
-in: in dur: dur |u| u := self new . u setIn: in . u setDur: dur . ^ u !
-in: in dur: dur mul: mul |u| u := self new . u setIn: in . u setDur: dur . ^ u * mul !
-in: in dur: dur mul: mul add: add |u| u := self new . u setIn: in . u setDur: dur . ^ u * mul + add !
+in: in dur: dur |u| u := self new . u in: in . u dur: dur . ^ u !
+in: in dur: dur mul: mul |u| u := self new . u in: in . u dur: dur . ^ u * mul !
+in: in dur: dur mul: mul add: add |u| u := self new . u in: in . u dur: dur . ^ u * mul + add !
 !
 
 UGen subclass: #XFade2
@@ -1438,10 +1438,10 @@ level ^level !
 !
 
 !XFade2 methodsFor: 'private'!
-setInA: x inA := x !
-setInB: x inB := x !
-setPan: x pan := x !
-setLevel: x level := x !
+inA: x inA := x !
+inB: x inB := x !
+pan: x pan := x !
+level: x level := x !
 !
 
 !XFade2 methodsFor: 'private'!
@@ -1451,9 +1451,9 @@ initialize ugenName := #XFade2 . paramNames := #(inA inB pan level) . mceNames :
 new ^ self basicNew initialize ! !
 
 !XFade2 class methodsFor: 'instance creation'!
-inA: inA inB: inB pan: pan level: level |u| u := self new . u setInA: inA . u setInB: inB . u setPan: pan . u setLevel: level . ^ u !
-inA: inA inB: inB pan: pan level: level mul: mul |u| u := self new . u setInA: inA . u setInB: inB . u setPan: pan . u setLevel: level . ^ u * mul !
-inA: inA inB: inB pan: pan level: level mul: mul add: add |u| u := self new . u setInA: inA . u setInB: inB . u setPan: pan . u setLevel: level . ^ u * mul + add !
+inA: inA inB: inB pan: pan level: level |u| u := self new . u inA: inA . u inB: inB . u pan: pan . u level: level . ^ u !
+inA: inA inB: inB pan: pan level: level mul: mul |u| u := self new . u inA: inA . u inB: inB . u pan: pan . u level: level . ^ u * mul !
+inA: inA inB: inB pan: pan level: level mul: mul add: add |u| u := self new . u inA: inA . u inB: inB . u pan: pan . u level: level . ^ u * mul + add !
 !
 
 UGen subclass: #XLine
@@ -1469,10 +1469,10 @@ doneAction ^doneAction !
 !
 
 !XLine methodsFor: 'private'!
-setStart: x start := x !
-setEnd: x end := x !
-setDur: x dur := x !
-setDoneAction: x doneAction := x !
+start: x start := x !
+end: x end := x !
+dur: x dur := x !
+doneAction: x doneAction := x !
 !
 
 !XLine methodsFor: 'private'!
@@ -1482,9 +1482,9 @@ initialize ugenName := #XLine . paramNames := #(start end dur doneAction) . mceN
 new ^ self basicNew initialize ! !
 
 !XLine class methodsFor: 'instance creation'!
-start: start end: end dur: dur doneAction: doneAction |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u !
-start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul !
-start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u setStart: start . u setEnd: end . u setDur: dur . u setDoneAction: doneAction . ^ u * mul + add !
+start: start end: end dur: dur doneAction: doneAction |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u !
+start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul !
+start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul + add !
 !
 
 UGen subclass: #WhiteNoise
