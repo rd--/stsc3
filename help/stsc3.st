@@ -31,6 +31,10 @@ Transcript open . "-> opens Transcript"
 #((1 2) (3 4)) transpose concatenation . "-> #(1 3 2 4)"
 5 mixFill: [:x| x * x] . "-> 55"
 
+"Symbols"
+
+#x isSymbol . "-> true"
+
 "Haskell - List"
 
 (1 to: 5) first . "-> 1 ; head"
@@ -50,6 +54,12 @@ OpalCompiler evaluate: '1+1' "pharo ; evaluate string"
 
 d := Dictionary new . d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z' .
 d := Dictionary newFromPairs: #(select x from y list z)
+
+"Conditionals"
+
+x := nil .
+x isNil ifTrue: ['x'] ifFalse: ['y'] .
+x isNil ifTrue: 'x' ifFalse: 'y' .
 
 "SC3"
 
