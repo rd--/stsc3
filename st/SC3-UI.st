@@ -56,8 +56,9 @@ openOn: x |v| v := self new . v index: 0 . v directoryName: x . v createWindow .
 play (self files at: index) evalTextFile play !
 "edit (FileStream fileNamed: (self files at: index)) edit"
 edit (self files at: index) viewTextFile !
-menu: m shifted: _i m add: 'play (p)' target: self selector: #play . m add: 'stop (s)' target: SC3 selector: #reset . m add: 'edit (e)' target: self selector: #edit . ^ m !
-key: k from: _i k == $p ifTrue: [self play] . k == $s ifTrue: [SC3 reset] . k == $e ifTrue: [self edit] ! !
+draw (self files at: index) evalTextFile draw !
+menu: m shifted: _i m add: 'play (p)' target: self selector: #play . m add: 'stop (s)' target: SC3 selector: #reset . m add: 'edit (e)' target: self selector: #edit . m add: 'draw (d)' target: self selector: #draw . ^ m !
+key: k from: _i k == $p ifTrue: [self play] . k == $s ifTrue: [SC3 reset] . k == $e ifTrue: [self edit] . k == $d ifTrue: [self draw] ! !
 
 !GraphBrowser methodsFor: 'initialization'!
 createWindow

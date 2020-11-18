@@ -1,3 +1,5 @@
+GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' .
+
 "Transcript"
 
 Transcript open . "-> opens Transcript"
@@ -63,24 +65,19 @@ x isNil ifTrue: 'x' ifFalse: 'y' .
 
 "SC3"
 
+SC3 reset . "C-c C-."
+
 '/tmp/hsc3.png' viewImageFile .
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' readTextFile .
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile .
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile .
-
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile play.
-SC3 reset .
-
-(FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') suffixList: #(st) label: 'select st file') evalTextFile play
-
-GraphBrowser openOn: '/home/rohan/sw/stsc3/help/graph/' .
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' readTextFile . "read text file"
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile play . "read and evaluate text file"
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile . "editor for text file with play, stop and draw buttons"
 
 "Morph"
 
 menu := PopUpMenu labelArray: #('circle' 'oval' 'square' 'rectangle' 'triangle') lines: #(2 4).
 menu startUpWithCaption: 'Choose a shape'
 
-(UpdatingStringMorph on: Time selector: #now) openInHand .
+(UpdatingStringMorph on: Time selector: #now) openInHand . "clock"
 
 "UI"
 
@@ -120,16 +117,7 @@ Workspace open .
 Workspace open contents: 'Workspace open .' . "pharo"
 Workspace open openFile: '/home/rohan/sw/stsc3/help/stsc3.st' . "pharo"
 
-
-'a text' edit . "squeak"
-
 '/tmp/hsc3.png' viewImageFile "UI image file viewer"
-
-Display writePNGfileNamed: '/tmp/display.png' . "squeak ; screenshot"
-Form fromUser asMorph openInWorld
-(ImageReadWriter formFromFileNamed: '/tmp/hsc3.png') asMorph openInHand
-(Form fromFileNamed: '/tmp/hsc3.png') asMorph openInHand
-
 
 "OS ; squeak"
 MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess' .
@@ -144,3 +132,21 @@ OSProcess waitForCommand: 'echo sleeping...; sleep 3; echo I just slept for thre
 
 OSProcess outputOf: 'ls | cat | wc'
 OSProcess editOutputOf: 'ps -axjf'
+
+"Squeak"
+
+(FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') suffixList: #(st) label: 'select st file') evalTextFile play . "file chooser on dir"
+
+FileList2 modalFileSelectorForSuffixes: #(st) directory: (FileDirectory on: '/home/rohan/sw/stsc3/help/') . "file chooser on dir"
+
+(FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') fullNamesOfAllFilesInSubtree . "recursive directory listing"
+
+'a text' edit . "-> UIManager default edit: 'edit text'"
+
+Display writePNGfileNamed: '/tmp/display.png' . "squeak ; screenshot"
+
+Form fromUser asMorph openInWorld . "squeak ; screenshot selection"
+
+(ImageReadWriter formFromFileNamed: '/tmp/hsc3.png') asMorph openInHand . "squeak ; image display"
+
+(Form fromFileNamed: '/tmp/hsc3.png') asMorph openInHand . "squeak ; image display"
