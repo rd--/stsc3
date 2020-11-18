@@ -5,15 +5,12 @@ Schroeder allpass delay line with no interpolation. !
 
 !AllpassN methodsFor: 'accessing'!
 in ^in !
-maxdelaytime ^maxdelaytime !
-delaytime ^delaytime !
-decaytime ^decaytime !
-!
-
-!AllpassN methodsFor: 'private'!
 in: x in := x !
+maxdelaytime ^maxdelaytime !
 maxdelaytime: x maxdelaytime := x !
+delaytime ^delaytime !
 delaytime: x delaytime := x !
+decaytime ^decaytime !
 decaytime: x decaytime := x !
 !
 
@@ -36,13 +33,10 @@ Amplitude follower !
 
 !Amplitude methodsFor: 'accessing'!
 in ^in !
-attackTime ^attackTime !
-releaseTime ^releaseTime !
-!
-
-!Amplitude methodsFor: 'private'!
 in: x in := x !
+attackTime ^attackTime !
 attackTime: x attackTime := x !
+releaseTime ^releaseTime !
 releaseTime: x releaseTime := x !
 !
 
@@ -58,24 +52,6 @@ in: in attackTime: attackTime releaseTime: releaseTime mul: mul |u| u := self ne
 in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add |u| u := self new . u in: in . u attackTime: attackTime . u releaseTime: releaseTime . ^ u * mul + add !
 !
 
-UGen subclass: #BrownNoise
-instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!BrownNoise commentStamp: '<historical>' prior: 0!
-Brown Noise. !
-
-
-
-!BrownNoise methodsFor: 'private'!
-initialize ugenName := #BrownNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!BrownNoise class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!BrownNoise class methodsFor: 'instance creation'!
- mul: mul |u| u := self new .  ^ u * mul !
- mul: mul add: add |u| u := self new .  ^ u * mul + add !
-!
-
 UGen subclass: #BPZ2
 instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !BPZ2 commentStamp: '<historical>' prior: 0!
@@ -83,9 +59,6 @@ Two zero fixed midpass. !
 
 !BPZ2 methodsFor: 'accessing'!
 in ^in !
-!
-
-!BPZ2 methodsFor: 'private'!
 in: x in := x !
 !
 
@@ -101,6 +74,23 @@ in: in mul: mul |u| u := self new . u in: in . ^ u * mul !
 in: in mul: mul add: add |u| u := self new . u in: in . ^ u * mul + add !
 !
 
+UGen subclass: #BrownNoise
+instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!BrownNoise commentStamp: '<historical>' prior: 0!
+Brown Noise. !
+
+
+!BrownNoise methodsFor: 'private'!
+initialize ugenName := #BrownNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!BrownNoise class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!BrownNoise class methodsFor: 'instance creation'!
+ mul: mul |u| u := self new .  ^ u * mul !
+ mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
+
 UGen subclass: #CombL
 instanceVariableNames: 'in maxdelaytime delaytime decaytime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !CombL commentStamp: '<historical>' prior: 0!
@@ -108,15 +98,12 @@ Comb delay line with linear interpolation. !
 
 !CombL methodsFor: 'accessing'!
 in ^in !
-maxdelaytime ^maxdelaytime !
-delaytime ^delaytime !
-decaytime ^decaytime !
-!
-
-!CombL methodsFor: 'private'!
 in: x in := x !
+maxdelaytime ^maxdelaytime !
 maxdelaytime: x maxdelaytime := x !
+delaytime ^delaytime !
 delaytime: x delaytime := x !
+decaytime ^decaytime !
 decaytime: x decaytime := x !
 !
 
@@ -139,15 +126,12 @@ Comb delay line with no interpolation. !
 
 !CombN methodsFor: 'accessing'!
 in ^in !
-maxdelaytime ^maxdelaytime !
-delaytime ^delaytime !
-decaytime ^decaytime !
-!
-
-!CombN methodsFor: 'private'!
 in: x in := x !
+maxdelaytime ^maxdelaytime !
 maxdelaytime: x maxdelaytime := x !
+delaytime ^delaytime !
 delaytime: x delaytime := x !
+decaytime ^decaytime !
 decaytime: x decaytime := x !
 !
 
@@ -170,9 +154,6 @@ Chaotic noise function. !
 
 !Crackle methodsFor: 'accessing'!
 chaosParam ^chaosParam !
-!
-
-!Crackle methodsFor: 'private'!
 chaosParam: x chaosParam := x !
 !
 
@@ -195,11 +176,8 @@ Exponential decay !
 
 !Decay methodsFor: 'accessing'!
 in ^in !
-decayTime ^decayTime !
-!
-
-!Decay methodsFor: 'private'!
 in: x in := x !
+decayTime ^decayTime !
 decayTime: x decayTime := x !
 !
 
@@ -222,13 +200,10 @@ Exponential decay !
 
 !Decay2 methodsFor: 'accessing'!
 in ^in !
-attackTime ^attackTime !
-decayTime ^decayTime !
-!
-
-!Decay2 methodsFor: 'private'!
 in: x in := x !
+attackTime ^attackTime !
 attackTime: x attackTime := x !
+decayTime ^decayTime !
 decayTime: x decayTime := x !
 !
 
@@ -251,13 +226,10 @@ Convert signal to modal pitch. !
 
 !DegreeToKey methodsFor: 'accessing'!
 bufnum ^bufnum !
-in ^in !
-octave ^octave !
-!
-
-!DegreeToKey methodsFor: 'private'!
 bufnum: x bufnum := x !
+in ^in !
 in: x in := x !
+octave ^octave !
 octave: x octave := x !
 !
 
@@ -280,13 +252,10 @@ Simple delay line with no interpolation. !
 
 !DelayN methodsFor: 'accessing'!
 in ^in !
-maxdelaytime ^maxdelaytime !
-delaytime ^delaytime !
-!
-
-!DelayN methodsFor: 'private'!
 in: x in := x !
+maxdelaytime ^maxdelaytime !
 maxdelaytime: x maxdelaytime := x !
+delaytime ^delaytime !
 delaytime: x delaytime := x !
 !
 
@@ -309,13 +278,10 @@ Demand results from demand rate UGens. !
 
 !Demand methodsFor: 'accessing'!
 trig ^trig !
-reset ^reset !
-demandUGens ^demandUGens !
-!
-
-!Demand methodsFor: 'private'!
 trig: x trig := x !
+reset ^reset !
 reset: x reset := x !
+demandUGens ^demandUGens !
 demandUGens: x demandUGens := x !
 !
 
@@ -338,11 +304,8 @@ Demand rate random sequence generator. !
 
 !Drand methodsFor: 'accessing'!
 repeats ^repeats !
-list ^list !
-!
-
-!Drand methodsFor: 'private'!
 repeats: x repeats := x !
+list ^list !
 list: x list := x !
 !
 
@@ -365,11 +328,8 @@ Demand rate sequence generator. !
 
 !Dseq methodsFor: 'accessing'!
 repeats ^repeats !
-list ^list !
-!
-
-!Dseq methodsFor: 'private'!
 repeats: x repeats := x !
+list ^list !
 list: x list := x !
 !
 
@@ -392,11 +352,8 @@ Demand rate random sequence generator !
 
 !Dshuf methodsFor: 'accessing'!
 repeats ^repeats !
-list ^list !
-!
-
-!Dshuf methodsFor: 'private'!
 repeats: x repeats := x !
+list ^list !
 list: x list := x !
 !
 
@@ -419,9 +376,6 @@ Random impulses. !
 
 !Dust methodsFor: 'accessing'!
 density ^density !
-!
-
-!Dust methodsFor: 'private'!
 density: x density := x !
 !
 
@@ -444,19 +398,16 @@ Envelope generator !
 
 !EnvGen methodsFor: 'accessing'!
 gate ^gate !
-levelScale ^levelScale !
-levelBias ^levelBias !
-timeScale ^timeScale !
-doneAction ^doneAction !
-envelope ^envelope !
-!
-
-!EnvGen methodsFor: 'private'!
 gate: x gate := x !
+levelScale ^levelScale !
 levelScale: x levelScale := x !
+levelBias ^levelBias !
 levelBias: x levelBias := x !
+timeScale ^timeScale !
 timeScale: x timeScale := x !
+doneAction ^doneAction !
 doneAction: x doneAction := x !
+envelope ^envelope !
 envelope: x envelope := x !
 !
 
@@ -479,11 +430,8 @@ Exponential single random number generator. !
 
 !ExpRand methodsFor: 'accessing'!
 lo ^lo !
-hi ^hi !
-!
-
-!ExpRand methodsFor: 'private'!
 lo: x lo := x !
+hi ^hi !
 hi: x hi := x !
 !
 
@@ -506,11 +454,8 @@ Fast sine oscillator. !
 
 !FSinOsc methodsFor: 'accessing'!
 freq ^freq !
-iphase ^iphase !
-!
-
-!FSinOsc methodsFor: 'private'!
 freq: x freq := x !
+iphase ^iphase !
 iphase: x iphase := x !
 !
 
@@ -533,9 +478,6 @@ Two point difference filter !
 
 !HPZ1 methodsFor: 'accessing'!
 in ^in !
-!
-
-!HPZ1 methodsFor: 'private'!
 in: x in := x !
 !
 
@@ -551,6 +493,30 @@ in: in mul: mul |u| u := self new . u in: in . ^ u * mul !
 in: in mul: mul add: add |u| u := self new . u in: in . ^ u * mul + add !
 !
 
+UGen subclass: #IRand
+instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!IRand commentStamp: '<historical>' prior: 0!
+Single integer random number generator. !
+
+!IRand methodsFor: 'accessing'!
+lo ^lo !
+lo: x lo := x !
+hi ^hi !
+hi: x hi := x !
+!
+
+!IRand methodsFor: 'private'!
+initialize ugenName := #IRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!IRand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!IRand class methodsFor: 'instance creation'!
+lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
+!
+
 UGen subclass: #Impulse
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Impulse commentStamp: '<historical>' prior: 0!
@@ -558,11 +524,8 @@ Impulse oscillator. !
 
 !Impulse methodsFor: 'accessing'!
 freq ^freq !
-phase ^phase !
-!
-
-!Impulse methodsFor: 'private'!
 freq: x freq := x !
+phase ^phase !
 phase: x phase := x !
 !
 
@@ -585,9 +548,6 @@ Read a signal from a bus. !
 
 !In methodsFor: 'accessing'!
 bus ^bus !
-!
-
-!In methodsFor: 'private'!
 bus: x bus := x !
 !
 
@@ -603,33 +563,6 @@ numChan: numChan bus: bus mul: mul |u| u := self new . u numChan: numChan . u bu
 numChan: numChan bus: bus mul: mul add: add |u| u := self new . u numChan: numChan . u bus: bus . ^ u * mul + add !
 !
 
-UGen subclass: #IRand
-instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!IRand commentStamp: '<historical>' prior: 0!
-Single integer random number generator. !
-
-!IRand methodsFor: 'accessing'!
-lo ^lo !
-hi ^hi !
-!
-
-!IRand methodsFor: 'private'!
-lo: x lo := x !
-hi: x hi := x !
-!
-
-!IRand methodsFor: 'private'!
-initialize ugenName := #IRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
-
-!IRand class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!IRand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
-lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
-lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
-!
-
 UGen subclass: #Klank
 instanceVariableNames: 'input freqscale freqoffset decayscale specificationsArrayRef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Klank commentStamp: '<historical>' prior: 0!
@@ -637,17 +570,14 @@ Bank of resonators !
 
 !Klank methodsFor: 'accessing'!
 input ^input !
-freqscale ^freqscale !
-freqoffset ^freqoffset !
-decayscale ^decayscale !
-specificationsArrayRef ^specificationsArrayRef !
-!
-
-!Klank methodsFor: 'private'!
 input: x input := x !
+freqscale ^freqscale !
 freqscale: x freqscale := x !
+freqoffset ^freqoffset !
 freqoffset: x freqoffset := x !
+decayscale ^decayscale !
 decayscale: x decayscale := x !
+specificationsArrayRef ^specificationsArrayRef !
 specificationsArrayRef: x specificationsArrayRef := x !
 !
 
@@ -663,87 +593,6 @@ input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale 
 input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add |u| u := self new . u input: input . u freqscale: freqscale . u freqoffset: freqoffset . u decayscale: decayscale . u specificationsArrayRef: specificationsArrayRef . ^ u * mul + add !
 !
 
-UGen subclass: #Lag
-instanceVariableNames: 'in lagTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!Lag commentStamp: '<historical>' prior: 0!
-Exponential lag !
-
-!Lag methodsFor: 'accessing'!
-in ^in !
-lagTime ^lagTime !
-!
-
-!Lag methodsFor: 'private'!
-in: x in := x !
-lagTime: x lagTime := x !
-!
-
-!Lag methodsFor: 'private'!
-initialize ugenName := #Lag . paramNames := #(in lagTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!Lag class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!Lag class methodsFor: 'instance creation'!
-in: in lagTime: lagTime |u| u := self new . u in: in . u lagTime: lagTime . ^ u !
-in: in lagTime: lagTime mul: mul |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul !
-in: in lagTime: lagTime mul: mul add: add |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul + add !
-!
-
-UGen subclass: #Latch
-instanceVariableNames: 'in trig' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!Latch commentStamp: '<historical>' prior: 0!
-Sample and hold !
-
-!Latch methodsFor: 'accessing'!
-in ^in !
-trig ^trig !
-!
-
-!Latch methodsFor: 'private'!
-in: x in := x !
-trig: x trig := x !
-!
-
-!Latch methodsFor: 'private'!
-initialize ugenName := #Latch . paramNames := #(in trig) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!Latch class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!Latch class methodsFor: 'instance creation'!
-in: in trig: trig |u| u := self new . u in: in . u trig: trig . ^ u !
-in: in trig: trig mul: mul |u| u := self new . u in: in . u trig: trig . ^ u * mul !
-in: in trig: trig mul: mul add: add |u| u := self new . u in: in . u trig: trig . ^ u * mul + add !
-!
-
-UGen subclass: #LeakDC
-instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!LeakDC commentStamp: '<historical>' prior: 0!
-Remove DC !
-
-!LeakDC methodsFor: 'accessing'!
-in ^in !
-coef ^coef !
-!
-
-!LeakDC methodsFor: 'private'!
-in: x in := x !
-coef: x coef := x !
-!
-
-!LeakDC methodsFor: 'private'!
-initialize ugenName := #LeakDC . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!LeakDC class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!LeakDC class methodsFor: 'instance creation'!
-in: in coef: coef |u| u := self new . u in: in . u coef: coef . ^ u !
-in: in coef: coef mul: mul |u| u := self new . u in: in . u coef: coef . ^ u * mul !
-in: in coef: coef mul: mul add: add |u| u := self new . u in: in . u coef: coef . ^ u * mul + add !
-!
-
 UGen subclass: #LFNoise1
 instanceVariableNames: 'freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !LFNoise1 commentStamp: '<historical>' prior: 0!
@@ -751,9 +600,6 @@ Ramp noise !
 
 !LFNoise1 methodsFor: 'accessing'!
 freq ^freq !
-!
-
-!LFNoise1 methodsFor: 'private'!
 freq: x freq := x !
 !
 
@@ -776,9 +622,6 @@ Quadratic noise. !
 
 !LFNoise2 methodsFor: 'accessing'!
 freq ^freq !
-!
-
-!LFNoise2 methodsFor: 'private'!
 freq: x freq := x !
 !
 
@@ -801,13 +644,10 @@ pulse oscillator !
 
 !LFPulse methodsFor: 'accessing'!
 freq ^freq !
-iphase ^iphase !
-width ^width !
-!
-
-!LFPulse methodsFor: 'private'!
 freq: x freq := x !
+iphase ^iphase !
 iphase: x iphase := x !
+width ^width !
 width: x width := x !
 !
 
@@ -830,11 +670,8 @@ Sawtooth oscillator !
 
 !LFSaw methodsFor: 'accessing'!
 freq ^freq !
-iphase ^iphase !
-!
-
-!LFSaw methodsFor: 'private'!
 freq: x freq := x !
+iphase ^iphase !
 iphase: x iphase := x !
 !
 
@@ -857,11 +694,8 @@ Triangle oscillator !
 
 !LFTri methodsFor: 'accessing'!
 freq ^freq !
-iphase ^iphase !
-!
-
-!LFTri methodsFor: 'private'!
 freq: x freq := x !
+iphase ^iphase !
 iphase: x iphase := x !
 !
 
@@ -877,6 +711,102 @@ freq: freq iphase: iphase mul: mul |u| u := self new . u freq: freq . u iphase: 
 freq: freq iphase: iphase mul: mul add: add |u| u := self new . u freq: freq . u iphase: iphase . ^ u * mul + add !
 !
 
+UGen subclass: #LPF
+instanceVariableNames: 'in freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LPF commentStamp: '<historical>' prior: 0!
+2nd order Butterworth lowpass filter !
+
+!LPF methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+freq ^freq !
+freq: x freq := x !
+!
+
+!LPF methodsFor: 'private'!
+initialize ugenName := #LPF . paramNames := #(in freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!LPF class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LPF class methodsFor: 'instance creation'!
+in: in freq: freq |u| u := self new . u in: in . u freq: freq . ^ u !
+in: in freq: freq mul: mul |u| u := self new . u in: in . u freq: freq . ^ u * mul !
+in: in freq: freq mul: mul add: add |u| u := self new . u in: in . u freq: freq . ^ u * mul + add !
+!
+
+UGen subclass: #Lag
+instanceVariableNames: 'in lagTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Lag commentStamp: '<historical>' prior: 0!
+Exponential lag !
+
+!Lag methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+lagTime ^lagTime !
+lagTime: x lagTime := x !
+!
+
+!Lag methodsFor: 'private'!
+initialize ugenName := #Lag . paramNames := #(in lagTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Lag class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Lag class methodsFor: 'instance creation'!
+in: in lagTime: lagTime |u| u := self new . u in: in . u lagTime: lagTime . ^ u !
+in: in lagTime: lagTime mul: mul |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul !
+in: in lagTime: lagTime mul: mul add: add |u| u := self new . u in: in . u lagTime: lagTime . ^ u * mul + add !
+!
+
+UGen subclass: #Latch
+instanceVariableNames: 'in trig' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Latch commentStamp: '<historical>' prior: 0!
+Sample and hold !
+
+!Latch methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+trig ^trig !
+trig: x trig := x !
+!
+
+!Latch methodsFor: 'private'!
+initialize ugenName := #Latch . paramNames := #(in trig) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Latch class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Latch class methodsFor: 'instance creation'!
+in: in trig: trig |u| u := self new . u in: in . u trig: trig . ^ u !
+in: in trig: trig mul: mul |u| u := self new . u in: in . u trig: trig . ^ u * mul !
+in: in trig: trig mul: mul add: add |u| u := self new . u in: in . u trig: trig . ^ u * mul + add !
+!
+
+UGen subclass: #LeakDC
+instanceVariableNames: 'in coef' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!LeakDC commentStamp: '<historical>' prior: 0!
+Remove DC !
+
+!LeakDC methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+coef ^coef !
+coef: x coef := x !
+!
+
+!LeakDC methodsFor: 'private'!
+initialize ugenName := #LeakDC . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!LeakDC class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!LeakDC class methodsFor: 'instance creation'!
+in: in coef: coef |u| u := self new . u in: in . u coef: coef . ^ u !
+in: in coef: coef mul: mul |u| u := self new . u in: in . u coef: coef . ^ u * mul !
+in: in coef: coef mul: mul add: add |u| u := self new . u in: in . u coef: coef . ^ u * mul + add !
+!
+
 UGen subclass: #Line
 instanceVariableNames: 'start end dur doneAction' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Line commentStamp: '<historical>' prior: 0!
@@ -884,15 +814,12 @@ Line generator. !
 
 !Line methodsFor: 'accessing'!
 start ^start !
-end ^end !
-dur ^dur !
-doneAction ^doneAction !
-!
-
-!Line methodsFor: 'private'!
 start: x start := x !
+end ^end !
 end: x end := x !
+dur ^dur !
 dur: x dur := x !
+doneAction ^doneAction !
 doneAction: x doneAction := x !
 !
 
@@ -915,11 +842,8 @@ Allocate a buffer local to the synth !
 
 !LocalBuf methodsFor: 'accessing'!
 numChannels ^numChannels !
-numFrames ^numFrames !
-!
-
-!LocalBuf methodsFor: 'private'!
 numChannels: x numChannels := x !
+numFrames ^numFrames !
 numFrames: x numFrames := x !
 !
 
@@ -942,9 +866,6 @@ Define and read from buses local to a synth. !
 
 !LocalIn methodsFor: 'accessing'!
 default ^default !
-!
-
-!LocalIn methodsFor: 'private'!
 default: x default := x !
 !
 
@@ -967,9 +888,6 @@ Write to buses local to a synth. !
 
 !LocalOut methodsFor: 'accessing'!
 channelsArray ^channelsArray !
-!
-
-!LocalOut methodsFor: 'private'!
 channelsArray: x channelsArray := x !
 !
 
@@ -985,33 +903,6 @@ channelsArray: channelsArray mul: mul |u| u := self new . u channelsArray: chann
 channelsArray: channelsArray mul: mul add: add |u| u := self new . u channelsArray: channelsArray . ^ u * mul + add !
 !
 
-UGen subclass: #LPF
-instanceVariableNames: 'in freq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!LPF commentStamp: '<historical>' prior: 0!
-2nd order Butterworth lowpass filter !
-
-!LPF methodsFor: 'accessing'!
-in ^in !
-freq ^freq !
-!
-
-!LPF methodsFor: 'private'!
-in: x in := x !
-freq: x freq := x !
-!
-
-!LPF methodsFor: 'private'!
-initialize ugenName := #LPF . paramNames := #(in freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!LPF class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!LPF class methodsFor: 'instance creation'!
-in: in freq: freq |u| u := self new . u in: in . u freq: freq . ^ u !
-in: in freq: freq mul: mul |u| u := self new . u in: in . u freq: freq . ^ u * mul !
-in: in freq: freq mul: mul add: add |u| u := self new . u in: in . u freq: freq . ^ u * mul + add !
-!
-
 UGen subclass: #MouseX
 instanceVariableNames: 'minval maxval warp lag' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !MouseX commentStamp: '<historical>' prior: 0!
@@ -1019,15 +910,12 @@ Cursor tracking UGen. !
 
 !MouseX methodsFor: 'accessing'!
 minval ^minval !
-maxval ^maxval !
-warp ^warp !
-lag ^lag !
-!
-
-!MouseX methodsFor: 'private'!
 minval: x minval := x !
+maxval ^maxval !
 maxval: x maxval := x !
+warp ^warp !
 warp: x warp := x !
+lag ^lag !
 lag: x lag := x !
 !
 
@@ -1050,15 +938,12 @@ Cursor tracking UGen. !
 
 !MouseY methodsFor: 'accessing'!
 minval ^minval !
-maxval ^maxval !
-warp ^warp !
-lag ^lag !
-!
-
-!MouseY methodsFor: 'private'!
 minval: x minval := x !
+maxval ^maxval !
 maxval: x maxval := x !
+warp ^warp !
 warp: x warp := x !
+lag ^lag !
 lag: x lag := x !
 !
 
@@ -1081,13 +966,10 @@ Multiply add !
 
 !MulAdd methodsFor: 'accessing'!
 in ^in !
-mul ^mul !
-add ^add !
-!
-
-!MulAdd methodsFor: 'private'!
 in: x in := x !
+mul ^mul !
 mul: x mul := x !
+add ^add !
 add: x add := x !
 !
 
@@ -1108,11 +990,8 @@ One pole filter. !
 
 !OnePole methodsFor: 'accessing'!
 in ^in !
-coef ^coef !
-!
-
-!OnePole methodsFor: 'private'!
 in: x in := x !
+coef ^coef !
 coef: x coef := x !
 !
 
@@ -1135,11 +1014,8 @@ Write a signal to a bus. !
 
 !Out methodsFor: 'accessing'!
 bus ^bus !
-channelsArray ^channelsArray !
-!
-
-!Out methodsFor: 'private'!
 bus: x bus := x !
+channelsArray ^channelsArray !
 channelsArray: x channelsArray := x !
 !
 
@@ -1162,13 +1038,10 @@ Two channel equal power pan. !
 
 !Pan2 methodsFor: 'accessing'!
 in ^in !
-pos ^pos !
-level ^level !
-!
-
-!Pan2 methodsFor: 'private'!
 in: x in := x !
+pos ^pos !
 pos: x pos := x !
+level ^level !
 level: x level := x !
 !
 
@@ -1191,17 +1064,14 @@ A resettable linear ramp between two levels. !
 
 !Phasor methodsFor: 'accessing'!
 trig ^trig !
-rate ^rate !
-start ^start !
-end ^end !
-resetPos ^resetPos !
-!
-
-!Phasor methodsFor: 'private'!
 trig: x trig := x !
+rate ^rate !
 rate: x rate := x !
+start ^start !
 start: x start := x !
+end ^end !
 end: x end := x !
+resetPos ^resetPos !
 resetPos: x resetPos := x !
 !
 
@@ -1223,7 +1093,6 @@ instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 
 Pink Noise. !
 
 
-
 !PinkNoise methodsFor: 'private'!
 initialize ugenName := #PinkNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
 
@@ -1242,11 +1111,8 @@ Band limited pulse wave. !
 
 !Pulse methodsFor: 'accessing'!
 freq ^freq !
-width ^width !
-!
-
-!Pulse methodsFor: 'private'!
 freq: x freq := x !
+width ^width !
 width: x width := x !
 !
 
@@ -1269,13 +1135,10 @@ Pulse divider. !
 
 !PulseDivider methodsFor: 'accessing'!
 trig ^trig !
-div ^div !
-start ^start !
-!
-
-!PulseDivider methodsFor: 'private'!
 trig: x trig := x !
+div ^div !
 div: x div := x !
+start ^start !
 start: x start := x !
 !
 
@@ -1291,62 +1154,6 @@ trig: trig div: div start: start mul: mul |u| u := self new . u trig: trig . u d
 trig: trig div: div start: start mul: mul add: add |u| u := self new . u trig: trig . u div: div . u start: start . ^ u * mul + add !
 !
 
-UGen subclass: #Rand
-instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!Rand commentStamp: '<historical>' prior: 0!
-Single random number generator. !
-
-!Rand methodsFor: 'accessing'!
-lo ^lo !
-hi ^hi !
-!
-
-!Rand methodsFor: 'private'!
-lo: x lo := x !
-hi: x hi := x !
-!
-
-!Rand methodsFor: 'private'!
-initialize ugenName := #Rand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
-
-!Rand class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!Rand class methodsFor: 'instance creation'!
-lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
-lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
-lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
-!
-
-UGen subclass: #Resonz
-instanceVariableNames: 'in freq bwr' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!Resonz commentStamp: '<historical>' prior: 0!
-Resonant filter. !
-
-!Resonz methodsFor: 'accessing'!
-in ^in !
-freq ^freq !
-bwr ^bwr !
-!
-
-!Resonz methodsFor: 'private'!
-in: x in := x !
-freq: x freq := x !
-bwr: x bwr := x !
-!
-
-!Resonz methodsFor: 'private'!
-initialize ugenName := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!Resonz class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!Resonz class methodsFor: 'instance creation'!
-in: in freq: freq bwr: bwr |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u !
-in: in freq: freq bwr: bwr mul: mul |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul !
-in: in freq: freq bwr: bwr mul: mul add: add |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul + add !
-!
-
 UGen subclass: #RHPF
 instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !RHPF commentStamp: '<historical>' prior: 0!
@@ -1354,13 +1161,10 @@ A resonant high pass filter. !
 
 !RHPF methodsFor: 'accessing'!
 in ^in !
-freq ^freq !
-rq ^rq !
-!
-
-!RHPF methodsFor: 'private'!
 in: x in := x !
+freq ^freq !
 freq: x freq := x !
+rq ^rq !
 rq: x rq := x !
 !
 
@@ -1383,13 +1187,10 @@ A resonant low pass filter. !
 
 !RLPF methodsFor: 'accessing'!
 in ^in !
-freq ^freq !
-rq ^rq !
-!
-
-!RLPF methodsFor: 'private'!
 in: x in := x !
+freq ^freq !
 freq: x freq := x !
+rq ^rq !
 rq: x rq := x !
 !
 
@@ -1405,11 +1206,60 @@ in: in freq: freq rq: rq mul: mul |u| u := self new . u in: in . u freq: freq . 
 in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul + add !
 !
 
+UGen subclass: #Rand
+instanceVariableNames: 'lo hi' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Rand commentStamp: '<historical>' prior: 0!
+Single random number generator. !
+
+!Rand methodsFor: 'accessing'!
+lo ^lo !
+lo: x lo := x !
+hi ^hi !
+hi: x hi := x !
+!
+
+!Rand methodsFor: 'private'!
+initialize ugenName := #Rand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+
+!Rand class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Rand class methodsFor: 'instance creation'!
+lo: lo hi: hi |u| u := self new . u lo: lo . u hi: hi . ^ u !
+lo: lo hi: hi mul: mul |u| u := self new . u lo: lo . u hi: hi . ^ u * mul !
+lo: lo hi: hi mul: mul add: add |u| u := self new . u lo: lo . u hi: hi . ^ u * mul + add !
+!
+
+UGen subclass: #Resonz
+instanceVariableNames: 'in freq bwr' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Resonz commentStamp: '<historical>' prior: 0!
+Resonant filter. !
+
+!Resonz methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+freq ^freq !
+freq: x freq := x !
+bwr ^bwr !
+bwr: x bwr := x !
+!
+
+!Resonz methodsFor: 'private'!
+initialize ugenName := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Resonz class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Resonz class methodsFor: 'instance creation'!
+in: in freq: freq bwr: bwr |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u !
+in: in freq: freq bwr: bwr mul: mul |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul !
+in: in freq: freq bwr: bwr mul: mul add: add |u| u := self new . u in: in . u freq: freq . u bwr: bwr . ^ u * mul + add !
+!
+
 UGen subclass: #SampleDur
 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !SampleDur commentStamp: '<historical>' prior: 0!
 Duration of one sample. !
-
 
 
 !SampleDur methodsFor: 'private'!
@@ -1430,9 +1280,6 @@ Band limited sawtooth. !
 
 !Saw methodsFor: 'accessing'!
 freq ^freq !
-!
-
-!Saw methodsFor: 'private'!
 freq: x freq := x !
 !
 
@@ -1455,15 +1302,12 @@ Set local buffer !
 
 !SetBuf methodsFor: 'accessing'!
 buf ^buf !
-offset ^offset !
-length ^length !
-array ^array !
-!
-
-!SetBuf methodsFor: 'private'!
 buf: x buf := x !
+offset ^offset !
 offset: x offset := x !
+length ^length !
 length: x length := x !
+array ^array !
 array: x array := x !
 !
 
@@ -1486,11 +1330,8 @@ Interpolating sine wavetable oscillator. !
 
 !SinOsc methodsFor: 'accessing'!
 freq ^freq !
-phase ^phase !
-!
-
-!SinOsc methodsFor: 'private'!
 freq: x freq := x !
+phase ^phase !
 phase: x phase := x !
 !
 
@@ -1513,11 +1354,8 @@ Timed trigger. !
 
 !Trig methodsFor: 'accessing'!
 in ^in !
-dur ^dur !
-!
-
-!Trig methodsFor: 'private'!
 in: x in := x !
+dur ^dur !
 dur: x dur := x !
 !
 
@@ -1533,6 +1371,23 @@ in: in dur: dur mul: mul |u| u := self new . u in: in . u dur: dur . ^ u * mul !
 in: in dur: dur mul: mul add: add |u| u := self new . u in: in . u dur: dur . ^ u * mul + add !
 !
 
+UGen subclass: #WhiteNoise
+instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!WhiteNoise commentStamp: '<historical>' prior: 0!
+White noise. !
+
+
+!WhiteNoise methodsFor: 'private'!
+initialize ugenName := #WhiteNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!WhiteNoise class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!WhiteNoise class methodsFor: 'instance creation'!
+ mul: mul |u| u := self new .  ^ u * mul !
+ mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
+
 UGen subclass: #XFade2
 instanceVariableNames: 'inA inB pan level' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !XFade2 commentStamp: '<historical>' prior: 0!
@@ -1540,15 +1395,12 @@ Equal power two channel cross fade. !
 
 !XFade2 methodsFor: 'accessing'!
 inA ^inA !
-inB ^inB !
-pan ^pan !
-level ^level !
-!
-
-!XFade2 methodsFor: 'private'!
 inA: x inA := x !
+inB ^inB !
 inB: x inB := x !
+pan ^pan !
 pan: x pan := x !
+level ^level !
 level: x level := x !
 !
 
@@ -1571,15 +1423,12 @@ Exponential line generator. !
 
 !XLine methodsFor: 'accessing'!
 start ^start !
-end ^end !
-dur ^dur !
-doneAction ^doneAction !
-!
-
-!XLine methodsFor: 'private'!
 start: x start := x !
+end ^end !
 end: x end := x !
+dur ^dur !
 dur: x dur := x !
+doneAction ^doneAction !
 doneAction: x doneAction := x !
 !
 
@@ -1593,24 +1442,6 @@ new ^ self basicNew initialize ! !
 start: start end: end dur: dur doneAction: doneAction |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u !
 start: start end: end dur: dur doneAction: doneAction mul: mul |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul !
 start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u := self new . u start: start . u end: end . u dur: dur . u doneAction: doneAction . ^ u * mul + add !
-!
-
-UGen subclass: #WhiteNoise
-instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
-!WhiteNoise commentStamp: '<historical>' prior: 0!
-White noise. !
-
-
-
-!WhiteNoise methodsFor: 'private'!
-initialize ugenName := #WhiteNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
-
-!WhiteNoise class methodsFor: 'instance creation'!
-new ^ self basicNew initialize ! !
-
-!WhiteNoise class methodsFor: 'instance creation'!
- mul: mul |u| u := self new .  ^ u * mul !
- mul: mul add: add |u| u := self new .  ^ u * mul + add !
 !
 
 
