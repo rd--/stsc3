@@ -385,6 +385,33 @@ repeats: repeats list: list mul: mul |u| u := self new . u repeats: repeats . u 
 repeats: repeats list: list mul: mul add: add |u| u := self new . u repeats: repeats . u list: list . ^ u * mul + add !
 !
 
+UGen subclass: #Dshuf
+instanceVariableNames: 'repeats list' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Dshuf commentStamp: '<historical>' prior: 0!
+Demand rate random sequence generator !
+
+!Dshuf methodsFor: 'accessing'!
+repeats ^repeats !
+list ^list !
+!
+
+!Dshuf methodsFor: 'private'!
+repeats: x repeats := x !
+list: x list := x !
+!
+
+!Dshuf methodsFor: 'private'!
+initialize ugenName := #Dshuf . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 ! !
+
+!Dshuf class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Dshuf class methodsFor: 'instance creation'!
+repeats: repeats list: list |u| u := self new . u repeats: repeats . u list: list . ^ u !
+repeats: repeats list: list mul: mul |u| u := self new . u repeats: repeats . u list: list . ^ u * mul !
+repeats: repeats list: list mul: mul add: add |u| u := self new . u repeats: repeats . u list: list . ^ u * mul + add !
+!
+
 UGen subclass: #Dust
 instanceVariableNames: 'density' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Dust commentStamp: '<historical>' prior: 0!
@@ -1206,6 +1233,62 @@ new ^ self basicNew initialize ! !
 !PinkNoise class methodsFor: 'instance creation'!
  mul: mul |u| u := self new .  ^ u * mul !
  mul: mul add: add |u| u := self new .  ^ u * mul + add !
+!
+
+UGen subclass: #Pulse
+instanceVariableNames: 'freq width' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Pulse commentStamp: '<historical>' prior: 0!
+Band limited pulse wave. !
+
+!Pulse methodsFor: 'accessing'!
+freq ^freq !
+width ^width !
+!
+
+!Pulse methodsFor: 'private'!
+freq: x freq := x !
+width: x width := x !
+!
+
+!Pulse methodsFor: 'private'!
+initialize ugenName := #Pulse . paramNames := #(freq width) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Pulse class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Pulse class methodsFor: 'instance creation'!
+freq: freq width: width |u| u := self new . u freq: freq . u width: width . ^ u !
+freq: freq width: width mul: mul |u| u := self new . u freq: freq . u width: width . ^ u * mul !
+freq: freq width: width mul: mul add: add |u| u := self new . u freq: freq . u width: width . ^ u * mul + add !
+!
+
+UGen subclass: #PulseDivider
+instanceVariableNames: 'trig div start' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!PulseDivider commentStamp: '<historical>' prior: 0!
+Pulse divider. !
+
+!PulseDivider methodsFor: 'accessing'!
+trig ^trig !
+div ^div !
+start ^start !
+!
+
+!PulseDivider methodsFor: 'private'!
+trig: x trig := x !
+div: x div := x !
+start: x start := x !
+!
+
+!PulseDivider methodsFor: 'private'!
+initialize ugenName := #PulseDivider . paramNames := #(trig div start) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!PulseDivider class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!PulseDivider class methodsFor: 'instance creation'!
+trig: trig div: div start: start |u| u := self new . u trig: trig . u div: div . u start: start . ^ u !
+trig: trig div: div start: start mul: mul |u| u := self new . u trig: trig . u div: div . u start: start . ^ u * mul !
+trig: trig div: div start: start mul: mul add: add |u| u := self new . u trig: trig . u div: div . u start: start . ^ u * mul + add !
 !
 
 UGen subclass: #Rand
