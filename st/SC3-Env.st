@@ -55,6 +55,10 @@ r at: 4 put: (loopNode isNil ifTrue: -99 ifFalse: loopNode) .
  r at: (4 + (i * 4)) put: ((curves at: i) isSymbol ifTrue: 0 ifFalse: (curves at: i)) ] .
 ^r ! !
 
+!Envelope methodsFor: 'envelope generator'!
+gen: x ^ EnvGen gate: 1 levelScale: 1 levelBias: 0 timeScale: 1 doneAction: x envelope: self coord !
+gen ^ self gen: 0 ! !
+
 Object subclass: #EnvPerc
  instanceVariableNames: 'attackTime releaseTime level curves'
  classVariableNames: ''

@@ -2,17 +2,17 @@
 SinOsc freq: (69 midicps) phase: 0 mul: 0.1
 
 "SinOsc ; modulate freq"
-SinOsc freq: (XLine start: 2000 end: 200 dur: 1 doneAction: 1) phase: 0 mul: 0.1
+SinOsc freq: (XLine start: 2000 end: 200 dur: 1 doneAction: 2) phase: 0 mul: 0.1
 
 "SinOsc ; modulate freq"
 |f1 f2|
-f1 := XLine start: 1 end: 1000 dur: 9 doneAction: 1 .
+f1 := XLine start: 1 end: 1000 dur: 9 doneAction: 2 .
 f2 := SinOsc freq: f1 phase: 0 mul: 200 add: 800 . "(-1,1) ; (-200,200) ; (600,1000)"
 SinOsc freq: f2 phase: 0 mul: 0.1
 
 "SinOsc ; Modulate phase"
 |ph|
-ph := SinOsc freq: (XLine start: 20 end: 8000 dur: 10 doneAction: 1) phase: 0 mul: 2 * Float pi .
+ph := SinOsc freq: (XLine start: 20 end: 8000 dur: 10 doneAction: 2) phase: 0 mul: 2 * Float pi .
 SinOsc freq: 800 phase: ph mul: 0.1
 
 "SinOsc ; mouse control"

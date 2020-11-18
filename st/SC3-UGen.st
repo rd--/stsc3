@@ -163,6 +163,31 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
 in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul + add !
 !
 
+UGen subclass: #Crackle
+instanceVariableNames: 'chaosParam' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!Crackle commentStamp: '<historical>' prior: 0!
+Chaotic noise function. !
+
+!Crackle methodsFor: 'accessing'!
+chaosParam ^chaosParam !
+!
+
+!Crackle methodsFor: 'private'!
+chaosParam: x chaosParam := x !
+!
+
+!Crackle methodsFor: 'private'!
+initialize ugenName := #Crackle . paramNames := #(chaosParam) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!Crackle class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!Crackle class methodsFor: 'instance creation'!
+chaosParam: chaosParam |u| u := self new . u chaosParam: chaosParam . ^ u !
+chaosParam: chaosParam mul: mul |u| u := self new . u chaosParam: chaosParam . ^ u * mul !
+chaosParam: chaosParam mul: mul add: add |u| u := self new . u chaosParam: chaosParam . ^ u * mul + add !
+!
+
 UGen subclass: #Decay
 instanceVariableNames: 'in decayTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Decay commentStamp: '<historical>' prior: 0!
@@ -1521,6 +1546,7 @@ min: b ^ BinaryOpUGen specialIndex: 12 a: self b: b !
 max: b ^ BinaryOpUGen specialIndex: 13 a: self b: b !
 round: b ^ BinaryOpUGen specialIndex: 19 a: self b: b !
 ** b ^ BinaryOpUGen specialIndex: 25 a: self b: b !
+amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b !
 clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b !
 !
 
