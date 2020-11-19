@@ -6,17 +6,17 @@ Object subclass: #Envelope
 
 !Envelope methodsFor: 'accessing'!
 curves ^ curves !
-curves: anObject curves := anObject. !
+curves: x curves := x. !
 levels ^ levels !
-levels: anObject levels := anObject. !
+levels: x levels := x. !
 loopNode ^ loopNode !
-loopNode: anObject loopNode := anObject. !
+loopNode: x loopNode := x. !
 offset ^ offset !
-offset: anObject offset := anObject. !
+offset: x offset := x. !
 releaseNode ^ releaseNode !
-releaseNode: anObject releaseNode := anObject. !
+releaseNode: x releaseNode := x. !
 times ^ times !
-times: anObject times := anObject. ! !
+times: x times := x. ! !
 
 !Envelope class methodsFor: 'accessing'!
 curveNameDictionary ^ CurveNameDictionary ! !
@@ -67,13 +67,13 @@ Object subclass: #EnvPerc
 
 !EnvPerc methodsFor: 'accessing'!
 attackTime ^ attackTime !
-attackTime: anObject attackTime := anObject. !
+attackTime: x attackTime := x. !
 curves ^ curves !
-curves: anObject curves := anObject. !
+curves: x curves := x. !
 level ^ level !
-level: anObject level := anObject. !
+level: x level := x. !
 releaseTime ^ releaseTime !
-releaseTime: anObject releaseTime := anObject. ! !
+releaseTime: x releaseTime := x. ! !
 
 !EnvPerc class methodsFor: 'instance creation'!
 attackTime: p1 releaseTime: p2 level: p3 curves: p4
@@ -90,15 +90,15 @@ Object subclass: #EnvLinen
 
 !EnvLinen methodsFor: 'accessing'!
 attackTime ^ attackTime !
-attackTime: anObject attackTime := anObject. !
+attackTime: x attackTime := x. !
 curves ^ curves !
-curves: anObject curves := anObject. !
+curves: x curves := x. !
 level ^ level !
-level: anObject level := anObject. !
+level: x level := x. !
 releaseTime ^ releaseTime !
-releaseTime: anObject releaseTime := anObject. !
+releaseTime: x releaseTime := x. !
 sustainTime ^ sustainTime !
-sustainTime: anObject sustainTime := anObject. ! !
+sustainTime: x sustainTime := x. ! !
 
 !EnvLinen class methodsFor: 'instance creation'!
 attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curves: p5
@@ -106,3 +106,53 @@ attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curves: p5
 
 !EnvLinen methodsFor: 'envelope coordinates'!
 envelope ^ Envelope levels: {0 . level . level . 0} times: {attackTime . sustainTime . releaseTime} curves: curves releaseNode: nil loopNode: nil offset: 0 ! !
+
+Object subclass: #EnvASR
+ instanceVariableNames: 'attackTime sustainLevel releaseTime curves'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!EnvASR methodsFor: 'accessing'!
+attackTime ^ attackTime !
+attackTime: x attackTime := x. !
+curves ^ curves !
+curves: x curves := x. !
+releaseTime ^ releaseTime !
+releaseTime: x releaseTime := x. !
+sustainLevel ^ sustainLevel !
+sustainLevel: x sustainLevel := x. ! !
+
+!EnvASR class methodsFor: 'instance creation'!
+attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4
+|u| u := self new . u attackTime: p1 . u sustainLevel: p2 . u releaseTime: p3 . u curves: p4 . ^ u ! !
+
+!EnvASR methodsFor: 'envelope coordinates'!
+envelope ^ Envelope levels: {0 . sustainLevel . 0} times: {attackTime . releaseTime} curves: curves releaseNode: 1 loopNode: nil offset: 0 ! !
+
+Object subclass: #EnvADSR
+ instanceVariableNames: 'attackTime decayTime sustainLevel releaseTime peakLevel curves'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3' !
+
+!EnvADSR methodsFor: 'accessing'!
+attackTime ^ attackTime !
+attackTime: x attackTime := x. !
+curves ^ curves !
+curves: x curves := x. !
+decayTime ^ decayTime !
+decayTime: x decayTime := x. !
+peakLevel ^ peakLevel !
+peakLevel: x peakLevel := x. !
+releaseTime ^ releaseTime !
+releaseTime: x releaseTime := x. !
+sustainLevel ^ sustainLevel !
+sustainLevel: x sustainLevel := x. ! !
+
+!EnvADSR class methodsFor: 'instance creation'!
+attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6
+|u| u := self new . u attackTime: p1 . u decayTime: p2 . u sustainLevel: p3 . u releaseTime: p4 . u peakLevel: p5 . u curves: p6 . ^ u ! !
+
+!EnvADSR methodsFor: 'envelope coordinates'!
+envelope ^ Envelope levels: {0 . peakLevel . peakLevel * sustainLevel . 0} times: {attackTime . decayTime . releaseTime} curves: curves releaseNode: 2 loopNode: nil offset: 0 ! !

@@ -1323,6 +1323,30 @@ buf: buf offset: offset length: length array: array mul: mul |u| u := self new .
 buf: buf offset: offset length: length array: array mul: mul add: add |u| u := self new . u buf: buf . u offset: offset . u length: length . u array: array . ^ u * mul + add !
 !
 
+UGen subclass: #SetResetFF
+instanceVariableNames: 'trig reset' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!SetResetFF commentStamp: '<historical>' prior: 0!
+Set-reset flip flop. !
+
+!SetResetFF methodsFor: 'accessing'!
+trig ^trig !
+trig: x trig := x !
+reset ^reset !
+reset: x reset := x !
+!
+
+!SetResetFF methodsFor: 'private'!
+initialize ugenName := #SetResetFF . paramNames := #(trig reset) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!SetResetFF class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!SetResetFF class methodsFor: 'instance creation'!
+trig: trig reset: reset |u| u := self new . u trig: trig . u reset: reset . ^ u !
+trig: trig reset: reset mul: mul |u| u := self new . u trig: trig . u reset: reset . ^ u * mul !
+trig: trig reset: reset mul: mul add: add |u| u := self new . u trig: trig . u reset: reset . ^ u * mul + add !
+!
+
 UGen subclass: #SinOsc
 instanceVariableNames: 'freq phase' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !SinOsc commentStamp: '<historical>' prior: 0!

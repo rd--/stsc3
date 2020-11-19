@@ -1,5 +1,22 @@
 GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' .
 
+"Envelope"
+
+Envelope initialize . "build dictionary (class variable)"
+Envelope curveNameDictionary . "curve name dictionary"
+
+"File I/O - Text"
+
+FileStream oldFileNamed: '/home/rohan/sw/stsc3/help/stsc3.st' do:  [:in | in contentsOfEntireFile ] . "squeak"
+'/home/rohan/sw/stsc3/help/stsc3.st' asFileEntry textContents . "squeak - FM library"
+'/home/rohan/sw/stsc3/help/stsc3.st' asFileReference readStream upToEnd . "pharo"
+
+"File I/O - Object"
+
+d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
+FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
+FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
+
 "Transcript"
 
 Transcript open . "-> opens Transcript"

@@ -24,7 +24,7 @@ ugen =
   ,"Lag","Latch","LeakDC","Line","LocalBuf","LocalIn","LocalOut"
   ,"MouseX","MouseY","MulAdd","OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pulse","PulseDivider"
-  ,"RHPF","RLPF","Rand","Resonz","SampleDur","Saw","SetBuf","SinOsc"
+  ,"RHPF","RLPF","Rand","Resonz","SampleDur","Saw","SetBuf","SetResetFF","SinOsc"
   ,"Trig","WhiteNoise","XFade2","XLine"]
 
 main :: IO ()
