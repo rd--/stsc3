@@ -67,5 +67,11 @@
 !
 
 !Control methodsFor: 'printing'!
- printHaskellOn: fd '(control KR ' putOn: fd . self name asString printHaskellOn: fd . self init putOn: fd . ') ' putOn: fd !
+ printHaskellOn: fd
+  "Print Control value"
+  '(control KR ' putOn: fd .
+  self name asString printHaskellOn: fd .
+  fd space .
+  self init asString putOn: fd .
+  ') ' putOn: fd !
 !
