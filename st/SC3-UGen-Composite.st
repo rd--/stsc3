@@ -1,7 +1,7 @@
 !LocalBuf class methodsFor: 'instance creation'!
  newFrom: x
  |p q |
- p := self class numChannels: 1 numFrames: x size .
+ p := self numChannels: 1 numFrames: x size .
  q := SetBuf buf: p offset: 0 length: x size array: x .
  ^ MRG lhs: p rhs: q ! !
 

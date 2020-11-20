@@ -12,18 +12,18 @@
 
 !String methodsFor: 'user interface'!
  viewTextFile
- |txt b t w m|
- w := SystemWindow new extent: 500@500 .
+ |w t b|
+ w := SystemWindow new extent: 600@270 .
  w setLabel: self .
  w model: (Model new) .
  t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
  t backgroundColor: Color white .
- w addMorph: t frame: (0@0 corner: 0.9@1) .
+ w addMorph: t frame: (0@0 corner: 1@0.9) .
  b := AlignmentMorph newRow .
  b color: Color veryVeryLightGray ; rubberBandCells: false ; vResizing: #shrinkWrap " ; cellGap: 6@0" .
  {{'Play' . [(t selection) asString evalString play]} . {'Stop' . [SC3 reset]} . {'Draw' . [(t selection) asString evalString draw]}} do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value)] .
  w addMorph: b frame: (0@0.9 corner: 1@1) .
- w openInWorldExtent: 500@350 !
+ w openInWorldExtent: 600@270 "400@180 500@225 600@270" !
 !
 
 SystemWindow subclass: #GraphBrowser
