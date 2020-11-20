@@ -63,17 +63,35 @@ Object subclass: #Envelope
 !
 
 !Envelope methodsFor: 'envelope generator'!
- gen: x ^ EnvGen gate: 1 levelScale: 1 levelBias: 0 timeScale: 1 doneAction: x envelope: self coord !
- gen ^ self gen: 0 !
+ gen: g doneAction: d ^ EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coord !
+ gen ^ self gen: 1 doneAction: 0 !
 !
 
-Object subclass: #EnvPerc
+Object subclass: #Env
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'
+!
+!Env commentStamp: '<historical>' prior: 0! Envelope Types!
+
+!Env methodsFor: 'envelope coordinates'!
+ envelope
+  "Make Envelope instance"
+  self subclassResponsibility !
+ envGen: g doneAction: d
+  "Make EnvGen instance with indicated doneAction"
+  ^ EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self envelope coord !
+ envGen ^ self envGen: 1 doneAction: 0 !
+!
+
+Env subclass: #EnvPerc
  instanceVariableNames: 'attackTime releaseTime level curves'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
-!EnvPerc commentStamp: '<historical>' prior: 0! Attack-Release Envelope!
+!EnvPerc commentStamp: '<historical>' prior: 0! Attack-Release Envelope (Fixed Duration, No Gate)!
 
 !EnvPerc methodsFor: 'accessing'!
  attackTime ^ attackTime !
@@ -95,12 +113,12 @@ Object subclass: #EnvPerc
  envelope ^ Envelope levels: {0 . level . 0} times: {attackTime . releaseTime} curves: curves releaseNode: nil loopNode: nil offset: 0 !
 !
 
-Object subclass: #EnvLinen
+Env subclass: #EnvLinen
  instanceVariableNames: 'attackTime sustainTime releaseTime level curves'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'!
-!EnvLinen commentStamp: '<historical>' prior: 0! Trapezoidal envelope!
+!EnvLinen commentStamp: '<historical>' prior: 0! Trapezoidal Envelope (Fixed Duration, No Gate)!
 
 !EnvLinen methodsFor: 'accessing'!
  attackTime ^ attackTime !
@@ -124,13 +142,13 @@ Object subclass: #EnvLinen
  envelope ^ Envelope levels: {0 . level . level . 0} times: {attackTime . sustainTime . releaseTime} curves: curves releaseNode: nil loopNode: nil offset: 0 !
 !
 
-Object subclass: #EnvASR
+Env subclass: #EnvASR
  instanceVariableNames: 'attackTime sustainLevel releaseTime curves'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
-!EnvASR commentStamp: '<historical>' prior: 0! Attack-Sustain-Release envelope!
+!EnvASR commentStamp: '<historical>' prior: 0! Attack-Sustain-Release Envelope!
 
 !EnvASR methodsFor: 'accessing'!
  attackTime ^ attackTime !
@@ -152,13 +170,13 @@ Object subclass: #EnvASR
  envelope ^ Envelope levels: {0 . sustainLevel . 0} times: {attackTime . releaseTime} curves: curves releaseNode: 1 loopNode: nil offset: 0 !
 !
 
-Object subclass: #EnvADSR
+Env subclass: #EnvADSR
  instanceVariableNames: 'attackTime decayTime sustainLevel releaseTime peakLevel curves'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
-!EnvADSR commentStamp: '<historical>' prior: 0! Attack-Decay-Sustain-Release envelope!
+!EnvADSR commentStamp: '<historical>' prior: 0! Attack-Decay-Sustain-Release Envelope!
 
 !EnvADSR methodsFor: 'accessing'!
  attackTime ^ attackTime !

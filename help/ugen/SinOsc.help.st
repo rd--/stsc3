@@ -22,13 +22,12 @@ y := MouseY minval: 0.01 maxval: 0.25 warp: 1 lag: 0.2 .
 SinOsc freq: x phase: 0 mul: y
 
 "SinOsc ; simple bell-like tone"
-|f a o d e|
+|f a o e|
 f := {0.5 . 1.0 . 1.19 . 1.56 . 2.0 . 2.51 . 2.66 . 3.01 . 4.1} .
 a := {0.25 . 1.0 . 0.8 . 0.5 . 0.9 . 0.4 . 0.3 . 0.6 . 0.1} .
 o := SinOsc freq: (f * 500) phase: 0 mul: a .
-d := {0.0 . 2.0 . -99.0 . -99.0 . 1.0 . 0.01 . 5.0 . -4.0 . 0.0 . 10.0 . 5.0 . -4.0} .
-e := EnvGen gate: 1 levelScale: 0.1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: d .
-o mix * e
+e := EnvPerc attackTime: 0.01 releaseTime: 10 level: 0.1 curves: #(-4 -4) .
+o mix * (e envGen: 1 doneAction: 2)
 
 "SinOsc ; When two pure tones of slightly different frequency are superposed, our ears
 perceive audible beats at a rate given by the difference of the two frequencies."

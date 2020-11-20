@@ -1,9 +1,8 @@
 "envASR ; random release time"
-|g p e|
+|g e|
 g := SetResetFF trig: 1 reset: (Dust density: 1) .
-p := EnvASR attackTime: 0.01 sustainLevel: 1 releaseTime: 1 curves: #(-4 -4) .
-e := EnvGen gate: g levelScale: 0.1 levelBias: 0 timeScale: 1 doneAction: 2 envelope: p envelope coord .
-SinOsc freq: 440 phase: 0 mul: e kr
+e := EnvASR attackTime: 0.01 sustainLevel: 0.1 releaseTime: 1 curves: #(-4 -4) .
+SinOsc freq: 440 phase: 0 mul: (e envGen: g doneAction: 2) kr
 
 "---- ; coordinates"
 |e|

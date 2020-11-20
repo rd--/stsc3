@@ -1,9 +1,7 @@
 "envPerc"
-|a p e|
-a := 0.1 .
-p := EnvPerc attackTime: 0.01 releaseTime: 1 level: 1 curves: #(-4 -4) .
-e := EnvGen gate: 1 levelScale: a levelBias: 0 timeScale: 1 doneAction: 2 envelope: p envelope coord .
-SinOsc freq: 440 phase: 0 mul: e kr
+|e|
+e := EnvPerc attackTime: 0.01 releaseTime: 1 level: 0.1 curves: #(-4 -4) .
+SinOsc freq: 440 phase: 0 mul: (e envGen: 1 doneAction: 2) kr
 
 "---- coord"
 e := EnvPerc attackTime: 0.01 releaseTime: 1 level: 1 curves #(-4 -4) .
