@@ -7,6 +7,8 @@ Envelope curveNameDictionary . "curve name dictionary"
 
 "File I/O - Text"
 
+'/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd  ] .
+
 FileStream oldFileNamed: '/home/rohan/sw/stsc3/help/stsc3.st' do:  [:in | in contentsOfEntireFile ] . "squeak"
 '/home/rohan/sw/stsc3/help/stsc3.st' asFileEntry textContents . "squeak - FM library"
 '/home/rohan/sw/stsc3/help/stsc3.st' asFileReference readStream upToEnd . "pharo"
@@ -16,6 +18,13 @@ FileStream oldFileNamed: '/home/rohan/sw/stsc3/help/stsc3.st' do:  [:in | in con
 d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
+
+"File I/O - Directory"
+
+(FileDirectory on: '/home/rohan/sw/stsc3/help/') fullNamesOfAllFilesInSubtree . "recursive directory listing ; squeak"
+
+'/home/rohan/sw/stsc3/help/' asFileReference allChildren . "recursive directory listing ; pharo"
+'/home/rohan/sw/stsc3/help/' asFileReference allChildrenMatching: '*.st' . "recursive directory listing with pattern; pharo"
 
 "Transcript"
 
@@ -155,8 +164,6 @@ OSProcess editOutputOf: 'ps -axjf'
 (FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') suffixList: #(st) label: 'select st file') evalTextFile play . "file chooser on dir"
 
 FileList2 modalFileSelectorForSuffixes: #(st) directory: (FileDirectory on: '/home/rohan/sw/stsc3/help/') . "file chooser on dir"
-
-(FileDirectory on: '/home/rohan/sw/stsc3/help/graph/') fullNamesOfAllFilesInSubtree . "recursive directory listing"
 
 'a text' edit . "-> UIManager default edit: 'edit text'"
 
