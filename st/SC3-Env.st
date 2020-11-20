@@ -31,7 +31,7 @@ Object subclass: #Envelope
  ^ u !
 !
 
-!Envelope class methodsFor: 'initialisation'!
+!Envelope class methodsFor: 'class initialization'!
  initialize
  CurveNameDictionary :=
  Dictionary newFrom: {
@@ -52,8 +52,8 @@ Object subclass: #Envelope
  r := Array new: ((n + 1) * 4) .
  r at: 1 put: (levels at: 1) .
  r at: 2 put: n .
- r at: 3 put: (releaseNode isNil ifTrue: -99 ifFalse: releaseNode) .
- r at: 4 put: (loopNode isNil ifTrue: -99 ifFalse: loopNode) .
+ r at: 3 put: (releaseNode ifNil: -99 ifNotNil: releaseNode) .
+ r at: 4 put: (loopNode ifNil: -99 ifNotNil: loopNode) .
  (1 to: n) do: [: i|
   r at: (1 + (i * 4)) put: (levels at: (i + 1)) .
   r at: (2 + (i * 4)) put: (times at: i) .
