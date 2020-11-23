@@ -8,23 +8,26 @@ Envelope curveNameDictionary . "curve name dictionary"
 "File I/O - Text"
 
 '/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd  ] .
-
-FileStream oldFileNamed: '/home/rohan/sw/stsc3/help/stsc3.st' do:  [:in | in contentsOfEntireFile ] . "squeak"
-'/home/rohan/sw/stsc3/help/stsc3.st' asFileEntry textContents . "squeak - FM library"
-'/home/rohan/sw/stsc3/help/stsc3.st' asFileReference readStream upToEnd . "pharo"
-
-"File I/O - Object"
-
-d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
-FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
-FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
+'/tmp/str.text' readTextFile .
 
 "File I/O - Directory"
 
-(FileDirectory on: '/home/rohan/sw/stsc3/help/') fullNamesOfAllFilesInSubtree . "recursive directory listing ; squeak"
+'/home/rohan/sw/stsc3/help/' dirAllFilesWithExt: '.st' . "recursive directory listing by file extension"
 
-'/home/rohan/sw/stsc3/help/' asFileReference allChildren . "recursive directory listing ; pharo"
-'/home/rohan/sw/stsc3/help/' asFileReference allChildrenMatching: '*.st' . "recursive directory listing with pattern; pharo"
+"Evaluate"
+
+'1+1' evalString . "-> 2 ; evaluate string"
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play . "evaluate text file"
+
+"SC3"
+
+SC3 reset . "C-c C-."
+
+"UI"
+
+'/home/rohan/sw/stsc3/lib/png/smalltalk-balloon.png' viewImageFile . "viewer for image file"
+'/home/rohan/sw/stsc3/lib/png/squeak-mouse.png' viewImageFile . "viewer for image file"
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile . "editor for text file ; play, stop and draw buttons"
 
 "Transcript"
 
@@ -37,16 +40,20 @@ Transcript open . "-> opens Transcript"
 2.0 rand: 3.0 . "-> random Float in 2 to 3"
 4.0 rand2 . "-> random Float in -4 to 4"
 
+100 arrayFill: [:_i | 5.0 rand] . "-> 100 random Floats in 0 to 5"
+
 "Random - Integer"
 
-5 rand . "-> random Integer in 0 to 5"
+5 rand . "-> random Integer in 1 to 5 ; i.e. atRandom"
 1 rand: 5 . "-> random Integer in 1 to 5"
 4 rand2 . "-> random Integer in -4 to 4"
 
+100 arrayFill: [:_i | 5 rand] . "-> 100 random Integers in 0 to 5"
+
 "Random - Array"
 
-{1 . 2 . 3 . 4 . 5} atRandom . "random element of Array ; SC3 choose"
-50 arrayFill: [:_i | 1 rand: 5] . "array of random Integers in 1 to 5"
+{1 . 2 . 3 . 4 . 5} choose . "random element of Array ; i.e. atRandom"
+100 arrayFill: [:_i | #(a b c d e} choose] . "-> 100 randomly chosen symbols"
 
 "Array"
 
@@ -58,6 +65,10 @@ Transcript open . "-> opens Transcript"
 #((1 2) (3 4)) concatenation . "-> #((1 3) (2 4))"
 #((1 2) (3 4)) transpose concatenation . "-> #(1 3 2 4)"
 5 mixFill: [:x| x * x] . "-> 55"
+
+"Strings"
+
+'file' , '.ext' = 'file.ext' . "-> true"
 
 "Symbols"
 
@@ -73,11 +84,6 @@ Transcript open . "-> opens Transcript"
 (1 to: 5) copyFrom: 2 to: 5 . "-> #(2 3 4 5) ; drop"
 (1 to: 5) at: 3 . "-> 3 ; ! ; one-indexed"
 
-"Evaluate"
-
-Compiler evaluate: '1+1' "squeak ; evaluate string"
-OpalCompiler evaluate: '1+1' "pharo ; evaluate string"
-
 "Dictionary"
 
 d := Dictionary new . d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z' .
@@ -88,15 +94,6 @@ d := Dictionary newFromPairs: #(select x from y list z)
 x := nil .
 x isNil ifTrue: ['x'] ifFalse: ['y'] .
 x isNil ifTrue: 'x' ifFalse: 'y' .
-
-"SC3"
-
-SC3 reset . "C-c C-."
-
-'/tmp/hsc3.png' viewImageFile .
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' readTextFile . "read text file"
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalTextFile play . "read and evaluate text file"
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile . "editor for text file with play, stop and draw buttons"
 
 "Morph"
 
@@ -174,3 +171,10 @@ Form fromUser asMorph openInWorld . "squeak ; screenshot selection"
 (ImageReadWriter formFromFileNamed: '/tmp/hsc3.png') asMorph openInHand . "squeak ; image display"
 
 (Form fromFileNamed: '/tmp/hsc3.png') asMorph openInHand . "squeak ; image display"
+
+"File I/O - Object"
+
+d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
+FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
+FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
+

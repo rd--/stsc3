@@ -42,7 +42,7 @@ SystemWindow subclass: #GraphBrowser
 !GraphBrowser methodsFor: 'accessing'!
  directoryName ^ directoryName !
  index ^ index !
- files ^ directoryName dirAllSmalltalkFiles sort !
+ files ^ (directoryName dirAllFilesWithExt: '.st') sort !
 !
 
 !GraphBrowser class methodsFor: 'instance creation'!

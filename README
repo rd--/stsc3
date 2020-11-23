@@ -4,4 +4,6 @@ stsc3
 [smalltalk](http://squeak.org/) bindings to the
 [SuperCollider](http://audiosynth.com/) real-time synthesiser.
 
+![](sw/stsc3/lib/png/smalltalk-balloon.png)
+
 © [rohan drape](http://rohandrape.net/), 2019-2020, [gpl](http://gnu.org/copyleft/)

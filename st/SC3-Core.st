@@ -107,16 +107,8 @@ UGen subclass: #MCE
  mce ^ MCE source: self !
 !
 
-!Array methodsFor: 'rearranging'!
- transpose ^ (1 to: self first size) collect: [:c | self collect: [:r | r at: c]] !
-!
-
 !Number methodsFor: 'enumerating'!
- to: n collect: f ^ ((self to: n) asArray) collect: [:i| f value: i] !
- arrayFill: f ^ 1 to: self collect: [:i| f value: i] !
- replicate: x ^ self arrayFill: [:_i| x] !
  mceFill: f ^ (self arrayFill: f) mce !
- mixFill: f ^ (self arrayFill: f) sum !
 !
 
 UGen subclass: #Mix
