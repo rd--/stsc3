@@ -6,4 +6,9 @@ stsc3
 
 ![](sw/stsc3/lib/png/smalltalk-balloon.png)
 
+requires:
+[OSProcess](https://wiki.squeak.org/squeak/708)
+
+tested with: squeak 6.0α & 5.2 ; pharo 8.0
+
 © [rohan drape](http://rohandrape.net/), 2019-2020, [gpl](http://gnu.org/copyleft/)

@@ -2,8 +2,8 @@ GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' .
 
 "Envelope"
 
-Envelope initialize . "build dictionary (class variable)"
-Envelope curveNameDictionary . "curve name dictionary"
+Env initialize . "build dictionary (class variable)"
+Env curveNameDictionary . "curve name dictionary"
 
 "File I/O - Text"
 
@@ -29,10 +29,23 @@ SC3 reset . "C-c C-."
 '/home/rohan/sw/stsc3/lib/png/squeak-mouse.png' viewImageFile . "viewer for image file"
 '/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile . "editor for text file ; play, stop and draw buttons"
 
+"Browser"
+
+Browser openBrowser . "open Browser"
+
 "Transcript"
 
-Transcript open . "-> opens Transcript"
+Transcript open . "-> opens Transcript ; MVC"
 1 to: 5 do: [:x| Transcript cr ; show: x] . "-> prints to Transcript"
+
+"Method Finder"
+
+ToolBuilder open: SelectorBrowser new . "open Method Finder (Selector Browser) tool ; squeak ; MVC"
+SelectorBrowser new open . "squeak ; MVC"
+
+"Message Names"
+
+MessageNames openMessageNames . "open Message Names tool"
 
 "Random - Float"
 
@@ -130,13 +143,18 @@ UIManager default chooseFullFileNameMatching: nil
 
 "FileList"
 
-FileList open .
+FileList open . "opens FileList ; default directory"
+FileList openInMVC . "squeak ; MVC"
 FileList openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') . "squeak"
 FileList openOn: '/home/rohan/sw/stsc3/help/' . "pharo"
 
+"ProcessBrowser"
+
+ProcessBrowser open . "open process browser ; MVC"
+
 "Workspace"
 
-Workspace open .
+Workspace open . "opens workspace ; MVC"
 Workspace open contents: 'Workspace open .' . "pharo"
 Workspace open openFile: '/home/rohan/sw/stsc3/help/stsc3.st' . "pharo"
 
