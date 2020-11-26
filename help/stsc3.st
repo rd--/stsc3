@@ -117,8 +117,19 @@ menu startUpWithCaption: 'Choose a shape'
 
 "UI"
 
+ListChooser chooseItemFrom: #(select an item from an array) title: 'Select:' addAllowed: true
+ListChooser chooseIndexFrom: #(select an item from an array) title: 'Select:' addAllowed: true
+
+ListMultipleChooser chooseItemListFrom: #(select an item from an array) title: 'Select:'
+ListMultipleChooser chooseIndexListFrom: #(select an item from an array) title: 'Select:'
+
+DirectoryChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') label: 'Select:'
+FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') pattern: '*.st' label: 'Select:'
+FileSaverDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') initialFilename: 'x.st' label: 'Select:'
+
 UIManager default chooseDirectory
-UIManager default chooseFrom: #(select from list)
+UIManager default chooseFrom: #(select from list) "few items = buttons"
+UIManager default chooseFrom: ((100 to: 125) asArray) "many items = list"
 UIManager default confirm: 'really?'
 UIManager default confirm: 'really?' orCancel: [Transcript show: 'cancel' ; cr]
 UIManager default edit: 'edit text'
