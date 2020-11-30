@@ -207,3 +207,9 @@ d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
 
+
+"Smalltalk"
+
+Smalltalk garbageCollect .
+Smalltalk aboutThisSystem . "System Reporter"
+
