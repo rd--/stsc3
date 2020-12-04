@@ -86,7 +86,7 @@ UGen subclass: #Rate
 !
 
 UGen subclass: #MCE
- instanceVariableNames: 'source'
+ instanceVariableNames: 'source transform'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
@@ -96,11 +96,22 @@ UGen subclass: #MCE
 !MCE methodsFor: 'accessing'!
  source: x source := x !
  source ^ source !
+ transform: x transform := x !
+ transform ^ transform !
  size ^ source size !
 !
 
+!MCE methodsFor: 'initialization'!
+ initialize source := nil . transform := nil !
+!
+
 !MCE class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize !
  source: x ^ self new source: x !
+!
+
+!MCE methodsFor: 'transforms'!
+ transpose ^ self transform: #mceTranspose !
 !
 
 !Array methodsFor: 'multi-channel expansion'!

@@ -47,6 +47,7 @@
 
 !MCE methodsFor: 'printing'!
  printHaskellOn: fd
+  transform notNil ifTrue: [transform putOn: fd . ' ' putOn: fd] .
   source printHaskellOn: fd !
 !
 

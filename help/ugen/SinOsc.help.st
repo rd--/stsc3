@@ -60,6 +60,12 @@ o3 := ph sin .
 "sinOsc ; 15.5 khz"
 Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75
 
+"mce"
+(SinOsc freq: #((220 880) (221 881)) phase: 0 mul: 0.1) mix
+
+"mce transpose"
+(SinOsc freq: #((220 880) (221 881)) mce transpose phase: 0 mul: 0.1) mix
+
 "----"
 o := SinOsc freq: 440 phase: 0
 o hash

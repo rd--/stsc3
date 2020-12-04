@@ -26,6 +26,32 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
 in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add |u| u := self new . u in: in . u maxdelaytime: maxdelaytime . u delaytime: delaytime . u decaytime: decaytime . ^ u * mul + add !
 !
 
+UGen subclass: #AmpComp
+instanceVariableNames: 'freq root exp' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!AmpComp commentStamp: '<historical>' prior: 0!
+Basic psychoacoustic amplitude compensation. !
+
+!AmpComp methodsFor: 'accessing'!
+freq ^freq !
+freq: x freq := x !
+root ^root !
+root: x root := x !
+exp ^exp !
+exp: x exp := x !
+!
+
+!AmpComp methodsFor: 'initialization'!
+initialize ugenName := #AmpComp . paramNames := #(freq root exp) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!AmpComp class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!AmpComp class methodsFor: 'instance creation'!
+freq: freq root: root exp: exp |u| u := self new . u freq: freq . u root: root . u exp: exp . ^ u !
+freq: freq root: root exp: exp mul: mul |u| u := self new . u freq: freq . u root: root . u exp: exp . ^ u * mul !
+freq: freq root: root exp: exp mul: mul add: add |u| u := self new . u freq: freq . u root: root . u exp: exp . ^ u * mul + add !
+!
+
 UGen subclass: #Amplitude
 instanceVariableNames: 'in attackTime releaseTime' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !Amplitude commentStamp: '<historical>' prior: 0!
@@ -903,6 +929,32 @@ channelsArray: channelsArray mul: mul |u| u := self new . u channelsArray: chann
 channelsArray: channelsArray mul: mul add: add |u| u := self new . u channelsArray: channelsArray . ^ u * mul + add !
 !
 
+UGen subclass: #ModDif
+instanceVariableNames: 'x y mod' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!ModDif commentStamp: '<historical>' prior: 0!
+Minimum difference of two values in modulo arithmetics !
+
+!ModDif methodsFor: 'accessing'!
+x ^x !
+x: x_ x := x_ !
+y ^y !
+y: x y := x !
+mod ^mod !
+mod: x mod := x !
+!
+
+!ModDif methodsFor: 'initialization'!
+initialize ugenName := #ModDif . paramNames := #(x y mod) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!ModDif class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!ModDif class methodsFor: 'instance creation'!
+x: x y: y mod: mod |u| u := self new . u x: x . u y: y . u mod: mod . ^ u !
+x: x y: y mod: mod mul: mul |u| u := self new . u x: x . u y: y . u mod: mod . ^ u * mul !
+x: x y: y mod: mod mul: mul add: add |u| u := self new . u x: x . u y: y . u mod: mod . ^ u * mul + add !
+!
+
 UGen subclass: #MouseX
 instanceVariableNames: 'minval maxval warp lag' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !MouseX commentStamp: '<historical>' prior: 0!
@@ -1482,6 +1534,8 @@ start: start end: end dur: dur doneAction: doneAction mul: mul add: add |u| u :=
 >= b ^ BinaryOpUGen specialIndex: 11 a: self b: b !
 min: b ^ BinaryOpUGen specialIndex: 12 a: self b: b !
 max: b ^ BinaryOpUGen specialIndex: 13 a: self b: b !
+lcm: b ^ BinaryOpUGen specialIndex: 17 a: self b: b !
+gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b !
 round: b ^ BinaryOpUGen specialIndex: 19 a: self b: b !
 ** b ^ BinaryOpUGen specialIndex: 25 a: self b: b !
 amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b !
@@ -1491,6 +1545,7 @@ clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b !
 !UGen methodsFor: 'arithmetic'!
 negated ^ UnaryOpUGen specialIndex: 0 a: self !
 abs ^ UnaryOpUGen specialIndex: 5 a: self !
+frac ^ UnaryOpUGen specialIndex: 10 a: self !
 cubed ^ UnaryOpUGen specialIndex: 13 a: self !
 reciprocal ^ UnaryOpUGen specialIndex: 16 a: self !
 midicps ^ UnaryOpUGen specialIndex: 17 a: self !

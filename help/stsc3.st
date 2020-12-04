@@ -29,9 +29,17 @@ SC3 reset . "C-c C-."
 '/home/rohan/sw/stsc3/lib/png/squeak-mouse.png' viewImageFile . "viewer for image file"
 '/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' viewTextFile . "editor for text file ; play, stop and draw buttons"
 
+"Mouse ; Cursor ; Hand"
+
+World activeHand position . "get mouse position"
+
 "Browser"
 
 Browser openBrowser . "open Browser"
+Browser newOnCategory: 'SC3' . "open Browser on Category"
+Browser newOnClass: UGen . "open Browser on Class"
+Browser newOnClass: UGen messageCategory: 'rate control' . "open Browser on Protocol of Class"
+Browser newOnClass: UGen selector: #kr . "open Browser on Method of Class"
 
 "Transcript"
 
@@ -168,6 +176,11 @@ ProcessBrowser open . "open process browser ; MVC"
 Workspace open . "opens workspace ; MVC"
 Workspace open contents: 'Workspace open .' . "pharo"
 Workspace open openFile: '/home/rohan/sw/stsc3/help/stsc3.st' . "pharo"
+
+"Message Names"
+
+MessageNames openMessageNames .
+ToolBuilder open: (MessageNames methodBrowserSearchingFor: 'freqscale') .
 
 '/tmp/hsc3.png' viewImageFile "UI image file viewer"
 
