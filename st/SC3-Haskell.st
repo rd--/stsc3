@@ -30,10 +30,10 @@
   fn writeTextFile: [:fd | self printHaskellOn: fd . fd cr] !
  play
   self writeHaskellTo: '/tmp/st.hs' .
-  OSProcess command: 'hsc3-graphs fragments hs play /tmp/st.hs' !
+  'hsc3-graphs fragments hs play /tmp/st.hs' systemCommand !
  draw
   self writeHaskellTo: '/tmp/st.hs' .
-  OSProcess command: 'hsc3-graphs fragments hs draw /tmp/st.hs' !
+  'hsc3-graphs fragments hs draw /tmp/st.hs' systemCommand !
 !
 
 !Rate methodsFor: 'printing'!

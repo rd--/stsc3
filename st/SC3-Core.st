@@ -154,7 +154,7 @@ Object subclass: #SC3
 !SC3 commentStamp: '<historical>' prior: 0! SuperCollider3!
 
 !SC3 class methodsFor: 'server control'!
- reset OSProcess command: 'hsc3-scsynth reset' !
+ reset 'hsc3-scsynth reset' systemCommand !
 !
 
 UGen subclass: #MRG

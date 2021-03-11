@@ -4,4 +4,5 @@
  dirAllFilesWithExt: ext ^ ((FileDirectory on: self) fullNamesOfAllFilesInSubtree) select: [:x | x endsWith: ext] !
  evalString ^ Compiler evaluate: self !
  evalFile ^ self readTextFile evalString !
+ systemCommand ^ OSProcess command: self !
 !
