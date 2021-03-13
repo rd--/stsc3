@@ -14,6 +14,6 @@ requires:
 - [OSProcess](https://wiki.squeak.org/squeak/708) /
   [OSSubprocess](https://github.com/pharo-contributions/OSSubprocess/)
 
-tested with: squeak 6.0α & 5.3 ; pharo 9.0 & 8.0
+tested with: squeak 6.0α & 5.3 ; pharo 9.0 & 8.0 ; cuis 5.0
 
 © [rohan drape](http://rohandrape.net/), 2019-2021, [gpl](http://gnu.org/copyleft/)

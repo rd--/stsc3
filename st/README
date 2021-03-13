@@ -34,8 +34,9 @@ written without proxied outputs, without applying
 multiple-channel-expansion, and without applying rate-control editing.
 
 [SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
-[SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st):
-Methods that cannot be written to work under both Squeak and Pharo
+[SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st) &
+[SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) :
+Methods that cannot be written to work under both Squeak, Pharo and Cuis
 have separate definitions.
 
 ![](sw/stsc3/lib/png/squeak-mouse.png)
