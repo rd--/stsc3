@@ -87,6 +87,8 @@ MessageNames openMessageNames . "open Message Names tool"
 #((1 2) (3 4)) transpose concatenation . "-> #(1 3 2 4)"
 5 mixFill: [:x| x * x] . "-> 55"
 
+Array with: 1 with: 2.3 with: 'str' . "{1. 2.3. 'str'}
+
 "Strings"
 
 'file' , '.ext' = 'file.ext' . "-> true"

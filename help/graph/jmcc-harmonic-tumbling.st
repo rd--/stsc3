@@ -2,7 +2,7 @@
 |f p t o s|
 f := 80 .
 p := 10 .
-t := XLine start: {10 . 11} end: 0.1 dur: 60 doneAction: 0 . "trigger probability decreases over time"
+t := XLine start: #(10 11) end: 0.1 dur: 60 doneAction: 0 . "trigger probability decreases over time"
 o := [:h |
      | n r e |
      n := Dust density: t mul: 0.02 .

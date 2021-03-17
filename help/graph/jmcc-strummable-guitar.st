@@ -1,6 +1,6 @@
 "strummable guitar (jmcc) #11"
 |scale str strs o|
-scale := {52 . 57 . 62 . 67 . 71 . 76} .
+scale := #(52 57 62 67 71 76) .
 str := [:i |
         | x t e n dt s |
         x := MouseX minval: 0 maxval: 1 warp: 0 lag: 0.2 .
