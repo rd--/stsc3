@@ -1,0 +1,27 @@
+Name:               stsc3
+Version:            0.19
+Synopsis:           Smalltalk SuperCollider
+Description:        Smalltalk SuperCollider
+License:            GPL-3
+Category:           Sound
+Copyright:          (c) Rohan Drape, 2019-2021
+Author:             Rohan Drape
+Maintainer:         rd@rohandrape.net
+Stability:          Experimental
+Homepage:           http://rohandrape.net/t/stsc3
+Tested-With:        GHC == 8.8.4
+Build-Type:         Simple
+Cabal-Version:      >= 1.10
+
+Data-files:         README
+
+Library
+  Build-Depends:    base >= 4.7 && < 5,
+                    parsec
+  GHC-Options:      -Wall -fwarn-tabs
+  Default-Language: Haskell2010
+  Exposed-modules:  Language.Smalltalk.Parser
+
+Source-Repository   head
+  Type:             darcs
+  Location:         http://rohandrape.net/sw/stsc3/
