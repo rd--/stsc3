@@ -1,4 +1,6 @@
-GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' .
+'/home/rohan/sw/stsc3/help/' fileList "open file browser on stsc3/help"
+
+GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 
 "Envelope"
 

@@ -5,4 +5,5 @@
  evalString ^ OpalCompiler evaluate: self !
  evalFile ^ self readTextFile evalString !
  systemCommand ^ OSSUnixSubprocess new shellCommand: self ; runAndWait !
+ fileList ^ FileList openOn: self !
 !

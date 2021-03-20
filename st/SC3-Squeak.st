@@ -5,4 +5,5 @@
  evalString ^ Compiler evaluate: self !
  evalFile ^ self readTextFile evalString !
  systemCommand ^ OSProcess command: self !
+ fileList ^ FileList openOn: (FileDirectory on: self) !
 !
