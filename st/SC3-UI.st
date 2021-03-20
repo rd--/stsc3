@@ -16,16 +16,16 @@
   w := SystemWindow new extent: 600@270 .
   w setLabel: self .
   w model: (Model new) .
-  t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
-  t backgroundColor: Color white .
-  w addMorph: t frame: (0@0 corner: 1@0.85) .
   b := AlignmentMorph newRow .
-  b color: Color veryVeryLightGray ; rubberBandCells: false ; vResizing: #shrinkWrap .
+  b color: Color veryVeryLightGray . " ; rubberBandCells: false ; vResizing: #shrinkWrap "
   m := {{'Play' . [(t selection) asString evalString play]} .
         {'Stop' . [SC3 reset]} .
         {'Draw' . [(t selection) asString evalString draw]}} .
-  m do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value)] .
-  w addMorph: b frame: (0@0.85 corner: 1@1) .
+  m do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value ; color: Color veryVeryLightGray)] .
+  w addMorph: b frame: (0@0 corner: 1@0.1) .
+  t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
+  t backgroundColor: Color white .
+  w addMorph: t frame: (0@0.1 corner: 1@1) .
   w openInWorldExtent: 600@270 "400@180 500@225 600@270" !
 !
 
