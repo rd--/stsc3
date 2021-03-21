@@ -78,6 +78,32 @@ in: in attackTime: attackTime releaseTime: releaseTime mul: mul |u| u := self ne
 in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add |u| u := self new . u in: in . u attackTime: attackTime . u releaseTime: releaseTime . ^ u * mul + add !
 !
 
+UGen subclass: #BPF
+instanceVariableNames: 'in freq rq' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
+!BPF commentStamp: '<historical>' prior: 0!
+2nd order Butterworth bandpass filter. !
+
+!BPF methodsFor: 'accessing'!
+in ^in !
+in: x in := x !
+freq ^freq !
+freq: x freq := x !
+rq ^rq !
+rq: x rq := x !
+!
+
+!BPF methodsFor: 'initialization'!
+initialize ugenName := #BPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+
+!BPF class methodsFor: 'instance creation'!
+new ^ self basicNew initialize ! !
+
+!BPF class methodsFor: 'instance creation'!
+in: in freq: freq rq: rq |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u !
+in: in freq: freq rq: rq mul: mul |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul !
+in: in freq: freq rq: rq mul: mul add: add |u| u := self new . u in: in . u freq: freq . u rq: rq . ^ u * mul + add !
+!
+
 UGen subclass: #BPZ2
 instanceVariableNames: 'in' classVariableNames: '' poolDictionaries: '' category: 'SC3' !
 !BPZ2 commentStamp: '<historical>' prior: 0!
@@ -936,7 +962,7 @@ Minimum difference of two values in modulo arithmetics !
 
 !ModDif methodsFor: 'accessing'!
 x ^x !
-x: x_ x := x_ !
+x: i x := i !
 y ^y !
 y: x y := x !
 mod ^mod !
