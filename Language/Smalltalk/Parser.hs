@@ -20,11 +20,27 @@ p >>~ q = p >>= \x -> q >> return x
 
 -- | /p/ consuming any trailing separators.
 lexeme :: P t -> P t
-lexeme p = p >>~ P.optional separator
+lexeme = P.lexeme stLexer
 
--- | Haskell lexer, use for float parser.
-haskellLexer :: P.GenTokenParser String () Identity
-haskellLexer = P.makeTokenParser P.haskellDef
+-- | Smalltalk language definition (for token parser)
+stLanguageDef :: P.GenLanguageDef String () Identity
+stLanguageDef =
+  P.LanguageDef
+  {P.commentStart = "\""
+  ,P.commentEnd = "\""
+  ,P.commentLine = "" -- NIL
+  ,P.nestedComments = False
+  ,P.identStart = letter
+  ,P.identLetter = letter P.<|> P.digit
+  ,P.opStart = binaryCharacter
+  ,P.opLetter = binaryCharacter
+  ,P.reservedNames = stReservedIdentifiers
+  ,P.reservedOpNames = []
+  ,P.caseSensitive = True}
+
+-- | Lexer
+stLexer :: P.GenTokenParser String () Identity
+stLexer = P.makeTokenParser stLanguageDef
 
 -- | Run parser and report any error.
 stParse :: P t -> String -> t
@@ -312,8 +328,8 @@ statements_pp st =
     StatementsReturn r -> returnStatement_pp r
     StatementsExpression e st' -> strjn [expression_pp e,".\n",maybe "" statements_pp st']
 
-period :: P Char
-period = lexeme (P.char '.')
+period :: P String
+period = P.dot stLexer
 
 {- | <statements> ::= (<return statement> ['.']) | (<expression> ['.' [<statements>]])
 
@@ -462,13 +478,13 @@ primary_pp pr =
     PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map basicExpression_pp a))
 
 inParentheses :: P t -> P t
-inParentheses = P.between (lexeme (P.char '(')) (lexeme (P.char ')'))
+inParentheses = P.parens stLexer
 
 inBraces :: P t -> P t
-inBraces = P.between (lexeme (P.char '{')) (lexeme (P.char '}'))
+inBraces = P.braces stLexer
 
 inBrackets :: P t -> P t
-inBrackets = P.between (lexeme (P.char '[')) (lexeme (P.char ']'))
+inBrackets = P.brackets stLexer
 
 {- | <primary> ::= identifier | <literal> | <block constructor> | ( '(' <expression> ')' )
 
@@ -620,8 +636,8 @@ keywordArgument = do
   b <- P.optionMaybe (P.many1 (P.try binaryMessage))
   return (p,u,b)
 
-cascadeSeparator :: P Char
-cascadeSeparator = lexeme (P.char ';')
+cascadeSeparator :: P String
+cascadeSeparator = P.semi stLexer
 
 type CascadedMessages = [Messages]
 
@@ -741,6 +757,11 @@ arrayLiteral = fmap ArrayLiteral (P.between (lexeme (P.string "#(")) (lexeme (P.
 arrayElement :: P (Either Literal Identifier)
 arrayElement = fmap Left literal P.<|> fmap Right identifier -- lexeme
 
+-- * 3.4.7 Reserved Identifiers
+
+stReservedIdentifiers :: [String]
+stReservedIdentifiers = words "nil true false self super"
+
 -- * 3.5.1
 
 -- | character ::= "Any character in the implementation-defined character set"
@@ -806,11 +827,7 @@ type Identifier = String
 > stParse identifier "" -- FAIL
 -}
 identifier :: P Identifier
-identifier = do
-  c <- P.label letter "identifier"
-  cs <- P.many (P.choice [letter,P.digit])
-  P.optional separator -- lexeme
-  return (c : cs)
+identifier = P.identifier stLexer
 
 -- * 3.5.4
 
@@ -841,7 +858,7 @@ type BinarySelector = String
 -- > stParse binarySelector "+" == "+"
 -- > stParse binarySelector "+p" == "+" -- +1 must parse as BinarySelector=+ BinaryArgument=1
 binarySelector :: P BinarySelector
-binarySelector = lexeme (P.many1 binaryCharacter)
+binarySelector = P.operator stLexer
 
 -- | returnOperator ::= '^'
 returnOperator :: P Char
@@ -867,7 +884,7 @@ digits = P.many1 P.digit
 
 -- | float ::= mantissa [exponentLetter exponent]
 float :: P Double
-float = P.float haskellLexer
+float = P.float stLexer
 
 -- * 3.5.7
 
