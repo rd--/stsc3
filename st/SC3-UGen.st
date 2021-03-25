@@ -15,7 +15,7 @@ decaytime: x decaytime := x !
 !
 
 !AllpassN methodsFor: 'initialization'!
-initialize ugenName := #AllpassN . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #AllpassN . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . maxdelaytime := 0.2 . delaytime := 0.2 . decaytime := 1.0 ! !
 
 !AllpassN class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -41,7 +41,7 @@ exp: x exp := x !
 !
 
 !AmpComp methodsFor: 'initialization'!
-initialize ugenName := #AmpComp . paramNames := #(freq root exp) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #AmpComp . paramNames := #(freq root exp) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 0.0 . root := 0.0 . exp := 0.3333 ! !
 
 !AmpComp class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -67,7 +67,7 @@ releaseTime: x releaseTime := x !
 !
 
 !Amplitude methodsFor: 'initialization'!
-initialize ugenName := #Amplitude . paramNames := #(in attackTime releaseTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Amplitude . paramNames := #(in attackTime releaseTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . attackTime := 0.01 . releaseTime := 0.01 ! !
 
 !Amplitude class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -93,7 +93,7 @@ rq: x rq := x !
 !
 
 !BPF methodsFor: 'initialization'!
-initialize ugenName := #BPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #BPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . freq := 440.0 . rq := 1.0 ! !
 
 !BPF class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -115,7 +115,7 @@ in: x in := x !
 !
 
 !BPZ2 methodsFor: 'initialization'!
-initialize ugenName := #BPZ2 . paramNames := #(in) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #BPZ2 . paramNames := #(in) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 ! !
 
 !BPZ2 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -133,7 +133,7 @@ Brown Noise. !
 
 
 !BrownNoise methodsFor: 'initialization'!
-initialize ugenName := #BrownNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #BrownNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 .  ! !
 
 !BrownNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -160,7 +160,7 @@ decaytime: x decaytime := x !
 !
 
 !CombL methodsFor: 'initialization'!
-initialize ugenName := #CombL . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #CombL . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . maxdelaytime := 0.2 . delaytime := 0.2 . decaytime := 1.0 ! !
 
 !CombL class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -188,7 +188,7 @@ decaytime: x decaytime := x !
 !
 
 !CombN methodsFor: 'initialization'!
-initialize ugenName := #CombN . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #CombN . paramNames := #(in maxdelaytime delaytime decaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . maxdelaytime := 0.2 . delaytime := 0.2 . decaytime := 1.0 ! !
 
 !CombN class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -210,7 +210,7 @@ chaosParam: x chaosParam := x !
 !
 
 !Crackle methodsFor: 'initialization'!
-initialize ugenName := #Crackle . paramNames := #(chaosParam) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Crackle . paramNames := #(chaosParam) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . chaosParam := 1.5 ! !
 
 !Crackle class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -234,7 +234,7 @@ decayTime: x decayTime := x !
 !
 
 !Decay methodsFor: 'initialization'!
-initialize ugenName := #Decay . paramNames := #(in decayTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Decay . paramNames := #(in decayTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . decayTime := 1.0 ! !
 
 !Decay class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -260,7 +260,7 @@ decayTime: x decayTime := x !
 !
 
 !Decay2 methodsFor: 'initialization'!
-initialize ugenName := #Decay2 . paramNames := #(in attackTime decayTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Decay2 . paramNames := #(in attackTime decayTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . attackTime := 0.01 . decayTime := 1.0 ! !
 
 !Decay2 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -286,7 +286,7 @@ octave: x octave := x !
 !
 
 !DegreeToKey methodsFor: 'initialization'!
-initialize ugenName := #DegreeToKey . paramNames := #(bufnum in octave) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #DegreeToKey . paramNames := #(bufnum in octave) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . bufnum := 0.0 . in := 0.0 . octave := 12.0 ! !
 
 !DegreeToKey class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -312,7 +312,7 @@ delaytime: x delaytime := x !
 !
 
 !DelayN methodsFor: 'initialization'!
-initialize ugenName := #DelayN . paramNames := #(in maxdelaytime delaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #DelayN . paramNames := #(in maxdelaytime delaytime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . maxdelaytime := 0.2 . delaytime := 0.2 ! !
 
 !DelayN class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -338,7 +338,7 @@ demandUGens: x demandUGens := x !
 !
 
 !Demand methodsFor: 'initialization'!
-initialize ugenName := #Demand . paramNames := #(trig reset) . mceNames := #(demandUGens) . ugenRate := #ar . numChan := nil . specialIndex := 0 ! !
+initialize ugenName := #Demand . paramNames := #(trig reset) . mceNames := #(demandUGens) . ugenRate := #ar . numChan := nil . specialIndex := 0 . trig := 0.0 . reset := 0.0 ! !
 
 !Demand class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -362,7 +362,7 @@ list: x list := x !
 !
 
 !Drand methodsFor: 'initialization'!
-initialize ugenName := #Drand . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Drand . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 . repeats := 1.0 ! !
 
 !Drand class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -386,7 +386,7 @@ list: x list := x !
 !
 
 !Dseq methodsFor: 'initialization'!
-initialize ugenName := #Dseq . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Dseq . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 . repeats := 1.0 ! !
 
 !Dseq class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -410,7 +410,7 @@ list: x list := x !
 !
 
 !Dshuf methodsFor: 'initialization'!
-initialize ugenName := #Dshuf . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Dshuf . paramNames := #(repeats) . mceNames := #(list) . ugenRate := #dr . numChan := 1 . specialIndex := 0 . repeats := 1.0 ! !
 
 !Dshuf class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -432,7 +432,7 @@ density: x density := x !
 !
 
 !Dust methodsFor: 'initialization'!
-initialize ugenName := #Dust . paramNames := #(density) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Dust . paramNames := #(density) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . density := 0.0 ! !
 
 !Dust class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -464,7 +464,7 @@ envelope: x envelope := x !
 !
 
 !EnvGen methodsFor: 'initialization'!
-initialize ugenName := #EnvGen . paramNames := #(gate levelScale levelBias timeScale doneAction) . mceNames := #(envelope) . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #EnvGen . paramNames := #(gate levelScale levelBias timeScale doneAction) . mceNames := #(envelope) . ugenRate := #ar . numChan := 1 . specialIndex := 0 . gate := 1.0 . levelScale := 1.0 . levelBias := 0.0 . timeScale := 1.0 . doneAction := 0.0 ! !
 
 !EnvGen class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -488,7 +488,7 @@ hi: x hi := x !
 !
 
 !ExpRand methodsFor: 'initialization'!
-initialize ugenName := #ExpRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #ExpRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 . lo := 0.01 . hi := 1.0 ! !
 
 !ExpRand class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -512,7 +512,7 @@ iphase: x iphase := x !
 !
 
 !FSinOsc methodsFor: 'initialization'!
-initialize ugenName := #FSinOsc . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #FSinOsc . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . iphase := 0.0 ! !
 
 !FSinOsc class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -534,7 +534,7 @@ in: x in := x !
 !
 
 !HPZ1 methodsFor: 'initialization'!
-initialize ugenName := #HPZ1 . paramNames := #(in) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #HPZ1 . paramNames := #(in) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 ! !
 
 !HPZ1 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -558,7 +558,7 @@ hi: x hi := x !
 !
 
 !IRand methodsFor: 'initialization'!
-initialize ugenName := #IRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #IRand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 . lo := 0.0 . hi := 127.0 ! !
 
 !IRand class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -582,7 +582,7 @@ phase: x phase := x !
 !
 
 !Impulse methodsFor: 'initialization'!
-initialize ugenName := #Impulse . paramNames := #(freq phase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Impulse . paramNames := #(freq phase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . phase := 0.0 ! !
 
 !Impulse class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -604,7 +604,7 @@ bus: x bus := x !
 !
 
 !In methodsFor: 'initialization'!
-initialize ugenName := #In . paramNames := #(bus) . mceNames := #() . ugenRate := #ar . numChan := nil . specialIndex := 0 ! !
+initialize ugenName := #In . paramNames := #(bus) . mceNames := #() . ugenRate := #ar . numChan := nil . specialIndex := 0 . bus := 0.0 ! !
 
 !In class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -634,7 +634,7 @@ specificationsArrayRef: x specificationsArrayRef := x !
 !
 
 !Klank methodsFor: 'initialization'!
-initialize ugenName := #Klank . paramNames := #(input freqscale freqoffset decayscale) . mceNames := #(specificationsArrayRef) . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Klank . paramNames := #(input freqscale freqoffset decayscale) . mceNames := #(specificationsArrayRef) . ugenRate := #ar . numChan := 1 . specialIndex := 0 . input := 0.0 . freqscale := 1.0 . freqoffset := 0.0 . decayscale := 1.0 ! !
 
 !Klank class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -656,7 +656,7 @@ freq: x freq := x !
 !
 
 !LFNoise1 methodsFor: 'initialization'!
-initialize ugenName := #LFNoise1 . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LFNoise1 . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 500.0 ! !
 
 !LFNoise1 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -678,7 +678,7 @@ freq: x freq := x !
 !
 
 !LFNoise2 methodsFor: 'initialization'!
-initialize ugenName := #LFNoise2 . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LFNoise2 . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 500.0 ! !
 
 !LFNoise2 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -704,7 +704,7 @@ width: x width := x !
 !
 
 !LFPulse methodsFor: 'initialization'!
-initialize ugenName := #LFPulse . paramNames := #(freq iphase width) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LFPulse . paramNames := #(freq iphase width) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . iphase := 0.0 . width := 0.5 ! !
 
 !LFPulse class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -728,7 +728,7 @@ iphase: x iphase := x !
 !
 
 !LFSaw methodsFor: 'initialization'!
-initialize ugenName := #LFSaw . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LFSaw . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . iphase := 0.0 ! !
 
 !LFSaw class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -752,7 +752,7 @@ iphase: x iphase := x !
 !
 
 !LFTri methodsFor: 'initialization'!
-initialize ugenName := #LFTri . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LFTri . paramNames := #(freq iphase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . iphase := 0.0 ! !
 
 !LFTri class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -776,7 +776,7 @@ freq: x freq := x !
 !
 
 !LPF methodsFor: 'initialization'!
-initialize ugenName := #LPF . paramNames := #(in freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LPF . paramNames := #(in freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . freq := 440.0 ! !
 
 !LPF class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -800,7 +800,7 @@ lagTime: x lagTime := x !
 !
 
 !Lag methodsFor: 'initialization'!
-initialize ugenName := #Lag . paramNames := #(in lagTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Lag . paramNames := #(in lagTime) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . lagTime := 0.1 ! !
 
 !Lag class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -824,7 +824,7 @@ trig: x trig := x !
 !
 
 !Latch methodsFor: 'initialization'!
-initialize ugenName := #Latch . paramNames := #(in trig) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Latch . paramNames := #(in trig) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . trig := 0.0 ! !
 
 !Latch class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -848,7 +848,7 @@ coef: x coef := x !
 !
 
 !LeakDC methodsFor: 'initialization'!
-initialize ugenName := #LeakDC . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LeakDC . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . coef := 0.995 ! !
 
 !LeakDC class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -876,7 +876,7 @@ doneAction: x doneAction := x !
 !
 
 !Line methodsFor: 'initialization'!
-initialize ugenName := #Line . paramNames := #(start end dur doneAction) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Line . paramNames := #(start end dur doneAction) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . start := 0.0 . end := 1.0 . dur := 1.0 . doneAction := 0.0 ! !
 
 !Line class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -900,7 +900,7 @@ numFrames: x numFrames := x !
 !
 
 !LocalBuf methodsFor: 'initialization'!
-initialize ugenName := #LocalBuf . paramNames := #(numChannels numFrames) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #LocalBuf . paramNames := #(numChannels numFrames) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 . numChannels := 1.0 . numFrames := 1.0 ! !
 
 !LocalBuf class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -922,7 +922,7 @@ default: x default := x !
 !
 
 !LocalIn methodsFor: 'initialization'!
-initialize ugenName := #LocalIn . paramNames := #() . mceNames := #(default) . ugenRate := #ar . numChan := nil . specialIndex := 0 ! !
+initialize ugenName := #LocalIn . paramNames := #() . mceNames := #(default) . ugenRate := #ar . numChan := nil . specialIndex := 0 .  ! !
 
 !LocalIn class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -944,7 +944,7 @@ channelsArray: x channelsArray := x !
 !
 
 !LocalOut methodsFor: 'initialization'!
-initialize ugenName := #LocalOut . paramNames := #() . mceNames := #(channelsArray) . ugenRate := #ar . numChan := 0 . specialIndex := 0 ! !
+initialize ugenName := #LocalOut . paramNames := #() . mceNames := #(channelsArray) . ugenRate := #ar . numChan := 0 . specialIndex := 0 .  ! !
 
 !LocalOut class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -962,7 +962,7 @@ Minimum difference of two values in modulo arithmetics !
 
 !ModDif methodsFor: 'accessing'!
 x ^x !
-x: i x := i !
+x: z x := z !
 y ^y !
 y: x y := x !
 mod ^mod !
@@ -970,7 +970,7 @@ mod: x mod := x !
 !
 
 !ModDif methodsFor: 'initialization'!
-initialize ugenName := #ModDif . paramNames := #(x y mod) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #ModDif . paramNames := #(x y mod) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . x := 0.0 . y := 0.0 . mod := 1.0 ! !
 
 !ModDif class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -998,7 +998,7 @@ lag: x lag := x !
 !
 
 !MouseX methodsFor: 'initialization'!
-initialize ugenName := #MouseX . paramNames := #(minval maxval warp lag) . mceNames := #() . ugenRate := #kr . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #MouseX . paramNames := #(minval maxval warp lag) . mceNames := #() . ugenRate := #kr . numChan := 1 . specialIndex := 0 . minval := 0.0 . maxval := 1.0 . warp := 0.0 . lag := 0.2 ! !
 
 !MouseX class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1026,7 +1026,7 @@ lag: x lag := x !
 !
 
 !MouseY methodsFor: 'initialization'!
-initialize ugenName := #MouseY . paramNames := #(minval maxval warp lag) . mceNames := #() . ugenRate := #kr . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #MouseY . paramNames := #(minval maxval warp lag) . mceNames := #() . ugenRate := #kr . numChan := 1 . specialIndex := 0 . minval := 0.0 . maxval := 1.0 . warp := 0.0 . lag := 0.2 ! !
 
 !MouseY class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1052,7 +1052,7 @@ add: x add := x !
 !
 
 !MulAdd methodsFor: 'initialization'!
-initialize ugenName := #MulAdd . paramNames := #(in mul add) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #MulAdd . paramNames := #(in mul add) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . mul := 0.0 . add := 0.0 ! !
 
 !MulAdd class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1074,7 +1074,7 @@ coef: x coef := x !
 !
 
 !OnePole methodsFor: 'initialization'!
-initialize ugenName := #OnePole . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #OnePole . paramNames := #(in coef) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . coef := 0.5 ! !
 
 !OnePole class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1098,7 +1098,7 @@ channelsArray: x channelsArray := x !
 !
 
 !Out methodsFor: 'initialization'!
-initialize ugenName := #Out . paramNames := #(bus) . mceNames := #(channelsArray) . ugenRate := #ar . numChan := 0 . specialIndex := 0 ! !
+initialize ugenName := #Out . paramNames := #(bus) . mceNames := #(channelsArray) . ugenRate := #ar . numChan := 0 . specialIndex := 0 . bus := 0.0 ! !
 
 !Out class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1124,7 +1124,7 @@ level: x level := x !
 !
 
 !Pan2 methodsFor: 'initialization'!
-initialize ugenName := #Pan2 . paramNames := #(in pos level) . mceNames := #() . ugenRate := #ar . numChan := 2 . specialIndex := 0 ! !
+initialize ugenName := #Pan2 . paramNames := #(in pos level) . mceNames := #() . ugenRate := #ar . numChan := 2 . specialIndex := 0 . in := 0.0 . pos := 0.0 . level := 1.0 ! !
 
 !Pan2 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1154,7 +1154,7 @@ resetPos: x resetPos := x !
 !
 
 !Phasor methodsFor: 'initialization'!
-initialize ugenName := #Phasor . paramNames := #(trig rate start end resetPos) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Phasor . paramNames := #(trig rate start end resetPos) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . trig := 0.0 . rate := 1.0 . start := 0.0 . end := 1.0 . resetPos := 0.0 ! !
 
 !Phasor class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1172,7 +1172,7 @@ Pink Noise. !
 
 
 !PinkNoise methodsFor: 'initialization'!
-initialize ugenName := #PinkNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #PinkNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 .  ! !
 
 !PinkNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1195,7 +1195,7 @@ width: x width := x !
 !
 
 !Pulse methodsFor: 'initialization'!
-initialize ugenName := #Pulse . paramNames := #(freq width) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Pulse . paramNames := #(freq width) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . width := 0.5 ! !
 
 !Pulse class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1221,7 +1221,7 @@ start: x start := x !
 !
 
 !PulseDivider methodsFor: 'initialization'!
-initialize ugenName := #PulseDivider . paramNames := #(trig div start) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #PulseDivider . paramNames := #(trig div start) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . trig := 0.0 . div := 2.0 . start := 0.0 ! !
 
 !PulseDivider class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1247,7 +1247,7 @@ rq: x rq := x !
 !
 
 !RHPF methodsFor: 'initialization'!
-initialize ugenName := #RHPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #RHPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . freq := 440.0 . rq := 1.0 ! !
 
 !RHPF class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1273,7 +1273,7 @@ rq: x rq := x !
 !
 
 !RLPF methodsFor: 'initialization'!
-initialize ugenName := #RLPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #RLPF . paramNames := #(in freq rq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . freq := 440.0 . rq := 1.0 ! !
 
 !RLPF class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1297,7 +1297,7 @@ hi: x hi := x !
 !
 
 !Rand methodsFor: 'initialization'!
-initialize ugenName := #Rand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Rand . paramNames := #(lo hi) . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 . lo := 0.0 . hi := 1.0 ! !
 
 !Rand class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1323,7 +1323,7 @@ bwr: x bwr := x !
 !
 
 !Resonz methodsFor: 'initialization'!
-initialize ugenName := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Resonz . paramNames := #(in freq bwr) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . freq := 440.0 . bwr := 1.0 ! !
 
 !Resonz class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1341,7 +1341,7 @@ Duration of one sample. !
 
 
 !SampleDur methodsFor: 'initialization'!
-initialize ugenName := #SampleDur . paramNames := #() . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #SampleDur . paramNames := #() . mceNames := #() . ugenRate := #ir . numChan := 1 . specialIndex := 0 .  ! !
 
 !SampleDur class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1362,7 +1362,7 @@ freq: x freq := x !
 !
 
 !Saw methodsFor: 'initialization'!
-initialize ugenName := #Saw . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Saw . paramNames := #(freq) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 ! !
 
 !Saw class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1390,7 +1390,7 @@ array: x array := x !
 !
 
 !SetBuf methodsFor: 'initialization'!
-initialize ugenName := #SetBuf . paramNames := #(buf offset length) . mceNames := #(array) . ugenRate := #ir . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #SetBuf . paramNames := #(buf offset length) . mceNames := #(array) . ugenRate := #ir . numChan := 1 . specialIndex := 0 . buf := 0.0 . offset := 0.0 . length := 0.0 ! !
 
 !SetBuf class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1414,7 +1414,7 @@ reset: x reset := x !
 !
 
 !SetResetFF methodsFor: 'initialization'!
-initialize ugenName := #SetResetFF . paramNames := #(trig reset) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #SetResetFF . paramNames := #(trig reset) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . trig := 0.0 . reset := 0.0 ! !
 
 !SetResetFF class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1438,7 +1438,7 @@ phase: x phase := x !
 !
 
 !SinOsc methodsFor: 'initialization'!
-initialize ugenName := #SinOsc . paramNames := #(freq phase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #SinOsc . paramNames := #(freq phase) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . freq := 440.0 . phase := 0.0 ! !
 
 !SinOsc class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1462,7 +1462,7 @@ dur: x dur := x !
 !
 
 !Trig methodsFor: 'initialization'!
-initialize ugenName := #Trig . paramNames := #(in dur) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #Trig . paramNames := #(in dur) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . in := 0.0 . dur := 0.1 ! !
 
 !Trig class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1480,7 +1480,7 @@ White noise. !
 
 
 !WhiteNoise methodsFor: 'initialization'!
-initialize ugenName := #WhiteNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #WhiteNoise . paramNames := #() . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 .  ! !
 
 !WhiteNoise class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1507,7 +1507,7 @@ level: x level := x !
 !
 
 !XFade2 methodsFor: 'initialization'!
-initialize ugenName := #XFade2 . paramNames := #(inA inB pan level) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #XFade2 . paramNames := #(inA inB pan level) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . inA := 0.0 . inB := 0.0 . pan := 0.0 . level := 1.0 ! !
 
 !XFade2 class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !
@@ -1535,7 +1535,7 @@ doneAction: x doneAction := x !
 !
 
 !XLine methodsFor: 'initialization'!
-initialize ugenName := #XLine . paramNames := #(start end dur doneAction) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 ! !
+initialize ugenName := #XLine . paramNames := #(start end dur doneAction) . mceNames := #() . ugenRate := #ar . numChan := 1 . specialIndex := 0 . start := 1.0 . end := 2.0 . dur := 1.0 . doneAction := 0.0 ! !
 
 !XLine class methodsFor: 'instance creation'!
 new ^ self basicNew initialize ! !

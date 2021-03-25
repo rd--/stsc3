@@ -7,6 +7,12 @@ GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on st
 Env initialize . "build dictionary (class variable)"
 Env curveNameDictionary . "curve name dictionary"
 
+"UGen"
+
+SinOsc freq: 440 phase: 0 . "freq:phase: is a class method"
+SinOsc new freq: 440 ; phase: 0 . "freq: and phase: are instance methods"
+SinOsc new . "initialize sets default values for parameters"
+
 "File I/O - Text"
 
 '/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd  ] .
