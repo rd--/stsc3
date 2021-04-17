@@ -1,12 +1,11 @@
-SystemOrganization addCategory: #'SC3'!
-
 Object subclass: #UGen
  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
-!UGen commentStamp: '<historical>' prior: 0! Unit Generator!
+
+UGen comment: 'Unit Generator'!
 
 !UGen methodsFor: 'accessing'!
  mceNames ^mceNames !
@@ -29,7 +28,8 @@ UGen subclass: #BinaryOpUGen
  poolDictionaries: ''
  category: 'SC3'
 !
-!BinaryOpUGen commentStamp: '<historical>' prior: 0! Binary Operators !
+
+BinaryOpUGen comment: 'Binary Operators'!
 
 !BinaryOpUGen methodsFor: 'accessing'!
  a ^a !
@@ -39,7 +39,19 @@ UGen subclass: #BinaryOpUGen
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a b: b |u| u := self new . u ugenName: #BinaryOpUGen . u paramNames: #(a b) . u mceNames: #() . u ugenRate: #ar . u numChan: 1 . u specialIndex: specialIndex . u a: a . u b: b . ^u !
+ specialIndex: specialIndex a: a b: b
+  "Create binary operator UGen"
+  |u|
+  u := self new.
+  u ugenName: #BinaryOpUGen.
+  u paramNames: #(#a #b).
+  u mceNames: #().
+  u ugenRate: #ar.
+  u numChan: 1.
+  u specialIndex: specialIndex.
+  u a: a.
+  u b: b.
+  ^u !
 !
 
 UGen subclass: #UnaryOpUGen
@@ -48,7 +60,8 @@ UGen subclass: #UnaryOpUGen
  poolDictionaries: ''
  category: 'SC3'
 !
-!UnaryOpUGen commentStamp: '<historical>' prior: 0! Unary Operators !
+
+UnaryOpUGen comment: 'Unary Operators'!
 
 !UnaryOpUGen methodsFor: 'accessing'!
  a ^a !
@@ -56,7 +69,18 @@ UGen subclass: #UnaryOpUGen
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
-specialIndex: specialIndex a: a |u| u := self new . u ugenName: #UnaryOpUGen . u paramNames: #(a) . u mceNames: #() . u ugenRate: #ar . u numChan: 1 . u specialIndex: specialIndex . u a: a . ^u !
+ specialIndex: specialIndex a: a
+  "Create unary operator UGen"
+  |u|
+  u := self new.
+  u ugenName: #UnaryOpUGen.
+  u paramNames: #(#a).
+  u mceNames: #().
+  u ugenRate: #ar.
+  u numChan: 1.
+  u specialIndex: specialIndex.
+  u a: a.
+  ^u !
 !
 
 UGen subclass: #Rate
@@ -65,7 +89,8 @@ UGen subclass: #Rate
  poolDictionaries: ''
  category: 'SC3'
 !
-!Rate commentStamp: '<historical>' prior: 0! Audio Rate !
+
+Rate comment: 'Audio Rate'!
 
 !Rate methodsFor: 'accessing'!
  rate ^ rate !
@@ -91,7 +116,8 @@ UGen subclass: #MCE
  poolDictionaries: ''
  category: 'SC3'
 !
-!MCE commentStamp: '<historical>' prior: 0! Multiple Channel Expansion!
+
+MCE comment: 'Multiple Channel Expansion'!
 
 !MCE methodsFor: 'accessing'!
  source: x source := x !
@@ -128,7 +154,8 @@ UGen subclass: #Mix
  poolDictionaries: ''
  category: 'SC3'
 !
-!Mix commentStamp: '<historical>' prior: 0! UGen Mixer!
+
+Mix comment: 'UGen Mixer'!
 
 !Mix methodsFor: 'accessing'!
  source ^ source !
@@ -151,7 +178,8 @@ Object subclass: #SC3
  poolDictionaries: ''
  category: 'SC3'
 !
-!SC3 commentStamp: '<historical>' prior: 0! SuperCollider3!
+
+SC3 comment: 'SuperCollider3'!
 
 !SC3 class methodsFor: 'server control'!
  reset 'hsc3-scsynth reset' systemCommand !
@@ -163,7 +191,8 @@ UGen subclass: #MRG
  poolDictionaries: ''
  category: 'SC3'
 !
-!MRG commentStamp: '<historical>' prior: 0! Multiple Root Graph!
+
+MRG comment: 'Multiple Root Graph'!
 
 !MRG methodsFor: 'accessing'!
  lhs ^ lhs !
@@ -182,7 +211,8 @@ UGen subclass: #Control
  poolDictionaries: ''
  category: 'SC3'
 !
-!Control commentStamp: '<historical>' prior: 0! Control Input!
+
+Control comment: 'Control Input'!
 
 !Control methodsFor: 'accessing'!
  name ^name !

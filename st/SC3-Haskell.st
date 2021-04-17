@@ -98,18 +98,18 @@
 !Splay methodsFor: 'printing'!
  printHaskellOn: fd
  '(splay ' putOn: fd .
- #(input spread level center levelComp) do: [:x| (self perform: x) printHaskellOn: fd] separatedBy: [' ' putOn: fd] .
+ #(#input #spread #level #center #levelComp) do: [:x| (self perform: x) printHaskellOn: fd] separatedBy: [' ' putOn: fd] .
  ') ' putOn: fd !
 !
 
 !True methodsFor: 'printing'!
  printHaskellOn: fd
-  #True putOn: fd !
+  'True' putOn: fd !
 !
 
 !False methodsFor: 'printing'!
  printHaskellOn: fd
-  #False putOn: fd !
+  'False' putOn: fd !
 !
 
 !Control methodsFor: 'printing'!

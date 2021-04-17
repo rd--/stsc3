@@ -11,8 +11,8 @@ UGen subclass: #Splay
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3' !
-!Splay commentStamp: '<historical>' prior: 0!
-Pan a set of channels across the stereo field. !
+
+Splay comment: 'Pan a set of channels across the stereo field.'!
 
 !Splay methodsFor: 'accessing'!
  center ^center !
@@ -37,4 +37,3 @@ Pan a set of channels across the stereo field. !
   u input: input .
   ^ u !
 !
-

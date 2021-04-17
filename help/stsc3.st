@@ -95,7 +95,7 @@ MessageNames openMessageNames . "open Message Names tool"
 #((1 2) (3 4)) transpose concatenation . "-> #(1 3 2 4)"
 5 mixFill: [:x| x * x] . "-> 55"
 
-Array with: 1 with: 2.3 with: 'str' . "{1. 2.3. 'str'}
+Array with: 1 with: 2.3 with: 'str' . "{1. 2.3. 'str'}"
 
 "Strings"
 
@@ -118,6 +118,7 @@ Array with: 1 with: 2.3 with: 'str' . "{1. 2.3. 'str'}
 "Dictionary"
 
 d := Dictionary new . d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z' .
+d := Dictionary newFrom: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'} .
 d := Dictionary newFromPairs: #(select x from y list z)
 
 "Conditionals"
@@ -236,3 +237,8 @@ FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read
 Smalltalk garbageCollect .
 Smalltalk aboutThisSystem . "System Reporter"
 
+"GNU Smalltalk"
+
+Smalltalk system: 'ls' .
+Smalltalk system: 'ls /home/rohan/sw/stsc3/README' .
+Smalltalk getenv: 'HOME' . "'/home/rohan'"

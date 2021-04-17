@@ -4,8 +4,8 @@ classVariableNames: 'CurveNameDictionary'
 poolDictionaries: ''
 category: 'SC3'
 !
-!Env commentStamp: '<historical>' prior: 0!
-Specification for a segmented envelope!
+
+!Env comment: 'Specification for a segmented envelope'!
 
 !Env methodsFor: 'accessing'!
 curves ^ curves !
@@ -83,7 +83,8 @@ classVariableNames: ''
 poolDictionaries: ''
 category: 'SC3'
 !
-!EnvBuilder commentStamp: '<historical>' prior: 0! Envelope types!
+
+!EnvBuilder comment: 'Envelope types'!
 
 !EnvBuilder methodsFor: 'envelope coordinates'!
 env
@@ -103,7 +104,8 @@ classVariableNames: ''
 poolDictionaries: ''
 category: 'SC3'
 !
-!EnvPerc commentStamp: '<historical>' prior: 0! Attack-Release Envelope (Fixed Duration, No Gate)!
+
+!EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
 
 !EnvPerc methodsFor: 'accessing'!
 attackTime ^ attackTime !
@@ -143,7 +145,8 @@ instanceVariableNames: 'attackTime sustainTime releaseTime level curves'
 classVariableNames: ''
 poolDictionaries: ''
 category: 'SC3'!
-!EnvLinen commentStamp: '<historical>' prior: 0! Trapezoidal Envelope (Fixed Duration, No Gate)!
+
+!EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
 
 !EnvLinen methodsFor: 'accessing'!
 attackTime ^ attackTime !
@@ -187,7 +190,8 @@ classVariableNames: ''
 poolDictionaries: ''
 category: 'SC3'
 !
-!EnvASR commentStamp: '<historical>' prior: 0! Attack-Sustain-Release Envelope!
+
+!EnvASR comment: 'Attack-Sustain-Release Envelope'!
 
 !EnvASR methodsFor: 'accessing'!
 attackTime ^ attackTime !
@@ -228,7 +232,8 @@ classVariableNames: ''
 poolDictionaries: ''
 category: 'SC3'
 !
-!EnvADSR commentStamp: '<historical>' prior: 0! Attack-Decay-Sustain-Release Envelope!
+
+!EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 
 !EnvADSR methodsFor: 'accessing'!
 attackTime ^ attackTime !

@@ -13,7 +13,7 @@
   ^ 1 to: self collect: [:i| f value: i] !
  replicate: x
   "Array of self places each being x"
-  ^ self arrayFill: [:_i| x] !
+  ^ self arrayFill: [:i| x] !
  mixFill: f
   "sum of arrayFill"
   ^ (self arrayFill: f) sum !
