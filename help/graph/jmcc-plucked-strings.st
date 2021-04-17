@@ -7,7 +7,7 @@
   s1 := Dust density: 0.5 mul: 0.3 .
   s2 := Impulse freq: (SinOsc freq: (0.05 rand: 0.15) phase: (0.0 rand: (Float pi * 2)) mul: 5 add: 5.2) kr phase: 0 mul: 0.3 .
   {s0 . s1 . s2} atRandom] .
- s := [:_j|
+ s := [:j|
   |dt_ t|
   dt_ := dt value .
   t := Decay in: i value decayTime: 0.1 mul: (PinkNoise mul: 0.1) .

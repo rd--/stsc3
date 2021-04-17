@@ -384,7 +384,7 @@ expression_pp = either assignment_pp basicExpression_pp
 > stParse expression "a value + b value + c value"
 > stParse expression "note2 := (sequR value: #(-12 -7 -5 0 2 5) value: clock_16) + note1"
 > stParse expression "freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midicps ."
-> stParse expression "(1 to: 6) do: [:_i| s := AllpassN in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] . \"rvb\""
+> stParse expression "(1 to: 6) do: [:i| s := AllpassN in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] . \"rvb\""
 > stParse expression "out := pitch size mixFill: [:i| |trigger pluck period string| trigger := HPZ1 in: (mousex > (0.25 + ((i - 1) * triggerSpacing))) abs . x]"
 > stParse expression "out := pitch size mixFill: [:i| x]"
 > stParse expression "pitch size mixFill: x"

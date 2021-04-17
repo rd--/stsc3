@@ -69,7 +69,7 @@ MessageNames openMessageNames . "open Message Names tool"
 2.0 rand: 3.0 . "-> random Float in 2 to 3"
 4.0 rand2 . "-> random Float in -4 to 4"
 
-100 arrayFill: [:_i | 5.0 rand] . "-> 100 random Floats in 0 to 5"
+100 arrayFill: [:i | 5.0 rand] . "-> 100 random Floats in 0 to 5"
 
 "Random - Integer"
 
@@ -77,12 +77,12 @@ MessageNames openMessageNames . "open Message Names tool"
 1 rand: 5 . "-> random Integer in 1 to 5"
 4 rand2 . "-> random Integer in -4 to 4"
 
-100 arrayFill: [:_i | 5 rand] . "-> 100 random Integers in 0 to 5"
+100 arrayFill: [:i | 5 rand] . "-> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 {1 . 2 . 3 . 4 . 5} choose . "random element of Array ; i.e. atRandom"
-100 arrayFill: [:_i | #(a b c d e} choose] . "-> 100 randomly chosen symbols"
+100 arrayFill: [:i | #(a b c d e} choose] . "-> 100 randomly chosen symbols"
 
 "Array"
 
@@ -125,7 +125,6 @@ d := Dictionary newFromPairs: #(select x from y list z)
 
 x := nil .
 x isNil ifTrue: ['x'] ifFalse: ['y'] .
-x isNil ifTrue: 'x' ifFalse: 'y' .
 
 "Morph"
 
@@ -239,6 +238,52 @@ Smalltalk aboutThisSystem . "System Reporter"
 
 "GNU Smalltalk"
 
-Smalltalk system: 'ls' .
 Smalltalk system: 'ls /home/rohan/sw/stsc3/README' .
-Smalltalk getenv: 'HOME' . "'/home/rohan'"
+Smalltalk getenv: 'HOME' . "/home/rohan"
+
+ObjectMemory snapshot . "save image file"
+
+FileStream fileIn: 'SC3-Base.st' .
+FileStream fileIn: 'SC3-Core.st' .
+FileStream fileIn: 'SC3-Random.st' .
+FileStream fileIn: 'SC3-Math.st' .
+FileStream fileIn: 'SC3-UGen.st' .
+FileStream fileIn: 'SC3-UGen-Composite.st' .
+FileStream fileIn: 'SC3-Env.st' .
+FileStream fileIn: 'SC3-Haskell.st' .
+FileStream fileIn: 'SC3-Gnu.st' .
+
+"Help Graphs"
+
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles-mouse.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-babbling-brook.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-berlin-1977.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-birdies.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-demanding-studies.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-harmonic-swimming.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-harmonic-tumbling.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-harmonic-zither.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-lfo-modulation.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-modal-space.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-moto-rev.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-narrow-band-filtered-crackle-noise.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-plucked-strings.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-pulsing-bottles-ir.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-pulsing-bottles.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-random-pulsations.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-random-sine-waves.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-reverberated-sine-percussion.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-sample-and-hold-liquidities.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-scratchy.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-sprinkler-mouse.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-sprinkler.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-strummable-guitar.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-strummable-silk.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-sweepy-noise.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-synthetic-piano.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-tank.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-theremin.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/jrhb-gcd.st' evalFile play .
+'/home/rohan/sw/stsc3/help/graph/pj-forest-sounds.st' evalFile play .

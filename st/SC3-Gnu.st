@@ -18,3 +18,21 @@
 !Dictionary class methodsFor: 'instance creation'!
  newFrom: x ^ self from: x !
 !
+
+!Integer methodsFor: 'randomness'!
+ atRandom ^ Random between: 1 and: self !
+!
+
+!Array methodsFor: 'numerics'!
+ sum ^ self inject: 0 into: [:a :c | c + a] !
+!
+
+!SequenceableCollection methodsFor: 'joining'!
+ concatenation
+  "Flattens the collection by one level into an Array."
+  |result index|
+  result := Array new: (self inject: 0 into: [:sum :each | sum + each size]).
+  index := 0.
+  self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
+  ^ result !
+!

@@ -1,6 +1,6 @@
 "synthetic piano (jmcc) #3"
 |p|
-p := [:_i |
+p := [:i |
  |n f ph s e c l c_|
  n := 36 rand: 90 .
  f := 0.1 rand: 0.5 .

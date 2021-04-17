@@ -3,10 +3,10 @@
 r_allpass :=
   [:z|
   |r|
-  r := 2 mceFill: [:_i| Rand lo: 0.005 hi: 0.02] .
+  r := 2 mceFill: [:i| Rand lo: 0.005 hi: 0.02] .
   AllpassN in: z maxdelaytime: 0.03 delaytime: r decaytime: 1] .
 pling :=
-  [:_i|
+  [:i|
   |d f p s1 s2|
   d := Dust density: 0.2 .
   f := ExpRand lo: 300 hi: 2200 .
@@ -22,8 +22,8 @@ bang :=
 tank :=
   [:i|
   |r1 r2 l0 l1 l2 l3 l4 l5 l6 l7|
-  r1 := 2 mceFill: [:_i| Rand lo: 0.01 hi: 0.05] .
-  r2 := 2 mceFill: [:_i| Rand lo: 0.03 hi: 0.15] .
+  r1 := 2 mceFill: [:i| Rand lo: 0.01 hi: 0.05] .
+  r2 := 2 mceFill: [:i| Rand lo: 0.03 hi: 0.15] .
   l0 := LocalIn numChan: 2 default: 0 mul: 0.98 .
   l1 := OnePole in: l0 coef: 0.33 .
   l2 := l1 . "RotateStereo in: l1 pos: 0.23 ."
@@ -34,5 +34,5 @@ tank :=
   l7 := l6 + i .
   MRG lhs: l7 rhs: (LocalOut channelsArray: l7) ] .
 signal := (12 mixFill: pling) + bang .
-(1 to: 4) do: [:_i| signal := r_allpass value: signal] .
+(1 to: 4) do: [:i| signal := r_allpass value: signal] .
 tank value: signal

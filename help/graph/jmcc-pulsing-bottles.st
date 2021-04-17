@@ -1,7 +1,7 @@
 "pulsing bottles (jmcc) #2"
 |n f o|
 n := 6 . "number of bottles"
-f := [:_x|
+f := [:x|
       |a l|
       a := LFPulse freq: (4.0 rand: 14.0) iphase: 0 width: (0.7 rand) mul: (0.8 / n) .
       l := SinOsc freq: (0.1 rand: 0.5) phase: (2 * Float pi) rand .
