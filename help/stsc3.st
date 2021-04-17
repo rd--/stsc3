@@ -287,3 +287,5 @@ FileStream fileIn: 'SC3-Gnu.st' .
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play .
 '/home/rohan/sw/stsc3/help/graph/jrhb-gcd.st' evalFile play .
 '/home/rohan/sw/stsc3/help/graph/pj-forest-sounds.st' evalFile play .
+
+SC3 reset .
