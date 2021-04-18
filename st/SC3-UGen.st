@@ -301,12 +301,12 @@ BrownNoise comment: 'Brown Noise.'!
   mul: mul
   |u|
   u := self new.
-  
+
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-  
+
   ^(u * mul + add)!
 !
 
@@ -1125,6 +1125,97 @@ FSinOsc comment: 'Fast sine oscillator.'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #GVerb
+ instanceVariableNames: 'in roomsize revtime damping inputbw spread drylevel earlyreflevel taillevel maxroomsize'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+GVerb comment: 'A two-channel reverb'!
+
+!GVerb methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ roomsize ^roomsize!
+ roomsize: x roomsize := x!
+ revtime ^revtime!
+ revtime: x revtime := x!
+ damping ^damping!
+ damping: x damping := x!
+ inputbw ^inputbw!
+ inputbw: x inputbw := x!
+ spread ^spread!
+ spread: x spread := x!
+ drylevel ^drylevel!
+ drylevel: x drylevel := x!
+ earlyreflevel ^earlyreflevel!
+ earlyreflevel: x earlyreflevel := x!
+ taillevel ^taillevel!
+ taillevel: x taillevel := x!
+ maxroomsize ^maxroomsize!
+ maxroomsize: x maxroomsize := x!
+!
+
+!GVerb methodsFor: 'initialization'!
+ initialize
+  ugenName := #GVerb.
+  paramNames := #(#in #roomsize #revtime #damping #inputbw #spread #drylevel #earlyreflevel #taillevel #maxroomsize).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 2.
+  specialIndex := 0.
+  in := 0.0. roomsize := 10.0. revtime := 3.0. damping := 0.5. inputbw := 0.5. spread := 15.0. drylevel := 1.0. earlyreflevel := 0.7. taillevel := 0.5. maxroomsize := 300.0!
+!
+
+!GVerb class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!GVerb class methodsFor: 'instance creation'!
+ in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
+  |u|
+  u := self new.
+  u in: in.
+  u roomsize: roomsize.
+  u revtime: revtime.
+  u damping: damping.
+  u inputbw: inputbw.
+  u spread: spread.
+  u drylevel: drylevel.
+  u earlyreflevel: earlyreflevel.
+  u taillevel: taillevel.
+  u maxroomsize: maxroomsize.
+  ^u!
+ in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u roomsize: roomsize.
+  u revtime: revtime.
+  u damping: damping.
+  u inputbw: inputbw.
+  u spread: spread.
+  u drylevel: drylevel.
+  u earlyreflevel: earlyreflevel.
+  u taillevel: taillevel.
+  u maxroomsize: maxroomsize.
+  ^(u * mul)!
+ in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u roomsize: roomsize.
+  u revtime: revtime.
+  u damping: damping.
+  u inputbw: inputbw.
+  u spread: spread.
+  u drylevel: drylevel.
+  u earlyreflevel: earlyreflevel.
+  u taillevel: taillevel.
+  u maxroomsize: maxroomsize.
   ^(u * mul + add)!
 !
 
@@ -2524,12 +2615,12 @@ PinkNoise comment: 'Pink Noise.'!
   mul: mul
   |u|
   u := self new.
-  
+
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-  
+
   ^(u * mul + add)!
 !
 
@@ -2887,12 +2978,12 @@ SampleDur comment: 'Duration of one sample.'!
   mul: mul
   |u|
   u := self new.
-  
+
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-  
+
   ^(u * mul + add)!
 !
 
@@ -3184,12 +3275,12 @@ WhiteNoise comment: 'White noise.'!
   mul: mul
   |u|
   u := self new.
-  
+
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-  
+
   ^(u * mul + add)!
 !
 
@@ -3348,4 +3439,3 @@ log ^ UnaryOpUGen specialIndex: 25 a: self!
 sin ^ UnaryOpUGen specialIndex: 28 a: self!
 distort ^ UnaryOpUGen specialIndex: 42 a: self!
 !
-

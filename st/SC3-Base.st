@@ -9,8 +9,8 @@
   "Array of (self to: n) collected with f"
   ^ ((self to: n) asArray) collect: [:i| f value: i] !
  arrayFill: f
-  "Array of (1 to: self) collected with f"
-  ^ 1 to: self collect: [:i| f value: i] !
+  "Array of (1 to: self) collected with f (zero indexed)"
+  ^ 1 to: self collect: [:i| f value: (i - 1)] !
  replicate: x
   "Array of self places each being x"
   ^ self arrayFill: [:i| x] !

@@ -94,6 +94,7 @@ MessageNames openMessageNames . "open Message Names tool"
 #((1 2) (3 4)) concatenation . "-> #((1 3) (2 4))"
 #((1 2) (3 4)) transpose concatenation . "-> #(1 3 2 4)"
 5 mixFill: [:x| x * x] . "-> 55"
+5 arrayFill: [:x| x * x]. "-> #(1 4 9 16 25)"
 
 Array with: 1 with: 2.3 with: 'str' . "{1. 2.3. 'str'}"
 
@@ -230,11 +231,21 @@ d := {'a'->1 . 'b'->2 . 'c'->'3'} as: Dictionary.
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out] . "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in] . "read"
 
-
 "Smalltalk"
 
 Smalltalk garbageCollect .
 Smalltalk aboutThisSystem . "System Reporter"
+
+"Math"
+
+0 raisedTo: 1. "-> 0"
+1 raisedTo: 0. "-> 1"
+0 raisedTo: 0. "-> 1 (gst = error)"
+0.0 raisedTo: 1.0. "-> 0.0"
+1.0 raisedTo: 0.0. "-> 1.0"
+0.0 raisedTo: 0.0. "-> 1.0"
+1 / 0. "-> error"
+1.0 / 0.0. "-> Inf"
 
 "GNU Smalltalk"
 
