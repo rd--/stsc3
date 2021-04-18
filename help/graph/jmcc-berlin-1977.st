@@ -1,7 +1,7 @@
 "berlin 1977 (jmcc) #4"
-|sequ sequR clock_rate clock_time clock patternList note1 clock_16 note2 freq env amp filt pw sig|
-sequ := [:s :tr| Demand trig: tr reset: 0 demandUGens: (Dseq repeats: #dinf list: s)]. "somewhat akin to SC2 Sequencer"
-sequR := [:s :tr| Demand trig: tr reset: 0 demandUGens: (Dshuf repeats: #dinf list: s)]. "sequ with random selection function"
+| sequ sequR clock_rate clock_time clock patternList note1 clock_16 note2 freq env amp filt pw sig |
+sequ := [:s :tr | Demand trig: tr reset: 0 demandUGens: (Dseq repeats: #dinf list: s)]. "somewhat akin to SC2 Sequencer"
+sequR := [:s :tr | Demand trig: tr reset: 0 demandUGens: (Dshuf repeats: #dinf list: s)]. "sequ with random selection function"
 clock_rate := MouseX minval: 5 maxval: 20 warp: 1 lag: 0.2. "mouse x controls clock rate"
 clock_time := clock_rate reciprocal.
 clock := Impulse freq: clock_rate phase: 0. "sequencer trigger"

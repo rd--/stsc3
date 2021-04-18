@@ -1,5 +1,5 @@
 "sample and hold liquidities (jmcc) #4"
-|r t c cf f p s i|
+| r t c cf f p s i |
 r := MouseX minval: 1 maxval: 200 warp: 1 lag: 0.2.
 t := r reciprocal.
 c := Impulse freq: r phase: 0 mul: 0.4.

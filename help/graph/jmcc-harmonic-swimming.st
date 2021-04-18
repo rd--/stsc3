@@ -1,5 +1,5 @@
 "harmonic swimming (jmcc) #1"
-|a f p l o|
+| a f p l o |
 a := 0.02. "amplitude scale"
 f := 50. "fundamental frequency"
 p := 20. "number of partials per channel"
@@ -10,4 +10,4 @@ o := [:h | "harmonic number (from one)"
       n := LFNoise1 freq: r mul: a add: l.
       e := (n max: 0) kr. "clip negative amplitudes to zero"
       FSinOsc freq: (f * h) iphase: 0 mul: e].
-p mixFill: o.
+p mixFill: o

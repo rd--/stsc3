@@ -1,38 +1,71 @@
 !String methodsFor: 'file i/o'!
- readTextFile |fd txt| fd := FileStream open: self mode: FileStream read. txt := fd contents. fd close. ^txt !
- writeTextFile: blk |fd| fd := FileStream open: self mode: FileStream write. blk value: fd. fd close !
- evalString ^ Behavior evaluate: self !
- evalFile ^ self readTextFile evalString !
- systemCommand ^ Smalltalk system: self !
-"
- dirAllFilesWithExt: ext ^ ((FileDirectory on: self) fullNamesOfAllFilesInSubtree) select: [:x | x endsWith: ext] !
- fileList ^ FileList openOn: (FileDirectory on: self) !
-"
- putOn: fd ^ 1 to: self size do: [:i | fd nextPut: (self at: i)] !
+ readTextFile
+  "Read entire contents from file as String."
+  | fd txt |
+  fd := FileStream open: self mode: FileStream read.
+  txt := fd contents.
+  fd close.
+  ^txt
+ !
+ writeTextFile: blk
+  "Write text file passing blk a file descriptor."
+  | fd |
+  fd := FileStream open: self mode: FileStream write.
+  blk value: fd.
+  fd close
+ !
+ evalString
+  "Evaluate string."
+  ^Behavior evaluate: self
+ !
+ evalFile
+  "evalString of readTextFile."
+  ^self readTextFile evalString
+ !
+ systemCommand
+  "Run system command."
+  ^Smalltalk system: self
+ !
+ putOn: fd
+ "Run nextPut: for each character in self."
+  ^1 to: self size do: [:i | fd nextPut: (self at: i)]
+ !
 !
 
 !Character methodsFor: 'file i/o'!
- putOn: fd ^ fd nextPut: self !
+ putOn: fd
+  "Run nextPut:."
+  ^fd nextPut: self
+ !
 !
 
 !Dictionary class methodsFor: 'instance creation'!
- newFrom: x ^ self from: x !
+ newFrom: x
+  "Alias for from:."
+  ^self from: x
+ !
 !
 
 !Integer methodsFor: 'randomness'!
- atRandom ^ Random between: 1 and: self !
+ atRandom
+  "Random number between 1 and self."
+  ^Random between: 1 and: self
+ !
 !
 
-!Array methodsFor: 'numerics'!
- sum ^ self inject: 0 into: [:a :c | c + a] !
+!Collection methodsFor: 'math functions'!
+ sum
+  "Sum elements of collection."
+  ^self inject: 0 into: [:a :c | c + a]
+ !
 !
 
 !SequenceableCollection methodsFor: 'joining'!
  concatenation
   "Flattens the collection by one level into an Array."
-  |result index|
+  | result index |
   result := Array new: (self inject: 0 into: [:sum :each | sum + each size]).
   index := 0.
   self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
-  ^ result !
+  ^result !
 !

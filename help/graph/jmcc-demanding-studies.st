@@ -1,5 +1,5 @@
 "demanding studies (jmcc)"
-|s1 s2 s3 x tr f o1 o2 o3|
+| s1 s2 s3 x tr f o1 o2 o3 |
 s1 := Drand repeats: #dinf list: #(72 75 79 82).
 s2 := Drand repeats: 1 list: #(82 84 86).
 s3 := Dseq repeats: #dinf list: {72. 75. 79. s2}.

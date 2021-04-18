@@ -1,5 +1,5 @@
 "birdies (jmcc) #6 ; texture=overlap,7,4,4,inf"
-|p1 p2 p3 sw freq amp|
+| p1 p2 p3 sw freq amp |
 p1 := LFPulse freq: 1.0 rand + 0.4 iphase: 0 width: 0.8 rand + 0.1 mul: 3.0 rand + 4 add: 2.
 p2 := LFPulse freq: 1.0 rand + 0.4 iphase: 0 width: 0.8 rand + 0.1 mul: 3.0 rand + 4.
 p3 := LFPulse freq: 0.5 rand + 0.2 iphase: 0 width: 0.4 mul: 0.02.

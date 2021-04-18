@@ -48,8 +48,12 @@
   "Filein the current buffer file name to Smalltalk."
   (interactive)
   (save-buffer)
-  (stsc3-see-smalltalk)
   (stsc3-send-string (format "FileStream fileIn: '%s'" buffer-file-name)))
+
+(defun stsc3-save-image-file ()
+  "Save the current state of the Smalltalk image to file."
+  (interactive)
+  (stsc3-send-string "ObjectMemory snapshot."))
 
 (defun stsc3-send-current-line ()
   "Send the current line to Smalltalk."
@@ -150,7 +154,6 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map [menu-bar stsc3 expression] (cons "Expression" (make-sparse-keymap "Expression")))
   (define-key map [menu-bar stsc3 expression stop] '("Stop (interrupt and reset)" . stsc3-stop))
   (define-key map [menu-bar stsc3 expression send-current-line] '("Send current line" . stsc3-send-current-line))
-  (define-key map [menu-bar stsc3 expression load-current-file] '("Filein current file" . stsc3-filein-current-file))
   (define-key map [menu-bar stsc3 expression draw-region] '("Draw region" . stsc3-draw-region))
   (define-key map [menu-bar stsc3 expression play-region] '("Play region" . stsc3-play-region))
   (define-key map [menu-bar stsc3 scsynth] (cons "SCSynth" (make-sparse-keymap "SCSynth")))
@@ -159,6 +162,8 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map [menu-bar stsc3 Smalltalk] (cons "Smalltalk" (make-sparse-keymap "Smalltalk")))
   (define-key map [menu-bar stsc3 Smalltalk quit-smalltalk] '("Quit Smalltalk" . stsc3-quit-smalltalk))
   (define-key map [menu-bar stsc3 Smalltalk interrupt-smalltalk] '("Interrupt Smalltalk" . stsc3-interrupt-smalltalk))
+  (define-key map [menu-bar stsc3 expression save-image-file] '("Save image file" . stsc3-save-image-file))
+  (define-key map [menu-bar stsc3 expression filein-current-file] '("Filein current file" . stsc3-filein-current-file))
   (define-key map [menu-bar stsc3 Smalltalk see-smalltalk] '("See Smalltalk" . stsc3-see-smalltalk)))
 
 (if stsc3-mode-map
