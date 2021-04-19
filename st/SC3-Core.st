@@ -8,18 +8,30 @@ Object subclass: #UGen
 UGen comment: 'Unit Generator'!
 
 !UGen methodsFor: 'accessing'!
- mceNames ^mceNames !
- mceNames: x mceNames := x !
- numChan ^numChan !
- numChan: x numChan := x !
- paramNames ^paramNames !
- paramNames: x paramNames := x !
- specialIndex ^specialIndex !
- specialIndex: x specialIndex := x !
- ugenName ^ugenName !
- ugenName: x ugenName := x !
- ugenRate ^ugenRate !
- ugenRate: x ugenRate := x !
+ mceNames ^mceNames
+ !
+ mceNames: x mceNames := x
+ !
+ numChan ^numChan
+ !
+ numChan: x numChan := x
+ !
+ paramNames ^paramNames
+ !
+ paramNames: x paramNames := x
+ !
+ specialIndex ^specialIndex
+ !
+ specialIndex: x specialIndex := x
+ !
+ ugenName ^ugenName
+ !
+ ugenName: x ugenName := x
+ !
+ ugenRate ^ugenRate
+ !
+ ugenRate: x ugenRate := x
+ !
 !
 
 UGen subclass: #BinaryOpUGen
@@ -32,10 +44,14 @@ UGen subclass: #BinaryOpUGen
 BinaryOpUGen comment: 'Binary Operators'!
 
 !BinaryOpUGen methodsFor: 'accessing'!
- a ^a !
- a: x a := x !
- b ^b !
- b: x b := x !
+ a ^a
+ !
+ a: x a := x
+ !
+ b ^b
+ !
+ b: x b := x
+ !
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
@@ -51,7 +67,8 @@ BinaryOpUGen comment: 'Binary Operators'!
   u specialIndex: specialIndex.
   u a: a.
   u b: b.
-  ^u !
+  ^u
+ !
 !
 
 UGen subclass: #UnaryOpUGen
@@ -64,8 +81,10 @@ UGen subclass: #UnaryOpUGen
 UnaryOpUGen comment: 'Unary Operators'!
 
 !UnaryOpUGen methodsFor: 'accessing'!
- a ^a !
- a: x a := x !
+ a ^a
+ !
+ a: x a := x
+ !
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
@@ -80,7 +99,8 @@ UnaryOpUGen comment: 'Unary Operators'!
   u numChan: 1.
   u specialIndex: specialIndex.
   u a: a.
-  ^u !
+  ^u
+ !
 !
 
 UGen subclass: #Rate
@@ -93,21 +113,39 @@ UGen subclass: #Rate
 Rate comment: 'Audio Rate'!
 
 !Rate methodsFor: 'accessing'!
- rate ^ rate !
- rate: x rate := x !
- source ^ source !
- source: x source := x !
+ rate ^rate
+ !
+ rate: x rate := x
+ !
+ source ^source
+ !
+ source: x source := x
+ !
 !
 
 !Rate class methodsFor: 'instance creation'!
- source: p1 rate: p2 |r| r := self new . r source: p1 . r rate: p2 . ^r !
+ source: p1 rate: p2
+  |r|
+  r := self new.
+  r source: p1.
+  r rate: p2.
+  ^r
+ !
 !
 
 !UGen methodsFor: 'rate control'!
- ar ^ Rate source: self rate: #ar!
- kr ^ Rate source: self rate: #kr!
- ir ^ Rate source: self rate: #ir!
- dr ^ Rate source: self rate: #dr!
+ ar
+  ^Rate source: self rate: #ar
+ !
+ kr
+  ^Rate source: self rate: #kr
+ !
+ ir
+  ^Rate source: self rate: #ir
+ !
+ dr
+  ^Rate source: self rate: #dr
+ !
 !
 
 UGen subclass: #MCE
@@ -120,32 +158,50 @@ UGen subclass: #MCE
 MCE comment: 'Multiple Channel Expansion'!
 
 !MCE methodsFor: 'accessing'!
- source: x source := x !
- source ^ source !
- transform: x transform := x !
- transform ^ transform !
- size ^ source size !
+ source: x source := x
+ !
+ source ^source
+ !
+ transform: x transform := x
+ !
+ transform ^transform
+ !
+ size ^source size
+ !
 !
 
 !MCE methodsFor: 'initialization'!
- initialize source := nil . transform := nil !
+ initialize
+  source := nil.
+  transform := nil
+ !
 !
 
 !MCE class methodsFor: 'instance creation'!
- new ^ self basicNew initialize !
- source: x ^ self new source: x !
+ new
+  ^self basicNew initialize
+ !
+ source: x
+  ^self new source: x
+ !
 !
 
 !MCE methodsFor: 'transforms'!
- transpose ^ self transform: #mceTranspose !
+ transpose
+  ^self transform: #mceTranspose
+ !
 !
 
 !Array methodsFor: 'multi-channel expansion'!
- mce ^ MCE source: self !
+ mce
+  ^MCE source: self
+ !
 !
 
 !Number methodsFor: 'enumerating'!
- mceFill: f ^ (self arrayFill: f) mce !
+ mceFill: f
+  ^(self arrayFill: f) mce
+ !
 !
 
 UGen subclass: #Mix
@@ -158,18 +214,28 @@ UGen subclass: #Mix
 Mix comment: 'UGen Mixer'!
 
 !Mix methodsFor: 'accessing'!
- source ^ source !
- source: x source := x !
+ source ^source
+ !
+ source: x source := x
+ !
 !
 
 !Mix class methodsFor: 'instance creation'!
- source: x ^ self new source: x !
+ source: x
+  ^self new source: x
+ !
 !
 
 !UGen methodsFor: 'arithmetic'!
- mul: mul add: add ^ MulAdd in: self mul: mul add: add !
- mix ^ Mix source: self !
- round ^ self round: 1.0 !
+ mul: mul add: add
+  ^MulAdd in: self mul: mul add: add
+ !
+ mix
+  ^Mix source: self
+ !
+ round
+  ^self round: 1.0
+ !
 !
 
 Object subclass: #SC3
@@ -182,7 +248,9 @@ Object subclass: #SC3
 SC3 comment: 'SuperCollider3'!
 
 !SC3 class methodsFor: 'server control'!
- reset 'hsc3-scsynth reset' systemCommand !
+ reset
+  'hsc3-scsynth reset' systemCommand
+ !
 !
 
 UGen subclass: #MRG
@@ -195,14 +263,24 @@ UGen subclass: #MRG
 MRG comment: 'Multiple Root Graph'!
 
 !MRG methodsFor: 'accessing'!
- lhs ^ lhs !
- lhs: x lhs := x !
- rhs ^ rhs !
- rhs: x rhs := x !
+ lhs ^lhs
+ !
+ lhs: x lhs := x
+ !
+ rhs ^rhs
+ !
+ rhs: x rhs := x
+ !
 !
 
 !MRG class methodsFor: 'instance creation'!
- lhs: x rhs: y |u| u := self new . u lhs: x . u rhs: y . ^ u !
+ lhs: x rhs: y
+  |u|
+  u := self new.
+  u lhs: x.
+  u rhs: y.
+  ^u
+ !
 !
 
 UGen subclass: #Control
@@ -215,12 +293,21 @@ UGen subclass: #Control
 Control comment: 'Control Input'!
 
 !Control methodsFor: 'accessing'!
- name ^name !
- name: x name := x !
- init ^init !
- init: x init := x !
+ name ^name
+ !
+ name: x name := x
+ !
+ init ^init
+ !
+ init: x init := x
+ !
 !
 
 !Control class methodsFor: 'instance creation'!
- name: p1 init: p2 |u| u := self new . u name: p1 . u init: p2 . ^ u !
+ name: p1 init: p2
+  |u| u := self new.
+  u name: p1.
+  u init: p2.
+  ^u
+ !
 !
