@@ -99,6 +99,11 @@ MessageNames openMessageNames. "open Message Names tool"
 
 Array with: 1 with: 2.3 with: 'str'. "{1. 2.3. 'str'}"
 
+"Array - Math"
+
+3 adaptToCollection: #(1 2 3) andSend: #*
+#(1 2 3) * 3
+
 "Strings"
 
 'file' , '.ext' = 'file.ext'. "-> true"

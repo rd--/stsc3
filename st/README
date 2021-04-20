@@ -32,11 +32,13 @@ Classes to write UGen graphs as expressions to text files for
 interpretation by [hsc3](?t=hsc3) or [rsc3](?t=rsc3).  The graphs are
 written without proxied outputs, without applying
 multiple-channel-expansion, and without applying rate-control editing.
+The SC3-Lisp file is not currently maintained.
 
 [SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
 [SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st) &
-[SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) :
-Methods that cannot be written to work under all of Squeak, Pharo and Cuis
+[SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
+[SC3-Gnu.st](?t=stsc3&e=st/SC3-Gnu.st) :
+Methods that cannot be written to work under all of Squeak, Pharo, Cuis and GNU-Smalltalk
 have separate definitions.
 
 ![](sw/stsc3/lib/png/squeak-mouse.png)

@@ -82,6 +82,11 @@
   (interactive)
   (stsc3-send-region "draw"))
 
+(defun stsc3-print-ugens-region ()
+  "Print region."
+  (interactive)
+  (stsc3-send-region "printUGens"))
+
 (defun stsc3-reset-scsynth ()
   "Send SC3 reset instruction to Smalltalk."
   (interactive)
@@ -162,8 +167,8 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map [menu-bar stsc3 Smalltalk] (cons "Smalltalk" (make-sparse-keymap "Smalltalk")))
   (define-key map [menu-bar stsc3 Smalltalk quit-smalltalk] '("Quit Smalltalk" . stsc3-quit-smalltalk))
   (define-key map [menu-bar stsc3 Smalltalk interrupt-smalltalk] '("Interrupt Smalltalk" . stsc3-interrupt-smalltalk))
-  (define-key map [menu-bar stsc3 expression save-image-file] '("Save image file" . stsc3-save-image-file))
-  (define-key map [menu-bar stsc3 expression filein-current-file] '("Filein current file" . stsc3-filein-current-file))
+  (define-key map [menu-bar stsc3 Smalltalk save-image-file] '("Save image file" . stsc3-save-image-file))
+  (define-key map [menu-bar stsc3 Smalltalk filein-current-file] '("Filein current file" . stsc3-filein-current-file))
   (define-key map [menu-bar stsc3 Smalltalk see-smalltalk] '("See Smalltalk" . stsc3-see-smalltalk)))
 
 (if stsc3-mode-map

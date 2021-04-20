@@ -30,14 +30,14 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
 !
 
 !Splay class methodsFor: 'instance creation'!
- spread: spread level: level center: center levelComp: levelComp input: input
+ input: input spread: spread level: level center: center levelComp: levelComp
   | u |
   u := self new.
+  u input: input.
   u spread: spread.
   u level: level.
   u center: center.
   u levelComp: levelComp.
-  u input: input.
   ^u
  !
 !

@@ -301,12 +301,12 @@ BrownNoise comment: 'Brown Noise.'!
   mul: mul
   |u|
   u := self new.
-
+  
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-
+  
   ^(u * mul + add)!
 !
 
@@ -733,7 +733,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens
   |u|
   u := self new.
-  u numChan: #mceInput.
+  u numChan: #mceInput. 
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -741,7 +741,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens mul: mul
   |u|
   u := self new.
-  u numChan: #mceInput.
+  u numChan: #mceInput. 
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -749,7 +749,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
   |u|
   u := self new.
-  u numChan: #mceInput.
+  u numChan: #mceInput. 
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -955,6 +955,67 @@ Dust comment: 'Random impulses.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Duty
+ instanceVariableNames: 'dur reset doneAction level'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Duty comment: 'Demand results from demand rate UGens.'!
+
+!Duty methodsFor: 'accessing'!
+ dur ^dur!
+ dur: x dur := x!
+ reset ^reset!
+ reset: x reset := x!
+ doneAction ^doneAction!
+ doneAction: x doneAction := x!
+ level ^level!
+ level: x level := x!
+!
+
+!Duty methodsFor: 'initialization'!
+ initialize
+  ugenName := #Duty.
+  paramNames := #(#dur #reset #doneAction #level).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0!
+!
+
+!Duty class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Duty class methodsFor: 'instance creation'!
+ dur: dur reset: reset doneAction: doneAction level: level
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  ^u!
+ dur: dur reset: reset doneAction: doneAction level: level mul: mul
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  ^(u * mul)!
+ dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #EnvGen
  instanceVariableNames: 'gate levelScale levelBias timeScale doneAction envelope'
  classVariableNames: ''
@@ -1125,6 +1186,67 @@ FSinOsc comment: 'Fast sine oscillator.'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #FreeVerb
+ instanceVariableNames: 'in mix room damp'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+FreeVerb comment: 'A reverb'!
+
+!FreeVerb methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ mix ^mix!
+ mix: x mix := x!
+ room ^room!
+ room: x room := x!
+ damp ^damp!
+ damp: x damp := x!
+!
+
+!FreeVerb methodsFor: 'initialization'!
+ initialize
+  ugenName := #FreeVerb.
+  paramNames := #(#in #mix #room #damp).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. mix := 0.33. room := 0.5. damp := 0.5!
+!
+
+!FreeVerb class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!FreeVerb class methodsFor: 'instance creation'!
+ in: in mix: mix room: room damp: damp
+  |u|
+  u := self new.
+  u in: in.
+  u mix: mix.
+  u room: room.
+  u damp: damp.
+  ^u!
+ in: in mix: mix room: room damp: damp mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u mix: mix.
+  u room: room.
+  u damp: damp.
+  ^(u * mul)!
+ in: in mix: mix room: room damp: damp mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u mix: mix.
+  u room: room.
+  u damp: damp.
   ^(u * mul + add)!
 !
 
@@ -2615,12 +2737,12 @@ PinkNoise comment: 'Pink Noise.'!
   mul: mul
   |u|
   u := self new.
-
+  
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-
+  
   ^(u * mul + add)!
 !
 
@@ -2978,12 +3100,12 @@ SampleDur comment: 'Duration of one sample.'!
   mul: mul
   |u|
   u := self new.
-
+  
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-
+  
   ^(u * mul + add)!
 !
 
@@ -3196,6 +3318,57 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #SinOscFB
+ instanceVariableNames: 'freq feedback'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+SinOscFB comment: 'Feedback FM oscillator'!
+
+!SinOscFB methodsFor: 'accessing'!
+ freq ^freq!
+ freq: x freq := x!
+ feedback ^feedback!
+ feedback: x feedback := x!
+!
+
+!SinOscFB methodsFor: 'initialization'!
+ initialize
+  ugenName := #SinOscFB.
+  paramNames := #(#freq #feedback).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  freq := 440.0. feedback := 0.0!
+!
+
+!SinOscFB class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!SinOscFB class methodsFor: 'instance creation'!
+ freq: freq feedback: feedback
+  |u|
+  u := self new.
+  u freq: freq.
+  u feedback: feedback.
+  ^u!
+ freq: freq feedback: feedback mul: mul
+  |u|
+  u := self new.
+  u freq: freq.
+  u feedback: feedback.
+  ^(u * mul)!
+ freq: freq feedback: feedback mul: mul add: add
+  |u|
+  u := self new.
+  u freq: freq.
+  u feedback: feedback.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #Trig
  instanceVariableNames: 'in dur'
  classVariableNames: ''
@@ -3275,12 +3448,12 @@ WhiteNoise comment: 'White noise.'!
   mul: mul
   |u|
   u := self new.
-
+  
   ^(u * mul)!
   mul: mul add: add
   |u|
   u := self new.
-
+  
   ^(u * mul + add)!
 !
 
@@ -3439,3 +3612,4 @@ log ^ UnaryOpUGen specialIndex: 25 a: self!
 sin ^ UnaryOpUGen specialIndex: 28 a: self!
 distort ^ UnaryOpUGen specialIndex: 42 a: self!
 !
+

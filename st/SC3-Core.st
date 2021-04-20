@@ -57,12 +57,12 @@ BinaryOpUGen comment: 'Binary Operators'!
 !BinaryOpUGen class methodsFor: 'instance creation'!
  specialIndex: specialIndex a: a b: b
   "Create binary operator UGen"
-  |u|
+  | u |
   u := self new.
   u ugenName: #BinaryOpUGen.
   u paramNames: #(#a #b).
   u mceNames: #().
-  u ugenRate: #ar.
+  u ugenRate: #(0 1).
   u numChan: 1.
   u specialIndex: specialIndex.
   u a: a.
@@ -90,12 +90,12 @@ UnaryOpUGen comment: 'Unary Operators'!
 !UnaryOpUGen class methodsFor: 'instance creation'!
  specialIndex: specialIndex a: a
   "Create unary operator UGen"
-  |u|
+  | u |
   u := self new.
   u ugenName: #UnaryOpUGen.
   u paramNames: #(#a).
   u mceNames: #().
-  u ugenRate: #ar.
+  u ugenRate: #(0).
   u numChan: 1.
   u specialIndex: specialIndex.
   u a: a.
@@ -125,7 +125,7 @@ Rate comment: 'Audio Rate'!
 
 !Rate class methodsFor: 'instance creation'!
  source: p1 rate: p2
-  |r|
+  | r |
   r := self new.
   r source: p1.
   r rate: p2.
@@ -275,7 +275,7 @@ MRG comment: 'Multiple Root Graph'!
 
 !MRG class methodsFor: 'instance creation'!
  lhs: x rhs: y
-  |u|
+  | u |
   u := self new.
   u lhs: x.
   u rhs: y.
@@ -305,9 +305,41 @@ Control comment: 'Control Input'!
 
 !Control class methodsFor: 'instance creation'!
  name: p1 init: p2
-  |u| u := self new.
+  | u |
+  u := self new.
   u name: p1.
   u init: p2.
   ^u
+ !
+!
+
+UGen subclass: #Constant
+ instanceVariableNames: 'k'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'
+!
+
+Constant comment: 'Constant Numerical Value'!
+
+!Constant methodsFor: 'accessing'!
+ k ^k
+ !
+ k: x k := x
+ !
+!
+
+!Constant class methodsFor: 'instance creation'!
+ k: k
+  | u |
+  u := self new.
+  u k: k.
+  ^u
+ !
+!
+
+!Number methodsFor: 'UGen constants'!
+ constant
+  ^Constant k: self
  !
 !

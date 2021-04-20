@@ -18,13 +18,13 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassN","AmpComp","Amplitude","BPF","BPZ2","BrownNoise","CombL","CombN","Crackle"
-  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust"
-  ,"EnvGen","ExpRand","FSinOsc","GVerb","HPZ1","IRand","Impulse","In","Klank"
+  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Duty"
+  ,"EnvGen","ExpRand","FSinOsc","FreeVerb","GVerb","HPZ1","IRand","Impulse","In","Klank"
   ,"LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","Latch","LeakDC","Line","LocalBuf","LocalIn","LocalOut"
   ,"ModDif","MouseX","MouseY","MulAdd","OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pulse","PulseDivider"
-  ,"RHPF","RLPF","Rand","Resonz","SampleDur","Saw","SetBuf","SetResetFF","SinOsc"
+  ,"RHPF","RLPF","Rand","Resonz","SampleDur","Saw","SetBuf","SetResetFF","SinOsc","SinOscFB"
   ,"Trig","WhiteNoise","XFade2","XLine"]
 
 main :: IO ()

@@ -3,9 +3,9 @@
   "Print my hsc3 representation."
   |mce nc|
   '(mkUGen Nothing all_rates ' putOn: fd.
-  '(Left ' putOn: fd.
-  ugenRate asString asUppercase putOn: fd.
-  ') ' putOn: fd.
+  ugenRate isArray
+   ifTrue: ['(Right ' putOn: fd. ugenRate printHaskellArrayOn: fd. ') ' putOn: fd]
+   ifFalse: ['(Left ' putOn: fd. ugenRate asString asUppercase putOn: fd. ') ' putOn: fd].
   ugenName asString printHaskellOn: fd.
   fd space.
   '[' putOn: fd.
@@ -41,6 +41,11 @@
   "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
   self writeHaskellTo: '/tmp/st.hs'.
   'hsc3-graphs fragments hs draw /tmp/st.hs' systemCommand
+ !
+ printUGens
+  "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
+  self writeHaskellTo: '/tmp/st.hs'.
+  'hsc3-graphs fragments hs dump-ugens /tmp/st.hs' systemCommand
  !
 !
 
@@ -97,11 +102,17 @@
 !
 
 !Array methodsFor: 'printing'!
+ printHaskellArrayOn: fd
+  "Print my haskell representation."
+  '[' putOn: fd.
+  self do: [:x | x printHaskellOn: fd. ] separatedBy: [',' putOn: fd].
+  ']' putOn: fd
+ !
  printHaskellOn: fd
   "Print my hsc3 MCE representation."
-  '(mce [' putOn: fd.
-  self do: [:x | x printHaskellOn: fd. ] separatedBy: [',' putOn: fd].
-  '])' putOn: fd
+  '(mce ' putOn: fd.
+  self printHaskellArrayOn: fd.
+  ')' putOn: fd
  !
 !
 
@@ -151,6 +162,15 @@
   self name asString printHaskellOn: fd.
   fd space.
   self init asString putOn: fd.
+  ') ' putOn: fd
+ !
+!
+
+!Constant methodsFor: 'printing'!
+ printHaskellOn: fd
+  "Print my haskell representation."
+  '(constant ' putOn: fd.
+  self k asString putOn: fd.
   ') ' putOn: fd
  !
 !

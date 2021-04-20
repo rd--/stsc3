@@ -69,3 +69,25 @@
   self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
   ^result !
 !
+
+!Number methodsFor: 'converting'!
+ adaptToCollection: rcvr andSend: selector
+  "If I am involved in arithmetic with a Collection, return a Collection of the results of each element combined with me in that expression."
+  ^rcvr collect: [:element | element perform: selector with: self]
+ !
+!
+
+!Collection methodsFor: 'arithmetic'!
+ * arg
+  ^arg adaptToCollection: self andSend: #*
+ !
+ + arg
+  ^arg adaptToCollection: self andSend: #+
+ !
+ - arg
+  ^arg adaptToCollection: self andSend: #-
+ !
+ / arg
+  ^arg adaptToCollection: self andSend: #/
+ !
+!
