@@ -13,7 +13,7 @@
 !String methodsFor: 'user interface'!
  viewTextFile
   |w t b m|
-  w := SystemWindow new extent: 600@270 .
+  w := SystemWindow new extent: 800@494 .
   w setLabel: self .
   w model: (Model new) .
   b := AlignmentMorph newRow .
@@ -22,11 +22,11 @@
         {'Stop' . [SC3 reset]} .
         {'Draw' . [(t selection) asString evalString draw]}} .
   m do: [:x | b addMorphBack: (SimpleButtonMorph new target: (x at: 2) ; label: (x at: 1) ; actionSelector: #value ; color: Color veryVeryLightGray)] .
-  w addMorph: b frame: (0@0 corner: 1@0.1) .
+  w addMorph: b frame: (0@0 corner: 1@0.05) .
   t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
   t backgroundColor: Color white .
-  w addMorph: t frame: (0@0.1 corner: 1@1) .
-  w openInWorldExtent: 600@270 "400@180 500@225 600@270" !
+  w addMorph: t frame: (0@0.05 corner: 1@1) .
+  w openInWorldExtent: 800@494 "600@370 400@248 500@309" !
 !
 
 SystemWindow subclass: #GraphBrowser
