@@ -1,4 +1,5 @@
-'/home/rohan/sw/stsc3/help/' fileList "open file browser on stsc3/help"
+'/home/rohan/sw/stsc3/help/' fileListOn. "open file browser on named directory"
+'/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn. "open Workspace on named file"
 
 GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 
@@ -194,7 +195,7 @@ ProcessBrowser open. "open process browser ; MVC"
 
 "Workspace"
 
-Workspace open. "opens workspace ; MVC"
+Workspace open. "opens workspace ; Squeak ; MVC"
 Workspace open contents: 'Workspace open .'. "pharo"
 Workspace open openFile: '/home/rohan/sw/stsc3/help/stsc3.st'. "pharo"
 
