@@ -13,7 +13,7 @@
 !String methodsFor: 'user interface'!
  viewTextFile
   |w t b m|
-  w := SystemWindow new extent: 800@494 .
+  w := SystemWindow new extent: 700@432 .
   w setLabel: self .
   w model: (Model new) .
   b := AlignmentMorph newRow .
@@ -26,7 +26,7 @@
   t := (TextMorph new) string: (self readTextFile) fontName: 'Bitmap DejaVu Sans' size: 16 .
   t backgroundColor: Color white .
   w addMorph: t frame: (0@0.05 corner: 1@1) .
-  w openInWorldExtent: 800@494 "600@370 400@248 500@309" !
+  w openInWorldExtent: 700@432 "800@494 700@432 600@370 400@248 500@309" !
 !
 
 SystemWindow subclass: #GraphBrowser
