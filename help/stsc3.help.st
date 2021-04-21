@@ -105,6 +105,11 @@ Array with: 1 with: 2.3 with: 'str'. "{1. 2.3. 'str'}"
 3 adaptToCollection: #(1 2 3) andSend: #*
 #(1 2 3) * 3
 
+"Interval"
+
+(Interval from: 5 to: 9) asArray "-> #(5 6 7 8 9)"
+(Interval from: 5 to: 15 by: 2) asArray "-> #(5 7 9 11 13 15)"
+
 "Strings"
 
 'file' , '.ext' = 'file.ext'. "-> true"
@@ -257,6 +262,7 @@ Smalltalk aboutThisSystem. "System Reporter"
 0.0 raisedTo: 0.0. "-> 1.0"
 1 / 0. "-> error"
 1.0 / 0.0. "-> Inf"
+Float pi. "-> 3.141592653589793"
 
 "GNU Smalltalk"
 

@@ -310,6 +310,67 @@ BrownNoise comment: 'Brown Noise.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #CombC
+ instanceVariableNames: 'in maxdelaytime delaytime decaytime'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+CombC comment: 'Comb delay line with cubic interpolation.'!
+
+!CombC methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ maxdelaytime ^maxdelaytime!
+ maxdelaytime: x maxdelaytime := x!
+ delaytime ^delaytime!
+ delaytime: x delaytime := x!
+ decaytime ^decaytime!
+ decaytime: x decaytime := x!
+!
+
+!CombC methodsFor: 'initialization'!
+ initialize
+  ugenName := #CombC.
+  paramNames := #(#in #maxdelaytime #delaytime #decaytime).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
+!
+
+!CombC class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!CombC class methodsFor: 'instance creation'!
+ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
+  |u|
+  u := self new.
+  u in: in.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  ^u!
+ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  ^(u * mul)!
+ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #CombL
  instanceVariableNames: 'in maxdelaytime delaytime decaytime'
  classVariableNames: ''
@@ -1138,6 +1199,62 @@ ExpRand comment: 'Exponential single random number generator.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Formant
+ instanceVariableNames: 'fundfreq formfreq bwfreq'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Formant comment: 'Formant oscillator'!
+
+!Formant methodsFor: 'accessing'!
+ fundfreq ^fundfreq!
+ fundfreq: x fundfreq := x!
+ formfreq ^formfreq!
+ formfreq: x formfreq := x!
+ bwfreq ^bwfreq!
+ bwfreq: x bwfreq := x!
+!
+
+!Formant methodsFor: 'initialization'!
+ initialize
+  ugenName := #Formant.
+  paramNames := #(#fundfreq #formfreq #bwfreq).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  fundfreq := 440.0. formfreq := 1760.0. bwfreq := 880.0!
+!
+
+!Formant class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Formant class methodsFor: 'instance creation'!
+ fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq
+  |u|
+  u := self new.
+  u fundfreq: fundfreq.
+  u formfreq: formfreq.
+  u bwfreq: bwfreq.
+  ^u!
+ fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul
+  |u|
+  u := self new.
+  u fundfreq: fundfreq.
+  u formfreq: formfreq.
+  u bwfreq: bwfreq.
+  ^(u * mul)!
+ fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add
+  |u|
+  u := self new.
+  u fundfreq: fundfreq.
+  u formfreq: formfreq.
+  u bwfreq: bwfreq.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #FSinOsc
  instanceVariableNames: 'freq iphase'
  classVariableNames: ''
@@ -1341,6 +1458,57 @@ GVerb comment: 'A two-channel reverb'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #HPF
+ instanceVariableNames: 'in freq'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+HPF comment: '2nd order Butterworth highpass filter.'!
+
+!HPF methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ freq ^freq!
+ freq: x freq := x!
+!
+
+!HPF methodsFor: 'initialization'!
+ initialize
+  ugenName := #HPF.
+  paramNames := #(#in #freq).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. freq := 440.0!
+!
+
+!HPF class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!HPF class methodsFor: 'instance creation'!
+ in: in freq: freq
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  ^u!
+ in: in freq: freq mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  ^(u * mul)!
+ in: in freq: freq mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #HPZ1
  instanceVariableNames: 'in'
  classVariableNames: ''
@@ -1518,6 +1686,55 @@ In comment: 'Read a signal from a bus.'!
 !
 
 !In class methodsFor: 'instance creation'!
+ numChan: numChan bus: bus
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u bus: bus.
+  ^u!
+ numChan: numChan bus: bus mul: mul
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u bus: bus.
+  ^(u * mul)!
+ numChan: numChan bus: bus mul: mul add: add
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u bus: bus.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #InFeedback
+ instanceVariableNames: 'bus'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+InFeedback comment: 'Read signal from a bus with a current or one cycle old timestamp.'!
+
+!InFeedback methodsFor: 'accessing'!
+ bus ^bus!
+ bus: x bus := x!
+!
+
+!InFeedback methodsFor: 'initialization'!
+ initialize
+  ugenName := #InFeedback.
+  paramNames := #(#bus).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := nil.
+  specialIndex := 0.
+  bus := 0.0!
+!
+
+!InFeedback class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!InFeedback class methodsFor: 'instance creation'!
  numChan: numChan bus: bus
   |u|
   u := self new.
@@ -1956,6 +2173,164 @@ Lag comment: 'Exponential lag'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #LagUD
+ instanceVariableNames: 'in lagTimeU lagTimeD'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+LagUD comment: 'Exponential lag'!
+
+!LagUD methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ lagTimeU ^lagTimeU!
+ lagTimeU: x lagTimeU := x!
+ lagTimeD ^lagTimeD!
+ lagTimeD: x lagTimeD := x!
+!
+
+!LagUD methodsFor: 'initialization'!
+ initialize
+  ugenName := #LagUD.
+  paramNames := #(#in #lagTimeU #lagTimeD).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. lagTimeU := 0.1. lagTimeD := 0.1!
+!
+
+!LagUD class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!LagUD class methodsFor: 'instance creation'!
+ in: in lagTimeU: lagTimeU lagTimeD: lagTimeD
+  |u|
+  u := self new.
+  u in: in.
+  u lagTimeU: lagTimeU.
+  u lagTimeD: lagTimeD.
+  ^u!
+ in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u lagTimeU: lagTimeU.
+  u lagTimeD: lagTimeD.
+  ^(u * mul)!
+ in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u lagTimeU: lagTimeU.
+  u lagTimeD: lagTimeD.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Lag2
+ instanceVariableNames: 'in lagTime'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Lag2 comment: 'Exponential lag'!
+
+!Lag2 methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ lagTime ^lagTime!
+ lagTime: x lagTime := x!
+!
+
+!Lag2 methodsFor: 'initialization'!
+ initialize
+  ugenName := #Lag2.
+  paramNames := #(#in #lagTime).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. lagTime := 0.1!
+!
+
+!Lag2 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Lag2 class methodsFor: 'instance creation'!
+ in: in lagTime: lagTime
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^u!
+ in: in lagTime: lagTime mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^(u * mul)!
+ in: in lagTime: lagTime mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Lag3
+ instanceVariableNames: 'in lagTime'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Lag3 comment: 'Exponential lag'!
+
+!Lag3 methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ lagTime ^lagTime!
+ lagTime: x lagTime := x!
+!
+
+!Lag3 methodsFor: 'initialization'!
+ initialize
+  ugenName := #Lag3.
+  paramNames := #(#in #lagTime).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. lagTime := 0.1!
+!
+
+!Lag3 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Lag3 class methodsFor: 'instance creation'!
+ in: in lagTime: lagTime
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^u!
+ in: in lagTime: lagTime mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^(u * mul)!
+ in: in lagTime: lagTime mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u lagTime: lagTime.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #Latch
  instanceVariableNames: 'in trig'
  classVariableNames: ''
@@ -2116,6 +2491,72 @@ Line comment: 'Line generator.'!
   u end: end.
   u dur: dur.
   u doneAction: doneAction.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #LinExp
+ instanceVariableNames: 'in srclo srchi dstlo dsthi'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+LinExp comment: 'Map a linear range to an exponential range'!
+
+!LinExp methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ srclo ^srclo!
+ srclo: x srclo := x!
+ srchi ^srchi!
+ srchi: x srchi := x!
+ dstlo ^dstlo!
+ dstlo: x dstlo := x!
+ dsthi ^dsthi!
+ dsthi: x dsthi := x!
+!
+
+!LinExp methodsFor: 'initialization'!
+ initialize
+  ugenName := #LinExp.
+  paramNames := #(#in #srclo #srchi #dstlo #dsthi).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. srclo := 0.0. srchi := 1.0. dstlo := 1.0. dsthi := 2.0!
+!
+
+!LinExp class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!LinExp class methodsFor: 'instance creation'!
+ in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
+  |u|
+  u := self new.
+  u in: in.
+  u srclo: srclo.
+  u srchi: srchi.
+  u dstlo: dstlo.
+  u dsthi: dsthi.
+  ^u!
+ in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u srclo: srclo.
+  u srchi: srchi.
+  u dstlo: dstlo.
+  u dsthi: dsthi.
+  ^(u * mul)!
+ in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u srclo: srclo.
+  u srchi: srchi.
+  u dstlo: dstlo.
+  u dsthi: dsthi.
   ^(u * mul + add)!
 !
 
@@ -2746,6 +3187,77 @@ PinkNoise comment: 'Pink Noise.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Pluck
+ instanceVariableNames: 'in trig maxdelaytime delaytime decaytime coef'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Pluck comment: 'A Karplus-Strong UGen'!
+
+!Pluck methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ trig ^trig!
+ trig: x trig := x!
+ maxdelaytime ^maxdelaytime!
+ maxdelaytime: x maxdelaytime := x!
+ delaytime ^delaytime!
+ delaytime: x delaytime := x!
+ decaytime ^decaytime!
+ decaytime: x decaytime := x!
+ coef ^coef!
+ coef: x coef := x!
+!
+
+!Pluck methodsFor: 'initialization'!
+ initialize
+  ugenName := #Pluck.
+  paramNames := #(#in #trig #maxdelaytime #delaytime #decaytime #coef).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. trig := 1.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0. coef := 0.5!
+!
+
+!Pluck class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Pluck class methodsFor: 'instance creation'!
+ in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  u coef: coef.
+  ^u!
+ in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  u coef: coef.
+  ^(u * mul)!
+ in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u maxdelaytime: maxdelaytime.
+  u delaytime: delaytime.
+  u decaytime: decaytime.
+  u coef: coef.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #Pulse
  instanceVariableNames: 'freq width'
  classVariableNames: ''
@@ -3072,6 +3584,113 @@ Resonz comment: 'Resonant filter.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Ringz
+ instanceVariableNames: 'in freq decaytime'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Ringz comment: 'Ringing filter.'!
+
+!Ringz methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ freq ^freq!
+ freq: x freq := x!
+ decaytime ^decaytime!
+ decaytime: x decaytime := x!
+!
+
+!Ringz methodsFor: 'initialization'!
+ initialize
+  ugenName := #Ringz.
+  paramNames := #(#in #freq #decaytime).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. freq := 440.0. decaytime := 1.0!
+!
+
+!Ringz class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Ringz class methodsFor: 'instance creation'!
+ in: in freq: freq decaytime: decaytime
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u decaytime: decaytime.
+  ^u!
+ in: in freq: freq decaytime: decaytime mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u decaytime: decaytime.
+  ^(u * mul)!
+ in: in freq: freq decaytime: decaytime mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u decaytime: decaytime.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #RunningMax
+ instanceVariableNames: 'in trig'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+RunningMax comment: 'Track maximum level.'!
+
+!RunningMax methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ trig ^trig!
+ trig: x trig := x!
+!
+
+!RunningMax methodsFor: 'initialization'!
+ initialize
+  ugenName := #RunningMax.
+  paramNames := #(#in #trig).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. trig := 0.0!
+!
+
+!RunningMax class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!RunningMax class methodsFor: 'instance creation'!
+ in: in trig: trig
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  ^u!
+ in: in trig: trig mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  ^(u * mul)!
+ in: in trig: trig mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #SampleDur
  instanceVariableNames: ''
  classVariableNames: ''
@@ -3152,6 +3771,57 @@ Saw comment: 'Band limited sawtooth.'!
   |u|
   u := self new.
   u freq: freq.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Select
+ instanceVariableNames: 'which array'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Select comment: 'Select output from an array of inputs.'!
+
+!Select methodsFor: 'accessing'!
+ which ^which!
+ which: x which := x!
+ array ^array!
+ array: x array := x!
+!
+
+!Select methodsFor: 'initialization'!
+ initialize
+  ugenName := #Select.
+  paramNames := #(#which).
+  mceNames := #(#array).
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  which := 0.0!
+!
+
+!Select class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Select class methodsFor: 'instance creation'!
+ which: which array: array
+  |u|
+  u := self new.
+  u which: which.
+  u array: array.
+  ^u!
+ which: which array: array mul: mul
+  |u|
+  u := self new.
+  u which: which.
+  u array: array.
+  ^(u * mul)!
+ which: which array: array mul: mul add: add
+  |u|
+  u := self new.
+  u which: which.
+  u array: array.
   ^(u * mul + add)!
 !
 
@@ -3369,6 +4039,57 @@ SinOscFB comment: 'Feedback FM oscillator'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Sweep
+ instanceVariableNames: 'trig rate'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Sweep comment: 'Triggered linear ramp'!
+
+!Sweep methodsFor: 'accessing'!
+ trig ^trig!
+ trig: x trig := x!
+ rate ^rate!
+ rate: x rate := x!
+!
+
+!Sweep methodsFor: 'initialization'!
+ initialize
+  ugenName := #Sweep.
+  paramNames := #(#trig #rate).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  trig := 0.0. rate := 1.0!
+!
+
+!Sweep class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Sweep class methodsFor: 'instance creation'!
+ trig: trig rate: rate
+  |u|
+  u := self new.
+  u trig: trig.
+  u rate: rate.
+  ^u!
+ trig: trig rate: rate mul: mul
+  |u|
+  u := self new.
+  u trig: trig.
+  u rate: rate.
+  ^(u * mul)!
+ trig: trig rate: rate mul: mul add: add
+  |u|
+  u := self new.
+  u trig: trig.
+  u rate: rate.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #Trig
  instanceVariableNames: 'in dur'
  classVariableNames: ''
@@ -3417,6 +4138,62 @@ Trig comment: 'Timed trigger.'!
   u := self new.
   u in: in.
   u dur: dur.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #VarSaw
+ instanceVariableNames: 'freq iphase width'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+VarSaw comment: 'Variable duty saw'!
+
+!VarSaw methodsFor: 'accessing'!
+ freq ^freq!
+ freq: x freq := x!
+ iphase ^iphase!
+ iphase: x iphase := x!
+ width ^width!
+ width: x width := x!
+!
+
+!VarSaw methodsFor: 'initialization'!
+ initialize
+  ugenName := #VarSaw.
+  paramNames := #(#freq #iphase #width).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  freq := 440.0. iphase := 0.0. width := 0.5!
+!
+
+!VarSaw class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!VarSaw class methodsFor: 'instance creation'!
+ freq: freq iphase: iphase width: width
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  u width: width.
+  ^u!
+ freq: freq iphase: iphase width: width mul: mul
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  u width: width.
+  ^(u * mul)!
+ freq: freq iphase: iphase width: width mul: mul add: add
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  u width: width.
   ^(u * mul + add)!
 !
 
@@ -3610,6 +4387,7 @@ reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
 midicps ^ UnaryOpUGen specialIndex: 17 a: self!
 log ^ UnaryOpUGen specialIndex: 25 a: self!
 sin ^ UnaryOpUGen specialIndex: 28 a: self!
+tanh ^ UnaryOpUGen specialIndex: 36 a: self!
 distort ^ UnaryOpUGen specialIndex: 42 a: self!
 !
 

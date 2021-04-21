@@ -41,3 +41,15 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   ^u
  !
 !
+
+!UGen methodsFor: 'arithmetic'!
+ inExpRangeFrom: x to: y
+  ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y
+ !
+ inRangeFrom: x to: y
+  | m a |
+  m := (y - x) / 2.
+  a := x + m.
+  ^self mul: m add: a.
+ !
+!
