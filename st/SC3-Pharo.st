@@ -18,7 +18,7 @@
   ^self readTextFile evalString
  !
  systemCommand
-  ^OSSUnixSubprocess new shellCommand: self ; runAndWait
+  ^OSUnixSubprocess new shellCommand: self ; runAndWait
  !
  fileListOn
   ^FileList openOn: self
