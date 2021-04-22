@@ -1,7 +1,7 @@
 '/home/rohan/sw/stsc3/help/' fileListOn. "open file browser on named directory"
 '/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn. "open Workspace on named file"
 
-GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
+SC3GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 
 "Envelope"
 
