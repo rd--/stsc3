@@ -11,8 +11,9 @@ initial notes: [st/README](?t=stsc3&e=st/README)
 requires:
 
 - [hsc3-graphs](?t=hsc3-graphs)
-- [OSProcess](https://wiki.squeak.org/squeak/708) /
-  [OSSubprocess](https://github.com/pharo-contributions/OSSubprocess/)
+- squeak:[OSProcess](https://wiki.squeak.org/squeak/708)
+
+<-- pharo:[OSSubprocess](https://github.com/pharo-contributions/OSSubprocess/) -->
 
 tested with:
  squeak 6.0α & 5.3 ;
