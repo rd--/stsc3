@@ -13,7 +13,7 @@ requires:
 - [hsc3-graphs](?t=hsc3-graphs)
 - squeak:[OSProcess](https://wiki.squeak.org/squeak/708)
 
-<-- pharo:[OSSubprocess](https://github.com/pharo-contributions/OSSubprocess/) -->
+<!-- pharo:[OSSubprocess](https://github.com/pharo-contributions/OSSubprocess/) -->
 
 tested with:
  squeak 6.0α & 5.3 ;
