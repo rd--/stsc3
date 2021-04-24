@@ -4,7 +4,7 @@ stsc3
 [smalltalk](http://archive.org/details/byte-magazine-1981-08/) bindings to the
 [SuperCollider](http://audiosynth.com/) real-time synthesiser.
 
-initial notes: [st/README](?t=stsc3&e=st/README)
+initial notes: [st/README](http://rohandrape.net/?t=stsc3&e=st/README)
 
 ![](http://rohandrape.net/sw/stsc3/lib/png/smalltalk-balloon.png)
 
