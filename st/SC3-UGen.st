@@ -794,7 +794,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens
   |u|
   u := self new.
-  u numChan: #mceInput. 
+  u numChan: #mceInput.
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -802,7 +802,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens mul: mul
   |u|
   u := self new.
-  u numChan: #mceInput. 
+  u numChan: #mceInput.
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -810,7 +810,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
  trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
   |u|
   u := self new.
-  u numChan: #mceInput. 
+  u numChan: #mceInput.
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
@@ -1364,6 +1364,97 @@ FreeVerb comment: 'A reverb'!
   u mix: mix.
   u room: room.
   u damp: damp.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Gendy1
+ instanceVariableNames: 'ampdist durdist adparam ddparam minfreq maxfreq ampscale durscale initCPs knum'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
+
+!Gendy1 methodsFor: 'accessing'!
+ ampdist ^ampdist!
+ ampdist: x ampdist := x!
+ durdist ^durdist!
+ durdist: x durdist := x!
+ adparam ^adparam!
+ adparam: x adparam := x!
+ ddparam ^ddparam!
+ ddparam: x ddparam := x!
+ minfreq ^minfreq!
+ minfreq: x minfreq := x!
+ maxfreq ^maxfreq!
+ maxfreq: x maxfreq := x!
+ ampscale ^ampscale!
+ ampscale: x ampscale := x!
+ durscale ^durscale!
+ durscale: x durscale := x!
+ initCPs ^initCPs!
+ initCPs: x initCPs := x!
+ knum ^knum!
+ knum: x knum := x!
+!
+
+!Gendy1 methodsFor: 'initialization'!
+ initialize
+  ugenName := #Gendy1.
+  paramNames := #(#ampdist #durdist #adparam #ddparam #minfreq #maxfreq #ampscale #durscale #initCPs #knum).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  ampdist := 1.0. durdist := 1.0. adparam := 1.0. ddparam := 1.0. minfreq := 440.0. maxfreq := 660.0. ampscale := 0.5. durscale := 0.5. initCPs := 12.0. knum := 0.0!
+!
+
+!Gendy1 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Gendy1 class methodsFor: 'instance creation'!
+ ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum
+  |u|
+  u := self new.
+  u ampdist: ampdist.
+  u durdist: durdist.
+  u adparam: adparam.
+  u ddparam: ddparam.
+  u minfreq: minfreq.
+  u maxfreq: maxfreq.
+  u ampscale: ampscale.
+  u durscale: durscale.
+  u initCPs: initCPs.
+  u knum: knum.
+  ^u!
+ ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul
+  |u|
+  u := self new.
+  u ampdist: ampdist.
+  u durdist: durdist.
+  u adparam: adparam.
+  u ddparam: ddparam.
+  u minfreq: minfreq.
+  u maxfreq: maxfreq.
+  u ampscale: ampscale.
+  u durscale: durscale.
+  u initCPs: initCPs.
+  u knum: knum.
+  ^(u * mul)!
+ ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul add: add
+  |u|
+  u := self new.
+  u ampdist: ampdist.
+  u durdist: durdist.
+  u adparam: adparam.
+  u ddparam: ddparam.
+  u minfreq: minfreq.
+  u maxfreq: maxfreq.
+  u ampscale: ampscale.
+  u durscale: durscale.
+  u initCPs: initCPs.
+  u knum: knum.
   ^(u * mul + add)!
 !
 

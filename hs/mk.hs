@@ -19,7 +19,7 @@ ugen :: [String]
 ugen =
   ["AllpassN","AmpComp","Amplitude","BPF","BPZ2","BrownNoise","CombC","CombL","CombN","Crackle"
   ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Duty"
-  ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","GVerb","HPF","HPZ1"
+  ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","Gendy1","GVerb","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","Klank"
   ,"LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Line","LinExp","LocalBuf","LocalIn","LocalOut"

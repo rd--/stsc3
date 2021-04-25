@@ -26,6 +26,9 @@
   "Random Integer between -self and self (inclusive)"
   ^(self negated) rand: self
  !
+ exprand: n
+  ^1.0 rand linExpFrom: self to: n.
+ !
 !
 
 !Array methodsFor: 'randomness'!
