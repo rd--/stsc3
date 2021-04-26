@@ -23,6 +23,12 @@
  putOn: fd
   ^1 to: self size do: [:i | fd nextPut: (self at: i)]
  !
+ fileListOn
+  ^FileListWindow openFileList "does not open on self..."
+ !
+ workspaceOn
+  (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)
+ !
 !
 
 !Character methodsFor: 'file i/o'!

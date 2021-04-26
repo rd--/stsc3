@@ -1,7 +1,7 @@
 '/home/rohan/sw/stsc3/help/' fileListOn. "open file browser on named directory"
 '/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn. "open Workspace on named file"
 
-SC3GraphBrowser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
+SC3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 
 "Envelope"
 
@@ -212,10 +212,16 @@ ToolBuilder open: (MessageNames methodBrowserSearchingFor: 'freqscale').
 '/tmp/hsc3.png' viewImageFile. "UI image file viewer"
 
 "OS ; squeak"
+
 MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess'.
 MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/CommandShell'.
 
-"OS ; pharo"
+"OS ; cuis"
+
+Feature require: 'OSProcess'
+
+"OS ; pharo (use LibC)"
+
 Metacello new configuration: 'OSProcess'; repository: 'http://www.squeaksource.com/MetacelloRepository'; load
 Metacello new configuration: 'CommandShell'; repository: 'http://www.squeaksource.com/MetacelloRepository'; load
 
@@ -283,6 +289,22 @@ FileStream fileIn: 'SC3-Gnu.st'.
 
 "Help Graphs"
 
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0041.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0045.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0077.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0084.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0121.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0125.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-0456384156159574016.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-1125557217086857216.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-1254441448327479299.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-1338987643057688579.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/f0-tw-1343283697840226307.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/jar-1-4Qx.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/jar-rk_20120422.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/jl-1-9.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/jl-bitwise.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/jl-rain-thunder.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles-mouse.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jmcc-babbling-brook.st' evalFile play.
@@ -314,6 +336,9 @@ FileStream fileIn: 'SC3-Gnu.st'.
 '/home/rohan/sw/stsc3/help/graph/jmcc-theremin.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jrhb-gcd.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/nc-sctutorial.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/nv-tw-41.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/pj-forest-sounds.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/tw-tw-01.st' evalFile play.
 
 SC3 reset.
