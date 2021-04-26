@@ -310,6 +310,62 @@ BrownNoise comment: 'Brown Noise.'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #Clip
+ instanceVariableNames: 'in lo hi'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Clip comment: 'Clip a signal outside given thresholds.'!
+
+!Clip methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ lo ^lo!
+ lo: x lo := x!
+ hi ^hi!
+ hi: x hi := x!
+!
+
+!Clip methodsFor: 'initialization'!
+ initialize
+  ugenName := #Clip.
+  paramNames := #(#in #lo #hi).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. lo := 0.0. hi := 1.0!
+!
+
+!Clip class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Clip class methodsFor: 'instance creation'!
+ in: in lo: lo hi: hi
+  |u|
+  u := self new.
+  u in: in.
+  u lo: lo.
+  u hi: hi.
+  ^u!
+ in: in lo: lo hi: hi mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u lo: lo.
+  u hi: hi.
+  ^(u * mul)!
+ in: in lo: lo hi: hi mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u lo: lo.
+  u hi: hi.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #CombC
  instanceVariableNames: 'in maxdelaytime delaytime decaytime'
  classVariableNames: ''
@@ -999,6 +1055,52 @@ Dust comment: 'Random impulses.'!
 !
 
 !Dust class methodsFor: 'instance creation'!
+ density: density
+  |u|
+  u := self new.
+  u density: density.
+  ^u!
+ density: density mul: mul
+  |u|
+  u := self new.
+  u density: density.
+  ^(u * mul)!
+ density: density mul: mul add: add
+  |u|
+  u := self new.
+  u density: density.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Dust2
+ instanceVariableNames: 'density'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Dust2 comment: 'Random impulses.'!
+
+!Dust2 methodsFor: 'accessing'!
+ density ^density!
+ density: x density := x!
+!
+
+!Dust2 methodsFor: 'initialization'!
+ initialize
+  ugenName := #Dust2.
+  paramNames := #(#density).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  density := 0.0!
+!
+
+!Dust2 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Dust2 class methodsFor: 'instance creation'!
  density: density
   |u|
   u := self new.
@@ -1912,6 +2014,103 @@ Klank comment: 'Bank of resonators'!
   ^(u * mul + add)!
 !
 
+UGen subclass: #LFCub
+ instanceVariableNames: 'freq iphase'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+LFCub comment: 'A sine like shape made of two cubic pieces'!
+
+!LFCub methodsFor: 'accessing'!
+ freq ^freq!
+ freq: x freq := x!
+ iphase ^iphase!
+ iphase: x iphase := x!
+!
+
+!LFCub methodsFor: 'initialization'!
+ initialize
+  ugenName := #LFCub.
+  paramNames := #(#freq #iphase).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  freq := 440.0. iphase := 0.0!
+!
+
+!LFCub class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!LFCub class methodsFor: 'instance creation'!
+ freq: freq iphase: iphase
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  ^u!
+ freq: freq iphase: iphase mul: mul
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  ^(u * mul)!
+ freq: freq iphase: iphase mul: mul add: add
+  |u|
+  u := self new.
+  u freq: freq.
+  u iphase: iphase.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #LFNoise0
+ instanceVariableNames: 'freq'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+LFNoise0 comment: 'Step noise'!
+
+!LFNoise0 methodsFor: 'accessing'!
+ freq ^freq!
+ freq: x freq := x!
+!
+
+!LFNoise0 methodsFor: 'initialization'!
+ initialize
+  ugenName := #LFNoise0.
+  paramNames := #(#freq).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  freq := 500.0!
+!
+
+!LFNoise0 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!LFNoise0 class methodsFor: 'instance creation'!
+ freq: freq
+  |u|
+  u := self new.
+  u freq: freq.
+  ^u!
+ freq: freq mul: mul
+  |u|
+  u := self new.
+  u freq: freq.
+  ^(u * mul)!
+ freq: freq mul: mul add: add
+  |u|
+  u := self new.
+  u freq: freq.
+  ^(u * mul + add)!
+!
+
 UGen subclass: #LFNoise1
  instanceVariableNames: 'freq'
  classVariableNames: ''
@@ -2521,6 +2720,62 @@ LeakDC comment: 'Remove DC'!
   u := self new.
   u in: in.
   u coef: coef.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #Limiter
+ instanceVariableNames: 'in level dur'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Limiter comment: 'Peak limiter'!
+
+!Limiter methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ level ^level!
+ level: x level := x!
+ dur ^dur!
+ dur: x dur := x!
+!
+
+!Limiter methodsFor: 'initialization'!
+ initialize
+  ugenName := #Limiter.
+  paramNames := #(#in #level #dur).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. level := 1.0. dur := 0.01!
+!
+
+!Limiter class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Limiter class methodsFor: 'instance creation'!
+ in: in level: level dur: dur
+  |u|
+  u := self new.
+  u in: in.
+  u level: level.
+  u dur: dur.
+  ^u!
+ in: in level: level dur: dur mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u level: level.
+  u dur: dur.
+  ^(u * mul)!
+ in: in level: level dur: dur mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u level: level.
+  u dur: dur.
   ^(u * mul + add)!
 !
 
@@ -3397,6 +3652,57 @@ Pulse comment: 'Band limited pulse wave.'!
   u := self new.
   u freq: freq.
   u width: width.
+  ^(u * mul + add)!
+!
+
+UGen subclass: #PulseCount
+ instanceVariableNames: 'trig reset'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+PulseCount comment: 'Pulse counter.'!
+
+!PulseCount methodsFor: 'accessing'!
+ trig ^trig!
+ trig: x trig := x!
+ reset ^reset!
+ reset: x reset := x!
+!
+
+!PulseCount methodsFor: 'initialization'!
+ initialize
+  ugenName := #PulseCount.
+  paramNames := #(#trig #reset).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  trig := 0.0. reset := 0.0!
+!
+
+!PulseCount class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!PulseCount class methodsFor: 'instance creation'!
+ trig: trig reset: reset
+  |u|
+  u := self new.
+  u trig: trig.
+  u reset: reset.
+  ^u!
+ trig: trig reset: reset mul: mul
+  |u|
+  u := self new.
+  u trig: trig.
+  u reset: reset.
+  ^(u * mul)!
+ trig: trig reset: reset mul: mul add: add
+  |u|
+  u := self new.
+  u trig: trig.
+  u reset: reset.
   ^(u * mul + add)!
 !
 
@@ -4461,10 +4767,14 @@ XLine comment: 'Exponential line generator.'!
 >= b ^ BinaryOpUGen specialIndex: 11 a: self b: b!
 min: b ^ BinaryOpUGen specialIndex: 12 a: self b: b!
 max: b ^ BinaryOpUGen specialIndex: 13 a: self b: b!
+bitAnd: b ^ BinaryOpUGen specialIndex: 14 a: self b: b!
+bitOr: b ^ BinaryOpUGen specialIndex: 15 a: self b: b!
 lcm: b ^ BinaryOpUGen specialIndex: 17 a: self b: b!
 gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b!
 round: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
 ** b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
+bitShiftLeft: b ^ BinaryOpUGen specialIndex: 26 a: self b: b!
+bitShiftRight: b ^ BinaryOpUGen specialIndex: 27 a: self b: b!
 amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!
 clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b!
 !

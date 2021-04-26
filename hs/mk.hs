@@ -10,21 +10,24 @@ uop =
 binop :: [(String, Int)]
 binop =
   [("+",0),("-",1),("*",2),("/",4),("%",5),("/=",7),("<",8),(">",9)
-  ,("<=",10),(">=",11),("min:",12),("max:",13),("lcm:",17),("gcd:",18),("round:",19)
+  ,("<=",10),(">=",11),("min:",12),("max:",13)
+  ,("bitAnd:",14),("bitOr:",15)
+  ,("lcm:",17),("gcd:",18),("round:",19)
   ,("**",25)
+  ,("bitShiftLeft:",26),("bitShiftRight:",27)
   ,("amclip:",40),("clip2:",42)]
 
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
 ugen =
-  ["AllpassN","AmpComp","Amplitude","BPF","BPZ2","BrownNoise","CombC","CombL","CombN","Crackle"
-  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Duty"
+  ["AllpassN","AmpComp","Amplitude","BPF","BPZ2","BrownNoise","Clip","CombC","CombL","CombN","Crackle"
+  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","Gendy1","GVerb","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","Klank"
-  ,"LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Line","LinExp","LocalBuf","LocalIn","LocalOut"
+  ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
+  ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
   ,"ModDif","MouseX","MouseY","MulAdd","OnePole","Out"
-  ,"Pan2","Phasor","PinkNoise","Pluck","Pulse","PulseDivider"
+  ,"Pan2","Phasor","PinkNoise","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
   ,"SampleDur","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"Trig","VarSaw","WhiteNoise","XFade2","XLine"]
