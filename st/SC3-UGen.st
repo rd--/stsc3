@@ -56,7 +56,7 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
   u maxdelaytime: maxdelaytime.
   u delaytime: delaytime.
   u decaytime: decaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #AmpComp
@@ -112,7 +112,7 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
   u freq: freq.
   u root: root.
   u exp: exp.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Amplitude
@@ -168,7 +168,7 @@ Amplitude comment: 'Amplitude follower'!
   u in: in.
   u attackTime: attackTime.
   u releaseTime: releaseTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #BPF
@@ -224,7 +224,7 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
   u in: in.
   u freq: freq.
   u rq: rq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #BPZ2
@@ -270,7 +270,7 @@ BPZ2 comment: 'Two zero fixed midpass.'!
   |u|
   u := self new.
   u in: in.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #BrownNoise
@@ -307,7 +307,7 @@ BrownNoise comment: 'Brown Noise.'!
   |u|
   u := self new.
   
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Clip
@@ -363,7 +363,7 @@ Clip comment: 'Clip a signal outside given thresholds.'!
   u in: in.
   u lo: lo.
   u hi: hi.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #CombC
@@ -424,7 +424,7 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
   u maxdelaytime: maxdelaytime.
   u delaytime: delaytime.
   u decaytime: decaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #CombL
@@ -485,7 +485,7 @@ CombL comment: 'Comb delay line with linear interpolation.'!
   u maxdelaytime: maxdelaytime.
   u delaytime: delaytime.
   u decaytime: decaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #CombN
@@ -546,7 +546,7 @@ CombN comment: 'Comb delay line with no interpolation.'!
   u maxdelaytime: maxdelaytime.
   u delaytime: delaytime.
   u decaytime: decaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Crackle
@@ -592,7 +592,7 @@ Crackle comment: 'Chaotic noise function.'!
   |u|
   u := self new.
   u chaosParam: chaosParam.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Decay
@@ -643,7 +643,7 @@ Decay comment: 'Exponential decay'!
   u := self new.
   u in: in.
   u decayTime: decayTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Decay2
@@ -699,7 +699,7 @@ Decay2 comment: 'Exponential decay'!
   u in: in.
   u attackTime: attackTime.
   u decayTime: decayTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #DegreeToKey
@@ -755,7 +755,7 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
   u bufnum: bufnum.
   u in: in.
   u octave: octave.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #DelayN
@@ -811,7 +811,7 @@ DelayN comment: 'Simple delay line with no interpolation.'!
   u in: in.
   u maxdelaytime: maxdelaytime.
   u delaytime: delaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Demand
@@ -870,7 +870,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
   u trig: trig.
   u reset: reset.
   u demandUGens: demandUGens.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Drand
@@ -921,7 +921,7 @@ Drand comment: 'Demand rate random sequence generator.'!
   u := self new.
   u repeats: repeats.
   u list: list.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Dseq
@@ -972,7 +972,7 @@ Dseq comment: 'Demand rate sequence generator.'!
   u := self new.
   u repeats: repeats.
   u list: list.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Dshuf
@@ -1023,7 +1023,7 @@ Dshuf comment: 'Demand rate random sequence generator'!
   u := self new.
   u repeats: repeats.
   u list: list.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Dust
@@ -1069,7 +1069,7 @@ Dust comment: 'Random impulses.'!
   |u|
   u := self new.
   u density: density.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Dust2
@@ -1115,7 +1115,7 @@ Dust2 comment: 'Random impulses.'!
   |u|
   u := self new.
   u density: density.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Duty
@@ -1176,7 +1176,7 @@ Duty comment: 'Demand results from demand rate UGens.'!
   u reset: reset.
   u doneAction: doneAction.
   u level: level.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #EnvGen
@@ -1247,7 +1247,7 @@ EnvGen comment: 'Envelope generator'!
   u timeScale: timeScale.
   u doneAction: doneAction.
   u envelope: envelope.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #ExpRand
@@ -1298,7 +1298,7 @@ ExpRand comment: 'Exponential single random number generator.'!
   u := self new.
   u lo: lo.
   u hi: hi.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Formant
@@ -1354,7 +1354,7 @@ Formant comment: 'Formant oscillator'!
   u fundfreq: fundfreq.
   u formfreq: formfreq.
   u bwfreq: bwfreq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #FSinOsc
@@ -1405,7 +1405,7 @@ FSinOsc comment: 'Fast sine oscillator.'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #FreeVerb
@@ -1466,7 +1466,7 @@ FreeVerb comment: 'A reverb'!
   u mix: mix.
   u room: room.
   u damp: damp.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Gendy1
@@ -1557,7 +1557,7 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
   u durscale: durscale.
   u initCPs: initCPs.
   u knum: knum.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #GVerb
@@ -1648,7 +1648,7 @@ GVerb comment: 'A two-channel reverb'!
   u earlyreflevel: earlyreflevel.
   u taillevel: taillevel.
   u maxroomsize: maxroomsize.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #HPF
@@ -1699,7 +1699,7 @@ HPF comment: '2nd order Butterworth highpass filter.'!
   u := self new.
   u in: in.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #HPZ1
@@ -1745,7 +1745,7 @@ HPZ1 comment: 'Two point difference filter'!
   |u|
   u := self new.
   u in: in.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #IRand
@@ -1796,7 +1796,7 @@ IRand comment: 'Single integer random number generator.'!
   u := self new.
   u lo: lo.
   u hi: hi.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Impulse
@@ -1847,7 +1847,7 @@ Impulse comment: 'Impulse oscillator.'!
   u := self new.
   u freq: freq.
   u phase: phase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #In
@@ -1896,7 +1896,7 @@ In comment: 'Read a signal from a bus.'!
   u := self new.
   u numChan: numChan.
   u bus: bus.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #InFeedback
@@ -1945,7 +1945,7 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
   u := self new.
   u numChan: numChan.
   u bus: bus.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Klank
@@ -2011,7 +2011,7 @@ Klank comment: 'Bank of resonators'!
   u freqoffset: freqoffset.
   u decayscale: decayscale.
   u specificationsArrayRef: specificationsArrayRef.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFCub
@@ -2062,7 +2062,7 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFNoise0
@@ -2108,7 +2108,7 @@ LFNoise0 comment: 'Step noise'!
   |u|
   u := self new.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFNoise1
@@ -2154,7 +2154,7 @@ LFNoise1 comment: 'Ramp noise'!
   |u|
   u := self new.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFNoise2
@@ -2200,7 +2200,7 @@ LFNoise2 comment: 'Quadratic noise.'!
   |u|
   u := self new.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFPulse
@@ -2256,7 +2256,7 @@ LFPulse comment: 'pulse oscillator'!
   u freq: freq.
   u iphase: iphase.
   u width: width.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFSaw
@@ -2307,7 +2307,7 @@ LFSaw comment: 'Sawtooth oscillator'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LFTri
@@ -2358,7 +2358,7 @@ LFTri comment: 'Triangle oscillator'!
   u := self new.
   u freq: freq.
   u iphase: iphase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LPF
@@ -2409,7 +2409,7 @@ LPF comment: '2nd order Butterworth lowpass filter'!
   u := self new.
   u in: in.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Lag
@@ -2460,7 +2460,7 @@ Lag comment: 'Exponential lag'!
   u := self new.
   u in: in.
   u lagTime: lagTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LagUD
@@ -2516,7 +2516,7 @@ LagUD comment: 'Exponential lag'!
   u in: in.
   u lagTimeU: lagTimeU.
   u lagTimeD: lagTimeD.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Lag2
@@ -2567,7 +2567,7 @@ Lag2 comment: 'Exponential lag'!
   u := self new.
   u in: in.
   u lagTime: lagTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Lag3
@@ -2618,7 +2618,7 @@ Lag3 comment: 'Exponential lag'!
   u := self new.
   u in: in.
   u lagTime: lagTime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Latch
@@ -2669,7 +2669,7 @@ Latch comment: 'Sample and hold'!
   u := self new.
   u in: in.
   u trig: trig.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LeakDC
@@ -2720,7 +2720,7 @@ LeakDC comment: 'Remove DC'!
   u := self new.
   u in: in.
   u coef: coef.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Limiter
@@ -2776,7 +2776,7 @@ Limiter comment: 'Peak limiter'!
   u in: in.
   u level: level.
   u dur: dur.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Line
@@ -2837,7 +2837,7 @@ Line comment: 'Line generator.'!
   u end: end.
   u dur: dur.
   u doneAction: doneAction.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LinExp
@@ -2903,7 +2903,7 @@ LinExp comment: 'Map a linear range to an exponential range'!
   u srchi: srchi.
   u dstlo: dstlo.
   u dsthi: dsthi.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LocalBuf
@@ -2954,7 +2954,7 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
   u := self new.
   u numChannels: numChannels.
   u numFrames: numFrames.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LocalIn
@@ -3003,7 +3003,7 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
   u := self new.
   u numChan: numChan.
   u default: default.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #LocalOut
@@ -3049,7 +3049,7 @@ LocalOut comment: 'Write to buses local to a synth.'!
   |u|
   u := self new.
   u channelsArray: channelsArray.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #ModDif
@@ -3105,7 +3105,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
   u x: x.
   u y: y.
   u mod: mod.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #MouseX
@@ -3166,7 +3166,7 @@ MouseX comment: 'Cursor tracking UGen.'!
   u maxval: maxval.
   u warp: warp.
   u lag: lag.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #MouseY
@@ -3227,7 +3227,7 @@ MouseY comment: 'Cursor tracking UGen.'!
   u maxval: maxval.
   u warp: warp.
   u lag: lag.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #MulAdd
@@ -3320,7 +3320,7 @@ OnePole comment: 'One pole filter.'!
   u := self new.
   u in: in.
   u coef: coef.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Out
@@ -3371,7 +3371,7 @@ Out comment: 'Write a signal to a bus.'!
   u := self new.
   u bus: bus.
   u channelsArray: channelsArray.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Pan2
@@ -3427,7 +3427,7 @@ Pan2 comment: 'Two channel equal power pan.'!
   u in: in.
   u pos: pos.
   u level: level.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Phasor
@@ -3493,7 +3493,7 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
   u start: start.
   u end: end.
   u resetPos: resetPos.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #PinkNoise
@@ -3530,7 +3530,7 @@ PinkNoise comment: 'Pink Noise.'!
   |u|
   u := self new.
   
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Pluck
@@ -3601,7 +3601,7 @@ Pluck comment: 'A Karplus-Strong UGen'!
   u delaytime: delaytime.
   u decaytime: decaytime.
   u coef: coef.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Pulse
@@ -3652,7 +3652,7 @@ Pulse comment: 'Band limited pulse wave.'!
   u := self new.
   u freq: freq.
   u width: width.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #PulseCount
@@ -3703,7 +3703,7 @@ PulseCount comment: 'Pulse counter.'!
   u := self new.
   u trig: trig.
   u reset: reset.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #PulseDivider
@@ -3759,7 +3759,7 @@ PulseDivider comment: 'Pulse divider.'!
   u trig: trig.
   u div: div.
   u start: start.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #RHPF
@@ -3815,7 +3815,7 @@ RHPF comment: 'A resonant high pass filter.'!
   u in: in.
   u freq: freq.
   u rq: rq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #RLPF
@@ -3871,7 +3871,7 @@ RLPF comment: 'A resonant low pass filter.'!
   u in: in.
   u freq: freq.
   u rq: rq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Rand
@@ -3922,7 +3922,7 @@ Rand comment: 'Single random number generator.'!
   u := self new.
   u lo: lo.
   u hi: hi.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Resonz
@@ -3978,7 +3978,7 @@ Resonz comment: 'Resonant filter.'!
   u in: in.
   u freq: freq.
   u bwr: bwr.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Ringz
@@ -4034,7 +4034,7 @@ Ringz comment: 'Ringing filter.'!
   u in: in.
   u freq: freq.
   u decaytime: decaytime.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #RunningMax
@@ -4085,7 +4085,7 @@ RunningMax comment: 'Track maximum level.'!
   u := self new.
   u in: in.
   u trig: trig.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #SampleDur
@@ -4122,7 +4122,7 @@ SampleDur comment: 'Duration of one sample.'!
   |u|
   u := self new.
   
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Saw
@@ -4168,7 +4168,7 @@ Saw comment: 'Band limited sawtooth.'!
   |u|
   u := self new.
   u freq: freq.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Select
@@ -4219,7 +4219,7 @@ Select comment: 'Select output from an array of inputs.'!
   u := self new.
   u which: which.
   u array: array.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #SetBuf
@@ -4280,7 +4280,7 @@ SetBuf comment: 'Set local buffer'!
   u offset: offset.
   u length: length.
   u array: array.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #SetResetFF
@@ -4331,7 +4331,7 @@ SetResetFF comment: 'Set-reset flip flop.'!
   u := self new.
   u trig: trig.
   u reset: reset.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #SinOsc
@@ -4382,7 +4382,7 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
   u := self new.
   u freq: freq.
   u phase: phase.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #SinOscFB
@@ -4433,7 +4433,7 @@ SinOscFB comment: 'Feedback FM oscillator'!
   u := self new.
   u freq: freq.
   u feedback: feedback.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Sweep
@@ -4484,7 +4484,7 @@ Sweep comment: 'Triggered linear ramp'!
   u := self new.
   u trig: trig.
   u rate: rate.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #Trig
@@ -4535,7 +4535,7 @@ Trig comment: 'Timed trigger.'!
   u := self new.
   u in: in.
   u dur: dur.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #VarSaw
@@ -4591,7 +4591,7 @@ VarSaw comment: 'Variable duty saw'!
   u freq: freq.
   u iphase: iphase.
   u width: width.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #WhiteNoise
@@ -4628,7 +4628,7 @@ WhiteNoise comment: 'White noise.'!
   |u|
   u := self new.
   
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #XFade2
@@ -4689,7 +4689,7 @@ XFade2 comment: 'Equal power two channel cross fade.'!
   u inB: inB.
   u pan: pan.
   u level: level.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 UGen subclass: #XLine
@@ -4750,7 +4750,7 @@ XLine comment: 'Exponential line generator.'!
   u end: end.
   u dur: dur.
   u doneAction: doneAction.
-  ^(u * mul + add)!
+  ^(MulAdd in: u mul: mul add: add)!
 !
 
 
