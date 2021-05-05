@@ -210,6 +210,12 @@ MCE comment: 'Multiple Channel Expansion'!
  !
 !
 
+!AbstractUGen methodsFor: 'multi-channel expansion'!
+ mce
+  ^MCE source: self
+ !
+!
+
 !Number methodsFor: 'enumerating'!
  mceFill: f
   ^(self arrayFill: f) mce

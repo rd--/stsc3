@@ -60,6 +60,11 @@ o3 := ph sin.
 "sinOsc ; 15.5 khz"
 Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75
 
+"sinOsc ; event control"
+| f |
+f := [:e :i | SinOsc freq: (e x * 24 + 48) midicps phase: 0 mul: e z * e w * 0.5].
+(EventVoicerAddr k0: 13000 c0: 0 numVoices: 16 voiceFunc: f) mix
+
 "----"
 o := SinOsc freq: 440 phase: 0
 o hash

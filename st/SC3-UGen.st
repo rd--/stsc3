@@ -171,6 +171,57 @@ Amplitude comment: 'Amplitude follower'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #Blip
+ instanceVariableNames: 'freq numharm'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Blip comment: 'Band limited impulse oscillator.'!
+
+!Blip methodsFor: 'accessing'!
+ freq ^freq!
+ freq: x freq := x!
+ numharm ^numharm!
+ numharm: x numharm := x!
+!
+
+!Blip methodsFor: 'initialization'!
+ initialize
+  ugenName := #Blip.
+  paramNames := #(#freq #numharm).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  freq := 440.0. numharm := 200.0!
+!
+
+!Blip class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Blip class methodsFor: 'instance creation'!
+ freq: freq numharm: numharm
+  |u|
+  u := self new.
+  u freq: freq.
+  u numharm: numharm.
+  ^u!
+ freq: freq numharm: numharm mul: mul
+  |u|
+  u := self new.
+  u freq: freq.
+  u numharm: numharm.
+  ^(u * mul)!
+ freq: freq numharm: numharm mul: mul add: add
+  |u|
+  u := self new.
+  u freq: freq.
+  u numharm: numharm.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #BPF
  instanceVariableNames: 'in freq rq'
  classVariableNames: ''

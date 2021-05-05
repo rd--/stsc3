@@ -45,3 +45,31 @@ EventParam comment: 'Event Input Parameters'!
   ^e
  !
 !
+
+Object subclass: #EventAddr
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'
+!
+
+!EventAddr class methodsFor: 'instance creation'!
+ k0: k0 c: c
+  ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * 10))) kr mce.
+ !
+!
+
+Object subclass: #EventVoicerAddr
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'
+!
+
+!EventVoicerAddr class methodsFor: 'instance creation'!
+ k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc
+  | v |
+  v := (Interval from: 0 to: (numVoices - 1)) asArray.
+  ^(v collect: [:c | voiceFunc value: (EventAddr k0: k0 c: (c0 + c)) value: c]) mce
+ !
+!

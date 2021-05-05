@@ -20,7 +20,8 @@ binop =
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
 ugen =
-  ["AllpassN","AmpComp","Amplitude","BPF","BPZ2","BrownNoise","Clip","CombC","CombL","CombN","Crackle"
+  ["AllpassN","AmpComp","Amplitude","Blip","BPF","BPZ2","BrownNoise"
+  ,"Clip","CombC","CombL","CombN","Crackle"
   ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","Gendy1","GVerb","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","Klank"
