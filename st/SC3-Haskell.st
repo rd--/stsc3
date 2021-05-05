@@ -1,3 +1,25 @@
+!AbstractUGen methodsFor: 'printing'!
+ writeHaskellTo: fn
+  "Write my hsc3 representation to a file."
+  fn writeTextFile: [:fd | self printHaskellOn: fd. fd cr]
+ !
+ play
+  "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
+  self writeHaskellTo: '/tmp/st.hs'.
+  'hsc3-graphs fragments hs play /tmp/st.hs' systemCommand
+ !
+ draw
+  "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
+  self writeHaskellTo: '/tmp/st.hs'.
+  'hsc3-graphs fragments hs draw /tmp/st.hs' systemCommand
+ !
+ printUGens
+  "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
+  self writeHaskellTo: '/tmp/st.hs'.
+  'hsc3-graphs fragments hs dump-ugens /tmp/st.hs' systemCommand
+ !
+!
+
 !UGen methodsFor: 'printing'!
  printHaskellOn: fd
   "Print my hsc3 representation."
@@ -27,25 +49,6 @@
   self hash asString putOn: fd.
   ')' putOn: fd.
   ')' putOn: fd
- !
- writeHaskellTo: fn
-  "Write my hsc3 representation to a file."
-  fn writeTextFile: [:fd | self printHaskellOn: fd. fd cr]
- !
- play
-  "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
-  self writeHaskellTo: '/tmp/st.hs'.
-  'hsc3-graphs fragments hs play /tmp/st.hs' systemCommand
- !
- draw
-  "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
-  self writeHaskellTo: '/tmp/st.hs'.
-  'hsc3-graphs fragments hs draw /tmp/st.hs' systemCommand
- !
- printUGens
-  "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
-  self writeHaskellTo: '/tmp/st.hs'.
-  'hsc3-graphs fragments hs dump-ugens /tmp/st.hs' systemCommand
  !
 !
 

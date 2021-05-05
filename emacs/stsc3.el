@@ -67,7 +67,12 @@
   "Get current region as string."
   (buffer-substring-no-properties (region-beginning) (region-end)))
 
-(defun stsc3-send-region (msg)
+(defun stsc3-send-region ()
+  "Send region to Smalltalk."
+  (interactive)
+  (stsc3-send-string (format "[%s] value" (stsc3-region-string))))
+
+(defun stsc3-send-region-msg (msg)
   "Send region to Smalltalk, appending msg."
   (let ((str (stsc3-region-string)))
     (stsc3-send-string (format "[%s] value %s " str msg))))
@@ -75,17 +80,17 @@
 (defun stsc3-play-region ()
   "Play region at scsynth."
   (interactive)
-  (stsc3-send-region "play"))
+  (stsc3-send-region-msg "play"))
 
 (defun stsc3-draw-region ()
   "Draw region."
   (interactive)
-  (stsc3-send-region "draw"))
+  (stsc3-send-region-msg "draw"))
 
 (defun stsc3-print-ugens-region ()
   "Print region."
   (interactive)
-  (stsc3-send-region "printUGens"))
+  (stsc3-send-region-msg "printUGens"))
 
 (defun stsc3-reset-scsynth ()
   "Send SC3 reset instruction to Smalltalk."

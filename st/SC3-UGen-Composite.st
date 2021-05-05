@@ -7,7 +7,7 @@
  !
 !
 
-UGen subclass: #Splay
+AbstractUGen subclass: #Splay
  instanceVariableNames: 'input spread level center levelComp'
  classVariableNames: ''
  poolDictionaries: ''
@@ -42,7 +42,7 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
  !
 !
 
-!UGen methodsFor: 'arithmetic'!
+!AbstractUGen methodsFor: 'arithmetic'!
  inExpRangeFrom: x to: y
   ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y
  !

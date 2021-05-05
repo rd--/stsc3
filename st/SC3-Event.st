@@ -1,13 +1,13 @@
-Object subclass: #REventParam
+Object subclass: #EventParam
  instanceVariableNames: 'w x y z o rx ry p px'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
 
-REventParam comment: 'Event Input Parameters'!
+EventParam comment: 'Event Input Parameters'!
 
-!REventParam methodsFor: 'accessing'!
+!EventParam methodsFor: 'accessing'!
  w ^w!
  w: x w := x!
  x ^x!
@@ -28,20 +28,20 @@ REventParam comment: 'Event Input Parameters'!
  px: x px := x!
 !
 
-!REventParam class methodsFor: 'instance creation'!
- fromUGen: p
+!EventParam class methodsFor: 'instance creation'!
+ fromUGen: u
   "Create Event parameter object from MCE UGen"
   | e |
   e := self new.
-  e w: (p at: 1).
-  e x: (p at: 2).
-  e y: (p at: 3).
-  e z: (p at: 4).
-  e o: (p at: 5).
-  e rx: (p at: 6).
-  e ry: (p at: 7).
-  e p: (p at: 8).
-  e px: (p at: 9).
+  e w: (u at: 1).
+  e x: (u at: 2).
+  e y: (u at: 3).
+  e z: (u at: 4).
+  e o: (u at: 5).
+  e rx: (u at: 6).
+  e ry: (u at: 7).
+  e p: (u at: 8).
+  e px: (u at: 9).
   ^e
  !
 !

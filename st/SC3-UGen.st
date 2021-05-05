@@ -4754,7 +4754,7 @@ XLine comment: 'Exponential line generator.'!
 !
 
 
-!UGen methodsFor: 'arithmetic'!
+!AbstractUGen methodsFor: 'arithmetic'!
 + b ^ BinaryOpUGen specialIndex: 0 a: self b: b!
 - b ^ BinaryOpUGen specialIndex: 1 a: self b: b!
 * b ^ BinaryOpUGen specialIndex: 2 a: self b: b!
@@ -4779,7 +4779,7 @@ amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!
 clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b!
 !
 
-!UGen methodsFor: 'arithmetic'!
+!AbstractUGen methodsFor: 'arithmetic'!
 negated ^ UnaryOpUGen specialIndex: 0 a: self!
 abs ^ UnaryOpUGen specialIndex: 5 a: self!
 frac ^ UnaryOpUGen specialIndex: 10 a: self!

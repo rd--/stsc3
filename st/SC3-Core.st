@@ -1,4 +1,13 @@
-Object subclass: #UGen
+Object subclass: #AbstractUGen
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'
+!
+
+AbstractUGen comment: 'Unit Generator (Abstract)'!
+
+AbstractUGen subclass: #UGen
  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
  classVariableNames: ''
  poolDictionaries: ''
@@ -103,7 +112,7 @@ UnaryOpUGen comment: 'Unary Operators'!
  !
 !
 
-UGen subclass: #Rate
+AbstractUGen subclass: #Rate
  instanceVariableNames: 'source rate'
  classVariableNames: ''
  poolDictionaries: ''
@@ -148,7 +157,7 @@ Rate comment: 'Audio Rate'!
  !
 !
 
-UGen subclass: #MCE
+AbstractUGen subclass: #MCE
  instanceVariableNames: 'source transform'
  classVariableNames: ''
  poolDictionaries: ''
@@ -188,10 +197,10 @@ MCE comment: 'Multiple Channel Expansion'!
 
 !MCE methodsFor: 'transforms'!
  transpose
-  ^self transform: {#mceTranspose}
+  ^self copy transform: {#mceTranspose}
  !
  at: x
-  ^self transform: {#mceChannel. x - 1}
+  ^self copy transform: {#mceChannel. x - 1}
  !
 !
 
@@ -207,7 +216,7 @@ MCE comment: 'Multiple Channel Expansion'!
  !
 !
 
-UGen subclass: #Mix
+AbstractUGen subclass: #Mix
  instanceVariableNames: 'source'
  classVariableNames: ''
  poolDictionaries: ''
@@ -229,7 +238,7 @@ Mix comment: 'UGen Mixer'!
  !
 !
 
-!UGen methodsFor: 'arithmetic'!
+!AbstractUGen methodsFor: 'arithmetic'!
  mul: mul add: add
   ^MulAdd in: self mul: mul add: add
  !
@@ -256,7 +265,7 @@ SC3 comment: 'SuperCollider3'!
  !
 !
 
-UGen subclass: #MRG
+AbstractUGen subclass: #MRG
  instanceVariableNames: 'lhs rhs'
  classVariableNames: ''
  poolDictionaries: ''
@@ -286,7 +295,7 @@ MRG comment: 'Multiple Root Graph'!
  !
 !
 
-UGen subclass: #Control
+AbstractUGen subclass: #Control
  instanceVariableNames: 'name init'
  classVariableNames: ''
  poolDictionaries: ''
@@ -316,7 +325,7 @@ Control comment: 'Control Input'!
  !
 !
 
-UGen subclass: #Constant
+AbstractUGen subclass: #Constant
  instanceVariableNames: 'k'
  classVariableNames: ''
  poolDictionaries: ''
