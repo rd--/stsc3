@@ -142,7 +142,7 @@ Rate comment: 'Audio Rate'!
  !
 !
 
-!UGen methodsFor: 'rate control'!
+!AbstractUGen methodsFor: 'rate control'!
  ar
   ^Rate source: self rate: #ar
  !
