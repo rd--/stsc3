@@ -188,7 +188,10 @@ MCE comment: 'Multiple Channel Expansion'!
 
 !MCE methodsFor: 'transforms'!
  transpose
-  ^self transform: #mceTranspose
+  ^self transform: {#mceTranspose}
+ !
+ at: x
+  ^self transform: {#mceChannel. x - 1}
  !
 !
 
