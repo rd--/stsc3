@@ -5,7 +5,7 @@ Object subclass: #EventParam
  category: 'SC3'
 !
 
-EventParam comment: 'Event Input Parameters'!
+EventParam comment: 'Event Parameters'!
 
 !EventParam methodsFor: 'accessing'!
  w ^w!
@@ -30,7 +30,7 @@ EventParam comment: 'Event Input Parameters'!
 
 !EventParam class methodsFor: 'instance creation'!
  fromUGen: u
-  "Create Event parameter object from MCE UGen"
+  "Create EventParam object from MCE UGen"
   | e |
   e := self new.
   e w: (u at: 1).
@@ -46,30 +46,28 @@ EventParam comment: 'Event Input Parameters'!
  !
 !
 
-Object subclass: #EventAddr
+Object subclass: #EventControl
  instanceVariableNames: ''
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
 
-!EventAddr class methodsFor: 'instance creation'!
+EventControl comment: 'Event Control Input'!
+
+!EventControl class methodsFor: 'instance creation'!
  k0: k0 c: c
   ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * 10))) kr mce.
  !
-!
-
-Object subclass: #EventVoicerAddr
- instanceVariableNames: ''
- classVariableNames: ''
- poolDictionaries: ''
- category: 'SC3'
-!
-
-!EventVoicerAddr class methodsFor: 'instance creation'!
  k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc
   | v |
   v := (Interval from: 0 to: (numVoices - 1)) asArray.
-  ^(v collect: [:c | voiceFunc value: (EventAddr k0: k0 c: (c0 + c)) value: c]) mce
+  ^(v collect: [:c | voiceFunc value: (self k0: k0 c: (c0 + c)) value: c]) mce
+ !
+ numVoices: numVoices voiceFunc: voiceFunc
+  | k0 c0 |
+  k0 := Control name: 'EventAddr' init: 13000.
+  c0 := Control name: 'EventZero' init: 0.
+  ^self k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc.
  !
 !
