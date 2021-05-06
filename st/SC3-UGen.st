@@ -600,6 +600,43 @@ CombN comment: 'Comb delay line with no interpolation.'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #ControlDur
+ instanceVariableNames: ''
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+ControlDur comment: 'Duration of one block'!
+
+
+!ControlDur methodsFor: 'initialization'!
+ initialize
+  ugenName := #ControlDur.
+  paramNames := #().
+  mceNames := #().
+  ugenRate := #ir.
+  numChan := 1.
+  specialIndex := 0.
+  !
+!
+
+!ControlDur class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!ControlDur class methodsFor: 'instance creation'!
+  mul: mul
+  |u|
+  u := self new.
+  
+  ^(u * mul)!
+  mul: mul add: add
+  |u|
+  u := self new.
+  
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #Crackle
  instanceVariableNames: 'chaosParam'
  classVariableNames: ''
@@ -3103,6 +3140,107 @@ LocalOut comment: 'Write to buses local to a synth.'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #MiRings
+ instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+MiRings comment: 'a resonator'!
+
+!MiRings methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ trig ^trig!
+ trig: x trig := x!
+ pit ^pit!
+ pit: x pit := x!
+ struct ^struct!
+ struct: x struct := x!
+ bright ^bright!
+ bright: x bright := x!
+ damp ^damp!
+ damp: x damp := x!
+ pos ^pos!
+ pos: x pos := x!
+ model ^model!
+ model: x model := x!
+ poly ^poly!
+ poly: x poly := x!
+ intern_exciter ^intern_exciter!
+ intern_exciter: x intern_exciter := x!
+ easteregg ^easteregg!
+ easteregg: x easteregg := x!
+ bypass ^bypass!
+ bypass: x bypass := x!
+!
+
+!MiRings methodsFor: 'initialization'!
+ initialize
+  ugenName := #MiRings.
+  paramNames := #(#in #trig #pit #struct #bright #damp #pos #model #poly #intern_exciter #easteregg #bypass).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 2.
+  specialIndex := 0.
+  in := 0.0. trig := 0.0. pit := 60.0. struct := 0.25. bright := 0.5. damp := 0.7. pos := 0.25. model := 0.0. poly := 1.0. intern_exciter := 0.0. easteregg := 0.0. bypass := 0.0!
+!
+
+!MiRings class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!MiRings class methodsFor: 'instance creation'!
+ in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u pit: pit.
+  u struct: struct.
+  u bright: bright.
+  u damp: damp.
+  u pos: pos.
+  u model: model.
+  u poly: poly.
+  u intern_exciter: intern_exciter.
+  u easteregg: easteregg.
+  u bypass: bypass.
+  ^u!
+ in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u pit: pit.
+  u struct: struct.
+  u bright: bright.
+  u damp: damp.
+  u pos: pos.
+  u model: model.
+  u poly: poly.
+  u intern_exciter: intern_exciter.
+  u easteregg: easteregg.
+  u bypass: bypass.
+  ^(u * mul)!
+ in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u trig: trig.
+  u pit: pit.
+  u struct: struct.
+  u bright: bright.
+  u damp: damp.
+  u pos: pos.
+  u model: model.
+  u poly: poly.
+  u intern_exciter: intern_exciter.
+  u easteregg: easteregg.
+  u bypass: bypass.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #ModDif
  instanceVariableNames: 'x y mod'
  classVariableNames: ''
@@ -4569,6 +4707,57 @@ Trig comment: 'Timed trigger.'!
 !
 
 !Trig class methodsFor: 'instance creation'!
+ in: in dur: dur
+  |u|
+  u := self new.
+  u in: in.
+  u dur: dur.
+  ^u!
+ in: in dur: dur mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u dur: dur.
+  ^(u * mul)!
+ in: in dur: dur mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u dur: dur.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
+UGen subclass: #Trig1
+ instanceVariableNames: 'in dur'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Trig1 comment: 'Timed trigger.'!
+
+!Trig1 methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ dur ^dur!
+ dur: x dur := x!
+!
+
+!Trig1 methodsFor: 'initialization'!
+ initialize
+  ugenName := #Trig1.
+  paramNames := #(#in #dur).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. dur := 0.1!
+!
+
+!Trig1 class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Trig1 class methodsFor: 'instance creation'!
  in: in dur: dur
   |u|
   u := self new.
