@@ -23,5 +23,5 @@ Library
   Exposed-modules:  Language.Smalltalk.Parser
 
 Source-Repository   head
-  Type:             darcs
-  Location:         http://rohandrape.net/sw/stsc3/
+  Type:             git
+  Location:         https://gitlab.com/rd--/stsc3/
