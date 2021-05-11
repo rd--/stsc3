@@ -1,7 +1,14 @@
 !AbstractUGen methodsFor: 'printing'!
  writeHaskellTo: fn
   "Write my hsc3 representation to a file."
-  fn writeTextFile: [:fd | self printHaskellOn: fd. fd cr]
+  | c |
+  c := self ugenSet.
+  fn writeTextFile: [:fd |
+   'let {' putOn: fd.
+   c do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].
+   '} in ' putOn: fd.
+   self printHaskellOn: fd.
+   fd cr]
  !
  play
   "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
@@ -22,7 +29,11 @@
 
 !UGen methodsFor: 'printing'!
  printHaskellOn: fd
-  "Print my hsc3 representation."
+  "Print the name I am bound to in hsc3."
+  '_u_', self hash asString putOn: fd
+ !
+ printHaskellDefinitionOn: fd
+  "Print my hsc3 definition."
   |mce nc|
   '(mkUGen Nothing all_rates ' putOn: fd.
   ugenRate isArray
