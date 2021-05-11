@@ -7,6 +7,18 @@ Object subclass: #AbstractUGen
 
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
+!AbstractUGen methodsFor: 'collecting'!
+ addToUGenSet: c
+  "Add self any any inputs to UGen set.  Only actual instances of UGen are collected."
+ !
+ ugenSet
+  | c |
+  c := IdentitySet new.
+  self addToUGenSet: c.
+  ^c
+ !
+!
+
 AbstractUGen subclass: #UGen
  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
  classVariableNames: ''
@@ -40,6 +52,16 @@ UGen comment: 'Unit Generator'!
  ugenRate ^ugenRate
  !
  ugenRate: x ugenRate := x
+ !
+!
+
+!UGen methodsFor: 'collecting'!
+ addToUGenSet: c
+  paramNames do: [:x |
+   | p |
+   c add: self.
+   p := self perform: x.
+   (p isKindOf: UGen) ifTrue: [c add: p. p addToUGenSet: c] ifFalse: [(p isKindOf: AbstractUGen) ifTrue: [p addToUGenSet: c]]]
  !
 !
 
@@ -119,7 +141,13 @@ AbstractUGen subclass: #Rate
  category: 'SC3'
 !
 
-Rate comment: 'Audio Rate'!
+Rate comment: 'UGen Processing Rate'!
+
+!Rate methodsFor: 'collecting'!
+ addToUGenSet: c
+  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+ !
+!
 
 !Rate methodsFor: 'accessing'!
  rate ^rate
@@ -165,6 +193,12 @@ AbstractUGen subclass: #MCE
 !
 
 MCE comment: 'Multiple Channel Expansion'!
+
+!MCE methodsFor: 'collecting'!
+ addToUGenSet: c
+  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+ !
+!
 
 !MCE methodsFor: 'accessing'!
  source: x source := x
@@ -231,6 +265,12 @@ AbstractUGen subclass: #Mix
 
 Mix comment: 'UGen Mixer'!
 
+!Mix methodsFor: 'collecting'!
+ addToUGenSet: c
+  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+ !
+!
+
 !Mix methodsFor: 'accessing'!
  source ^source
  !
@@ -279,6 +319,13 @@ AbstractUGen subclass: #MRG
 !
 
 MRG comment: 'Multiple Root Graph'!
+
+!MRG methodsFor: 'collecting'!
+ addToUGenSet: c
+  (lhs isKindOf: AbstractUGen) ifTrue: [lhs addToUGenSet: c].
+  (rhs isKindOf: AbstractUGen) ifTrue: [rhs addToUGenSet: c]
+ !
+!
 
 !MRG methodsFor: 'accessing'!
  lhs ^lhs

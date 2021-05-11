@@ -32,6 +32,8 @@ Classes to write UGen graphs as expressions to text files for
 interpretation by [hsc3](?t=hsc3) or [rsc3](?t=rsc3).  The graphs are
 written without proxied outputs, without applying
 multiple-channel-expansion, and without applying rate-control editing.
+The writer should, but does not, generate let bindings for all UGens,
+see `ugenSet` method.
 The `SC3-Lisp.st` file is not currently maintained.
 
 [SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
