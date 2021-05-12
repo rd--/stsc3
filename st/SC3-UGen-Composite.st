@@ -16,6 +16,15 @@ AbstractUGen subclass: #Splay
 
 Splay comment: 'Pan a set of channels across the stereo field.'!
 
+!Splay methodsFor: 'collecting'!
+ addToUGenSet: c
+  input addToUGenSet: c.
+  spread addToUGenSet: c.
+  level addToUGenSet: c.
+  center addToUGenSet: c
+ !
+!
+
 !Splay methodsFor: 'accessing'!
  center ^center!
  center: x center := x!

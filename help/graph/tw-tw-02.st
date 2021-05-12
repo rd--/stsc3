@@ -1,4 +1,4 @@
-"<https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters) ; "
+"<https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters)"
 | depth nd |
 depth := 8. "<- initially simplified because of hs rewriter, however 3 also sounds well"
 nd := [:k |

@@ -30,7 +30,7 @@
 !UGen methodsFor: 'printing'!
  printHaskellOn: fd
   "Print the name I am bound to in hsc3."
-  '_u_', self hash asString putOn: fd
+  '_u_', self identityHash asString putOn: fd
  !
  printHaskellDefinitionOn: fd
   "Print my hsc3 definition."
@@ -57,7 +57,7 @@
   specialIndex notNil ifTrue: [specialIndex asString putOn: fd] ifFalse: ['0' putOn: fd]
  . ') ' putOn: fd.
   '(UId ' putOn: fd.
-  self hash asString putOn: fd.
+  self identityHash asString putOn: fd.
   ')' putOn: fd.
   ')' putOn: fd
  !
@@ -87,6 +87,7 @@
   "Print my haskell representation."
   '(mrg2 ' putOn: fd.
   lhs printHaskellOn: fd.
+  ' ' putOn: fd.
   rhs printHaskellOn: fd.
   ')' putOn: fd
  !

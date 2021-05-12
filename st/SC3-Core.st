@@ -9,7 +9,8 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen methodsFor: 'collecting'!
  addToUGenSet: c
-  "Add self any any inputs to UGen set.  Only actual instances of UGen are collected."
+  "Add inputs to UGen set.  Only actual instances of UGen are collected."
+  self subclassResponsibility
  !
  ugenSet
   | c |
@@ -57,11 +58,11 @@ UGen comment: 'Unit Generator'!
 
 !UGen methodsFor: 'collecting'!
  addToUGenSet: c
-  paramNames do: [:x |
-   | p |
-   c add: self.
-   p := self perform: x.
-   (p isKindOf: UGen) ifTrue: [c add: p. p addToUGenSet: c] ifFalse: [(p isKindOf: AbstractUGen) ifTrue: [p addToUGenSet: c]]]
+  | addFunc |
+  addFunc := [:x | (self perform: x) addToUGenSet: c].
+  c add: self.
+  paramNames do: addFunc.
+  mceNames do: addFunc
  !
 !
 
@@ -145,7 +146,7 @@ Rate comment: 'UGen Processing Rate'!
 
 !Rate methodsFor: 'collecting'!
  addToUGenSet: c
-  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+  source addToUGenSet: c
  !
 !
 
@@ -194,9 +195,15 @@ AbstractUGen subclass: #MCE
 
 MCE comment: 'Multiple Channel Expansion'!
 
+!Array methodsFor: 'collecting'!
+ addToUGenSet: c
+  self do: [:x | x addToUGenSet: c]
+ !
+!
+
 !MCE methodsFor: 'collecting'!
  addToUGenSet: c
-  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+  source addToUGenSet: c
  !
 !
 
@@ -267,7 +274,7 @@ Mix comment: 'UGen Mixer'!
 
 !Mix methodsFor: 'collecting'!
  addToUGenSet: c
-  (source isKindOf: AbstractUGen) ifTrue: [source addToUGenSet: c]
+  source addToUGenSet: c
  !
 !
 
@@ -322,8 +329,8 @@ MRG comment: 'Multiple Root Graph'!
 
 !MRG methodsFor: 'collecting'!
  addToUGenSet: c
-  (lhs isKindOf: AbstractUGen) ifTrue: [lhs addToUGenSet: c].
-  (rhs isKindOf: AbstractUGen) ifTrue: [rhs addToUGenSet: c]
+  lhs addToUGenSet: c.
+  rhs addToUGenSet: c
  !
 !
 
@@ -357,6 +364,11 @@ AbstractUGen subclass: #Control
 
 Control comment: 'Control Input'!
 
+!Control methodsFor: 'collecting'!
+ addToUGenSet: c
+ !
+!
+
 !Control methodsFor: 'accessing'!
  name ^name
  !
@@ -387,6 +399,11 @@ AbstractUGen subclass: #Constant
 
 Constant comment: 'Constant Numerical Value'!
 
+!Constant methodsFor: 'collecting'!
+ addToUGenSet: c
+ !
+!
+
 !Constant methodsFor: 'accessing'!
  k ^k
  !
@@ -406,5 +423,20 @@ Constant comment: 'Constant Numerical Value'!
 !Number methodsFor: 'UGen constants'!
  constant
   ^Constant k: self
+ !
+!
+
+!Number methodsFor: 'collecting'!
+ addToUGenSet: c
+ !
+!
+
+!Symbol methodsFor: 'collecting'!
+ addToUGenSet: c
+ !
+!
+
+!Boolean methodsFor: 'collecting'!
+ addToUGenSet: c
  !
 !
