@@ -8,6 +8,10 @@ initial notes: [st/README](http://rohandrape.net/?t=stsc3&e=st/README)
 
 ![](http://rohandrape.net/sw/stsc3/lib/png/smalltalk-balloon.png)
 
+cli:
+
+[stsc3](http://rohandrape.net/?t=stsc3&e=md/stsc3.md),
+
 requires:
 
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)

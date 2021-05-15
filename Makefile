@@ -5,7 +5,7 @@ all:
 	echo "stsc3"
 
 clean:
-	echo "stsc3"
+	(cd cmd ; make clean)
 
 push-gl:
 	git push $(GL_GIT)

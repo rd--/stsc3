@@ -88,12 +88,12 @@ MessageNames openMessageNames. "open Message Names tool"
 "Array"
 
 #(1 2 3 4 5). "literal array syntax ; {1. 2. 3. 4. 5}"
-#((1 2) (3 4)). "literal array syntax ; {{1. 2}. {3. 4}}"
+#(#(1 2) #(3 4)). "literal array syntax ; {{1. 2}. {3. 4}}"
 
 1 to: 5 collect: [:x | x * x]. "-> #(1 4 9 16 25)"
 6 replicate: 1. "-> #(1 1 1 1 1 1)"
-#((1 2) (3 4)) concatenation. "-> #((1 3) (2 4))"
-#((1 2) (3 4)) transpose concatenation. "-> #(1 3 2 4)"
+#(#(1 2) #(3 4)) concatenation. "-> #(#(1 3) #(2 4))"
+#(#(1 2) #(3 4)) transpose concatenation. "-> #(1 3 2 4)"
 5 mixFill: [:x | x * x]. "-> 30 ; mixFill is zero indexed (as in supercollider)"
 5 arrayFill: [:x | x * x]. "-> #(1 4 9 16 25)"
 5 arrayFillZeroIndexed: [:x | x * x]. "-> #(0 1 4 9 16)"
@@ -142,6 +142,11 @@ x isNil ifTrue: ['x'] ifFalse: ['y']. "-> x"
 "Collections"
 
 #(1 2 3 4 5) sum = 15. "-> true"
+
+"Class"
+
+SinOsc class. "SinOsc class"
+SinOsc new class. "SinOsc"
 
 "Morph"
 

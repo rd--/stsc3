@@ -388,8 +388,8 @@ expression_pp = either assignment_pp basicExpression_pp
 > stParse expression "out := pitch size mixFill: [:i| |trigger pluck period string| trigger := HPZ1 in: (mousex > (0.25 + ((i - 1) * triggerSpacing))) abs . x]"
 > stParse expression "out := pitch size mixFill: [:i| x]"
 > stParse expression "pitch size mixFill: x"
-> stParse expression "[1 .] value"
-]"
+> stParse expression "[1] value"
+> stParse expression "o m: true"
 -}
 expression :: P Expression
 expression = fmap Left (P.try assignment) P.<|> fmap Right basicExpression
@@ -759,6 +759,7 @@ arrayElement = fmap Left literal P.<|> fmap Right identifier -- lexeme
 
 -- * 3.4.7 Reserved Identifiers
 
+-- | These are the reserved identifiers.
 stReservedIdentifiers :: [String]
 stReservedIdentifiers = words "nil true false self super"
 
@@ -818,6 +819,17 @@ comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommen
 
 -- * 3.5.3
 
+type ReservedIdentifier = String
+
+-- | One of stReservedIdentifiers
+reservedIdentifier :: P ReservedIdentifier
+reservedIdentifier = P.choice (map P.string stReservedIdentifiers)
+
+type OrdinaryIdentifier = String
+
+ordinaryIdentifier :: P OrdinaryIdentifier
+ordinaryIdentifier = P.identifier stLexer
+
 type Identifier = String
 
 {- | identifier ::= letter (letter | digit)*
@@ -825,9 +837,10 @@ type Identifier = String
 > stParse identifier "x1" == "x1"
 > stParse identifier "1x" -- FAIL
 > stParse identifier "" -- FAIL
+> stParse identifier "true" == "true"
 -}
 identifier :: P Identifier
-identifier = P.identifier stLexer
+identifier = ordinaryIdentifier P.<|> reservedIdentifier
 
 -- * 3.5.4
 
