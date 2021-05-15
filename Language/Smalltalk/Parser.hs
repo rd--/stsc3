@@ -367,10 +367,16 @@ returnStatement_pp (ReturnStatement e) = printf "^%s" (expression_pp e)
 returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
 
-type Expression = Either Assignment BasicExpression
+data Expression = ExprAssignment Assignment | ExprBasic BasicExpression deriving (Eq, Show)
+
+expression_bimap :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
+expression_bimap f g e =
+  case e of
+    ExprAssignment x -> f x
+    ExprBasic x -> g x
 
 expression_pp :: Expression -> String
-expression_pp = either assignment_pp basicExpression_pp
+expression_pp = expression_bimap assignment_pp basicExpression_pp
 
 {- | <expression> ::= <assignment> | <basic expression>
 
@@ -392,7 +398,7 @@ expression_pp = either assignment_pp basicExpression_pp
 > stParse expression "o m: true"
 -}
 expression :: P Expression
-expression = fmap Left (P.try assignment) P.<|> fmap Right basicExpression
+expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
 
 data Assignment = Assignment Identifier Expression deriving (Eq,Show)
 

@@ -10,7 +10,7 @@ initial notes: [st/README](http://rohandrape.net/?t=stsc3&e=st/README)
 
 cli:
 
-[stsc3](http://rohandrape.net/?t=stsc3&e=md/stsc3.md),
+[stsc3](http://rohandrape.net/?t=stsc3&e=md/stsc3.md)
 
 requires:
 
