@@ -3,10 +3,13 @@ import Control.Monad.State {- mtl -}
 import Data.Char {- base -}
 import Data.Maybe {- base -}
 import System.Environment {- base -}
+import System.IO {- base -}
 
 import qualified Data.Map as Map {- containers -}
 
 import Sound.SC3 {- hsc3 -}
+
+import qualified Sound.SC3.UGen.Dot {- hsc3-dot -}
 
 import qualified Sound.SC3.Lisp.Env as Env {- hsc3-lisp -}
 
@@ -40,25 +43,21 @@ type VM t = Env.EnvMonad IO Object t
 
 data Object
   = NilObject
-  | IntObject Integer
-  | FloatObject Double
-  | BooleanObject Bool
+  | UGenObject UGen
   | SymbolObject String
   | ArrayObject [Object]
   | BlockObject (Env.Env Object) St.BlockBody
-  | UGenObject UGen
 
 instance Show Object where
   show o =
     case o of
       NilObject -> "nil"
-      IntObject x -> show x
-      FloatObject x -> show x
-      BooleanObject x -> map toLower (show x)
       SymbolObject x -> show x
       ArrayObject x -> unwords (map show x)
       BlockObject _ _ -> "Block"
-      UGenObject x -> show x
+      UGenObject x -> case x of
+                        Constant_U c -> show (constantValue c)
+                        _ -> show x
 
 identifier_to_object :: St.Identifier -> Object
 identifier_to_object x = SymbolObject x
@@ -66,8 +65,8 @@ identifier_to_object x = SymbolObject x
 literal_to_object :: St.Literal -> Object
 literal_to_object l =
   case l of
-    St.NumberLiteral (Left x) -> IntObject x
-    St.NumberLiteral (Right x) -> FloatObject x
+    St.NumberLiteral (Left x) -> UGenObject (constant x)
+    St.NumberLiteral (Right x) -> UGenObject (constant x)
     St.StringLiteral _ -> error "literal_to_object?"
     St.CharacterLiteral _ -> error "literal_to_object?"
     St.SymbolLiteral x -> SymbolObject x
@@ -99,58 +98,6 @@ evalExpression expr =
 evalAssignment :: St.Assignment -> VM Object
 evalAssignment = undefined
 
--- | Lookup unary Num method by name.
-unaryNumLookup :: Num t => String -> Maybe (t -> t)
-unaryNumLookup x =
-  case x of
-    "abs" -> Just abs
-    "negate" -> Just negate
-    "signum" -> Just signum
-    _ -> Nothing
-
-unaryNumLookupError :: Num t => String -> VM (t -> t)
-unaryNumLookupError = maybe (throwError "unaryNumLookup?") return . unaryNumLookup
-
--- | Lookup binary Num method by name.
-binaryNumLookup :: Num t => String -> Maybe (t -> t -> t)
-binaryNumLookup x =
-  case x of
-    "+" -> Just (+)
-    "-" -> Just (-)
-    "*" -> Just (*)
-    _ -> Nothing
-
-binaryNumLookupError :: Num t => String -> VM (t -> t -> t)
-binaryNumLookupError = maybe (throwError "binaryNumLookup?") return . binaryNumLookup
-
--- | Lookup unary Floating method by name.
-unaryFloatingLookup :: Floating t => String -> Maybe (t -> t)
-unaryFloatingLookup x =
-  case x of
-    "exp" -> Just exp
-    "log" -> Just log
-    "sqrt" -> Just sqrt
-    "sin" -> Just sin
-    "cos" -> Just cos
-    "tan" -> Just tan
-    "asin" -> Just asin
-    "acos" -> Just acos
-    "atan" -> Just atan
-    "sinh" -> Just sinh
-    "cosh" -> Just cosh
-    "tanh" -> Just tanh
-    "asinh" -> Just asinh
-    "acosh" -> Just acosh
-    "atanh" -> Just atanh
-    _ -> Nothing
-
--- | Lookup binary Floating method by name.
-binaryFloatingLookup :: Floating t => String -> Maybe (t -> t -> t)
-binaryFloatingLookup x =
-  case x of
-    "**" -> Just (**)
-    "logBase" -> Just logBase
-    _ -> Nothing
 
 evalBinaryArgument :: St.BinaryArgument -> VM Object
 evalBinaryArgument (p,u) =evalPrimary p >>= \o -> maybe (return o) (evalUnaryMessageSeq o) u
@@ -159,10 +106,15 @@ evalBinaryMessage :: Object -> St.BinaryMessage -> VM Object
 evalBinaryMessage lhs (St.BinaryMessage (m,a)) = do
   rhs <- evalBinaryArgument a
   case (lhs,rhs) of
-    (IntObject x,IntObject y) -> binaryNumLookupError m >>= \f -> return (IntObject (f x y))
-    (FloatObject x,FloatObject y) -> binaryNumLookupError m >>= \f -> return (FloatObject (f x y))
-    (UGenObject x,UGenObject y) -> binaryNumLookupError m >>= \f -> return (UGenObject (f x y))
-    _ -> throwError "evalBinaryNumFunc"
+    (UGenObject x,UGenObject y) ->
+      case m of
+        "+" -> return (UGenObject (x + y))
+        "-" -> return (UGenObject (x - y))
+        "*" -> return (UGenObject (x * y))
+        "/" -> return (UGenObject (x / y))
+        "**" -> return (UGenObject (x ** y))
+        _ -> throwError "evalBinaryMessage"
+    _ -> throwError "evalBinaryMessage"
 
 evalBinaryMessageSeq :: Object -> [St.BinaryMessage] -> VM Object
 evalBinaryMessageSeq o sq =
@@ -173,9 +125,28 @@ evalBinaryMessageSeq o sq =
 evalUnaryMessage :: Object -> St.UnaryMessage -> VM Object
 evalUnaryMessage o (St.UnaryMessage m) =
   case o of
-    IntObject x -> unaryNumLookupError m >>= \f -> return (IntObject (f x))
-    FloatObject x -> unaryNumLookupError m >>= \f -> return (FloatObject (f x))
-    UGenObject x -> unaryNumLookupError m >>= \f -> return (UGenObject (f x))
+    UGenObject x ->
+      case m of
+        "abs" -> return (UGenObject (abs x))
+        "negate" -> return (UGenObject (negate x))
+        "exp" -> return (UGenObject (exp x))
+        "log" -> return (UGenObject (log x))
+        "sqrt" -> return (UGenObject (sqrt x))
+        "sin" -> return (UGenObject (sin x))
+        "cos" -> return (UGenObject (cos x))
+        "tan" -> return (UGenObject (tan x))
+        "asin" -> return (UGenObject (asin x))
+        "acos" -> return (UGenObject (acos x))
+        "atan" -> return (UGenObject (atan x))
+        "sinh" -> return (UGenObject (sinh x))
+        "cosh" -> return (UGenObject (cosh x))
+        "tanh" -> return (UGenObject (tanh x))
+        "asinh" -> return (UGenObject (asinh x))
+        "acosh" -> return (UGenObject (acosh x))
+        "atanh" -> return (UGenObject (atanh x))
+        "play" -> liftIO (audition x) >> return NilObject
+        "draw" -> liftIO (Sound.SC3.UGen.Dot.draw x) >> return NilObject
+        _ -> throwError "evalUnaryNumFunc"
     _ -> throwError "evalUnaryNumFunc"
 
 evalUnaryMessageSeq :: Object -> [St.UnaryMessage] -> VM Object
@@ -241,12 +212,24 @@ evalString txt = do
   programElementEval st
 
 coreDict :: Env.Dict Object
-coreDict = Map.fromList [("true",BooleanObject True),("false",BooleanObject False)]
+coreDict = Map.fromList [("true",UGenObject (constant 1)),("false",UGenObject (constant 0))]
 
-{-
+getProgram :: String -> Handle -> IO String
+getProgram s h = do
+  l <- hGetLine h -- no eol
+  r <- hReady h
+  let s' = s ++ (l ++ "\n")
+  if r then getProgram s' h else return s'
 
-env <- Env.env_gen_toplevel coreDict :: IO (Env.Env Object)
-(r,env') <- runStateT (runExceptT (evalString "5.0 + 3.0 * 5.0")) env
-r
+replCont :: Env.Env Object -> IO ()
+replCont env = do
+  str <- getProgram "" stdin
+  (r,env') <- runStateT (runExceptT (evalString str)) env
+  case r of
+    Left msg -> putStrLn ("error: " ++ msg) >> replCont env
+    Right res -> putStrLn ("result: " ++ show res) >> replCont env'
 
--}
+replInit :: IO ()
+replInit = do
+  env <- Env.env_gen_toplevel coreDict :: IO (Env.Env Object)
+  replCont env
