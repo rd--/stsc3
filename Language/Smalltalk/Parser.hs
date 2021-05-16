@@ -298,7 +298,7 @@ blockBody_pp (BlockBody a t s) =
 blockBody :: P BlockBody
 blockBody = do
   a <- P.optionMaybe (P.try (P.many1 blockArgument >>~ verticalBar))
-  P.optional separator
+  P.optional separator -- ?
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
   return (BlockBody a t s)
@@ -446,25 +446,28 @@ basicExpression :: P BasicExpression
 basicExpression = do
   p <- primary
   m <- P.optionMaybe messages
-  c <- P.optionMaybe cascadedMessages
-  return (p,m,c)
+  c <- cascadedMessages
+  return (p,m,if null c then Nothing else Just c)
 
 -- | <assignment target> := identifier
 assignmentTarget :: P Identifier
 assignmentTarget = P.label identifier "assignmentTarget"
 
 data Messages
-  = UnaryMessages ([Message],Maybe [Message],Maybe Message)
-  | BinaryMessages ([Message],Maybe Message)
-  | KeywordMessages Message
+  = MessagesUnary ([UnaryMessage],Maybe [BinaryMessage],Maybe KeywordMessage)
+  | MessagesBinary ([BinaryMessage],Maybe KeywordMessage)
+  | MessagesKeyword KeywordMessage
   deriving (Eq,Show)
 
 messages_pp :: Messages -> String
 messages_pp ms =
   case ms of
-    UnaryMessages (m1,m2,m3) -> strjn (concat ([map message_pp m1,maybe [] (map message_pp) m2,maybe [] (return . message_pp) m3]))
-    BinaryMessages (m1,m2) -> strjn (concat ([map message_pp m1,maybe [] (return . message_pp) m2]))
-    KeywordMessages m1 -> message_pp m1
+    MessagesUnary (m1,m2,m3) -> strjn (concat ([map unaryMessage_pp m1
+                                               ,maybe [] (map binaryMessage_pp) m2
+                                               ,maybe [] (return . keywordMessage_pp) m3]))
+    MessagesBinary (m1,m2) -> strjn (concat ([map binaryMessage_pp m1
+                                             ,maybe [] (return . keywordMessage_pp) m2]))
+    MessagesKeyword m1 -> keywordMessage_pp m1
 
 data Primary
   = PrimaryIdentifier Identifier
@@ -524,17 +527,17 @@ primary = P.choice [fmap PrimaryBlock blockConstructor
 unaryMessages :: P Messages
 unaryMessages = do
   u <- P.many1 (P.try unaryMessage)
-  b <- P.optionMaybe (P.many binaryMessage)
-  P.optional separator
+  b <- P.many binaryMessage
+  P.optional separator -- ?
   k <- P.optionMaybe keywordMessage
-  return (UnaryMessages (u,b,k))
+  return (MessagesUnary (u,if null b then Nothing else Just b,k))
 
 -- | <binary message>+ [<keyword message>]
 binaryMessages :: P Messages
 binaryMessages = do
   b <- P.many1 binaryMessage
   k <- P.optionMaybe keywordMessage
-  return (BinaryMessages (b,k))
+  return (MessagesBinary (b,k))
 
 {- | <messages> ::= (<unary message>+ <binary message>* [<keyword message>] ) | (<binary message>+ [<keyword message>] ) | <keyword message>
 
@@ -545,36 +548,45 @@ binaryMessages = do
 
 > stParse messages "k1:p1" == stParse messages "k1: p1"
 > stParse messages "k1: p1 k2: p2" == stParse messages "k1:p1 k2:p2"
-> stParse messages "+1" == stParse messages "+ 1"
+> stParse messages "+1"== stParse messages "+ 1"
 > stParse messages "+p" == stParse messages "+ p"
 > stParse messages "+p +q" == stParse messages "+ p + q"
 > stParse messages "+p +q k:r" == stParse messages "+ p + q k: r"
 > stParse messages "q r: x"
 -}
 messages :: P Messages
-messages = P.choice [P.try binaryMessages,P.try (fmap KeywordMessages keywordMessage),unaryMessages]
+messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
 
-data Message
-  = UnaryMessage Identifier
-  | BinaryMessage (Identifier,BinaryArgument)
-  | KeywordMessage [(Identifier,KeywordArgument)]
-  deriving (Eq,Show)
+data UnaryMessage = UnaryMessage Identifier deriving (Eq,Show)
 
+unaryMessage_pp :: UnaryMessage -> String
+unaryMessage_pp (UnaryMessage u) = u
+
+data BinaryMessage = BinaryMessage (Identifier,BinaryArgument) deriving (Eq,Show)
+
+binaryMessage_pp :: BinaryMessage -> String
+binaryMessage_pp (BinaryMessage (b,a)) = strjn [b,binaryArgument_pp a]
+
+data KeywordMessage = KeywordMessage [(Identifier,KeywordArgument)] deriving (Eq,Show)
+
+keywordMessage_pp :: KeywordMessage -> String
+keywordMessage_pp (KeywordMessage l) =
+  let f (k,a) = strjn [k,keywordArgument_pp a]
+  in strjn (map f l)
+
+{-
 message_pp :: Message -> String
 message_pp msg =
-  let keywordMessage_pp :: (Identifier,KeywordArgument) -> String
-      keywordMessage_pp (k,a) = strjn [k,keywordArgument_pp a]
   in case msg of
-       UnaryMessage u -> u
-       BinaryMessage (b,a) -> strjn [b,binaryArgument_pp a]
        KeywordMessage k -> strjn (map keywordMessage_pp k)
+-}
 
 {- | <unary message> ::= unarySelector
 
 > stParse unaryMessage "p" == UnaryMessage "p"
 > stParse unaryMessage "" -- FAIL
 -}
-unaryMessage :: P Message
+unaryMessage :: P UnaryMessage
 unaryMessage = fmap UnaryMessage unarySelector -- lexeme
 
 {- | <binary message> ::= binarySelector <binary argument>
@@ -584,16 +596,16 @@ unaryMessage = fmap UnaryMessage unarySelector -- lexeme
 > stParse binaryMessage "+1.0" == stParse binaryMessage "+ 1.0"
 > stParse binaryMessage "+ 1 k:" -- + 1
 -}
-binaryMessage :: P Message
+binaryMessage :: P BinaryMessage
 binaryMessage = do
   sel <- binarySelector
   arg <- binaryArgument
   return (BinaryMessage (sel,arg))
 
-type BinaryArgument = (Primary,Maybe [Message])
+type BinaryArgument = (Primary,Maybe [UnaryMessage])
 
 binaryArgument_pp :: BinaryArgument -> String
-binaryArgument_pp (p,m) = strjn [primary_pp p,maybe "" (strjn . map message_pp) m]
+binaryArgument_pp (p,m) = strjn [primary_pp p,maybe "" (strjn . map unaryMessage_pp) m]
 
 {- | <binary argument> ::= <primary> <unary message>*
 
@@ -613,17 +625,20 @@ binaryArgument = do
 > stParse keywordMessage "k:p" == stParse keywordMessage "k: p"
 > stParse keywordMessage "k1:p1 k2:p2" == stParse keywordMessage "k1: p1 k2: p2"
 -}
-keywordMessage :: P Message
+keywordMessage :: P KeywordMessage
 keywordMessage = do
   let f = do kw <- keyword
              arg <- keywordArgument
              return (kw,arg)
   fmap KeywordMessage (P.many1 f)
 
-type KeywordArgument = (Primary,Maybe [Message],Maybe [Message])
+type KeywordArgument = (Primary,Maybe [UnaryMessage],Maybe [BinaryMessage])
 
 keywordArgument_pp :: KeywordArgument -> String
-keywordArgument_pp (p,m1,m2) = strjn [primary_pp p,maybe "" (strjn . map message_pp) m1,maybe "" (strjn . map message_pp) m2]
+keywordArgument_pp (p,m1,m2) =
+  strjn [primary_pp p
+        ,maybe "" (strjn . map unaryMessage_pp) m1
+        ,maybe "" (strjn . map binaryMessage_pp) m2]
 
 {- | <keyword argument> ::= <primary> <unary message>* <binary message>*
 
