@@ -1,17 +1,20 @@
 import Control.Monad.Except {- mtl -}
 import Control.Monad.State {- mtl -}
-import Data.Char {- base -}
 import Data.Maybe {- base -}
 import System.Environment {- base -}
 import System.IO {- base -}
 
 import qualified Data.Map as Map {- containers -}
 
-import Sound.SC3 {- hsc3 -}
+import qualified Sound.SC3 as SC3 {- hsc3 -}
+import qualified Sound.SC3.UGen.Plain as Plain {- hsc3 -}
 
 import qualified Sound.SC3.UGen.Dot {- hsc3-dot -}
 
 import qualified Sound.SC3.Lisp.Env as Env {- hsc3-lisp -}
+
+import qualified Sound.SC3.UGen.DB as DB {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Record as DB {- hsc3-db -}
 
 import qualified Language.Smalltalk.Parser as St {- stsc3 -}
 
@@ -43,10 +46,17 @@ type VM t = Env.EnvMonad IO Object t
 
 data Object
   = NilObject
-  | UGenObject UGen
+  | UGenClassObject String
+  | UGenObject SC3.UGen
   | SymbolObject String
   | ArrayObject [Object]
   | BlockObject (Env.Env Object) St.BlockBody
+
+objectUGen :: Object ->  VM SC3.UGen
+objectUGen o =
+  case o of
+    UGenObject x -> return x
+    _ -> throwError "objectUGen?"
 
 instance Show Object where
   show o =
@@ -55,36 +65,42 @@ instance Show Object where
       SymbolObject x -> show x
       ArrayObject x -> unwords (map show x)
       BlockObject _ _ -> "Block"
+      UGenClassObject x -> x
       UGenObject x -> case x of
-                        Constant_U c -> show (constantValue c)
+                        SC3.Constant_U c -> show (SC3.constantValue c)
                         _ -> show x
 
-identifier_to_object :: St.Identifier -> Object
-identifier_to_object x = SymbolObject x
+identifierToObject :: St.Identifier -> Object
+identifierToObject x = SymbolObject x
 
-literal_to_object :: St.Literal -> Object
-literal_to_object l =
+isUGenName :: String -> Bool
+isUGenName x = x `elem` map DB.ugen_name DB.ugen_db
+
+literalToObject :: St.Literal -> Object
+literalToObject l =
   case l of
-    St.NumberLiteral (Left x) -> UGenObject (constant x)
-    St.NumberLiteral (Right x) -> UGenObject (constant x)
-    St.StringLiteral _ -> error "literal_to_object?"
-    St.CharacterLiteral _ -> error "literal_to_object?"
+    St.NumberLiteral (Left x) -> UGenObject (SC3.constant x)
+    St.NumberLiteral (Right x) -> UGenObject (SC3.constant x)
+    St.StringLiteral _ -> error "literalToObject?"
+    St.CharacterLiteral _ -> error "literalToObject?"
     St.SymbolLiteral x -> SymbolObject x
-    St.SelectorLiteral _ -> error "literal_to_object?"
-    St.ArrayLiteral x -> ArrayObject (map (either literal_to_object identifier_to_object) x)
+    St.SelectorLiteral _ -> error "literalToObject?"
+    St.ArrayLiteral x -> ArrayObject (map (either literalToObject identifierToObject) x)
 
--- | Add temporaries to environment, initialised to nil.  In
--- evaluation this will be preceded by a capture of the current
--- environment, which will later be reinstated.
-temporariesEval :: St.Temporaries -> VM ()
-temporariesEval x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
+-- | Add temporaries to environment, initialised to nil.
+evalTemporaries :: St.Temporaries -> VM ()
+evalTemporaries x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
+
+-- | Delete frame and return input value.
+deleteFrame :: t -> VM t
+deleteFrame r = (put =<< Env.env_del_frame =<< get) >> return r
 
 -- > evalPrimary (St.PrimaryLiteral (St.NumberLiteral (Left 15)))
 evalPrimary :: St.Primary -> VM Object
 evalPrimary p =
   case p of
-    St.PrimaryIdentifier x -> get >>= \e -> Env.env_lookup x e
-    St.PrimaryLiteral x -> return (literal_to_object x)
+    St.PrimaryIdentifier x -> if isUGenName x then return (UGenClassObject x) else get >>= \e -> Env.env_lookup x e
+    St.PrimaryLiteral x -> return (literalToObject x)
     St.PrimaryBlock x -> get >>= \e -> return (BlockObject e x)
     St.PrimaryExpression x -> evalExpression x -- can assign
     St.PrimaryArrayExpression x -> fmap ArrayObject (mapM evalBasicExpression x)
@@ -96,11 +112,14 @@ evalExpression expr =
     St.ExprBasic x -> evalBasicExpression x
 
 evalAssignment :: St.Assignment -> VM Object
-evalAssignment = undefined
-
+evalAssignment (St.Assignment lhs rhs) = do
+  env <- get
+  rhsValue <- evalExpression rhs
+  liftIO (Env.env_set env lhs rhsValue)
+  return NilObject
 
 evalBinaryArgument :: St.BinaryArgument -> VM Object
-evalBinaryArgument (p,u) =evalPrimary p >>= \o -> maybe (return o) (evalUnaryMessageSeq o) u
+evalBinaryArgument (p,u) = evalPrimary p >>= \o -> maybe (return o) (evalUnaryMessageSeq o) u
 
 evalBinaryMessage :: Object -> St.BinaryMessage -> VM Object
 evalBinaryMessage lhs (St.BinaryMessage (m,a)) = do
@@ -122,9 +141,35 @@ evalBinaryMessageSeq o sq =
     [] -> return o
     b:sq' -> evalBinaryMessage o b >>= \r -> evalBinaryMessageSeq r sq'
 
+{- | evalBlock works by:
+   1. saving the current environment;
+   2. extending the stored block environment with the argument frame and making this the current environment;
+   3. evaluating the block body in the current (extended block) environment and saving the result;
+   4. restoring the saved environment;
+   5. returning the saved result
+-}
+evalBlock :: Object -> Env.Env Object -> St.BlockBody -> [Object] -> VM Object
+evalBlock _o blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries blockStatements) arguments = do
+  let blockArguments = fromMaybe [] maybeBlockArguments
+  when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
+  extendedBlockEnvironment <- if null arguments then return blockEnvironment else liftIO (Env.env_add_frame (zip blockArguments arguments) blockEnvironment)
+  currentEnvironment <- get
+  put extendedBlockEnvironment
+  result <- evalTemporariesStatements blockTemporaries blockStatements
+  put currentEnvironment
+  return result
+
 evalUnaryMessage :: Object -> St.UnaryMessage -> VM Object
 evalUnaryMessage o (St.UnaryMessage m) =
   case o of
+    BlockObject e x ->
+      case m of
+        "value" -> evalBlock o e x []
+        _ -> throwError "evalUnaryMessage: Block?"
+    UGenClassObject _x ->
+      case m of
+        "new" -> undefined -- ie. WhiteNoise new
+        _ -> throwError "evalUnaryMessage: UGenClass?"
     UGenObject x ->
       case m of
         "abs" -> return (UGenObject (abs x))
@@ -144,7 +189,7 @@ evalUnaryMessage o (St.UnaryMessage m) =
         "asinh" -> return (UGenObject (asinh x))
         "acosh" -> return (UGenObject (acosh x))
         "atanh" -> return (UGenObject (atanh x))
-        "play" -> liftIO (audition x) >> return NilObject
+        "play" -> liftIO (SC3.audition x) >> return NilObject
         "draw" -> liftIO (Sound.SC3.UGen.Dot.draw x) >> return NilObject
         _ -> throwError "evalUnaryNumFunc"
     _ -> throwError "evalUnaryNumFunc"
@@ -155,6 +200,34 @@ evalUnaryMessageSeq o sq =
     [] -> return o
     u:sq' -> evalUnaryMessage o u >>= \r -> evalUnaryMessageSeq r sq'
 
+evalKeywordArgument :: St.KeywordArgument -> VM Object
+evalKeywordArgument (p,u,b) = do
+  p' <- evalPrimary p
+  u' <- maybe (return p') (evalUnaryMessageSeq p') u
+  maybe (return u') (evalBinaryMessageSeq p') b
+
+{- | Where o is a SC3.UGen class:
+     check keyword names match SC3.UGen input names,
+     check for mulAdd inputs,
+     check for numChan input,
+     derive number of output channels and rate,
+     check if UGen is non-determinate and if so generate UId,
+-}
+evalKeywordMessage :: Object -> [(St.Identifier,St.KeywordArgument)] -> VM Object
+evalKeywordMessage o k = do
+  let keywordNames = map fst k
+  keywordValues <- mapM (evalKeywordArgument . snd) k
+  case o of
+    BlockObject e x -> if all (== "value:") keywordNames then evalBlock o e x keywordValues else throwError "evalKeywordMessage: block?"
+    UGenClassObject x -> do
+      ugenInputs <- mapM objectUGen keywordValues
+      let rt = SC3.AR -- ?
+          nc = 1 -- ?
+          sp = SC3.Special 0
+          uid = SC3.NoId -- ?
+      return (UGenObject (SC3.ugen_optimise_const_operator (Plain.mk_plain rt x ugenInputs nc sp uid))) -- ?
+    _ -> error "evalKeywordMessage"
+
 messagesRewrite :: St.Messages -> Maybe St.Messages
 messagesRewrite m =
   case m of
@@ -164,55 +237,59 @@ messagesRewrite m =
     St.MessagesBinary ([],Just k) -> Just (St.MessagesKeyword k)
     St.MessagesBinary ([],Nothing) -> Nothing
     St.MessagesKeyword k -> Just (St.MessagesKeyword k)
+    _ -> error "messagesRewrite?"
 
-evalMessagesSend :: Object -> St.Messages -> VM Object
-evalMessagesSend o m =
+evalMessages :: Object -> St.Messages -> VM Object
+evalMessages o m =
   case m of
     St.MessagesUnary (u,b,k) -> do
       r <- evalUnaryMessageSeq o u
       case messagesRewrite (St.MessagesUnary ([],b,k)) of
-        Just m' -> evalMessagesSend r m'
+        Just m' -> evalMessages r m'
         Nothing -> return r
     St.MessagesBinary (b,k) -> do
       r <- evalBinaryMessageSeq o b
       case messagesRewrite (St.MessagesBinary ([],k)) of
-        Just m' -> evalMessagesSend r m'
+        Just m' -> evalMessages r m'
         Nothing -> return r
-    St.MessagesKeyword k -> throwError "evalMessagesSend: keyword?"
+    St.MessagesKeyword (St.KeywordMessage k) -> evalKeywordMessage o k
 
 evalBasicExpression :: St.BasicExpression -> VM Object
 evalBasicExpression expr =
   case expr of
     (p,Nothing,Nothing) -> evalPrimary p
-    (p,Just m,Nothing) -> evalPrimary p >>= \o -> evalMessagesSend o m
+    (p,Just m,Nothing) -> evalPrimary p >>= \o -> evalMessages o m
     _ -> error "eval_basicexpression?"
 
-statementsEval :: St.Statements -> VM Object
-statementsEval st =
+evalStatements :: St.Statements -> VM Object
+evalStatements st =
   case st of
     St.StatementsReturn _ -> throwError "StatementsReturn?"
-    St.StatementsExpression expr cnt -> evalExpression expr >>= \r -> maybe (return r) statementsEval cnt
+    St.StatementsExpression expr cnt -> evalExpression expr >>= \r -> maybe (return r) evalStatements cnt
 
-initializerDefinitionEval :: St.InitializerDefinition -> VM Object
-initializerDefinitionEval (St.InitializerDefinition tm st) = do
+evalTemporariesStatements :: Maybe St.Temporaries -> Maybe St.Statements -> VM Object
+evalTemporariesStatements tm st = do
   case (tm,st) of
     (_,Nothing) -> return NilObject
-    (Nothing,Just st') -> statementsEval st'
-    (Just tm',Just st') -> temporariesEval tm' >> statementsEval st'
+    (Nothing,Just st') -> evalStatements st'
+    (Just tm',Just st') -> evalTemporaries tm' >> evalStatements st' >>= deleteFrame
 
-programElementEval :: St.ProgramElement -> VM Object
-programElementEval el =
+evalProgramElement :: St.ProgramElement -> VM Object
+evalProgramElement el =
   case el of
     St.ProgramGlobal _ -> throwError "ProgramGlobal?"
-    St.ProgramInitializer x -> initializerDefinitionEval x
+    St.ProgramInitializer (St.InitializerDefinition tm st) -> evalTemporariesStatements tm st
 
 evalString :: String -> VM Object
 evalString txt = do
   let [st] = St.stParse St.smalltalkProgram txt
-  programElementEval st
+  evalProgramElement st
 
 coreDict :: Env.Dict Object
-coreDict = Map.fromList [("true",UGenObject (constant 1)),("false",UGenObject (constant 0))]
+coreDict =
+  Map.fromList
+  [("true",UGenObject (SC3.constant 1))
+  ,("false",UGenObject (SC3.constant 0))]
 
 getProgram :: String -> Handle -> IO String
 getProgram s h = do
