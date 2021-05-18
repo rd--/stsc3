@@ -46,12 +46,13 @@ type VM t = Env.EnvMonad IO Object t
 
 data Object
   = NilObject
-  | UGenClassObject String
+  | UGenClassObject String DB.U
   | UGenObject SC3.UGen
   | SymbolObject String
   | ArrayObject [Object]
   | BlockObject (Env.Env Object) St.BlockBody
 
+-- | Extract UGenObject, in VM in case of error
 objectUGen :: Object ->  VM SC3.UGen
 objectUGen o =
   case o of
@@ -65,7 +66,7 @@ instance Show Object where
       SymbolObject x -> show x
       ArrayObject x -> unwords (map show x)
       BlockObject _ _ -> "Block"
-      UGenClassObject x -> x
+      UGenClassObject x _ -> x
       UGenObject x -> case x of
                         SC3.Constant_U c -> show (SC3.constantValue c)
                         _ -> show x
@@ -99,7 +100,7 @@ deleteFrame r = (put =<< Env.env_del_frame =<< get) >> return r
 evalPrimary :: St.Primary -> VM Object
 evalPrimary p =
   case p of
-    St.PrimaryIdentifier x -> if isUGenName x then return (UGenClassObject x) else get >>= \e -> Env.env_lookup x e
+    St.PrimaryIdentifier x -> if isUGenName x then return (UGenClassObject x (DB.u_lookup_cs_err x)) else get >>= \e -> Env.env_lookup x e
     St.PrimaryLiteral x -> return (literalToObject x)
     St.PrimaryBlock x -> get >>= \e -> return (BlockObject e x)
     St.PrimaryExpression x -> evalExpression x -- can assign
@@ -141,6 +142,9 @@ evalBinaryMessageSeq o sq =
     [] -> return o
     b:sq' -> evalBinaryMessage o b >>= \r -> evalBinaryMessageSeq r sq'
 
+extendEnvironment :: Env.Env t -> [(Env.Name,t)] -> VM (Env.Env t)
+extendEnvironment e x = if null x then return e else liftIO (Env.env_add_frame x e)
+
 {- | evalBlock works by:
    1. saving the current environment;
    2. extending the stored block environment with the argument frame and making this the current environment;
@@ -152,12 +156,15 @@ evalBlock :: Object -> Env.Env Object -> St.BlockBody -> [Object] -> VM Object
 evalBlock _o blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries blockStatements) arguments = do
   let blockArguments = fromMaybe [] maybeBlockArguments
   when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
-  extendedBlockEnvironment <- if null arguments then return blockEnvironment else liftIO (Env.env_add_frame (zip blockArguments arguments) blockEnvironment)
+  extendedBlockEnvironment <- extendEnvironment blockEnvironment (zip blockArguments arguments)
   currentEnvironment <- get
   put extendedBlockEnvironment
   result <- evalTemporariesStatements blockTemporaries blockStatements
   put currentEnvironment
   return result
+
+genUId :: VM SC3.UGenId
+genUId = return (SC3.UId 0)
 
 evalUnaryMessage :: Object -> St.UnaryMessage -> VM Object
 evalUnaryMessage o (St.UnaryMessage m) =
@@ -166,9 +173,12 @@ evalUnaryMessage o (St.UnaryMessage m) =
       case m of
         "value" -> evalBlock o e x []
         _ -> throwError "evalUnaryMessage: Block?"
-    UGenClassObject _x ->
+    UGenClassObject x u -> do
+      uid <- if DB.ugen_nondet u then genUId else throwError "evalUnaryMessage: UGen: nonDet?"
+      let rt = DB.ugen_default_rate u
+          nc = fromMaybe (error "evalUnaryMessage: UGen: numChan?") (DB.ugen_outputs u)
       case m of
-        "new" -> undefined -- ie. WhiteNoise new
+        "new" -> makeUGen x rt [] nc uid -- ie. WhiteNoise new
         _ -> throwError "evalUnaryMessage: UGenClass?"
     UGenObject x ->
       case m of
@@ -206,6 +216,12 @@ evalKeywordArgument (p,u,b) = do
   u' <- maybe (return p') (evalUnaryMessageSeq p') u
   maybe (return u') (evalBinaryMessageSeq p') b
 
+makeUGen :: String -> SC3.Rate -> [Object] -> Int -> SC3.UGenId -> VM Object
+makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId = do
+  ugenInputs <- mapM objectUGen ugenInputObjects
+  let u = Plain.mk_plain ugenRate ugenName ugenInputs ugenNumChan (SC3.Special 0) ugenId
+  return (UGenObject (SC3.ugen_optimise_const_operator u))
+
 {- | Where o is a SC3.UGen class:
      check keyword names match SC3.UGen input names,
      check for mulAdd inputs,
@@ -219,13 +235,11 @@ evalKeywordMessage o k = do
   keywordValues <- mapM (evalKeywordArgument . snd) k
   case o of
     BlockObject e x -> if all (== "value:") keywordNames then evalBlock o e x keywordValues else throwError "evalKeywordMessage: block?"
-    UGenClassObject x -> do
-      ugenInputs <- mapM objectUGen keywordValues
-      let rt = SC3.AR -- ?
-          nc = 1 -- ?
-          sp = SC3.Special 0
-          uid = SC3.NoId -- ?
-      return (UGenObject (SC3.ugen_optimise_const_operator (Plain.mk_plain rt x ugenInputs nc sp uid))) -- ?
+    UGenClassObject x u -> do
+      uid <- if DB.ugen_nondet u then genUId else return SC3.NoId
+      let rt = DB.ugen_default_rate u
+          nc = fromMaybe (error "evalKeywordMessage: UGen: numChan?") (DB.ugen_outputs u)
+      makeUGen x rt keywordValues nc uid -- ?
     _ -> error "evalKeywordMessage"
 
 messagesRewrite :: St.Messages -> Maybe St.Messages
