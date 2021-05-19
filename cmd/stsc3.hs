@@ -1,5 +1,6 @@
 import Control.Monad.Except {- mtl -}
 import Control.Monad.State {- mtl -}
+import Data.List {- base -}
 import Data.Maybe {- base -}
 import System.Environment {- base -}
 import System.IO {- base -}
@@ -14,6 +15,7 @@ import qualified Sound.SC3.UGen.Dot {- hsc3-dot -}
 import qualified Sound.SC3.Lisp.Env as Env {- hsc3-lisp -}
 
 import qualified Sound.SC3.UGen.DB as DB {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Bindings.Smalltalk as DB {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Record as DB {- hsc3-db -}
 
 import qualified Language.Smalltalk.Parser as St {- stsc3 -}
@@ -38,6 +40,7 @@ main = do
   a <- getArgs
   case a of
     "cat":fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat_file fn) fn_seq
+    ["repl"] -> replInit
     _ -> putStrLn (unlines help)
 
 -- * Interpreter
@@ -46,18 +49,28 @@ type VM t = Env.EnvMonad IO Object t
 
 data Object
   = NilObject
+  | FloatObject
+  | SC3Object
   | UGenClassObject String DB.U
   | UGenObject SC3.UGen
   | SymbolObject String
   | ArrayObject [Object]
   | BlockObject (Env.Env Object) St.BlockBody
 
--- | Extract UGenObject, in VM in case of error
+-- | Extract UGenObject, result is in VM in case of error.
 objectUGen :: Object ->  VM SC3.UGen
 objectUGen o =
   case o of
     UGenObject x -> return x
-    _ -> throwError "objectUGen?"
+    ArrayObject x -> fmap SC3.mce (mapM objectUGen x)
+    _ -> throwError "objectUGen: Object not UGen?"
+
+-- | Extract Int, result is in VM in case of error.
+objectInt :: Object ->  VM Int
+objectInt o =
+  case o of
+    UGenObject x -> maybe (throwError "objectInt") (return . round . SC3.constantValue) (SC3.un_constant x)
+    _ -> throwError "objectInt: Object not UGen?"
 
 instance Show Object where
   show o =
@@ -70,6 +83,8 @@ instance Show Object where
       UGenObject x -> case x of
                         SC3.Constant_U c -> show (SC3.constantValue c)
                         _ -> show x
+      SC3Object -> "SC3"
+      FloatObject -> "Float"
 
 identifierToObject :: St.Identifier -> Object
 identifierToObject x = SymbolObject x
@@ -82,13 +97,14 @@ literalToObject l =
   case l of
     St.NumberLiteral (Left x) -> UGenObject (SC3.constant x)
     St.NumberLiteral (Right x) -> UGenObject (SC3.constant x)
-    St.StringLiteral _ -> error "literalToObject?"
-    St.CharacterLiteral _ -> error "literalToObject?"
+    St.StringLiteral _ -> error "literalToObject: string?"
+    St.CharacterLiteral _ -> error "literalToObject: character?"
     St.SymbolLiteral x -> SymbolObject x
-    St.SelectorLiteral _ -> error "literalToObject?"
+    St.SelectorLiteral (St.UnarySelector "dinf") -> UGenObject SC3.dinf
+    St.SelectorLiteral _ -> error "literalToObject: selector?"
     St.ArrayLiteral x -> ArrayObject (map (either literalToObject identifierToObject) x)
 
--- | Add temporaries to environment, initialised to nil.
+-- | Add temporaries as single frame to environment, initialised to nil.
 evalTemporaries :: St.Temporaries -> VM ()
 evalTemporaries x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
 
@@ -96,11 +112,16 @@ evalTemporaries x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)
 deleteFrame :: t -> VM t
 deleteFrame r = (put =<< Env.env_del_frame =<< get) >> return r
 
+-- | Lookup identifier, which is either a UGen Class name or a value in the environment.
+lookupIdentifier :: String -> VM Object
+lookupIdentifier x =
+  if x == "Float" then return FloatObject else if x == "SC3" then return SC3Object else if isUGenName x then return (UGenClassObject x (DB.u_lookup_cs_err x)) else get >>= \e -> Env.env_lookup x e
+
 -- > evalPrimary (St.PrimaryLiteral (St.NumberLiteral (Left 15)))
 evalPrimary :: St.Primary -> VM Object
 evalPrimary p =
   case p of
-    St.PrimaryIdentifier x -> if isUGenName x then return (UGenClassObject x (DB.u_lookup_cs_err x)) else get >>= \e -> Env.env_lookup x e
+    St.PrimaryIdentifier x -> lookupIdentifier x
     St.PrimaryLiteral x -> return (literalToObject x)
     St.PrimaryBlock x -> get >>= \e -> return (BlockObject e x)
     St.PrimaryExpression x -> evalExpression x -- can assign
@@ -173,12 +194,20 @@ evalUnaryMessage o (St.UnaryMessage m) =
       case m of
         "value" -> evalBlock o e x []
         _ -> throwError "evalUnaryMessage: Block?"
+    SC3Object ->
+      case m of
+        "reset" -> liftIO (SC3.withSC3 SC3.reset) >> return NilObject
+        _ -> throwError "evalUnaryMessage: SC3?"
+    FloatObject ->
+      case m of
+        "pi" -> return (UGenObject (SC3.constant pi))
+        _ -> throwError "evalUnaryMessage: Float?"
     UGenClassObject x u -> do
       uid <- if DB.ugen_nondet u then genUId else throwError "evalUnaryMessage: UGen: nonDet?"
       let rt = DB.ugen_default_rate u
           nc = fromMaybe (error "evalUnaryMessage: UGen: numChan?") (DB.ugen_outputs u)
       case m of
-        "new" -> makeUGen x rt [] nc uid -- ie. WhiteNoise new
+        "new" -> makeUGen x rt [] nc uid [] -- ie. WhiteNoise new
         _ -> throwError "evalUnaryMessage: UGenClass?"
     UGenObject x ->
       case m of
@@ -199,10 +228,19 @@ evalUnaryMessage o (St.UnaryMessage m) =
         "asinh" -> return (UGenObject (asinh x))
         "acosh" -> return (UGenObject (acosh x))
         "atanh" -> return (UGenObject (atanh x))
+        "midicps" -> return (UGenObject (SC3.midiCPS x))
+        "reciprocal" -> return (UGenObject (1 / x))
+        "kr" -> return (UGenObject (SC3.rewriteToRate SC3.KR x))
         "play" -> liftIO (SC3.audition x) >> return NilObject
         "draw" -> liftIO (Sound.SC3.UGen.Dot.draw x) >> return NilObject
-        _ -> throwError "evalUnaryNumFunc"
-    _ -> throwError "evalUnaryNumFunc"
+        _ -> throwError ("evalUnaryNumFunc: UGen: " ++ m)
+    ArrayObject x ->
+      case m of
+        "mce" -> do
+          ugenArray <- mapM objectUGen x
+          return (UGenObject (SC3.mce ugenArray))
+        _ -> throwError "evalUnaryMessage: Block?"
+    _ -> throwError ("evalUnaryNumFunc: Object: " ++ m)
 
 evalUnaryMessageSeq :: Object -> [St.UnaryMessage] -> VM Object
 evalUnaryMessageSeq o sq =
@@ -216,11 +254,21 @@ evalKeywordArgument (p,u,b) = do
   u' <- maybe (return p') (evalUnaryMessageSeq p') u
   maybe (return u') (evalBinaryMessageSeq p') b
 
-makeUGen :: String -> SC3.Rate -> [Object] -> Int -> SC3.UGenId -> VM Object
-makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId = do
+makeUGen :: String -> SC3.Rate -> [Object] -> Int -> SC3.UGenId -> [Object] -> VM Object
+makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId optInputObjects = do
   ugenInputs <- mapM objectUGen ugenInputObjects
+  optInputs <- mapM objectUGen optInputObjects
   let u = Plain.mk_plain ugenRate ugenName ugenInputs ugenNumChan (SC3.Special 0) ugenId
-  return (UGenObject (SC3.ugen_optimise_const_operator u))
+      o = SC3.ugen_optimise_const_operator u
+      m = case optInputs of
+            [] -> o
+            [mul,add] ->  SC3.mulAdd o mul add
+            [mul] -> o * mul
+            _ -> error "makeUGen: optInputs?"
+  return (UGenObject (SC3.ugen_optimise_const_operator m))
+
+ugenRequiredKeywordNames :: DB.U -> [String]
+ugenRequiredKeywordNames = map (\x -> x ++ ":") . DB.st_gen_required_arg
 
 {- | Where o is a SC3.UGen class:
      check keyword names match SC3.UGen input names,
@@ -236,11 +284,24 @@ evalKeywordMessage o k = do
   case o of
     BlockObject e x -> if all (== "value:") keywordNames then evalBlock o e x keywordValues else throwError "evalKeywordMessage: block?"
     UGenClassObject x u -> do
+      let requiredKeywords = ugenRequiredKeywordNames u
+          numRequiredKeywords = length requiredKeywords
+          optKeywords = drop numRequiredKeywords keywordNames
+          (requiredValues,optValues) = splitAt numRequiredKeywords keywordValues
+      when (not (keywordNames `isPrefixOf` requiredKeywords) && not (optKeywords `isPrefixOf` ["mul:","add:"])) (throwError "evalKeywordMessage: incorrect keyword message?")
       uid <- if DB.ugen_nondet u then genUId else return SC3.NoId
       let rt = DB.ugen_default_rate u
           nc = fromMaybe (error "evalKeywordMessage: UGen: numChan?") (DB.ugen_outputs u)
-      makeUGen x rt keywordValues nc uid -- ?
-    _ -> error "evalKeywordMessage"
+      ugen <- makeUGen x rt requiredValues nc uid optValues
+      return ugen
+    ArrayObject x ->
+      case k of
+        [("at:",ix)] -> do
+          ixObject <- evalKeywordArgument ix
+          ixInt <- objectInt ixObject
+          return (x !! (ixInt - 1))
+        _ -> throwError "evalKeywordMessage: Array?"
+    _ -> throwError "evalKeywordMessage"
 
 messagesRewrite :: St.Messages -> Maybe St.Messages
 messagesRewrite m =
@@ -302,8 +363,8 @@ evalString txt = do
 coreDict :: Env.Dict Object
 coreDict =
   Map.fromList
-  [("true",UGenObject (SC3.constant 1))
-  ,("false",UGenObject (SC3.constant 0))]
+  [("true",UGenObject (SC3.int_to_ugen 1))
+  ,("false",UGenObject (SC3.int_to_ugen 0))]
 
 getProgram :: String -> Handle -> IO String
 getProgram s h = do
@@ -320,7 +381,20 @@ replCont env = do
     Left msg -> putStrLn ("error: " ++ msg) >> replCont env
     Right res -> putStrLn ("result: " ++ show res) >> replCont env'
 
+initialEnvironment :: IO (Env.Env Object)
+initialEnvironment = Env.env_gen_toplevel coreDict
+
 replInit :: IO ()
 replInit = do
-  env <- Env.env_gen_toplevel coreDict :: IO (Env.Env Object)
+  env <- initialEnvironment
   replCont env
+
+-- > evalSmalltalkFile "/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st"
+evalSmalltalkFile :: FilePath -> IO ()
+evalSmalltalkFile fn = do
+  str <- readFile fn
+  env <- initialEnvironment
+  (r,_) <- runStateT (runExceptT (evalString str)) env
+  case r of
+    Left msg -> putStrLn ("error: " ++ msg)
+    Right res -> putStrLn ("result: " ++ show res)
