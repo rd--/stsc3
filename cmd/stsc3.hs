@@ -1,5 +1,7 @@
 import Control.Monad.Except {- mtl -}
 import Control.Monad.State {- mtl -}
+import Data.Bits {- base -}
+import Data.Char {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
 import System.Environment {- base -}
@@ -51,8 +53,7 @@ type VM t = Env.EnvMonad IO Object t
 
 data Object
   = NilObject
-  | FloatObject
-  | SC3Object
+  | ClassObject String
   | UGenClassObject String DB.U
   | UGenObject SC3.UGen
   | SymbolObject String
@@ -108,8 +109,7 @@ instance Show Object where
       UGenObject x -> case x of
                         SC3.Constant_U c -> show (SC3.constantValue c)
                         _ -> show x
-      SC3Object -> "SC3"
-      FloatObject -> "Float"
+      ClassObject x -> x
 
 identifierToObject :: St.Identifier -> VM Object
 identifierToObject x = return (SymbolObject x)
@@ -137,10 +137,20 @@ evalTemporaries x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)
 deleteFrame :: t -> VM t
 deleteFrame r = (put =<< Env.env_del_frame =<< get) >> return r
 
--- | Lookup identifier, which is either a UGen Class name or a value in the environment.
+isCapitalised :: String -> Bool
+isCapitalised x =
+  case x of
+    c:_ -> isUpper c
+    _ -> False
+
+-- | Lookup identifier, which is either a UGen Class name, or a Class name, or a value in the environment.
 lookupIdentifier :: String -> VM Object
 lookupIdentifier x =
-  if x == "Float" then return FloatObject else if x == "SC3" then return SC3Object else if isUGenName x then return (UGenClassObject x (DB.u_lookup_cs_err x)) else get >>= \e -> Env.env_lookup x e
+  if isUGenName x
+  then return (UGenClassObject x (DB.u_lookup_cs_err x))
+  else if isCapitalised x
+       then return (ClassObject x)
+       else get >>= \e -> Env.env_lookup x e
 
 -- > evalPrimary (St.PrimaryLiteral (St.NumberLiteral (Left 15)))
 evalPrimary :: St.Primary -> VM Object
@@ -175,7 +185,8 @@ asUGenInput o =
     _ -> return o
 
 evalBinaryMessage :: Object -> St.BinaryMessage -> VM Object
-evalBinaryMessage lhs (St.BinaryMessage (m,a)) = do
+evalBinaryMessage o (St.BinaryMessage (m,a)) = do
+  lhs <- asUGenInput o
   rhs <- asUGenInput =<< evalBinaryArgument a
   case (lhs,rhs) of
     (UGenObject x,UGenObject y) ->
@@ -184,13 +195,14 @@ evalBinaryMessage lhs (St.BinaryMessage (m,a)) = do
         "-" -> return (UGenObject (x - y))
         "*" -> return (UGenObject (x * y))
         "/" -> return (UGenObject (x / y))
+        "%" -> return (UGenObject (x `SC3.modE` y))
         "**" -> return (UGenObject (x ** y))
         ">" -> return (UGenObject (x `SC3.greater_than` y))
         ">=" -> return (UGenObject (x `SC3.greater_than_or_equal_to` y))
         "<" -> return (UGenObject (x `SC3.less_than` y))
         "<=" -> return (UGenObject (x `SC3.less_than_or_equal_to` y))
         _ -> throwError ("evalBinaryMessage: UGen: " ++ m)
-    _ -> throwError ("evalBinaryMessage: " ++ m)
+    _ -> throwError ("evalBinaryMessage: " ++ show (m,lhs,rhs))
 
 evalBinaryMessageSeq :: Object -> [St.BinaryMessage] -> VM Object
 evalBinaryMessageSeq o sq =
@@ -246,14 +258,11 @@ evalUnaryMessage o (St.UnaryMessage m) =
       case m of
         "value" -> evalBlock e x []
         _ -> throwError ("evalUnaryMessage: Block: " ++ m)
-    SC3Object ->
-      case m of
-        "reset" -> liftIO (SC3.withSC3 SC3.reset) >> return NilObject
-        _ -> throwError "evalUnaryMessage: SC3?"
-    FloatObject ->
-      case m of
-        "pi" -> return (UGenObject (SC3.double_to_ugen pi))
-        _ -> throwError "evalUnaryMessage: Float?"
+    ClassObject c ->
+      case (c,m) of
+        ("SC3","reset") -> liftIO (SC3.withSC3 SC3.reset) >> return NilObject
+        ("Float","pi") -> return (UGenObject (SC3.double_to_ugen pi))
+        _ -> throwError ("evalUnaryMessage: Class: " ++ c)
     UGenClassObject x u -> do
       uid <- if DB.ugen_nondet u then genUId else throwError "evalUnaryMessage: UGen: nonDet?"
       let rt = DB.ugen_default_rate u
@@ -263,6 +272,7 @@ evalUnaryMessage o (St.UnaryMessage m) =
         _ -> throwError "evalUnaryMessage: UGenClass?"
     UGenObject x ->
       case m of
+        "constant" -> return o -- FIXME
         "abs" -> return (UGenObject (abs x))
         "negated" -> return (UGenObject (negate x))
         "exp" -> return (UGenObject (exp x))
@@ -295,6 +305,7 @@ evalUnaryMessage o (St.UnaryMessage m) =
         _ -> throwError ("evalUnaryMessage: UGen: " ++ m)
     ArrayObject x ->
       case m of
+        "asArray" -> return o
         "atRandom" -> Random.choose x
         "size" -> return (intObject (length x))
         "mce" -> do
@@ -347,6 +358,21 @@ arrayDo x aBlock = do
     BlockObject env blockBody -> mapM_ (evalBlock env blockBody . return) x >> return NilObject
     _ -> throwError "arrayDo?"
 
+arrayCollect :: [Object] -> Object -> VM Object
+arrayCollect x aBlock = do
+  case aBlock of
+    BlockObject env blockBody -> fmap ArrayObject (mapM (evalBlock env blockBody . return) x)
+    _ -> throwError "arrayCollect?"
+
+intToDo :: SC3.UGen -> Object -> Object -> VM Object
+intToDo p1 p2 aBlock = do
+  i1 <- ugenInt p1
+  i2 <- objectInt p2
+  let a = map intObject [i1 .. i2]
+  case aBlock of
+    BlockObject env blockBody -> mapM_ (evalBlock env blockBody . return) a >> return NilObject
+    _ -> throwError "intToDo?"
+
 objectMulAdd :: SC3.UGen -> Object -> Object -> VM Object
 objectMulAdd p q r = do
   j <- objectUGen q
@@ -358,6 +384,19 @@ intervalTo p q = do
   i <- ugenInt p
   j <- objectInt q
   return (ArrayObject (map intObject [i .. j]))
+
+arrayFromTo :: Object -> Object -> VM Object
+arrayFromTo p1 p2 = do
+  i <- objectInt p1
+  j <- objectInt p2
+  return (ArrayObject (map intObject [i .. j]))
+
+arrayFromToBy :: Object -> Object -> Object -> VM Object
+arrayFromToBy p1 p2 p3 = do
+  i <- objectInt p1
+  j <- objectInt p2
+  k <- objectInt p3
+  return (ArrayObject (map intObject [i,i + k .. j]))
 
 {- | Where o is a SC3.UGen class:
      check keyword names match SC3.UGen input names,
@@ -388,6 +427,10 @@ evalKeywordMessage o k = do
     UGenObject x ->
       case keywordArguments of
         [("to:",y)] -> intervalTo x y
+        [("to:",p1),("do:",p2)] -> intToDo x p1 p2
+        [("bitAnd:",y)] -> fmap (UGenObject . (.&.) x) (objectUGen y)
+        [("bitOr:",y)] -> fmap (UGenObject . (.|.) x) (objectUGen y)
+        [("bitShiftRight:",y)] -> fmap (UGenObject . SC3.shiftRight x) (objectUGen y)
         [("max:",y)] -> fmap (UGenObject . max x) (objectUGen y)
         [("clip2:",y)] -> fmap (UGenObject . SC3.clip2 x) (objectUGen y)
         [("rand:",y)] -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= \i -> objectDouble y >>= genRRand i)
@@ -400,8 +443,14 @@ evalKeywordMessage o k = do
         [("at:",y)] -> do
           ixInt <- objectInt y
           return (x !! (ixInt - 1))
+        [("collect:",y)] -> arrayCollect x y
         [("do:",y)] -> arrayDo x y
         _ -> throwError "evalKeywordMessage: Array?"
+    ClassObject x ->
+      case (x,keywordArguments) of
+        ("Interval",[("from:",p1),("to:",p2)]) -> arrayFromTo p1 p2
+        ("Interval",[("from:",p1),("to:",p2),("by:",p3)]) -> arrayFromToBy p1 p2 p3
+        _ -> throwError ("evalKeywordMessage: ClassObject: " ++ x)
     _ -> throwError "evalKeywordMessage"
 
 messagesRewrite :: St.Messages -> Maybe St.Messages
