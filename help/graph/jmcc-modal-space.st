@@ -1,6 +1,6 @@
 "modal space (jmcc) #8"
 | b x k c n |
-b := LocalBuf newFrom: #(0 2 3.2 5 7 9 10).
+b := #(0 2 3.2 5 7 9 10) asLocalBuf.
 x := MouseX minval: 0.0 maxval: 15.0 warp: 0.0 lag: 0.2.
 k := DegreeToKey bufnum: b in: x octave: 12.
 n := LFNoise1 freq: #(3 3).

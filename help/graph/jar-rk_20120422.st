@@ -6,4 +6,4 @@ fmod := (LFCub freq: (1 / 12) iphase: 0) inRangeFrom: 1 constant to: (MouseX min
 rqmod := LFNoise2 freq: 1 mul: 0.011 add: 1.
 sig := RLPF in: gen freq: (freq * fmod) kr rq: rqmod kr.
 amp := MouseY minval: 0 maxval: 0.25 warp: 0 lag: 0.2.
-Splay input: sig spread: 1 level: amp kr center: 0 levelComp: true
+(Splay input: sig) * amp kr

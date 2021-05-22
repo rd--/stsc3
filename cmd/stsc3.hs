@@ -68,15 +68,15 @@ objectUGen o =
     ArrayObject x -> fmap SC3.mce (mapM objectUGen x)
     _ -> throwError "objectUGen: Object not UGen?"
 
-ugenInt :: SC3.UGen -> VM Int
-ugenInt x = maybe (throwError "ugenInt") (return . round . SC3.constantValue) (SC3.un_constant x)
+ugenInt :: String -> SC3.UGen -> VM Int
+ugenInt msg x = maybe (throwError ("ugenInt: " ++ msg)) (return . round . SC3.constantValue) (SC3.un_constant x)
 
 -- | Extract Int, result is in VM in case of error.
-objectInt :: Object ->  VM Int
-objectInt o =
+objectInt :: String -> Object ->  VM Int
+objectInt msg o =
   case o of
-    UGenObject x -> ugenInt x
-    _ -> throwError "objectInt: Object not UGen?"
+    UGenObject x -> ugenInt msg x
+    _ -> throwError ("objectInt: Object not UGen: " ++ msg)
 
 intObject :: Int -> Object
 intObject x = UGenObject (SC3.int_to_ugen x)
@@ -89,14 +89,20 @@ objectBlock o =
     _ -> throwError "objectBlock: Object not Block?"
 
 ugenDouble :: SC3.UGen ->  VM Double
-ugenDouble x = maybe (throwError "objectInt") (return . SC3.constantValue) (SC3.un_constant x)
+ugenDouble x = maybe (throwError "objectDouble") (return . SC3.constantValue) (SC3.un_constant x)
 
 -- | Extract Double, result is in VM in case of error.
 objectDouble :: Object ->  VM Double
 objectDouble o =
   case o of
     UGenObject x -> ugenDouble x
-    _ -> throwError "objectInt: Object not UGen?"
+    _ -> throwError "objectDouble: Object not UGen?"
+
+objectArray :: String -> Object ->  VM [Object]
+objectArray msg o =
+  case o of
+    ArrayObject x -> return x
+    _ -> throwError ("objectArray: Object not Array: " ++ msg)
 
 instance Show Object where
   show o =
@@ -196,11 +202,11 @@ evalBinaryMessage o (St.BinaryMessage (m,a)) = do
         "*" -> return (UGenObject (x * y))
         "/" -> return (UGenObject (x / y))
         "%" -> return (UGenObject (x `SC3.modE` y))
-        "**" -> return (UGenObject (x ** y))
         ">" -> return (UGenObject (x `SC3.greater_than` y))
         ">=" -> return (UGenObject (x `SC3.greater_than_or_equal_to` y))
         "<" -> return (UGenObject (x `SC3.less_than` y))
         "<=" -> return (UGenObject (x `SC3.less_than_or_equal_to` y))
+        "==" -> return (UGenObject (x `SC3.equal_to` y))
         _ -> throwError ("evalBinaryMessage: UGen: " ++ m)
     _ -> throwError ("evalBinaryMessage: " ++ show (m,lhs,rhs))
 
@@ -251,6 +257,22 @@ genRand2 x = liftIO (Random.rand2 x)
 genRRand :: Double -> Double -> VM Double
 genRRand x y = liftIO (Random.rrand x y)
 
+arrayAsLocalBuf :: [Object] -> VM Object
+arrayAsLocalBuf a = do
+  uid <- liftIO SC3.generateUId
+  u <- mapM objectUGen a
+  return (UGenObject (SC3.asLocalBuf uid u))
+
+arrayTranspose :: [Object] -> VM Object
+arrayTranspose a = do
+  m <- mapM (objectArray "arrayTranspose") a
+  return (ArrayObject (map ArrayObject (transpose m)))
+
+arrayConcatenation :: [Object] -> VM Object
+arrayConcatenation a = do
+  m <- mapM (objectArray "arrayConcatenation") a
+  return (ArrayObject (concat m))
+
 evalUnaryMessage :: Object -> St.UnaryMessage -> VM Object
 evalUnaryMessage o (St.UnaryMessage m) =
   case o of
@@ -268,12 +290,14 @@ evalUnaryMessage o (St.UnaryMessage m) =
       let rt = DB.ugen_default_rate u
           nc = fromMaybe (error "evalUnaryMessage: UGen: numChan?") (DB.ugen_outputs u)
       case m of
-        "new" -> makeUGen x rt [] nc uid [] -- ie. WhiteNoise new
+        "new" -> makeUGen x rt [] nc uid [] (DB.ugen_std_mce u > 0) -- ie. WhiteNoise new
         _ -> throwError "evalUnaryMessage: UGenClass?"
     UGenObject x ->
       case m of
         "constant" -> return o -- FIXME
+        "asFloat" -> return o -- FIXME
         "abs" -> return (UGenObject (abs x))
+        "transpose" -> return (UGenObject (SC3.mceTranspose x))
         "negated" -> return (UGenObject (negate x))
         "exp" -> return (UGenObject (exp x))
         "log" -> return (UGenObject (log x))
@@ -297,6 +321,7 @@ evalUnaryMessage o (St.UnaryMessage m) =
         "rand" -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= genRand)
         "rand2" -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= genRand2)
         "floor" -> return (UGenObject (SC3.floorE x))
+        "frac" -> return (UGenObject (SC3.frac x))
         "mix" -> return (UGenObject (SC3.mix x))
         "dr" -> return (UGenObject (SC3.rewriteToRate SC3.DR x))
         "kr" -> return (UGenObject (SC3.rewriteToRate SC3.KR x))
@@ -306,7 +331,10 @@ evalUnaryMessage o (St.UnaryMessage m) =
     ArrayObject x ->
       case m of
         "asArray" -> return o
+        "asLocalBuf" -> arrayAsLocalBuf x
         "atRandom" -> Random.choose x
+        "transpose" -> arrayTranspose x
+        "concatenation" -> arrayConcatenation x
         "size" -> return (intObject (length x))
         "mce" -> do
           ugenArray <- mapM objectUGen x
@@ -326,11 +354,12 @@ evalKeywordArgument (p,u,b) = do
   u' <- maybe (return p') (evalUnaryMessageSeq p') u
   maybe (return u') (evalBinaryMessageSeq p') b
 
-makeUGen :: String -> SC3.Rate -> [Object] -> Int -> SC3.UGenId -> [Object] -> VM Object
-makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId optInputObjects = do
+makeUGen :: String -> SC3.Rate -> [Object] -> Int -> SC3.UGenId -> [Object] -> Bool -> VM Object
+makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId optInputObjects mceInputs = do
   ugenInputs <- mapM objectUGen ugenInputObjects
   optInputs <- mapM objectUGen optInputObjects
-  let u = Plain.mk_plain ugenRate ugenName ugenInputs ugenNumChan (SC3.Special 0) ugenId
+  let plainInputs = (if mceInputs then SC3.halt_mce_transform else id) ugenInputs
+      u = Plain.mk_plain ugenRate ugenName plainInputs ugenNumChan (SC3.Special 0) ugenId
       o = SC3.ugen_optimise_const_operator u
   m <- case optInputs of
          [] -> return o
@@ -342,12 +371,24 @@ makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId optInputObjects =
 ugenRequiredKeywordNames :: DB.U -> [String]
 ugenRequiredKeywordNames = map (\x -> x ++ ":") . DB.st_gen_required_arg
 
--- | One indexed (?)
-arrayFill :: (SC3.UGen -> SC3.UGen) -> SC3.UGen -> Object -> VM Object
-arrayFill f k blockObject = do
-  i <- ugenInt k
+intArrayFill :: SC3.UGen -> Object -> VM Object
+intArrayFill k blockObject = do
+  i <- ugenInt "intArrayFill" k
   (e,b) <- objectBlock blockObject
   let j = map intObject [1 .. i]
+  a <- mapM (\x -> evalBlockError e b ["value:"] [x]) j
+  return (ArrayObject a)
+
+intReplicate :: Object -> Object -> VM Object
+intReplicate p1 p2 = do
+  i1 <- objectInt "intReplicate" p1
+  return (ArrayObject (replicate i1 p2))
+
+intUGenFill :: Bool -> (SC3.UGen -> SC3.UGen) -> SC3.UGen -> Object -> VM Object
+intUGenFill zeroIndexed f k blockObject = do
+  i <- ugenInt "intUGenFill" k
+  (e,b) <- objectBlock blockObject
+  let j = map intObject (if zeroIndexed then [0 .. i - 1] else [1 .. i])
   a <- mapM (\x -> evalBlockError e b ["value:"] [x]) j
   u <- mapM objectUGen a
   return (UGenObject (f (SC3.mce u)))
@@ -364,39 +405,80 @@ arrayCollect x aBlock = do
     BlockObject env blockBody -> fmap ArrayObject (mapM (evalBlock env blockBody . return) x)
     _ -> throwError "arrayCollect?"
 
+arrayInjectInto :: [Object] -> Object -> Object -> VM Object
+arrayInjectInto x aValue aBlock = do
+  case aBlock of
+    BlockObject env blockBody -> foldM (\i j -> evalBlock env blockBody [i,j]) aValue x
+    _ -> throwError "arrayInjectInto?"
+
+mceCollect :: SC3.UGen -> Object -> VM Object
+mceCollect x aBlock = do
+  case aBlock of
+    BlockObject env blockBody -> fmap ArrayObject (mapM (evalBlock env blockBody . return . UGenObject) (SC3.mceChannels x))
+    _ -> throwError "mceCollect?"
+
 intToDo :: SC3.UGen -> Object -> Object -> VM Object
 intToDo p1 p2 aBlock = do
-  i1 <- ugenInt p1
-  i2 <- objectInt p2
+  i1 <- ugenInt "intToDo" p1
+  i2 <- objectInt "intToDo" p2
   let a = map intObject [i1 .. i2]
   case aBlock of
     BlockObject env blockBody -> mapM_ (evalBlock env blockBody . return) a >> return NilObject
     _ -> throwError "intToDo?"
 
-objectMulAdd :: SC3.UGen -> Object -> Object -> VM Object
-objectMulAdd p q r = do
-  j <- objectUGen q
-  k <- objectUGen r
-  return (UGenObject (SC3.mulAdd p j k))
+liftUGen :: (SC3.UGen -> SC3.UGen) -> Object -> VM Object
+liftUGen f p1 = objectUGen p1 >>= return . UGenObject . f
+
+liftUGen2 :: (SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> VM Object
+liftUGen2 f p1 p2 = do
+  u1 <- objectUGen p1
+  u2 <- objectUGen p2
+  return (UGenObject (f u1 u2))
+
+liftUGen3 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> VM Object
+liftUGen3 f p1 p2 p3 = do
+  u1 <- objectUGen p1
+  u2 <- objectUGen p2
+  u3 <- objectUGen p3
+  return (UGenObject (f u1 u2 u3))
+
+{-
+liftUGen6 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> Object -> Object -> Object -> VM Object
+liftUGen6 f p1 p2 p3 p4 p5 p6 = do
+  u1 <- objectUGen p1
+  u2 <- objectUGen p2
+  u3 <- objectUGen p3
+  u4 <- objectUGen p4
+  u5 <- objectUGen p5
+  u6 <- objectUGen p6
+  return (UGenObject (f u1 u2 u3 u4 u5 u6))
+-}
 
 intervalTo :: SC3.UGen -> Object -> VM Object
 intervalTo p q = do
-  i <- ugenInt p
-  j <- objectInt q
+  i <- ugenInt "intervalTo" p
+  j <- objectInt "intervalTo" q
   return (ArrayObject (map intObject [i .. j]))
 
 arrayFromTo :: Object -> Object -> VM Object
 arrayFromTo p1 p2 = do
-  i <- objectInt p1
-  j <- objectInt p2
+  i <- objectInt "arrayFromTo" p1
+  j <- objectInt "arrayFromTo" p2
   return (ArrayObject (map intObject [i .. j]))
 
 arrayFromToBy :: Object -> Object -> Object -> VM Object
 arrayFromToBy p1 p2 p3 = do
-  i <- objectInt p1
-  j <- objectInt p2
-  k <- objectInt p3
+  i <- objectInt "arrayFromToBy" p1
+  j <- objectInt "arrayFromToBy" p2
+  k <- objectInt "arrayFromToBy" p3
   return (ArrayObject (map intObject [i,i + k .. j]))
+
+ugenIfTrueIfFalse :: Object -> Object -> Object -> VM Object
+ugenIfTrueIfFalse p1 p2 p3 = do
+  aBool <- objectInt "ugenIfTrueIfFalse" p1
+  (e1,b1) <- objectBlock p2
+  (e2,b2) <- objectBlock p3
+  if aBool /= 0 then evalBlock e1 b1 [] else evalBlock e2 b2 []
 
 {- | Where o is a SC3.UGen class:
      check keyword names match SC3.UGen input names,
@@ -421,35 +503,53 @@ evalKeywordMessage o k = do
            (throwError "evalKeywordMessage: incorrect keyword message?")
       uid <- if DB.ugen_nondet u then genUId else return SC3.NoId
       let rt = DB.ugen_default_rate u
-          nc = fromMaybe (error "evalKeywordMessage: UGen: numChan?") (DB.ugen_outputs u)
-      ugen <- makeUGen x rt requiredValues nc uid optValues
+      (nc,inputValues) <- case (x,DB.ugen_outputs u) of
+                            (_,Just fixedNumChan) -> return (fixedNumChan,requiredValues)
+                            ("Demand",_) -> fmap (\i -> (i,requiredValues)) (fmap (length . SC3.mceChannels) (objectUGen (last requiredValues))) -- FIXME
+                            (_,Nothing) -> fmap (\varNumChan -> (varNumChan,tail requiredValues)) (objectInt "numChan" (requiredValues !! 0))
+      ugen <- makeUGen x rt inputValues nc uid optValues (DB.ugen_std_mce u > 0)
       return ugen
     UGenObject x ->
       case keywordArguments of
         [("to:",y)] -> intervalTo x y
         [("to:",p1),("do:",p2)] -> intToDo x p1 p2
-        [("bitAnd:",y)] -> fmap (UGenObject . (.&.) x) (objectUGen y)
-        [("bitOr:",y)] -> fmap (UGenObject . (.|.) x) (objectUGen y)
-        [("bitShiftRight:",y)] -> fmap (UGenObject . SC3.shiftRight x) (objectUGen y)
-        [("max:",y)] -> fmap (UGenObject . max x) (objectUGen y)
-        [("clip2:",y)] -> fmap (UGenObject . SC3.clip2 x) (objectUGen y)
+        [("bitAnd:",p1)] -> liftUGen2 (.&.) o p1
+        [("bitOr:",p1)] -> liftUGen2 (.|.) o p1
+        [("bitShiftRight:",p1)] -> liftUGen2 SC3.shiftRight o p1
+        [("raisedTo:",p1)] -> liftUGen2 (**) o p1
+        [("gcd:",p1)] -> liftUGen2 SC3.gcdE o p1
+        [("lcm:",p1)] -> liftUGen2 SC3.lcmE o p1
+        [("max:",p1)] -> liftUGen2 max o p1
+        [("clip2:",p1)] -> liftUGen2 SC3.clip2 o p1
         [("rand:",y)] -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= \i -> objectDouble y >>= genRRand i)
-        [("mul:",y),("add:",z)] -> objectMulAdd x y z
-        [("mceFill:",y)] -> arrayFill id x y
-        [("mixFill:",y)] -> arrayFill SC3.mix x y
+        [("mul:",p1),("add:",p2)] -> liftUGen3 SC3.mulAdd o p1 p2
+        [("replicate:",p1)] -> intReplicate o p1
+        [("arrayFill:",y)] -> intArrayFill x y
+        [("mceFill:",y)] -> intUGenFill False id x y
+        [("mixFill:",y)] -> intUGenFill False SC3.mix x y
+        [("mixFillZeroIndexed:",y)] -> intUGenFill True SC3.mix x y
+        [("collect:",p1)] -> mceCollect x p1
+        [("inExpRangeFrom:",p1),("to:",p2)] -> liftUGen3 (\u1 u2 u3 -> SC3.linExp u1 (-1) 1 u2 u3) o p1 p2
+        [("inRangeFrom:",p1),("to:",p2)] -> liftUGen3 (\u1 u2 u3 -> SC3.linLin u1 (-1) 1 u2 u3) o p1 p2
+        [("round:",p1)] -> liftUGen2 SC3.roundTo o p1
+        [("ifTrue:",p1),("ifFalse:",p2)] -> ugenIfTrueIfFalse o p1 p2
         _ -> throwError ("evalKeywordMessage: UGen: " ++ show keywordNames)
     ArrayObject x ->
       case keywordArguments of
         [("at:",y)] -> do
-          ixInt <- objectInt y
+          ixInt <- objectInt "at:" y
           return (x !! (ixInt - 1))
         [("collect:",y)] -> arrayCollect x y
+        [("inject:",y),("into:",z)] -> arrayInjectInto x y z
         [("do:",y)] -> arrayDo x y
         _ -> throwError "evalKeywordMessage: Array?"
     ClassObject x ->
       case (x,keywordArguments) of
         ("Interval",[("from:",p1),("to:",p2)]) -> arrayFromTo p1 p2
         ("Interval",[("from:",p1),("to:",p2),("by:",p3)]) -> arrayFromToBy p1 p2 p3
+        ("MRG",[("lhs:",p1),("rhs:",p2)]) -> liftUGen2 SC3.mrg2 p1 p2
+        ("Splay",[("input:",p1)]) -> liftUGen (\input -> SC3.splay input 1 1 0 True) p1
+        --("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4),("levelComp:",p5)]) -> liftUGen6 SC3.splay o p1 p2 p3 p4 p5
         _ -> throwError ("evalKeywordMessage: ClassObject: " ++ x)
     _ -> throwError "evalKeywordMessage"
 

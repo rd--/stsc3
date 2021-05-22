@@ -49,6 +49,9 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   u levelComp: levelComp.
   ^u
  !
+ input: input
+  ^Splay input: input spread: 1 level: 1 center: 0 levelComp: 1
+ !
 !
 
 !AbstractUGen methodsFor: 'arithmetic'!
@@ -60,5 +63,11 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   m := (y - x) / 2.
   a := x + m.
   ^self mul: m add: a.
+ !
+!
+
+!SequenceableCollection methodsFor: 'UGen creation'!
+ asLocalBuf
+  LocalBuf newFrom: self
  !
 !
