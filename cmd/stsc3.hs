@@ -74,9 +74,15 @@ ugenInt msg x = maybe (throwError ("ugenInt: " ++ msg)) (return . round . SC3.co
 -- | Extract Int, result is in VM in case of error.
 objectInt :: String -> Object ->  VM Int
 objectInt msg o =
-  case o of
+   case o of
     UGenObject x -> ugenInt msg x
     _ -> throwError ("objectInt: Object not UGen: " ++ msg)
+
+objectSymbol :: Object ->  VM String
+objectSymbol o =
+  case o of
+    SymbolObject x -> return x
+    _ -> throwError "objectSymbol: Object not symbol"
 
 intObject :: Int -> Object
 intObject x = UGenObject (SC3.int_to_ugen x)
@@ -109,7 +115,7 @@ instance Show Object where
     case o of
       NilObject -> "nil"
       SymbolObject x -> show x
-      ArrayObject x -> unwords (map show x)
+      ArrayObject x -> "{" ++ intercalate ". " (map show x) ++ "}"
       BlockObject _ _ -> "Block"
       UGenClassObject x _ -> x
       UGenObject x -> case x of
@@ -128,7 +134,7 @@ literalToObject l =
   case l of
     St.NumberLiteral (Left x) -> return (UGenObject (SC3.constant x))
     St.NumberLiteral (Right x) -> return (UGenObject (SC3.constant x))
-    St.StringLiteral _ -> throwError "literalToObject: string?"
+    St.StringLiteral x -> return (SymbolObject x) -- throwError "literalToObject: string?" -- FIXME
     St.CharacterLiteral _ -> throwError "literalToObject: character?"
     St.SymbolLiteral x -> return (SymbolObject x)
     St.SelectorLiteral (St.UnarySelector "dinf") -> return (UGenObject SC3.dinf)
@@ -257,6 +263,9 @@ genRand2 x = liftIO (Random.rand2 x)
 genRRand :: Double -> Double -> VM Double
 genRRand x y = liftIO (Random.rrand x y)
 
+genExpRand :: Double -> Double -> VM Double
+genExpRand x y = liftIO (Random.exprand x y)
+
 arrayAsLocalBuf :: [Object] -> VM Object
 arrayAsLocalBuf a = do
   uid <- liftIO SC3.generateUId
@@ -322,9 +331,11 @@ evalUnaryMessage o (St.UnaryMessage m) =
         "rand2" -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= genRand2)
         "floor" -> return (UGenObject (SC3.floorE x))
         "frac" -> return (UGenObject (SC3.frac x))
+        "round" -> return (UGenObject (SC3.roundE x))
         "mix" -> return (UGenObject (SC3.mix x))
         "dr" -> return (UGenObject (SC3.rewriteToRate SC3.DR x))
         "kr" -> return (UGenObject (SC3.rewriteToRate SC3.KR x))
+        "ar" -> return (UGenObject (SC3.rewriteToRate SC3.AR x))
         "play" -> liftIO (SC3.audition x) >> return NilObject
         "draw" -> liftIO (Sound.SC3.UGen.Dot.draw x) >> return NilObject
         _ -> throwError ("evalUnaryMessage: UGen: " ++ m)
@@ -480,6 +491,12 @@ ugenIfTrueIfFalse p1 p2 p3 = do
   (e2,b2) <- objectBlock p3
   if aBool /= 0 then evalBlock e1 b1 [] else evalBlock e2 b2 []
 
+controlInput :: Object -> Object -> VM Object
+controlInput p1 p2 = do
+  nm <- objectSymbol p1
+  df <- objectDouble p2
+  return (UGenObject (SC3.control SC3.KR nm df))
+
 {- | Where o is a SC3.UGen class:
      check keyword names match SC3.UGen input names,
      check for mulAdd inputs,
@@ -522,6 +539,7 @@ evalKeywordMessage o k = do
         [("max:",p1)] -> liftUGen2 max o p1
         [("clip2:",p1)] -> liftUGen2 SC3.clip2 o p1
         [("rand:",y)] -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= \i -> objectDouble y >>= genRRand i)
+        [("exprand:",y)] -> fmap (UGenObject . SC3.constant) (ugenDouble x >>= \i -> objectDouble y >>= genExpRand i)
         [("mul:",p1),("add:",p2)] -> liftUGen3 SC3.mulAdd o p1 p2
         [("replicate:",p1)] -> intReplicate o p1
         [("arrayFill:",y)] -> intArrayFill x y
@@ -549,6 +567,7 @@ evalKeywordMessage o k = do
         ("Interval",[("from:",p1),("to:",p2),("by:",p3)]) -> arrayFromToBy p1 p2 p3
         ("MRG",[("lhs:",p1),("rhs:",p2)]) -> liftUGen2 SC3.mrg2 p1 p2
         ("Splay",[("input:",p1)]) -> liftUGen (\input -> SC3.splay input 1 1 0 True) p1
+        ("Control",[("name:",p1),("init:",p2)]) -> controlInput p1 p2
         --("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4),("levelComp:",p5)]) -> liftUGen6 SC3.splay o p1 p2 p3 p4 p5
         _ -> throwError ("evalKeywordMessage: ClassObject: " ++ x)
     _ -> throwError "evalKeywordMessage"

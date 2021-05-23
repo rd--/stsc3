@@ -10,9 +10,9 @@ Env curveNameDictionary. "curve name dictionary"
 
 "UGen"
 
-SinOsc freq: 440 phase: 0. "freq:phase: is a class method"
-SinOsc new freq: 440 ; phase: 0. "freq: and phase: are instance methods and ; is the cascade operator"
-SinOsc new inspect. "initialize sets default values for parameters"
+SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
+SinOsc new freq: 440 ; phase: 0 "freq: and phase: are instance methods and ; is the cascade operator"
+SinOsc new inspect "initialize sets default values for parameters"
 
 "File I/O - Text"
 
@@ -25,12 +25,12 @@ SinOsc new inspect. "initialize sets default values for parameters"
 
 "Evaluate"
 
-'1+1' evalString == 2. "-> true ; evaluate string"
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play. "evaluate text file"
+'1+1' evalString == 2 "-> true ; evaluate string"
+'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play "evaluate text file"
 
 "SC3"
 
-SC3 reset. "C-c C-."
+SC3 reset "C-c C-."
 
 "UI"
 
@@ -66,44 +66,45 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Random - Float"
 
-5.0 rand. "-> random Float in 0 to 5"
-2.0 rand: 3.0. "-> random Float in 2 to 3"
-4.0 rand2. "-> random Float in -4 to 4"
+5.0 rand "-> uniform random Float in 0 to 5"
+2.0 rand: 3.0 "-> uniform random Float in 2 to 3"
+4.0 rand2 "-> uniform random Float in -4 to 4"
+1.0 exprand: 2.0 "-> exponential distribution"
 
-100 arrayFill: [:i | 5.0 rand]. "-> 100 random Floats in 0 to 5"
+100 arrayFill: [:i | 5.0 rand] "-> 100 random Floats in 0 to 5"
 
 "Random - Integer"
 
-5 rand. "-> random Integer in 1 to 5 ; i.e. atRandom"
-1 rand: 5. "-> random Integer in 1 to 5"
-4 rand2. "-> random Integer in -4 to 4"
+5 rand "-> random Integer in 1 to 5 ; i.e. atRandom"
+1 rand: 5 "-> random Integer in 1 to 5"
+4 rand2 "-> random Integer in -4 to 4"
 
 100 arrayFill: [:i | 5 rand]. "-> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
-{1. 2. 3. 4. 5} choose. "random element of Array ; i.e. atRandom"
-100 arrayFill: [:i | {#a. #b. #c. #d. #e} choose]. "-> 100 randomly chosen symbols"
+{1. 2. 3. 4. 5} atRandom "random element of Array ; i.e. atRandom ; choose"
+100 arrayFill: [:i | {#a. #b. #c. #d. #e} choose] "-> 100 randomly chosen symbols"
 
 "Array"
 
-#(1 2 3 4 5). "literal array syntax ; {1. 2. 3. 4. 5}"
-#(#(1 2) #(3 4)). "literal array syntax ; {{1. 2}. {3. 4}}"
+#(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"
+#(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
 
-1 to: 5 collect: [:x | x * x]. "-> #(1 4 9 16 25)"
-6 replicate: 1. "-> #(1 1 1 1 1 1)"
-#(#(1 2) #(3 4)) concatenation. "-> #(#(1 3) #(2 4))"
-#(#(1 2) #(3 4)) transpose concatenation. "-> #(1 3 2 4)"
-5 mixFill: [:x | x * x]. "-> 30 ; mixFill is zero indexed (as in supercollider)"
-5 arrayFill: [:x | x * x]. "-> #(1 4 9 16 25)"
-5 arrayFillZeroIndexed: [:x | x * x]. "-> #(0 1 4 9 16)"
+1 to: 5 collect: [:x | x * x] "-> #(1 4 9 16 25)"
+6 replicate: 1 "-> #(1 1 1 1 1 1)"
+#(#(1 2) #(3 4)) concatenation "-> #(1 2 3 4)"
+#(#(1 2) #(3 4)) transpose concatenation "-> #(1 3 2 4)"
+5 mixFill: [:x | x * x] "-> 30 ; mixFill is one indexed (as in smalltalk)"
+5 arrayFill: [:x | x * x] "-> #(1 4 9 16 25)"
+5 arrayFillZeroIndexed: [:x | x * x] "-> #(0 1 4 9 16)"
 
-Array with: 1 with: 2.3 with: 'str'. "{1. 2.3. 'str'}"
+Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
 
 "Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*
-#(1 2 3) * 3
+#(1 2 3) * 3 "-> #(3 6 9)"
 
 "Interval"
 
@@ -120,19 +121,19 @@ Array with: 1 with: 2.3 with: 'str'. "{1. 2.3. 'str'}"
 
 "Haskell - List"
 
-(1 to: 5) first = 1. "-> 1 ; head"
-(1 to: 5) last = 5. "-> 5"
-(1 to: 5) size = 5. "-> 5 ; length"
-(1 to: 5) collect: [:x | x * x]. "-> #(1 4 9 16 25) ; map"
-(1 to: 5) select: [:x | x > 3]. "-> #(4 5) ; filter"
-(1 to: 5) copyFrom: 2 to: 5. "-> #(2 3 4 5) ; drop"
-(1 to: 5) at: 3. "-> 3 ; haskell=! ; one-indexed"
+(1 to: 5) first = 1 "-> 1 ; head"
+(1 to: 5) last = 5 "-> 5"
+(1 to: 5) size = 5 "-> 5 ; length"
+(1 to: 5) collect: [:x | x * x] "-> #(1 4 9 16 25) ; map"
+(1 to: 5) select: [:x | x > 3] "-> #(4 5) ; filter"
+(1 to: 5) copyFrom: 2 to: 5 "-> #(2 3 4 5) ; drop"
+(1 to: 5) at: 3 "-> 3 ; haskell=! ; one-indexed"
 
 "Dictionary"
 
-d := Dictionary new. d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z'.
-d := Dictionary newFrom: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'}.
-d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}.
+d := Dictionary new. d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z'
+d := Dictionary newFrom: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'}
+d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 "Conditionals"
 
@@ -141,7 +142,7 @@ x isNil ifTrue: ['x'] ifFalse: ['y']. "-> x"
 
 "Collections"
 
-#(1 2 3 4 5) sum = 15. "-> true"
+#(1 2 3 4 5) sum = 15 "-> true"
 
 "Class"
 
@@ -282,15 +283,16 @@ Smalltalk getenv: 'HOME'. "/home/rohan"
 
 ObjectMemory snapshot. "save image file"
 
-FileStream fileIn: 'SC3-Base.st'.
-FileStream fileIn: 'SC3-Core.st'.
-FileStream fileIn: 'SC3-Random.st'.
-FileStream fileIn: 'SC3-Math.st'.
-FileStream fileIn: 'SC3-UGen.st'.
-FileStream fileIn: 'SC3-UGen-Composite.st'.
-FileStream fileIn: 'SC3-Env.st'.
-FileStream fileIn: 'SC3-Haskell.st'.
-FileStream fileIn: 'SC3-Gnu.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Env.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Event.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
 
 "Help Graphs"
 
