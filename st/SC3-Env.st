@@ -1,6 +1,6 @@
 Object subclass: #Env
  instanceVariableNames: 'levels times curves releaseNode loopNode offset'
- classVariableNames: 'CurveNameDictionary'
+ classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
@@ -22,8 +22,18 @@ Env comment: 'Specification for a segmented envelope'!
  times: x times := x. !
 !
 
-!Env class methodsFor: 'accessing'!
- curveNameDictionary ^CurveNameDictionary !
+!Env methodsFor: 'naming'!
+ curveNameDictionary
+  ^Dictionary newFrom: {
+      #step -> 0.
+      #lin -> 1. #linear -> 1.
+      #exp -> 2. #exponential -> 2.
+      #sin -> 3. #sine -> 3.
+      #wel -> 4. #welch -> 4.
+      #sqr -> 6. #squared -> 6.
+      #cub -> 7. #cubed -> 7.
+      #hold -> 8 }
+ !
 !
 
 !Env class methodsFor: 'instance creation'!
@@ -40,34 +50,20 @@ Env comment: 'Specification for a segmented envelope'!
  !
 !
 
-!Env class methodsFor: 'class initialization'!
- initialize
-  CurveNameDictionary :=
-    Dictionary newFrom: {
-      #step -> 0.
-      #lin -> 1. #linear -> 1.
-      #exp -> 2. #exponential -> 2.
-      #sin -> 3. #sine -> 3.
-      #wel -> 4. #welch -> 4.
-      #sqr -> 6. #squared -> 6.
-      #cub -> 7. #cubed -> 7.
-      #hold -> 8 }
- !
-!
-
 !Env methodsFor: 'envelope coordinates'!
  coord
-  | r n |
+  | n r d |
   n := times size.
   r := Array new: ((n + 1) * 4).
   r at: 1 put: (levels at: 1).
   r at: 2 put: n.
   r at: 3 put: (releaseNode ifNil: [-99] ifNotNil: [releaseNode]).
   r at: 4 put: (loopNode ifNil: [-99] ifNotNil: [loopNode]).
+  d := self curveNameDictionary.
   (1 to: n) do: [: i |
     r at: (1 + (i * 4)) put: (levels at: (i + 1)).
     r at: (2 + (i * 4)) put: (times at: i).
-    r at: (3 + (i * 4)) put: (self class curveNameDictionary at: (curves at: i) ifAbsent: [5]).
+    r at: (3 + (i * 4)) put: (d at: (curves at: i) ifAbsent: [5]).
     r at: (4 + (i * 4)) put: ((curves at: i) isSymbol ifTrue: [0] ifFalse: [curves at: i]) ].
   ^r
  !
