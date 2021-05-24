@@ -250,6 +250,7 @@ initializerDefinition_pp (InitializerDefinition t s) = strjn [maybe "" temporari
 > stParse initializerDefinition "SinOsc freq: (69 midicps) phase: 0 mul: 0.1"
 > stParse initializerDefinition "|a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c ."
 > stParse initializerDefinition "|a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value ."
+> stParse initializerDefinition "[:x | x * x] value: Float pi * 2"
 > stParse initializerDefinition "" -- FAIL
 -}
 initializerDefinition :: P InitializerDefinition

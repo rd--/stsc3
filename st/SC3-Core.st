@@ -261,6 +261,9 @@ MCE comment: 'Multiple Channel Expansion'!
  mceFill: f
   ^(self arrayFill: f) mce
  !
+ mceFillZeroIndexed: f
+  ^(self arrayFillZeroIndexed: f) mce
+ !
 !
 
 AbstractUGen subclass: #Mix

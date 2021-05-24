@@ -50,7 +50,7 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   ^u
  !
  input: input
-  ^Splay input: input spread: 1 level: 1 center: 0 levelComp: 1
+  ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
  !
 !
 
@@ -68,6 +68,6 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
 
 !SequenceableCollection methodsFor: 'UGen creation'!
  asLocalBuf
-  LocalBuf newFrom: self
+  ^LocalBuf newFrom: self
  !
 !

@@ -266,19 +266,21 @@ Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
 
-0 raisedTo: 1. "-> 0"
-1 raisedTo: 0. "-> 1"
-0 raisedTo: 0. "-> 1 (gst = error)"
-0.0 raisedTo: 1.0. "-> 0.0"
-1.0 raisedTo: 0.0. "-> 1.0"
-0.0 raisedTo: 0.0. "-> 1.0"
-1 / 0. "-> error"
-1.0 / 0.0. "-> Inf"
-Float pi. "-> 3.141592653589793"
+0 raisedTo: 1 "-> 0"
+1 raisedTo: 0 "-> 1"
+0 raisedTo: 0 "-> 1 (gst = error)"
+0.0 raisedTo: 1.0 "-> 0.0"
+1.0 raisedTo: 0.0 "-> 1.0"
+0.0 raisedTo: 0.0 "-> 1.0"
+1 / 0 "-> error"
+1.0 / 0.0 "-> Inf"
+Float pi "-> 3.141592653589793"
+Float pi * 2 "-> 6.283185307179586"
+[:x | x * x] value: Float pi * 2 "-> 39.47841760435743"
 
 "GNU Smalltalk"
 
-Smalltalk system: 'ls /home/rohan/sw/stsc3/README'.
+Smalltalk system: 'ls /home/rohan/sw/stsc3/README.md'.
 Smalltalk getenv: 'HOME'. "/home/rohan"
 
 ObjectMemory snapshot. "save image file"
