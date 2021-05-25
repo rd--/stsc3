@@ -31,7 +31,7 @@ ugen =
   ,"Pan2","Phasor","PinkNoise","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
   ,"SampleDur","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
-  ,"Trig","Trig1","VarSaw","WhiteNoise","XFade2","XLine"]
+  ,"TDuty","Timer","Trig","Trig1","VarSaw","WhiteNoise","XFade2","XLine"]
 
 main :: IO ()
 main = st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen

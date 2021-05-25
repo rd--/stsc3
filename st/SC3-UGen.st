@@ -4722,6 +4722,118 @@ Sweep comment: 'Triggered linear ramp'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #TDuty
+ instanceVariableNames: 'dur reset doneAction level gapFirst'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+TDuty comment: 'Demand results as trigger from demand rate UGens.'!
+
+!TDuty methodsFor: 'accessing'!
+ dur ^dur!
+ dur: x dur := x!
+ reset ^reset!
+ reset: x reset := x!
+ doneAction ^doneAction!
+ doneAction: x doneAction := x!
+ level ^level!
+ level: x level := x!
+ gapFirst ^gapFirst!
+ gapFirst: x gapFirst := x!
+!
+
+!TDuty methodsFor: 'initialization'!
+ initialize
+  ugenName := #TDuty.
+  paramNames := #(#dur #reset #doneAction #level #gapFirst).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0. gapFirst := 0.0!
+!
+
+!TDuty class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!TDuty class methodsFor: 'instance creation'!
+ dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  u gapFirst: gapFirst.
+  ^u!
+ dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  u gapFirst: gapFirst.
+  ^(u * mul)!
+ dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add
+  |u|
+  u := self new.
+  u dur: dur.
+  u reset: reset.
+  u doneAction: doneAction.
+  u level: level.
+  u gapFirst: gapFirst.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
+UGen subclass: #Timer
+ instanceVariableNames: 'trig'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Timer comment: 'Returns time since last triggered.'!
+
+!Timer methodsFor: 'accessing'!
+ trig ^trig!
+ trig: x trig := x!
+!
+
+!Timer methodsFor: 'initialization'!
+ initialize
+  ugenName := #Timer.
+  paramNames := #(#trig).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  trig := 0.0!
+!
+
+!Timer class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Timer class methodsFor: 'instance creation'!
+ trig: trig
+  |u|
+  u := self new.
+  u trig: trig.
+  ^u!
+ trig: trig mul: mul
+  |u|
+  u := self new.
+  u trig: trig.
+  ^(u * mul)!
+ trig: trig mul: mul add: add
+  |u|
+  u := self new.
+  u trig: trig.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #Trig
  instanceVariableNames: 'in dur'
  classVariableNames: ''
