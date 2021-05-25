@@ -1739,6 +1739,52 @@ GVerb comment: 'A two-channel reverb'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #Hasher
+ instanceVariableNames: 'in'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+Hasher comment: 'Scrambled value with a hash function.'!
+
+!Hasher methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+!
+
+!Hasher methodsFor: 'initialization'!
+ initialize
+  ugenName := #Hasher.
+  paramNames := #(#in).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0!
+!
+
+!Hasher class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!Hasher class methodsFor: 'instance creation'!
+ in: in
+  |u|
+  u := self new.
+  u in: in.
+  ^u!
+ in: in mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  ^(u * mul)!
+ in: in mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #HPF
  instanceVariableNames: 'in freq'
  classVariableNames: ''

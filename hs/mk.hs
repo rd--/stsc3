@@ -23,7 +23,7 @@ ugen =
   ["AllpassN","AmpComp","Amplitude","Blip","BPF","BPZ2","BrownNoise"
   ,"Clip","CombC","CombL","CombN","ControlDur","Crackle"
   ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
-  ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","Gendy1","GVerb","HPF","HPZ1"
+  ,"EnvGen","ExpRand","Formant","FSinOsc","FreeVerb","Gendy1","GVerb","Hasher","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"

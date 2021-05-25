@@ -243,6 +243,9 @@ MCE comment: 'Multiple Channel Expansion'!
  at: x
   ^self copy transform: {#mceChannel. x - 1}
  !
+ clump: x
+  ^self copy transform: {#mceClump. x}
+ !
 !
 
 !Array methodsFor: 'multi-channel expansion'!

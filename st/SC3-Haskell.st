@@ -77,8 +77,10 @@
 !MCE methodsFor: 'printing'!
  printHaskellOn: fd
   "Print my haskell representation."
+  '(' putOn: fd.
   transform notNil ifTrue: [transform do: [:x | x printHaskellOn: fd. fd space]].
-  source printHaskellOn: fd
+  source printHaskellOn: fd.
+  ')' putOn: fd
  !
 !
 
