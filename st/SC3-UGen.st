@@ -1648,6 +1648,92 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #GreyholeRaw
+ instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+GreyholeRaw comment: 'algorithmic delay'!
+
+!GreyholeRaw methodsFor: 'accessing'!
+ in1 ^in1!
+ in1: x in1 := x!
+ in2 ^in2!
+ in2: x in2 := x!
+ damping ^damping!
+ damping: x damping := x!
+ delaytime ^delaytime!
+ delaytime: x delaytime := x!
+ diffusion ^diffusion!
+ diffusion: x diffusion := x!
+ feedback ^feedback!
+ feedback: x feedback := x!
+ moddepth ^moddepth!
+ moddepth: x moddepth := x!
+ modfreq ^modfreq!
+ modfreq: x modfreq := x!
+ size ^size!
+ size: x size := x!
+!
+
+!GreyholeRaw methodsFor: 'initialization'!
+ initialize
+  ugenName := #GreyholeRaw.
+  paramNames := #(#in1 #in2 #damping #delaytime #diffusion #feedback #moddepth #modfreq #size).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 2.
+  specialIndex := 0.
+  in1 := 0.0. in2 := 0.0. damping := 0.0. delaytime := 2.0. diffusion := 0.5. feedback := 0.9. moddepth := 0.1. modfreq := 2.0. size := 1.0!
+!
+
+!GreyholeRaw class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!GreyholeRaw class methodsFor: 'instance creation'!
+ in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
+  |u|
+  u := self new.
+  u in1: in1.
+  u in2: in2.
+  u damping: damping.
+  u delaytime: delaytime.
+  u diffusion: diffusion.
+  u feedback: feedback.
+  u moddepth: moddepth.
+  u modfreq: modfreq.
+  u size: size.
+  ^u!
+ in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul
+  |u|
+  u := self new.
+  u in1: in1.
+  u in2: in2.
+  u damping: damping.
+  u delaytime: delaytime.
+  u diffusion: diffusion.
+  u feedback: feedback.
+  u moddepth: moddepth.
+  u modfreq: modfreq.
+  u size: size.
+  ^(u * mul)!
+ in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add
+  |u|
+  u := self new.
+  u in1: in1.
+  u in2: in2.
+  u damping: damping.
+  u delaytime: delaytime.
+  u diffusion: diffusion.
+  u feedback: feedback.
+  u moddepth: moddepth.
+  u modfreq: modfreq.
+  u size: size.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #GVerb
  instanceVariableNames: 'in roomsize revtime damping inputbw spread drylevel earlyreflevel taillevel maxroomsize'
  classVariableNames: ''
@@ -4785,6 +4871,62 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
   u doneAction: doneAction.
   u level: level.
   u gapFirst: gapFirst.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
+UGen subclass: #TExpRand
+ instanceVariableNames: 'lo hi trig'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+TExpRand comment: 'Triggered exponential random number generator.'!
+
+!TExpRand methodsFor: 'accessing'!
+ lo ^lo!
+ lo: x lo := x!
+ hi ^hi!
+ hi: x hi := x!
+ trig ^trig!
+ trig: x trig := x!
+!
+
+!TExpRand methodsFor: 'initialization'!
+ initialize
+  ugenName := #TExpRand.
+  paramNames := #(#lo #hi #trig).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  lo := 0.01. hi := 1.0. trig := 0.0!
+!
+
+!TExpRand class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!TExpRand class methodsFor: 'instance creation'!
+ lo: lo hi: hi trig: trig
+  |u|
+  u := self new.
+  u lo: lo.
+  u hi: hi.
+  u trig: trig.
+  ^u!
+ lo: lo hi: hi trig: trig mul: mul
+  |u|
+  u := self new.
+  u lo: lo.
+  u hi: hi.
+  u trig: trig.
+  ^(u * mul)!
+ lo: lo hi: hi trig: trig mul: mul add: add
+  |u|
+  u := self new.
+  u lo: lo.
+  u hi: hi.
+  u trig: trig.
   ^(MulAdd in: u mul: mul add: add)!
 !
 
