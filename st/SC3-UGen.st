@@ -25,6 +25,7 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
@@ -84,6 +85,7 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 0.0. root := 0.0. exp := 0.3333!
 !
 
@@ -140,6 +142,7 @@ Amplitude comment: 'Amplitude follower'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. attackTime := 0.01. releaseTime := 0.01!
 !
 
@@ -194,6 +197,7 @@ Blip comment: 'Band limited impulse oscillator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. numharm := 200.0!
 !
 
@@ -247,6 +251,7 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 1200.0. rq := 1.0!
 !
 
@@ -303,6 +308,7 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0. rq := 1.0!
 !
 
@@ -355,6 +361,7 @@ BPZ2 comment: 'Two zero fixed midpass.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0!
 !
 
@@ -397,6 +404,7 @@ BrownNoise comment: 'Brown Noise.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -442,6 +450,7 @@ Clip comment: 'Clip a signal outside given thresholds.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. lo := 0.0. hi := 1.0!
 !
 
@@ -500,6 +509,7 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
@@ -561,6 +571,7 @@ CombL comment: 'Comb delay line with linear interpolation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
@@ -622,6 +633,7 @@ CombN comment: 'Comb delay line with no interpolation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
@@ -673,6 +685,7 @@ ControlDur comment: 'Duration of one block'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -714,6 +727,7 @@ Crackle comment: 'Chaotic noise function.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   chaosParam := 1.5!
 !
 
@@ -762,6 +776,7 @@ Decay comment: 'Exponential decay'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. decayTime := 1.0!
 !
 
@@ -815,6 +830,7 @@ Decay2 comment: 'Exponential decay'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. attackTime := 0.01. decayTime := 1.0!
 !
 
@@ -871,6 +887,7 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   bufnum := 0.0. in := 0.0. octave := 12.0!
 !
 
@@ -927,6 +944,7 @@ DelayN comment: 'Simple delay line with no interpolation.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. maxdelaytime := 0.2. delaytime := 0.2!
 !
 
@@ -983,6 +1001,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
   ugenRate := #ar.
   numChan := nil.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. reset := 0.0!
 !
 
@@ -1040,6 +1059,7 @@ Drand comment: 'Demand rate random sequence generator.'!
   ugenRate := #dr.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   repeats := 1.0!
 !
 
@@ -1091,6 +1111,7 @@ Dseq comment: 'Demand rate sequence generator.'!
   ugenRate := #dr.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   repeats := 1.0!
 !
 
@@ -1142,6 +1163,7 @@ Dshuf comment: 'Demand rate random sequence generator'!
   ugenRate := #dr.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   repeats := 1.0!
 !
 
@@ -1191,6 +1213,7 @@ Dust comment: 'Random impulses.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   density := 0.0!
 !
 
@@ -1237,6 +1260,7 @@ Dust2 comment: 'Random impulses.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   density := 0.0!
 !
 
@@ -1289,6 +1313,7 @@ Duty comment: 'Demand results from demand rate UGens.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0!
 !
 
@@ -1354,6 +1379,7 @@ EnvGen comment: 'Envelope generator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   gate := 1.0. levelScale := 1.0. levelBias := 0.0. timeScale := 1.0. doneAction := 0.0!
 !
 
@@ -1417,6 +1443,7 @@ ExpRand comment: 'Exponential single random number generator.'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   lo := 0.01. hi := 1.0!
 !
 
@@ -1470,6 +1497,7 @@ Formant comment: 'Formant oscillator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   fundfreq := 440.0. formfreq := 1760.0. bwfreq := 880.0!
 !
 
@@ -1524,6 +1552,7 @@ FSinOsc comment: 'Fast sine oscillator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0!
 !
 
@@ -1579,6 +1608,7 @@ FreeVerb comment: 'A reverb'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. mix := 0.33. room := 0.5. damp := 0.5!
 !
 
@@ -1652,6 +1682,7 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   ampdist := 1.0. durdist := 1.0. adparam := 1.0. ddparam := 1.0. minfreq := 440.0. maxfreq := 660.0. ampscale := 0.5. durscale := 0.5. initCPs := 12.0. knum := 0.0!
 !
 
@@ -1739,6 +1770,7 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
   ugenRate := #ar.
   numChan := nil.
   specialIndex := 0.
+  ugenId := nil.
   trigger := 0.0. dur := 1.0. carfreq := 440.0. modfreq := 200.0. index := 1.0. pan := 0.0. envbufnum := -1.0. maxGrains := 512.0!
 !
 
@@ -1825,6 +1857,7 @@ GreyholeRaw comment: 'algorithmic delay'!
   ugenRate := #ar.
   numChan := 2.
   specialIndex := 0.
+  ugenId := nil.
   in1 := 0.0. in2 := 0.0. damping := 0.0. delaytime := 2.0. diffusion := 0.5. feedback := 0.9. moddepth := 0.1. modfreq := 2.0. size := 1.0!
 !
 
@@ -1913,6 +1946,7 @@ GVerb comment: 'A two-channel reverb'!
   ugenRate := #ar.
   numChan := 2.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. roomsize := 10.0. revtime := 3.0. damping := 0.5. inputbw := 0.5. spread := 15.0. drylevel := 1.0. earlyreflevel := 0.7. taillevel := 0.5. maxroomsize := 300.0!
 !
 
@@ -1986,6 +2020,7 @@ Hasher comment: 'Scrambled value with a hash function.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0!
 !
 
@@ -2034,6 +2069,7 @@ HPF comment: '2nd order Butterworth highpass filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0!
 !
 
@@ -2083,6 +2119,7 @@ HPZ1 comment: 'Two point difference filter'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0!
 !
 
@@ -2131,6 +2168,7 @@ IRand comment: 'Single integer random number generator.'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   lo := 0.0. hi := 127.0!
 !
 
@@ -2182,6 +2220,7 @@ Impulse comment: 'Impulse oscillator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. phase := 0.0!
 !
 
@@ -2231,6 +2270,7 @@ In comment: 'Read a signal from a bus.'!
   ugenRate := #ar.
   numChan := nil.
   specialIndex := 0.
+  ugenId := nil.
   bus := 0.0!
 !
 
@@ -2280,6 +2320,7 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
   ugenRate := #ar.
   numChan := nil.
   specialIndex := 0.
+  ugenId := nil.
   bus := 0.0!
 !
 
@@ -2337,6 +2378,7 @@ Klank comment: 'Bank of resonators'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   input := 0.0. freqscale := 1.0. freqoffset := 0.0. decayscale := 1.0!
 !
 
@@ -2397,6 +2439,7 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0!
 !
 
@@ -2446,6 +2489,7 @@ LFNoise0 comment: 'Step noise'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 500.0!
 !
 
@@ -2492,6 +2536,7 @@ LFNoise1 comment: 'Ramp noise'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 500.0!
 !
 
@@ -2538,6 +2583,7 @@ LFNoise2 comment: 'Quadratic noise.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 500.0!
 !
 
@@ -2588,6 +2634,7 @@ LFPulse comment: 'pulse oscillator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0. width := 0.5!
 !
 
@@ -2642,6 +2689,7 @@ LFSaw comment: 'Sawtooth oscillator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0!
 !
 
@@ -2693,6 +2741,7 @@ LFTri comment: 'Triangle oscillator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0!
 !
 
@@ -2744,6 +2793,7 @@ LPF comment: '2nd order Butterworth lowpass filter'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0!
 !
 
@@ -2795,6 +2845,7 @@ Lag comment: 'Exponential lag'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. lagTime := 0.1!
 !
 
@@ -2848,6 +2899,7 @@ LagUD comment: 'Exponential lag'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. lagTimeU := 0.1. lagTimeD := 0.1!
 !
 
@@ -2902,6 +2954,7 @@ Lag2 comment: 'Exponential lag'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. lagTime := 0.1!
 !
 
@@ -2953,6 +3006,7 @@ Lag3 comment: 'Exponential lag'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. lagTime := 0.1!
 !
 
@@ -3004,6 +3058,7 @@ Latch comment: 'Sample and hold'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. trig := 0.0!
 !
 
@@ -3055,6 +3110,7 @@ LeakDC comment: 'Remove DC'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. coef := 0.995!
 !
 
@@ -3108,6 +3164,7 @@ Limiter comment: 'Peak limiter'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. level := 1.0. dur := 0.01!
 !
 
@@ -3166,6 +3223,7 @@ Line comment: 'Line generator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   start := 0.0. end := 1.0. dur := 1.0. doneAction := 0.0!
 !
 
@@ -3229,6 +3287,7 @@ LinExp comment: 'Map a linear range to an exponential range'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. srclo := 0.0. srchi := 1.0. dstlo := 1.0. dsthi := 2.0!
 !
 
@@ -3289,6 +3348,7 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   numChannels := 1.0. numFrames := 1.0!
 !
 
@@ -3338,6 +3398,7 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
   ugenRate := #ar.
   numChan := nil.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -3387,6 +3448,7 @@ LocalOut comment: 'Write to buses local to a synth.'!
   ugenRate := #ar.
   numChan := 0.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -3455,6 +3517,7 @@ MiRings comment: 'a resonator'!
   ugenRate := #ar.
   numChan := 2.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. trig := 0.0. pit := 60.0. struct := 0.25. bright := 0.5. damp := 0.7. pos := 0.25. model := 0.0. poly := 1.0. intern_exciter := 0.0. easteregg := 0.0. bypass := 0.0!
 !
 
@@ -3538,6 +3601,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   x := 0.0. y := 0.0. mod := 1.0!
 !
 
@@ -3596,6 +3660,7 @@ MouseX comment: 'Cursor tracking UGen.'!
   ugenRate := #kr.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   minval := 0.0. maxval := 1.0. warp := 0.0. lag := 0.2!
 !
 
@@ -3657,6 +3722,7 @@ MouseY comment: 'Cursor tracking UGen.'!
   ugenRate := #kr.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   minval := 0.0. maxval := 1.0. warp := 0.0. lag := 0.2!
 !
 
@@ -3716,6 +3782,7 @@ MulAdd comment: 'Multiply add'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. mul := 0.0. add := 0.0!
 !
 
@@ -3756,6 +3823,7 @@ OnePole comment: 'One pole filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. coef := 0.5!
 !
 
@@ -3807,6 +3875,7 @@ Out comment: 'Write a signal to a bus.'!
   ugenRate := #ar.
   numChan := 0.
   specialIndex := 0.
+  ugenId := nil.
   bus := 0.0!
 !
 
@@ -3860,6 +3929,7 @@ Pan2 comment: 'Two channel equal power pan.'!
   ugenRate := #ar.
   numChan := 2.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. pos := 0.0. level := 1.0!
 !
 
@@ -3920,6 +3990,7 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. rate := 1.0. start := 0.0. end := 1.0. resetPos := 0.0!
 !
 
@@ -3974,6 +4045,7 @@ PinkNoise comment: 'Pink Noise.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -4023,6 +4095,7 @@ PitchShift comment: 'Time domain pitch shifter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. windowSize := 0.2. pitchRatio := 1.0. pitchDispersion := 0.0. timeDispersion := 0.0!
 !
 
@@ -4091,6 +4164,7 @@ Pluck comment: 'A Karplus-Strong UGen'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. trig := 1.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0. coef := 0.5!
 !
 
@@ -4154,6 +4228,7 @@ Pulse comment: 'Band limited pulse wave.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. width := 0.5!
 !
 
@@ -4205,6 +4280,7 @@ PulseCount comment: 'Pulse counter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. reset := 0.0!
 !
 
@@ -4258,6 +4334,7 @@ PulseDivider comment: 'Pulse divider.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. div := 2.0. start := 0.0!
 !
 
@@ -4314,6 +4391,7 @@ RHPF comment: 'A resonant high pass filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0. rq := 1.0!
 !
 
@@ -4370,6 +4448,7 @@ RLPF comment: 'A resonant low pass filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0. rq := 1.0!
 !
 
@@ -4424,6 +4503,7 @@ Rand comment: 'Single random number generator.'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   lo := 0.0. hi := 1.0!
 !
 
@@ -4477,6 +4557,7 @@ Resonz comment: 'Resonant filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0. bwr := 1.0!
 !
 
@@ -4533,6 +4614,7 @@ Ringz comment: 'Ringing filter.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. freq := 440.0. decaytime := 1.0!
 !
 
@@ -4587,6 +4669,7 @@ RunningMax comment: 'Track maximum level.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. trig := 0.0!
 !
 
@@ -4632,6 +4715,7 @@ SampleDur comment: 'Duration of one sample.'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -4673,6 +4757,7 @@ Saw comment: 'Band limited sawtooth.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0!
 !
 
@@ -4721,6 +4806,7 @@ Select comment: 'Select output from an array of inputs.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   which := 0.0!
 !
 
@@ -4776,6 +4862,7 @@ SetBuf comment: 'Set local buffer'!
   ugenRate := #ir.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   buf := 0.0. offset := 0.0. length := 0.0!
 !
 
@@ -4833,6 +4920,7 @@ SetResetFF comment: 'Set-reset flip flop.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. reset := 0.0!
 !
 
@@ -4884,6 +4972,7 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. phase := 0.0!
 !
 
@@ -4935,6 +5024,7 @@ SinOscFB comment: 'Feedback FM oscillator'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. feedback := 0.0!
 !
 
@@ -4986,6 +5076,7 @@ Sweep comment: 'Triggered linear ramp'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0. rate := 1.0!
 !
 
@@ -5043,6 +5134,7 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0. gapFirst := 0.0!
 !
 
@@ -5105,6 +5197,7 @@ TExpRand comment: 'Triggered exponential random number generator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   lo := 0.01. hi := 1.0. trig := 0.0!
 !
 
@@ -5157,6 +5250,7 @@ Timer comment: 'Returns time since last triggered.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   trig := 0.0!
 !
 
@@ -5205,6 +5299,7 @@ Trig comment: 'Timed trigger.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. dur := 0.1!
 !
 
@@ -5256,6 +5351,7 @@ Trig1 comment: 'Timed trigger.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   in := 0.0. dur := 0.1!
 !
 
@@ -5309,6 +5405,7 @@ VarSaw comment: 'Variable duty saw'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   freq := 440.0. iphase := 0.0. width := 0.5!
 !
 
@@ -5357,6 +5454,7 @@ WhiteNoise comment: 'White noise.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   !
 !
 
@@ -5404,6 +5502,7 @@ XFade2 comment: 'Equal power two channel cross fade.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   inA := 0.0. inB := 0.0. pan := 0.0. level := 1.0!
 !
 
@@ -5465,6 +5564,7 @@ XLine comment: 'Exponential line generator.'!
   ugenRate := #ar.
   numChan := 1.
   specialIndex := 0.
+  ugenId := nil.
   start := 1.0. end := 2.0. dur := 1.0. doneAction := 0.0!
 !
 

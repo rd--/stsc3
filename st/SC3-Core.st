@@ -36,13 +36,13 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !
 
 AbstractUGen subclass: #UGen
- instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
+ instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
  classVariableNames: ''
  poolDictionaries: ''
  category: 'SC3'
 !
 
-UGen comment: 'Unit Generator'!
+UGen comment: 'Unit Generator.  ugenId is assigned during graph serialisation since identityHash is not unique'!
 
 !UGen methodsFor: 'accessing'!
  mceNames ^mceNames
@@ -68,6 +68,10 @@ UGen comment: 'Unit Generator'!
  ugenRate ^ugenRate
  !
  ugenRate: x ugenRate := x
+ !
+ ugenId ^ugenId
+ !
+ ugenId: x ugenId := x
  !
 !
 
@@ -112,6 +116,7 @@ BinaryOpUGen comment: 'Binary Operators'!
   u ugenRate: #(0 1).
   u numChan: 1.
   u specialIndex: specialIndex.
+  u ugenId: nil.
   u a: a.
   u b: b.
   ^u
@@ -145,6 +150,7 @@ UnaryOpUGen comment: 'Unary Operators'!
   u ugenRate: #(0).
   u numChan: 1.
   u specialIndex: specialIndex.
+  u ugenId: nil.
   u a: a.
   ^u
  !
