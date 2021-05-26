@@ -1,12 +1,11 @@
-'/home/rohan/sw/stsc3/help/' fileListOn. "open file browser on named directory"
-'/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn. "open Workspace on named file"
+'/home/rohan/sw/stsc3/help/' fileListOn "open file browser on named directory"
+'/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn "open Workspace on named file"
 
 SC3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 
 "Envelope"
 
-Env initialize. "build dictionary (class variable)"
-Env curveNameDictionary. "curve name dictionary"
+Env curveNameDictionary "curve name dictionary"
 
 "UGen"
 
@@ -79,12 +78,13 @@ MessageNames openMessageNames. "open Message Names tool"
 1 rand: 5 "-> random Integer in 1 to 5"
 4 rand2 "-> random Integer in -4 to 4"
 
-100 arrayFill: [:i | 5 rand]. "-> 100 random Integers in 0 to 5"
+100 arrayFill: [:i | 5 rand] "-> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 {1. 2. 3. 4. 5} atRandom "random element of Array ; i.e. atRandom ; choose"
-100 arrayFill: [:i | {#a. #b. #c. #d. #e} choose] "-> 100 randomly chosen symbols"
+100 arrayFill: [:i | #(1 2 3 4 5) atRandom] "-> 100 randomly chosen numbers"
+100 arrayFill: [:i | {#a. #b. #c. #d. #e} atRandom] "-> 100 randomly chosen symbols"
 
 "Array"
 
@@ -139,8 +139,8 @@ d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 "Conditionals"
 
-x := nil.
-x isNil ifTrue: ['x'] ifFalse: ['y']. "-> x"
+x := nil
+x isNil ifTrue: ['x'] ifFalse: ['y'] "-> x"
 
 "Collections"
 

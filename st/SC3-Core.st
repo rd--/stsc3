@@ -20,6 +20,21 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
  !
 !
 
+!AbstractUGen methodsFor: 'multi-channel expansion'!
+ mce
+  ^MCE source: self
+ !
+ transpose
+  ^self mce transpose
+ !
+ at: x
+  ^self mce at: x
+ !
+ clump: x
+  ^self mce clump: x
+ !
+!
+
 AbstractUGen subclass: #UGen
  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex'
  classVariableNames: ''
@@ -255,12 +270,6 @@ MCE comment: 'Multiple Channel Expansion'!
 !
 
 !Array methodsFor: 'multi-channel expansion'!
- mce
-  ^MCE source: self
- !
-!
-
-!AbstractUGen methodsFor: 'multi-channel expansion'!
  mce
   ^MCE source: self
  !
