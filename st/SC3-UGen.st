@@ -222,6 +222,62 @@ Blip comment: 'Band limited impulse oscillator.'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #BLowPass
+ instanceVariableNames: 'in freq rq'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
+
+!BLowPass methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ freq ^freq!
+ freq: x freq := x!
+ rq ^rq!
+ rq: x rq := x!
+!
+
+!BLowPass methodsFor: 'initialization'!
+ initialize
+  ugenName := #BLowPass.
+  paramNames := #(#in #freq #rq).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. freq := 1200.0. rq := 1.0!
+!
+
+!BLowPass class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!BLowPass class methodsFor: 'instance creation'!
+ in: in freq: freq rq: rq
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u rq: rq.
+  ^u!
+ in: in freq: freq rq: rq mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u rq: rq.
+  ^(u * mul)!
+ in: in freq: freq rq: rq mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u freq: freq.
+  u rq: rq.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #BPF
  instanceVariableNames: 'in freq rq'
  classVariableNames: ''
@@ -1645,6 +1701,90 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
   u durscale: durscale.
   u initCPs: initCPs.
   u knum: knum.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
+UGen subclass: #GrainFM
+ instanceVariableNames: 'trigger dur carfreq modfreq index pan envbufnum maxGrains'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
+
+!GrainFM methodsFor: 'accessing'!
+ trigger ^trigger!
+ trigger: x trigger := x!
+ dur ^dur!
+ dur: x dur := x!
+ carfreq ^carfreq!
+ carfreq: x carfreq := x!
+ modfreq ^modfreq!
+ modfreq: x modfreq := x!
+ index ^index!
+ index: x index := x!
+ pan ^pan!
+ pan: x pan := x!
+ envbufnum ^envbufnum!
+ envbufnum: x envbufnum := x!
+ maxGrains ^maxGrains!
+ maxGrains: x maxGrains := x!
+!
+
+!GrainFM methodsFor: 'initialization'!
+ initialize
+  ugenName := #GrainFM.
+  paramNames := #(#trigger #dur #carfreq #modfreq #index #pan #envbufnum #maxGrains).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := nil.
+  specialIndex := 0.
+  trigger := 0.0. dur := 1.0. carfreq := 440.0. modfreq := 200.0. index := 1.0. pan := 0.0. envbufnum := -1.0. maxGrains := 512.0!
+!
+
+!GrainFM class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!GrainFM class methodsFor: 'instance creation'!
+ numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u trigger: trigger.
+  u dur: dur.
+  u carfreq: carfreq.
+  u modfreq: modfreq.
+  u index: index.
+  u pan: pan.
+  u envbufnum: envbufnum.
+  u maxGrains: maxGrains.
+  ^u!
+ numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u trigger: trigger.
+  u dur: dur.
+  u carfreq: carfreq.
+  u modfreq: modfreq.
+  u index: index.
+  u pan: pan.
+  u envbufnum: envbufnum.
+  u maxGrains: maxGrains.
+  ^(u * mul)!
+ numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add
+  |u|
+  u := self new.
+  u numChan: numChan.
+  u trigger: trigger.
+  u dur: dur.
+  u carfreq: carfreq.
+  u modfreq: modfreq.
+  u index: index.
+  u pan: pan.
+  u envbufnum: envbufnum.
+  u maxGrains: maxGrains.
   ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -3854,6 +3994,72 @@ PinkNoise comment: 'Pink Noise.'!
   ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #PitchShift
+ instanceVariableNames: 'in windowSize pitchRatio pitchDispersion timeDispersion'
+ classVariableNames: ''
+ poolDictionaries: ''
+ category: 'SC3'!
+
+PitchShift comment: 'Time domain pitch shifter.'!
+
+!PitchShift methodsFor: 'accessing'!
+ in ^in!
+ in: x in := x!
+ windowSize ^windowSize!
+ windowSize: x windowSize := x!
+ pitchRatio ^pitchRatio!
+ pitchRatio: x pitchRatio := x!
+ pitchDispersion ^pitchDispersion!
+ pitchDispersion: x pitchDispersion := x!
+ timeDispersion ^timeDispersion!
+ timeDispersion: x timeDispersion := x!
+!
+
+!PitchShift methodsFor: 'initialization'!
+ initialize
+  ugenName := #PitchShift.
+  paramNames := #(#in #windowSize #pitchRatio #pitchDispersion #timeDispersion).
+  mceNames := #().
+  ugenRate := #ar.
+  numChan := 1.
+  specialIndex := 0.
+  in := 0.0. windowSize := 0.2. pitchRatio := 1.0. pitchDispersion := 0.0. timeDispersion := 0.0!
+!
+
+!PitchShift class methodsFor: 'instance creation'!
+ new ^ self basicNew initialize!
+!
+
+!PitchShift class methodsFor: 'instance creation'!
+ in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
+  |u|
+  u := self new.
+  u in: in.
+  u windowSize: windowSize.
+  u pitchRatio: pitchRatio.
+  u pitchDispersion: pitchDispersion.
+  u timeDispersion: timeDispersion.
+  ^u!
+ in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul
+  |u|
+  u := self new.
+  u in: in.
+  u windowSize: windowSize.
+  u pitchRatio: pitchRatio.
+  u pitchDispersion: pitchDispersion.
+  u timeDispersion: timeDispersion.
+  ^(u * mul)!
+ in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul add: add
+  |u|
+  u := self new.
+  u in: in.
+  u windowSize: windowSize.
+  u pitchRatio: pitchRatio.
+  u pitchDispersion: pitchDispersion.
+  u timeDispersion: timeDispersion.
+  ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #Pluck
  instanceVariableNames: 'in trig maxdelaytime delaytime decaytime coef'
  classVariableNames: ''
@@ -5322,6 +5528,8 @@ clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b!
 !AbstractUGen methodsFor: 'arithmetic'!
 negated ^ UnaryOpUGen specialIndex: 0 a: self!
 abs ^ UnaryOpUGen specialIndex: 5 a: self!
+ceil ^ UnaryOpUGen specialIndex: 8 a: self!
+floor ^ UnaryOpUGen specialIndex: 9 a: self!
 frac ^ UnaryOpUGen specialIndex: 10 a: self!
 cubed ^ UnaryOpUGen specialIndex: 13 a: self!
 reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!

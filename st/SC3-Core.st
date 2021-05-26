@@ -248,6 +248,12 @@ MCE comment: 'Multiple Channel Expansion'!
  !
 !
 
+!Interval methodsFor: 'multi-channel expansion'!
+ mce
+  ^self asArray mce
+ !
+!
+
 !Array methodsFor: 'multi-channel expansion'!
  mce
   ^MCE source: self

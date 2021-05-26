@@ -6,17 +6,13 @@
 !
 
 !Number methodsFor: 'enumerating'!
- to: n collect: f
-  "Array of (self to: n) collected with f"
-  ^((self to: n) asArray) collect: [:i | f value: i]
- !
  arrayFill: f
   "Array of (1 to: self) collected with f"
-  ^1 to: self collect: [:i | f value: i]
+  ^(1 to: self) collect: [:i | f value: i]
  !
  arrayFillZeroIndexed: f
   "Array of (0 to: self - 1) collected with f"
-  ^1 to: self collect: [:i | f value: (i - 1)]
+  ^(1 to: self) collect: [:i | f value: (i - 1)]
  !
  replicate: x
   "Array of self places each being x"

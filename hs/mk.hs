@@ -2,7 +2,7 @@ import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
 
 uop :: [(String, Int)]
 uop =
-  [("negated",0),("abs",5)
+  [("negated",0),("abs",5),("ceil",8),("floor",9)
   ,("frac",10),("cubed",13),("reciprocal",16),("midicps",17)
   ,("log",25),("sin",28),("tanh",36)
   ,("distort",42)]
@@ -21,19 +21,19 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassN","AmpComp","Amplitude"
-  ,"Blip","BPF","BPZ2","BrownNoise"
+  ,"Blip","BLowPass","BPF","BPZ2","BrownNoise"
   ,"Clip","CombC","CombL","CombN","ControlDur","Crackle"
   ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"Formant","FSinOsc","FreeVerb"
-  ,"Gendy1","GreyholeRaw","GVerb"
+  ,"Gendy1","GrainFM","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback"
   ,"Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
   ,"MiRings","ModDif","MouseX","MouseY","MulAdd","OnePole","Out"
-  ,"Pan2","Phasor","PinkNoise","Pluck","Pulse","PulseCount","PulseDivider"
+  ,"Pan2","Phasor","PinkNoise","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
   ,"SampleDur","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"TDuty","TExpRand","Timer","Trig","Trig1"

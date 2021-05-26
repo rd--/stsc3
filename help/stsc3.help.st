@@ -91,7 +91,6 @@ MessageNames openMessageNames. "open Message Names tool"
 #(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"
 #(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
 
-1 to: 5 collect: [:x | x * x] "-> #(1 4 9 16 25)"
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "-> #((1 4) (2 5) (3 6))"
 6 replicate: 1 "-> #(1 1 1 1 1 1)"
 #(#(1 2) #(3 4)) concatenation "-> #(1 2 3 4)"
@@ -111,6 +110,8 @@ Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
 
 (Interval from: 5 to: 9) asArray "-> #(5 6 7 8 9)"
 (Interval from: 5 to: 15 by: 2) asArray "-> #(5 7 9 11 13 15)"
+(1 to: 5) collect: [:x | x * x] "-> #(1 4 9 16 25)"
+(1 to: 9 by: 2) collect: [:x | x * x] "-> #(1 9 25 49 81)"
 
 "Strings"
 
