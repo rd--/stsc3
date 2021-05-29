@@ -1,6 +1,13 @@
+prefix = ~/opt
 cmd = stsc3
 
-include ~/sw/hsc3/mk/cmd.mk
+% : %.hs
+	ghc -Wall -fwarn-tabs -O2 --make $<
 
-install-no-prefix:
+all: $(cmd)
+
+install: $(cmd)
 	cp $(cmd) $(prefix)/bin
+
+clean:
+	rm -f *.hi *.o $(cmd)
