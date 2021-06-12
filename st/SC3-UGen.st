@@ -5276,6 +5276,63 @@ Timer comment: 'Returns time since last triggered.'!
     ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #TRand
+  instanceVariableNames: 'lo hi trig'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'SC3'!
+
+TRand comment: 'Triggered random number generator.'!
+
+!TRand methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+  trig ^trig!
+  trig: x trig := x!
+!
+
+!TRand methodsFor: 'initialization'!
+  initialize
+    ugenName := #TRand.
+    paramNames := #(#lo #hi #trig).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0. trig := 0.0!
+!
+
+!TRand class methodsFor: 'instance creation'!
+  new ^ self basicNew initialize!
+!
+
+!TRand class methodsFor: 'instance creation'!
+  lo: lo hi: hi trig: trig
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u trig: trig.
+    ^u!
+  lo: lo hi: hi trig: trig mul: mul
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u trig: trig.
+    ^(u * mul)!
+  lo: lo hi: hi trig: trig mul: mul add: add
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u trig: trig.
+    ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #Trig
   instanceVariableNames: 'in dur'
   classVariableNames: ''
