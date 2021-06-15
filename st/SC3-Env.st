@@ -285,3 +285,41 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
       offset: 0
   !
 !
+
+EnvBuilder subclass: #EnvSine
+  instanceVariableNames: 'dur level'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'SC3'
+!
+
+EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!
+
+!EnvSine methodsFor: 'accessing'!
+  dur ^dur !
+  dur: x dur := x. !
+  level ^level !
+  level: x level := x. !
+!
+
+!EnvSine class methodsFor: 'instance creation'!
+  dur: p1 level: p2
+    | u |
+    u := self new.
+    u dur: p1.
+    u level: p2.
+    ^u
+  !
+!
+
+!EnvSine methodsFor: 'envelope coordinates'!
+  env
+    ^Env
+      levels: {0. level. 0}
+      times: {dur / 2. dur / 2}
+      curves: #(3 3)
+      releaseNode: nil
+      loopNode: nil
+      offset: 0
+  !
+!

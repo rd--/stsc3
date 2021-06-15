@@ -49,6 +49,9 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
     u levelComp: levelComp.
     ^u
   !
+  input: input spread: spread level: level center: center
+    ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
+  !
   input: input
     ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
   !
@@ -86,5 +89,20 @@ TXLine comment: 'Triggered XLine.'!
     | env |
     env := Env levels: {start. start. end} times: {0. dur} curves: #(#exp #exp) releaseNode: -1 loopNode: -1 offset: 0.
     ^EnvGen gate: trig levelScale: 1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: env coord
+  !
+!
+
+AbstractUGen subclass: #TChoose
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'SC3'
+!
+
+TChoose comment: 'Randomly select one of several inputs on trigger.'!
+
+!TChoose class methodsFor: 'instance creation'!
+  trig: trig array: array
+    ^Select which: (TIRand lo: 0 hi: (array size - 1) trig: trig) array: array
   !
 !

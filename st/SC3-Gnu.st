@@ -58,6 +58,10 @@
     "Sum elements of collection."
     ^self inject: 0 into: [:a :c | c + a]
   !
+  max
+    "Maximum element of collection."
+    ^self inject: 0 into: [:a :c | (a > c) ifTrue: [a] ifFalse: [c]].
+  !
 !
 
 !SequenceableCollection methodsFor: 'joining'!

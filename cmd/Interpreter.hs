@@ -450,6 +450,35 @@ liftUGen3 f p1 p2 p3 = do
   u3 <- objectToUGen p3
   return (UGenObject (f u1 u2 u3))
 
+liftUGen4 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> Object -> VM Object
+liftUGen4 f p1 p2 p3 p4 = do
+  u1 <- objectToUGen p1
+  u2 <- objectToUGen p2
+  u3 <- objectToUGen p3
+  u4 <- objectToUGen p4
+  return (UGenObject (f u1 u2 u3 u4))
+
+{-
+liftUGen5 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> Object -> Object -> VM Object
+liftUGen5 f p1 p2 p3 p4 p5 = do
+  u1 <- objectToUGen p1
+  u2 <- objectToUGen p2
+  u3 <- objectToUGen p3
+  u4 <- objectToUGen p4
+  u5 <- objectToUGen p5
+  return (UGenObject (f u1 u2 u3 u4 u5))
+
+liftUGen6 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> Object -> Object -> Object -> VM Object
+liftUGen6 f p1 p2 p3 p4 p5 p6 = do
+  u1 <- objectToUGen p1
+  u2 <- objectToUGen p2
+  u3 <- objectToUGen p3
+  u4 <- objectToUGen p4
+  u5 <- objectToUGen p5
+  u6 <- objectToUGen p6
+  return (UGenObject (f u1 u2 u3 u4 u5 u6))
+-}
+
 arrayFromToBy :: Object -> Object -> Object -> VM Object
 arrayFromToBy p1 p2 p3 = do
   i <- objectToInt "arrayFromToBy" p1
@@ -552,12 +581,12 @@ evalKeywordMessage o k = do
     UGenObject _ -> evalKeywordUGenMessage o keywordArguments
     ClassObject x ->
       case (x,keywordArguments) of
+        ("Control",[("name:",p1),("init:",p2)]) -> controlInput p1 p2
         ("Interval",[("from:",p1),("to:",p2)]) -> arrayFromTo p1 p2
         ("Interval",[("from:",p1),("to:",p2),("by:",p3)]) -> arrayFromToBy p1 p2 p3
         ("MRG",[("lhs:",p1),("rhs:",p2)]) -> liftUGen2 SC3.mrg2 p1 p2
         ("Splay",[("input:",p1)]) -> liftUGen (\input -> SC3.splay input 1 1 0 True) p1
-        ("Control",[("name:",p1),("init:",p2)]) -> controlInput p1 p2
-        --("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4),("levelComp:",p5)]) -> liftUGen6 SC3.splay o p1 p2 p3 p4 p5
+        ("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4)]) -> liftUGen4 (\p1' p2' p3' p4' -> SC3.splay p1' p2' p3' p4' True) p1 p2 p3 p4
         _ -> throwError ("evalKeywordMessage: ClassObject: " ++ x)
     _ -> throwError "evalKeywordMessage"
 
@@ -657,16 +686,4 @@ evalSmalltalkFile fn = do
   case r of
     Left msg -> putStrLn ("error: " ++ msg)
     Right res -> putStrLn ("result: " ++ show res)
--}
-
-{-
-liftUGen6 :: (SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen -> SC3.UGen) -> Object -> Object -> Object -> Object -> Object -> Object -> VM Object
-liftUGen6 f p1 p2 p3 p4 p5 p6 = do
-  u1 <- objectToUGen p1
-  u2 <- objectToUGen p2
-  u3 <- objectToUGen p3
-  u4 <- objectToUGen p4
-  u5 <- objectToUGen p5
-  u6 <- objectToUGen p6
-  return (UGenObject (f u1 u2 u3 u4 u5 u6))
 -}

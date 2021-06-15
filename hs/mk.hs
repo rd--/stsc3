@@ -36,7 +36,7 @@ ugen =
   ,"Pan2","Phasor","PinkNoise","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
   ,"SampleDur","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
-  ,"TDuty","TExpRand","Timer","TRand","Trig","Trig1"
+  ,"TDuty","TExpRand","Timer","TIRand","TRand","Trig","Trig1"
   ,"VarSaw"
   ,"WhiteNoise"
   ,"XFade2","XLine"]
