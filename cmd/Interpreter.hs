@@ -311,6 +311,7 @@ evalUnaryUGenMessage o m = do
     "ir" -> liftUGen (SC3.rewriteToRate SC3.IR) o
     "kr" -> liftUGen (SC3.rewriteToRate SC3.KR) o
     "log" -> liftUGen log o
+    "max" -> objectToArray "max" o >>= mapM objectToDouble >>= return . doubleToObject . maximum
     "mce" -> return o
     "midicps" -> liftUGen SC3.midiCPS o
     "mix" -> liftUGen SC3.mix o
@@ -372,7 +373,7 @@ makeUGen ugenName ugenRate ugenInputObjects ugenNumChan ugenId optInputObjects m
       o = SC3.ugen_optimise_const_operator u
   m <- case optInputs of
          [] -> return o
-         [mul,add] ->  return (SC3.mulAdd o mul add)
+         [mul,add] -> return (SC3.mulAdd o mul add)
          [mul] -> return (o * mul)
          _ -> throwError "makeUGen: optInputs?"
   return (UGenObject (SC3.ugen_optimise_const_operator m))
@@ -508,6 +509,9 @@ mceAt o p1 = do
   i <- objectToInt "mceAt" p1
   return (UGenObject (SC3.mceChannel (i - 1) u))
 
+envGen :: Object -> Object -> Object -> VM Object
+envGen o p1 p2 = makeUGen "EnvGen" SC3.AR [p1,doubleToObject 1,doubleToObject 0,doubleToObject 1,p2,o] 1 SC3.NoId [] True
+
 evalKeywordUGenMessage :: Object -> [(String,Object)] -> VM Object
 evalKeywordUGenMessage o keywordArguments =
   case keywordArguments of
@@ -521,6 +525,7 @@ evalKeywordUGenMessage o keywordArguments =
     [("clump:",p1)] -> objectToInt "clump:" p1 >>= \k -> liftUGen (SC3.mceClump k) o
     [("collect:",p1)] -> mceCollect o p1
     [("do:",p1)] -> mceDo o p1
+    [("envGen:",p1),("doneAction:",p2)] -> envGen o p1 p2
     [("exprand:",p1)] -> genExpRand o p1
     [("gcd:",p1)] -> liftUGen2 SC3.gcdE o p1
     [("ifTrue:",p1),("ifFalse:",p2)] -> ifTrueIfFalse o p1 p2
@@ -570,6 +575,32 @@ evalKeywordUGenClassMessage x u keywordArguments = do
   ugen <- makeUGen x rt inputValues nc uid optValues (DB.ugen_std_mce u > 0)
   return ugen
 
+overlapTexture :: Object -> Object -> Object -> Object -> VM Object
+overlapTexture graphFunc sustainTime transitionTime overlap = do
+  (e,b) <- objectToBlock graphFunc
+  t1 <- objectToUGen sustainTime
+  t2 <- objectToUGen transitionTime
+  k <- objectToInt "overlapTexture" overlap
+  let tr_seq = map (\i -> SC3.impulse SC3.KR (1 / (t1 + (t2 * 2))) (SC3.constant i / SC3.constant k)) [0 .. k - 1]
+      en_seq = map (\tr-> SC3.envGen SC3.KR tr 1 0 1 SC3.DoNothing (SC3.envelope [0,1,1,0] [t1,t2,t1] [SC3.EnvSin])) tr_seq
+  a <- mapM (\x -> evalBlockError e b ["value:"] [x]) (map UGenObject tr_seq)
+  u <- mapM objectToUGen a
+  return (UGenObject (SC3.mix (SC3.mce (zipWith (*) u en_seq))))
+
+tChoose :: Object -> Object -> VM Object
+tChoose p1 p2 = do
+  z <- liftIO SC3.generateUId
+  liftUGen2 (SC3.tChoose z) p1 p2
+
+tXLine :: Object -> Object -> Object -> Object -> VM Object
+tXLine p1 p2 p3 p4 = liftUGen4 (SC3.tXLine SC3.AR) p1 p2 p3 p4
+
+envSine :: Object -> Object -> VM Object
+envSine p1 p2 = do
+  u1 <- objectToUGen p1
+  u2 <- objectToUGen p2
+  return (UGenObject (SC3.envelope_to_ugen (SC3.envSine u1 u2)))
+
 evalKeywordMessage :: Object -> [(St.Identifier,St.KeywordArgument)] -> VM Object
 evalKeywordMessage o k = do
   keywordValues <- mapM (evalKeywordArgument . snd) k
@@ -582,11 +613,17 @@ evalKeywordMessage o k = do
     ClassObject x ->
       case (x,keywordArguments) of
         ("Control",[("name:",p1),("init:",p2)]) -> controlInput p1 p2
+        ("EnvSine",[("dur:",p1),("level:",p2)]) -> envSine p1 p2
         ("Interval",[("from:",p1),("to:",p2)]) -> arrayFromTo p1 p2
         ("Interval",[("from:",p1),("to:",p2),("by:",p3)]) -> arrayFromToBy p1 p2 p3
         ("MRG",[("lhs:",p1),("rhs:",p2)]) -> liftUGen2 SC3.mrg2 p1 p2
+        ("OverlapTexture",[("graphFunc:",p1),("sustainTime:",p2),("transitionTime:",p3),("overlap:",p4)]) ->
+          overlapTexture p1 p2 p3 p4
         ("Splay",[("input:",p1)]) -> liftUGen (\input -> SC3.splay input 1 1 0 True) p1
-        ("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4)]) -> liftUGen4 (\p1' p2' p3' p4' -> SC3.splay p1' p2' p3' p4' True) p1 p2 p3 p4
+        ("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4)]) ->
+          liftUGen4 (\p1' p2' p3' p4' -> SC3.splay p1' p2' p3' p4' True) p1 p2 p3 p4
+        ("TChoose",[("trig:",p1),("array:",p2)]) -> tChoose p1 p2
+        ("TXLine",[("start:",p1),("end:",p2),("dur:",p3),("trig:",p4)]) -> tXLine p1 p2 p3 p4
         _ -> throwError ("evalKeywordMessage: ClassObject: " ++ x)
     _ -> throwError "evalKeywordMessage"
 

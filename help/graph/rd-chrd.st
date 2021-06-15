@@ -17,4 +17,4 @@ gen := [:tr |
   mnn := (scale collect: [:n | octaves collect: [:o | n + (o * 12)]]) concatenation.
   chd := 6 mceFill: [:i | TChoose trig: tr array: mnn].
   9 mixFill: [:i | chrd value: chd]].
-OverlapTexture graphFunc: gen sustainTime: 21 transitionTime: 0 overlap: 3.
+OverlapTexture graphFunc: gen sustainTime: 21 transitionTime: 0 overlap: 3
