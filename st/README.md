@@ -40,6 +40,13 @@ The writer generates let bindings for all UGens.
 Methods that cannot be written to work under all of Squeak, Pharo, Cuis and GNU-Smalltalk
 have separate definitions.
 
+The program `hsc3-graphs` is required to communicate with `scsynth`.
+It is a part of the `hsc3-graphs` archive at <https://gitlab.com/rd--/hsc3-graphs>.
+It depends upon [hsc3](https://hackage.haskell.org/package/hsc3),
+[hsc3-dot](https://gitlab.com/rd--/hsc3-dot),
+[hsc3-lisp](https://gitlab.com/rd--/hsc3-lisp) and
+[hmt](https://gitlab.com/rd--/hmt).
+
 ![](sw/stsc3/lib/png/squeak-mouse.png)
 
 * * *

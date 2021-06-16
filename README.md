@@ -4,7 +4,7 @@ stsc3
 [smalltalk](http://archive.org/details/byte-magazine-1981-08/) bindings to the
 [SuperCollider](http://audiosynth.com/) real-time synthesiser.
 
-initial notes: [st/README](http://rohandrape.net/?t=stsc3&e=st/README)
+initial notes: [st/README.md](http://rohandrape.net/?t=stsc3&e=st/README.md)
 
 ![](http://rohandrape.net/sw/stsc3/lib/png/smalltalk-balloon.png)
 
@@ -15,6 +15,7 @@ cli:
 requires:
 
 - [hsc3](http://rohandrape.net/?t=hsc3)
+- [hsc3-dot](http://rohandrape.net/?t=hsc3-dot)
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)
 - squeak:[OSProcess](http://wiki.squeak.org/squeak/708)
 
