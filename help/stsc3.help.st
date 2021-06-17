@@ -25,7 +25,7 @@ SinOsc new inspect "initialize sets default values for parameters"
 "Evaluate"
 
 '1+1' evalString == 2 "-> true ; evaluate string"
-'/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st' evalFile play "evaluate text file"
+'/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
 "SC3"
 

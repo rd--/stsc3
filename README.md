@@ -14,8 +14,6 @@ cli:
 
 requires:
 
-- [hsc3](http://rohandrape.net/?t=hsc3)
-- [hsc3-dot](http://rohandrape.net/?t=hsc3-dot)
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)
 - squeak:[OSProcess](http://wiki.squeak.org/squeak/708)
 
