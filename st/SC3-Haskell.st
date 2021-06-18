@@ -14,17 +14,17 @@
   play
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs play /tmp/st.hs' systemCommand
+    'hsc3-graphs fragments hs min play /tmp/st.hs' systemCommand
   !
   draw
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs draw /tmp/st.hs' systemCommand
+    'hsc3-graphs fragments hs min draw /tmp/st.hs' systemCommand
   !
   printUGens
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs dump-ugens /tmp/st.hs' systemCommand
+    'hsc3-graphs fragments hs min dump-ugens /tmp/st.hs' systemCommand
   !
 !
 
