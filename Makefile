@@ -5,6 +5,7 @@ all:
 	echo "stsc3"
 
 clean:
+	rm -Rf dist dist-newstyle *~
 	(cd cmd ; make clean)
 
 push-gl:
