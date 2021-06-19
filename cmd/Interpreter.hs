@@ -534,6 +534,7 @@ evalKeywordUGenMessage o keywordArguments =
     [("inject:",p1),("into:",p2)] -> mceInjectInto o p1 p2
     [("lcm:",p1)] -> liftUGen2 SC3.lcmE o p1
     [("max:",p1)] -> liftUGen2 max o p1
+    [("min:",p1)] -> liftUGen2 min o p1
     [("mceFill:",p1)] -> mceFill False id o p1
     [("mceFillZeroIndexed:",p1)] -> mceFill True id o p1
     [("mixFill:",p1)] -> mceFill False SC3.mix o p1
@@ -713,14 +714,13 @@ replInit = do
   env <- initialEnvironment
   replCont env
 
-{-
 -- > evalSmalltalkFile "/home/rohan/sw/stsc3/help/graph/jmcc-analog-bubbles.st"
-evalSmalltalkFile :: FilePath -> IO ()
+evalSmalltalkFile :: FilePath -> IO SC3.UGen
 evalSmalltalkFile fn = do
   str <- readFile fn
   env <- initialEnvironment
   (r,_) <- runStateT (runExceptT (evalString str)) env
   case r of
-    Left msg -> putStrLn ("error: " ++ msg)
-    Right res -> putStrLn ("result: " ++ show res)
--}
+    Right (UGenObject res) -> return res
+    Right _ -> error "evalSmalltalkFile: error: not UGen?"
+    Left msg -> error ("evalSmalltalkFile: error: " ++ msg)
