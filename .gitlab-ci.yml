@@ -1,0 +1,15 @@
+stages:
+  - build
+
+build:8:
+  image: haskell:8
+  stage: build
+  script:
+    - cabal update
+    - cabal install --installdir public --install-method copy
+    - zip -r public/stsc3.zip public/stsc3
+  rules:
+    - when: manual
+  artifacts:
+    paths:
+      - public/stsc3.zip
