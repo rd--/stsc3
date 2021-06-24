@@ -5,8 +5,8 @@ build:8:
   image: haskell:8
   stage: build
   script:
-    - cabal update
-    - cabal install --installdir public --install-method copy
+    - apt-get update -qq && apt-get install -y -qq zip
+    - cabal update && cabal install --installdir public --install-method copy
     - zip -r public/stsc3.zip public/stsc3
   rules:
     - when: manual
