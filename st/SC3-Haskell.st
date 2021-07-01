@@ -39,7 +39,7 @@
     '(mkUGen Nothing all_rates ' putOn: fd.
     ugenRate isArray
      ifTrue: ['(Right ' putOn: fd. ugenRate printHaskellArrayOn: fd. ') ' putOn: fd]
-     ifFalse: ['(Left ' putOn: fd. ugenRate asString asUppercase putOn: fd. ') ' putOn: fd].
+     ifFalse: ['(Left ' putOn: fd. ugenRate asString putOn: fd. ') ' putOn: fd].
     ugenName asString printHaskellOn: fd.
     fd space.
     '[' putOn: fd.
@@ -68,7 +68,7 @@
   printHaskellOn: fd
     "Print my hsc3 representation."
     '(rewriteToRate ' putOn: fd.
-    rate asString asUppercase putOn: fd.
+    rate asString putOn: fd.
     fd space.
     source printHaskellOn: fd.
     ')' putOn: fd
@@ -176,7 +176,7 @@
 !Control methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
-    '(control KR ' putOn: fd.
+    '(control kr ' putOn: fd.
     self name asString printHaskellOn: fd.
     fd space.
     self init asString putOn: fd.
