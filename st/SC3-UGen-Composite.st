@@ -87,7 +87,10 @@ TXLine comment: 'Triggered XLine.'!
 !TXLine class methodsFor: 'instance creation'!
   start: start end: end dur: dur trig: trig
     | env |
-    env := Env levels: {start. start. end} times: {0. dur} curves: #(#exp #exp) releaseNode: -1 loopNode: -1 offset: 0.
+    env := Env levels: (Array with: start with: start with: end)
+               times: (Array with: 0 with: dur)
+               curves: #(#exp #exp)
+               releaseNode: -1 loopNode: -1 offset: 0.
     ^EnvGen gate: trig levelScale: 1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: env coord
   !
 !

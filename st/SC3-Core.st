@@ -259,13 +259,13 @@ MCE comment: 'Multiple Channel Expansion'!
 
 !MCE methodsFor: 'transforms'!
   transpose
-    ^self copy transform: {#mceTranspose}
+    ^self copy transform: #(#mceTranspose)
   !
   at: x
-    ^self copy transform: {#mceChannel. x - 1}
+    ^self copy transform: (Array with: #mceChannel with: x - 1)
   !
   clump: x
-    ^self copy transform: {#mceClump. x}
+    ^self copy transform: (Array with: #mceClump with: x)
   !
 !
 

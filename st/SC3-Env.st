@@ -137,8 +137,8 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
 !EnvPerc methodsFor: 'envelope coordinates'!
   env
     ^Env
-      levels: {0. level. 0}
-      times: {attackTime. releaseTime}
+      levels: (Array with: 0 with: level with: 0)
+      times: (Array with: attackTime with: releaseTime)
       curves: curves
       releaseNode: nil
       loopNode: nil
@@ -184,8 +184,8 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
 !EnvLinen methodsFor: 'envelope coordinates'!
   env
     ^Env
-      levels: {0. level. level. 0}
-      times: {attackTime. sustainTime. releaseTime}
+      levels: (Array with: 0 with: level with: level with: 0)
+      times: (Attay with: attackTime with: sustainTime with: releaseTime)
       curves: curves
       releaseNode: nil
       loopNode: nil
@@ -228,8 +228,8 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
 !EnvASR methodsFor: 'envelope coordinates'!
   env
     ^Env
-      levels: {0. sustainLevel. 0}
-      times: {attackTime. releaseTime}
+      levels: (Array with: 0 with: sustainLevel with: 0)
+      times: (Array with: attackTime with: releaseTime)
       curves: curves
       releaseNode: 1
       loopNode: nil
@@ -277,8 +277,8 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 !EnvADSR methodsFor: 'envelope coordinates'!
   env
     ^Env
-      levels: {0. peakLevel. peakLevel * sustainLevel. 0}
-      times: {attackTime. decayTime. releaseTime}
+      levels: (Array with: 0 with: peakLevel with: peakLevel * sustainLevel with: 0)
+      times: (Array with: attackTime with: decayTime with: releaseTime)
       curves: curves
       releaseNode: 2
       loopNode: nil
@@ -315,8 +315,8 @@ EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!
 !EnvSine methodsFor: 'envelope coordinates'!
   env
     ^Env
-      levels: {0. level. 0}
-      times: {dur / 2. dur / 2}
+      levels: (Array with: 0 with: level with: 0)
+      times: (Array with: dur / 2 with: dur / 2)
       curves: #(3 3)
       releaseNode: nil
       loopNode: nil
