@@ -46,7 +46,7 @@ stLexer = P.makeTokenParser stLanguageDef
 stParse :: P t -> String -> t
 stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
 
--- | 'unwords', removing empty input strings.
+-- | 'unwords', removing empty input strings.  Used for pretty printing.
 strjn :: [String] -> String
 strjn = unwords . filter (not . null)
 

@@ -40,8 +40,8 @@ data Object
 ugenShow :: SC3.UGen -> String
 ugenShow x =
   case x of
-    SC3.Constant_U c -> show (SC3.constantValue c)
-    SC3.MCE_U m -> "{" ++ intercalate ". " (map ugenShow (SC3.mce_elem m)) ++ "}"
+    SC3.UGen (SC3.CConstant c) -> show (SC3.constantValue c)
+    SC3.UGen (SC3.CMce m _) -> "{" ++ intercalate ". " (map ugenShow (SC3.mce_elem m)) ++ "}"
     _ -> show x
 
 instance Show Object where
@@ -72,7 +72,7 @@ objectToMCE msg o =
 objectToInt :: String -> Object ->  VM Int
 objectToInt msg o =
    case o of
-    UGenObject x -> maybe (throwError ("objectToInt: " ++ msg)) (return . round . SC3.constantValue) (SC3.un_constant x)
+    UGenObject x -> maybe (throwError ("objectToInt: " ++ msg)) (return . round) (SC3.u_constant x)
     _ -> throwError ("objectToInt: Object not UGen: " ++ msg)
 
 -- | Object to Symbol
@@ -93,7 +93,7 @@ objectToBlock o =
 objectToDouble :: Object ->  VM Double
 objectToDouble o =
   case o of
-    UGenObject x -> maybe (throwError "objectToDouble") (return . SC3.constantValue) (SC3.un_constant x)
+    UGenObject x -> maybe (throwError "objectToDouble") return (SC3.u_constant x)
     _ -> throwError "objectToDouble: Object not UGen?"
 
 -- | Object to list of Object
@@ -272,7 +272,7 @@ asLocalBuf :: Object -> VM Object
 asLocalBuf aUGen = do
   uid <- liftIO SC3.generateUId
   u <- objectToMCE "asLocalBuf" aUGen
-  return (UGenObject (SC3.asLocalBuf uid u))
+  return (UGenObject (SC3.asLocalBufId uid u))
 
 mceConcatenation :: Object -> VM Object
 mceConcatenation aUGen = do
@@ -287,7 +287,7 @@ evalUnaryUGenMessage o m = do
     "abs" -> liftUGen abs o
     "acos" -> liftUGen acos o
     "acosh" -> liftUGen acosh o
-    "ar" -> liftUGen (SC3.rewriteToRate SC3.AR) o
+    "ar" -> liftUGen (SC3.rewriteToRate SC3.ar) o
     "asArray" -> return o
     "asFloat" -> return o
     "asLocalBuf" -> asLocalBuf o
@@ -303,13 +303,13 @@ evalUnaryUGenMessage o m = do
     "cosh" -> liftUGen cosh o
     "cubed" -> liftUGen SC3.cubed o
     "distort" -> liftUGen SC3.distort o
-    "dr" -> liftUGen (SC3.rewriteToRate SC3.DR) o
+    "dr" -> liftUGen (SC3.rewriteToRate SC3.dr) o
     "draw" -> liftIO (Sound.SC3.UGen.Dot.draw x) >> return NilObject
     "exp" -> liftUGen exp o
     "floor" -> liftUGen SC3.floorE o
     "frac" -> liftUGen SC3.frac o
-    "ir" -> liftUGen (SC3.rewriteToRate SC3.IR) o
-    "kr" -> liftUGen (SC3.rewriteToRate SC3.KR) o
+    "ir" -> liftUGen (SC3.rewriteToRate SC3.ir) o
+    "kr" -> liftUGen (SC3.rewriteToRate SC3.kr) o
     "log" -> liftUGen log o
     "max" -> objectToArray "max" o >>= mapM objectToDouble >>= return . doubleToObject . maximum
     "mce" -> return o
@@ -501,7 +501,7 @@ controlInput :: Object -> Object -> VM Object
 controlInput p1 p2 = do
   nm <- objectToSymbol p1
   df <- objectToDouble p2
-  return (UGenObject (SC3.control SC3.KR nm df))
+  return (UGenObject (SC3.control SC3.kr nm df))
 
 mceAt :: Object -> Object -> VM Object
 mceAt o p1 = do
@@ -510,7 +510,7 @@ mceAt o p1 = do
   return (UGenObject (SC3.mceChannel (i - 1) u))
 
 envGen :: Object -> Object -> Object -> VM Object
-envGen o p1 p2 = makeUGen "EnvGen" SC3.AR [p1,doubleToObject 1,doubleToObject 0,doubleToObject 1,p2,o] 1 SC3.NoId [] True
+envGen o p1 p2 = makeUGen "EnvGen" SC3.ar [p1,doubleToObject 1,doubleToObject 0,doubleToObject 1,p2,o] 1 SC3.NoId [] True
 
 evalKeywordUGenMessage :: Object -> [(String,Object)] -> VM Object
 evalKeywordUGenMessage o keywordArguments =
@@ -582,8 +582,8 @@ overlapTexture graphFunc sustainTime transitionTime overlap = do
   t1 <- objectToUGen sustainTime
   t2 <- objectToUGen transitionTime
   k <- objectToInt "overlapTexture" overlap
-  let tr_seq = map (\i -> SC3.impulse SC3.KR (1 / (t1 + (t2 * 2))) (SC3.constant i / SC3.constant k)) [0 .. k - 1]
-      en_seq = map (\tr-> SC3.envGen SC3.KR tr 1 0 1 SC3.DoNothing (SC3.envelope [0,1,1,0] [t1,t2,t1] [SC3.EnvSin])) tr_seq
+  let tr_seq = map (\i -> SC3.impulse SC3.kr (1 / (t1 + (t2 * 2))) (SC3.constant i / SC3.constant k)) [0 .. k - 1]
+      en_seq = map (\tr-> SC3.envGen SC3.kr tr 1 0 1 SC3.DoNothing (SC3.envelope [0,1,1,0] [t1,t2,t1] [SC3.EnvSin])) tr_seq
   a <- mapM (\x -> evalBlockError e b ["value:"] [x]) (map UGenObject tr_seq)
   u <- mapM objectToUGen a
   return (UGenObject (SC3.mix (SC3.mce (zipWith (*) u en_seq))))
@@ -591,10 +591,10 @@ overlapTexture graphFunc sustainTime transitionTime overlap = do
 tChoose :: Object -> Object -> VM Object
 tChoose p1 p2 = do
   z <- liftIO SC3.generateUId
-  liftUGen2 (SC3.tChoose z) p1 p2
+  liftUGen2 (SC3.tChooseId z) p1 p2
 
 tXLine :: Object -> Object -> Object -> Object -> VM Object
-tXLine p1 p2 p3 p4 = liftUGen4 (SC3.tXLine SC3.AR) p1 p2 p3 p4
+tXLine p1 p2 p3 p4 = liftUGen4 (SC3.tXLine SC3.ar) p1 p2 p3 p4
 
 envSine :: Object -> Object -> VM Object
 envSine p1 p2 = do
