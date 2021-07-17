@@ -1,6 +1,7 @@
 -- | Parser and pretty printer for a subset of ANSI Smalltalk.
 module Language.Smalltalk.Parser where
 
+import Data.Char {- base -}
 import Data.Functor.Identity {- base -}
 import Data.List {- base -}
 import qualified Numeric {- base -}
@@ -42,9 +43,12 @@ stLanguageDef =
 stLexer :: P.GenTokenParser String () Identity
 stLexer = P.makeTokenParser stLanguageDef
 
+deleteLeadingSpaces :: String -> String
+deleteLeadingSpaces = dropWhile isSpace
+
 -- | Run parser and report any error.
 stParse :: P t -> String -> t
-stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
+stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p "" . deleteLeadingSpaces
 
 -- | 'unwords', removing empty input strings.  Used for pretty printing.
 strjn :: [String] -> String
@@ -140,9 +144,16 @@ methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temp
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
 > stParse methodDefinition "p"
+> stParse methodDefinition "p q"
+> stParse methodDefinition "p ^q"
+> stParse methodDefinition "p q. ^r"
 > stParse methodDefinition "p |t|"
-> stParse methodDefinition "p |t| ^s"
-> stParse methodDefinition "p ^s"
+> stParse methodDefinition "p |t| r"
+> stParse methodDefinition "p |t| r. ^s"
+> stParse methodDefinition "p: q"
+> stParse methodDefinition "p: q r"
+> stParse methodDefinition "p: q ^r"
+> stParse methodDefinition "p: q r. ^s"
 > methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 -}
 methodDefinition :: P MethodDefinition
@@ -168,11 +179,27 @@ pattern_pp pat =
     BinaryPattern (b,a) -> strjn [b,a]
     KeywordPattern kp -> strjn (concatMap (\(k,a) -> [k,a]) kp)
 
+{- | Derive method selector from Pattern.
+
+> patternSelector (stParse messagePattern "midicps") == "midicps"
+> patternSelector (stParse messagePattern "+ aNumber") == "+"
+> patternSelector (stParse messagePattern "new: x") == "new:"
+> patternSelector (stParse messagePattern "freq: f phase: p") == "freq:phase:"
+-}
+patternSelector :: Pattern -> Identifier
+patternSelector pat =
+  case pat of
+    UnaryPattern u -> u
+    BinaryPattern (b,_) -> b
+    KeywordPattern kp -> concatMap fst kp
+
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
 > stParse messagePattern "p" == UnaryPattern "p"
 > stParse messagePattern "+p" == stParse messagePattern "+ p"
+> stParse messagePattern "k1:p1" == stParse messagePattern "k1: p1"
 > stParse messagePattern "k1:p1 k2:p2" == stParse messagePattern "k1: p1 k2: p2"
+> stParse messagePattern "k: v x"
 -}
 messagePattern :: P Pattern
 messagePattern = P.choice [(P.try keywordPattern),(P.try binaryPattern),unaryPattern] P.<?> "messagePattern"
@@ -197,17 +224,16 @@ binaryPattern = do
 
 {- | <keyword pattern> ::= (keyword <method argument>)+
 
-> stParse keywordPattern "k: p"
-> stParse keywordPattern "k1: p1 k2: p2"
-> stParse keywordPattern "k1: p1 k2:" -- FAIL
-> stParse keywordPattern "k1: p1 p2" -- FAIL
+> stParse keywordPattern "k: p" == KeywordPattern [("k:","p")]
+> stParse keywordPattern "k1: p1 k2: p2" == KeywordPattern [("k1:","p1"),("k2:","p2")]
+> stParse keywordPattern "k1: p1 ..." == KeywordPattern [("k1:","p1")]
 -}
 keywordPattern :: P Pattern
 keywordPattern = do
   let f = do kw <- keyword
              arg <- identifier
              return (kw,arg)
-  fmap KeywordPattern (P.many1 f)
+  fmap KeywordPattern (P.many1 (P.try f))
 
 type Temporaries = [Identifier]
 
@@ -367,6 +393,7 @@ returnStatement_pp (ReturnStatement e) = printf "^%s" (expression_pp e)
 > stParse returnStatement "^ 1"
 > stParse returnStatement "^ p"
 > stParse returnStatement "^ a value + b value + c value"
+> stParse returnStatement "^ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
 returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
@@ -400,6 +427,7 @@ expression_pp = expression_bimap assignment_pp basicExpression_pp
 > stParse expression "pitch size mixFill: x"
 > stParse expression "[1] value"
 > stParse expression "o m: true"
+> stParse expression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
 expression :: P Expression
 expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
@@ -440,11 +468,13 @@ basicExpression_pp (p,m,c) =
 > stParse basicExpression "1"
 > stParse basicExpression "p"
 > stParse basicExpression "1 negate"
+> stParse basicExpression "p negate"
 > stParse basicExpression "1 + 2"
 > stParse basicExpression "(p)"
-> stParse basicExpression "(p 1)"
+> stParse basicExpression "(p q)"
 > stParse basicExpression "a value + b value + c value"
-> stParse basicExpression "p q r: x"
+> stParse basicExpression "p q r: x" == stParse basicExpression "p q r:x"
+> stParse basicExpression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
 basicExpression :: P BasicExpression
 basicExpression = do
@@ -511,11 +541,12 @@ inBrackets = P.brackets stLexer
 > primary_pp (stParse primary "{p.q.r}")
 -}
 primary :: P Primary
-primary = P.choice [fmap PrimaryBlock blockConstructor
+primary =
+  lexeme (P.choice [fmap PrimaryBlock blockConstructor
                    ,fmap PrimaryExpression (inParentheses expression)
                    ,fmap PrimaryArrayExpression (inBraces (P.sepBy basicExpression period))
                    ,fmap PrimaryIdentifier identifier
-                   ,fmap PrimaryLiteral literal] P.<?> "primary"
+                   ,fmap PrimaryLiteral literal] P.<?> "primary")
 
 {- | <unary message>+ <binary message>* [<keyword message>]
 
@@ -556,22 +587,32 @@ binaryMessages = do
 > stParse messages "+p" == stParse messages "+ p"
 > stParse messages "+p +q" == stParse messages "+ p + q"
 > stParse messages "+p +q k:r" == stParse messages "+ p + q k: r"
-> stParse messages "q r: x"
+> stParse messages "q r: x" == stParse messages "q r:x"
+> stParse messages "< 0 ifTrue: [0 - self] ifFalse: [self]" == stParse messages "<0ifTrue:[0-self]ifFalse:[self]"
 -}
 messages :: P Messages
 messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
 
 data UnaryMessage = UnaryMessage Identifier deriving (Eq,Show)
 
+unaryMessageSelector :: UnaryMessage -> Identifier
+unaryMessageSelector (UnaryMessage u) = u
+
 unaryMessage_pp :: UnaryMessage -> String
-unaryMessage_pp (UnaryMessage u) = u
+unaryMessage_pp = unaryMessageSelector
 
 data BinaryMessage = BinaryMessage (Identifier,BinaryArgument) deriving (Eq,Show)
 
 binaryMessage_pp :: BinaryMessage -> String
 binaryMessage_pp (BinaryMessage (b,a)) = strjn [b,binaryArgument_pp a]
 
+binaryMessageSelector :: BinaryMessage -> Identifier
+binaryMessageSelector (BinaryMessage (b,_)) = b
+
 data KeywordMessage = KeywordMessage [(Identifier,KeywordArgument)] deriving (Eq,Show)
+
+keywordMessageSelector :: KeywordMessage -> Identifier
+keywordMessageSelector (KeywordMessage l) = concatMap fst l
 
 keywordMessage_pp :: KeywordMessage -> String
 keywordMessage_pp (KeywordMessage l) =
@@ -846,9 +887,12 @@ comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommen
 
 type ReservedIdentifier = String
 
--- | One of stReservedIdentifiers
+{- | One of stReservedIdentifiers
+
+> map (stParse reservedIdentifier) (words "self super")
+-}
 reservedIdentifier :: P ReservedIdentifier
-reservedIdentifier = P.choice (map P.string stReservedIdentifiers)
+reservedIdentifier = P.choice (map (P.try . P.string) stReservedIdentifiers)
 
 type OrdinaryIdentifier = String
 
