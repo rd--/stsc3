@@ -27,7 +27,7 @@ SystemWindow subclass: #SC3Editor
   instanceVariableNames: 'fileName editor'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 SC3Editor comment: 'Editor for UGen graph fragments'!
@@ -85,7 +85,7 @@ SystemWindow subclass: #SC3Browser
   instanceVariableNames: 'directoryName index'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 SC3Browser comment: 'List view on UGen graph fragments'!

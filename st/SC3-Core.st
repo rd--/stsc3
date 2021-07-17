@@ -2,7 +2,7 @@ Object subclass: #AbstractUGen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 AbstractUGen comment: 'Unit Generator (Abstract)'!
@@ -39,7 +39,7 @@ AbstractUGen subclass: #UGen
   instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 UGen comment: 'Unit Generator.  ugenId is assigned during graph serialisation since identityHash is not unique'!
@@ -89,7 +89,7 @@ UGen subclass: #BinaryOpUGen
   instanceVariableNames: 'a b'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 BinaryOpUGen comment: 'Binary Operators'!
@@ -127,7 +127,7 @@ UGen subclass: #UnaryOpUGen
   instanceVariableNames: 'a'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 UnaryOpUGen comment: 'Unary Operators'!
@@ -160,7 +160,7 @@ AbstractUGen subclass: #Rate
   instanceVariableNames: 'source rate'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Rate comment: 'UGen Processing Rate'!
@@ -211,7 +211,7 @@ AbstractUGen subclass: #MCE
   instanceVariableNames: 'source transform'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 MCE comment: 'Multiple Channel Expansion'!
@@ -294,7 +294,7 @@ AbstractUGen subclass: #Mix
   instanceVariableNames: 'source'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Mix comment: 'UGen Mixer'!
@@ -334,7 +334,7 @@ Object subclass: #SC3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 SC3 comment: 'SuperCollider3'!
@@ -349,7 +349,7 @@ AbstractUGen subclass: #MRG
   instanceVariableNames: 'lhs rhs'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 MRG comment: 'Multiple Root Graph'!
@@ -386,7 +386,7 @@ AbstractUGen subclass: #Control
   instanceVariableNames: 'name init'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Control comment: 'Control Input'!
@@ -421,7 +421,7 @@ AbstractUGen subclass: #Constant
   instanceVariableNames: 'k'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Constant comment: 'Constant Numerical Value'!
@@ -472,7 +472,7 @@ Object subclass: #OverlapTexture
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 OverlapTexture comment: 'Texture Generator'!

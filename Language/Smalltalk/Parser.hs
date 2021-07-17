@@ -158,6 +158,9 @@ data Pattern
   | KeywordPattern [(Keyword,Identifier)]
   deriving (Eq, Show)
 
+-- > pattern_pp (stParse messagePattern "midicps")
+-- > pattern_pp (stParse messagePattern "+ aNumber")
+-- > pattern_pp (stParse messagePattern "freq: f phase: p")
 pattern_pp :: Pattern -> String
 pattern_pp pat =
   case pat of

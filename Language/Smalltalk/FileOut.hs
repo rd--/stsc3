@@ -91,16 +91,18 @@ fileOutReader = do
 
 -- | Parser for FileOut segment.
 fileOutSegment :: P FileOutSegment
-fileOutSegment = fileOutReader P.<|> fileOutEval
+fileOutSegment = (fileOutReader P.<|> fileOutEval) St.>>~ P.optional (P.spaces)
 
 {- | Parser for FileOut.
 
 > St.stParse fileOut "'A comment chunk'! !" == [FileOutEvalSegment ["'A comment chunk'"]]
 > St.stParse fileOut "x! y! !"
 > St.stParse fileOut "!Number methodsFor: 'arithmetic'! midicps ^440 * (2 raisedTo: ((self - 69) * (1 / 12)))! !"
+> St.stParse fileOut "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'! !"
+> St.stParse fileOut "! x ! y ! ! z ! !"
 -}
 fileOut :: P FileOut
-fileOut = P.many1 (P.try fileOutSegment) St.>>~ P.optional (P.spaces)
+fileOut = P.many1 (P.try fileOutSegment)
 
 -- | Run fileOut parser.
 parseFileOut :: String -> FileOut

@@ -28,11 +28,13 @@ import qualified Language.Smalltalk.Parser as St {- stsc3 -}
 -- | VM is simply an environment.
 type VM t = Env.EnvMonad IO Object t
 
+type Name = String
+
 -- | Object
 data Object
   = NilObject
-  | ClassObject String
-  | UGenClassObject String DB.U
+  | ClassObject Name
+  | UGenClassObject Name DB.U
   | UGenObject SC3.UGen
   | SymbolObject String -- ^ There is no separate string type.
   | BlockObject (Env.Env Object) St.BlockBody

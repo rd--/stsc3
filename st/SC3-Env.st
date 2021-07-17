@@ -2,7 +2,7 @@ Object subclass: #Env
   instanceVariableNames: 'levels times curves releaseNode loopNode offset'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Env comment: 'Specification for a segmented envelope'!
@@ -82,7 +82,7 @@ Object subclass: #EnvBuilder
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvBuilder comment: 'Envelope types'!
@@ -106,7 +106,7 @@ EnvBuilder subclass: #EnvPerc
   instanceVariableNames: 'attackTime releaseTime level curves'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
@@ -150,7 +150,7 @@ EnvBuilder subclass: #EnvLinen
   instanceVariableNames: 'attackTime sustainTime releaseTime level curves'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
@@ -197,7 +197,7 @@ EnvBuilder subclass: #EnvASR
   instanceVariableNames: 'attackTime sustainLevel releaseTime curves'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvASR comment: 'Attack-Sustain-Release Envelope'!
@@ -240,7 +240,7 @@ EnvBuilder subclass: #EnvADSR
   instanceVariableNames: 'attackTime decayTime sustainLevel releaseTime peakLevel curves'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
@@ -290,7 +290,7 @@ EnvBuilder subclass: #EnvSine
   instanceVariableNames: 'dur level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!

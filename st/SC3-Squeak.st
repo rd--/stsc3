@@ -1,4 +1,4 @@
-SystemOrganization addCategory: #'SC3'!
+SystemOrganization addCategory: #'Sound-SC3'!
 
 !String methodsFor: 'file i/o'!
   readTextFile

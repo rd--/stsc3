@@ -11,7 +11,7 @@ AbstractUGen subclass: #Splay
   instanceVariableNames: 'input spread level center levelComp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 Splay comment: 'Pan a set of channels across the stereo field.'!
@@ -79,7 +79,7 @@ AbstractUGen subclass: #TXLine
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 TXLine comment: 'Triggered XLine.'!
@@ -99,7 +99,7 @@ AbstractUGen subclass: #TChoose
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 TChoose comment: 'Randomly select one of several inputs on trigger.'!

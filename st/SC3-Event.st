@@ -2,7 +2,7 @@ Object subclass: #EventParam
   instanceVariableNames: 'w x y z o rx ry p px'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EventParam comment: 'Event Parameters'!
@@ -68,7 +68,7 @@ Object subclass: #EventControl
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'SC3'
+  category: 'Sound-SC3'
 !
 
 EventControl comment: 'Event Control Input'!
