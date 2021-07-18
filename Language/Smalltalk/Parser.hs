@@ -1,7 +1,6 @@
 -- | Parser and pretty printer for a subset of ANSI Smalltalk.
 module Language.Smalltalk.Parser where
 
-import Data.Char {- base -}
 import Data.Functor.Identity {- base -}
 import Data.List {- base -}
 import qualified Numeric {- base -}
@@ -43,12 +42,15 @@ stLanguageDef =
 stLexer :: P.GenTokenParser String () Identity
 stLexer = P.makeTokenParser stLanguageDef
 
+{-
+import Data.Char {- base -}
 deleteLeadingSpaces :: String -> String
 deleteLeadingSpaces = dropWhile isSpace
+-}
 
--- | Run parser and report any error.
+-- | Run parser and report any error.  Does not delete leading spaces.
 stParse :: P t -> String -> t
-stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p "" . deleteLeadingSpaces
+stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
 
 -- | 'unwords', removing empty input strings.  Used for pretty printing.
 strjn :: [String] -> String
@@ -170,6 +172,8 @@ methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temp
 > stParse methodDefinition "p: q ^r"
 > stParse methodDefinition "p: q r. ^s"
 > stParse methodDefinition "printElementsOn: aStream aStream nextPut: $(."
+> stParse methodDefinition "* anObject ^self shallowCopy *= anObject"
+
 > methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 -}
 methodDefinition :: P MethodDefinition
@@ -909,10 +913,10 @@ type ReservedIdentifier = String
 
 {- | One of stReservedIdentifiers
 
-> map (stParse reservedIdentifier) (words "self super")
+> map (stParse reservedIdentifier) (words "self super nil")
 -}
 reservedIdentifier :: P ReservedIdentifier
-reservedIdentifier = P.choice (map (P.try . P.string) stReservedIdentifiers)
+reservedIdentifier = lexeme (P.choice (map (P.try . P.string) stReservedIdentifiers))
 
 type OrdinaryIdentifier = String
 
@@ -927,6 +931,7 @@ type Identifier = String
 > stParse identifier "1x" -- FAIL
 > stParse identifier "" -- FAIL
 > stParse identifier "true" == "true"
+> stParse identifier "nil" == "nil
 -}
 identifier :: P Identifier
 identifier = ordinaryIdentifier P.<|> reservedIdentifier

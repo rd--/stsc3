@@ -21,7 +21,8 @@ Library
   Default-Language: Haskell2010
   GHC-Options:      -Wall -fwarn-tabs
   Exposed-modules:  Language.Smalltalk.FileOut,
-                    Language.Smalltalk.Parser
+                    Language.Smalltalk.Parser,
+                    Language.Smalltalk.SOM
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
