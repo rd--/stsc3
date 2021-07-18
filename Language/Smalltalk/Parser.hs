@@ -68,6 +68,8 @@ stRewrite st_fn rw_fn = do
   let p = stParse smalltalkProgram st
   writeFile rw_fn (smalltalkProgram_pp p)
 
+-- * 3.3 Smalltalk Abstract Program Grammar
+
 -- * 3.3.1 Program Definition
 
 type SmalltalkProgram = [ProgramElement]
@@ -94,6 +96,19 @@ programElement_pp el =
 programElement :: P ProgramElement
 programElement = P.choice [fmap ProgramInitializer programInitializerDefinition
                           ,fmap ProgramGlobal globalDefinition]
+
+-- * 3.3.2 Class Definition
+
+-- | A class definition defines the behavior and encapsulated state of objects.
+data ClassDefinition =
+  ClassDefinition {className :: Identifier
+                  ,superclassName :: Maybe Identifier
+                  ,instanceVariableNames :: [Identifier]
+                  ,classVariableNames :: [Identifier]
+                  ,instanceMethods :: [MethodDefinition]
+                  ,classMethods :: [MethodDefinition]
+                  ,classInitializer :: Maybe InitializerDefinition}
+  deriving (Eq,Show)
 
 -- * 3.3.3 Global Variable Definition
 
@@ -154,6 +169,7 @@ methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temp
 > stParse methodDefinition "p: q r"
 > stParse methodDefinition "p: q ^r"
 > stParse methodDefinition "p: q r. ^s"
+> stParse methodDefinition "printElementsOn: aStream aStream nextPut: $(."
 > methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 -}
 methodDefinition :: P MethodDefinition
@@ -370,14 +386,18 @@ period = P.dot stLexer
 > stParse statements "p q"
 > stParse statements "(p q)"
 > stParse statements "p.^q" == stParse statements "p .^q"
-> stParse statements "p . ^q" ==  stParse statements "p . ^ q"
+> stParse statements "p . ^q" == stParse statements "p . ^ q"
 > stParse statements "^ 440 * (2 ** ((self - 69) * (1 / 12)))"
+> stParse statements "p. q." == stParse statements "p. q"
 -}
 statements :: P Statements
 statements = do
   let rhs = do
         e <- expression
-        s <- P.optionMaybe (period >> statements)
+        p <- P.optionMaybe period
+        s <- case p of
+               Nothing -> return Nothing
+               Just _ -> P.optionMaybe statements
         return (StatementsExpression e s)
   P.choice [fmap StatementsReturn (returnStatement >>~ P.optional period),rhs]
 
