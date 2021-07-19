@@ -20,8 +20,8 @@ Library
                     parsec
   Default-Language: Haskell2010
   GHC-Options:      -Wall -fwarn-tabs
-  Exposed-modules:  Language.Smalltalk.FileOut,
-                    Language.Smalltalk.Parser,
+  Exposed-modules:  Language.Smalltalk.ANSI,
+                    Language.Smalltalk.FileOut,
                     Language.Smalltalk.SOM
 
 executable stsc3

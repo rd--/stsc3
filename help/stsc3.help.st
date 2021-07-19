@@ -148,8 +148,34 @@ x isNil ifTrue: ['x'] ifFalse: ['y'] "-> x"
 
 "Class"
 
+'x' class = String. "true"
+'x' class class = String class. "true"
+'x' class class class = Metaclass. "true"
+'x' class class class class = Metaclass class. "true"
+'x' class class class class class = Metaclass. "true"
+
+SinOsc name = #SinOsc. "true"
 SinOsc class. "SinOsc class"
-SinOsc new class. "SinOsc"
+SinOsc class name. "nil ; 'SinOsc class'"
+SinOsc new class name = #SinOsc. "true"
+SinOsc class class name = #Metaclass. "true"
+SinOsc class class class name. "nil ; 'Metaclass class'"
+SinOsc class class class class name = #Metaclass. "true"
+
+SinOsc superclass name = #UGen. "true"
+SinOsc superclass superclass name = #AbstractUGen. "true"
+SinOsc superclass superclass superclass name = #Object. "true"
+SinOsc superclass superclass superclass superclass. "nil ; ProtoObject"
+
+SinOsc subclasses size = 0. "true"
+UGen subclasses size = 104. "true"
+
+SinOsc methodDict. "Squeak"
+SinOsc methodDictionary. "Gnu Smalltalk"
+
+SinOsc inspect.
+SinOsc class inspect.
+SinOsc new inspect.
 
 "Morph"
 
@@ -263,7 +289,9 @@ FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in]. "read"
 
 "Smalltalk"
 
-Smalltalk garbageCollect.
+(Smalltalk at: #SinOsc) = SinOsc. "true"
+
+Smalltalk garbageCollect. "Squeak"
 Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
@@ -285,7 +313,11 @@ Float pi * 2 "-> 6.283185307179586"
 Smalltalk system: 'ls /home/rohan/sw/stsc3/README.md'.
 Smalltalk getenv: 'HOME'. "/home/rohan"
 
-ObjectMemory snapshot. "save image file"
+ObjectMemory snapshot. "save image file (to current image file)"
+ObjectMemory snapshot: '/tmp/stsc3.img'. "save image file (to indicated image file)"
+ObjectMemory compact. "garbage collection (major)"
+ObjectMemory scavenge. "garbage collection (minor)"
+ObjectMemory current inspect. "vm memory statistics"
 
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.

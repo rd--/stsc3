@@ -4,7 +4,7 @@ import qualified Sound.SC3 as SC3 {- hsc3 -}
 
 import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
 
-import qualified Language.Smalltalk.Parser as St {- stsc3 -}
+import qualified Language.Smalltalk.ANSI as St {- stsc3 -}
 
 import qualified Interpreter {- stsc3 -}
 

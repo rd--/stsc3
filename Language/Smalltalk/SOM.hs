@@ -3,7 +3,7 @@ module Language.Smalltalk.SOM where
 
 import qualified Text.Parsec as P {- parsec -}
 
-import qualified Language.Smalltalk.Parser as St {- stsc3 -}
+import qualified Language.Smalltalk.ANSI as St {- stsc3 -}
 
 equalSign :: St.P Char
 equalSign = St.lexeme (P.char '=')
@@ -67,4 +67,13 @@ classDefinition = do
   instanceMethods <- P.many methodDefinition
   (classVariableNames,classMethods) <- P.option ([],[]) classSide
   _ <- closeParen
-  return (St.ClassDefinition className superclassName instanceVariableNames classVariableNames instanceMethods classMethods Nothing)
+  return (St.ClassDefinition
+          className
+          superclassName
+          St.noInstanceState
+          instanceVariableNames
+          classVariableNames
+          []
+          instanceMethods
+          classMethods
+          Nothing)

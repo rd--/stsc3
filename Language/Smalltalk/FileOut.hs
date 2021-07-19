@@ -20,7 +20,7 @@ module Language.Smalltalk.FileOut where
 
 import qualified Text.Parsec as P {- parsec -}
 
-import Language.Smalltalk.Parser as St
+import Language.Smalltalk.ANSI as St
 
 -- | A chunk is a text string.
 type Chunk = String

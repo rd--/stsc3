@@ -1,5 +1,5 @@
 -- | Parser and pretty printer for a subset of ANSI Smalltalk.
-module Language.Smalltalk.Parser where
+module Language.Smalltalk.ANSI where
 
 import Data.Functor.Identity {- base -}
 import Data.List {- base -}
@@ -101,12 +101,21 @@ programElement = P.choice [fmap ProgramInitializer programInitializerDefinition
 
 -- * 3.3.2 Class Definition
 
+data Indexable = ByteIndexable | ObjectIndexable | NonIndexable deriving (Eq,Show)
+
+data InstanceState = InstanceState Indexable [Identifier] deriving (Eq,Show)
+
+noInstanceState :: InstanceState
+noInstanceState = InstanceState NonIndexable []
+
 -- | A class definition defines the behavior and encapsulated state of objects.
 data ClassDefinition =
   ClassDefinition {className :: Identifier
                   ,superclassName :: Maybe Identifier
-                  ,instanceVariableNames :: [Identifier]
+                  ,instanceState :: InstanceState
+                  ,classInstanceVariableNames :: [Identifier]
                   ,classVariableNames :: [Identifier]
+                  ,importedPoolNames :: [Identifier]
                   ,instanceMethods :: [MethodDefinition]
                   ,classMethods :: [MethodDefinition]
                   ,classInitializer :: Maybe InitializerDefinition}
@@ -185,7 +194,7 @@ methodDefinition = do
 
 data Pattern
   = UnaryPattern Identifier
-  | BinaryPattern (Identifier,Identifier)
+  | BinaryPattern (BinarySelector,Identifier)
   | KeywordPattern [(Keyword,Identifier)]
   deriving (Eq, Show)
 
@@ -200,6 +209,7 @@ pattern_pp pat =
     KeywordPattern kp -> strjn (concatMap (\(k,a) -> [k,a]) kp)
 
 {- | Derive method selector from Pattern.
+     Return is either Identifier or BinarySelector (both Strings).
 
 > patternSelector (stParse messagePattern "midicps") == "midicps"
 > patternSelector (stParse messagePattern "+ aNumber") == "+"
@@ -499,6 +509,9 @@ basicExpression_pp (p,m,c) =
 > stParse basicExpression "a value + b value + c value"
 > stParse basicExpression "p q r: x" == stParse basicExpression "p q r:x"
 > stParse basicExpression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> stParse basicExpression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> stParse basicExpression "w * ((x + y) z)"
+> stParse basicExpression "w * (x + y) z"
 -}
 basicExpression :: P BasicExpression
 basicExpression = do
@@ -777,6 +790,7 @@ literal_pp lit =
 > stParse literal "#+" == SelectorLiteral (BinarySelector "+")
 > stParse literal "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
 > stParse literal "#(-12 -7 -5 0 2 5)"
+> stParse literal "#(x y z)"
 -}
 literal :: P Literal
 literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayLiteral, P.try symbolLiteral, selectorLiteral] -- lexeme
@@ -806,7 +820,7 @@ number_pp = either show (\n -> Numeric.showFFloat Nothing n "")
 > map (stParse number) (words "-1 -1.2") -- FAIL
 -}
 number :: P Number
-number = lexeme (fmap Right (P.try float) P.<|> fmap Left integer)
+number = fmap Right (P.try float) P.<|> fmap Left integer -- lexeme
 
 -- | <character literal> ::= quotedCharacter
 characterLiteral :: P Literal
@@ -827,6 +841,12 @@ symbolLiteral = fmap SymbolLiteral hashedString
 selectorLiteral :: P Literal
 selectorLiteral = fmap SelectorLiteral quotedSelector
 
+hashOpenParen :: P String
+hashOpenParen = lexeme (P.string "#(")
+
+closeParen :: P Char
+closeParen = lexeme (P.char ')')
+
 {- | <array literal> ::= '#(' <array element>* ')'
 
 > stParse arrayLiteral "#()" == stParse arrayLiteral "#( )"
@@ -836,7 +856,7 @@ selectorLiteral = fmap SelectorLiteral quotedSelector
 > stParse arrayLiteral "#(1 2.0 p)"
 -}
 arrayLiteral :: P Literal
-arrayLiteral = fmap ArrayLiteral (P.between (lexeme (P.string "#(")) (lexeme (P.char ')')) (P.many arrayElement))
+arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
 
 {- | <array element> ::= <literal> | identifier
 
@@ -887,7 +907,7 @@ letter = P.choice [uppercaseAlphabetic, lowercaseAlphabetic, nonCaseLetter]
 
 -- | commentDelimiter ::= '"'
 commentDelimiter :: P Char
-commentDelimiter = P.char '"' -- non-lexeme
+commentDelimiter = P.char '"' -- non-lexeme (the lhs comment marker is not a lexeme, the rhs is)
 
 {- | nonCommentDelimiter::= "any character that is not a commentDelimiter "
 
@@ -928,10 +948,11 @@ type Identifier = String
 {- | identifier ::= letter (letter | digit)*
 
 > stParse identifier "x1" == "x1"
+> stParse identifier "X1" == "X1"
 > stParse identifier "1x" -- FAIL
 > stParse identifier "" -- FAIL
 > stParse identifier "true" == "true"
-> stParse identifier "nil" == "nil
+> stParse identifier "nil" == "nil"
 -}
 identifier :: P Identifier
 identifier = ordinaryIdentifier P.<|> reservedIdentifier
@@ -958,7 +979,8 @@ keyword = do
 binaryCharacter :: P Char
 binaryCharacter = P.oneOf "!%&*+,/<=>?@\\~|-"
 
-type BinarySelector = String
+-- | Identifier for binary operations.
+type BinarySelector = Identifier
 
 -- | binarySelector ::= binaryCharacter+
 --
@@ -987,7 +1009,7 @@ decimalInteger = fmap read digits
 
 -- | digits ::= digit+
 digits :: P String
-digits = P.many1 P.digit
+digits = lexeme (P.many1 P.digit)
 
 -- | float ::= mantissa [exponentLetter exponent]
 float :: P Double
@@ -1037,7 +1059,7 @@ stringBody = P.many (nonStringDelimiter P.<|> P.try (stringDelimiter >>~ stringD
 
 -- | stringDelimiter ::= ''' "a single quote"
 stringDelimiter :: P Char
-stringDelimiter = P.char '\'' -- non-lexeme
+stringDelimiter = P.char '\'' -- non-lexeme (the lhs is not a lexeme, the rhs is)
 
 -- | nonStringDelimiter ::= "any character except stringDelimiter"
 nonStringDelimiter :: P Char
