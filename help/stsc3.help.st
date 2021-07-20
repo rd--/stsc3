@@ -13,6 +13,12 @@ SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
 SinOsc new freq: 440 ; phase: 0 "freq: and phase: are instance methods and ; is the cascade operator"
 SinOsc new inspect "initialize sets default values for parameters"
 
+SinOsc ar: {220. Float pi}
+SinOsc ar: {#freq: -> 110. #phase: -> (Float pi / 4)}
+SinOsc ar: {#phase: -> 1. #freq: -> 55}
+SinOsc ar: {22.5. #phase: -> 0}
+BrownNoise ar
+
 "File I/O - Text"
 
 '/tmp/str.text' writeTextFile: [:fd | 5.0 asString putOn: fd].
@@ -63,6 +69,13 @@ SelectorBrowser new open. "squeak ; MVC"
 
 MessageNames openMessageNames. "open Message Names tool"
 
+"Precedence"
+
+2 + 5 * 5. "-> 35"
+2 + (5 * 5). "-> 27"
+2 + 5 min: 5.  "-> 5"
+2 + (5 min: 5). "-> 7"
+
 "Random - Float"
 
 5.0 rand "-> uniform random Float in 0 to 5"
@@ -100,6 +113,8 @@ MessageNames openMessageNames. "open Message Names tool"
 5 arrayFillZeroIndexed: [:x | x * x] "-> #(0 1 4 9 16)"
 
 Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
+
+#(5 4 3 2 1) withIndexDo: [:e :i | {e. i} print].
 
 "Array - Math"
 

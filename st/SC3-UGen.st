@@ -5750,6 +5750,7 @@ XLine comment: 'Exponential line generator.'!
   midicps ^ UnaryOpUGen specialIndex: 17 a: self!
   log ^ UnaryOpUGen specialIndex: 25 a: self!
   sin ^ UnaryOpUGen specialIndex: 28 a: self!
+  cos ^ UnaryOpUGen specialIndex: 29 a: self!
   tanh ^ UnaryOpUGen specialIndex: 36 a: self!
   distort ^ UnaryOpUGen specialIndex: 42 a: self!
 !

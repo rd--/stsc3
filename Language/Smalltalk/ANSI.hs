@@ -346,8 +346,8 @@ blockBody_pp (BlockBody a t s) =
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
 > stParse blockBody ""
-> stParse blockBody ":a|"
-> stParse blockBody ":a :b|"
+> stParse blockBody ":a|" == stParse blockBody ": a|"
+> stParse blockBody ":a :b|" == stParse blockBody ": a : b|"
 > stParse blockBody ":a| |p q r|"
 > stParse blockBody ":a :b| |p q r|"
 > stParse blockBody "|p q r|"
@@ -370,10 +370,10 @@ blockArgument_pp = (:) ':'
 
 {- | <block argument> ::= ':' identifier
 
-> stParse blockArgument ":a"
+> stParse blockArgument ":a" == stParse blockArgument ": a"
 -}
 blockArgument :: P BlockArgument
-blockArgument = P.char ':' >> identifier
+blockArgument = lexeme (P.char ':') >> identifier
 
 -- * 3.4.5
 

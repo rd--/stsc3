@@ -7,6 +7,47 @@ Object subclass: #AbstractUGen
 
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
+"
+Support for SuperCollider type class instantiation.
+Note there are also a and and kr instance methods.
+"
+!AbstractUGen class methodsFor: 'instance creation'!
+  ar
+    ^self new ugenRate: #ar
+  !
+  ar: d
+    ^self ar setParamsFromOrderedDictionary: d
+  !
+  kr
+    ^self new ugenRate: #kr
+  !
+  kr: d
+    ^self kr setParamsFromOrderedDictionary: d
+  !
+  ir
+    ^self new ugenRate: #ir
+  !
+  ir: d
+    ^self ir setParamsFromOrderedDictionary: d
+  !
+  dr
+    ^self new ugenRate: #dr
+  !
+  dr: d
+    ^self dr setParamsFromOrderedDictionary: d
+  !
+!
+
+!AbstractUGen methodsFor: 'accessing'!
+  setParamsFromOrderedDictionary: d
+    "Set UGen parameters from an array of either ugen inputs or (name,input) associations."
+    d withIndexDo: [:e :i |
+      (e class = Association)
+        ifTrue: [self perform: e key with: e value]
+        ifFalse: [self instVarNamed: (self paramNames at: i) put: e]]
+  !
+!
+
 !AbstractUGen methodsFor: 'collecting'!
   addToUGenSet: c
     "Add inputs to UGen set.  Only actual instances of UGen are collected."

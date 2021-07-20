@@ -95,7 +95,7 @@ TXLine comment: 'Triggered XLine.'!
   !
 !
 
-AbstractUGen subclass: #TChoose
+UGen subclass: #TChoose
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -107,5 +107,8 @@ TChoose comment: 'Randomly select one of several inputs on trigger.'!
 !TChoose class methodsFor: 'instance creation'!
   trig: trig array: array
     ^Select which: (TIRand lo: 0 hi: (array size - 1) trig: trig) array: array
+  !
+  kr: d
+    ^self trig: (d at: 1) value array: (d at: 2) value.
   !
 !

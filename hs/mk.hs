@@ -4,7 +4,7 @@ uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
   ,("frac",10),("cubed",13),("reciprocal",16),("midicps",17)
-  ,("log",25),("sin",28),("tanh",36)
+  ,("log",25),("sin",28),("cos",29),("tanh",36)
   ,("distort",42)]
 
 binop :: [(String, Int)]
