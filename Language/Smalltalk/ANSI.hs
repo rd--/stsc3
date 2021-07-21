@@ -303,10 +303,13 @@ temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 
 -- * 3.4.3
 
-data InitializerDefinition = InitializerDefinition (Maybe Temporaries) (Maybe Statements) deriving (Eq,Show)
+data InitializerDefinition =
+  InitializerDefinition (Maybe Temporaries) (Maybe Statements)
+  deriving (Eq,Show)
 
 initializerDefinition_pp :: InitializerDefinition -> String
-initializerDefinition_pp (InitializerDefinition t s) = strjn [maybe "" temporaries_pp t,maybe "" statements_pp s]
+initializerDefinition_pp (InitializerDefinition t s) =
+  strjn [maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
 
@@ -440,14 +443,14 @@ returnStatement = fmap ReturnStatement (returnOperator >> expression)
 
 data Expression = ExprAssignment Assignment | ExprBasic BasicExpression deriving (Eq, Show)
 
-expression_bimap :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
-expression_bimap f g e =
+expressionEither :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
+expressionEither f g e =
   case e of
     ExprAssignment x -> f x
     ExprBasic x -> g x
 
 expression_pp :: Expression -> String
-expression_pp = expression_bimap assignment_pp basicExpression_pp
+expression_pp = expressionEither assignment_pp basicExpression_pp
 
 {- | <expression> ::= <assignment> | <basic expression>
 

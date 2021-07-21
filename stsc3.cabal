@@ -23,6 +23,7 @@ Library
   Exposed-modules:  Language.Smalltalk.ANSI,
                     Language.Smalltalk.FileOut,
                     Language.Smalltalk.SOM
+                    Language.Smalltalk.SuperCollider.Print
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
