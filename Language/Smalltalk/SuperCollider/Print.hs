@@ -126,24 +126,31 @@ sc_expression_pp = expressionEither sc_assignment_pp sc_basicExpression_pp
 sc_assignment_pp :: Assignment -> String
 sc_assignment_pp (Assignment i e) = printf "%s = %s" i (sc_expression_pp e)
 
-areBinaryMessages :: Maybe Messages -> Bool
-areBinaryMessages m =
+-- | Decide if Messages require the binary sequence to be parenthesised.
+requiresParen :: Maybe Messages -> Bool
+requiresParen m =
   case m of
-    Just (MessagesBinary _ _) -> True
+    Just (MessagesUnary _ (Just _) (Just _)) -> True
+    Just (MessagesBinary _ (Just _)) -> True
     _ -> False
 
 {- | Binary messages must be parenthesised because keyword messages have higher precedence.
 
 > let p = sc_basicExpression_pp . stParse basicExpression
+> p "x + y" == "x + y"
+> p "x + y * z" == "x + y * z"
+> p "x y + z q" == "x .y + z .q"
+> p "x y + z min: a" == "( x .y + z ) .min(a)"
 > p "x * y + z min: 3" == "( x * y + z ) .min(3)"
 > p "x == 0 ifTrue: [y]" == "( x == 0 ) .ifTrue({y})"
 -}
 sc_basicExpression_pp :: BasicExpression -> String
 sc_basicExpression_pp (BasicExpression p m c) =
-  strjn [if areBinaryMessages m then "(" else ""
-        ,sc_primary_pp p
-        ,maybe "" sc_messages_pp m
-        ,maybe "" sc_cascadedMessages_pp c]
+  let rqp = requiresParen m
+  in strjn [if rqp then "(" else ""
+           ,sc_primary_pp p
+           ,maybe "" (sc_messages_pp rqp) m
+           ,maybe "" sc_cascadedMessages_pp c]
 
 {- | In SuperCollider keyword patterns bind more closely than binary patterns.
 
@@ -152,14 +159,15 @@ sc_basicExpression_pp (BasicExpression p m c) =
 > p "at: 0 put: x * 2"
 > p "== 0 ifTrue: [error]" -- the initial binary operator needs to be parenthesised....
 -}
-sc_messages_pp :: Messages -> String
-sc_messages_pp ms =
+sc_messages_pp :: Bool -> Messages -> String
+sc_messages_pp rqp ms =
   case ms of
     MessagesUnary m1 m2 m3 -> strjn (concat ([map sc_unaryMessage_pp m1
                                              ,maybe [] (map sc_binaryMessage_pp) m2
+                                             ,if rqp then [")"] else []
                                              ,maybe [] (return . sc_keywordMessage_pp) m3]))
     MessagesBinary m1 m2 -> strjn (concat ([map sc_binaryMessage_pp m1
-                                           ,[")"] -- close binary messages ; precedence
+                                           ,if rqp then [")"] else []
                                            ,maybe [] (return . sc_keywordMessage_pp) m2]))
     MessagesKeyword m1 -> sc_keywordMessage_pp m1
 
