@@ -322,6 +322,9 @@ Smalltalk aboutThisSystem. "System Reporter"
 Float pi "-> 3.141592653589793"
 Float pi * 2 "-> 6.283185307179586"
 [:x | x * x] value: Float pi * 2 "-> 39.47841760435743"
+-1 raisedTo: (1/2). "-> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
+-1 raisedTo: (1/3). "-> -1 (Squeak)"
+-1 raisedTo: 0.5. "-> ArithmeticError: Negative can't be raised to float powers."
 
 "GNU Smalltalk"
 
