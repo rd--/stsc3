@@ -14,7 +14,9 @@ openParen = St.lexeme (P.char '(')
 closeParen :: St.P Char
 closeParen = St.lexeme (P.char ')')
 
-type MethodBlock = (Maybe St.Temporaries,Maybe St.Statements)
+data MethodBlock =
+  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements)
+  deriving (Eq, Show)
 
 methodBlock :: St.P MethodBlock
 methodBlock = do
@@ -22,12 +24,14 @@ methodBlock = do
   t <- P.optionMaybe St.temporaries
   s <- P.optionMaybe St.statements
   _ <- closeParen
-  return (t,s)
+  return (MethodBlock t s)
 
 primitive :: St.P MethodBlock
 primitive = do
   p <- St.lexeme (P.string "primitive")
-  return (Nothing,Just (St.StatementsExpression (St.ExprBasic (St.PrimaryIdentifier p,Nothing,Nothing)) Nothing))
+  let be = St.BasicExpression (St.PrimaryIdentifier p) Nothing Nothing
+      se = St.StatementsExpression (St.ExprBasic be) Nothing
+  return (MethodBlock Nothing (Just se))
 
 {- | The SOM separator is an allowed Smalltalk operator name.
      It can therefore form the start of a Smalltalk method definition.
@@ -40,7 +44,7 @@ methodDefinition = do
   P.notFollowedBy separator
   p <- St.messagePattern
   _ <- equalSign
-  (t,s) <- primitive P.<|> methodBlock
+  MethodBlock t s <- primitive P.<|> methodBlock
   return (St.MethodDefinition p t s)
 
 -- > St.stParse separator "-----------" == "----"
@@ -50,7 +54,7 @@ separator = St.lexeme (P.string "----" St.>>~ P.many (P.char '-'))
 classSide :: St.P ([St.Identifier], [St.MethodDefinition])
 classSide = do
   _ <- separator
-  t <- P.option [] St.temporaries
+  t <- P.option [] St.temporariesIdentifierSequence
   m <- P.many methodDefinition
   return (t,m)
 
@@ -63,7 +67,7 @@ classDefinition = do
   _ <- equalSign
   superclassName <- P.optionMaybe St.identifier
   _ <- openParen
-  instanceVariableNames <- P.option [] St.temporaries
+  instanceVariableNames <- P.option [] St.temporariesIdentifierSequence
   instanceMethods <- P.many methodDefinition
   (classVariableNames,classMethods) <- P.option ([],[]) classSide
   _ <- closeParen

@@ -74,14 +74,15 @@ stRewrite st_fn rw_fn = do
 
 -- * 3.3.1 Program Definition
 
-type SmalltalkProgram = [ProgramElement]
+data SmalltalkProgram = SmalltalkProgram {programElements :: [ProgramElement]}
+  deriving (Eq, Show)
 
 smalltalkProgram_pp :: SmalltalkProgram -> String
-smalltalkProgram_pp = unlines . map programElement_pp
+smalltalkProgram_pp = unlines . map programElement_pp . programElements
 
 -- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
 smalltalkProgram :: P SmalltalkProgram
-smalltalkProgram = P.optional separator >> P.many1 programElement
+smalltalkProgram = P.optional separator >> fmap SmalltalkProgram (P.many1 programElement)
 
 data ProgramElement
   = ProgramGlobal GlobalDefinition
@@ -123,10 +124,12 @@ data ClassDefinition =
 
 -- * 3.3.3 Global Variable Definition
 
-type GlobalDefinition = (GlobalName,Maybe VariableInitializer)
+data GlobalDefinition =
+  GlobalDefinition GlobalName (Maybe VariableInitializer)
+  deriving (Eq, Show)
 
 globalDefinition_pp :: GlobalDefinition -> String
-globalDefinition_pp (n,i) = strjn [n,maybe "" variableInitializer_pp i,"\n"]
+globalDefinition_pp (GlobalDefinition n i) = strjn [n,maybe "" variableInitializer_pp i,"\n"]
 
 -- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
 globalDefinition :: P GlobalDefinition
@@ -134,7 +137,7 @@ globalDefinition = do
   -- constant designator
   n <- identifier
   v <- P.optionMaybe initializerDefinition
-  return (n,v)
+  return (GlobalDefinition n v)
 
 -- | <<global name>> ::= identifier
 type GlobalName = Identifier
@@ -194,7 +197,7 @@ methodDefinition = do
 
 data Pattern
   = UnaryPattern Identifier
-  | BinaryPattern (BinarySelector,Identifier)
+  | BinaryPattern BinarySelector Identifier
   | KeywordPattern [(Keyword,Identifier)]
   deriving (Eq, Show)
 
@@ -205,7 +208,7 @@ pattern_pp :: Pattern -> String
 pattern_pp pat =
   case pat of
     UnaryPattern u -> u
-    BinaryPattern (b,a) -> strjn [b,a]
+    BinaryPattern b a -> strjn [b,a]
     KeywordPattern kp -> strjn (concatMap (\(k,a) -> [k,a]) kp)
 
 {- | Derive method selector from Pattern.
@@ -220,7 +223,7 @@ patternSelector :: Pattern -> Identifier
 patternSelector pat =
   case pat of
     UnaryPattern u -> u
-    BinaryPattern (b,_) -> b
+    BinaryPattern b _ -> b
     KeywordPattern kp -> concatMap fst kp
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
@@ -250,7 +253,7 @@ binaryPattern :: P Pattern
 binaryPattern = do
   sel <- binarySelector
   arg <- identifier
-  return (BinaryPattern (sel,arg))
+  return (BinaryPattern sel arg)
 
 {- | <keyword pattern> ::= (keyword <method argument>)+
 
@@ -265,13 +268,16 @@ keywordPattern = do
              return (kw,arg)
   fmap KeywordPattern (P.many1 (P.try f))
 
-type Temporaries = [Identifier]
+data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
 
 temporaries_pp :: Temporaries -> String
-temporaries_pp = printf "|%s|\n" . strjn
+temporaries_pp (Temporaries t) = printf "|%s|\n" (strjn t)
 
 verticalBar :: P Char
 verticalBar = lexeme (P.char '|')
+
+temporariesIdentifierSequence :: P [Identifier]
+temporariesIdentifierSequence = P.between verticalBar verticalBar temporary_variable_list
 
 {- | <temporaries> ::= '|' <temporary variable list> '|'
 
@@ -282,7 +288,7 @@ verticalBar = lexeme (P.char '|')
 > stParse temporaries "|p q r|"
 -}
 temporaries :: P Temporaries
-temporaries = P.label (P.between verticalBar verticalBar temporary_variable_list) "temporaries"
+temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporaries"
 
 {- | <temporary variable list> ::= identifier*
 
@@ -489,10 +495,12 @@ assignment = do
   e <- expression
   return (Assignment a e)
 
-type BasicExpression = (Primary,Maybe Messages,Maybe CascadedMessages)
+data BasicExpression =
+  BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
+  deriving (Eq, Show)
 
 basicExpression_pp :: BasicExpression -> String
-basicExpression_pp (p,m,c) =
+basicExpression_pp (BasicExpression p m c) =
   strjn [primary_pp p
         ,maybe "" messages_pp m
         ,maybe "" cascadedMessages_pp c]
@@ -518,26 +526,26 @@ basicExpression = do
   p <- primary
   m <- P.optionMaybe messages
   c <- cascadedMessages
-  return (p,m,if null c then Nothing else Just c)
+  return (BasicExpression p m (if null c then Nothing else Just c))
 
 -- | <assignment target> := identifier
 assignmentTarget :: P Identifier
 assignmentTarget = P.label identifier "assignmentTarget"
 
 data Messages
-  = MessagesUnary ([UnaryMessage],Maybe [BinaryMessage],Maybe KeywordMessage)
-  | MessagesBinary ([BinaryMessage],Maybe KeywordMessage)
+  = MessagesUnary [UnaryMessage] (Maybe [BinaryMessage]) (Maybe KeywordMessage)
+  | MessagesBinary [BinaryMessage] (Maybe KeywordMessage)
   | MessagesKeyword KeywordMessage
   deriving (Eq,Show)
 
 messages_pp :: Messages -> String
 messages_pp ms =
   case ms of
-    MessagesUnary (m1,m2,m3) -> strjn (concat ([map unaryMessage_pp m1
-                                               ,maybe [] (map binaryMessage_pp) m2
-                                               ,maybe [] (return . keywordMessage_pp) m3]))
-    MessagesBinary (m1,m2) -> strjn (concat ([map binaryMessage_pp m1
-                                             ,maybe [] (return . keywordMessage_pp) m2]))
+    MessagesUnary m1 m2 m3 -> strjn (concat ([map unaryMessage_pp m1
+                                             ,maybe [] (map binaryMessage_pp) m2
+                                             ,maybe [] (return . keywordMessage_pp) m3]))
+    MessagesBinary m1 m2 -> strjn (concat ([map binaryMessage_pp m1
+                                           ,maybe [] (return . keywordMessage_pp) m2]))
     MessagesKeyword m1 -> keywordMessage_pp m1
 
 data Primary
@@ -602,14 +610,14 @@ unaryMessages = do
   b <- P.many binaryMessage
   P.optional separator -- ?
   k <- P.optionMaybe keywordMessage
-  return (MessagesUnary (u,if null b then Nothing else Just b,k))
+  return (MessagesUnary u (if null b then Nothing else Just b) k)
 
 -- | <binary message>+ [<keyword message>]
 binaryMessages :: P Messages
 binaryMessages = do
   b <- P.many1 binaryMessage
   k <- P.optionMaybe keywordMessage
-  return (MessagesBinary (b,k))
+  return (MessagesBinary b k)
 
 {- | <messages> ::= (<unary message>+ <binary message>* [<keyword message>] ) | (<binary message>+ [<keyword message>] ) | <keyword message>
 
@@ -638,15 +646,19 @@ unaryMessageSelector (UnaryMessage u) = u
 unaryMessage_pp :: UnaryMessage -> String
 unaryMessage_pp = unaryMessageSelector
 
-data BinaryMessage = BinaryMessage (Identifier,BinaryArgument) deriving (Eq,Show)
+data BinaryMessage =
+  BinaryMessage Identifier BinaryArgument
+  deriving (Eq,Show)
 
 binaryMessage_pp :: BinaryMessage -> String
-binaryMessage_pp (BinaryMessage (b,a)) = strjn [b,binaryArgument_pp a]
+binaryMessage_pp (BinaryMessage b a) = strjn [b,binaryArgument_pp a]
 
 binaryMessageSelector :: BinaryMessage -> Identifier
-binaryMessageSelector (BinaryMessage (b,_)) = b
+binaryMessageSelector (BinaryMessage b _) = b
 
-data KeywordMessage = KeywordMessage [(Identifier,KeywordArgument)] deriving (Eq,Show)
+data KeywordMessage =
+  KeywordMessage [(Identifier,KeywordArgument)]
+  deriving (Eq,Show)
 
 keywordMessageSelector :: KeywordMessage -> Identifier
 keywordMessageSelector (KeywordMessage l) = concatMap fst l
@@ -682,12 +694,14 @@ binaryMessage :: P BinaryMessage
 binaryMessage = do
   sel <- binarySelector
   arg <- binaryArgument
-  return (BinaryMessage (sel,arg))
+  return (BinaryMessage sel arg)
 
-type BinaryArgument = (Primary,Maybe [UnaryMessage])
+data BinaryArgument =
+  BinaryArgument Primary (Maybe [UnaryMessage])
+  deriving (Eq, Show)
 
 binaryArgument_pp :: BinaryArgument -> String
-binaryArgument_pp (p,m) = strjn [primary_pp p,maybe "" (strjn . map unaryMessage_pp) m]
+binaryArgument_pp (BinaryArgument p m) = strjn [primary_pp p,maybe "" (strjn . map unaryMessage_pp) m]
 
 {- | <binary argument> ::= <primary> <unary message>*
 
@@ -700,7 +714,7 @@ binaryArgument :: P BinaryArgument
 binaryArgument = do
   p <- primary
   u <- P.optionMaybe (P.many (P.try unaryMessage))
-  return (p,u)
+  return (BinaryArgument p u)
 
 {- | <keyword message> ::= (keyword <keyword argument>)+
 
@@ -714,10 +728,12 @@ keywordMessage = do
              return (kw,arg)
   fmap KeywordMessage (P.many1 f)
 
-type KeywordArgument = (Primary,Maybe [UnaryMessage],Maybe [BinaryMessage])
+data KeywordArgument =
+  KeywordArgument Primary (Maybe [UnaryMessage]) (Maybe [BinaryMessage])
+  deriving (Eq, Show)
 
 keywordArgument_pp :: KeywordArgument -> String
-keywordArgument_pp (p,m1,m2) =
+keywordArgument_pp (KeywordArgument p m1 m2) =
   strjn [primary_pp p
         ,maybe "" (strjn . map unaryMessage_pp) m1
         ,maybe "" (strjn . map binaryMessage_pp) m2]
@@ -737,7 +753,7 @@ keywordArgument = do
   p <- primary
   u <- P.optionMaybe (P.many1 (P.try unaryMessage))
   b <- P.optionMaybe (P.many1 (P.try binaryMessage))
-  return (p,u,b)
+  return (KeywordArgument p u b)
 
 cascadeSeparator :: P String
 cascadeSeparator = P.semi stLexer
@@ -807,12 +823,18 @@ numberLiteral = do
   n <- P.optionMaybe (P.char '-')
   let rw :: Num n => n -> n
       rw = maybe id (const negate) n
-  fmap (NumberLiteral . either (Left . rw) (Right . rw)) number -- lexeme
+  fmap (NumberLiteral . numberEither (Int . rw) (Float . rw)) number -- lexeme
 
-type Number = Either Integer Double
+data Number = Int Integer | Float Double deriving (Eq, Show)
+
+numberEither :: (Integer -> t) -> (Double -> t) -> Number -> t
+numberEither f1 f2 n =
+  case n of
+    Int x -> f1 x
+    Float x -> f2 x
 
 number_pp :: Number -> String
-number_pp = either show (\n -> Numeric.showFFloat Nothing n "")
+number_pp = numberEither show (\n -> Numeric.showFFloat Nothing n "")
 
 {- | <number> ::= integer | float | scaledDecimal
 
@@ -820,7 +842,7 @@ number_pp = either show (\n -> Numeric.showFFloat Nothing n "")
 > map (stParse number) (words "-1 -1.2") -- FAIL
 -}
 number :: P Number
-number = fmap Right (P.try float) P.<|> fmap Left integer -- lexeme
+number = fmap Float (P.try float) P.<|> fmap Int integer -- lexeme
 
 -- | <character literal> ::= quotedCharacter
 characterLiteral :: P Literal
@@ -828,7 +850,7 @@ characterLiteral = fmap CharacterLiteral quotedCharacter
 
 {- | <string literal> ::= quotedString
 
-> stParse stringLiteral "'x'" == "x"
+> stParse stringLiteral "'x'" == StringLiteral "x"
 -}
 stringLiteral :: P Literal
 stringLiteral = fmap StringLiteral quotedString

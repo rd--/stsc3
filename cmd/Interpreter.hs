@@ -129,8 +129,8 @@ arrayToObject a = do
 literalToObject :: St.Literal -> VM Object
 literalToObject l =
   case l of
-    St.NumberLiteral (Left x) -> return (UGenObject (SC3.constant x))
-    St.NumberLiteral (Right x) -> return (UGenObject (SC3.constant x))
+    St.NumberLiteral (St.Int x) -> return (UGenObject (SC3.constant x))
+    St.NumberLiteral (St.Float x) -> return (UGenObject (SC3.constant x))
     St.StringLiteral x -> return (SymbolObject x) -- ?
     St.CharacterLiteral _ -> throwError "literalToObject: character?"
     St.SymbolLiteral x -> return (SymbolObject x)
@@ -141,7 +141,8 @@ literalToObject l =
 
 -- | Add temporaries as single frame to environment, initialised to nil.
 evalTemporaries :: St.Temporaries -> VM ()
-evalTemporaries x = put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
+evalTemporaries (St.Temporaries x) =
+  put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
 
 -- | Delete frame and return input value.
 deleteFrame :: t -> VM t
@@ -188,10 +189,11 @@ evalAssignment (St.Assignment lhs rhs) = do
   return NilObject
 
 evalBinaryArgument :: St.BinaryArgument -> VM Object
-evalBinaryArgument (p,u) = evalPrimary p >>= \o -> maybe (return o) (evalUnaryMessageSeq o) u
+evalBinaryArgument (St.BinaryArgument p u) =
+  evalPrimary p >>= \o -> maybe (return o) (evalUnaryMessageSeq o) u
 
 evalBinaryMessage :: Object -> St.BinaryMessage -> VM Object
-evalBinaryMessage o (St.BinaryMessage (m,a)) = do
+evalBinaryMessage o (St.BinaryMessage m a) = do
   rhs <- evalBinaryArgument a
   case (o,rhs) of
     (UGenObject x,UGenObject y) ->
@@ -361,7 +363,7 @@ evalUnaryMessageSeq o sq =
     u:sq' -> evalUnaryMessage o u >>= \r -> evalUnaryMessageSeq r sq'
 
 evalKeywordArgument :: St.KeywordArgument -> VM Object
-evalKeywordArgument (p,u,b) = do
+evalKeywordArgument (St.KeywordArgument p u b) = do
   primary <- evalPrimary p
   unary <- maybe (return primary) (evalUnaryMessageSeq primary) u
   maybe (return unary) (evalBinaryMessageSeq unary) b
@@ -633,25 +635,25 @@ evalKeywordMessage o k = do
 messagesRewrite :: St.Messages -> Maybe St.Messages
 messagesRewrite m =
   case m of
-    St.MessagesUnary ([],Just b,k) -> Just (St.MessagesBinary (b,k))
-    St.MessagesUnary ([],Nothing,Just k) -> Just (St.MessagesKeyword k)
-    St.MessagesUnary ([],Nothing,Nothing) -> Nothing
-    St.MessagesBinary ([],Just k) -> Just (St.MessagesKeyword k)
-    St.MessagesBinary ([],Nothing) -> Nothing
+    St.MessagesUnary [] (Just b) k -> Just (St.MessagesBinary b k)
+    St.MessagesUnary [] Nothing (Just k) -> Just (St.MessagesKeyword k)
+    St.MessagesUnary [] Nothing Nothing -> Nothing
+    St.MessagesBinary [] (Just k) -> Just (St.MessagesKeyword k)
+    St.MessagesBinary [] Nothing -> Nothing
     St.MessagesKeyword k -> Just (St.MessagesKeyword k)
     _ -> error "messagesRewrite?"
 
 evalMessages :: Object -> St.Messages -> VM Object
 evalMessages o m =
   case m of
-    St.MessagesUnary (u,b,k) -> do
+    St.MessagesUnary u b k -> do
       r <- evalUnaryMessageSeq o u
-      case messagesRewrite (St.MessagesUnary ([],b,k)) of
+      case messagesRewrite (St.MessagesUnary [] b k) of
         Just m' -> evalMessages r m'
         Nothing -> return r
-    St.MessagesBinary (b,k) -> do
+    St.MessagesBinary b k -> do
       r <- evalBinaryMessageSeq o b
-      case messagesRewrite (St.MessagesBinary ([],k)) of
+      case messagesRewrite (St.MessagesBinary [] k) of
         Just m' -> evalMessages r m'
         Nothing -> return r
     St.MessagesKeyword (St.KeywordMessage k) -> evalKeywordMessage o k
@@ -659,8 +661,8 @@ evalMessages o m =
 evalBasicExpression :: St.BasicExpression -> VM Object
 evalBasicExpression expr =
   case expr of
-    (p,Nothing,Nothing) -> evalPrimary p
-    (p,Just m,Nothing) -> evalPrimary p >>= \o -> evalMessages o m
+    St.BasicExpression p Nothing Nothing -> evalPrimary p
+    St.BasicExpression p (Just m) Nothing -> evalPrimary p >>= \o -> evalMessages o m
     _ -> throwError "eval_basicexpression?"
 
 evalStatements :: St.Statements -> VM Object
@@ -684,7 +686,7 @@ evalProgramElement el =
 
 evalString :: String -> VM Object
 evalString txt = do
-  let [st] = St.stParse St.smalltalkProgram txt
+  let St.SmalltalkProgram [st] = St.stParse St.smalltalkProgram txt
   evalProgramElement st
 
 coreDict :: Env.Dict Object
