@@ -30,7 +30,7 @@ BrownNoise ar
 
 "Evaluate"
 
-'1+1' evalString == 2 "-> true ; evaluate string"
+'1+1' evalString = 2 "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
 "SC3"
@@ -57,8 +57,8 @@ Browser newOnClass: UGen selector: #kr. "open Browser on Method of Class"
 
 "Transcript"
 
-Transcript open. "-> opens Transcript ; MVC"
-1 to: 5 do: [:x | Transcript cr ; show: x]. "-> prints to Transcript"
+Transcript open. "=> opens Transcript ; MVC"
+1 to: 5 do: [:x | Transcript cr ; show: x]. "=> prints to Transcript"
 
 "Method Finder"
 
@@ -71,46 +71,49 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Precedence"
 
-2 + 5 * 5. "-> 35"
-2 + (5 * 5). "-> 27"
-2 + 5 min: 5.  "-> 5"
-2 + (5 min: 5). "-> 7"
+2 + 5 * 5. "=> 35"
+2 + (5 * 5). "=> 27"
+2 + 5 min: 5.  "=> 5"
+2 + (5 min: 5). "=> 7"
+1 min: 2 max: 3. "=> 3"
+(1 min: 2) max: 3. "=> 3"
+1 min: (2 max: 3). "=> 1"
 
 "Random - Float"
 
-5.0 rand "-> uniform random Float in 0 to 5"
-2.0 rand: 3.0 "-> uniform random Float in 2 to 3"
-4.0 rand2 "-> uniform random Float in -4 to 4"
-1.0 exprand: 2.0 "-> exponential distribution"
+5.0 rand "=> uniform random Float in 0 to 5"
+2.0 rand: 3.0 "=> uniform random Float in 2 to 3"
+4.0 rand2 "=> uniform random Float in -4 to 4"
+1.0 exprand: 2.0 "=> exponential distribution"
 
-100 arrayFill: [:i | 5.0 rand] "-> 100 random Floats in 0 to 5"
+100 arrayFill: [:i | 5.0 rand] "=> 100 random Floats in 0 to 5"
 
 "Random - Integer"
 
-5 rand "-> random Integer in 1 to 5 ; i.e. atRandom"
-1 rand: 5 "-> random Integer in 1 to 5"
-4 rand2 "-> random Integer in -4 to 4"
+5 rand "=> random Integer in 1 to 5 ; i.e. atRandom"
+1 rand: 5 "=> random Integer in 1 to 5"
+4 rand2 "=> random Integer in -4 to 4"
 
-100 arrayFill: [:i | 5 rand] "-> 100 random Integers in 0 to 5"
+100 arrayFill: [:i | 5 rand] "=> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 {1. 2. 3. 4. 5} atRandom "random element of Array ; i.e. atRandom ; choose"
-100 arrayFill: [:i | #(1 2 3 4 5) atRandom] "-> 100 randomly chosen numbers"
-100 arrayFill: [:i | {#a. #b. #c. #d. #e} atRandom] "-> 100 randomly chosen symbols"
+100 arrayFill: [:i | #(1 2 3 4 5) atRandom] "=> 100 randomly chosen numbers"
+100 arrayFill: [:i | {#a. #b. #c. #d. #e} atRandom] "=> 100 randomly chosen symbols"
 
 "Array"
 
 #(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"
 #(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
 
-#(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "-> #((1 4) (2 5) (3 6))"
-6 replicate: 1 "-> #(1 1 1 1 1 1)"
-#(#(1 2) #(3 4)) concatenation "-> #(1 2 3 4)"
-#(#(1 2) #(3 4)) transpose concatenation "-> #(1 3 2 4)"
-5 mixFill: [:x | x * x] "-> 30 ; mixFill is one indexed (as in smalltalk)"
-5 arrayFill: [:x | x * x] "-> #(1 4 9 16 25)"
-5 arrayFillZeroIndexed: [:x | x * x] "-> #(0 1 4 9 16)"
+#(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
+6 replicate: 1 "=> #(1 1 1 1 1 1)"
+#(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
+#(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
+5 mixFill: [:x | x * x] "=> 30 ; mixFill is one indexed (as in smalltalk)"
+5 arrayFill: [:x | x * x] "=> #(1 4 9 16 25)"
+5 arrayFillZeroIndexed: [:x | x * x] "=> #(0 1 4 9 16)"
 
 Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
 
@@ -119,32 +122,32 @@ Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
 "Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*
-#(1 2 3) * 3 "-> #(3 6 9)"
+#(1 2 3) * 3 "=> #(3 6 9)"
 
 "Interval"
 
-(Interval from: 5 to: 9) asArray "-> #(5 6 7 8 9)"
-(Interval from: 5 to: 15 by: 2) asArray "-> #(5 7 9 11 13 15)"
-(1 to: 5) collect: [:x | x * x] "-> #(1 4 9 16 25)"
-(1 to: 9 by: 2) collect: [:x | x * x] "-> #(1 9 25 49 81)"
+(Interval from: 5 to: 9) asArray "=> #(5 6 7 8 9)"
+(Interval from: 5 to: 15 by: 2) asArray "=> #(5 7 9 11 13 15)"
+(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
+(1 to: 9 by: 2) collect: [:x | x * x] "=> #(1 9 25 49 81)"
 
 "Strings"
 
-'file' , '.ext' = 'file.ext'. "-> true"
+'file' , '.ext' = 'file.ext'. "=> true"
 
 "Symbols"
 
-#x isSymbol = true. "-> true"
+#x isSymbol = true. "=> true"
 
 "Haskell - List"
 
-(1 to: 5) first = 1 "-> 1 ; head"
-(1 to: 5) last = 5 "-> 5"
-(1 to: 5) size = 5 "-> 5 ; length"
-(1 to: 5) collect: [:x | x * x] "-> #(1 4 9 16 25) ; map"
-(1 to: 5) select: [:x | x > 3] "-> #(4 5) ; filter"
-(1 to: 5) copyFrom: 2 to: 5 "-> #(2 3 4 5) ; drop"
-(1 to: 5) at: 3 "-> 3 ; haskell=! ; one-indexed"
+(1 to: 5) first = 1 "=> 1 ; head"
+(1 to: 5) last = 5 "=> 5"
+(1 to: 5) size = 5 "=> 5 ; length"
+(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25) ; map"
+(1 to: 5) select: [:x | x > 3] "=> #(4 5) ; filter"
+(1 to: 5) copyFrom: 2 to: 5 "=> #(2 3 4 5) ; drop"
+(1 to: 5) at: 3 "=> 3 ; haskell=! ; one-indexed"
 
 "Dictionary"
 
@@ -155,11 +158,11 @@ d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 "Conditionals"
 
 x := nil
-x isNil ifTrue: ['x'] ifFalse: ['y'] "-> x"
+x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 
 "Collections"
 
-#(1 2 3 4 5) sum = 15 "-> true"
+#(1 2 3 4 5) sum = 15 "=> true"
 
 "Class"
 
@@ -286,7 +289,7 @@ OSProcess editOutputOf: 'ps -axjf'
 
 FileList2 modalFileSelectorForSuffixes: #(st) directory: (FileDirectory on: '/home/rohan/sw/stsc3/help/'). "file chooser on dir"
 
-'a text' edit. "-> UIManager default edit: 'edit text'"
+'a text' edit. "=> UIManager default edit: 'edit text'"
 
 Display writePNGfileNamed: '/tmp/display.png'. "squeak ; screenshot"
 
@@ -311,20 +314,20 @@ Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
 
-0 raisedTo: 1 "-> 0"
-1 raisedTo: 0 "-> 1"
-0 raisedTo: 0 "-> 1 (gst = error)"
-0.0 raisedTo: 1.0 "-> 0.0"
-1.0 raisedTo: 0.0 "-> 1.0"
-0.0 raisedTo: 0.0 "-> 1.0"
-1 / 0 "-> error"
-1.0 / 0.0 "-> Inf"
-Float pi "-> 3.141592653589793"
-Float pi * 2 "-> 6.283185307179586"
-[:x | x * x] value: Float pi * 2 "-> 39.47841760435743"
--1 raisedTo: (1/2). "-> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
--1 raisedTo: (1/3). "-> -1 (Squeak)"
--1 raisedTo: 0.5. "-> ArithmeticError: Negative can't be raised to float powers."
+0 raisedTo: 1 "=> 0"
+1 raisedTo: 0 "=> 1"
+0 raisedTo: 0 "=> 1 (gst = error)"
+0.0 raisedTo: 1.0 "=> 0.0"
+1.0 raisedTo: 0.0 "=> 1.0"
+0.0 raisedTo: 0.0 "=> 1.0"
+1 / 0 "=> error"
+1.0 / 0.0 "=> Inf"
+Float pi "=> 3.141592653589793"
+Float pi * 2 "=> 6.283185307179586"
+[:x | x * x] value: Float pi * 2 "=> 39.47841760435743"
+-1 raisedTo: (1/2). "=> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
+-1 raisedTo: (1/3). "=> -1 (Squeak)"
+-1 raisedTo: 0.5. "=> ArithmeticError: Negative can't be raised to float powers."
 
 "GNU Smalltalk"
 

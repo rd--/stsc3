@@ -52,9 +52,13 @@ deleteLeadingSpaces = dropWhile isSpace
 stParse :: P t -> String -> t
 stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
 
--- | 'unwords', removing empty input strings.  Used for pretty printing.
+-- | 'intercalate', removing empty input strings.  Used for pretty printing.
+strjnWith :: Char -> [String] -> String
+strjnWith x = intercalate [x] . filter (not . null)
+
+-- | 'strjnWith' space.
 strjn :: [String] -> String
-strjn = unwords . filter (not . null)
+strjn = strjnWith ' '
 
 {- | Read file, parse as 'smalltalkProgram', pretty print and write to file.
 
