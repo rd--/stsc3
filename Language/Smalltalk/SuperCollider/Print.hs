@@ -2,8 +2,14 @@
 
 Notes:
 - Translations are: self->this =->== ~=->!= ,->++
-- All variables have <> annotations
-- Getter and setter methods are not written
+- Keyword selectors are rewritten to
+  - remove : characters
+  - start interior words with upper case letters
+  - end with a _
+  - (ie. at:put: -> atPut_)
+- Class variable names and unary and keyword selectors are rewritten to:
+  - begin with a lower case character (ie. Name -> name)
+- Assignment targets are rewritten to begin with a lower case character (ie. Name -> name)
 
 -}
 module Language.Smalltalk.SuperCollider.Print where
@@ -36,16 +42,24 @@ removeTrailingColon x = if last x == ':' then take (length x - 1) x else x
 isGetterOrSetter :: ClassDefinition -> MethodDefinition -> Bool
 isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (methodSelector m))
 
+-- > downcaseFirstLetter "VariableName" == "variableName"
+downcaseFirstLetter :: String -> String
+downcaseFirstLetter s =
+  case s of
+    l:s' -> (if isUpper l then toLower l else l) : s'
+    _ -> s
+
+makeVariablePublic :: String -> String
+makeVariablePublic = ("<>" ++)
+
 sc_ClassDefinition_pp :: ClassDefinition -> String
 sc_ClassDefinition_pp c =
   let l f x = if null x then "" else f x
-      mkpublic = if False then ("<>" ++) else id
-      filtermethods = if False then filter (not . isGetterOrSetter c) else id
   in unlines
      [printf "%s %s {" (className c) (maybe "" (\x -> printf " : %s" x) (superclassName c))
-     ,l (\x -> printf "var %s;" (strjnComma (map mkpublic x))) (classInstanceVariableNames c)
-     ,l (\x -> printf "classvar %s;" (strjnComma (map mkpublic x))) (classVariableNames c)
-     ,unlines (map (sc_methodDefinition_pp Nothing) (filtermethods (instanceMethods c)))
+     ,l (\x -> printf "var %s;" (strjnComma x)) (classInstanceVariableNames c)
+     ,l (\x -> printf "classvar %s;" (strjnComma (map downcaseFirstLetter x))) (classVariableNames c)
+     ,unlines (map (sc_methodDefinition_pp Nothing) (instanceMethods c))
      ,unlines (map (sc_methodDefinition_pp (Just '*')) (classMethods c))
      ,"}"]
 
@@ -58,14 +72,16 @@ sc_variableInitializer_pp = sc_initializerDefinition_pp
 sc_programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 sc_programInitializerDefinition_pp = sc_initializerDefinition_pp
 
+-- > sc_keywordSelector ["at:","put:"] == "atPut_"
+-- > sc_keywordSelector ["Required"] == "required_"
 sc_keywordSelector :: [Identifier] -> Identifier
 sc_keywordSelector k =
-  let remcadd_ s = filter (/= ':') s ++ "_"
+  let remcadd_ s = downcaseFirstLetter (filter (/= ':') s ++ "_")
       cap s = if length s > 1 then (toUpper (head s)) : tail s else s
   in case k of
        [] -> error "sc_keywordSelector?"
-       [k0] -> remcadd_ k0
-       k0:kN -> remcadd_ (k0 ++ concatMap cap kN)
+       [k0] -> remcadd_ (downcaseFirstLetter k0)
+       k0:kN -> remcadd_ (downcaseFirstLetter k0 ++ concatMap cap kN)
 
 {- | This rewrites the symbols "=" (to "==") "~=" (to "!=") and "," (to "++").
      These are required for translation.
@@ -80,10 +96,11 @@ sc_binop_rewrite b =
     _ -> b
 
 -- > sc_patternSelector (stParse messagePattern "= x") == "=="
+-- > sc_patternSelector (stParse messagePattern "Required") == "required"
 sc_patternSelector :: Pattern -> Identifier
 sc_patternSelector pat =
   case pat of
-    UnaryPattern u -> u
+    UnaryPattern u -> downcaseFirstLetter u
     BinaryPattern b _ -> sc_binop_rewrite b
     KeywordPattern kp -> sc_keywordSelector (map fst kp)
 
@@ -153,7 +170,7 @@ sc_expression_pp :: Expression -> String
 sc_expression_pp = expressionEither sc_assignment_pp sc_basicExpression_pp
 
 sc_assignment_pp :: Assignment -> String
-sc_assignment_pp (Assignment i e) = printf "%s = %s" i (sc_expression_pp e)
+sc_assignment_pp (Assignment i e) = printf "%s = %s" (downcaseFirstLetter i) (sc_expression_pp e)
 
 -- | Decide if Messages require the binary sequence to be parenthesised.
 requiresParen :: Maybe Messages -> Bool
@@ -172,6 +189,7 @@ requiresParen m =
 > p "x y + z min: a" == "( x .y + z ) .min(a)"
 > p "x * y + z min: 3" == "( x * y + z ) .min(3)"
 > p "x == 0 ifTrue: [y]" == "( x == 0 ) .ifTrue({y})"
+> p "Strength SymPreferred"
 -}
 sc_basicExpression_pp :: BasicExpression -> String
 sc_basicExpression_pp (BasicExpression p m c) =
@@ -218,8 +236,9 @@ sc_primary_pp pr =
     PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map sc_basicExpression_pp a))
 
 -- > sc_unaryMessage_pp (stParse unaryMessage "abs") == ".abs"
+-- > sc_unaryMessage_pp (stParse unaryMessage "Required") == ".required"
 sc_unaryMessage_pp :: UnaryMessage -> String
-sc_unaryMessage_pp = ('.' :) . unaryMessageSelector
+sc_unaryMessage_pp = ('.' :) . downcaseFirstLetter . unaryMessageSelector
 
 -- > sc_binaryMessage_pp (stParse binaryMessage "= 0") == "== 0"
 -- > sc_binaryMessage_pp (stParse binaryMessage "+ 2") == "+ 2"
