@@ -1,3 +1,11 @@
+{- | Printer from ANSI Smalltalk AST to SuperCollider
+
+Notes:
+- Translations are: self->this =->== ~=->!= ,->++
+- All variables have <> annotations
+- Getter and setter methods are not written
+
+-}
 module Language.Smalltalk.SuperCollider.Print where
 
 import Data.Char {- base -}
@@ -19,14 +27,25 @@ sc_programElement_pp el =
     ProgramGlobal g -> sc_globalDefinition_pp g
     ProgramInitializer i -> sc_programInitializerDefinition_pp i
 
+isInstanceVar :: ClassDefinition -> Identifier -> Bool
+isInstanceVar c nm = nm `elem` classInstanceVariableNames c
+
+removeTrailingColon :: Identifier -> Identifier
+removeTrailingColon x = if last x == ':' then take (length x - 1) x else x
+
+isGetterOrSetter :: ClassDefinition -> MethodDefinition -> Bool
+isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (methodSelector m))
+
 sc_ClassDefinition_pp :: ClassDefinition -> String
 sc_ClassDefinition_pp c =
   let l f x = if null x then "" else f x
+      mkpublic = if False then ("<>" ++) else id
+      filtermethods = if False then filter (not . isGetterOrSetter c) else id
   in unlines
      [printf "%s %s {" (className c) (maybe "" (\x -> printf " : %s" x) (superclassName c))
-     ,l (\x -> printf "var %s;" (strjnComma (map ("<>" ++) x))) (classInstanceVariableNames c)
-     ,l (\x -> printf "classvar %s;" (strjnComma (map ("<>" ++) x))) (classVariableNames c)
-     ,unlines (map (sc_methodDefinition_pp Nothing) (instanceMethods c))
+     ,l (\x -> printf "var %s;" (strjnComma (map mkpublic x))) (classInstanceVariableNames c)
+     ,l (\x -> printf "classvar %s;" (strjnComma (map mkpublic x))) (classVariableNames c)
+     ,unlines (map (sc_methodDefinition_pp Nothing) (filtermethods (instanceMethods c)))
      ,unlines (map (sc_methodDefinition_pp (Just '*')) (classMethods c))
      ,"}"]
 
@@ -41,19 +60,24 @@ sc_programInitializerDefinition_pp = sc_initializerDefinition_pp
 
 sc_keywordSelector :: [Identifier] -> Identifier
 sc_keywordSelector k =
-  let remc = filter (/= ':')
+  let remcadd_ s = filter (/= ':') s ++ "_"
       cap s = if length s > 1 then (toUpper (head s)) : tail s else s
   in case k of
        [] -> error "sc_keywordSelector?"
-       [k0] -> remc k0
-       k0:kN -> remc (k0 ++ concatMap cap kN)
+       [k0] -> remcadd_ k0
+       k0:kN -> remcadd_ (k0 ++ concatMap cap kN)
 
-{- | This rewrites the symbol "=" (to "==").
-     This is required for translation.
+{- | This rewrites the symbols "=" (to "==") "~=" (to "!=") and "," (to "++").
+     These are required for translation.
      Other rewriting is defered.
 -}
 sc_binop_rewrite :: BinarySelector -> BinarySelector
-sc_binop_rewrite b = if b == "=" then "==" else b
+sc_binop_rewrite b =
+  case b of
+    "=" -> "=="
+    "~=" -> "!="
+    "," -> "++"
+    _ -> b
 
 -- > sc_patternSelector (stParse messagePattern "= x") == "=="
 sc_patternSelector :: Pattern -> Identifier
@@ -117,6 +141,11 @@ sc_statements_pp st =
     StatementsReturn r -> sc_returnStatement_pp r
     StatementsExpression e st' -> strjn [sc_expression_pp e,maybe "" ((";" ++) . sc_statements_pp) st']
 
+{- | Print ReturnStatement
+
+p = sc_returnStatement_pp . stParse returnStatement
+p "^self" == "^this"
+-}
 sc_returnStatement_pp :: ReturnStatement -> String
 sc_returnStatement_pp (ReturnStatement e) = printf "^%s" (sc_expression_pp e)
 
@@ -171,17 +200,17 @@ sc_messages_pp rqp ms =
                                            ,maybe [] (return . sc_keywordMessage_pp) m2]))
     MessagesKeyword m1 -> sc_keywordMessage_pp m1
 
-{- | This rewrites the identifiers "this" (to "self").
+{- | This rewrites the identifiers "self" (to "this").
      This is required for translation.
      Other rewriting is defered.
 
-> sc_primary_pp (stParse primary "this") == "self"
+> sc_primary_pp (stParse primary "self") == "this"
 -}
 sc_primary_pp :: Primary -> String
 sc_primary_pp pr =
   case pr of
     PrimaryIdentifier i -> case i of
-                             "this" -> "self"
+                             "self" -> "this"
                              _ -> i
     PrimaryLiteral l -> sc_literal_pp l
     PrimaryBlock b -> sc_blockBody_pp b

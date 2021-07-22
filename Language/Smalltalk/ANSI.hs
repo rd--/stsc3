@@ -78,7 +78,8 @@ stRewrite st_fn rw_fn = do
 
 -- * 3.3.1 Program Definition
 
-data SmalltalkProgram = SmalltalkProgram {programElements :: [ProgramElement]}
+data SmalltalkProgram =
+  SmalltalkProgram {programElements :: [ProgramElement]}
   deriving (Eq, Show)
 
 smalltalkProgram_pp :: SmalltalkProgram -> String
@@ -169,7 +170,9 @@ programInitializerDefinition_pp = initializerDefinition_pp
 
 -- * 3.4.2
 
-data MethodDefinition = MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements) deriving (Eq,Show)
+data MethodDefinition =
+  MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements)
+  deriving (Eq,Show)
 
 methodDefinition_pp :: MethodDefinition -> String
 methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
@@ -229,6 +232,9 @@ patternSelector pat =
     UnaryPattern u -> u
     BinaryPattern b _ -> b
     KeywordPattern kp -> concatMap fst kp
+
+methodSelector :: MethodDefinition -> Identifier
+methodSelector (MethodDefinition p _ _) = patternSelector p
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
@@ -346,7 +352,9 @@ initializerDefinition = do
 blockConstructor :: P BlockBody
 blockConstructor = inBrackets blockBody
 
-data BlockBody = BlockBody (Maybe [BlockArgument]) (Maybe Temporaries) (Maybe Statements) deriving (Eq,Show)
+data BlockBody =
+  BlockBody (Maybe [BlockArgument]) (Maybe Temporaries) (Maybe Statements)
+  deriving (Eq,Show)
 
 blockBody_pp :: BlockBody -> String
 blockBody_pp (BlockBody a t s) =
