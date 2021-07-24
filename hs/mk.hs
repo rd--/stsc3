@@ -35,7 +35,7 @@ ugen =
   ,"MiRings","ModDif","MouseX","MouseY","MulAdd","OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
-  ,"SampleDur","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
+  ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"TDuty","TExpRand","Timer","TIRand","TRand","Trig","Trig1"
   ,"VarSaw"
   ,"WhiteNoise"

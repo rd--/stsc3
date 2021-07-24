@@ -4736,6 +4736,44 @@ SampleDur comment: 'Duration of one sample.'!
     ^(MulAdd in: u mul: mul add: add)!
 !
 
+UGen subclass: #SampleRate
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SampleRate comment: 'Server sample rate.'!
+
+
+!SampleRate methodsFor: 'initialization'!
+  initialize
+    ugenName := #SampleRate.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+!SampleRate class methodsFor: 'instance creation'!
+  new ^ self basicNew initialize!
+!
+
+!SampleRate class methodsFor: 'instance creation'!
+   mul: mul
+    |u|
+    u := self new.
+    
+    ^(u * mul)!
+   mul: mul add: add
+    |u|
+    u := self new.
+    
+    ^(MulAdd in: u mul: mul add: add)!
+!
+
 UGen subclass: #Saw
   instanceVariableNames: 'freq'
   classVariableNames: ''

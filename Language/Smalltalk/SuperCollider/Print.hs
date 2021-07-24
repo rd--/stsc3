@@ -1,15 +1,16 @@
 {- | Printer from ANSI Smalltalk AST to SuperCollider
 
 Notes:
+
 - Translations are: self->this =->== ~=->!= ,->++
 - Keyword selectors are rewritten to
   - remove : characters
   - start interior words with upper case letters
   - end with a _
   - (ie. at:put: -> atPut_)
-- Class variable names and unary and keyword selectors are rewritten to:
-  - begin with a lower case character (ie. Name -> name)
-- Assignment targets are rewritten to begin with a lower case character (ie. Name -> name)
+- Names that begin with an upper case letter that would be invalid in Sc are rewritten
+  - class variable, unary and keyword names, assignment targets
+  - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 
 -}
 module Language.Smalltalk.SuperCollider.Print where
@@ -87,7 +88,7 @@ sc_keywordSelector k =
      These are required for translation.
      Other rewriting is defered.
 -}
-sc_binop_rewrite :: BinarySelector -> BinarySelector
+sc_binop_rewrite :: BinaryIdentifier -> BinaryIdentifier
 sc_binop_rewrite b =
   case b of
     "=" -> "=="

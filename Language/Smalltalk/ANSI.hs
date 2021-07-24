@@ -204,7 +204,7 @@ methodDefinition = do
 
 data Pattern
   = UnaryPattern Identifier
-  | BinaryPattern BinarySelector Identifier
+  | BinaryPattern BinaryIdentifier Identifier
   | KeywordPattern [(Keyword,Identifier)]
   deriving (Eq, Show)
 
@@ -403,6 +403,16 @@ data Statements
   | StatementsExpression Expression (Maybe Statements)
   deriving (Eq,Show)
 
+-- | Prepend a list of expressions, as statements, to an existing statement.
+expressionSequenceToStatements :: Maybe Statements -> [Expression] -> Statements
+expressionSequenceToStatements stm =
+  let f e =
+        case e of
+          [] -> error "expressionSequenceToStatements"
+          [e0] -> StatementsExpression e0 stm
+          e0:eN -> StatementsExpression e0 (Just (f eN))
+  in f
+
 statements_pp :: Statements -> String
 statements_pp st =
   case st of
@@ -502,6 +512,7 @@ assignment_pp (Assignment i e) = printf "%s := %s" i (expression_pp e)
 > stParse assignment "p := 2.0"
 > stParse assignment "p := 'x'"
 > stParse assignment "p := 8 mixFill: [:i| |n trigger pluck freq z metal| n := 15 ]"
+> stParse assignment "p := q := r := nil"
 -}
 assignment :: P Assignment
 assignment = do
@@ -996,7 +1007,8 @@ identifier = ordinaryIdentifier P.<|> reservedIdentifier
 
 -- * 3.5.4
 
-type Keyword = String
+-- | An identifier ending with a colon.
+type Keyword = Identifier
 
 {- | keyword ::= identifier ':'
 
@@ -1017,13 +1029,13 @@ binaryCharacter :: P Char
 binaryCharacter = P.oneOf "!%&*+,/<=>?@\\~|-"
 
 -- | Identifier for binary operations.
-type BinarySelector = Identifier
+type BinaryIdentifier = Identifier
 
 -- | binarySelector ::= binaryCharacter+
 --
 -- > stParse binarySelector "+" == "+"
 -- > stParse binarySelector "+p" == "+" -- +1 must parse as BinarySelector=+ BinaryArgument=1
-binarySelector :: P BinarySelector
+binarySelector :: P BinaryIdentifier
 binarySelector = P.operator stLexer
 
 -- | returnOperator ::= '^'
@@ -1128,7 +1140,7 @@ unarySelector = (identifier >>= \u -> P.notFollowedBy (P.char ':') >> return u) 
 
 data Selector
   = UnarySelector Identifier
-  | BinarySelector Identifier
+  | BinarySelector BinaryIdentifier
   | KeywordSelector Identifier
   deriving (Eq, Show)
 
@@ -1159,7 +1171,7 @@ quotedSelector =
 > stParse keywordSelector "freq:iphase:" == "freq:iphase:"
 > stParse keywordSelector "freq:iphase:x" -- FAIL
 -}
-keywordSelector :: P Identifier
+keywordSelector :: P Keyword
 keywordSelector = fmap concat (P.many1 keyword) P.<?> "keywordSelector"
 
 -- * 3.5.11

@@ -23,6 +23,8 @@ Library
   Exposed-modules:  Language.Smalltalk.ANSI,
                     Language.Smalltalk.FileOut,
                     Language.Smalltalk.SOM
+                    Language.Smalltalk.SuperCollider.ANSI
+                    Language.Smalltalk.SuperCollider.Ast
                     Language.Smalltalk.SuperCollider.Print
 
 executable stsc3
