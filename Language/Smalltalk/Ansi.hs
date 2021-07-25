@@ -903,6 +903,7 @@ closeParen = lexeme (P.char ')')
 > stParse arrayLiteral "#(1 2.0)"
 > stParse arrayLiteral "#(1 2.0 3)"
 > stParse arrayLiteral "#(1 2.0 p)"
+> stParse arrayLiteral "#(1 #(2 3) 4)"
 -}
 arrayLiteral :: P Literal
 arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))

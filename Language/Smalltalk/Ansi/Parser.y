@@ -1,18 +1,17 @@
 {
 module Language.Smalltalk.Ansi.Parser where
 
+import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+
 import Language.Smalltalk.Ansi.Lexer {- stsc3 -}
 import Language.Smalltalk.Ansi.Token {- stsc3 -}
-
-import qualified Language.Smalltalk.ANSI as St
 }
 
-%name smalltalk
+%name smalltalkParser
 %tokentype { Token }
 %error { parseError }
 
 %token
-      ','             { Comma }
       '|'             { VerticalBar }
       '['             { LeftBracket }
       ']'             { RightBracket }
@@ -21,6 +20,7 @@ import qualified Language.Smalltalk.ANSI as St
       ';'             { SemiColon }
       '{'             { LeftBrace }
       '}'             { RightBrace }
+      '#'             { Hash }
       '#('            { HashLeftParen }
       '('             { LeftParen }
       ')'             { RightParen }
@@ -44,6 +44,40 @@ import qualified Language.Smalltalk.ANSI as St
 
 
 %%
+
+{-
+smalltalkprogram :: { St.SmalltalkProgram }
+        : programelements                      { St.SmalltalkProgram $1 }
+
+programelements :: { [St.ProgramElement] }
+        : programelement                       { [$1] }
+        | programelement programelements       { $1 : $2 }
+
+programelement :: { St.ProgramElement }
+        : globaldefinition                     { St.ProgramGlobal $1 }
+        | programinitializerdefinition         { St.ProgramInitializer $1 }
+
+programinitializerdefinition :: { St.ProgramInitializerDefinition }
+        : initializerdefinition                { $1 }
+
+globaldefinition :: { St.GlobalDefinition }
+        : identifier
+          maybe_variableinitializer            { St.GlobalDefinition $1 $2 }
+
+maybe_variableinitializer :: { Maybe St.VariableInitializer }
+        : {- empty -}                          { Nothing }
+        | initializerdefinition                { Just $1 }
+
+maybe_initializerdefinition :: { Maybe St.InitializerDefinition }
+        : {- empty -}                          { Nothing }
+        | initializerdefinition                { Just $1 }
+-}
+
+smalltalkprogram :: { St.SmalltalkProgram }
+        : initializerdefinition                { St.SmalltalkProgram [St.ProgramInitializer $1] }
+
+initializerdefinition :: { St.InitializerDefinition }
+        : maybe_temporaries maybe_statements   { St.InitializerDefinition $1 $2 }
 
 expression :: { St.Expression }
         : assignment                           { St.ExprAssignment $1 }
@@ -147,7 +181,7 @@ blockbody :: { St.BlockBody }
 
 maybe_blockarguments :: { Maybe [St.BlockArgument] }
         : {- empty -}                          { Nothing }
-        | '|' blockargument_seq '|'            { Just $2 }
+        | blockargument_seq '|'                { Just $1 }
 
 blockargument_seq :: { [St.BlockArgument] }
         : blockargument                        { [$1] }
@@ -170,7 +204,7 @@ maybe_statements :: { Maybe St.Statements }
 
 statements :: { St.Statements }
         : '^' expression optdot                 { St.StatementsReturn (St.ReturnStatement $2) }
-        | expression                            { St.StatementsExpression $1 Nothing }
+        | expression optdot                     { St.StatementsExpression $1 Nothing }
         | expression '.' statements             { St.StatementsExpression $1 (Just $3) }
 
 literal :: { St.Literal }
@@ -178,8 +212,14 @@ literal :: { St.Literal }
         | float                                 { St.NumberLiteral (St.Float $1) }
         | quotedstring                          { St.StringLiteral $1 }
         | quotedchar                            { St.CharacterLiteral $1 }
-        | '#(' maybe_arrayliteral_seq ')'       { St.ArrayLiteral $3 }
+        | '#(' maybe_arrayliteral_seq ')'       { St.ArrayLiteral $2 }
         | hashedstring                          { St.SymbolLiteral $1 }
+        | selectorliteral                       { St.SelectorLiteral $1 }
+
+selectorliteral :: { St.Selector }
+        : '#' identifier                        { St.UnarySelector $2 }
+        | '#' binaryselector                    { St.BinarySelector $2 }
+        | '#' keyword                           { St.KeywordSelector $2 }
 
 maybe_arrayliteral_seq :: { [Either St.Literal St.Identifier] }
         : {- empty -}                           { [] }
@@ -198,10 +238,6 @@ optdot :: { () }
         | '.'                                   { () }
 
 {
-
 parseError :: [Token] -> a
 parseError t = error ("Parse error: " ++ show t)
-
-main = getContents >>= print . smalltalk . alexScanTokens
-
 }

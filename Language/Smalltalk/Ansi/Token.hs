@@ -2,8 +2,7 @@
 module Language.Smalltalk.Ansi.Token where
 
 data Token =
-    Comma -- ,
-  | VerticalBar -- 3.4.2 |
+    VerticalBar -- 3.4.2 |
   | LeftBracket -- [ -- 3.4.4
   | RightBracket -- ]
   | Dot -- . -- 3.4.5
@@ -11,6 +10,7 @@ data Token =
   | LeftBrace -- {
   | RightBrace -- }
   | HashLeftParen -- #( 3.4.6.6
+  | Hash -- #
   | Colon -- :
   | LeftParen -- (
   | RightParen -- )

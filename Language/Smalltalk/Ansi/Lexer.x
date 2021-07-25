@@ -23,9 +23,8 @@ $graphic       = $printable # $white
 tokens :-
 
   $white+                               ;
-  \" ($printable # \") \"               ;
+  \" ([$printable \n] # \")+ \"         ;
 
-  ","                                   { \_ -> Comma }
   "|"                                   { \_ -> VerticalBar }
   "["                                   { \_ -> LeftBracket }
   "]"                                   { \_ -> RightBracket }
@@ -34,6 +33,7 @@ tokens :-
   ";"                                   { \_ -> SemiColon }
   "{"                                   { \_ -> LeftBrace }
   "}"                                   { \_ -> RightBrace }
+  "#"                                   { \_ -> Hash }
   "#("                                  { \_ -> HashLeftParen }
   "("                                   { \_ -> LeftParen }
   ")"                                   { \_ -> RightParen }

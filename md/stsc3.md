@@ -5,9 +5,13 @@ Command line stsc3.
 ## cat
 
 Parse and pretty print Smalltalk program files.
+There are two parsers,
+one using `parsec` (better error messages)
+and one using `alex` & `happy` (better grammar analysis and faster parsing).
+They should be otherwise be equivalent.
 
 ~~~~
-$ stsc3 cat ~/sw/hsc3-graphs/db/*.st
+$ stsc3 cat parsec ~/sw/hsc3-graphs/db/*.st
 ...
 /home/rohan/sw/hsc3-graphs/db/09041bfdf77d32d2.st
 |n x t f|
@@ -16,6 +20,16 @@ $ stsc3 cat ~/sw/hsc3-graphs/db/*.st
  t := Impulse freq: x phase: 0 .
  f := Demand trig: t reset: 0 demandUGens: n mul: 30 add: 340 .
  SinOsc freq: f phase: 0 mul: 0.1 .
+...
+$ stsc3 cat happy ~/sw/hsc3-graphs/db/*.st
+...
+/home/rohan/sw/hsc3-graphs/db/fe1b361244cc392c.st
+|f1 f2 f3 a3|
+ f1 := 300 .
+ f2 := 300 * 3 / 2 .
+ f3 := (f2 - f1) abs .
+ a3 := (SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0 .
+ (SinOsc freq: {f1 . f2 . f3} mce phase: 0 mul: {0.1 . 0.1 . a3} mce) mix .
 ...
 $
 ~~~~
