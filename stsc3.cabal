@@ -28,10 +28,13 @@ library
                         Language.Smalltalk.Ansi.Lexer,
                         Language.Smalltalk.Ansi.Token,
                         Language.Smalltalk.FileOut,
-                        Language.Smalltalk.SOM
-                        Language.Smalltalk.SuperCollider.Ansi
-                        Language.Smalltalk.SuperCollider.Ast
-                        Language.Smalltalk.SuperCollider.Print
+                        Language.Smalltalk.SOM,
+                        Language.Smalltalk.SuperCollider.Ansi,
+                        Language.Smalltalk.SuperCollider.Ast,
+                        Language.Smalltalk.SuperCollider.Lexer,
+                        Language.Smalltalk.SuperCollider.Parser,
+                        Language.Smalltalk.SuperCollider.Print,
+                        Language.Smalltalk.SuperCollider.Token
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,

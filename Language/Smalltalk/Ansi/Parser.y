@@ -203,9 +203,12 @@ maybe_statements :: { Maybe St.Statements }
         | statements                            { Just $1 }
 
 statements :: { St.Statements }
-        : '^' expression optdot                 { St.StatementsReturn (St.ReturnStatement $2) }
+        : returnstatement                       { $1 }
         | expression optdot                     { St.StatementsExpression $1 Nothing }
         | expression '.' statements             { St.StatementsExpression $1 (Just $3) }
+
+returnstatement :: { St.Statements }
+        : '^' expression optdot                 { St.StatementsReturn (St.ReturnStatement $2) }
 
 literal :: { St.Literal }
         : integer                               { St.NumberLiteral (St.Int $1) }

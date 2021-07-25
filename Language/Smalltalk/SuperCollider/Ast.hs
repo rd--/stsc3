@@ -4,9 +4,10 @@ This is similar to the ANSI Smalltalk (St) Ast.
 
 The most important differences are:
 
-- in Sc Unary and Keyword messages share syntax and have equal precedence
+- in Sc Unary and Keyword messages have the same syntax and equal precedence
 - in Sc Temporaries can introduce bindings
 - in Sc all Keyword messages take one argument, which is a Dictionary
+- in Sc if y is a unary message, "x.y" and "x.y()" and "x.y(nil)"
 
 In St "x y" sends y to x, in Sc this is written "x.y".
 
@@ -29,7 +30,7 @@ data ScPrimary
   deriving (Eq, Show)
 
 data ScBlockBody =
-  ScBlockBody (Maybe [St.BlockArgument]) (Maybe ScTemporaries) (Maybe ScStatements)
+  ScBlockBody (Maybe [St.BlockArgument]) (Maybe [ScTemporaries]) (Maybe ScStatements)
   deriving (Eq,Show)
 
 data ScStatements
@@ -41,14 +42,14 @@ data ScReturnStatement =
   ScReturnStatement ScExpression
   deriving (Eq,Show)
 
--- | Identifier with perhaps an inializer expression.
-type ScTemporary = (St.Identifier,Maybe ScExpression)
+-- | Identifier with perhaps an initializer expression.
+type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
 
+-- | Sequence of temporaries, single var statement.
 type ScTemporaries = [ScTemporary]
 
 data ScBasicExpression =
     ScBasicExpression ScPrimary (Maybe ScMessages)
-  | ScKeywordParam St.Identifier ScBasicExpression
   deriving (Eq, Show)
 
 data ScMessages
@@ -56,8 +57,10 @@ data ScMessages
   | ScMessagesBinary [ScBinaryMessage]
   deriving (Eq,Show)
 
+-- | For translation we want to distinguish between x.y and x.y(),
+--   so that x.abs does not send abs: #().
 data ScDotMessage =
-  ScDotMessage (St.Identifier,Maybe [ScKeywordArgument])
+  ScDotMessage St.Identifier (Maybe [ScKeywordArgument])
   deriving (Eq, Show)
 
 data ScBinaryMessage =
