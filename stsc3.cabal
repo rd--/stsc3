@@ -15,17 +15,22 @@ Build-Type:         Simple
 
 Data-files:         README.md
 
-Library
-  Build-Depends:    base >= 4.7 && < 5,
-                    parsec
-  Default-Language: Haskell2010
-  GHC-Options:      -Wall -fwarn-tabs
-  Exposed-modules:  Language.Smalltalk.ANSI,
-                    Language.Smalltalk.FileOut,
-                    Language.Smalltalk.SOM
-                    Language.Smalltalk.SuperCollider.ANSI
-                    Language.Smalltalk.SuperCollider.Ast
-                    Language.Smalltalk.SuperCollider.Print
+library
+  build-depends:        array,
+                        base >= 4.7 && < 5,
+                        parsec
+  default-language:     Haskell2010
+  ghc-options:          -Wall -fwarn-tabs
+  build-tool-depends:   alex:alex,
+                        happy:happy
+  exposed-modules:      Language.Smalltalk.Ansi,
+                        Language.Smalltalk.Ansi.Lexer,
+                        Language.Smalltalk.Ansi.Token,
+                        Language.Smalltalk.FileOut,
+                        Language.Smalltalk.SOM
+                        Language.Smalltalk.SuperCollider.Ansi
+                        Language.Smalltalk.SuperCollider.Ast
+                        Language.Smalltalk.SuperCollider.Print
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,

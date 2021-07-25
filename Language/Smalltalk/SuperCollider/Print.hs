@@ -20,7 +20,7 @@ import Data.List {- base -}
 import qualified Numeric {- base -}
 import Text.Printf {- base -}
 
-import Language.Smalltalk.ANSI {- stsc3 -}
+import Language.Smalltalk.Ansi {- stsc3 -}
 
 strjnComma :: [String] -> String
 strjnComma = strjnWith ','

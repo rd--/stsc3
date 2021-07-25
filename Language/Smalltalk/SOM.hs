@@ -3,7 +3,7 @@ module Language.Smalltalk.SOM where
 
 import qualified Text.Parsec as P {- parsec -}
 
-import qualified Language.Smalltalk.ANSI as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 equalSign :: St.P Char
 equalSign = St.lexeme (P.char '=')

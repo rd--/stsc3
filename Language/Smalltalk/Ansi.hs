@@ -1,5 +1,5 @@
 -- | Parser and pretty printer for a subset of ANSI Smalltalk.
-module Language.Smalltalk.ANSI where
+module Language.Smalltalk.Ansi where
 
 import Data.Functor.Identity {- base -}
 import Data.List {- base -}
@@ -384,6 +384,7 @@ blockBody = do
   s <- P.optionMaybe statements
   return (BlockBody a t s)
 
+-- | An identifier for a block argument.  Written with a ':' prefix.
 type BlockArgument = Identifier
 
 blockArgument_pp :: BlockArgument -> String
@@ -683,7 +684,7 @@ binaryMessageSelector :: BinaryMessage -> Identifier
 binaryMessageSelector (BinaryMessage b _) = b
 
 data KeywordMessage =
-  KeywordMessage [(Identifier,KeywordArgument)]
+  KeywordMessage [(Keyword,KeywordArgument)]
   deriving (Eq,Show)
 
 keywordMessageSelector :: KeywordMessage -> Identifier

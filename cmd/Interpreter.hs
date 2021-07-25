@@ -23,7 +23,7 @@ import qualified Sound.SC3.UGen.DB as DB {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Bindings.Smalltalk as DB {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Record as DB {- hsc3-db -}
 
-import qualified Language.Smalltalk.ANSI as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | VM is simply an environment.
 type VM t = Env.EnvMonad IO Object t
