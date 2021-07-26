@@ -13,7 +13,7 @@ Notes:
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 
 -}
-module Language.Smalltalk.SuperCollider.Print where
+module Language.Smalltalk.Ansi.Print.SuperCollider where
 
 import Data.Char {- base -}
 import Data.List {- base -}

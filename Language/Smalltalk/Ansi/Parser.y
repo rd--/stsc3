@@ -215,7 +215,7 @@ literal :: { St.Literal }
         | float                                 { St.NumberLiteral (St.Float $1) }
         | quotedstring                          { St.StringLiteral $1 }
         | quotedchar                            { St.CharacterLiteral $1 }
-        | '#(' maybe_arrayliteral_seq ')'       { St.ArrayLiteral $2 }
+        | '#(' maybe_arrayliteral ')'           { St.ArrayLiteral $2 }
         | hashedstring                          { St.SymbolLiteral $1 }
         | selectorliteral                       { St.SelectorLiteral $1 }
 
@@ -224,15 +224,15 @@ selectorliteral :: { St.Selector }
         | '#' binaryselector                    { St.BinarySelector $2 }
         | '#' keyword                           { St.KeywordSelector $2 }
 
-maybe_arrayliteral_seq :: { [Either St.Literal St.Identifier] }
+maybe_arrayliteral :: { [Either St.Literal St.Identifier] }
         : {- empty -}                           { [] }
-        | arrayliteral_seq                      { $1 }
+        | arrayliteral                          { $1 }
 
-arrayliteral_seq :: { [Either St.Literal St.Identifier] }
-        : arrayliteral                          { [$1] }
-        | arrayliteral arrayliteral_seq         { $1 : $2 }
+arrayliteral :: { [Either St.Literal St.Identifier] }
+        : arrayliteral_elem                     { [$1] }
+        | arrayliteral_elem arrayliteral        { $1 : $2 }
 
-arrayliteral :: { Either St.Literal St.Identifier }
+arrayliteral_elem :: { Either St.Literal St.Identifier }
         : literal                               { Left $1 }
         | reserveridentifier                    { Right $1 }
 

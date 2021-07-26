@@ -26,6 +26,7 @@ library
   exposed-modules:      Language.Smalltalk.Ansi,
                         Language.Smalltalk.Ansi.Parser,
                         Language.Smalltalk.Ansi.Print,
+                        Language.Smalltalk.Ansi.Print.SuperCollider,
                         Language.Smalltalk.Ansi.Lexer,
                         Language.Smalltalk.Ansi.Token,
                         Language.Smalltalk.FileOut,
@@ -35,7 +36,6 @@ library
                         Language.Smalltalk.SuperCollider.Ast.Print,
                         Language.Smalltalk.SuperCollider.Lexer,
                         Language.Smalltalk.SuperCollider.Parser,
-                        Language.Smalltalk.SuperCollider.Print,
                         Language.Smalltalk.SuperCollider.Token,
                         Language.Smalltalk.SuperCollider.Transform
 
@@ -45,6 +45,7 @@ executable stsc3
                     hsc3 == 0.20.*,
                     hsc3-db == 0.20.*,
                     hsc3-dot == 0.20.*,
+                    hsc3-graphs == 0.20.*,
                     hsc3-lang == 0.20.*,
                     hsc3-lisp == 0.20.*,
                     mtl,

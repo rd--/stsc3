@@ -25,7 +25,6 @@ tokens :-
   $white+                               ;
   "//" $printable +                     ;
 
-  "|"                                   { \_ -> VerticalBar }
   "["                                   { \_ -> LeftBracket }
   "]"                                   { \_ -> RightBracket }
   "."                                   { \_ -> Dot }
@@ -35,6 +34,7 @@ tokens :-
   "}"                                   { \_ -> RightBrace }
   "("                                   { \_ -> LeftParen }
   ")"                                   { \_ -> RightParen }
+  "#["                                  { \_ -> HashLeftBracket }
 
   "nil"                                 { \_ -> NilIdentifier }
   "true"                                { \_ -> TrueIdentifier }

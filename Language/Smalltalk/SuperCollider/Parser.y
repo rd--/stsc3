@@ -12,7 +12,6 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 %error { parseError }
 
 %token
-      '|'             { VerticalBar }
       '['             { LeftBracket }
       ']'             { RightBracket }
       '.'             { Dot }
@@ -22,6 +21,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       '}'             { RightBrace }
       '('             { LeftParen }
       ')'             { RightParen }
+      '#['            { HashLeftBracket }
 
       nil             { NilIdentifier }
       true            { TrueIdentifier }
@@ -97,11 +97,7 @@ binarymessage_seq :: { [ScBinaryMessage] }
         | binarymessage                        { [$1] }
 
 binarymessage :: { ScBinaryMessage }
-        : binaryselectorextended binaryargument { ScBinaryMessage $1 $2 }
-
-binaryselectorextended :: { St.BinaryIdentifier }
-        : binaryselector                        { $1 }
-        | '|'                                   { "|" }
+        : binaryselector binaryargument        { ScBinaryMessage $1 $2 }
 
 binaryargument :: { ScBinaryArgument }
         : primary maybe_dotmessage_seq         { ScBinaryArgument $1 $2 }
@@ -132,7 +128,6 @@ blockbody :: { ScBlockBody }
 
 maybe_blockarguments :: { Maybe [St.BlockArgument] }
         : {- empty -}                          { Nothing }
-        | '|' blockargument_seq '|'            { Just $2 }
         | arg blockargument_seq ';'            { Just $2 }
 
 blockargument_seq :: { [St.BlockArgument] }
@@ -179,6 +174,16 @@ literal :: { St.Literal }
         | quotedstring                          { St.StringLiteral $1 }
         | quotedchar                            { St.CharacterLiteral $1 }
         | hashedstring                          { St.SymbolLiteral $1 }
+        | '#[' arrayliteral ']'                 { St.ArrayLiteral $2 }
+
+arrayliteral :: { [Either St.Literal St.Identifier] }
+        : {- empty -}                           { [] }
+        | arrayliteral_elem                     { [$1] }
+        | arrayliteral_elem ',' arrayliteral    { $1 : $3 }
+
+arrayliteral_elem :: { Either St.Literal St.Identifier }
+        : literal                               { Left $1 }
+        | reserveridentifier                    { Right $1 }
 
 optsemicolon :: { () }
         : {- empty -}                           { () }

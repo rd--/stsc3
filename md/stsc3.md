@@ -2,7 +2,27 @@
 
 Command line stsc3.
 
-## cat
+## sc cat
+
+Parse and pretty print SuperCollider program files.
+
+The parser is for a minimal subset of SuperCollider
+and does not recognise the following constructs:
+
+~~~~
+P()     => P.new()
+p.(q)   => p.value(q)
+`p      => Ref.new(p)
+p q: r  => p.q(r)
+q(p)    => p.q
+|p|     => arg p;
+p[q]    => p.at(q)
+p.q(*r) => p.performList(\q,r)
+p.q {}  => p.q({})
+(p..q)  => p.to(q).asArray
+~~~~
+
+## st cat
 
 Parse and pretty print Smalltalk program files.
 There are two parsers,

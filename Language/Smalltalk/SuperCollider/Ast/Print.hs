@@ -41,7 +41,7 @@ scBlockBodyPrint (ScBlockBody a t s) =
   ,maybePrint scStatementsPrint s]
 
 scBlockArgumentsPrint :: [St.BlockArgument] -> String
-scBlockArgumentsPrint = intercalate ", "
+scBlockArgumentsPrint x = scJoin ["arg ",intercalate ", " x,"; "]
 
 scStatementsPrint :: ScStatements -> String
 scStatementsPrint s =
@@ -83,6 +83,10 @@ inBraces x = "{" ++ x ++ "}"
 inBrackets :: String -> String
 inBrackets x = "[" ++ x ++ "]"
 
+{-
+> let x = ScBasicExpression (ScPrimaryIdentifier "x") Nothing
+> scKeywordArgumentsPrint [ScKeywordArgument (Just "mul:") x,ScKeywordArgument (Just "add:") x]
+-}
 scKeywordArgumentsPrint :: [ScKeywordArgument] -> String
 scKeywordArgumentsPrint = inParen . intercalate ", " . map scKeywordArgumentPrint
 
@@ -96,9 +100,10 @@ scBinaryArgumentPrint :: ScBinaryArgument -> String
 scBinaryArgumentPrint (ScBinaryArgument p m) =
   scJoin [scPrimaryPrint p,maybePrint (scJoin . map scDotMessagePrint) m]
 
+-- > scKeywordArgumentPrint (ScKeywordArgument (Just "mul:") (ScBasicExpression (ScPrimaryIdentifier "x") Nothing))
 scKeywordArgumentPrint :: ScKeywordArgument -> String
 scKeywordArgumentPrint (ScKeywordArgument k e) = scJoin
-                                                 [maybePrint (" " ++) k
+                                                 [maybePrint id k
                                                  ,scBasicExpressionPrint e]
 
 scExpressionPrint :: ScExpression -> String
