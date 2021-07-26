@@ -7,6 +7,7 @@ import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
 import qualified Interpreter {- stsc3 -}
 

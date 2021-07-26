@@ -21,6 +21,7 @@ module Language.Smalltalk.SuperCollider.Ast where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
+-- | Reuse the Smalltalk Literal type.
 data ScPrimary
   = ScPrimaryIdentifier St.Identifier
   | ScPrimaryLiteral St.Literal
@@ -37,6 +38,16 @@ data ScStatements
   = ScStatementsReturn ScReturnStatement
   | ScStatementsExpression ScExpression (Maybe ScStatements)
   deriving (Eq,Show)
+
+-- | Prepend a list of expressions, as statements, to an existing statement.
+scExpressionSequenceToStatements :: Maybe ScStatements -> [ScExpression] -> ScStatements
+scExpressionSequenceToStatements stm =
+  let f e =
+        case e of
+          [] -> error "scExpressionSequenceToStatements"
+          [e0] -> ScStatementsExpression e0 stm
+          e0:eN -> ScStatementsExpression e0 (Just (f eN))
+  in f
 
 data ScReturnStatement =
   ScReturnStatement ScExpression

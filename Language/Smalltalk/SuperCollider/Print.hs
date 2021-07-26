@@ -20,7 +20,8 @@ import Data.List {- base -}
 import qualified Numeric {- base -}
 import Text.Printf {- base -}
 
-import Language.Smalltalk.Ansi {- stsc3 -}
+import Language.Smalltalk.Ansi as St {- stsc3 -}
+import Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
 strjnComma :: [String] -> String
 strjnComma = strjnWith ','
@@ -266,15 +267,15 @@ sc_keywordArgument_pp (KeywordArgument p m1 m2) =
 sc_cascadedMessages_pp :: CascadedMessages -> String
 sc_cascadedMessages_pp = error "CascadedMessages?"
 
-sc_literal_pp :: Literal -> String
+sc_literal_pp :: St.Literal -> String
 sc_literal_pp lit =
   case lit of
-    NumberLiteral n -> number_pp n
-    StringLiteral s -> printf "\"%s\"" s
-    CharacterLiteral c -> printf "$%c" c
-    SymbolLiteral s -> printf "'%s'" s
-    SelectorLiteral s -> printf "\\%s" (selector_pp s)
-    ArrayLiteral a -> printf "#[%s]" (strjnComma (map (either sc_literal_pp id) a))
+    St.NumberLiteral n -> St.number_pp n
+    St.StringLiteral s -> printf "\"%s\"" s
+    St.CharacterLiteral c -> printf "$%c" c
+    St.SymbolLiteral s -> printf "'%s'" s
+    St.SelectorLiteral s -> printf "\\%s" (St.selector_pp s)
+    St.ArrayLiteral a -> printf "#[%s]" (St.strjnWith ',' (map (either sc_literal_pp id) a))
 
 sc_number_pp :: Number -> String
 sc_number_pp = numberEither show (\x -> Numeric.showFFloat Nothing x "")

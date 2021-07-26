@@ -25,16 +25,19 @@ library
                         happy:happy
   exposed-modules:      Language.Smalltalk.Ansi,
                         Language.Smalltalk.Ansi.Parser,
+                        Language.Smalltalk.Ansi.Print,
                         Language.Smalltalk.Ansi.Lexer,
                         Language.Smalltalk.Ansi.Token,
                         Language.Smalltalk.FileOut,
                         Language.Smalltalk.SOM,
                         Language.Smalltalk.SuperCollider.Ansi,
                         Language.Smalltalk.SuperCollider.Ast,
+                        Language.Smalltalk.SuperCollider.Ast.Print,
                         Language.Smalltalk.SuperCollider.Lexer,
                         Language.Smalltalk.SuperCollider.Parser,
                         Language.Smalltalk.SuperCollider.Print,
-                        Language.Smalltalk.SuperCollider.Token
+                        Language.Smalltalk.SuperCollider.Token,
+                        Language.Smalltalk.SuperCollider.Transform
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,

@@ -2,9 +2,6 @@
 module Language.Smalltalk.Ansi where
 
 import Data.Functor.Identity {- base -}
-import Data.List {- base -}
-import qualified Numeric {- base -}
-import Text.Printf {- base -}
 
 import qualified Text.Parsec as P {- parsec -}
 import qualified Text.Parsec.Language as P {- parsec -}
@@ -52,28 +49,6 @@ deleteLeadingSpaces = dropWhile isSpace
 stParse :: P t -> String -> t
 stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
 
--- | 'intercalate', removing empty input strings.  Used for pretty printing.
-strjnWith :: Char -> [String] -> String
-strjnWith x = intercalate [x] . filter (not . null)
-
--- | 'strjnWith' space.
-strjn :: [String] -> String
-strjn = strjnWith ' '
-
-{- | Read file, parse as 'smalltalkProgram', pretty print and write to file.
-
-> stParse smalltalkProgram "Transcript show: 'text'"
-> stParse smalltalkProgram "1 to: 5 do: [:x| Transcript cr ; show: x]"
-
-> st <- readFile "/home/rohan/sw/stsc3/help/graph/jmcc-strummable-silk.st"
-> putStrLn $ smalltalkProgram_pp $ stParse smalltalkProgram st
--}
-stRewrite :: FilePath -> FilePath -> IO ()
-stRewrite st_fn rw_fn = do
-  st <- readFile st_fn
-  let p = stParse smalltalkProgram st
-  writeFile rw_fn (smalltalkProgram_pp p)
-
 -- * 3.3 Smalltalk Abstract Program Grammar
 
 -- * 3.3.1 Program Definition
@@ -81,9 +56,6 @@ stRewrite st_fn rw_fn = do
 data SmalltalkProgram =
   SmalltalkProgram {programElements :: [ProgramElement]}
   deriving (Eq, Show)
-
-smalltalkProgram_pp :: SmalltalkProgram -> String
-smalltalkProgram_pp = unlines . map programElement_pp . programElements
 
 -- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
 smalltalkProgram :: P SmalltalkProgram
@@ -93,12 +65,6 @@ data ProgramElement
   = ProgramGlobal GlobalDefinition
   | ProgramInitializer ProgramInitializerDefinition
   deriving (Eq,Show)
-
-programElement_pp :: ProgramElement -> String
-programElement_pp el =
-  case el of
-    ProgramGlobal g -> globalDefinition_pp g
-    ProgramInitializer i -> programInitializerDefinition_pp i
 
 -- | <<program element>> ::= <<class definition>> | <<global definition>> | <<pool definition>> | <<program initializer definition>>
 programElement :: P ProgramElement
@@ -133,9 +99,6 @@ data GlobalDefinition =
   GlobalDefinition GlobalName (Maybe VariableInitializer)
   deriving (Eq, Show)
 
-globalDefinition_pp :: GlobalDefinition -> String
-globalDefinition_pp (GlobalDefinition n i) = strjn [n,maybe "" variableInitializer_pp i,"\n"]
-
 -- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
 globalDefinition :: P GlobalDefinition
 globalDefinition = do
@@ -150,9 +113,6 @@ type GlobalName = Identifier
 -- | <<variable initializer>> ::= <initializer definition>
 type VariableInitializer = InitializerDefinition
 
-variableInitializer_pp :: VariableInitializer -> String
-variableInitializer_pp = initializerDefinition_pp
-
 -- * 3.3.5 Program Initializer Definition
 
 type ProgramInitializerDefinition = InitializerDefinition
@@ -165,17 +125,11 @@ type ProgramInitializerDefinition = InitializerDefinition
 programInitializerDefinition :: P ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
 
-programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
-programInitializerDefinition_pp = initializerDefinition_pp
-
 -- * 3.4.2
 
 data MethodDefinition =
   MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
-
-methodDefinition_pp :: MethodDefinition -> String
-methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -207,16 +161,6 @@ data Pattern
   | BinaryPattern BinaryIdentifier Identifier
   | KeywordPattern [(Keyword,Identifier)]
   deriving (Eq, Show)
-
--- > pattern_pp (stParse messagePattern "midicps")
--- > pattern_pp (stParse messagePattern "+ aNumber")
--- > pattern_pp (stParse messagePattern "freq: f phase: p")
-pattern_pp :: Pattern -> String
-pattern_pp pat =
-  case pat of
-    UnaryPattern u -> u
-    BinaryPattern b a -> strjn [b,a]
-    KeywordPattern kp -> strjn (concatMap (\(k,a) -> [k,a]) kp)
 
 {- | Derive method selector from Pattern.
      Return is either Identifier or BinarySelector (both Strings).
@@ -280,9 +224,6 @@ keywordPattern = do
 
 data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
 
-temporaries_pp :: Temporaries -> String
-temporaries_pp (Temporaries t) = printf "|%s|\n" (strjn t)
-
 verticalBar :: P Char
 verticalBar = lexeme (P.char '|')
 
@@ -316,10 +257,6 @@ temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 data InitializerDefinition =
   InitializerDefinition (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
-
-initializerDefinition_pp :: InitializerDefinition -> String
-initializerDefinition_pp (InitializerDefinition t s) =
-  strjn [maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
 
@@ -356,14 +293,6 @@ data BlockBody =
   BlockBody (Maybe [BlockArgument]) (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
-blockBody_pp :: BlockBody -> String
-blockBody_pp (BlockBody a t s) =
-  strjn ["["
-        ,maybe "" (printf "%s|" . strjn . map blockArgument_pp) a
-        ,maybe "" temporaries_pp t
-        ,maybe "" statements_pp s
-        ,"]"]
-
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
 > stParse blockBody ""
@@ -386,9 +315,6 @@ blockBody = do
 
 -- | An identifier for a block argument.  Written with a ':' prefix.
 type BlockArgument = Identifier
-
-blockArgument_pp :: BlockArgument -> String
-blockArgument_pp = (:) ':'
 
 {- | <block argument> ::= ':' identifier
 
@@ -413,12 +339,6 @@ expressionSequenceToStatements stm =
           [e0] -> StatementsExpression e0 stm
           e0:eN -> StatementsExpression e0 (Just (f eN))
   in f
-
-statements_pp :: Statements -> String
-statements_pp st =
-  case st of
-    StatementsReturn r -> returnStatement_pp r
-    StatementsExpression e st' -> strjn [expression_pp e,".\n",maybe "" statements_pp st']
 
 period :: P String
 period = P.dot stLexer
@@ -449,9 +369,6 @@ statements = do
 
 data ReturnStatement = ReturnStatement Expression deriving (Eq,Show)
 
-returnStatement_pp :: ReturnStatement -> String
-returnStatement_pp (ReturnStatement e) = printf "^%s" (expression_pp e)
-
 {- | <return statement> ::= returnOperator <expression>
 
 > stParse returnStatement "^1"
@@ -471,9 +388,6 @@ expressionEither f g e =
   case e of
     ExprAssignment x -> f x
     ExprBasic x -> g x
-
-expression_pp :: Expression -> String
-expression_pp = expressionEither assignment_pp basicExpression_pp
 
 {- | <expression> ::= <assignment> | <basic expression>
 
@@ -500,9 +414,6 @@ expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicEx
 
 data Assignment = Assignment Identifier Expression deriving (Eq,Show)
 
-assignment_pp :: Assignment -> String
-assignment_pp (Assignment i e) = printf "%s := %s" i (expression_pp e)
-
 {- | <assignment> ::= <assignment target> assignmentOperator <expression>
 
 > stParse assignment "p:=1"
@@ -525,12 +436,6 @@ assignment = do
 data BasicExpression =
   BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
   deriving (Eq, Show)
-
-basicExpression_pp :: BasicExpression -> String
-basicExpression_pp (BasicExpression p m c) =
-  strjn [primary_pp p
-        ,maybe "" messages_pp m
-        ,maybe "" cascadedMessages_pp c]
 
 {- | <basic expression> ::= <primary> [<messages> <cascaded messages>]
 
@@ -565,16 +470,6 @@ data Messages
   | MessagesKeyword KeywordMessage
   deriving (Eq,Show)
 
-messages_pp :: Messages -> String
-messages_pp ms =
-  case ms of
-    MessagesUnary m1 m2 m3 -> strjn (concat ([map unaryMessage_pp m1
-                                             ,maybe [] (map binaryMessage_pp) m2
-                                             ,maybe [] (return . keywordMessage_pp) m3]))
-    MessagesBinary m1 m2 -> strjn (concat ([map binaryMessage_pp m1
-                                           ,maybe [] (return . keywordMessage_pp) m2]))
-    MessagesKeyword m1 -> keywordMessage_pp m1
-
 data Primary
   = PrimaryIdentifier Identifier
   | PrimaryLiteral Literal
@@ -582,15 +477,6 @@ data Primary
   | PrimaryExpression Expression
   | PrimaryArrayExpression [BasicExpression] -- NON-ANSI
   deriving (Eq, Show)
-
-primary_pp :: Primary -> String
-primary_pp pr =
-  case pr of
-    PrimaryIdentifier i -> i
-    PrimaryLiteral l -> literal_pp l
-    PrimaryBlock b -> blockBody_pp b
-    PrimaryExpression e -> printf "(%s)" (expression_pp e)
-    PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map basicExpression_pp a))
 
 inParentheses :: P t -> P t
 inParentheses = P.parens stLexer
@@ -670,15 +556,9 @@ data UnaryMessage = UnaryMessage Identifier deriving (Eq,Show)
 unaryMessageSelector :: UnaryMessage -> Identifier
 unaryMessageSelector (UnaryMessage u) = u
 
-unaryMessage_pp :: UnaryMessage -> String
-unaryMessage_pp = unaryMessageSelector
-
 data BinaryMessage =
   BinaryMessage Identifier BinaryArgument
   deriving (Eq,Show)
-
-binaryMessage_pp :: BinaryMessage -> String
-binaryMessage_pp (BinaryMessage b a) = strjn [b,binaryArgument_pp a]
 
 binaryMessageSelector :: BinaryMessage -> Identifier
 binaryMessageSelector (BinaryMessage b _) = b
@@ -689,18 +569,6 @@ data KeywordMessage =
 
 keywordMessageSelector :: KeywordMessage -> Identifier
 keywordMessageSelector (KeywordMessage l) = concatMap fst l
-
-keywordMessage_pp :: KeywordMessage -> String
-keywordMessage_pp (KeywordMessage l) =
-  let f (k,a) = strjn [k,keywordArgument_pp a]
-  in strjn (map f l)
-
-{-
-message_pp :: Message -> String
-message_pp msg =
-  in case msg of
-       KeywordMessage k -> strjn (map keywordMessage_pp k)
--}
 
 {- | <unary message> ::= unarySelector
 
@@ -726,9 +594,6 @@ binaryMessage = do
 data BinaryArgument =
   BinaryArgument Primary (Maybe [UnaryMessage])
   deriving (Eq, Show)
-
-binaryArgument_pp :: BinaryArgument -> String
-binaryArgument_pp (BinaryArgument p m) = strjn [primary_pp p,maybe "" (strjn . map unaryMessage_pp) m]
 
 {- | <binary argument> ::= <primary> <unary message>*
 
@@ -759,12 +624,6 @@ data KeywordArgument =
   KeywordArgument Primary (Maybe [UnaryMessage]) (Maybe [BinaryMessage])
   deriving (Eq, Show)
 
-keywordArgument_pp :: KeywordArgument -> String
-keywordArgument_pp (KeywordArgument p m1 m2) =
-  strjn [primary_pp p
-        ,maybe "" (strjn . map unaryMessage_pp) m1
-        ,maybe "" (strjn . map binaryMessage_pp) m2]
-
 {- | <keyword argument> ::= <primary> <unary message>* <binary message>*
 
 > stParse keywordArgument "p"
@@ -787,9 +646,6 @@ cascadeSeparator = P.semi stLexer
 
 type CascadedMessages = [Messages]
 
-cascadedMessages_pp :: CascadedMessages -> String
-cascadedMessages_pp = strjn . map ((++) "; " . messages_pp)
-
 -- | <cascaded messages> ::= (';' <messages>)*
 cascadedMessages :: P CascadedMessages
 cascadedMessages = P.many (cascadeSeparator >> messages)
@@ -807,17 +663,6 @@ data Literal
   | SelectorLiteral Selector
   | ArrayLiteral [Either Literal Identifier]
   deriving (Eq, Show)
-
--- > map literal_pp [SelectorLiteral (UnarySelector "dinf")]
-literal_pp :: Literal -> String
-literal_pp lit =
-  case lit of
-    NumberLiteral n -> number_pp n
-    StringLiteral s -> printf "'%s'" s
-    CharacterLiteral c -> printf "$%c" c
-    SymbolLiteral s -> printf "#'%s'" s
-    SelectorLiteral s -> printf "#%s" (selector_pp s)
-    ArrayLiteral a -> printf "#(%s)" (strjn (map (either literal_pp id) a))
 
 {- | <literal> ::= <number literal> | <string literal> | <character literal> | <symbol literal> | <selector literal> | <array literal>
 
@@ -859,9 +704,6 @@ numberEither f1 f2 n =
   case n of
     Int x -> f1 x
     Float x -> f2 x
-
-number_pp :: Number -> String
-number_pp = numberEither show (\n -> Numeric.showFFloat Nothing n "")
 
 {- | <number> ::= integer | float | scaledDecimal
 
@@ -1070,9 +912,6 @@ float = P.float stLexer
 
 type QuotedCharacter = Char
 
-quotedCharacter_pp :: QuotedCharacter -> String
-quotedCharacter_pp = printf "$%c"
-
 {- | quotedCharacter ::= '$' character
 
 > stParse quotedCharacter "$x" == 'x'
@@ -1083,9 +922,6 @@ quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
 -- * 3.5.8
 
 type QuotedString = String
-
-quotedString_pp :: QuotedString -> String
-quotedString_pp = printf "'%s'"
 
 {- | quotedString ::= stringDelimiter stringBody stringDelimiter
 
@@ -1120,9 +956,6 @@ nonStringDelimiter = P.noneOf "'"
 
 type HashedString = String
 
-hashedString_pp :: HashedString -> String
-hashedString_pp = printf "#'%s'"
-
 {- | hashedString ::= '#' quotedString
 
 > stParse hashedString "#'x'" == "x"
@@ -1145,13 +978,6 @@ data Selector
   | BinarySelector BinaryIdentifier
   | KeywordSelector Identifier
   deriving (Eq, Show)
-
-selector_pp :: Selector -> String
-selector_pp sel =
-  case sel of
-    UnarySelector u -> u
-    BinarySelector b -> b
-    KeywordSelector k -> k
 
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
