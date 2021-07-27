@@ -1,4 +1,4 @@
--- | Parser and pretty printer for a subset of ANSI Smalltalk.
+-- | Ast and parser for a subset of ANSI Smalltalk.
 module Language.Smalltalk.Ansi where
 
 import Data.Functor.Identity {- base -}
@@ -165,19 +165,19 @@ data Pattern
 {- | Derive method selector from Pattern.
      Return is either Identifier or BinarySelector (both Strings).
 
-> patternSelector (stParse messagePattern "midicps") == "midicps"
-> patternSelector (stParse messagePattern "+ aNumber") == "+"
-> patternSelector (stParse messagePattern "new: x") == "new:"
-> patternSelector (stParse messagePattern "freq: f phase: p") == "freq:phase:"
+> patternSelector (stParse messagePattern "midicps") == UnarySelector "midicps"
+> patternSelector (stParse messagePattern "+ aNumber") == BinarySelector "+"
+> patternSelector (stParse messagePattern "new: x") == KeywordSelector "new:"
+> patternSelector (stParse messagePattern "freq: f phase: p") == KeywordSelector "freq:phase:"
 -}
-patternSelector :: Pattern -> Identifier
+patternSelector :: Pattern -> Selector
 patternSelector pat =
   case pat of
-    UnaryPattern u -> u
-    BinaryPattern b _ -> b
-    KeywordPattern kp -> concatMap fst kp
+    UnaryPattern u -> UnarySelector u
+    BinaryPattern b _ -> BinarySelector b
+    KeywordPattern kp -> KeywordSelector (concatMap fst kp)
 
-methodSelector :: MethodDefinition -> Identifier
+methodSelector :: MethodDefinition -> Selector
 methodSelector (MethodDefinition p _ _) = patternSelector p
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
@@ -197,7 +197,7 @@ messagePattern = P.choice [(P.try keywordPattern),(P.try binaryPattern),unaryPat
 > stParse unaryPattern "p:" -- FAIL
 -}
 unaryPattern :: P Pattern
-unaryPattern = fmap UnaryPattern unarySelector -- lexeme
+unaryPattern = fmap (UnaryPattern . selectorIdentifier) unarySelector -- lexeme
 
 {- | <binary pattern> ::= binarySelector <method argument>
 
@@ -205,7 +205,7 @@ unaryPattern = fmap UnaryPattern unarySelector -- lexeme
 -}
 binaryPattern :: P Pattern
 binaryPattern = do
-  sel <- binarySelector
+  BinarySelector sel <- binarySelector
   arg <- identifier
   return (BinaryPattern sel arg)
 
@@ -223,6 +223,9 @@ keywordPattern = do
   fmap KeywordPattern (P.many1 (P.try f))
 
 data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
+
+emptyTemporaries :: Temporaries
+emptyTemporaries = Temporaries []
 
 verticalBar :: P Char
 verticalBar = lexeme (P.char '|')
@@ -553,22 +556,23 @@ messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMes
 
 data UnaryMessage = UnaryMessage Identifier deriving (Eq,Show)
 
-unaryMessageSelector :: UnaryMessage -> Identifier
-unaryMessageSelector (UnaryMessage u) = u
+unaryMessageSelector :: UnaryMessage -> Selector
+unaryMessageSelector (UnaryMessage u) = UnarySelector u
 
 data BinaryMessage =
   BinaryMessage Identifier BinaryArgument
   deriving (Eq,Show)
 
-binaryMessageSelector :: BinaryMessage -> Identifier
-binaryMessageSelector (BinaryMessage b _) = b
+binaryMessageSelector :: BinaryMessage -> Selector
+binaryMessageSelector (BinaryMessage b _) = BinarySelector b
 
 data KeywordMessage =
   KeywordMessage [(Keyword,KeywordArgument)]
   deriving (Eq,Show)
 
-keywordMessageSelector :: KeywordMessage -> Identifier
-keywordMessageSelector (KeywordMessage l) = concatMap fst l
+-- | Keyword selector from KeywordMessage.
+keywordMessageSelector :: KeywordMessage -> Selector
+keywordMessageSelector (KeywordMessage l) = KeywordSelector (concatMap fst l)
 
 {- | <unary message> ::= unarySelector
 
@@ -576,7 +580,7 @@ keywordMessageSelector (KeywordMessage l) = concatMap fst l
 > stParse unaryMessage "" -- FAIL
 -}
 unaryMessage :: P UnaryMessage
-unaryMessage = fmap UnaryMessage unarySelector -- lexeme
+unaryMessage = fmap (UnaryMessage . selectorIdentifier) unarySelector -- lexeme
 
 {- | <binary message> ::= binarySelector <binary argument>
 
@@ -587,7 +591,7 @@ unaryMessage = fmap UnaryMessage unarySelector -- lexeme
 -}
 binaryMessage :: P BinaryMessage
 binaryMessage = do
-  sel <- binarySelector
+  BinarySelector sel <- binarySelector
   arg <- binaryArgument
   return (BinaryMessage sel arg)
 
@@ -877,10 +881,10 @@ type BinaryIdentifier = Identifier
 
 -- | binarySelector ::= binaryCharacter+
 --
--- > stParse binarySelector "+" == "+"
--- > stParse binarySelector "+p" == "+" -- +1 must parse as BinarySelector=+ BinaryArgument=1
-binarySelector :: P BinaryIdentifier
-binarySelector = P.operator stLexer
+-- > stParse binarySelector "+" == BinarySelector "+"
+-- > stParse binarySelector "+p" == BinarySelector "+" -- +1 must parse as selector=+ argument=1
+binarySelector :: P Selector
+binarySelector = fmap BinarySelector (P.operator stLexer)
 
 -- | returnOperator ::= '^'
 returnOperator :: P Char
@@ -967,11 +971,13 @@ hashedString = (P.char '#' >> quotedString) P.<?> "hashedString"
 
 {- | Identifier (lexeme), not ending with ':'
 
-> stParse unarySelector "p" == "p"
+> stParse unarySelector "p" == UnarySelector "p"
 > stParse unarySelector "p:" -- FAIL
 -}
-unarySelector :: P Identifier
-unarySelector = (identifier >>= \u -> P.notFollowedBy (P.char ':') >> return u) P.<?> "unarySelector"
+unarySelector :: P Selector
+unarySelector =
+  (identifier >>= \u -> P.notFollowedBy (P.char ':') >> return (UnarySelector u))
+  P.<?> "unarySelector"
 
 data Selector
   = UnarySelector Identifier
@@ -979,28 +985,46 @@ data Selector
   | KeywordSelector Identifier
   deriving (Eq, Show)
 
+selectorIdentifier :: Selector -> Identifier
+selectorIdentifier s =
+  case s of
+    UnarySelector x -> x
+    BinarySelector x -> x
+    KeywordSelector x -> x
+
+{- | Determine arity of selector
+
+> map selectorArity [UnarySelector "abs",BinarySelector "+",KeywordSelector "at:put:"] == [0,1,2]
+-}
+selectorArity :: Selector -> Int
+selectorArity s =
+  case s of
+    UnarySelector _ -> 0
+    BinarySelector _ -> 1
+    KeywordSelector x -> length (filter (== ':') x)
+
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
 > stParse quotedSelector "#abs" == UnarySelector "abs"
 > stParse quotedSelector "#freq:" == KeywordSelector "freq:"
 > stParse quotedSelector "#freq:iphase:" == KeywordSelector "freq:iphase:"
 > stParse quotedSelector "#+" == BinarySelector "+"
-> stParse quotedSelector "#+:" -- FAIL
-> stParse quotedSelector "#+x" -- FAIL
+> stParse quotedSelector "#+:" -- FAIL?
+> stParse quotedSelector "#+x" -- FAIL?
 -}
 quotedSelector :: P Selector
 quotedSelector =
-  let sel = P.choice [fmap BinarySelector binarySelector, fmap KeywordSelector (P.try keywordSelector), fmap UnarySelector unarySelector]
+  let sel = P.choice [binarySelector, P.try keywordSelector, unarySelector]
   in P.label (P.char '#' >> sel) "quotedSelector" -- lexeme
 
 {- | keywordSelector ::= keyword+
 
-> stParse keywordSelector "freq:" == "freq:"
-> stParse keywordSelector "freq:iphase:" == "freq:iphase:"
+> stParse keywordSelector "freq:" == KeywordSelector "freq:"
+> stParse keywordSelector "freq:iphase:" == KeywordSelector "freq:iphase:"
 > stParse keywordSelector "freq:iphase:x" -- FAIL
 -}
-keywordSelector :: P Keyword
-keywordSelector = fmap concat (P.many1 keyword) P.<?> "keywordSelector"
+keywordSelector :: P Selector
+keywordSelector = fmap (KeywordSelector . concat) (P.many1 keyword) P.<?> "keywordSelector"
 
 -- * 3.5.11
 

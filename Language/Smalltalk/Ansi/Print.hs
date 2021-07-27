@@ -119,7 +119,7 @@ primary_pp pr =
     PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map basicExpression_pp a))
 
 unaryMessage_pp :: UnaryMessage -> String
-unaryMessage_pp = unaryMessageSelector
+unaryMessage_pp = selectorIdentifier . unaryMessageSelector
 
 binaryMessage_pp :: BinaryMessage -> String
 binaryMessage_pp (BinaryMessage b a) = strjn [b,binaryArgument_pp a]

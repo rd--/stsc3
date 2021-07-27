@@ -42,7 +42,7 @@ removeTrailingColon :: Identifier -> Identifier
 removeTrailingColon x = if last x == ':' then take (length x - 1) x else x
 
 isGetterOrSetter :: ClassDefinition -> MethodDefinition -> Bool
-isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (methodSelector m))
+isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (selectorIdentifier (methodSelector m)))
 
 -- > downcaseFirstLetter "VariableName" == "variableName"
 downcaseFirstLetter :: String -> String
@@ -240,7 +240,7 @@ sc_primary_pp pr =
 -- > sc_unaryMessage_pp (stParse unaryMessage "abs") == ".abs"
 -- > sc_unaryMessage_pp (stParse unaryMessage "Required") == ".required"
 sc_unaryMessage_pp :: UnaryMessage -> String
-sc_unaryMessage_pp = ('.' :) . downcaseFirstLetter . unaryMessageSelector
+sc_unaryMessage_pp = ('.' :) . downcaseFirstLetter . selectorIdentifier . unaryMessageSelector
 
 -- > sc_binaryMessage_pp (stParse binaryMessage "= 0") == "== 0"
 -- > sc_binaryMessage_pp (stParse binaryMessage "+ 2") == "+ 2"
