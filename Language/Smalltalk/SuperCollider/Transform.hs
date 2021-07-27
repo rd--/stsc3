@@ -1,4 +1,4 @@
-{- | Translate Sc Ast in relation to Smalltalk Ast.
+{- | Rewrite Sc Ast to conform to Smalltalk Ast rules.
 
 The three main tasks are:
 
@@ -25,7 +25,7 @@ This transformation can be done at the Sc Ast.
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))
 
-Method parameters are be collated into an array of associations.
+Method parameters are collated into an array of associations.
 
 - p.q(a,b)          => p q: {a. b}
 - p.q(x: a, b)      => p q: {#x: -> a. b}
@@ -55,7 +55,10 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 
 scExpressionRewrite :: ScExpression -> ScExpression
-scExpressionRewrite = scExpressionRewriteKeyword . scExpressionRewriteTemporaries . scExpressionRewritePrecedence
+scExpressionRewrite =
+  scExpressionRewritePrecedence .
+  scExpressionRewriteTemporaries .
+  scExpressionRewriteKeyword
 
 -- * Parameter re-writing
 
@@ -173,19 +176,21 @@ scDotMessagesForSmalltalk m =
          _ -> error "scDotMessagesForSmalltalk"
   else (m,Nothing)
 
--- | The recursion rules here are intricate and incorrect (see excess parentheses)
+-- | The recursion rules here are intricate and likely incorrect.
 scBinaryArgumentRewritePrecedence :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewritePrecedence (ScBinaryArgument p m) =
   case m of
-    Nothing -> ScBinaryArgument (scPrimaryRewritePrecedence p) m
+    Nothing -> ScBinaryArgument (scPrimaryRewritePrecedence p) Nothing
     Just x -> if not (scDotMessagesHaveKeyword x)
               then ScBinaryArgument (scPrimaryRewritePrecedence p) m
               else let (lhs,rhs) = scDotMessagesSplitAtKeyword x
-                   in scBinaryArgumentRewritePrecedence
+                   in --scBinaryArgumentRewritePrecedence
                       (ScBinaryArgument
                        (ScPrimaryExpression
                          (ScExprBasic
-                           (ScBasicExpression p (Just (ScMessagesDot lhs Nothing)))))
+                          (ScBasicExpression
+                            (scPrimaryRewritePrecedence p)
+                            (Just (ScMessagesDot (map scDotMessageRewritePrecedence lhs) Nothing)))))
                        (Just (map scDotMessageRewritePrecedence rhs)))
 
 scBinaryMessageRewritePrecedence :: ScBinaryMessage -> ScBinaryMessage
@@ -216,12 +221,14 @@ scBasicExpressionRewritePrecedence (ScBasicExpression p m) =
       then ScBasicExpression
            (scPrimaryRewritePrecedence p)
            (Just (ScMessagesDot d (Just (map scBinaryMessageRewritePrecedence b))))
-      else scBasicExpressionRewritePrecedence
+      else --scBasicExpressionRewritePrecedence -- too many paren?
            (ScBasicExpression
             (ScPrimaryExpression
              (ScExprBasic
-              (ScBasicExpression p (Just (ScMessagesDot d Nothing)))))
-            (Just (ScMessagesBinary b)))
+              (ScBasicExpression
+                (scPrimaryRewritePrecedence p)
+                (Just (ScMessagesDot d Nothing)))))
+            (Just (scMessagesRewritePrecedence (ScMessagesBinary b))))
 
 scExpressionRewritePrecedence :: ScExpression -> ScExpression
 scExpressionRewritePrecedence e =
@@ -342,39 +349,43 @@ scPrimaryRewriteTemporaries p =
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
 
 {-
-import Language.Smalltalk.SuperCollider.Ast.Print
-import Language.Smalltalk.SuperCollider.Lexer
-import Language.Smalltalk.SuperCollider.Parser
-p = superColliderParser . alexScanTokens
-x = scExpressionPrint . p
 
-rw = scExpressionPrint . scExpressionRewritePrecedence . p
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc
+
+rw = Sc.scExpressionPrint . scExpressionRewrite . Sc.superColliderParser . Sc.alexScanTokens
+rw "p + q.r()" == "p + (q.r([]))"
+
+rw = Sc.scExpressionPrint . scExpressionRewritePrecedence . Sc.superColliderParser . Sc.alexScanTokens
 rw "p.q + r" == "p.q + r"
 rw "p + q.r()" == "p + (q.r())"
+rw "p + q.r(x + y.z())" == "p + (q.r(x + (y.z())))"
 rw "p + q + r.s()" == "p + q + (r.s())"
+rw "p + q + r.s() + t" == "p + q + (r.s()) + t"
 rw "p + (q + r.s())" == "p + (q + (r.s()))"
-rw "p + q.r.s()" == "p + ((q.r.s()))" -- too many parentheses
-rw "p + q.r.s().t" == "p + ((q.r.s())).t" -- too many parentheses
-rw "p + q.r.s().t.u()" == "p + (((q.r.s()).t.u()))" -- too many parentheses
-rw "p.q(a)" == "p.q(a)" -- only one message, can be keyword
-rw "p.q(a).r" == "(p.q(a)).r"
-rw "p.q(a).r(b)" == "(p.q(a)).r(b)" -- hence nested trailing
+rw "p + q.r.s()" == "p + (q.r.s())"
+rw "p + q.r.s().t" == "p + (q.r.s()).t"
+rw "p + q.r.s().t.u()" == "p + (q.r.s()).t.u()"
+rw "p.q()" == "p.q()" -- only one message, can be keyword
+rw "p.q().r" == "(p.q()).r"
+rw "p.q().r()" == "(p.q()).r()" -- hence nested trailing
 rw "p + q" == "p + q"
 rw "p.q + r" == "p.q + r" -- unary no parens
-rw "p.q(a) + r" == "(p.q(a)) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
-rw "p.q(a) + r.s(b)" == "(p.q(a)) + (r.s(b))"
-rw "p + (q + r.s())" == "p + (q + (r.s()))"
-
+rw "p.q() + r" == "(p.q()) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
+rw "p.q() + r.s()" == "(p.q()) + (r.s())"
+rw "p + q + r.s()" == "p + q + (r.s())"
 rw "{p.q(a).r}" == "{(p.q(a)).r}"
 rw "{var x = p.q(a).r; x}" == "{var x = (p.q(a)).r; x}"
+rw "1 + p.q(x: a + r.s())" == "1 + (p.q(x:a + (r.s())))"
 
-rw = scExpressionPrint . scExpressionRewriteTemporaries . p
+rw = Sc.scExpressionPrint . scExpressionRewriteTemporaries . Sc.superColliderParser . Sc.alexScanTokens
 rw "{var x = a; x}" == "{var x; x = a; x}"
 rw "{var x = a,y; x + y}" == "{var x,y; x = a; x + y}"
 rw "{var x; var y = b; x + y}" == "{var x,y; y = b; x + y}"
 rw "{var x = {var y = a; a * x}.value; x}" == "{var x; x = {var y; y = a; a * x}.value; x}"
 
-rw = scExpressionPrint . scExpressionRewriteKeyword . p
+rw = Sc.scExpressionPrint . scExpressionRewriteKeyword . Sc.superColliderParser . Sc.alexScanTokens
 rw "p.q()" == "p.q([])"
 rw "p.q(a)" == "p.q([a])"
 rw "p.q(a,b)" == "p.q([a,b])"
