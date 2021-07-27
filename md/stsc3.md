@@ -17,6 +17,7 @@ p q: r  => p.q(r)
 q(p)    => p.q
 |p|     => arg p;
 p[q]    => p.at(q)
+p[q]=r  => p.put(q,r)
 p.q(*r) => p.performList(\q,r)
 p.q {}  => p.q({})
 (p..q)  => p.to(q).asArray

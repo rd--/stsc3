@@ -28,7 +28,7 @@ scPrimaryPrint p =
     ScPrimaryLiteral x -> scLiteralPrint x
     ScPrimaryBlock x -> inBraces (scBlockBodyPrint x)
     ScPrimaryExpression x -> inParen (scExpressionPrint x)
-    ScPrimaryArrayExpression x -> inBrackets (intercalate ", " (map scBasicExpressionPrint x))
+    ScPrimaryArrayExpression x -> inBrackets (intercalate "," (map scBasicExpressionPrint x))
 
 scJoin :: [String] -> String
 scJoin = concat
@@ -41,7 +41,7 @@ scBlockBodyPrint (ScBlockBody a t s) =
   ,maybePrint scStatementsPrint s]
 
 scBlockArgumentsPrint :: [St.BlockArgument] -> String
-scBlockArgumentsPrint x = scJoin ["arg ",intercalate ", " x,"; "]
+scBlockArgumentsPrint x = scJoin ["arg ",intercalate "," x,"; "]
 
 scStatementsPrint :: ScStatements -> String
 scStatementsPrint s =
@@ -57,7 +57,7 @@ scTemporaryPrint (x,y) =
     Just z -> scJoin [x," = ",scBasicExpressionPrint z]
 
 scTemporariesPrint :: ScTemporaries -> String
-scTemporariesPrint tmp = scJoin ["var ",intercalate ", " (map scTemporaryPrint tmp),"; "]
+scTemporariesPrint tmp = scJoin ["var ",intercalate "," (map scTemporaryPrint tmp),"; "]
 
 scBasicExpressionPrint :: ScBasicExpression -> String
 scBasicExpressionPrint (ScBasicExpression p m) =
@@ -88,7 +88,7 @@ inBrackets x = "[" ++ x ++ "]"
 > scKeywordArgumentsPrint [ScKeywordArgument (Just "mul:") x,ScKeywordArgument (Just "add:") x]
 -}
 scKeywordArgumentsPrint :: [ScKeywordArgument] -> String
-scKeywordArgumentsPrint = inParen . intercalate ", " . map scKeywordArgumentPrint
+scKeywordArgumentsPrint = inParen . intercalate "," . map scKeywordArgumentPrint
 
 scBinaryMessagePrint :: ScBinaryMessage -> String
 scBinaryMessagePrint (ScBinaryMessage i a) = scJoin [" ",i," ",scBinaryArgumentPrint a]

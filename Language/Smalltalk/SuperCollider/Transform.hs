@@ -3,13 +3,13 @@
 The three main tasks are:
 
 - changing the precedence rules
-- packaging method parameters into a dictionary
+- packaging method parameters into a dictionary (array of associations)
 - rewriting variable declarations
 
 The SuperCollider message precedence rule is Dot > Binary.
 The Smalltalk message precedence rule is Unary > Binary > Keyword.
 A SuperCollider Dot message is either Unary or Keyword.
-A Dot message sequence must have parentheses inserted after each Keyword element.
+To translate, a Dot message sequence has parentheses inserted after each Keyword element.
 
 - p.q(a).r          => (p q: a) r
 - p.q.r(a).s(b).t   => ((p q r: a) s: b) t
@@ -25,7 +25,7 @@ This transformation can be done at the Sc Ast.
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))
 
-Method parameters must be collated into an array of associations.
+Method parameters are be collated into an array of associations.
 
 - p.q(a,b)          => p q: {a. b}
 - p.q(x: a, b)      => p q: {#x: -> a. b}
@@ -54,7 +54,10 @@ import Data.Maybe {- maybe -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 
--- | Parameter re-writing
+scExpressionRewrite :: ScExpression -> ScExpression
+scExpressionRewrite = scExpressionRewriteKeyword . scExpressionRewriteTemporaries . scExpressionRewritePrecedence
+
+-- * Parameter re-writing
 
 scKeywordAssoc :: St.Keyword -> ScBasicExpression -> ScBasicExpression
 scKeywordAssoc k v =
@@ -66,19 +69,81 @@ scKeywordAssoc k v =
 scKeywordArgumentAssoc :: ScKeywordArgument -> ScBasicExpression
 scKeywordArgumentAssoc (ScKeywordArgument k v) =
   case k of
-    Just x -> scKeywordAssoc x v
-    Nothing -> v
+    Just x -> scKeywordAssoc x (scBasicExpressionRewriteKeyword v)
+    Nothing -> scBasicExpressionRewriteKeyword v
 
 scKeywordArgumentsArray :: [ScKeywordArgument] -> ScBasicExpression
 scKeywordArgumentsArray a =
   ScBasicExpression (ScPrimaryArrayExpression (map scKeywordArgumentAssoc a)) Nothing
 
--- | Rewrite Keyword messages to have a single association array as argument.
+{- | Rewrite Keyword messages to have a single association array as argument.
+     ScDotMessage occurs in ScMessages and in ScBinaryArgument, which occurs in ScMessages.
+     ScMessages occurs in ScBasicExpression.
+-}
+scKeywordArgumentsRewriteKeyword :: [ScKeywordArgument] -> [ScKeywordArgument]
+scKeywordArgumentsRewriteKeyword p =
+  [ScKeywordArgument Nothing (scKeywordArgumentsArray p)]
+
 scDotMessageRewriteKeyword :: ScDotMessage -> ScDotMessage
 scDotMessageRewriteKeyword (ScDotMessage m a) =
-  case a of
-    Nothing -> ScDotMessage m a
-    Just p -> ScDotMessage m (Just [ScKeywordArgument Nothing (scKeywordArgumentsArray p)])
+  ScDotMessage m (fmap scKeywordArgumentsRewriteKeyword a)
+
+scExpressionRewriteKeyword :: ScExpression -> ScExpression
+scExpressionRewriteKeyword e =
+  case e of
+    ScExprAssignment x y -> ScExprAssignment x (scExpressionRewriteKeyword y)
+    ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteKeyword x)
+
+scTemporaryRewriteKeyword :: ScTemporary -> ScTemporary
+scTemporaryRewriteKeyword (i,e) = (i,fmap scBasicExpressionRewriteKeyword e)
+
+scTemporariesRewriteKeyword :: ScTemporaries -> ScTemporaries
+scTemporariesRewriteKeyword = map scTemporaryRewriteKeyword
+
+scReturnStatementRewriteKeyword :: ScReturnStatement -> ScReturnStatement
+scReturnStatementRewriteKeyword (ScReturnStatement x) =
+  (ScReturnStatement (scExpressionRewriteKeyword x))
+
+scStatementsRewriteKeyword :: ScStatements -> ScStatements
+scStatementsRewriteKeyword s =
+  case s of
+    ScStatementsReturn x -> ScStatementsReturn (scReturnStatementRewriteKeyword x)
+    ScStatementsExpression x y -> ScStatementsExpression
+                                  (scExpressionRewriteKeyword x)
+                                  (fmap scStatementsRewriteKeyword y)
+
+scBlockBodyRewriteKeyword :: ScBlockBody -> ScBlockBody
+scBlockBodyRewriteKeyword (ScBlockBody a t s) =
+  ScBlockBody a (fmap (map scTemporariesRewriteKeyword) t) (fmap scStatementsRewriteKeyword s)
+
+scBasicExpressionRewriteKeyword :: ScBasicExpression -> ScBasicExpression
+scBasicExpressionRewriteKeyword (ScBasicExpression p m) =
+  ScBasicExpression (scPrimaryRewriteKeyword p) (fmap scMessagesRewriteKeyword m)
+
+scPrimaryRewriteKeyword :: ScPrimary -> ScPrimary
+scPrimaryRewriteKeyword p =
+  case p of
+    ScPrimaryIdentifier _ -> p
+    ScPrimaryLiteral _ -> p
+    ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteKeyword x)
+    ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteKeyword x)
+    ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteKeyword x)
+
+scBinaryArgumentRewriteKeyword :: ScBinaryArgument -> ScBinaryArgument
+scBinaryArgumentRewriteKeyword (ScBinaryArgument p m) =
+  ScBinaryArgument (scPrimaryRewriteKeyword p) (fmap (map scDotMessageRewriteKeyword) m)
+
+scBinaryMessageRewriteKeyword :: ScBinaryMessage -> ScBinaryMessage
+scBinaryMessageRewriteKeyword (ScBinaryMessage i a) =
+  ScBinaryMessage i (scBinaryArgumentRewriteKeyword a)
+
+scMessagesRewriteKeyword :: ScMessages -> ScMessages
+scMessagesRewriteKeyword m =
+  case m of
+    ScMessagesDot m1 m2 -> ScMessagesDot
+                           (map scDotMessageRewriteKeyword m1)
+                           (fmap (map scBinaryMessageRewriteKeyword) m2)
+    ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteKeyword m1)
 
 -- * Precedence re-writing
 
@@ -88,25 +153,40 @@ scDotMessageIsKeyword (ScDotMessage _ m) = isJust m
 scDotMessagesHaveKeyword :: [ScDotMessage] -> Bool
 scDotMessagesHaveKeyword = any scDotMessageIsKeyword
 
+-- | This is for parenthesising, it places the initial keyword at the end of the lhs, not the start of the rhs.
 scDotMessagesSplitAtKeyword :: [ScDotMessage] -> ([ScDotMessage], [ScDotMessage])
 scDotMessagesSplitAtKeyword m =
   case break scDotMessageIsKeyword m of
     (lhs,k:rhs) -> (lhs ++ [k],rhs)
     _ -> error "scDotMessagesSplitAtKeyword?"
 
+{- | This is for translating, it allows either
+     a Unary sequence with an optional ending Keyword,
+     or a single trailing Keyword.
+-}
+scDotMessagesForSmalltalk :: [ScDotMessage] -> ([ScDotMessage], Maybe ScDotMessage)
+scDotMessagesForSmalltalk m =
+  if scDotMessagesHaveKeyword m
+  then case break scDotMessageIsKeyword m of
+         (lhs,[]) -> (lhs,Nothing)
+         (lhs,[k]) -> (lhs,Just k)
+         _ -> error "scDotMessagesForSmalltalk"
+  else (m,Nothing)
+
+-- | The recursion rules here are intricate and incorrect (see excess parentheses)
 scBinaryArgumentRewritePrecedence :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewritePrecedence (ScBinaryArgument p m) =
   case m of
-    Nothing -> ScBinaryArgument p m
+    Nothing -> ScBinaryArgument (scPrimaryRewritePrecedence p) m
     Just x -> if not (scDotMessagesHaveKeyword x)
-              then ScBinaryArgument p m
+              then ScBinaryArgument (scPrimaryRewritePrecedence p) m
               else let (lhs,rhs) = scDotMessagesSplitAtKeyword x
                    in scBinaryArgumentRewritePrecedence
                       (ScBinaryArgument
                        (ScPrimaryExpression
                          (ScExprBasic
                            (ScBasicExpression p (Just (ScMessagesDot lhs Nothing)))))
-                       (Just rhs))
+                       (Just (map scDotMessageRewritePrecedence rhs)))
 
 scBinaryMessageRewritePrecedence :: ScBinaryMessage -> ScBinaryMessage
 scBinaryMessageRewritePrecedence (ScBinaryMessage i a) =
@@ -149,13 +229,51 @@ scExpressionRewritePrecedence e =
     ScExprAssignment x y -> ScExprAssignment x (scExpressionRewritePrecedence y)
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewritePrecedence x)
 
+scKeywordArgumentRewritePrecedence :: ScKeywordArgument -> ScKeywordArgument
+scKeywordArgumentRewritePrecedence (ScKeywordArgument k v) =
+  ScKeywordArgument k (scBasicExpressionRewritePrecedence v)
+
+scDotMessageRewritePrecedence :: ScDotMessage -> ScDotMessage
+scDotMessageRewritePrecedence (ScDotMessage i a) =
+  ScDotMessage i (fmap (map scKeywordArgumentRewritePrecedence) a)
+
+scMessagesRewritePrecedence :: ScMessages -> ScMessages
+scMessagesRewritePrecedence m =
+  case m of
+    ScMessagesDot m1 m2 -> ScMessagesDot
+                           (map scDotMessageRewritePrecedence m1)
+                           (fmap (map scBinaryMessageRewritePrecedence) m2)
+    ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewritePrecedence m1)
+
+
+scReturnStatementRewritePrecedence :: ScReturnStatement -> ScReturnStatement
+scReturnStatementRewritePrecedence (ScReturnStatement x) =
+  (ScReturnStatement (scExpressionRewritePrecedence x))
+
+scStatementsRewritePrecedence :: ScStatements -> ScStatements
+scStatementsRewritePrecedence s =
+  case s of
+    ScStatementsReturn x -> ScStatementsReturn (scReturnStatementRewritePrecedence x)
+    ScStatementsExpression x y -> ScStatementsExpression
+                                  (scExpressionRewritePrecedence x)
+                                  (fmap scStatementsRewritePrecedence y)
+
+scTemporaryRewritePrecedence :: ScTemporary -> ScTemporary
+scTemporaryRewritePrecedence (i,e) = (i,fmap scBasicExpressionRewritePrecedence e)
+
+scTemporariesRewritePrecedence :: ScTemporaries -> ScTemporaries
+scTemporariesRewritePrecedence = map scTemporaryRewritePrecedence
+
+scBlockBodyRewritePrecedence :: ScBlockBody -> ScBlockBody
+scBlockBodyRewritePrecedence (ScBlockBody a t s) =
+  ScBlockBody a (fmap (map scTemporariesRewritePrecedence) t) (fmap scStatementsRewritePrecedence s)
+
 scPrimaryRewritePrecedence :: ScPrimary -> ScPrimary
 scPrimaryRewritePrecedence p =
   case p of
     ScPrimaryIdentifier _ -> p
     ScPrimaryLiteral _ -> p
-    -- the block needs to be rewritten for precedence also
-    ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteTemporaries x)
+    ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewritePrecedence x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewritePrecedence x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewritePrecedence x)
 
@@ -175,9 +293,53 @@ scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
       let (tmpNames,tmpExpr) = scTemporariesRewrite tmp
           idToTmp k = (k,Nothing)
           maybeTmp = if null tmpNames then Nothing else Just [map idToTmp tmpNames]
+          tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
       in case tmpExpr of
         [] -> ScBlockBody arg maybeTmp stm
-        _ -> ScBlockBody arg maybeTmp (Just (scExpressionSequenceToStatements stm tmpExpr))
+        _ -> ScBlockBody arg maybeTmp (Just (scExpressionSequenceToStatements stm tmpExprRw))
+
+scBinaryArgumentRewriteTemporaries :: ScBinaryArgument -> ScBinaryArgument
+scBinaryArgumentRewriteTemporaries (ScBinaryArgument p m) =
+  ScBinaryArgument (scPrimaryRewriteTemporaries p) (fmap (map scDotMessageRewriteTemporaries) m)
+
+scKeywordArgumentRewriteTemporaries :: ScKeywordArgument -> ScKeywordArgument
+scKeywordArgumentRewriteTemporaries (ScKeywordArgument k v) =
+  ScKeywordArgument k (scBasicExpressionRewriteTemporaries v)
+
+scDotMessageRewriteTemporaries :: ScDotMessage -> ScDotMessage
+scDotMessageRewriteTemporaries (ScDotMessage i a) =
+  ScDotMessage i (fmap (map scKeywordArgumentRewriteTemporaries) a)
+
+scBinaryMessageRewriteTemporaries :: ScBinaryMessage -> ScBinaryMessage
+scBinaryMessageRewriteTemporaries (ScBinaryMessage i a) =
+  ScBinaryMessage i (scBinaryArgumentRewriteTemporaries a)
+
+scMessagesRewriteTemporaries :: ScMessages -> ScMessages
+scMessagesRewriteTemporaries m =
+  case m of
+    ScMessagesDot m1 m2 -> ScMessagesDot
+                           (map scDotMessageRewriteTemporaries m1)
+                           (fmap (map scBinaryMessageRewriteTemporaries) m2)
+    ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteTemporaries m1)
+
+scBasicExpressionRewriteTemporaries :: ScBasicExpression -> ScBasicExpression
+scBasicExpressionRewriteTemporaries (ScBasicExpression p m) =
+      ScBasicExpression (scPrimaryRewriteTemporaries p) (fmap scMessagesRewriteTemporaries m)
+
+scExpressionRewriteTemporaries :: ScExpression -> ScExpression
+scExpressionRewriteTemporaries e =
+  case e of
+    ScExprAssignment x y -> ScExprAssignment x (scExpressionRewriteTemporaries y)
+    ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteTemporaries x)
+
+scPrimaryRewriteTemporaries :: ScPrimary -> ScPrimary
+scPrimaryRewriteTemporaries p =
+  case p of
+    ScPrimaryIdentifier _ -> p
+    ScPrimaryLiteral _ -> p
+    ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteTemporaries x)
+    ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteTemporaries x)
+    ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
 
 {-
 import Language.Smalltalk.SuperCollider.Ast.Print
@@ -185,21 +347,39 @@ import Language.Smalltalk.SuperCollider.Lexer
 import Language.Smalltalk.SuperCollider.Parser
 p = superColliderParser . alexScanTokens
 x = scExpressionPrint . p
-x "p.q + r"
-x "p + q.r(a)"
+
 rw = scExpressionPrint . scExpressionRewritePrecedence . p
-rw "p + q.r(a)" --  p + (q.r(a))
-rw "p + q.r.s(a)"
-rw "p + q.r.s(a).t"
-rw "p + q.r.s(a).t.u(b)"
-rw "p.q(a)" -- only one message, can be keyword
-rw "p.q(a).r"
-rw "p.q(a).r(b)" -- hence nested trailing
-rw "p + q"
-rw "p.q + r" -- unary no parens
-rw "p.q(a) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
-rw "p.q(a) + r.s(b)"
-rw "{var x = a; x}"
-rw "{var x = a, y; x + y}"
-rw "{var x; var y = b; x + y}"
+rw "p.q + r" == "p.q + r"
+rw "p + q.r()" == "p + (q.r())"
+rw "p + q + r.s()" == "p + q + (r.s())"
+rw "p + (q + r.s())" == "p + (q + (r.s()))"
+rw "p + q.r.s()" == "p + ((q.r.s()))" -- too many parentheses
+rw "p + q.r.s().t" == "p + ((q.r.s())).t" -- too many parentheses
+rw "p + q.r.s().t.u()" == "p + (((q.r.s()).t.u()))" -- too many parentheses
+rw "p.q(a)" == "p.q(a)" -- only one message, can be keyword
+rw "p.q(a).r" == "(p.q(a)).r"
+rw "p.q(a).r(b)" == "(p.q(a)).r(b)" -- hence nested trailing
+rw "p + q" == "p + q"
+rw "p.q + r" == "p.q + r" -- unary no parens
+rw "p.q(a) + r" == "(p.q(a)) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
+rw "p.q(a) + r.s(b)" == "(p.q(a)) + (r.s(b))"
+rw "p + (q + r.s())" == "p + (q + (r.s()))"
+
+rw "{p.q(a).r}" == "{(p.q(a)).r}"
+rw "{var x = p.q(a).r; x}" == "{var x = (p.q(a)).r; x}"
+
+rw = scExpressionPrint . scExpressionRewriteTemporaries . p
+rw "{var x = a; x}" == "{var x; x = a; x}"
+rw "{var x = a,y; x + y}" == "{var x,y; x = a; x + y}"
+rw "{var x; var y = b; x + y}" == "{var x,y; y = b; x + y}"
+rw "{var x = {var y = a; a * x}.value; x}" == "{var x; x = {var y; y = a; a * x}.value; x}"
+
+rw = scExpressionPrint . scExpressionRewriteKeyword . p
+rw "p.q()" == "p.q([])"
+rw "p.q(a)" == "p.q([a])"
+rw "p.q(a,b)" == "p.q([a,b])"
+rw "p.q(x:a,b)" == "p.q([\\x: -> (a),b])"
+rw "p.q(a,x:b)" == "p.q([a,\\x: -> (b)])"
+rw "p.q(a,x: b.c(y: d,e))" == "p.q([a,\\x: -> (b.c([\\y: -> (d),e]))])"
+
 -}

@@ -37,7 +37,8 @@ library
                         Language.Smalltalk.SuperCollider.Lexer,
                         Language.Smalltalk.SuperCollider.Parser,
                         Language.Smalltalk.SuperCollider.Token,
-                        Language.Smalltalk.SuperCollider.Transform
+                        Language.Smalltalk.SuperCollider.Transform,
+                        Language.Smalltalk.SuperCollider.Translate
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
