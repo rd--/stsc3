@@ -1,4 +1,9 @@
--- | Temporaries re-writing
+{- | Temporaries re-writing
+
+SuperCollider allows assignment at variable declarations.
+The Identifiers from the sequence are collected as Temporaries.
+Initialisation expressions are prepended as Assignments to the list of Statements.
+-}
 module Language.Smalltalk.SuperCollider.Rewrite.Temporaries where
 
 import Data.Maybe {- maybe -}
