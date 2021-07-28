@@ -13,7 +13,7 @@ $upper         = A-Z                                  -- 3.5.1 lowercaseAlphabet
 $underscore    = _                                    -- 3.5.1 nonCaseLetter
 $letter        = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit = [a-z A-Z _ 0-9]
-$binaryChar    = [\!\%\&\*\+\,\/\>\<\=\>\?\@\\\~\|\-] -- 3.5.5
+$binaryChar    = [\!\%\&\*\+\,\/\<\=\>\?\@\\\~\|\-] -- 3.5.5 (!%&*+,/<=>?@\~|-)
 $graphic       = $printable # $white
 
 @decimal     = $digit+

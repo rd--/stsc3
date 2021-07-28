@@ -158,6 +158,38 @@ four = {arg x; x + 1}.value(3)
 {arg x; var y, z = y; x * y * z}
 {arg x; var y; var z = y; nil}
 
+'Precedence Rules'
+1 // => 1
+p.q // => p q
+p.q + r // => p q + r
+p + q.r(a) // => p + (q r: ({a}))
+p + q.r.s(a) // => p + (q r s: ({a}))
+p + q.r.s(a).t // => p + (q r s: ({a})) t
+nil // p + q.r.s(a).t.u(b) // => p + ((q r s: ({a})) t u: ({b}))
+p.q(a) // => p q: ({a})
+p.q(a).r // => (p q: ({a})) r
+p.q(a).r(b) // => (p q: ({a})) r: ({b})
+p + q // => p + q
+p.q + r // => p q + r
+p.q(a) + r // => (p q: ({a})) + r
+p.q(a) + r.s(b) // => (p q: ({a})) + (r s: ({b}))
+{p.q(a).r} // => [ (p q: ({a})) r .\n ]
+{var x = p.q(a).r; x} // => [ |x|\n x := (p q: ({a})) r .\n x .\n ]
+
+'Temporaries (Variable Declarations)'
+{var x = a; x}
+{var x = a,y; x + y}
+{var x; var y = b; x + y}
+{var x = {var y = a; a * x}.value; x}
+
+'Keyword Arguments (Function Parameters)'
+p.q()
+p.q(a)
+p.q(a,b)
+p.q(x:a,b)
+p.q(a,x:b)
+p.q(a,x: b.c(y: d,e))
+
 'Variable Arguments'
 -3.abs == 3
 -3.abs() == 3

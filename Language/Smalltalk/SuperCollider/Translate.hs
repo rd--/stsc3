@@ -1,13 +1,29 @@
+-- | Translate from the SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
 module Language.Smalltalk.SuperCollider.Translate where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Transform {- stsc3 -}
 
+scPiSt :: St.Primary
+scPiSt =
+  St.PrimaryExpression
+  (St.ExprBasic
+    (St.BasicExpression
+      (St.PrimaryIdentifier "Float")
+      (Just (St.MessagesUnary [St.UnaryMessage "pi"] Nothing Nothing))
+      Nothing))
+
 scPrimarySt :: ScPrimary -> St.Primary
 scPrimarySt p =
   case p of
-    ScPrimaryIdentifier x -> St.PrimaryIdentifier x
+    ScPrimaryIdentifier "pi" -> scPiSt
+    ScPrimaryIdentifier x ->
+        case x of
+          "this" -> St.PrimaryIdentifier "self"
+          "inf" -> St.PrimaryIdentifier "Infinity"
+          "pi" -> scPiSt
+          _ -> St.PrimaryIdentifier x
     ScPrimaryLiteral x -> St.PrimaryLiteral x
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
     ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
@@ -110,33 +126,6 @@ p = superColliderParser . alexScanTokens
 x = scExpressionPrint . p
 rw = St.expression_pp . scExpressionSt . scExpressionRewrite . p
 
-rw "1" == "1"
-rw "p.q" == "p q"
-rw "p.q + r" == "p q + r"
-rw "p + q.r(a)" == "p + (q r: ({a}))"
-rw "p + q.r.s(a)" == "p + (q r s: ({a}))"
-rw "p + q.r.s(a).t" == "p + (q r s: ({a})) t"
 rw "p + q.r.s(a).t.u(b)" == "p + ((q r s: ({a})) t u: ({b}))"
-rw "p.q(a)" == "p q: ({a})"
-rw "p.q(a).r" == "(p q: ({a})) r"
-rw "p.q(a).r(b)" == "(p q: ({a})) r: ({b})"
-rw "p + q" == "p + q"
-rw "p.q + r" == "p q + r"
-rw "p.q(a) + r" == "(p q: ({a})) + r"
-rw "p.q(a) + r.s(b)" == "(p q: ({a})) + (r s: ({b}))"
-rw "{p.q(a).r}" == "[ (p q: ({a})) r .\n ]"
-rw "{var x = p.q(a).r; x}" == "[ |x|\n x := (p q: ({a})) r .\n x .\n ]"
-
-rw "{var x = a; x}"
-rw "{var x = a,y; x + y}"
-rw "{var x; var y = b; x + y}"
-rw "{var x = {var y = a; a * x}.value; x}"
-
-rw "p.q()"
-rw "p.q(a)"
-rw "p.q(a,b)"
-rw "p.q(x:a,b)"
-rw "p.q(a,x:b)"
-rw "p.q(a,x: b.c(y: d,e))"
 
 -}

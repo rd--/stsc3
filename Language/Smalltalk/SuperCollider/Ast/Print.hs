@@ -102,9 +102,8 @@ scBinaryArgumentPrint (ScBinaryArgument p m) =
 
 -- > scKeywordArgumentPrint (ScKeywordArgument (Just "mul:") (ScBasicExpression (ScPrimaryIdentifier "x") Nothing))
 scKeywordArgumentPrint :: ScKeywordArgument -> String
-scKeywordArgumentPrint (ScKeywordArgument k e) = scJoin
-                                                 [maybePrint id k
-                                                 ,scBasicExpressionPrint e]
+scKeywordArgumentPrint (ScKeywordArgument k e) =
+  scJoin [maybePrint id k,scBasicExpressionPrint e]
 
 scExpressionPrint :: ScExpression -> String
 scExpressionPrint e =
