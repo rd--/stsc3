@@ -10,12 +10,25 @@ import Data.Maybe {- maybe -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 scTemporariesRewrite :: [ScTemporaries] -> ([St.Identifier], [ScExpression])
 scTemporariesRewrite tmp =
   let tmpNames = map fst (concat tmp)
       tmpExpr = mapMaybe (\(k,v) -> fmap (\e -> ScExprAssignment k (ScExprBasic e)) v) (concat tmp)
   in (tmpNames,tmpExpr)
+
+scStatementsRewriteTemporaries :: ScStatements -> ScStatements
+scStatementsRewriteTemporaries s =
+    case s of
+      ScStatementsReturn (ScReturnStatement e) ->
+        ScStatementsReturn (ScReturnStatement (scExpressionRewriteTemporaries e))
+      ScStatementsExpression e s' ->
+        ScStatementsExpression
+        (scExpressionRewriteTemporaries e)
+        (fmap scStatementsRewriteTemporaries s')
 
 scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
 scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
@@ -24,11 +37,19 @@ scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
     Just tmp ->
       let (tmpNames,tmpExpr) = scTemporariesRewrite tmp
           idToTmp k = (k,Nothing)
-          maybeTmp = if null tmpNames then Nothing else Just [map idToTmp tmpNames]
+          maybeTmp = if null tmpNames
+                     then error "scBlockBodyRewriteTemporaries"
+                     else Just [map idToTmp tmpNames]
           tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
       in case tmpExpr of
-        [] -> ScBlockBody arg maybeTmp stm
-        _ -> ScBlockBody arg maybeTmp (Just (scExpressionSequenceToStatements stm tmpExprRw))
+        [] -> ScBlockBody arg maybeTmp (fmap scStatementsRewriteTemporaries stm)
+        _ -> ScBlockBody
+             arg
+             maybeTmp
+             (Just
+               (scExpressionSequenceToStatements
+                 (fmap scStatementsRewriteTemporaries stm)
+                 tmpExprRw))
 
 scBinaryArgumentRewriteTemporaries :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewriteTemporaries (ScBinaryArgument p m) =
@@ -72,3 +93,17 @@ scPrimaryRewriteTemporaries p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteTemporaries x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteTemporaries x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
+
+-- | Test procedure, reads rewrites and prints Sc expression.
+scTemporariesViewer :: String -> String
+scTemporariesViewer =
+  Sc.scExpressionPrint .
+  scExpressionRewriteTemporaries .
+  Sc.superColliderParser .
+  Sc.alexScanTokens
+
+{-
+rw = scTemporariesViewer
+rw "{arg a; var p = x; var q = y; x + y}"
+rw "{u.v(m: {arg a; var p = x; var q = y; x + y})}" -- error
+-}

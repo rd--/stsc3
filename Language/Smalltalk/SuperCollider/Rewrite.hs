@@ -11,11 +11,11 @@ The Smalltalk message precedence rule is Unary > Binary > Keyword.
 A SuperCollider Dot message is either Unary or Keyword.
 To translate, a Dot message sequence has parentheses inserted after each Keyword element.
 
-- p.q(a).r          => (p q: a) r
+- p.q(a).r          => (p q: a) r                  <= p q: a r   ==> p q: (a r)
 - p.q.r(a).s(b).t   => ((p q r: a) s: b) t
 - p.q(a) + r        => (p q: a) + r
 - p.q(a).r + s      => (p q: a) r + s
-- p + q.r(a)        => p + (q r: a)
+- p + q.r(a)        => p + (q r: a)                <= p + q r: a ==> (p + q) r: a
 
 This transformation can be done at the Sc Ast.
 

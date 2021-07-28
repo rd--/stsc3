@@ -1,7 +1,12 @@
--- | Precedence re-writing
+{- | Precedence re-writing
+     The recursion rules here are intricate and likely incorrect.
+-}
 module Language.Smalltalk.SuperCollider.Rewrite.Precedence where
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 {- | This is for parenthesising.
      It places the initial keyword at the end of the lhs, not the start of the rhs.
@@ -12,7 +17,6 @@ scDotMessagesSplitAtKeyword m =
     (lhs,k:rhs) -> (lhs ++ [k],rhs)
     _ -> error "scDotMessagesSplitAtKeyword?"
 
--- | The recursion rules here are intricate and likely incorrect.
 scBinaryArgumentRewritePrecedence :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewritePrecedence (ScBinaryArgument p m) =
   case m of
@@ -20,8 +24,7 @@ scBinaryArgumentRewritePrecedence (ScBinaryArgument p m) =
     Just x -> if not (scDotMessagesHaveKeyword x)
               then ScBinaryArgument (scPrimaryRewritePrecedence p) m
               else let (lhs,rhs) = scDotMessagesSplitAtKeyword x
-                   in --scBinaryArgumentRewritePrecedence
-                      (ScBinaryArgument
+                   in (ScBinaryArgument
                        (ScPrimaryExpression
                          (ScExprBasic
                           (ScBasicExpression
@@ -44,7 +47,9 @@ scBasicExpressionRewritePrecedence (ScBasicExpression p m) =
       (Just (ScMessagesBinary (map scBinaryMessageRewritePrecedence b)))
     Just (ScMessagesDot d Nothing) ->
       if not (scDotMessagesHaveKeyword d) || length d == 1
-      then ScBasicExpression p m
+      then ScBasicExpression
+           (scPrimaryRewritePrecedence p)
+           (Just (ScMessagesDot (map scDotMessageRewritePrecedence d) Nothing))
       else let (lhs,rhs) = scDotMessagesSplitAtKeyword d
            in scBasicExpressionRewritePrecedence
               (ScBasicExpression
@@ -53,18 +58,20 @@ scBasicExpressionRewritePrecedence (ScBasicExpression p m) =
                     (ScBasicExpression p (Just (ScMessagesDot lhs Nothing)))))
                 (Just (ScMessagesDot rhs Nothing)))
     Just (ScMessagesDot d (Just b)) ->
-      if not (scDotMessagesHaveKeyword d)
+      if not (scDotMessagesHaveKeyword d) || length d == 1
       then ScBasicExpression
            (scPrimaryRewritePrecedence p)
-           (Just (ScMessagesDot d (Just (map scBinaryMessageRewritePrecedence b))))
-      else --scBasicExpressionRewritePrecedence -- too many paren?
-           (ScBasicExpression
-            (ScPrimaryExpression
-             (ScExprBasic
+           (Just
+             (ScMessagesDot
+               (map scDotMessageRewritePrecedence d)
+               (Just (map scBinaryMessageRewritePrecedence b))))
+      else let (lhs,rhs) = scDotMessagesSplitAtKeyword d
+           in scBasicExpressionRewritePrecedence
               (ScBasicExpression
-                (scPrimaryRewritePrecedence p)
-                (Just (ScMessagesDot d Nothing)))))
-            (Just (scMessagesRewritePrecedence (ScMessagesBinary b))))
+                (ScPrimaryExpression
+                  (ScExprBasic
+                    (ScBasicExpression p (Just (ScMessagesDot lhs Nothing)))))
+                (Just (ScMessagesDot rhs (Just b))))
 
 scExpressionRewritePrecedence :: ScExpression -> ScExpression
 scExpressionRewritePrecedence e =
@@ -120,3 +127,31 @@ scPrimaryRewritePrecedence p =
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewritePrecedence x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewritePrecedence x)
 
+-- | Test procedure, reads rewrites and prints Sc expression.
+scPrecedenceViewer :: String -> String
+scPrecedenceViewer =
+  Sc.scExpressionPrint .
+  scExpressionRewritePrecedence .
+  Sc.superColliderParser .
+  Sc.alexScanTokens
+
+{-
+
+rw = scPrecedenceViewer
+rw "p.q()" == "p.q()" -- only one message, can be keyword
+rw "p.q().r()" == "(p.q()).r()" -- nested trailing
+rw "p.q + r" == "p.q + r" -- unary no parens
+rw "p.q() + r" == "(p.q()) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
+rw "p + q.r" == "p + q.r"
+rw "p + q.r()" == "p + (q.r())"
+rw "p + q.r().s" == "p + (q.r()).s"
+rw "p.q(r + s.t())" == "p.q(r + (s.t()))" -- Binary within Dot/Keyword
+rw "p.q(a + b + c + d * e).r * s" == "(p.q(a + b + c + d * e)).r * s"
+rw "p.q().r" == "(p.q()).r"
+rw "p.q().r + s" == "(p.q()).r + s"
+
+rd = Sc.superColliderParser . Sc.alexScanTokens
+rd "p.q().r"
+rd "p.q().r + s"
+
+-}

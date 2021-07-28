@@ -1,4 +1,7 @@
--- | Translate from the SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
+{- | Translate from the SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
+     Requires that the Sc Ast has been rewritten to have only constructs that can be translated to St.
+     See Language.Smalltalk.SuperCollider.Rewrite
+-}
 module Language.Smalltalk.SuperCollider.Translate where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -14,9 +17,10 @@ scDotMessagesForSmalltalk m =
   then case break scDotMessageIsKeyword m of
          (lhs,[]) -> (lhs,Nothing)
          (lhs,[k]) -> (lhs,Just k)
-         _ -> error "scDotMessagesForSmalltalk"
+         _ -> error ("scDotMessagesForSmalltalk: " ++ show m)
   else (m,Nothing)
 
+-- | Sc pi is translated to "Float pi"
 scPiSt :: St.Primary
 scPiSt =
   St.PrimaryExpression
