@@ -81,6 +81,12 @@
   !
 !
 
+!Number methodsFor: 'mathematical functions'!
+  ** aNumber
+    ^ self raisedTo: aNumber
+  !
+!
+
 !Collection methodsFor: 'arithmetic'!
   * arg
     ^arg adaptToCollection: self andSend: #*

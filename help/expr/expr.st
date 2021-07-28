@@ -24,7 +24,7 @@ $.
 #'x y'
 #x
 #|                       "=> #|"
-#()
+#()                      "=> ()"
 #(1)
 #(1.2)
 #('x')
@@ -34,8 +34,8 @@ $.
 
 'Pseudo Variables'
 self                     "this in SuperCollider"
-true
-false
+true                     "=> true"
+false                    "=> true"
 
 'Assignment'
 a := 24
@@ -54,8 +54,8 @@ P q
 #(1 2 3) size            "=> 3"
 1 class superclass       "=> Integer"
 Object superclass        "=> ProtoObject"
-ProtoObject superclass   "=> nil"
 nil class                "=> UndefinedObject"
+Float infinity           "=> Infinity"
 Float negativeInfinity   "=> -Infinity"
 SinOsc class class class name = 'Metaclass class'
 
@@ -67,10 +67,10 @@ true ~= false            "=> true  ; != in Sc"
 p ! q                    "=> error"
 p % q                    "=> error"
 true & false = false     "=> true"
-1 * 2 = 2
-1 + 2 = 3
+1 * 2 = 2                "=> true"
+1 + 2 = 3                "=> true"
 'x','y' = 'xy'           "=> true"
-1 / 2                    "=> (1/2)"
+1 / 2                    "=> 1/2"
 1 < 2                    "=> true"
 1 = 2                    "=> false"
 1 > 2                    "=> false"
@@ -80,13 +80,15 @@ p \ q                    "=> error"
 p ~ q                    "=> error"
 true | false             "=> true"
 1 - 2                    "=> -1"
-4 + 5 * 6
-4 + 5 * 6 / 7
+4 + 5 * 6                "=> 54"
+4 + 5 * 6 / 7            "=> 54/7"
 2 ** 3 = 8               "=> true"
 7 // 3                   "=> 2"
 -37.0 / 4.0 = -9.25      "=> true"
 
 'Array Expressions'
+{1. 2}                   "=> (1 2)"
+{1 + 2. 3 min: 4. 5 abs} "=> (3 3 5)"
 {p. q}
 {p + q. r s: t. u v}
 
@@ -102,25 +104,26 @@ true | false             "=> true"
 2 + (5 min: 5)           "=> 7"
 p q: r
 nil ifNil: [1]           "=> 1"
+1 perform: #+ with: 2    "=> 3"
 SinOsc new perform: #freq: with: 110
 
 'Unary & Binary & Keyword Methods'
-4 + 5 neg
-4 + 5 neg + 6
-4 neg + 5
-1 + 2 * 3 neg
-4 + 5 neg                "=> -1"
-4 + 5 neg = -1           "=> true"
-4 + 5 neg < 0 = true     "=> true"
-4 + 5 neg
+4 + 5 negated            "=> -1"
+4 + 5 negated + 6        "=> 5"
+4 negated + 5            "=> 1"
+1 + 2 * 3 negated        "=> -9"
+4 + 5 negated            "=> -1"
+4 + 5 negated = -1       "=> true"
+4 + 5 negated < 0 = true "=> true"
+4 + 5 negated            "=> -1"
+(2 max: 3) = 3           "=> true"
+1 + -2 abs               "=> 3"
+1 + 2 squared negated    "=> -3"
+(1 + (2 * 3) squared / 4) negated
+(#freq -> 440) class     "=> Association"
 w * (x + y) z
 w * (x + y) - z
 (w * (x + y) z + a) b
-(1 + (2 * 3) squared / 4) neg
-(2 max: 3) = 3           "=> true"
-(#freq -> 440) class     "=> Association"
-1 + -2 abs               "=> 3"
-1 + 2 squared negated    "=> -3"
 
 'Parenthesised Expression'
 x y + z
@@ -130,8 +133,8 @@ w * (x + y)
 (w * (x + y))
 (w * (x + y)) z
 w * ((x + y) z)
-1 + (2 * 3)
-(1 + 2 * 3 / 4) neg
+1 + (2 * 3)              "=> 7"
+(1 + 2 * 3 / 4) negated  "=> 7"
 (x + y) z
 ((x + y) z) + a
 (x + y) z + a
@@ -139,8 +142,8 @@ w * ((x + y) z)
 ((x + y) z + a) b
 (1 + (2 * 3)) postln
 1 + (2 max: 3) = 4       "=> true"
-1 + 2 max: 3 = 4         "=> true"
-1 + 2 * 3 max: 4
+(1 + 2 max: 3) = 3       "=> true"
+1 + 2 * 3 max: 4         "=> 9"
 1@2 = (Point x: 1 y: 2)  "=> true"
 (1 + ((2 * 3) squared) / 4) negated
 
@@ -149,4 +152,4 @@ w * ((x + y) z)
 [:x| y]
 [:x| |y| z]
 [SinOsc freq: 440 phase: 0 mul: 0.1]
-four = [:x| x + 1] value: 3
+four := [:x| x + 1] value: 3
