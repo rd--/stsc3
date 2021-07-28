@@ -14,11 +14,36 @@ import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
-scTemporariesRewrite :: [ScTemporaries] -> ([St.Identifier], [ScExpression])
-scTemporariesRewrite tmp =
+-- | Get initialiser lifted to an Assignment expression.
+scTemporaryInitialiser :: ScTemporary -> Maybe ScExpression
+scTemporaryInitialiser (k,v) =
+  let f e = ScExprAssignment k (ScExprBasic (scBasicExpressionRewriteTemporaries e))
+  in fmap f v
+
+scTemporariesPartition :: [ScTemporaries] -> ([St.Identifier], [ScExpression])
+scTemporariesPartition tmp =
   let tmpNames = map fst (concat tmp)
-      tmpExpr = mapMaybe (\(k,v) -> fmap (\e -> ScExprAssignment k (ScExprBasic e)) v) (concat tmp)
+      tmpExpr = mapMaybe scTemporaryInitialiser (concat tmp)
   in (tmpNames,tmpExpr)
+
+scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
+scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
+  let stmRw = fmap scStatementsRewriteTemporaries stm
+  in case tmpMaybe of
+       Nothing -> ScBlockBody arg Nothing stmRw
+       Just tmp ->
+         let (tmpNames,tmpExpr) = scTemporariesPartition tmp
+             idToTmp k = (k,Nothing)
+             maybeTmp = if null tmpNames
+                        then error "scBlockBodyRewriteTemporaries"
+                        else Just [map idToTmp tmpNames]
+             tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
+         in case tmpExpr of
+           [] -> ScBlockBody arg maybeTmp stmRw
+           _ -> ScBlockBody
+                arg
+                maybeTmp
+                (Just (scExpressionSequenceToStatements stmRw tmpExprRw))
 
 scStatementsRewriteTemporaries :: ScStatements -> ScStatements
 scStatementsRewriteTemporaries s =
@@ -29,27 +54,6 @@ scStatementsRewriteTemporaries s =
         ScStatementsExpression
         (scExpressionRewriteTemporaries e)
         (fmap scStatementsRewriteTemporaries s')
-
-scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
-scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
-  case tmpMaybe of
-    Nothing -> ScBlockBody arg Nothing stm
-    Just tmp ->
-      let (tmpNames,tmpExpr) = scTemporariesRewrite tmp
-          idToTmp k = (k,Nothing)
-          maybeTmp = if null tmpNames
-                     then error "scBlockBodyRewriteTemporaries"
-                     else Just [map idToTmp tmpNames]
-          tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
-      in case tmpExpr of
-        [] -> ScBlockBody arg maybeTmp (fmap scStatementsRewriteTemporaries stm)
-        _ -> ScBlockBody
-             arg
-             maybeTmp
-             (Just
-               (scExpressionSequenceToStatements
-                 (fmap scStatementsRewriteTemporaries stm)
-                 tmpExprRw))
 
 scBinaryArgumentRewriteTemporaries :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewriteTemporaries (ScBinaryArgument p m) =
@@ -94,16 +98,14 @@ scPrimaryRewriteTemporaries p =
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteTemporaries x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
 
--- | Test procedure, reads rewrites and prints Sc expression.
-scTemporariesViewer :: String -> String
-scTemporariesViewer =
+-- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
+scRewriteTemporariesViewer :: String -> String
+scRewriteTemporariesViewer =
   Sc.scExpressionPrint .
   scExpressionRewriteTemporaries .
   Sc.superColliderParser .
   Sc.alexScanTokens
 
 {-
-rw = scTemporariesViewer
-rw "{arg a; var p = x; var q = y; x + y}"
-rw "{u.v(m: {arg a; var p = x; var q = y; x + y})}" -- error
+rw = scRewriteTemporariesViewer
 -}

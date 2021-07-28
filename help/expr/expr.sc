@@ -162,17 +162,21 @@ four = {arg x; x + 1}.value(3)
 1                        // => 1
 p.q                      // => p q
 p.q + r                  // => p q + r
-p + q.r()                // => p + (q r: ({}))
+p + q.r                  // => p + q.r
+p + q.r()                // => p + (q.r()) ==> p + (q r: ({}))
 p + q.r(x + y.z())       // => p + (q.r(x + (y.z())))
 p + q + r.s()            // => p + q + (r.s())
 p + q + r.s() + t        // => p + q + (r.s()) + t
-p + (q + r.s())
+p + (q + r.s())          // => p + (q + (r.s()))
+p + q.r().s              // => p + (q.r()).s
 p + q.r.s()              // => p + (q r s: ({}))
 p + q.r.s().t            // => p + (q r s: ({})) t
-nil // p + q.r.s().t.u() // => p + ((q r s: ({})) t u: ({}))
-p.q()                    // => p q: ({})
-p.q().r                  // => (p q: ({})) r
+p + q.r.s().t.u()        // => p + ((q r s: ({})) t u: ({}))
+p.q()                    // => p.q() ==> p q: ({})
+p.q().r                  // => (p.q()).r ==> (p q: ({})) r
+p.q().r + s              // => (p.q()).r + s
 p.q().r()                // => (p q: ({})) r: ({})
+p.q.r()                  // => (p.q.r())
 p + q                    // => p + q
 p.q + r                  // => p q + r
 p.q() + r                // => (p q: ({})) + r
@@ -180,12 +184,29 @@ p.q() + r.s( )           // => (p q: ({})) + (r s: ({}))
 {p.q().r}                // => [ (p q: ({})) r .\n ]
 {var x = p.q().r; x}     // => [ |x|\n x := (p q: ({})) r .\n x .\n ]
 1 + p.q(x: a + r.s())    // => 1 + (p.q(x:a + (r.s())))
+p.q(r + s.t())           // => p.q(r + (s.t()))
+p.q(a + b + c * d).r * s // => (p.q(a + b + c * d)).r * s
+p.q(r.s(x.y()))          // => p.q(r.s(x.y()))
+p.q(r.s(x.y.z))          // => p.q(r.s(x.y.z))
+r.s(x.y.z())             // => r.s((x.y.z()))
+p.q(r.s(x.y.z()))        // => p.q(r.s((x.y.z())))
+p + q.r()                // => p + (q.r())
+p + q.r.s()
+p + q.r.s().t            // => p + ((q.r.s())).t
+p + q.r.s().t()
+p + q.r.s().t.u()
+p.q(a + r.s())           // => p.q(a + (r.s()))
+1 / p.q(a + r.s())
+1 / p.q(x: a + r.s())
 
 'Temporaries (Variable Declarations)'
 {var x = a; x}           // {var x; x = a; x}
 {var x = a,y; x + y}     // {var x,y; x = a; x + y}
 {var x;var y = b;x + y}  // {var x,y; y = b; x + y}
 {var x={var y=a;a*x}; x} // {var x; x = {var y; y = a; a * x}; x}
+{arg a; var p = x; var q = y; x + y}
+{u.v; {arg a; var p = x; var q = y; x + y}}
+{u.v(m: {arg a; var p = x; var q = y; x + y})}
 
 'Keyword Arguments (Parameters)'
 p.q()                    // p.q([])

@@ -135,6 +135,7 @@ scExpressionSt e =
 import Language.Smalltalk.SuperCollider.Ast.Print
 import Language.Smalltalk.SuperCollider.Lexer
 import Language.Smalltalk.SuperCollider.Parser
+import Language.Smalltalk.SuperCollider.Rewrite
 
 import qualified Language.Smalltalk.Ansi.Print as St
 

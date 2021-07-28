@@ -1,5 +1,5 @@
 -- | Parser and pretty printer for SOM in terms of Smalltalk.
-module Language.Smalltalk.SOM where
+module Language.Smalltalk.Som where
 
 import qualified Text.Parsec as P {- parsec -}
 
