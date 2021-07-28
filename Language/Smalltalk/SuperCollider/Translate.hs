@@ -3,7 +3,19 @@ module Language.Smalltalk.SuperCollider.Translate where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import           Language.Smalltalk.SuperCollider.Transform {- stsc3 -}
+
+{- | This is for translating, it allows either
+     a Unary sequence with an optional ending Keyword,
+     or a single trailing Keyword.
+-}
+scDotMessagesForSmalltalk :: [ScDotMessage] -> ([ScDotMessage], Maybe ScDotMessage)
+scDotMessagesForSmalltalk m =
+  if scDotMessagesHaveKeyword m
+  then case break scDotMessageIsKeyword m of
+         (lhs,[]) -> (lhs,Nothing)
+         (lhs,[k]) -> (lhs,Just k)
+         _ -> error "scDotMessagesForSmalltalk"
+  else (m,Nothing)
 
 scPiSt :: St.Primary
 scPiSt =

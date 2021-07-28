@@ -19,6 +19,8 @@ The Sc expression "x.y(a).z.y(b) + c" would be written "(((x y: a) z) y: b) + c"
 -}
 module Language.Smalltalk.SuperCollider.Ast where
 
+import Data.Maybe {- maybe -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | Reuse the Smalltalk Literal type.
@@ -73,6 +75,12 @@ data ScMessages
 data ScDotMessage =
   ScDotMessage St.Identifier (Maybe [ScKeywordArgument])
   deriving (Eq, Show)
+
+scDotMessageIsKeyword :: ScDotMessage -> Bool
+scDotMessageIsKeyword (ScDotMessage _ m) = isJust m
+
+scDotMessagesHaveKeyword :: [ScDotMessage] -> Bool
+scDotMessagesHaveKeyword = any scDotMessageIsKeyword
 
 data ScBinaryMessage =
   ScBinaryMessage St.BinaryIdentifier ScBinaryArgument

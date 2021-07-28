@@ -38,8 +38,11 @@ library
                         Language.Smalltalk.SuperCollider.Ast.Print,
                         Language.Smalltalk.SuperCollider.Lexer,
                         Language.Smalltalk.SuperCollider.Parser,
+                        Language.Smalltalk.SuperCollider.Rewrite,
+                        Language.Smalltalk.SuperCollider.Rewrite.Keyword,
+                        Language.Smalltalk.SuperCollider.Rewrite.Precedence,
+                        Language.Smalltalk.SuperCollider.Rewrite.Temporaries,
                         Language.Smalltalk.SuperCollider.Token,
-                        Language.Smalltalk.SuperCollider.Transform,
                         Language.Smalltalk.SuperCollider.Translate
 
 executable stsc3
