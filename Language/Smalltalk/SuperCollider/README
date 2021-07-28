@@ -1,0 +1,4 @@
+"Any kind of sequence can be defined using either left recursion or
+right recursion, but you should always use left recursion, because it
+can parse a sequence of any number of elements with bounded stack
+space."
