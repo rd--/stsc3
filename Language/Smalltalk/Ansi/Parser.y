@@ -130,8 +130,12 @@ binarymessage_seq :: { [St.BinaryMessage] }
         : binarymessage binarymessage_seq      { $1 : $2 }
         | binarymessage                        { [$1] }
 
+binaryoperator :: { St.Identifier }
+        : binaryselector                       { $1 }
+        | '|'                                  { "|" }
+
 binarymessage :: { St.BinaryMessage }
-        : binaryselector binaryargument        { St.BinaryMessage $1 $2 }
+        : binaryoperator binaryargument        { St.BinaryMessage $1 $2 }
 
 binaryargument :: { St.BinaryArgument }
         : primary maybe_unarymessage_seq       { St.BinaryArgument $1 $2 }
@@ -221,7 +225,7 @@ literal :: { St.Literal }
 
 selectorliteral :: { St.Selector }
         : '#' identifier                        { St.UnarySelector $2 }
-        | '#' binaryselector                    { St.BinarySelector $2 }
+        | '#' binaryoperator                    { St.BinarySelector $2 }
         | '#' keyword                           { St.KeywordSelector $2 }
 
 maybe_arrayliteral :: { [Either St.Literal St.Identifier] }
