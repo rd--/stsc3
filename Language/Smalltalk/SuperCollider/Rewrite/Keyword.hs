@@ -8,11 +8,14 @@ module Language.Smalltalk.SuperCollider.Rewrite.Keyword where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 scKeywordAssoc :: St.Keyword -> ScBasicExpression -> ScBasicExpression
 scKeywordAssoc k v =
   let p = ScPrimaryLiteral (St.SelectorLiteral (St.KeywordSelector k))
-      rhs = ScPrimaryExpression (ScExprBasic v)
+      rhs = scBasicExpressionToPrimary v
       m = ScMessagesBinary [ScBinaryMessage "->" (ScBinaryArgument rhs Nothing)]
   in ScBasicExpression p (Just m)
 
@@ -90,3 +93,21 @@ scMessagesRewriteKeyword m =
                            (map scDotMessageRewriteKeyword m1)
                            (fmap (map scBinaryMessageRewriteKeyword) m2)
     ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteKeyword m1)
+
+-- | Viewer for keyword rewriter. Reads, rewrites and prints Sc expression.
+scRewriteKeywordViewer :: String -> String
+scRewriteKeywordViewer =
+  Sc.scExpressionPrint .
+  scExpressionRewriteKeyword .
+  Sc.superColliderParser .
+  Sc.alexScanTokens
+
+{-
+
+rw = scRewriteKeywordViewer
+rw "p.q()" == "p.q([])"
+rw "p.q(r)" == "p.q([r])"
+rw "p.q(r:s)" == "p.q([\\r: -> s])"
+rw "p.q(r:s.t)" == "p.q([\\r: -> (s.t)])"
+
+-}

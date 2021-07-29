@@ -1,19 +1,21 @@
 {- | An abstract syntax tree (Ast) for SuperCollider (Sc).
 
-This is similar to the ANSI Smalltalk (St) Ast.
+This follows the structure of the ANSI Smalltalk (St) Ast.
 
 The most important differences are:
 
 - in Sc Unary and Keyword messages have the same syntax and equal precedence
 - in Sc Temporaries can introduce bindings
-- in Sc all Keyword messages take one argument, which is a Dictionary
-- in Sc if y is a unary message, "x.y" and "x.y()" and "x.y(nil)"
+- in Sc Block parameters are passed as a Dictionary and allow default values
+- in Sc it is not possible to infer the arity of a Block from it's call site
+  - in all of the following x may have any arity
+  - .x .x() .x(nil) .x(y:nil) .x(y,z)
 
 In St "x y" sends y to x, in Sc this is written "x.y".
 
-In St "x y: a" sends the message (y:,a) to x, in Sc this is written "x.y (a)".
+In St "x y: a" sends the message y:a to x, in Sc this is written "x.y(a)".
 
-In St "(x y: a) z" sends (y:,a) to x and sends z to the result, in Sc this is written "x.y(a).z".
+In St "(x y: a) z" sends y:a to x and sends z to the result, in Sc this is written "x.y(a).z".
 
 The Sc expression "x.y(a).z.y(b) + c" would be written "(((x y: a) z) y: b) + c" in St.
 -}
@@ -23,22 +25,26 @@ import Data.Maybe {- maybe -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
--- | Reuse the Smalltalk Literal type.
-data ScPrimary
-  = ScPrimaryIdentifier St.Identifier
-  | ScPrimaryLiteral St.Literal
-  | ScPrimaryBlock ScBlockBody
-  | ScPrimaryExpression ScExpression
-  | ScPrimaryArrayExpression [ScBasicExpression]
-  deriving (Eq, Show)
+-- | Identifier with perhaps an initializer expression.
+type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
 
+-- | 3.4.2. Sequence of temporaries, single var statement.
+type ScTemporaries = [ScTemporary]
+
+-- | 3.4.4
 data ScBlockBody =
   ScBlockBody (Maybe [St.BlockArgument]) (Maybe [ScTemporaries]) (Maybe ScStatements)
   deriving (Eq,Show)
 
+-- | 3.4.5
 data ScStatements
   = ScStatementsReturn ScReturnStatement
   | ScStatementsExpression ScExpression (Maybe ScStatements)
+  deriving (Eq,Show)
+
+-- | 3.4.5.1
+data ScReturnStatement =
+  ScReturnStatement ScExpression
   deriving (Eq,Show)
 
 -- | Prepend a list of expressions, as statements, to an existing statement.
@@ -51,20 +57,36 @@ scExpressionSequenceToStatements stm =
           e0:eN -> ScStatementsExpression e0 (Just (f eN))
   in f
 
-data ScReturnStatement =
-  ScReturnStatement ScExpression
-  deriving (Eq,Show)
+-- | 3.4.5.2 Expressions
+data ScExpression =
+    ScExprAssignment St.Identifier ScExpression
+  | ScExprBasic ScBasicExpression
+  deriving (Eq, Show)
 
--- | Identifier with perhaps an initializer expression.
-type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
-
--- | Sequence of temporaries, single var statement.
-type ScTemporaries = [ScTemporary]
-
+-- | 3.4.5.2
 data ScBasicExpression =
     ScBasicExpression ScPrimary (Maybe ScMessages)
   deriving (Eq, Show)
 
+{- | If the expression consists only of a primary, return that.
+     If the expression has messages make a PrimaryExpression node.
+-}
+scBasicExpressionToPrimary :: ScBasicExpression -> ScPrimary
+scBasicExpressionToPrimary e =
+  case e of
+    ScBasicExpression p Nothing -> p
+    _ -> ScPrimaryExpression (ScExprBasic e)
+
+-- | 3.4.5.2 Reuse the Smalltalk Literal type.
+data ScPrimary
+  = ScPrimaryIdentifier St.Identifier
+  | ScPrimaryLiteral St.Literal
+  | ScPrimaryBlock ScBlockBody
+  | ScPrimaryExpression ScExpression
+  | ScPrimaryArrayExpression [ScBasicExpression]
+  deriving (Eq, Show)
+
+-- | 3.4.5.3
 data ScMessages
   = ScMessagesDot [ScDotMessage] (Maybe [ScBinaryMessage])
   | ScMessagesBinary [ScBinaryMessage]
@@ -76,9 +98,11 @@ data ScDotMessage =
   ScDotMessage St.Identifier (Maybe [ScKeywordArgument])
   deriving (Eq, Show)
 
+-- | Does message have parameters, i.e. written as .q()
 scDotMessageIsKeyword :: ScDotMessage -> Bool
 scDotMessageIsKeyword (ScDotMessage _ m) = isJust m
 
+-- | Are any messages in the sequence keyword messages.
 scDotMessagesHaveKeyword :: [ScDotMessage] -> Bool
 scDotMessagesHaveKeyword = any scDotMessageIsKeyword
 
@@ -92,9 +116,4 @@ data ScBinaryArgument =
 
 data ScKeywordArgument =
   ScKeywordArgument (Maybe St.Keyword) ScBasicExpression
-  deriving (Eq, Show)
-
-data ScExpression =
-    ScExprAssignment St.Identifier ScExpression
-  | ScExprBasic ScBasicExpression
   deriving (Eq, Show)

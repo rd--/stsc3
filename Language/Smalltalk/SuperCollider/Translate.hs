@@ -66,7 +66,7 @@ scKeywordArgumentSt (ScKeywordArgument k e) =
   case k of
     Just _ -> error "scKeywordArgumentSt"
     Nothing -> St.KeywordArgument
-               (St.PrimaryExpression (St.ExprBasic (scBasicExpressionSt e)))
+               (St.basicExpressionToPrimary (scBasicExpressionSt e))
                Nothing
                Nothing
 

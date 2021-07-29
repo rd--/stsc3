@@ -1,4 +1,16 @@
--- | Ast and parser for a subset of ANSI Smalltalk.
+{- | Ast and parser for a subset of ANSI Smalltalk.
+
+SmalltalkProgram (3.3.1)
+ClassDefinition (3.3.2)
+GlobalDefinition (3.3.3)
+ProgramInitializerDefinition (3.3.5)
+MethodDefinition, Temporaries (3.4.2)
+InitializerDefinition (3.4.3)
+BlockBody (3.4.4)
+Statements ReturnStatement Expression Assignment BasicExpression Primary Messages (3.4.5)
+Literal (3.4.6)
+
+-}
 module Language.Smalltalk.Ansi where
 
 import Data.Functor.Identity {- base -}
@@ -93,6 +105,16 @@ data ClassDefinition =
                   ,classInitializer :: Maybe InitializerDefinition}
   deriving (Eq,Show)
 
+-- | "Smalltalk implementations have traditionally open-coded certain
+-- messages including those with the following selectors."
+restrictedSelectors :: [Identifier]
+restrictedSelectors =
+  ["ifTrue:","ifTrue:ifFalse:","ifFalse:","ifFalse:ifTrue:"
+  ,"to:do:","to:by:do:"
+  ,"and:","or:","=="
+  ,"timesRepeat:"
+  ,"basicAt:","basicAt:put:","basicSize","basicNew:"]
+
 -- * 3.3.3 Global Variable Definition
 
 data GlobalDefinition =
@@ -127,6 +149,7 @@ programInitializerDefinition = initializerDefinition
 
 -- * 3.4.2
 
+-- | 3.4.2
 data MethodDefinition =
   MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
@@ -222,6 +245,7 @@ keywordPattern = do
              return (kw,arg)
   fmap KeywordPattern (P.many1 (P.try f))
 
+-- | 3.4.2
 data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
 
 emptyTemporaries :: Temporaries
@@ -328,6 +352,7 @@ blockArgument = lexeme (P.char ':') >> identifier
 
 -- * 3.4.5
 
+-- | 3.4.5
 data Statements
   = StatementsReturn ReturnStatement
   | StatementsExpression Expression (Maybe Statements)
@@ -370,6 +395,7 @@ statements = do
         return (StatementsExpression e s)
   P.choice [fmap StatementsReturn (returnStatement >>~ P.optional period),rhs]
 
+-- | 3.4.5.1 Return statement
 data ReturnStatement = ReturnStatement Expression deriving (Eq,Show)
 
 {- | <return statement> ::= returnOperator <expression>
@@ -384,6 +410,7 @@ data ReturnStatement = ReturnStatement Expression deriving (Eq,Show)
 returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
 
+-- | 3.4.5.2 Expressions
 data Expression = ExprAssignment Assignment | ExprBasic BasicExpression deriving (Eq, Show)
 
 expressionEither :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
@@ -415,6 +442,7 @@ expressionEither f g e =
 expression :: P Expression
 expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
 
+-- | 3.4.5.2 (Expressions)
 data Assignment = Assignment Identifier Expression deriving (Eq,Show)
 
 {- | <assignment> ::= <assignment target> assignmentOperator <expression>
@@ -436,9 +464,19 @@ assignment = do
   e <- expression
   return (Assignment a e)
 
+-- | 3.4.5.2
 data BasicExpression =
   BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
   deriving (Eq, Show)
+
+{- | If the expression consists only of a primary, return that.
+     If the expression has messages make a PrimaryExpression node.
+-}
+basicExpressionToPrimary :: BasicExpression -> Primary
+basicExpressionToPrimary e =
+  case e of
+    BasicExpression p Nothing Nothing -> p
+    _ -> PrimaryExpression (ExprBasic e)
 
 {- | <basic expression> ::= <primary> [<messages> <cascaded messages>]
 
@@ -467,12 +505,7 @@ basicExpression = do
 assignmentTarget :: P Identifier
 assignmentTarget = P.label identifier "assignmentTarget"
 
-data Messages
-  = MessagesUnary [UnaryMessage] (Maybe [BinaryMessage]) (Maybe KeywordMessage)
-  | MessagesBinary [BinaryMessage] (Maybe KeywordMessage)
-  | MessagesKeyword KeywordMessage
-  deriving (Eq,Show)
-
+-- | 3.4.5.2 (Expressions)
 data Primary
   = PrimaryIdentifier Identifier
   | PrimaryLiteral Literal
@@ -480,6 +513,13 @@ data Primary
   | PrimaryExpression Expression
   | PrimaryArrayExpression [BasicExpression] -- NON-ANSI
   deriving (Eq, Show)
+
+-- | 3.4.5.3 Messages
+data Messages
+  = MessagesUnary [UnaryMessage] (Maybe [BinaryMessage]) (Maybe KeywordMessage)
+  | MessagesBinary [BinaryMessage] (Maybe KeywordMessage)
+  | MessagesKeyword KeywordMessage
+  deriving (Eq,Show)
 
 inParentheses :: P t -> P t
 inParentheses = P.parens stLexer
