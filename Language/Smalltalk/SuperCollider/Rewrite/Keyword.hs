@@ -12,6 +12,7 @@ import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
+-- | Translate ScKeywordArgument (k:v) to Association (k -> v)
 scKeywordAssoc :: St.Keyword -> ScBasicExpression -> ScBasicExpression
 scKeywordAssoc k v =
   let p = ScPrimaryLiteral (St.SelectorLiteral (St.KeywordSelector k))
@@ -19,12 +20,14 @@ scKeywordAssoc k v =
       m = ScMessagesBinary [ScBinaryMessage "->" (ScBinaryArgument rhs Nothing)]
   in ScBasicExpression p (Just m)
 
+-- | Rewrite value and, if ScKeywordArgument has a keyword, translate to association.
 scKeywordArgumentAssoc :: ScKeywordArgument -> ScBasicExpression
 scKeywordArgumentAssoc (ScKeywordArgument k v) =
   case k of
     Just x -> scKeywordAssoc x (scBasicExpressionRewriteKeyword v)
     Nothing -> scBasicExpressionRewriteKeyword v
 
+-- | Translate ScKeywordArgument list into Sc Array.
 scKeywordArgumentsArray :: [ScKeywordArgument] -> ScBasicExpression
 scKeywordArgumentsArray a =
   ScBasicExpression (ScPrimaryArrayExpression (map scKeywordArgumentAssoc a)) Nothing

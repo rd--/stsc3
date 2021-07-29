@@ -1,76 +1,31 @@
--- | Parser and pretty printer for SOM in terms of Smalltalk.
+{- | Parser for SOM in terms of the Ansi Smalltalk Ast.
+
+     Som has a Class per file syntax.
+     The grammar is: <https://github.com/SOM-st/SOM/blob/master/specification/SOM.g4>
+     The parser here follows the sequence in the specification.
+-}
 module Language.Smalltalk.Som where
 
 import qualified Text.Parsec as P {- parsec -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
-equalSign :: St.P Char
-equalSign = St.lexeme (P.char '=')
+{- | Run parser for Som class definition.
 
-openParen :: St.P Char
-openParen = St.lexeme (P.char '(')
-
-closeParen :: St.P Char
-closeParen = St.lexeme (P.char ')')
-
-data MethodBlock =
-  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements)
-  deriving (Eq, Show)
-
-methodBlock :: St.P MethodBlock
-methodBlock = do
-  _ <- openParen
-  t <- P.optionMaybe St.temporaries
-  s <- P.optionMaybe St.statements
-  _ <- closeParen
-  return (MethodBlock t s)
-
-primitive :: St.P MethodBlock
-primitive = do
-  p <- St.lexeme (P.string "primitive")
-  let be = St.BasicExpression (St.PrimaryIdentifier p) Nothing Nothing
-      se = St.StatementsExpression (St.ExprBasic be) Nothing
-  return (MethodBlock Nothing (Just se))
-
-{- | The SOM separator is an allowed Smalltalk operator name.
-     It can therefore form the start of a Smalltalk method definition.
-     This parser must disallow this, this is done using notFollowedBy as a prefix rule.
-
-> St.stParse methodDefinition "---- new = (| t | q. r. ^s)" -- fail
+> parseSomClassDefinition "\"Set class definition\" Set = Object (|items|)"
+> parseSomClassDefinition "\"Object class definition\" Object = nil ()"
 -}
-methodDefinition :: St.P St.MethodDefinition
-methodDefinition = do
-  P.notFollowedBy separator
-  p <- St.messagePattern
-  _ <- equalSign
-  MethodBlock t s <- primitive P.<|> methodBlock
-  return (St.MethodDefinition p t s)
+parseSomClassDefinition :: String -> St.ClassDefinition
+parseSomClassDefinition = St.stParse classDefinition
 
--- > St.stParse separator "-----------" == "----"
-separator :: St.P String
-separator = St.lexeme (P.string "----" St.>>~ P.many (P.char '-'))
-
-classSide :: St.P ([St.Identifier], [St.MethodDefinition])
-classSide = do
-  _ <- separator
-  t <- P.option [] St.temporariesIdentifierSequence
-  m <- P.many methodDefinition
-  return (t,m)
-
--- > St.stParse classDefinition "\"Set class definition\" Set = Object (|items|)"
--- > St.stParse classDefinition "\"Object class definition\" Object = nil ()"
+-- | Class definition
 classDefinition :: St.P St.ClassDefinition
 classDefinition = do
   P.optional St.separator
   className <- St.identifier
   _ <- equalSign
   superclassName <- P.optionMaybe St.identifier
-  _ <- openParen
-  instanceVariableNames <- P.option [] St.temporariesIdentifierSequence
-  instanceMethods <- P.many methodDefinition
-  (classVariableNames,classMethods) <- P.option ([],[]) classSide
-  _ <- closeParen
+  (instanceVariableNames,instanceMethods,classVariableNames,classMethods) <- St.inParentheses classBody
   return (St.ClassDefinition
           className
           superclassName
@@ -81,3 +36,86 @@ classDefinition = do
           instanceMethods
           classMethods
           Nothing)
+
+-- | Instance fields and methods, optionally class fields and methods.
+classBody :: St.P ([St.Identifier], [St.MethodDefinition], [St.Identifier], [St.MethodDefinition])
+classBody = do
+  iv <- P.option [] St.temporariesIdentifierSequence
+  im <- P.many methodDefinition
+  (cv,cm) <- P.option ([],[]) classSide
+  return (iv,im,cv,cm)
+
+-- | Class fields and class methods.
+classSide :: St.P ([St.Identifier], [St.MethodDefinition])
+classSide = do
+  _ <- separator
+  t <- P.option [] St.temporariesIdentifierSequence
+  m <- P.many methodDefinition
+  return (t,m)
+
+{- | Method definition.
+
+> St.stParse methodDefinition "sumSqr: x = ( ^(self * self) + (x * x) )"
+-}
+methodDefinition :: St.P St.MethodDefinition
+methodDefinition = do
+  P.notFollowedBy separator
+  p <- St.messagePattern
+  _ <- equalSign
+  MethodBlock t s <- primitive P.<|> St.inParentheses methodBlock
+  return (St.MethodDefinition p t s)
+
+-- | Method block.  Arguments are given by the methodPattern.
+data MethodBlock =
+  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements)
+  deriving (Eq, Show)
+
+methodBlock :: St.P MethodBlock
+methodBlock = do
+  t <- P.optionMaybe St.temporaries
+  s <- P.optionMaybe St.statements
+  return (MethodBlock t s)
+
+-- * Lexer
+
+{- | Primitive is a reserved word indicating that a method is Primitive.
+     There is no St Ast node for this
+     It is represented as a Method of only the identifier "primitive".
+-}
+primitive :: St.P MethodBlock
+primitive = do
+  p <- St.lexeme (P.string "primitive")
+  let be = St.BasicExpression (St.PrimaryIdentifier p) Nothing Nothing
+      se = St.StatementsExpression (St.ExprBasic be) Nothing
+  return (MethodBlock Nothing (Just se))
+
+-- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
+somMethodIsPrimitive :: St.MethodDefinition -> Bool
+somMethodIsPrimitive m =
+  case m of
+    St.MethodDefinition
+      _
+      Nothing
+      (Just (St.StatementsExpression
+              (St.ExprBasic
+                (St.BasicExpression
+                  (St.PrimaryIdentifier "primitive")
+                  Nothing
+                  Nothing))
+              Nothing)) -> True
+    _ -> False
+
+{- | Seperator for instance and class methods.
+     The SOM separator is an allowed Smalltalk operator name.
+     It can therefore form the start of a Smalltalk method definition.
+     This parser must disallow this, which is done using notFollowedBy as a prefix rule.
+
+> St.stParse separator "-----------" == "----"
+> St.stParse methodDefinition "---- new = (| t | q. r. ^s)" -- fail
+-}
+separator :: St.P String
+separator = St.lexeme (P.string "----" St.>>~ P.many (P.char '-'))
+
+-- | Not a token in St.
+equalSign :: St.P Char
+equalSign = St.lexeme (P.char '=')

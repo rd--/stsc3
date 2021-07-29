@@ -1,4 +1,7 @@
 {- | Ast and parser for a subset of ANSI Smalltalk.
+     The file is organised according to the report.
+     Numbers refer to sections of the report.
+     <https://wiki.squeak.org/squeak/uploads/172/standard_v1_9-indexed.pdf>
 
 SmalltalkProgram (3.3.1)
 ClassDefinition (3.3.2)
