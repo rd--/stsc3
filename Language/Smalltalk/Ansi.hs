@@ -3,7 +3,7 @@
      Numbers refer to sections of the report.
      <https://wiki.squeak.org/squeak/uploads/172/standard_v1_9-indexed.pdf>
 
-SmalltalkProgram (3.3.1)
+SmalltalkProgram ProgramElement (3.3.1)
 ClassDefinition (3.3.2)
 GlobalDefinition (3.3.3)
 ProgramInitializerDefinition (3.3.5)
@@ -68,23 +68,56 @@ stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
 
 -- * 3.3.1 Program Definition
 
+-- | Sequence of program elements.
 data SmalltalkProgram =
   SmalltalkProgram {programElements :: [ProgramElement]}
   deriving (Eq, Show)
 
--- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
-smalltalkProgram :: P SmalltalkProgram
-smalltalkProgram = P.optional separator >> fmap SmalltalkProgram (P.many1 programElement)
+{- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
 
+> p = stParse smalltalkProgram
+> p "" == SmalltalkProgram {programElements = []}
+> p "self ifNil:" -- error?
+-}
+smalltalkProgram :: P SmalltalkProgram
+smalltalkProgram = do
+  P.optional separator
+  fmap SmalltalkProgram (P.many1 nonEmptyProgramElement P.<|> (P.eof >> return []))
+
+{-
+import Control.Monad.Loops {- monad-loops -}
+
+{- | P.many1 cannot accept a parser that can match an empty string, which programElement can.
+     This attempts parse ProgramElements until eof.
+     However in the case of a syntax error this will not halt.
+-}
+programElementSequence :: P [ProgramElement]
+programElementSequence = Control.Monad.Loops.unfoldM maybeProgramElement
+
+maybeProgramElement :: P (Maybe ProgramElement)
+maybeProgramElement = (P.eof >> return Nothing) P.<|> fmap Just programElement
+-}
+
+-- | 3.3.1
 data ProgramElement
   = ProgramGlobal GlobalDefinition
   | ProgramInitializer ProgramInitializerDefinition
   deriving (Eq,Show)
 
--- | <<program element>> ::= <<class definition>> | <<global definition>> | <<pool definition>> | <<program initializer definition>>
+{- | <<program element>> ::= <<class definition>>
+                           | <<global definition>>
+                           | <<pool definition>>
+                           | <<program initializer definition>>
+-}
 programElement :: P ProgramElement
-programElement = P.choice [fmap ProgramInitializer programInitializerDefinition
-                          ,fmap ProgramGlobal globalDefinition]
+programElement =
+  P.choice [fmap ProgramInitializer programInitializerDefinition
+           ,fmap ProgramGlobal globalDefinition]
+
+nonEmptyProgramElement :: P ProgramElement
+nonEmptyProgramElement =
+  P.choice [fmap ProgramInitializer nonEmptyProgramInitializerDefinition
+           ,fmap ProgramGlobal globalDefinition]
 
 -- * 3.3.2 Class Definition
 
@@ -120,9 +153,16 @@ restrictedSelectors =
 
 -- * 3.3.3 Global Variable Definition
 
+-- | 3.3.3
 data GlobalDefinition =
   GlobalDefinition GlobalName (Maybe VariableInitializer)
   deriving (Eq, Show)
+
+-- | <<global name>> ::= identifier
+type GlobalName = Identifier
+
+-- | <<variable initializer>> ::= <initializer definition>
+type VariableInitializer = InitializerDefinition
 
 -- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
 globalDefinition :: P GlobalDefinition
@@ -132,23 +172,23 @@ globalDefinition = do
   v <- P.optionMaybe initializerDefinition
   return (GlobalDefinition n v)
 
--- | <<global name>> ::= identifier
-type GlobalName = Identifier
-
--- | <<variable initializer>> ::= <initializer definition>
-type VariableInitializer = InitializerDefinition
-
 -- * 3.3.5 Program Initializer Definition
 
+-- | 3.3.5
 type ProgramInitializerDefinition = InitializerDefinition
 
 {- | <<program initializer definition >> ::= <initializer definition>
 
-> stParse programInitializerDefinition "\"x\" |t| t + 1"
-> stParse programInitializerDefinition "" -- FAIL
+> p = stParse programInitializerDefinition
+> p "|t| t + 1"
+> p "\"x\" |t| t + 1"
+> p "" == InitializerDefinition Nothing Nothing
 -}
 programInitializerDefinition :: P ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
+
+nonEmptyProgramInitializerDefinition :: P ProgramInitializerDefinition
+nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 
 -- * 3.4.2
 
@@ -284,6 +324,10 @@ temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 
 -- * 3.4.3
 
+{- | 3.4.3
+
+The value of an initializer with no <statements> is the binding of the reserved identifier 'nil'.
+-}
 data InitializerDefinition =
   InitializerDefinition (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
@@ -296,15 +340,21 @@ data InitializerDefinition =
 > stParse initializerDefinition "|a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c ."
 > stParse initializerDefinition "|a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value ."
 > stParse initializerDefinition "[:x | x * x] value: Float pi * 2"
-> stParse initializerDefinition "" -- FAIL
+> stParse initializerDefinition ""
 -}
 initializerDefinition :: P InitializerDefinition
 initializerDefinition = do
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
+  return (InitializerDefinition t s)
+
+nonEmptyInitializerDefinition :: P InitializerDefinition
+nonEmptyInitializerDefinition = do
+  InitializerDefinition t s <- initializerDefinition
   case (t,s) of
-    (Nothing,Nothing) -> P.unexpected "initializerDefinition: empty"
+    (Nothing,Nothing) -> P.unexpected "nonEmptyInitializerDefinition: empty"
     _ -> return (InitializerDefinition t s)
+
 
 -- * 3.4.4
 
@@ -483,19 +533,22 @@ basicExpressionToPrimary e =
 
 {- | <basic expression> ::= <primary> [<messages> <cascaded messages>]
 
-> stParse basicExpression "1"
-> stParse basicExpression "p"
-> stParse basicExpression "1 negate"
-> stParse basicExpression "p negate"
-> stParse basicExpression "1 + 2"
-> stParse basicExpression "(p)"
-> stParse basicExpression "(p q)"
-> stParse basicExpression "a value + b value + c value"
-> stParse basicExpression "p q r: x" == stParse basicExpression "p q r:x"
-> stParse basicExpression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
-> stParse basicExpression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
-> stParse basicExpression "w * ((x + y) z)"
-> stParse basicExpression "w * (x + y) z"
+> let p = stParse basicExpression
+> p "1"
+> p "p"
+> p "1 negate"
+> p "p negate"
+> p "1 + 2"
+> p "(p)"
+> p "(p q)"
+> p "a value + b value + c value"
+> p "p q r: x" == p "p q r:x"
+> p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> p "w * ((x + y) z)"
+> p "w * (x + y) z"
+> p "Transcript\n \"...\" show: 'hello ';\n show: 'world';\n cr."
+> p "self ifNil:" -- error
 -}
 basicExpression :: P BasicExpression
 basicExpression = do
@@ -578,7 +631,9 @@ binaryMessages = do
   k <- P.optionMaybe keywordMessage
   return (MessagesBinary b k)
 
-{- | <messages> ::= (<unary message>+ <binary message>* [<keyword message>] ) | (<binary message>+ [<keyword message>] ) | <keyword message>
+{- | <messages> ::= (<unary message>+ <binary message>* [<keyword message>] )
+                  | (<binary message>+ [<keyword message>] )
+                  | <keyword message>
 
 > rw = messages_pp . stParse messages
 > (rw "k1:p1",rw "k1:p1 k2:p2")
@@ -701,7 +756,13 @@ cascadedMessages = P.many (cascadeSeparator >> messages)
 
 type Symbol = String
 
--- | <literal> ::= <number literal> | <string literal> | <character literal> | <symbol literal> | <selector literal> | <array literal>
+{- | <literal> ::= <number literal>
+                 | <string literal>
+                 | <character literal>
+                 | <symbol literal>
+                 | <selector literal>
+                 | <array literal>
+-}
 data Literal
   = NumberLiteral Number
   | StringLiteral String
@@ -711,7 +772,7 @@ data Literal
   | ArrayLiteral [Either Literal Identifier]
   deriving (Eq, Show)
 
-{- | <literal> ::= <number literal> | <string literal> | <character literal> | <symbol literal> | <selector literal> | <array literal>
+{- | Parse literal.
 
 > stParse literal "123"
 > stParse literal "-123"
@@ -736,6 +797,7 @@ literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayL
 > stParse numberLiteral "123.456"
 > stParse numberLiteral "-123"
 > stParse numberLiteral "-123.456"
+> stParse numberLiteral "1e-2"
 -}
 numberLiteral :: P Literal
 numberLiteral = do
@@ -915,7 +977,9 @@ keyword = do
 
 -- * 3.5.5
 
--- | binaryCharacter ::= '!' | '%' | '&'' | '*' | '+' | ','' | '/' | '<' | '=' | '>' | '?' | '@' | '\' | '~' | '|' | '-'
+{- | binaryCharacter ::= '!' | '%' | '&' | '*' | '+' | ',' | '/'
+                       | '<' | '=' | '>' | '?' | '@' | '\' | '~' | '|' | '-'
+-}
 binaryCharacter :: P Char
 binaryCharacter = P.oneOf "!%&*+,/<=>?@\\~|-"
 
@@ -1064,7 +1128,7 @@ quotedSelector =
 
 > stParse keywordSelector "freq:" == KeywordSelector "freq:"
 > stParse keywordSelector "freq:iphase:" == KeywordSelector "freq:iphase:"
-> stParse keywordSelector "freq:iphase:x" -- FAIL
+> stParse keywordSelector "freq:iphase:x" -- error
 -}
 keywordSelector :: P Selector
 keywordSelector = fmap (KeywordSelector . concat) (P.many1 keyword) P.<?> "keywordSelector"

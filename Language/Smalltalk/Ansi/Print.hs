@@ -29,6 +29,7 @@ stRewrite st_fn rw_fn = do
   let p = stParse smalltalkProgram st
   writeFile rw_fn (smalltalkProgram_pp p)
 
+-- > smalltalkProgram_pp (SmalltalkProgram []) == ""
 smalltalkProgram_pp :: SmalltalkProgram -> String
 smalltalkProgram_pp = unlines . map programElement_pp . programElements
 

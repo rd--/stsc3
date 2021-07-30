@@ -17,8 +17,9 @@ $binaryChar    = [\!\%\&\*\+\,\/\<\=\>\?\@\\\~\|\-] -- 3.5.5 (!%&*+,/<=>?@\~|-)
 $graphic       = $printable # $white
 
 @decimal     = $digit+
+@exponent    = e \-? @decimal
 @integer     = \-? @decimal
-@float       = \-? @decimal \. @decimal
+@float       = \-? @decimal \. @decimal @exponent?
 
 tokens :-
 
@@ -49,9 +50,9 @@ tokens :-
   $binaryChar+                          { \s -> BinarySelector s }
   "^"                                   { \_ -> ReturnOperator }
   ":="                                  { \_ -> AssignmentOperator }
-  @float                                { \s -> Float (read s) }
+  @float | @decimal @exponent           { \s -> Float (read s) }
   @integer                              { \s -> Integer (read s) }
-  "$" $graphic                          { \s -> QuotedChar (s !! 1) }
+  "$" [$graphic \ ]                     { \s -> QuotedChar (s !! 1) }
   \' ($printable # \')* \'              { \s -> QuotedString (removeOuter 1 s) }
   \# \' ($printable # \')* \'           { \s -> HashedString (removeOuter 2 s) }
 
