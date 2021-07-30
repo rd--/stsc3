@@ -115,7 +115,13 @@ MessageNames openMessageNames. "open Message Names tool"
 5 arrayFill: [:x | x * x] "=> #(1 4 9 16 25)"
 5 arrayFillZeroIndexed: [:x | x * x] "=> #(0 1 4 9 16)"
 
-Array with: 1 with: 2.3 with: 'str' "{1. 2.3. 'str'}"
+(Array with: 1) = #(1)
+(Array with: 1 with: 2) = #(1 2)
+(Array with: 1 with: 2 with: 3) = #(1 2 3)
+(Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4)
+(Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5)
+
+(Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str')
 
 #(5 4 3 2 1) withIndexDo: [:e :i | {e. i} print].
 

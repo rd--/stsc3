@@ -185,7 +185,7 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
   env
     ^Env
       levels: (Array with: 0 with: level with: level with: 0)
-      times: (Attay with: attackTime with: sustainTime with: releaseTime)
+      times: (Array with: attackTime with: sustainTime with: releaseTime)
       curves: curves
       releaseNode: nil
       loopNode: nil
@@ -233,7 +233,8 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
       curves: curves
       releaseNode: 1
       loopNode: nil
-      offset: 0 !
+      offset: 0
+  !
 !
 
 EnvBuilder subclass: #EnvADSR

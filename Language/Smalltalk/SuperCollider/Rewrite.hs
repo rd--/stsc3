@@ -17,7 +17,7 @@ To translate, a Dot message sequence has parentheses inserted after each Keyword
 - p.q(a).r + s      => (p q: a) r + s
 - p + q.r(a)        => p + (q r: a)                <= p + q r: a ==> (p + q) r: a
 
-This transformation can be done at the Sc Ast.
+This transformation at the Sc Ast.
 
 - p.q(a).r          => (p.q(a)).r
 - p.q.r(a).s(b).t   => ((p.q.r(a)).s(b)) t
@@ -30,7 +30,7 @@ Method parameters are collated into an array of associations.
 - p.q(a,b)          => p q: {a. b}
 - p.q(x: a, b)      => p q: {#x: -> a. b}
 
-This transformation can also be done at the Sc Ast.
+This transformation at the Sc Ast.
 
 - p.q(a,b)          => p.q([a,b])
 - p.q(x: a, b)      => p.q([\x: -> a,b])
@@ -41,7 +41,7 @@ These must be rewritten to as a single set of names and a sequence of assignment
 - var p, q = a;     => |p q| q := a.
 - var p=a; var q;   => |p q| p := a.
 
-This transformation can also be done at the Sc Ast.
+This transformation at the Sc Ast.
 
 - var p, q = a;     => var p, q; q = a;
 - var p = a; var q; => var p, q; p = a;

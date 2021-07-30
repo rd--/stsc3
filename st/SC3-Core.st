@@ -299,6 +299,9 @@ MCE comment: 'Multiple Channel Expansion'!
 !
 
 !MCE methodsFor: 'transforms'!
+  reverse
+    ^self copy transform: #(#mceReverse)
+  !
   transpose
     ^self copy transform: #(#mceTranspose)
   !
