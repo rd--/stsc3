@@ -52,6 +52,9 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   input: input spread: spread level: level center: center
     ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
   !
+  input: input level: level
+    ^Splay input: input spread: 1 level: level center: 0 levelComp: true
+  !
   input: input
     ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
   !

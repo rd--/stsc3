@@ -125,6 +125,9 @@ MessageNames openMessageNames. "open Message Names tool"
 
 #(5 4 3 2 1) withIndexDo: [:e :i | {e. i} print].
 
+10 arraySeries: 0 step: 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
+5 arrayGeom: 1 grow: 3 "=> (1 3 9 27 81)"
+
 "Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*

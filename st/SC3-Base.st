@@ -6,6 +6,16 @@
 !
 
 !Integer methodsFor: 'enumerating'!
+  arraySeries: start step: step
+    "Fill with ramp of values"
+    ^(1 to: self) collect: [:i| (step * (i - 1)) + start]
+  !
+  arrayGeom: start grow: grow
+    "Fill with geometric series.  What is the Smalltalk method for this pattern."
+    |accum|
+    accum := start.
+    ^(1 to: self) collect: [:i| |entry| entry := accum. accum := grow * accum. entry]
+  !
   arrayFill: f
     "Array of (1 to: self) collected with f"
     ^(1 to: self) collect: [:i | f value: i]
