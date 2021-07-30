@@ -48,12 +48,17 @@ variableInitializer_pp = initializerDefinition_pp
 programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 programInitializerDefinition_pp = initializerDefinition_pp
 
+{-
+> methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
+-}
 methodDefinition_pp :: MethodDefinition -> String
 methodDefinition_pp (MethodDefinition p t s) = strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
 
--- > pattern_pp (stParse messagePattern "midicps")
--- > pattern_pp (stParse messagePattern "+ aNumber")
--- > pattern_pp (stParse messagePattern "freq: f phase: p")
+{-
+> pattern_pp (stParse messagePattern "midicps")
+> pattern_pp (stParse messagePattern "+ aNumber")
+> pattern_pp (stParse messagePattern "freq: f phase: p")
+-}
 pattern_pp :: Pattern -> String
 pattern_pp pat =
   case pat of

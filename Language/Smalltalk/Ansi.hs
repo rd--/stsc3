@@ -164,7 +164,12 @@ type GlobalName = Identifier
 -- | <<variable initializer>> ::= <initializer definition>
 type VariableInitializer = InitializerDefinition
 
--- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
+{- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
+
+> p = stParse globalDefinition
+> p "g"
+> p "g g := 0"
+-}
 globalDefinition :: P GlobalDefinition
 globalDefinition = do
   -- constant designator
@@ -187,6 +192,7 @@ type ProgramInitializerDefinition = InitializerDefinition
 programInitializerDefinition :: P ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
 
+-- | A variant that does will not match the empty string.
 nonEmptyProgramInitializerDefinition :: P ProgramInitializerDefinition
 nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 
@@ -199,21 +205,21 @@ data MethodDefinition =
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
-> stParse methodDefinition "p"
-> stParse methodDefinition "p q"
-> stParse methodDefinition "p ^q"
-> stParse methodDefinition "p q. ^r"
-> stParse methodDefinition "p |t|"
-> stParse methodDefinition "p |t| r"
-> stParse methodDefinition "p |t| r. ^s"
-> stParse methodDefinition "p: q"
-> stParse methodDefinition "p: q r"
-> stParse methodDefinition "p: q ^r"
-> stParse methodDefinition "p: q r. ^s"
-> stParse methodDefinition "printElementsOn: aStream aStream nextPut: $(."
-> stParse methodDefinition "* anObject ^self shallowCopy *= anObject"
+> p = stParse methodDefinition
+> p "p"
+> p "p q"
+> p "p ^q"
+> p "p q. ^r"
+> p "p |t|"
+> p "p |t| r"
+> p "p |t| r. ^s"
+> p "p: q"
+> p "p: q r"
+> p "p: q ^r"
+> p "p: q r. ^s"
+> p "printElementsOn: aStream aStream nextPut: $(."
+> p "* anObject ^self shallowCopy *= anObject"
 
-> methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 -}
 methodDefinition :: P MethodDefinition
 methodDefinition = do
@@ -231,10 +237,11 @@ data Pattern
 {- | Derive method selector from Pattern.
      Return is either Identifier or BinarySelector (both Strings).
 
-> patternSelector (stParse messagePattern "midicps") == UnarySelector "midicps"
-> patternSelector (stParse messagePattern "+ aNumber") == BinarySelector "+"
-> patternSelector (stParse messagePattern "new: x") == KeywordSelector "new:"
-> patternSelector (stParse messagePattern "freq: f phase: p") == KeywordSelector "freq:phase:"
+> p = stParse messagePattern
+> patternSelector (p "midicps") == UnarySelector "midicps"
+> patternSelector (p "+ aNumber") == BinarySelector "+"
+> patternSelector (p "new: x") == KeywordSelector "new:"
+> patternSelector (p "freq: f phase: p") == KeywordSelector "freq:phase:"
 -}
 patternSelector :: Pattern -> Selector
 patternSelector pat =
@@ -248,19 +255,23 @@ methodSelector (MethodDefinition p _ _) = patternSelector p
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
-> stParse messagePattern "p" == UnaryPattern "p"
-> stParse messagePattern "+p" == stParse messagePattern "+ p"
-> stParse messagePattern "k1:p1" == stParse messagePattern "k1: p1"
-> stParse messagePattern "k1:p1 k2:p2" == stParse messagePattern "k1: p1 k2: p2"
-> stParse messagePattern "k: v x"
+> p = stParse messagePattern
+> p "p" == UnaryPattern "p"
+> p "+p" == p "+ p"
+> p "k1:p1" == p "k1: p1"
+> p "k1:p1 k2:p2" == p "k1: p1 k2: p2"
+> p "k: v x" == p "k:v"
 -}
 messagePattern :: P Pattern
-messagePattern = P.choice [(P.try keywordPattern),(P.try binaryPattern),unaryPattern] P.<?> "messagePattern"
+messagePattern =
+  P.choice [P.try keywordPattern
+           ,P.try binaryPattern
+           ,unaryPattern] P.<?> "messagePattern"
 
 {- | <unary pattern> ::= unarySelector
 
 > stParse unaryPattern "p"
-> stParse unaryPattern "p:" -- FAIL
+> stParse unaryPattern "p:" -- error
 -}
 unaryPattern :: P Pattern
 unaryPattern = fmap (UnaryPattern . selectorIdentifier) unarySelector -- lexeme
@@ -291,9 +302,11 @@ keywordPattern = do
 -- | 3.4.2
 data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
 
+-- | Empty Temporaries list.
 emptyTemporaries :: Temporaries
 emptyTemporaries = Temporaries []
 
+-- | Vertical bar as lexeme (token).
 verticalBar :: P Char
 verticalBar = lexeme (P.char '|')
 
@@ -302,22 +315,22 @@ temporariesIdentifierSequence = P.between verticalBar verticalBar temporary_vari
 
 {- | <temporaries> ::= '|' <temporary variable list> '|'
 
-> stParse temporaries "||"
-> stParse temporaries "|p|"
-> stParse temporaries "| p|"
-> stParse temporaries "|p |"
-> stParse temporaries "|p q r|"
+> p = stParse temporaries
+> p "||" == Temporaries []
+> p "|p|" == p "| p|"
+> p "|p |" == p "| p |"
+> p "|p q r|" == Temporaries ["p","q","r"]
 -}
 temporaries :: P Temporaries
 temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporaries"
 
 {- | <temporary variable list> ::= identifier*
 
-> stParse temporary_variable_list ""
-> stParse temporary_variable_list "p"
-> stParse temporary_variable_list "p q"
-> stParse temporary_variable_list "p q r"
-> stParse temporary_variable_list "p q r +"
+> p = stParse temporary_variable_list
+> p ""
+> p "p"
+> p "p q"
+> p "p q r" == p "p q r +"
 -}
 temporary_variable_list :: P [Identifier]
 temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
@@ -334,13 +347,14 @@ data InitializerDefinition =
 
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
 
-> stParse initializerDefinition "|a b| a := 1 . ^ a + b ."
-> stParse initializerDefinition "SinOsc freq: (69 midicps) phase: 0 mul: 0.1"
-> stParse initializerDefinition "SinOsc freq: (69 midicps) phase: 0 mul: 0.1"
-> stParse initializerDefinition "|a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c ."
-> stParse initializerDefinition "|a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value ."
-> stParse initializerDefinition "[:x | x * x] value: Float pi * 2"
-> stParse initializerDefinition ""
+> p = stParse initializerDefinition
+> p "|a b| a := 1 . ^ a + b ."
+> p "SinOsc freq: (69 midicps) phase: 0 mul: 0.1"
+> p "SinOsc freq: (69 midicps) phase: 0 mul: 0.1"
+> p "|a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c ."
+> p "|a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value ."
+> p "[:x | x * x] value: Float pi * 2"
+> p ""
 -}
 initializerDefinition :: P InitializerDefinition
 initializerDefinition = do
@@ -360,11 +374,12 @@ nonEmptyInitializerDefinition = do
 
 {- | <block constructor> ::= '[' <block body> ']'
 
-> stParse blockConstructor "[1]" == stParse blockConstructor "[ 1 ]"
-> stParse blockConstructor "[^1]" ==  stParse blockConstructor "[ ^ 1 .]"
-> stParse blockConstructor "[:a| |t|]" == stParse blockConstructor "[ :a | | t | ]"
-> stParse blockConstructor "[:a| |t u| x . y]"
-> stParse blockConstructor "[:a| |t u| t := [:b| |v w| z] . x . y]"
+> p = stParse blockConstructor
+> p "[1]" == p "[ 1 ]"
+> p "[^1]" ==  p "[ ^ 1 .]"
+> p "[:a| |t|]" == p "[ :a | | t | ]"
+> p "[:a| |t u| x . y]"
+> p "[:a| |t u| t := [:b| |v w| z] . x . y]"
 -}
 blockConstructor :: P BlockBody
 blockConstructor = inBrackets blockBody
@@ -421,21 +436,23 @@ expressionSequenceToStatements stm =
           e0:eN -> StatementsExpression e0 (Just (f eN))
   in f
 
+-- | '.' as lexeme (token)
 period :: P String
 period = P.dot stLexer
 
 {- | <statements> ::= (<return statement> ['.']) | (<expression> ['.' [<statements>]])
 
-> stParse statements "^p" == stParse statements "^ p"
-> stParse statements "^p." == stParse statements "^p ."
-> stParse statements "^ p." == stParse statements "^ p ."
-> stParse statements "p"
-> stParse statements "p q"
-> stParse statements "(p q)"
-> stParse statements "p.^q" == stParse statements "p .^q"
-> stParse statements "p . ^q" == stParse statements "p . ^ q"
-> stParse statements "^ 440 * (2 ** ((self - 69) * (1 / 12)))"
-> stParse statements "p. q." == stParse statements "p. q"
+> p = stParse statements
+> p "^p" == p "^ p"
+> p "^p." == p "^p ."
+> p "^ p." == p "^ p ."
+> p "p"
+> p "p q"
+> p "(p q)"
+> p "p.^q" == p "p .^q"
+> p "p . ^q" == p "p . ^ q"
+> p "^ 440 * (2 ** ((self - 69) * (1 / 12)))"
+> p "p. q." == p "p. q"
 -}
 statements :: P Statements
 statements = do
@@ -453,12 +470,13 @@ data ReturnStatement = ReturnStatement Expression deriving (Eq,Show)
 
 {- | <return statement> ::= returnOperator <expression>
 
-> stParse returnStatement "^1"
-> stParse returnStatement "^p"
-> stParse returnStatement "^ 1"
-> stParse returnStatement "^ p"
-> stParse returnStatement "^ a value + b value + c value"
-> stParse returnStatement "^ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> p = stParse returnStatement
+> p "^1"
+> p "^p"
+> p "^ 1"
+> p "^ p"
+> p "^ a value + b value + c value"
+> p "^ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
 returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
@@ -474,23 +492,24 @@ expressionEither f g e =
 
 {- | <expression> ::= <assignment> | <basic expression>
 
-> stParse expression "p := 1"
-> stParse expression "p := q"
-> stParse expression "p"
-> stParse expression "1"
-> stParse expression "1 + 2"
-> stParse expression "p := (1 + 2)"
-> stParse expression "p := (1 + 2) negate"
-> stParse expression "a value + b value + c value"
-> stParse expression "note2 := (sequR value: #(-12 -7 -5 0 2 5) value: clock_16) + note1"
-> stParse expression "freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midicps ."
-> stParse expression "(1 to: 6) do: [:i| s := AllpassN in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] . \"rvb\""
-> stParse expression "out := pitch size mixFill: [:i| |trigger pluck period string| trigger := HPZ1 in: (mousex > (0.25 + ((i - 1) * triggerSpacing))) abs . x]"
-> stParse expression "out := pitch size mixFill: [:i| x]"
-> stParse expression "pitch size mixFill: x"
-> stParse expression "[1] value"
-> stParse expression "o m: true"
-> stParse expression "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> p = stParse expression
+> p "p := 1"
+> p "p := q"
+> p "p"
+> p "1"
+> p "1 + 2"
+> p "p := (1 + 2)"
+> p "p := (1 + 2) negate"
+> p "a value + b value + c value"
+> p "note2 := (sequR value: #(-12 -7 -5 0 2 5) value: clock_16) + note1"
+> p "freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midicps ."
+> p "(1 to: 6) do: [:i| s := AllpassN in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] . \"rvb\""
+> p "out := pitch size mixFill: [:i| |trigger pluck period string| trigger := HPZ1 in: (mousex > (0.25 + ((i - 1) * triggerSpacing))) abs . x]"
+> p "out := pitch size mixFill: [:i| x]"
+> p "pitch size mixFill: x"
+> p "[1] value"
+> p "o m: true"
+> p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
 expression :: P Expression
 expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
@@ -500,15 +519,14 @@ data Assignment = Assignment Identifier Expression deriving (Eq,Show)
 
 {- | <assignment> ::= <assignment target> assignmentOperator <expression>
 
-> stParse assignment "p:=1"
-> stParse assignment "p :=1"
-> stParse assignment "p:= 1"
-> stParse assignment "p := 1"
-> stParse assignment "p := q"
-> stParse assignment "p := 2.0"
-> stParse assignment "p := 'x'"
-> stParse assignment "p := 8 mixFill: [:i| |n trigger pluck freq z metal| n := 15 ]"
-> stParse assignment "p := q := r := nil"
+> p = stParse assignment
+> p "p:=1" == p "p :=1"
+> p "p:= 1" == p "p := 1"
+> p "p := q"
+> p "p := 2.0"
+> p "p := 'x'"
+> p "p := 8 mixFill: [:i| |n trigger pluck freq z metal| n := 15 ]"
+> p "p := q := r := nil"
 -}
 assignment :: P Assignment
 assignment = do
