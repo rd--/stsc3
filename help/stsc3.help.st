@@ -105,6 +105,7 @@ MessageNames openMessageNames. "open Message Names tool"
 "Array"
 
 #(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"
+#(true false nil) "=> #(true false nil)"
 #(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
 
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"

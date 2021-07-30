@@ -51,7 +51,7 @@ tokens :-
   $binaryChar+                          { \s -> BinarySelector s }
   @float                                { \s -> Float (read s) }
   @integer                              { \s -> Integer (read s) }
-  "$" $graphic                          { \s -> QuotedChar (s !! 1) }
+  "$" [$graphic \ ]                     { \s -> QuotedChar (s !! 1) }
   \" ($printable # \")* \"              { \s -> QuotedString (removeOuter 1 s) }
   \' ($printable # \')* \'              { \s -> HashedString (removeOuter 1 s) }
   \\ $letter $letterordigit*            { \s -> HashedString (tail s) }

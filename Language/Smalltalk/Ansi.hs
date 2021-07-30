@@ -847,7 +847,8 @@ hashOpenParen = lexeme (P.string "#(")
 closeParen :: P Char
 closeParen = lexeme (P.char ')')
 
-{- | <array literal> ::= '#(' <array element>* ')'
+{- | 3.4.6.6
+     <array literal> ::= '#(' <array element>* ')'
 
 > stParse arrayLiteral "#()" == stParse arrayLiteral "#( )"
 > stParse arrayLiteral "#(1)" == stParse arrayLiteral "#( 1 )"
@@ -861,12 +862,18 @@ arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arr
 
 {- | <array element> ::= <literal> | identifier
 
+If an identifier appears as an <array element> and it is one of the
+reserved identifiers nil, true or false the value of the corresponding
+element of the collection is the value of that reserved
+identifier. The meaning is undefined if any other identifier is used
+as an <array element>
+
 > stParse arrayElement "1"
 > stParse arrayElement "2.0"
-> stParse arrayElement "p"
+> stParse arrayElement "nil"
 -}
 arrayElement :: P (Either Literal Identifier)
-arrayElement = fmap Left literal P.<|> fmap Right identifier -- lexeme
+arrayElement = fmap Left literal P.<|> fmap Right reservedIdentifier -- lexeme
 
 -- * 3.4.7 Reserved Identifiers
 
@@ -930,7 +937,8 @@ comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommen
 
 -- * 3.5.3
 
-type ReservedIdentifier = String
+-- | C.f. 3.4.7
+type ReservedIdentifier = Identifier
 
 {- | One of stReservedIdentifiers
 

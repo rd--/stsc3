@@ -267,12 +267,12 @@ UGen.subclasses.size == 325             // true
 SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 
 'Iteration'
-4.for(5,{|x| [\for,x].postln})
-5.for(5,{|x| [\for,x].postln})
-6.for(5,{|x| [\for,x].postln})
-6.0.for(5.0,{|x| [\for,x].postln})
-6.forBy(5,-1, {|x| [\forBy,x].postln})
-6.0.forBy(5.0,-1.0, {|x| [\forBy,x].postln})
+4.for(5,{arg x; [\for,x].postln})
+5.for(5,{arg x; [\for,x].postln})
+6.for(5,{arg x; [\for,x].postln})
+6.0.for(5.0,{arg x; [\for,x].postln})
+6.forBy(5,-1, {arg x; [\forBy,x].postln})
+6.0.forBy(5.0,-1.0, {arg x; [\forBy,x].postln})
 
 'Randomness'
 {var i=0,x=nil; {x=1.0.rand; i=i+1; x>0.1}.while({[x,i].postln})}.value
