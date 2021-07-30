@@ -10,6 +10,7 @@ x // y
 inf
 $x
 $.
+$$
 "x"
 'x'
 \x
@@ -43,8 +44,9 @@ x.y.z
 x.y.z.y
 
 'Binary Methods'
-4 + 5 == 9 // true
-1 ! 2 == [1,1] // true
+4 + 5 == 9                               // true
+1 ! 2 == [1,1]                           // true
+1 @ 2 == Point.new(x: 1, y: 2)           // true
 1 @ 2
 1 % 2
 1 & 2
@@ -75,11 +77,12 @@ p + (q + r.s())
 1 ! 2 == [1,1] // true
 
 'Keyword'
-2.max(3)        // 3
-2.max(3) + 4    // 7
-1.min(2).max(3) // 3
-1.min(2.max(3)) // 1
-1.min(2.max(3)) // 1
+2.max(3)                                // 3
+2.max(3) + 4                            // 7
+1.min(2).max(3)                         // 3
+1.min(2.max(3))                         // 1
+1.min(2.max(3))                         // 1
+2.max(aNumber: 3) == 3                  // true
 SinOsc.ar()
 SinOsc.ar(440)
 SinOsc.ar(440, 0)
@@ -99,16 +102,17 @@ Signal.hanningWindow(1024).squared
 4 + 5.neg + 6
 4.neg + 5
 1 + 2 * 3.neg
-4 + 5 . neg // -1
-4 + 5 . neg == -1 // true
-4 + 5 . neg < 0 == true // true
+4 + 5 . neg                             // -1
+4 + 5 . neg == -1                       // true
+4 + 5 . neg < 0 == true                 // true
 4 + 5.neg
 w * (x + y).z
 w * (x + y) - z
 (w * (x + y).z + a).b
-(1 + (2 * 3).squared / 4).neg
+(1 + (2 * 3).squared / 4).neg == -9.25
 1 + -2.abs.min(3).squared
-2.max(3) == 3 // true
+2.max(3) == 3                           // true
+1 + 2 . max(3) == 4                     // true
 SinOsc.ar(60.midicps)
 SinOsc.ar(60.midicps,0)
 SinOsc.ar(60.midicps,pi)
@@ -124,18 +128,18 @@ w * (x + y)
 (w * (x + y))
 (w * (x + y)).z
 w * ((x + y).z)
-1 + (2 * 3)
-(1 + 2 * 3 / 4).neg
+1 + (2 * 3)                        // 7
+(1 + 2 * 3 / 4).neg                // -2.25
 (x + y).z
 ((x + y).z) + a
 (x + y).z + a
 (((x + y).z) + a).b
 ((x + y).z + a).b
 (1 + (2 * 3)).postln
-1 + (2 . max(3)) == 4 // true
-1 + 2 . max(3) == 4 // true
-1 + 2 * 3 . max(4)
-1 @ 2 == Point.new(x: 1, y: 2) // true
+1 + (2 . max(3)) == 4              // true
+1 + 2 . max(3) == 4                // true
+1 + 2 * 3 . max(4) == 12           // true
+1 @ 2 == Point.new(x: 1, y: 2)     // true
 
 'Blocks'
 {}
@@ -143,7 +147,8 @@ w * ((x + y).z)
 {arg x; x}
 {arg x; var y; z}
 {SinOsc.ar(mul: 0.1)}.play
-four = {arg x; x + 1}.value(3)
+{arg x; x + 1}.value(3) == 4            // true
+{^nil}.value                            // return in non-method
 
 'Temporaries'
 {var x; }
@@ -216,7 +221,85 @@ p.q(x:a,b)               // p.q([\x: -> (a),b])
 p.q(a,x:b)               // p.q([a,\x: -> (b)])
 p.q(a,x: b.c(y: d,e))    // p.q([a,\x: -> (b.c([\y: -> (d),e]))])
 
+'Boolean'
+1 != 2 == true                // => true
+true.and(false) == false      // => true
+true.or(false) == true        // => true
+true || false == true         // => true
+true && false == false        // => true
+
+
+'Strings'
+"x" + "y" == "x y"            // => true
+"x" ++ "y" == "xy"            // => true
+"".isEmpty == true            // true
+"text".copyRange(2,2) == "x"  // true
+"text".copyRange(1,2) == "ex" // true
+
+'Symbols'
+'x 1'.asString == "x 1"            // true
+'x $ x'.asString == "x $ x"        // true
+'x y'.class == Symbol              // true
+'x y'.asCompileString == "'x y'"   // true
+\x.class == Symbol                 // true
+\x.asCompileString == "'x'"        // true
+
+'Array'
+Array.new(6).size == 0        // => true
+Array.newClear(6).size == 6   // => true
+
+'Integer Math'
+5.div(2) == 2                 // => true
+7.div(3) == 2                 // => true
+-5.div(2) == -3               // => true
+-7.div(3) == -3               // => true
+
+'Complex'
+Complex.new(-1,0).pow(1/2)
+
+'Classes'
+SinOsc.name == 'SinOsc'                 // true
+SinOsc.class.class == Class             // true
+SinOsc.superclass == PureUGen           // true
+SinOsc.superclass.superclass == UGen    // true
+SinOsc.subclasses == nil                // true
+UGen.subclasses.size == 325             // true
+SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
+
+'Iteration'
+4.for(5,{|x| [\for,x].postln})
+5.for(5,{|x| [\for,x].postln})
+6.for(5,{|x| [\for,x].postln})
+6.0.for(5.0,{|x| [\for,x].postln})
+6.forBy(5,-1, {|x| [\forBy,x].postln})
+6.0.forBy(5.0,-1.0, {|x| [\forBy,x].postln})
+
+'Randomness'
+{var i=0,x=nil; {x=1.0.rand; i=i+1; x>0.1}.while({[x,i].postln})}.value
+
+'Bitwise'
+0 | 1 == 1               // true
+
 'Variable Arguments'
 -3.abs == 3
 -3.abs() == 3
 -3.abs(nil) == 3
+
+'Keyword operators'
+3 min: 2                 // 2
+3 min: 2 + 1             // 3
+3 min: -2.abs + 1        // 3
+3 min: 2.max(1)          // 2
+3 max: 2 . squared       // 4
+3 max: (2 . squared)     // 4
+(3 max: 2) . squared     // 9
+2 min: 3 pow: 2          // 4.0
+2 min: 3.pow(2)          // 2.0
+(2 min: 3) pow: 2        // 4.0
+2 min: (3 pow: 2)        // 2.0
+1.min(2).max(3) == 3     // true
+1.min(2.max(3)) == 1     // true
+1 min: 2 max: 3 == 3     // true
+1 min: (2 max: s) == 1   // true
+5 min: 2 + 2 == 4        // true (keyword operator binds as keyword message in smalltalk)
+5 min: 2 . neg + 6 == 4  // true
