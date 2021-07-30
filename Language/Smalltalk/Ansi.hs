@@ -625,14 +625,15 @@ primary =
 
 {- | <unary message>+ <binary message>* [<keyword message>]
 
-> stParse unaryMessages "abs"
-> stParse unaryMessages "abs square"
-> stParse unaryMessages "abs square +p" == stParse unaryMessages "abs square + p"
-> stParse unaryMessages "abs square +p +q" == stParse unaryMessages "abs square + p + q"
-> stParse unaryMessages "value +b value +c value" == stParse unaryMessages "value + b value + c value"
-> stParse unaryMessages "abs square +p +q k:r" == stParse unaryMessages "abs square + p + q k: r"
-> stParse unaryMessages "abs square +p +q k1:p1 k2:p2" == stParse unaryMessages "abs square + p + q k1: p1 k2: p2"
-> stParse unaryMessages "q r:x" == stParse unaryMessages "q r: x"
+> p = stParse unaryMessages
+> p "abs"
+> p "abs square"
+> p "abs square +p" == p "abs square + p"
+> p "abs square +p +q" == p "abs square + p + q"
+> p "value +b value +c value" == p "value + b value + c value"
+> p "abs square +p +q k:r" == p "abs square + p + q k: r"
+> p "abs square +p +q k1:p1 k2:p2" == p "abs square + p + q k1: p1 k2: p2"
+> p "q r:x" == p "q r: x"
 -}
 unaryMessages :: P Messages
 unaryMessages = do
@@ -658,14 +659,15 @@ binaryMessages = do
 > (rw "+p",rw "+p +q")
 > (rw "+p k:r",rw "+p +q k:r")
 
-> stParse messages "k1:p1" == stParse messages "k1: p1"
-> stParse messages "k1: p1 k2: p2" == stParse messages "k1:p1 k2:p2"
-> stParse messages "+1"== stParse messages "+ 1"
-> stParse messages "+p" == stParse messages "+ p"
-> stParse messages "+p +q" == stParse messages "+ p + q"
-> stParse messages "+p +q k:r" == stParse messages "+ p + q k: r"
-> stParse messages "q r: x" == stParse messages "q r:x"
-> stParse messages "< 0 ifTrue: [0 - self] ifFalse: [self]" == stParse messages "<0ifTrue:[0-self]ifFalse:[self]"
+> p = stParse messages
+> p "k1:p1" == p "k1: p1"
+> p "k1: p1 k2: p2" == p "k1:p1 k2:p2"
+> p "+1"== p "+ 1"
+> p "+p" == p "+ p"
+> p "+p +q" == p "+ p + q"
+> p "+p +q k:r" == p "+ p + q k: r"
+> p "q r: x" == p "q r:x"
+> p "< 0 ifTrue: [0 - self] ifFalse: [self]" == p "<0ifTrue:[0-self]ifFalse:[self]"
 -}
 messages :: P Messages
 messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
@@ -792,19 +794,20 @@ data Literal
 
 {- | Parse literal.
 
-> stParse literal "123"
-> stParse literal "-123"
-> stParse literal "123.456"
-> stParse literal "-123.456"
-> stParse literal "'x'" == CharacterLiteral 'x'
-> stParse literal "$x" == StringLiteral "x"
-> stParse literal "#'xyz'" == SymbolLiteral "xyz"
-> stParse literal "#abs" == SelectorLiteral (UnarySelector "abs")
-> stParse literal "#freq:iphase:" == SelectorLiteral (KeywordSelector "freq:iphase:")
-> stParse literal "#+" == SelectorLiteral (BinarySelector "+")
-> stParse literal "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
-> stParse literal "#(-12 -7 -5 0 2 5)"
-> stParse literal "#(x y z)"
+> p = stParse literal
+> p "123"
+> p "-123"
+> p "123.456"
+> p "-123.456"
+> p "'x'" == CharacterLiteral 'x'
+> p "$x" == StringLiteral "x"
+> p "#'xyz'" == SymbolLiteral "xyz"
+> p "#abs" == SelectorLiteral (UnarySelector "abs")
+> p "#freq:iphase:" == SelectorLiteral (KeywordSelector "freq:iphase:")
+> p "#+" == SelectorLiteral (BinarySelector "+")
+> p "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
+> p "#(-12 -7 -5 0 2 5)"
+> p "#(x y z)"
 -}
 literal :: P Literal
 literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayLiteral, P.try symbolLiteral, selectorLiteral] -- lexeme

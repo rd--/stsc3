@@ -12,20 +12,22 @@ p_q
 p1
 
 'Literals'
-0
-1
--1
-1.2
--1.2
-1e2                                               "=> 100.0"
-1e-2                                              "=> 0.01"
-$x                                                "=> $x"
+0                                                 "=> integer"
+1                                                 "=> integer"
+-1                                                "=> negative integer"
+1.2                                               "=> float"
+-1.2                                              "=> negative float"
+1e2                                               "=> float with exponent 100.0"
+1e-2                                              "=> float with negative exponent 0.01"
+$x                                                "=> character $x"
 $.                                                "=> $."
 $                                                 "=> $ "
-'x'
-#'x'
+'x'                                               "=> string"
+#'x'                                              "=> hashquoted string (symbol)"
 #'x y'
-#x
+#x                                                "=> unary selector literal"
+#x:                                               "=> keyword selector literal"
+#+                                                "=> binary selector literal"
 #|                                                "=> #|"
 #()                                               "=> ()"
 #(1)
@@ -235,3 +237,13 @@ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
 w * ((x + y) z)
 w * (x + y) z
 Transcript show: 'hello '; show: 'world'; cr.
+
+'Unary Messages'
+abs
+abs square
+abs square + p
+abs square + p + q
+value + b value + c value
+abs square + p + q k: r
+abs square + p + q k1: p1 k2: p2
+q r: x
