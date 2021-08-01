@@ -24,7 +24,7 @@ $.                                                "=> $."
 $                                                 "=> $ "
 'x'                                               "=> string"
 #'x'                                              "=> hashquoted string (symbol)"
-#'x y'
+#'x y'                                            "=> symbol with space character"
 #x                                                "=> unary selector literal"
 #x:                                               "=> keyword selector literal"
 #+                                                "=> binary selector literal"
