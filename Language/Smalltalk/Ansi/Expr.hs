@@ -8,7 +8,9 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
      If the selector is Binary there must be one parameter.
      If the selector is Keyword there must be as many parameters as the selector indicates.
 -}
-data Message = Message St.Selector [Expr]
+data Message =
+  Message St.Selector [Expr]
+  deriving (Eq, Show)
 
 {- | A standard applicative Expression type.
      Send replaces Apply.
@@ -26,6 +28,7 @@ data Expr =
   | Array [Expr]
   | Begin [Expr]
   | Init St.Temporaries [Expr]
+  deriving (Eq, Show)
 
 primaryExpr :: St.Primary -> Expr
 primaryExpr p =
