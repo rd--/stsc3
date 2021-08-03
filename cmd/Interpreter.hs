@@ -26,7 +26,7 @@ import qualified Sound.SC3.UGen.DB.Record as DB {- hsc3-db -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | VM is simply an environment.
-type VM t = Env.EnvMonad IO Object t
+type VM t = Env.EnvMonad () IO Object t
 
 type Name = String
 
@@ -37,7 +37,7 @@ data Object
   | UGenClassObject Name DB.U
   | UGenObject SC3.UGen
   | SymbolObject String -- ^ There is no separate string type.
-  | BlockObject (Env.Env Object) St.BlockBody
+  | BlockObject (Env.Env () Object) St.BlockBody
 
 ugenShow :: SC3.UGen -> String
 ugenShow x =
@@ -85,7 +85,7 @@ objectToSymbol o =
     _ -> throwError "objectToSymbol: Object not symbol"
 
 -- | Object to Block
-objectToBlock :: Object -> VM (Env.Env Object,St.BlockBody)
+objectToBlock :: Object -> VM (Env.Env () Object,St.BlockBody)
 objectToBlock o =
   case o of
     BlockObject e x -> return (e,x)
@@ -142,7 +142,7 @@ literalToObject l =
 -- | Add temporaries as single frame to environment, initialised to nil.
 evalTemporaries :: St.Temporaries -> VM ()
 evalTemporaries (St.Temporaries x) =
-  put =<< liftIO . Env.env_add_frame (zip x (repeat NilObject)) =<< get
+  put =<< liftIO . Env.env_add_frame () (zip x (repeat NilObject)) =<< get
 
 -- | Delete frame and return input value.
 deleteFrame :: t -> VM t
@@ -218,8 +218,8 @@ evalBinaryMessageSeq o sq =
     [] -> return o
     b:sq' -> evalBinaryMessage o b >>= \r -> evalBinaryMessageSeq r sq'
 
-extendEnvironment :: Env.Env t -> [(Env.Name,t)] -> VM (Env.Env t)
-extendEnvironment e x = if null x then return e else liftIO (Env.env_add_frame x e)
+extendEnvironment :: Env.Env () t -> [(Env.Name,t)] -> VM (Env.Env () t)
+extendEnvironment e x = if null x then return e else liftIO (Env.env_add_frame () x e)
 
 {- | evalBlock works by:
    1. saving the current environment;
@@ -228,7 +228,7 @@ extendEnvironment e x = if null x then return e else liftIO (Env.env_add_frame x
    4. restoring the saved environment;
    5. returning the saved result
 -}
-evalBlock :: Env.Env Object -> St.BlockBody -> [Object] -> VM Object
+evalBlock :: Env.Env () Object -> St.BlockBody -> [Object] -> VM Object
 evalBlock blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries blockStatements) arguments = do
   let blockArguments = fromMaybe [] maybeBlockArguments
   when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
@@ -239,7 +239,7 @@ evalBlock blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries bl
   put currentEnvironment
   return result
 
-evalBlockError :: Env.Env Object -> St.BlockBody -> [St.Identifier] -> [Object] -> VM Object
+evalBlockError :: Env.Env () Object -> St.BlockBody -> [St.Identifier] -> [Object] -> VM Object
 evalBlockError e x keywordNames keywordValues =
   if all (== "value:") keywordNames
   then evalBlock e x keywordValues
@@ -702,7 +702,7 @@ getProgram s h = do
   let s' = s ++ (l ++ "\n")
   if r then getProgram s' h else return s'
 
-replCont :: Env.Env Object -> IO ()
+replCont :: Env.Env () Object -> IO ()
 replCont env = do
   str <- getProgram "" stdin
   (r,env') <- runStateT (runExceptT (evalString str)) env
@@ -710,7 +710,7 @@ replCont env = do
     Left msg -> putStrLn ("error: " ++ msg) >> replCont env
     Right res -> putStrLn ("result: " ++ show res) >> replCont env'
 
-initialEnvironment :: IO (Env.Env Object)
+initialEnvironment :: IO (Env.Env () Object)
 initialEnvironment = Env.env_gen_toplevel coreDict
 
 replInit :: IO ()
