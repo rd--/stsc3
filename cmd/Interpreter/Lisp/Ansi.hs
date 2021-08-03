@@ -1,5 +1,5 @@
 -- | Simple Lisp interpter for Smalltalk expressions in the Ansi Ast.
-module Interpreter.Lisp.Direct where
+module Interpreter.Lisp.Ansi where
 
 import Control.Monad.Except {- mtl -}
 import Control.Monad.State {- mtl -}

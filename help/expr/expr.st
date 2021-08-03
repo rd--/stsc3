@@ -26,21 +26,31 @@ $                                                 "=> $ "
 #'x'                                              "=> hashquoted string (symbol)"
 #'x y'                                            "=> symbol with space character"
 #x                                                "=> unary selector literal"
+#x = #'x'                                         "=> true"
 #x:                                               "=> keyword selector literal"
+#x: = #'x:'                                       "=> true"
 #+                                                "=> binary selector literal"
+#+ = #'+'                                         "=> true"
 #|                                                "=> #|"
-#()                                               "=> ()"
+#| = #'|'                                         "=> true"
+#()                                               "=> empty literal array ; ()"
 #(1)
 #(1.2)
 #('x')
+#(#'x')
+#(#x) = #(#'x')                                   "=> true"
 #(1 2 3)
 #(1.2 3.4 5.6)
 #(#(0 1) #(2 3))
 
 'Pseudo Variables'
-self                                              "this in SuperCollider"
+self                                              "=> nil ; this in SuperCollider"
+self := nil                                       "=> error ; cannot store into"
+super                                             "=> nil"
 true                                              "=> true"
-false                                             "=> true"
+false                                             "=> false"
+nil                                               "=> nil"
+nil := nil                                        "=> error ; cannot store into"
 
 'Assignment'
 a := 24

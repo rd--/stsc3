@@ -59,7 +59,8 @@ executable stsc3
   hs-source-dirs:   cmd
   main-is:          stsc3.hs
   other-modules:    Interpreter.Lisp.Common
-                    Interpreter.Lisp.Direct
+                    Interpreter.Lisp.Ansi
+                    Interpreter.Lisp.Expr
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs
 

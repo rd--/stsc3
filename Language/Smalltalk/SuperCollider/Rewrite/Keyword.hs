@@ -1,8 +1,29 @@
 {- | Keyword parameter re-writing.
 
-     Rewrite Keyword messages to have a single association array as argument.
-     ScDotMessage occurs in ScMessages and in ScBinaryArgument, which occurs in ScMessages.
-     ScMessages occurs in ScBasicExpression.
+There are different ways this could be approached.
+
+For the special case of rewriting UGen graphs to work with stsc3:
+
+Rewrite Keyword messages to have a single association array as argument.
+
+.ar()                    => ar
+.ar(440, 0)              => ar: {440. 0}
+.ar(440, phase: 0)       => ar: {440. #phase -> 0}
+.ar(freq: 440, phase: 0) => at: #ar freq: 440 phase: 0
+
+For the more general case of translating a SuperCollider like notation to a Smalltalk like notation:
+
+Generate Smalltalk methods for each allowed arity with optional signature.
+
+.p()                     => p_0
+.p(q)                    => p_1: nil arg1: q
+.p(q,r)                  => p_2: nil arg1: q arg2: r
+.p(q,r,s)                => p_3: nil arg1: q arg2: r arg3: s
+.p(x:q)                  => p_1: #x: arg1 q
+.p(x:q,y:r)              => p_2: #x:y: arg1 q arg2: r
+
+ScDotMessage occurs in ScMessages and in ScBinaryArgument, which occurs in ScMessages.
+ScMessages occurs in ScBasicExpression.
 -}
 module Language.Smalltalk.SuperCollider.Rewrite.Keyword where
 

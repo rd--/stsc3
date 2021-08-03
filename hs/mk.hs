@@ -23,7 +23,7 @@ ugen =
   ["AllpassN","AmpComp","Amplitude"
   ,"Blip","BLowPass","BPF","BPZ2","BrownNoise"
   ,"Clip","CombC","CombL","CombN","ControlDur","Crackle"
-  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
+  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Diwhite","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"Formant","FSinOsc","FreeVerb"
   ,"Gendy1","GrainFM","GreyholeRaw","GVerb"

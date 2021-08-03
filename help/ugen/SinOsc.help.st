@@ -75,6 +75,9 @@ a := #(0.25 0.25 1 0.8 0.5 0.9 0.4 0.3 0.6 0.1 0.1).
 f := m collect: l.
 Splay input: (SinOsc freq: f * 500 phase: 0 mul: a * 0.05)
 
+"sinOsc ; non-implicit ugen rate"
+SinOsc at: #ar freq: 440 phase: 0 mul: 0.1
+
 "----"
 o := SinOsc freq: 440 phase: 0
 o hash
@@ -83,3 +86,4 @@ o perform: #freq
 o paramNames collect: [:x | o perform: x]
 o class == SinOsc
 o class name == #SinOsc
+o ugenRate == #ar

@@ -39,12 +39,18 @@ Note there are also a and and kr instance methods.
 !
 
 !AbstractUGen methodsFor: 'accessing'!
+  paramNameFromIndex: i
+    "Get parameter name given index. Parameter names are separated into paramNames and mceNames."
+    | n |
+    n := self paramNames size.
+    i > n ifTrue: [^self mceNames at: i - n] ifFalse: [^self paramNames at: i]
+  !
   setParamsFromOrderedDictionary: d
     "Set UGen parameters from an array of either ugen inputs or (name,input) associations."
     d withIndexDo: [:e :i |
       (e class = Association)
         ifTrue: [self perform: e key with: e value]
-        ifFalse: [self instVarNamed: (self paramNames at: i) put: e]]
+        ifFalse: [self instVarNamed: (self paramNameFromIndex: i) put: e]]
   !
 !
 

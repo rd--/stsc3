@@ -3,7 +3,7 @@
 pattern := #(55 63 60 63 57 65 62 65).
 f := [:octave :clockRate :pwmrate :fltrate|
   |sequ tr patternCps sq pwm cf|
-  sequ := [ :s :tr | (Demand trig: tr reset: 0 demandUGens: (Dseq repeats: #dinf list: s)) kr].
+  sequ := [ :s :tr | Demand kr: {tr. 0. Dseq dr: {#dinf. s}}].
   tr := Impulse kr: {clockRate. 0}.
   patternCps := (pattern + (12 * octave)) mce midicps.
   sq := sequ value: patternCps value: tr.
