@@ -18,6 +18,8 @@ module Language.Smalltalk.Ansi where
 
 import Data.Functor.Identity {- base -}
 
+import Data.List.Split {- split -}
+
 import qualified Text.Parsec as P {- parsec -}
 import qualified Text.Parsec.Language as P {- parsec -}
 import qualified Text.Parsec.String as P {- parsec -}
@@ -310,6 +312,10 @@ keywordPattern = do
 
 -- | 3.4.2
 data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
+
+-- | Number of temporaries.
+temporariesLength :: Temporaries -> Int
+temporariesLength (Temporaries x) = length x
 
 -- | Empty Temporaries list.
 emptyTemporaries :: Temporaries
@@ -1196,6 +1202,15 @@ selectorIdentifier s =
     UnarySelector x -> x
     BinarySelector x -> x
     KeywordSelector x -> x
+
+{- | Split KeywordSelector into it's components.
+
+> keywordSelectorElements "freq:" == ["freq:"]
+> keywordSelectorElements "freq:phase:" == ["freq:","phase:"]
+> keywordSelectorElements "" == []
+-}
+keywordSelectorElements :: Identifier -> [Identifier]
+keywordSelectorElements = takeWhile (not . null) . (split . keepDelimsR . onSublist) ":"
 
 {- | Determine arity of selector
 

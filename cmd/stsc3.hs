@@ -15,7 +15,7 @@ import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
-import qualified Interpreter {- stsc3 -}
+import qualified Interpreter.Lisp.Direct {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program.
 st_cat_parsec :: String -> String
@@ -44,10 +44,10 @@ help =
     ]
 
 stsc3_play :: FilePath -> IO ()
-stsc3_play fn = Interpreter.evalSmalltalkFile fn >>= SC3.audition
+stsc3_play fn = Interpreter.Lisp.Direct.evalSmalltalkFile fn >>= SC3.audition
 
 stsc3_draw :: FilePath -> IO ()
-stsc3_draw fn = Interpreter.evalSmalltalkFile fn >>= Dot.draw . SC3.out 0
+stsc3_draw fn = Interpreter.Lisp.Direct.evalSmalltalkFile fn >>= Dot.draw . SC3.out 0
 
 main :: IO ()
 main = do
@@ -55,7 +55,7 @@ main = do
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
-    ["repl"] -> Interpreter.replInit
+    ["repl"] -> Interpreter.Lisp.Direct.replInit
     ["draw",fn] -> stsc3_draw fn
     ["play",fn] -> stsc3_play fn
     ["stop"] -> SC3.withSC3 SC3.reset

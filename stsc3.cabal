@@ -18,7 +18,8 @@ Data-files:         README.md
 library
   build-depends:        array,
                         base >= 4.7 && < 5,
-                        parsec
+                        parsec,
+                        split
   default-language:     Haskell2010
   ghc-options:          -Wall -fwarn-tabs
   build-tool-depends:   alex:alex,
@@ -57,7 +58,8 @@ executable stsc3
                     stsc3
   hs-source-dirs:   cmd
   main-is:          stsc3.hs
-  other-modules:    Interpreter
+  other-modules:    Interpreter.Lisp.Common
+                    Interpreter.Lisp.Direct
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs
 
