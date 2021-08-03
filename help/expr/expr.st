@@ -99,7 +99,6 @@ true | false                                      "=> true"
 
 'Keyword'
 Transcript show: 'text'
-1 to: 5 do: [:x| Transcript cr ; show: x]
 2 max: 3                                          "=> 3"
 1 min: 2 max: 3                                   "=> 3"
 1 min: (2 max: 3)                                 "=> 1"
@@ -236,7 +235,6 @@ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
 self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
 w * ((x + y) z)
 w * (x + y) z
-Transcript show: 'hello '; show: 'world'; cr.
 
 'Unary Messages'
 abs
@@ -247,3 +245,12 @@ value + b value + c value
 abs square + p + q k: r
 abs square + p + q k1: p1 k2: p2
 q r: x
+
+'Cascaded Messages'
+p q ; r ; s ; t
+Transcript show: 'hello'; show: 'world'; cr.      "=> prints hello then world then carriage return"
+Transcript cr ; show: 'newline'; cr.              "=> prints newline on a newline"
+Transcript show: (194 * 9) printString; cr.       "=> prints 1746 then a cr"
+Point new setX: 25 setY: 35; isZero               "=> false"
+1 to: 5 do: [:x| Transcript cr ; show: x]
+OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the new collection"

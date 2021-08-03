@@ -10,10 +10,11 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 -}
 data Message = Message St.Selector [Expr]
 
-{- | A standard functional Expression type.
+{- | A standard applicative Expression type.
      Send replaces Apply.
      Block is named Lambda.
      There are both literal and expression arrays.
+     Sequences (including cascades) are written as Begin.
 -}
 data Expr =
     Identifier St.Identifier
@@ -23,6 +24,8 @@ data Expr =
   | Send Expr Message
   | Lambda [St.BlockArgument] St.Temporaries [Expr]
   | Array [Expr]
+  | Begin [Expr]
+  | Init St.Temporaries [Expr]
 
 primaryExpr :: St.Primary -> Expr
 primaryExpr p =
@@ -79,19 +82,35 @@ keywordMessageExpr e (St.KeywordMessage k) =
 unaryBinaryKeywordMessagesExpr :: Expr -> [St.UnaryMessage] -> [St.BinaryMessage] -> St.KeywordMessage -> Expr
 unaryBinaryKeywordMessagesExpr e u b = keywordMessageExpr (unaryBinaryMessagesExpr e u b)
 
--- | Cascaded message sends not implemented.
+messagesExpr :: Expr -> St.Messages -> Expr
+messagesExpr e m =
+  case m of
+    St.MessagesUnary u Nothing Nothing -> unaryMessagesExpr e u
+    St.MessagesUnary u (Just b) Nothing -> unaryBinaryMessagesExpr e u b
+    St.MessagesUnary u Nothing (Just k) -> unaryKeywordMessagesExpr e u k
+    St.MessagesUnary u (Just b) (Just k) -> unaryBinaryKeywordMessagesExpr e u b k
+    St.MessagesBinary b Nothing -> binaryMessagesExpr e b
+    St.MessagesBinary b (Just k) -> keywordMessageExpr (binaryMessagesExpr e b) k
+    St.MessagesKeyword k -> keywordMessageExpr e k
+
+exprSequence :: [Expr] -> Expr
+exprSequence l =
+  case l of
+    [] -> error "exprSequence: empty"
+    [e] -> e
+    _ -> Begin l
+
 basicExpressionExpr :: St.BasicExpression -> Expr
 basicExpressionExpr (St.BasicExpression p m c) =
-  case (m,c) of
-    (Nothing,Nothing) -> primaryExpr p
-    (Just (St.MessagesUnary u Nothing Nothing),Nothing) -> unaryMessagesExpr (primaryExpr p) u
-    (Just (St.MessagesUnary u (Just b) Nothing),Nothing) -> unaryBinaryMessagesExpr (primaryExpr p) u b
-    (Just (St.MessagesUnary u Nothing (Just k)),Nothing) -> unaryKeywordMessagesExpr (primaryExpr p) u k
-    (Just (St.MessagesUnary u (Just b) (Just k)),Nothing) -> unaryBinaryKeywordMessagesExpr (primaryExpr p) u b k
-    (Just (St.MessagesBinary b Nothing),Nothing) -> binaryMessagesExpr (primaryExpr p) b
-    (Just (St.MessagesBinary b (Just k)),Nothing) -> keywordMessageExpr (binaryMessagesExpr (primaryExpr p) b) k
-    (Just (St.MessagesKeyword k),Nothing) -> keywordMessageExpr (primaryExpr p) k
-    (_,Just _) -> error "cascaded message sends not implemented"
+  let q = case m of
+            Nothing -> primaryExpr p
+            Just m1 -> messagesExpr (primaryExpr p) m1
+      t = case q of
+            Send e _ -> e
+            _ -> q
+  in case c of
+       Nothing -> q
+       Just mList -> exprSequence (q : map (messagesExpr t) mList)
 
 expressionExpr :: St.Expression -> Expr
 expressionExpr e =
@@ -105,3 +124,25 @@ statementsExprList s =
     St.StatementsReturn (St.ReturnStatement e) -> [Return (expressionExpr e)]
     St.StatementsExpression e Nothing -> [expressionExpr e]
     St.StatementsExpression e (Just s') -> expressionExpr e : statementsExprList s'
+
+statementsExpr :: St.Statements -> Expr
+statementsExpr = exprSequence . statementsExprList
+
+smalltalkProgramExpr :: St.SmalltalkProgram -> Expr
+smalltalkProgramExpr x =
+  case x of
+    St.SmalltalkProgram e -> exprSequence (map programElementExpr e)
+
+programElementExpr :: St.ProgramElement -> Expr
+programElementExpr e =
+  case e of
+    St.ProgramGlobal x -> globalDefinitionExpr x
+    St.ProgramInitializer x -> initializerDefinitionExpr x
+
+globalDefinitionExpr :: St.GlobalDefinition -> Expr
+globalDefinitionExpr (St.GlobalDefinition k v) =
+  Assignment k (maybe (Identifier "nil") initializerDefinitionExpr v)
+
+initializerDefinitionExpr :: St.InitializerDefinition -> Expr
+initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
+  Init (maybe St.emptyTemporaries id tmp) (maybe [] statementsExprList stm)

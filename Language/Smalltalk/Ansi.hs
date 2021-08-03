@@ -77,7 +77,7 @@ data SmalltalkProgram =
 
 > p = stParse smalltalkProgram
 > p "" == SmalltalkProgram {programElements = []}
-> p "self ifNil:" -- error?
+> p "self ifNil:" -- ? error
 -}
 smalltalkProgram :: P SmalltalkProgram
 smalltalkProgram = do
@@ -140,6 +140,15 @@ data ClassDefinition =
                   ,classMethods :: [MethodDefinition]
                   ,classInitializer :: Maybe InitializerDefinition}
   deriving (Eq,Show)
+
+{- | The name of the meta class, ie. the class name with a class suffix.
+     Metaclasses do not have separate ClassDefinitions.
+     In Smalltalk the rule is that the class of a metaclass is "Metaclass".
+     This includes the class of "Metaclass class", forming a cycle.
+     This does not arise here since "Metaclass class" does not have a ClassDefinition.
+-}
+classMetaclassName :: ClassDefinition -> Identifier
+classMetaclassName x = className x ++ " class"
 
 -- | "Smalltalk implementations have traditionally open-coded certain
 -- messages including those with the following selectors."
@@ -390,20 +399,20 @@ data BlockBody =
 
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
-> stParse blockBody ""
-> stParse blockBody ":a|" == stParse blockBody ": a|"
-> stParse blockBody ":a :b|" == stParse blockBody ": a : b|"
-> stParse blockBody ":a| |p q r|"
-> stParse blockBody ":a :b| |p q r|"
-> stParse blockBody "|p q r|"
-> stParse blockBody "1"
-> stParse blockBody ":a| a + 1"
-> stParse blockBody ":a| |b| b := a + 1. ^b"
+> p = stParse blockBody
+> p "" == BlockBody Nothing Nothing Nothing
+> p ":a|" == p ": a|"
+> p ":a :b|" == p ": a : b|"
+> p ":a| |p q r|"
+> p ":a :b| |p q r|"
+> p "|p q r|"
+> p "1"
+> p ":a| a + 1"
+> p ":a| |b| b := a + 1. ^b"
 -}
 blockBody :: P BlockBody
 blockBody = do
   a <- P.optionMaybe (P.try (P.many1 blockArgument >>~ verticalBar))
-  P.optional separator -- ?
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
   return (BlockBody a t s)
@@ -413,7 +422,8 @@ type BlockArgument = Identifier
 
 {- | <block argument> ::= ':' identifier
 
-> stParse blockArgument ":a" == stParse blockArgument ": a"
+> p = stParse blockArgument
+> p ":a" == p ": a"
 -}
 blockArgument :: P BlockArgument
 blockArgument = lexeme (P.char ':') >> identifier
@@ -436,7 +446,10 @@ expressionSequenceToStatements stm =
           e0:eN -> StatementsExpression e0 (Just (f eN))
   in f
 
--- | '.' as lexeme (token)
+{- | '.' as lexeme (token)
+
+> stParse period "." == "."
+-}
 period :: P String
 period = P.dot stLexer
 
@@ -566,6 +579,7 @@ basicExpressionToPrimary e =
 > p "w * ((x + y) z)"
 > p "w * (x + y) z"
 > p "Transcript\n \"...\" show: 'hello ';\n show: 'world';\n cr."
+> p "Point new setX: 25 setY: 35; isZero"
 > p "self ifNil:" -- error
 -}
 basicExpression :: P BasicExpression
@@ -575,7 +589,11 @@ basicExpression = do
   c <- cascadedMessages
   return (BasicExpression p m (if null c then Nothing else Just c))
 
--- | <assignment target> := identifier
+{- | <assignment target> := identifier
+
+> p = stParse assignmentTarget
+> p "self" -- ? ; error ; reserved words cannot be assigned to
+-}
 assignmentTarget :: P Identifier
 assignmentTarget = P.label identifier "assignmentTarget"
 
@@ -639,7 +657,6 @@ unaryMessages :: P Messages
 unaryMessages = do
   u <- P.many1 (P.try unaryMessage)
   b <- P.many binaryMessage
-  P.optional separator -- ?
   k <- P.optionMaybe keywordMessage
   return (MessagesUnary u (if null b then Nothing else Just b) k)
 
@@ -668,6 +685,7 @@ binaryMessages = do
 > p "+p +q k:r" == p "+ p + q k: r"
 > p "q r: x" == p "q r:x"
 > p "< 0 ifTrue: [0 - self] ifFalse: [self]" == p "<0ifTrue:[0-self]ifFalse:[self]"
+> p "x perform: #y: with: z" -- error
 -}
 messages :: P Messages
 messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
@@ -732,8 +750,11 @@ binaryArgument = do
 
 {- | <keyword message> ::= (keyword <keyword argument>)+
 
-> stParse keywordMessage "k:p" == stParse keywordMessage "k: p"
-> stParse keywordMessage "k1:p1 k2:p2" == stParse keywordMessage "k1: p1 k2: p2"
+> p = stParse keywordMessage
+> p "k:p" == p "k: p"
+> p "k1:p1 k2:p2" == p "k1: p1 k2: p2"
+> p "k1: #p1:"
+> p "k1: #p1: k2: #p2"
 -}
 keywordMessage :: P KeywordMessage
 keywordMessage = do
@@ -748,13 +769,15 @@ data KeywordArgument =
 
 {- | <keyword argument> ::= <primary> <unary message>* <binary message>*
 
-> stParse keywordArgument "p"
-> stParse keywordArgument "1"
-> stParse keywordArgument "p q"
-> stParse keywordArgument "p q r"
-> stParse keywordArgument "p q r + s"
-> stParse keywordArgument "p q r + s * t"
-> stParse keywordArgument "p k:" -- p
+> p = stParse keywordArgument
+> p "p"
+> p "1"
+> p "p q"
+> p "p q r"
+> p "p q r + s"
+> p "p q r + s * t"
+> p "#m: w:" == p "#m:"
+> p "p k:" == p "p"
 -}
 keywordArgument :: P KeywordArgument
 keywordArgument = do
@@ -803,6 +826,7 @@ data Literal
 > p "$x" == StringLiteral "x"
 > p "#'xyz'" == SymbolLiteral "xyz"
 > p "#abs" == SelectorLiteral (UnarySelector "abs")
+> p "#m:" == SelectorLiteral (KeywordSelector "m:")
 > p "#freq:iphase:" == SelectorLiteral (KeywordSelector "freq:iphase:")
 > p "#+" == SelectorLiteral (BinarySelector "+")
 > p "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
@@ -862,6 +886,7 @@ symbolLiteral = fmap SymbolLiteral hashedString
 selectorLiteral :: P Literal
 selectorLiteral = fmap SelectorLiteral quotedSelector
 
+-- | #( is the start token for literal arrays.
 hashOpenParen :: P String
 hashOpenParen = lexeme (P.string "#(")
 
@@ -871,12 +896,13 @@ closeParen = lexeme (P.char ')')
 {- | 3.4.6.6
      <array literal> ::= '#(' <array element>* ')'
 
-> stParse arrayLiteral "#()" == stParse arrayLiteral "#( )"
-> stParse arrayLiteral "#(1)" == stParse arrayLiteral "#( 1 )"
-> stParse arrayLiteral "#(1 2.0)"
-> stParse arrayLiteral "#(1 2.0 3)"
-> stParse arrayLiteral "#(1 2.0 p)"
-> stParse arrayLiteral "#(1 #(2 3) 4)"
+> p = stParse arrayLiteral
+> p "#()" == p "#( )"
+> p "#(1)" == p "#( 1 )"
+> p "#(1 2.0)"
+> p "#(1 2.0 3)"
+> p "#(1 2.0 true)"
+> p "#(1 #(2 3) 4)"
 -}
 arrayLiteral :: P Literal
 arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
@@ -928,7 +954,11 @@ lowercaseAlphabetic = P.lower
 nonCaseLetter :: P Char
 nonCaseLetter = P.char '_'
 
--- | letter ::= uppercaseAlphabetic | lowercaseAlphabetic | nonCaseLetter | "implementation defined letters"
+{- | letter ::= uppercaseAlphabetic
+              | lowercaseAlphabetic
+              | nonCaseLetter
+              | "implementation defined letters"
+-}
 letter :: P Char
 letter = P.choice [uppercaseAlphabetic, lowercaseAlphabetic, nonCaseLetter]
 
@@ -963,15 +993,38 @@ type ReservedIdentifier = Identifier
 
 {- | One of stReservedIdentifiers
 
-> map (stParse reservedIdentifier) (words "self super nil")
+> p = stParse reservedIdentifier
+> map p (words "self super nil")
+> p "x" -- error
 -}
 reservedIdentifier :: P ReservedIdentifier
 reservedIdentifier = lexeme (P.choice (map (P.try . P.string) stReservedIdentifiers))
 
 type OrdinaryIdentifier = String
 
+{- | An identifier that is not a reserved identifier
+
+> p = stParse ordinaryIdentifier
+> p "self" -- error
+> p "x" == "x"
+> p "x_" == "x_"
+> p "x0" == "x0"
+-}
 ordinaryIdentifier :: P OrdinaryIdentifier
 ordinaryIdentifier = P.identifier stLexer
+
+{- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
+
+> p = stParse ordinaryIdentifierNonLexeme
+> p "x" == "x"
+> p "self" -- error
+-}
+ordinaryIdentifierNonLexeme :: P OrdinaryIdentifier
+ordinaryIdentifierNonLexeme = do
+  c0 <- P.letter
+  cN <- P.many (P.letter P.<|> P.digit)
+  let token = c0 : cN
+  if token `elem` stReservedIdentifiers then P.unexpected "reserverdIdentifier" else return (c0 : cN)
 
 type Identifier = String
 
@@ -983,26 +1036,41 @@ type Identifier = String
 > stParse identifier "" -- FAIL
 > stParse identifier "true" == "true"
 > stParse identifier "nil" == "nil"
+> stParse identifier "y:" == "y"
+> stParse identifier "#y:" -- error
 -}
 identifier :: P Identifier
 identifier = ordinaryIdentifier P.<|> reservedIdentifier
 
 -- * 3.5.4
 
--- | An identifier ending with a colon.
+{- | An identifier ending with a colon.
+
+Keywords are identifiers followed immediately by the colon
+character. An unadorned identifier is an identifier which is not
+immediately preceded by a '#'. If a ':' followed by an '=' immediately
+follows an unadorned identifier, with no intervening white space, then
+the token is to be parsed as an identifier followed by an
+assignmentOperator not as an keyword followed by an '='.
+-}
 type Keyword = Identifier
+
+keywordNotLexeme :: P Keyword
+keywordNotLexeme = do
+  cs <- P.label ordinaryIdentifierNonLexeme "keyword"
+  c <- P.label (P.char ':') "keyword"
+  return (cs ++ [c])
 
 {- | keyword ::= identifier ':'
 
-> stParse keyword "kw:" == "kw:"
-> stParse keyword "kw" -- FAIL
+> p = stParse keyword
+> p "kw:" == "kw:"
+> p "self:" -- error ?
+> p "kw :" -- error
+> p "kw" -- error
 -}
 keyword :: P Keyword
-keyword = do
-  cs <- P.label identifier "keyword"
-  c <- P.label (P.char ':') "keyword"
-  P.optional separator -- lexeme
-  return (cs ++ [c])
+keyword = lexeme keywordNotLexeme
 
 -- * 3.5.5
 
@@ -1075,11 +1143,12 @@ quotedString = P.label (P.between stringDelimiter (lexeme stringDelimiter) strin
 
 {- | stringBody ::= (nonStringDelimiter | (stringDelimiter stringDelimiter)*)
 
-> stParse stringBody "" == ""
-> stParse stringBody "x" == "x"
-> stParse stringBody "''" == "'"
-> stParse stringBody "x''y" = "x'y"
-> stParse stringBody "x'" -- ?
+> p = stParse stringBody
+> p "" == ""
+> p "x" == "x"
+> p "''" == "'" -- ?
+> p "x''y" == "x'y"
+> p "x'" == "x"
 -}
 stringBody :: P String
 stringBody = P.many (nonStringDelimiter P.<|> P.try (stringDelimiter >>~ stringDelimiter))
@@ -1141,12 +1210,13 @@ selectorArity s =
 
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
-> stParse quotedSelector "#abs" == UnarySelector "abs"
-> stParse quotedSelector "#freq:" == KeywordSelector "freq:"
-> stParse quotedSelector "#freq:iphase:" == KeywordSelector "freq:iphase:"
-> stParse quotedSelector "#+" == BinarySelector "+"
-> stParse quotedSelector "#+:" -- FAIL?
-> stParse quotedSelector "#+x" -- FAIL?
+> p = stParse quotedSelector
+> p "#abs" == UnarySelector "abs"
+> p "#freq:" == KeywordSelector "freq:"
+> p "#freq:iphase:" == KeywordSelector "freq:iphase:"
+> p "#+" == BinarySelector "+"
+> p "#+:" == p "#+" -- ?
+> p "#+x" == p "#+" -- ?
 -}
 quotedSelector :: P Selector
 quotedSelector =
@@ -1155,12 +1225,14 @@ quotedSelector =
 
 {- | keywordSelector ::= keyword+
 
-> stParse keywordSelector "freq:" == KeywordSelector "freq:"
-> stParse keywordSelector "freq:iphase:" == KeywordSelector "freq:iphase:"
-> stParse keywordSelector "freq:iphase:x" -- error
+> p = stParse keywordSelector
+> p "freq:" == KeywordSelector "freq:"
+> p "freq:iphase:" == KeywordSelector "freq:iphase:"
+> p "p: q:" == KeywordSelector "p:"
+> p "freq:iphase:x" -- error
 -}
 keywordSelector :: P Selector
-keywordSelector = fmap (KeywordSelector . concat) (P.many1 keyword) P.<?> "keywordSelector"
+keywordSelector = fmap (KeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
 
 -- * 3.5.11
 
