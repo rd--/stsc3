@@ -264,6 +264,9 @@ patternSelector pat =
 methodSelector :: MethodDefinition -> Selector
 methodSelector (MethodDefinition p _ _) = patternSelector p
 
+methodSignature :: MethodDefinition -> Identifier
+methodSignature = selectorIdentifier . methodSelector
+
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
 > p = stParse messagePattern
