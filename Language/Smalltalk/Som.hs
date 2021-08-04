@@ -14,17 +14,27 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 > parseSomClassDefinition "\"Set class definition\" Set = Object (|items|)"
 > parseSomClassDefinition "\"Object class definition\" Object = nil ()"
+> parseSomClassDefinition "\"Object class definition\" Class = ()"
 -}
 parseSomClassDefinition :: String -> St.ClassDefinition
 parseSomClassDefinition = St.stParse classDefinition
 
--- | Class definition
+{- | Class definition.
+     In Som if the superclassName is not specified it is "Object".
+     In Som the end of the class chain is indicated by "nil".
+     For Ansi "nil" becomes Nothing and empty becomes "Object".
+-}
 classDefinition :: St.P St.ClassDefinition
 classDefinition = do
   P.optional St.separator
   className <- St.identifier
   _ <- equalSign
-  superclassName <- P.optionMaybe St.identifier
+  somSuperclassName <- P.optionMaybe St.identifier
+  let superclassName =
+        case somSuperclassName of
+          Just "nil" -> Nothing
+          Nothing -> Just "Object"
+          _ -> somSuperclassName
   (instanceVariableNames,instanceMethods,classVariableNames,classMethods) <- St.inParentheses classBody
   return (St.ClassDefinition
           className

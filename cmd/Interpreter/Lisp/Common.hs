@@ -36,12 +36,12 @@ data Object t
   | UGenClassObject Name DB.U
   | UGenObject SC3.UGen
   | SymbolObject String -- ^ There is no separate string type.
-  | BlockObject (Env.Env () (Object t)) t
+  | BlockObject (Env.Env Name (Object t)) t
 
 -- | VM is simply an environment.
-type VM o t = Env.EnvMonad () IO (Object o) t
+type VM o t = Env.EnvMonad IO Name (Object o) t
 
-type EvalBlock t = Env.Env () (Object t) -> t -> [Object t] -> VM t (Object t)
+type EvalBlock t = Env.Env Name (Object t) -> t -> [Object t] -> VM t (Object t)
 
 ugenShow :: SC3.UGen -> String
 ugenShow x =
@@ -89,7 +89,7 @@ objectToSymbol o =
     _ -> throwError "objectToSymbol: Object not symbol"
 
 -- | Object to Block
-objectToBlock :: Object t -> VM t (Env.Env () (Object t),t)
+objectToBlock :: Object t -> VM t (Env.Env Name (Object t),t)
 objectToBlock o =
   case o of
     BlockObject e x -> return (e,x)
@@ -146,11 +146,11 @@ literalToObject l =
 -- | Add temporaries as single frame to environment, initialised to nil.
 evalTemporaries :: St.Temporaries -> VM t ()
 evalTemporaries (St.Temporaries x) =
-  put =<< liftIO . Env.env_add_frame () (zip x (repeat NilObject)) =<< get
+  put =<< liftIO . Env.envAddFrameFromList (zip x (repeat NilObject)) =<< get
 
 -- | Delete frame and return input value.
 deleteFrame :: r -> VM t r
-deleteFrame r = (put =<< Env.env_del_frame =<< get) >> return r
+deleteFrame r = (put =<< Env.envDeleteFrame =<< get) >> return r
 
 isCapitalised :: String -> Bool
 isCapitalised x =
@@ -168,10 +168,10 @@ lookupIdentifier x =
   then return (UGenClassObject x (DB.u_lookup_cs_err x))
   else if isCapitalised x
        then return (ClassObject x)
-       else get >>= \e -> Env.env_lookup x e
+       else get >>= \e -> Env.envLookup x e
 
-extendEnvironment :: Env.Env () e -> [(Env.Name,e)] -> VM t (Env.Env () e)
-extendEnvironment e x = if null x then return e else liftIO (Env.env_add_frame () x e)
+extendEnvironment :: Env.Env Name e -> [(Name,e)] -> VM t (Env.Env Name e)
+extendEnvironment e x = if null x then return e else liftIO (Env.envAddFrameFromList x e)
 
 genUId :: VM t SC3.UGenId
 genUId = do
@@ -536,7 +536,7 @@ envSine p1 p2 = do
   u2 <- objectToUGen p2
   return (UGenObject (SC3.envelope_to_ugen (SC3.envSine u1 u2)))
 
-coreDict :: Env.Dict (Object t)
+coreDict :: Env.Dict Name (Object t)
 coreDict =
   Map.fromList
   [("true",UGenObject (SC3.int_to_ugen 1))
@@ -549,5 +549,5 @@ getProgram s h = do
   let s' = s ++ (l ++ "\n")
   if r then getProgram s' h else return s'
 
-initialEnvironment :: IO (Env.Env () (Object t))
-initialEnvironment = Env.env_gen_toplevel coreDict
+initialEnvironment :: IO (Env.Env Name (Object t))
+initialEnvironment = Env.envNewFrom coreDict

@@ -7,15 +7,15 @@ Object subclass: #AbstractUGen
 
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
-"
-Support for SuperCollider type class instantiation.
-Note there are also a and and kr instance methods.
-"
 !AbstractUGen class methodsFor: 'instance creation'!
   ar
     ^self new ugenRate: #ar
   !
   ar: d
+    "
+    Support for SuperCollider type class instantiation.
+    Note there are also ar and and kr instance methods.
+    "
     ^self ar setParamsFromOrderedDictionary: d
   !
   kr

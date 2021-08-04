@@ -38,7 +38,7 @@ evalAssignment :: St.Identifier -> Expr.Expr -> VMExpr ObjectExpr
 evalAssignment lhs rhs = do
   env <- get
   rhsValue <- evalExpr rhs
-  liftIO (Env.env_set env lhs rhsValue)
+  liftIO (Env.envSet env lhs rhsValue)
   return NilObject
 
 evalSend :: Expr.Expr -> Expr.Message -> VMExpr ObjectExpr
@@ -87,7 +87,7 @@ evalUnaryMessage o m =
    4. restoring the saved environment;
    5. returning the saved result
 -}
-evalBlock :: Env.Env () ObjectExpr -> Proc -> [ObjectExpr] -> VMExpr ObjectExpr
+evalBlock :: Env.Env Name ObjectExpr -> Proc -> [ObjectExpr] -> VMExpr ObjectExpr
 evalBlock blockEnvironment (blockArguments, blockTemporaries, blockStatements) arguments = do
   when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
   extendedBlockEnvironment <- extendEnvironment blockEnvironment (zip blockArguments arguments)
@@ -107,7 +107,7 @@ evalTemporariesStatements tm st = do
 evalString :: String -> VMExpr ObjectExpr
 evalString txt = evalExpr (Expr.smalltalkProgramExpr (St.stParse St.smalltalkProgram txt))
 
-replCont :: Env.Env () ObjectExpr -> IO ()
+replCont :: Env.Env Name ObjectExpr -> IO ()
 replCont env = do
   str <- getProgram "" stdin
   (r,env') <- runStateT (runExceptT (evalString str)) env

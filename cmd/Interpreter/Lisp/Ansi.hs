@@ -38,7 +38,7 @@ evalAssignment :: St.Assignment -> VMAnsi ObjectAnsi
 evalAssignment (St.Assignment lhs rhs) = do
   env <- get
   rhsValue <- evalExpression rhs
-  liftIO (Env.env_set env lhs rhsValue)
+  liftIO (Env.envSet env lhs rhsValue)
   return NilObject
 
 evalBinaryArgument :: St.BinaryArgument -> VMAnsi ObjectAnsi
@@ -63,7 +63,7 @@ evalBinaryMessageSeq o sq =
    4. restoring the saved environment;
    5. returning the saved result
 -}
-evalBlock :: Env.Env () ObjectAnsi -> St.BlockBody -> [ObjectAnsi] -> VMAnsi ObjectAnsi
+evalBlock :: Env.Env Name ObjectAnsi -> St.BlockBody -> [ObjectAnsi] -> VMAnsi ObjectAnsi
 evalBlock blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries blockStatements) arguments = do
   let blockArguments = fromMaybe [] maybeBlockArguments
   when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
@@ -177,7 +177,7 @@ evalString txt = do
   let St.SmalltalkProgram [st] = St.stParse St.smalltalkProgram txt
   evalProgramElement st
 
-replCont :: Env.Env () ObjectAnsi -> IO ()
+replCont :: Env.Env Name ObjectAnsi -> IO ()
 replCont env = do
   str <- getProgram "" stdin
   (r,env') <- runStateT (runExceptT (evalString str)) env
