@@ -143,6 +143,9 @@ data ClassDefinition =
                   ,classInitializer :: Maybe InitializerDefinition}
   deriving (Eq,Show)
 
+metaclassName :: Identifier -> Identifier
+metaclassName x = x ++ " class"
+
 {- | The name of the meta class, ie. the class name with a class suffix.
      Metaclasses do not have separate ClassDefinitions.
      In Smalltalk the rule is that the class of a metaclass is "Metaclass".
@@ -150,7 +153,7 @@ data ClassDefinition =
      This does not arise here since "Metaclass class" does not have a ClassDefinition.
 -}
 classMetaclassName :: ClassDefinition -> Identifier
-classMetaclassName x = className x ++ " class"
+classMetaclassName = metaclassName . className
 
 -- | "Smalltalk implementations have traditionally open-coded certain
 -- messages including those with the following selectors."
@@ -261,9 +264,11 @@ patternSelector pat =
     BinaryPattern b _ -> BinarySelector b
     KeywordPattern kp -> KeywordSelector (concatMap fst kp)
 
+-- | Derive method selector from definition.
 methodSelector :: MethodDefinition -> Selector
 methodSelector (MethodDefinition p _ _) = patternSelector p
 
+-- | Untyped identifier for method selector.
 methodSignature :: MethodDefinition -> Identifier
 methodSignature = selectorIdentifier . methodSelector
 
@@ -1235,6 +1240,7 @@ selectorArity s =
 > p "#+" == BinarySelector "+"
 > p "#+:" == p "#+" -- ?
 > p "#+x" == p "#+" -- ?
+> p "#'class'" -- error
 -}
 quotedSelector :: P Selector
 quotedSelector =

@@ -206,6 +206,12 @@ SinOsc inspect.
 SinOsc class inspect.
 SinOsc new inspect.
 
+True class superclass = True superclass class "=> true"
+Object superclass = nil                       "=> true ; GNU "
+Object class superclass = Class               "=> true ; GNU"
+Object superclass = ProtoObject               "=> true ; Squeak"
+ProtoObject class superclass = Class          "=> true ; Squeak"
+
 "Morph"
 
 menu := PopUpMenu labelArray: #('circle' 'oval' 'square' 'rectangle' 'triangle') lines: #(2 4).

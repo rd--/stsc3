@@ -34,6 +34,7 @@ $                                                 "=> $ "
 #|                                                "=> #|"
 #| = #'|'                                         "=> true"
 #()                                               "=> empty literal array ; ()"
+#() = #()                                         "=> true"
 #(1)
 #(1.2)
 #('x')
@@ -165,6 +166,7 @@ w * ((x + y) z)
 
 'Blocks'
 []
+[] = []                                           "=> false"
 [:x| y]
 [:x| |y| z]
 [SinOsc freq: 440 phase: 0 mul: 0.1]
