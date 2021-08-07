@@ -217,6 +217,13 @@ data MethodDefinition =
   MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
+-- | Does MethodDefinition end with a Return (local).
+methodDefinitionHasReturn :: MethodDefinition -> Bool
+methodDefinitionHasReturn x =
+  case x of
+    MethodDefinition _ _ Nothing -> False
+    MethodDefinition _ _ (Just s) -> statementsHasReturn s
+
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
 > p = stParse methodDefinition
@@ -263,6 +270,17 @@ patternSelector pat =
     UnaryPattern u -> UnarySelector u
     BinaryPattern b _ -> BinarySelector b
     KeywordPattern kp -> KeywordSelector (concatMap fst kp)
+
+{- | Derive argument list from Pattern.
+
+> map patternArguments [UnaryPattern "x",BinaryPattern "+" "x",KeywordPattern [("x:","p"),("y:","q")]]
+-}
+patternArguments :: Pattern -> [Identifier]
+patternArguments pat =
+  case pat of
+    UnaryPattern _ -> []
+    BinaryPattern _ p -> [p]
+    KeywordPattern kp -> map snd kp
 
 -- | Derive method selector from definition.
 methodSelector :: MethodDefinition -> Selector
@@ -411,6 +429,13 @@ data BlockBody =
   BlockBody (Maybe [BlockArgument]) (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
+-- | Does BlockBody end with a Return (non-local).
+blockBodyHasReturn :: BlockBody -> Bool
+blockBodyHasReturn x =
+  case x of
+    BlockBody _ _ Nothing -> False
+    BlockBody _ _ (Just s) -> statementsHasReturn s
+
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
 > p = stParse blockBody
@@ -449,6 +474,14 @@ data Statements
   = StatementsReturn ReturnStatement
   | StatementsExpression Expression (Maybe Statements)
   deriving (Eq,Show)
+
+-- | Does Statements end with a Return?
+statementsHasReturn :: Statements -> Bool
+statementsHasReturn x =
+  case x of
+    StatementsReturn _ -> True
+    StatementsExpression _ Nothing -> False
+    StatementsExpression _ (Just x') -> statementsHasReturn x'
 
 -- | Prepend a list of expressions, as statements, to an existing statement.
 expressionSequenceToStatements :: Maybe Statements -> [Expression] -> Statements

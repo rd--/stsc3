@@ -34,9 +34,9 @@ exprPrint expr =
     Lambda a (St.Temporaries t) e ->
       let x = unwords (map exprPrint e)
       in case (a,t) of
-           ([],[]) -> printf "(\\ %s)" x
-           (_,[]) -> printf "(\\ (: %s) %s)" (unwords a) x
-           _ -> printf "(\\ (: %s) (| %s) %s)" (unwords a) (unwords t) x
+        ([],[]) -> printf "(\\ %s)" x
+        (_,[]) -> printf "(\\ (: %s) %s)" (unwords a) x
+        _ -> printf "(\\ (: %s) (| %s) %s)" (unwords a) (unwords t) x
     Array e -> printf "(%% %s)" (unwords (map exprPrint e))
     Begin e ->
       case e of

@@ -14,7 +14,8 @@ data Message =
 
 {- | A standard applicative Expression type.
      Send replaces Apply.
-     Block is named Lambda.
+     Block and Method bodies are written as Lambda.
+     Block and Method returns are both written as Return.
      There are both literal and expression arrays.
      Sequences (including cascades) are written as Begin.
 -}
@@ -22,9 +23,9 @@ data Expr =
     Identifier St.Identifier
   | Literal St.Literal
   | Assignment St.Identifier Expr
-  | Return Expr
+  | Return Expr -- ^ Block (non local) or Method (local) return.
   | Send Expr Message
-  | Lambda [St.BlockArgument] St.Temporaries [Expr]
+  | Lambda [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body.
   | Array [Expr]
   | Begin [Expr]
   | Init St.Temporaries [Expr]
@@ -40,11 +41,18 @@ primaryExpr p =
     St.PrimaryArrayExpression x -> Array (map basicExpressionExpr x)
 
 blockBodyExpr :: St.BlockBody -> Expr
-blockBodyExpr (St.BlockBody a t s) =
+blockBodyExpr (St.BlockBody arg tmp stm) =
   Lambda
-  (maybe [] id a)
-  (maybe St.emptyTemporaries id t)
-  (maybe [] statementsExprList s)
+  (maybe [] id arg)
+  (maybe St.emptyTemporaries id tmp)
+  (maybe [] (statementsExprList Return) stm)
+
+methodDefinitionExpr :: St.MethodDefinition -> Expr
+methodDefinitionExpr (St.MethodDefinition pat tmp stm) =
+  Lambda
+  (St.patternArguments pat)
+  (maybe St.emptyTemporaries id tmp)
+  (maybe [] (statementsExprList Return) stm)
 
 unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
 unaryMessagesExpr e u =
@@ -121,15 +129,16 @@ expressionExpr e =
      St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
      St.ExprBasic e' -> basicExpressionExpr e'
 
-statementsExprList :: St.Statements -> [Expr]
-statementsExprList s =
+-- | The returnForm is to allow for distinct MethodReturn and BlockReturn nodes (unused).
+statementsExprList :: (Expr -> Expr) -> St.Statements -> [Expr]
+statementsExprList returnForm s =
   case s of
-    St.StatementsReturn (St.ReturnStatement e) -> [Return (expressionExpr e)]
+    St.StatementsReturn (St.ReturnStatement e) -> [returnForm (expressionExpr e)]
     St.StatementsExpression e Nothing -> [expressionExpr e]
-    St.StatementsExpression e (Just s') -> expressionExpr e : statementsExprList s'
+    St.StatementsExpression e (Just s') -> expressionExpr e : statementsExprList returnForm s'
 
-statementsExpr :: St.Statements -> Expr
-statementsExpr = exprSequence . statementsExprList
+statementsExpr :: (Expr -> Expr) -> St.Statements -> Expr
+statementsExpr returnForm = exprSequence . statementsExprList returnForm
 
 smalltalkProgramExpr :: St.SmalltalkProgram -> Expr
 smalltalkProgramExpr x =
@@ -148,4 +157,4 @@ globalDefinitionExpr (St.GlobalDefinition k v) =
 
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr
 initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
-  Init (maybe St.emptyTemporaries id tmp) (maybe [] statementsExprList stm)
+  Init (maybe St.emptyTemporaries id tmp) (maybe [] (statementsExprList (\_ -> error "Illegal return")) stm)

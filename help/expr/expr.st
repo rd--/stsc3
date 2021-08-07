@@ -109,7 +109,7 @@ true | false                                      "=> true"
 {p + q. r s: t. u v}
 
 'Keyword'
-Transcript show: 'text'
+Transcript show: 'text'                           "=> prints text (no newline)"
 2 max: 3                                          "=> 3"
 1 min: 2 max: 3                                   "=> 3"
 1 min: (2 max: 3)                                 "=> 1"
@@ -202,6 +202,7 @@ p. q.
 ^p
 ^a value + b value + c value
 ^self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
+[[^0] value. Transcript show: 'x'] value
 
 'Method block body'
 440 * (2 ** ((self - 69) * (1 / 12)))
@@ -260,9 +261,14 @@ q r: x
 
 'Cascaded Messages'
 p q ; r ; s ; t
+(1 + 3 ; + 3) = 4                                 "=> true"
 Transcript show: 'hello'; show: 'world'; cr.      "=> prints hello then world then carriage return"
 Transcript cr ; show: 'newline'; cr.              "=> prints newline on a newline"
 Transcript show: (194 * 9) printString; cr.       "=> prints 1746 then a cr"
 Point new setX: 25 setY: 35; isZero               "=> false"
 1 to: 5 do: [:x| Transcript cr ; show: x]
 OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the new collection"
+
+'Integer'
+1 to: 5 do: [:x| x println]                       "=> print 1 to 5"
+1 to: 5 do: [:x| Transcript show: x]              "=> print 1 to 5"
