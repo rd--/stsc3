@@ -212,6 +212,8 @@ Object class superclass = Class               "=> true ; GNU"
 Object superclass = ProtoObject               "=> true ; Squeak"
 ProtoObject class superclass = Class          "=> true ; Squeak"
 
+$c class = Character                          "=> true"
+
 "Morph"
 
 menu := PopUpMenu labelArray: #('circle' 'oval' 'square' 'rectangle' 'triangle') lines: #(2 4).

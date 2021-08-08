@@ -1237,6 +1237,7 @@ data Selector
   | KeywordSelector Identifier
   deriving (Eq, Show)
 
+-- | Identifier of Selector
 selectorIdentifier :: Selector -> Identifier
 selectorIdentifier s =
   case s of

@@ -101,6 +101,7 @@ true | false                                      "=> true"
 2 ** 3 = 8                                        "=> true"
 7 // 3                                            "=> 2"
 -37.0 / 4.0 = -9.25                               "=> true"
+$c class = Character                              "=> true"
 
 'Array Expressions'
 {1. 2}                                            "=> (1 2)"
