@@ -46,6 +46,7 @@ classDefinition = do
           instanceMethods
           classMethods
           Nothing
+          Nothing
           Nothing)
 
 -- | Instance fields and methods, optionally class fields and methods.

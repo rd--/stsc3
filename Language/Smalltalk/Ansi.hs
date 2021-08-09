@@ -141,6 +141,7 @@ data ClassDefinition =
                   ,instanceMethods :: [MethodDefinition]
                   ,classMethods :: [MethodDefinition]
                   ,classInitializer :: Maybe InitializerDefinition
+                  ,classCategory :: Maybe String -- non-Ansi
                   ,classComment :: Maybe String} -- non-Ansi
   deriving (Eq,Show)
 
@@ -218,7 +219,10 @@ type MethodCategory = String
 
 -- | 3.4.2
 data MethodDefinition =
-  MethodDefinition (Maybe MethodCategory) Pattern (Maybe Temporaries) (Maybe Statements)
+  MethodDefinition {methodCategory :: Maybe MethodCategory
+                   ,methodPattern :: Pattern
+                   ,methodTemporaries :: Maybe Temporaries
+                   ,methodStatements :: Maybe Statements}
   deriving (Eq,Show)
 
 -- | Does MethodDefinition end with a Return (local).
