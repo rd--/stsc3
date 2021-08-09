@@ -140,7 +140,8 @@ data ClassDefinition =
                   ,importedPoolNames :: [Identifier]
                   ,instanceMethods :: [MethodDefinition]
                   ,classMethods :: [MethodDefinition]
-                  ,classInitializer :: Maybe InitializerDefinition}
+                  ,classInitializer :: Maybe InitializerDefinition
+                  ,classComment :: Maybe String} -- non-Ansi
   deriving (Eq,Show)
 
 metaclassName :: Identifier -> Identifier
@@ -212,17 +213,20 @@ nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 
 -- * 3.4.2
 
+-- | Method category (non-Ansi)
+type MethodCategory = String
+
 -- | 3.4.2
 data MethodDefinition =
-  MethodDefinition Pattern (Maybe Temporaries) (Maybe Statements)
+  MethodDefinition (Maybe MethodCategory) Pattern (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
 -- | Does MethodDefinition end with a Return (local).
 methodDefinitionHasReturn :: MethodDefinition -> Bool
 methodDefinitionHasReturn x =
   case x of
-    MethodDefinition _ _ Nothing -> False
-    MethodDefinition _ _ (Just s) -> statementsHasReturn s
+    MethodDefinition _ _ _ Nothing -> False
+    MethodDefinition _ _ _ (Just s) -> statementsHasReturn s
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -247,7 +251,7 @@ methodDefinition = do
   p <- messagePattern
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (MethodDefinition p t s)
+  return (MethodDefinition Nothing p t s)
 
 data Pattern
   = UnaryPattern Identifier
@@ -284,7 +288,7 @@ patternArguments pat =
 
 -- | Derive method selector from definition.
 methodSelector :: MethodDefinition -> Selector
-methodSelector (MethodDefinition p _ _) = patternSelector p
+methodSelector (MethodDefinition _ p _ _) = patternSelector p
 
 -- | Untyped identifier for method selector.
 methodSignature :: MethodDefinition -> Identifier
@@ -650,7 +654,7 @@ data Primary
   | PrimaryLiteral Literal
   | PrimaryBlock BlockBody
   | PrimaryExpression Expression
-  | PrimaryArrayExpression [BasicExpression] -- NON-ANSI
+  | PrimaryArrayExpression [BasicExpression] -- non-Ansi
   deriving (Eq, Show)
 
 -- | 3.4.5.3 Messages

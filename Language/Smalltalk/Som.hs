@@ -45,6 +45,7 @@ classDefinition = do
           []
           instanceMethods
           classMethods
+          Nothing
           Nothing)
 
 -- | Instance fields and methods, optionally class fields and methods.
@@ -73,7 +74,7 @@ methodDefinition = do
   p <- St.messagePattern
   _ <- equalSign
   MethodBlock t s <- primitive P.<|> St.inParentheses methodBlock
-  return (St.MethodDefinition p t s)
+  return (St.MethodDefinition Nothing p t s)
 
 -- | Method block.  Arguments are given by the methodPattern.
 data MethodBlock =
@@ -104,6 +105,7 @@ somMethodIsPrimitive :: St.MethodDefinition -> Bool
 somMethodIsPrimitive m =
   case m of
     St.MethodDefinition
+      _
       _
       Nothing
       (Just (St.StatementsExpression

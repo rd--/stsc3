@@ -425,3 +425,8 @@ FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
 '/home/rohan/sw/stsc3/help/graph/tw-tw-01.st' evalFile play.
 
 SC3 reset.
+
+"Blocks"
+| factorial |
+factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
+(1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
