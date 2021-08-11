@@ -39,7 +39,6 @@ evalAssignment lhs rhs = do
   env <- get
   rhsValue <- evalExpr rhs
   liftIO (Env.envSet env lhs rhsValue)
-  return NilObject
 
 evalSend :: Expr.Expr -> Expr.Message -> VMExpr ObjectExpr
 evalSend rcv (Expr.Message msg arg) = do

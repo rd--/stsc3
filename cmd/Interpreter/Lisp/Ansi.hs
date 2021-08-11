@@ -39,7 +39,6 @@ evalAssignment (St.Assignment lhs rhs) = do
   env <- get
   rhsValue <- evalExpression rhs
   liftIO (Env.envSet env lhs rhsValue)
-  return NilObject
 
 evalBinaryArgument :: St.BinaryArgument -> VMAnsi ObjectAnsi
 evalBinaryArgument (St.BinaryArgument p u) =

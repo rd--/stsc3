@@ -130,6 +130,8 @@ MessageNames openMessageNames. "open Message Names tool"
 10 arraySeries: 0 step: 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
 5 arrayGeom: 1 grow: 3 "=> (1 3 9 27 81)"
 
+({1. 2. 3} at: 2 put: -2) == -2 true              "=> true (at:put: returns the element put)"
+
 "Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*
@@ -145,6 +147,11 @@ MessageNames openMessageNames. "open Message Names tool"
 "Strings"
 
 'file' , '.ext' = 'file.ext'. "=> true"
+'\n' "=> '\n'"
+'\\n' "=> '\\n'"
+'\0' "=> '\0'"
+'
+x' "=> newline x"
 
 "Symbols"
 
@@ -213,6 +220,10 @@ Object superclass = ProtoObject               "=> true ; Squeak"
 ProtoObject class superclass = Class          "=> true ; Squeak"
 
 $c class = Character                          "=> true"
+
+1 perform: #class withArguments: #() "=> SmallInteger"
+1 perform: #class withArguments: #() inSuperclass: SmallInteger "=> SmallInteger"
+1 perform: #class withArguments: #() inSuperclass: Integer "=> SmallInteger"
 
 "Morph"
 

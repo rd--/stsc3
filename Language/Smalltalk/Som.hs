@@ -132,3 +132,55 @@ separator = St.lexeme (P.string "----" St.>>~ P.many (P.char '-'))
 -- | Not a token in St.
 equalSign :: St.P Char
 equalSign = St.lexeme (P.char '=')
+
+-- * Strings
+
+{- | Escape characters (beyond '') are not specified in the Ansi document.
+     This parser scans two character escape codes into the single character they represent.
+     Som requires the following:
+
+     \t   a tab character
+     \b   a backspace character
+     \n   a newline character
+     \r   a carriage return character
+     \f   a formfeed character
+     \'   a single quote character
+     \\   backslash character
+     \0   zero byte character
+
+> p = St.stParse escapedChar
+> p "\\n" == '\n'
+> p "\\0" == '\0'
+-}
+escapedChar :: St.P Char
+escapedChar = do
+  d <- P.char '\\'
+  c <- P.oneOf "tbnrf'\\0"
+  return (read ['\'',d,c,'\''])
+
+{- | Any character that is not one of the characters that are escaped at escapedChar.
+     Som also requires that newlines be allowed in strings, so these are excluded.
+
+> p = St.stParse nonEscapedChar
+> p "x" == 'x'
+> p "\n" == "\n"
+-}
+nonEscapedChar :: St.P Char
+nonEscapedChar = P.noneOf "\t\b\r\f'\\\0"
+
+-- | Either an escaped or a non-escaped character.
+stringCharacter :: St.P Char
+stringCharacter = nonEscapedChar P.<|> escapedChar
+
+{- | Parse an escaped string body.
+
+> p = St.stParse escapedStringBody
+> p "\\n" == "\n"
+> p "x\\'" == "x'"
+-}
+escapedStringBody :: St.P String
+escapedStringBody = P.many stringCharacter
+
+-- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
+somEscapedString :: String -> String
+somEscapedString = St.stParse escapedStringBody

@@ -1,7 +1,7 @@
 'Comments'
 x                                                 "x"
 nil                                               "()"
-[]                                                "\n"
+[]                                                "\n '"
 
 'Identifiers'
 p
@@ -273,3 +273,15 @@ OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the n
 'Integer'
 1 to: 5 do: [:x| x println]                       "=> print 1 to 5"
 1 to: 5 do: [:x| Transcript show: x]              "=> print 1 to 5"
+1 to: 10 do: [:x| 5 atRandom println
+
+'String'
+'text' isLetters = true                           "=> true"
+'0123' isDigits = true                            "=> true"
+'    ' isWhiteSpace = true                        "=> true"
+('string' substringFrom: 2 to: 4) = 'tri'         "=> true"
+self assert: 1 equals: '\\' length
+self assert: '\0' equals: '\0'
+
+'Vector'
+((1,2,3) instVarAt: 2 put: 4) = 4                  "=> true"

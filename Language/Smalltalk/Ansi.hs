@@ -145,6 +145,7 @@ data ClassDefinition =
                   ,classComment :: Maybe String} -- non-Ansi
   deriving (Eq,Show)
 
+-- | A Metaclass name is the class name with ' class' appended.
 metaclassName :: Identifier -> Identifier
 metaclassName x = x ++ " class"
 
@@ -928,7 +929,9 @@ characterLiteral = fmap CharacterLiteral quotedCharacter
 
 {- | <string literal> ::= quotedString
 
-> stParse stringLiteral "'x'" == StringLiteral "x"
+> p = stParse stringLiteral
+> p "'x'" == StringLiteral "x"
+> p "'\\n'"
 -}
 stringLiteral :: P Literal
 stringLiteral = fmap StringLiteral quotedString
@@ -1188,25 +1191,29 @@ type QuotedString = String
 
 {- | quotedString ::= stringDelimiter stringBody stringDelimiter
 
-> stParse quotedString "''" == ""
-> stParse quotedString "' xy'" == " xy"
-> stParse quotedString "'x''y'" == "x'y"
-> stParse quotedString "'''x''y'''" == "'x'y'"
+> p = stParse quotedString
+> p "''" == ""
+> p "' xy'" == " xy"
+> p "'x''y'" == "x'y"
+> p "'''x''y'''" == "'x'y'"
+> p "'\n'" == "\n"
+> p "'x\n'" == "x\n"
+> p "'\0x\n'" == "\0x\n"
 -}
 quotedString :: P QuotedString
-quotedString = P.label (P.between stringDelimiter (lexeme stringDelimiter) stringBody) "quotedString" -- lexeme
+quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- lexeme
 
 {- | stringBody ::= (nonStringDelimiter | (stringDelimiter stringDelimiter)*)
 
 > p = stParse stringBody
 > p "" == ""
+> p "x  y"
 > p "x" == "x"
-> p "''" == "'" -- ?
-> p "x''y" == "x'y"
+> p "x''" == "x'"
 > p "x'" == "x"
 -}
 stringBody :: P String
-stringBody = P.many (nonStringDelimiter P.<|> P.try (stringDelimiter >>~ stringDelimiter))
+stringBody = P.many (P.try escapedStringDelimiter P.<|> nonStringDelimiter)
 
 -- | stringDelimiter ::= ''' "a single quote"
 stringDelimiter :: P Char
@@ -1215,6 +1222,10 @@ stringDelimiter = P.char '\'' -- non-lexeme (the lhs is not a lexeme, the rhs is
 -- | nonStringDelimiter ::= "any character except stringDelimiter"
 nonStringDelimiter :: P Char
 nonStringDelimiter = P.noneOf "'"
+
+-- | Ansi escaped quote (quote quote).
+escapedStringDelimiter :: P Char
+escapedStringDelimiter = stringDelimiter >> stringDelimiter
 
 -- * 3.5.9
 
