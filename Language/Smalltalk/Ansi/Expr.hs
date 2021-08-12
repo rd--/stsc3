@@ -15,7 +15,7 @@ data Message =
 {- | A standard applicative Expression type.
      Send replaces Apply.
      Block and Method bodies are written as Lambda.
-     Block and Method returns are both written as Return.
+     Block and Method returns are written as Return.
      There are both literal and expression arrays.
      Sequences (including cascades) are written as Begin.
 -}
@@ -157,4 +157,6 @@ globalDefinitionExpr (St.GlobalDefinition k v) =
 
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr
 initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
-  Init (maybe St.emptyTemporaries id tmp) (maybe [] (statementsExprList (\_ -> error "Illegal return")) stm)
+  Init
+  (maybe St.emptyTemporaries id tmp)
+  (maybe [] (statementsExprList (\_ -> error "Illegal return")) stm)
