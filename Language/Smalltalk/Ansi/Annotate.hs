@@ -1,14 +1,14 @@
 -- | Ast annotation functions.
 module Language.Smalltalk.Ansi.Annotate where
 
-import Language.Smalltalk.Ansi {- stsc3 -}
-import Language.Smalltalk.Ansi.Rewrite {- stsc3 -}
+import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Rewrite as Rewrite {- stsc3 -}
 
 -- | Assign blockMethodName to all blocks defined within MethodDefinition.
-methodDefinitionAnnotateBlocks :: MethodDefinition -> MethodDefinition
+methodDefinitionAnnotateBlocks :: St.MethodDefinition -> St.MethodDefinition
 methodDefinitionAnnotateBlocks m =
   let annotate p =
         case p of
-          PrimaryBlock b -> PrimaryBlock (b {blockMethodName = Just (methodName m)})
+          St.PrimaryBlock b -> St.PrimaryBlock (b {St.blockMethodName = Just (St.methodName m)})
           _ -> p
-  in methodDefinitionRewritePrimary annotate m
+  in Rewrite.methodDefinitionRewritePrimary annotate m

@@ -227,9 +227,11 @@ data MethodDefinition =
                    ,methodStatements :: Maybe Statements}
   deriving (Eq,Show)
 
--- | Does MethodDefinition end with a Return (local).
-methodDefinitionHasReturn :: MethodDefinition -> Bool
-methodDefinitionHasReturn = maybe False statementsHasReturn . methodStatements
+{- | Does MethodDefinition end with a Return (local).
+     Note this does not look to see if the method includes any non-local returns.
+-}
+methodDefinitionEndsWithReturn :: MethodDefinition -> Bool
+methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodStatements
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -453,9 +455,11 @@ data BlockBody =
             ,blockStatements :: Maybe Statements}
   deriving (Eq,Show)
 
--- | Does BlockBody end with a Return (non-local).
-blockBodyHasReturn :: BlockBody -> Bool
-blockBodyHasReturn = maybe False statementsHasReturn . blockStatements
+{- | Does BlockBody end with a Return (non-local).
+     Note this does not look to see if the block contains any nested non-local returns.
+-}
+blockBodyEndsWithReturn :: BlockBody -> Bool
+blockBodyEndsWithReturn = maybe False statementsEndsWithReturn . blockStatements
 
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
@@ -497,12 +501,12 @@ data Statements
   deriving (Eq,Show)
 
 -- | Does Statements end with a Return?
-statementsHasReturn :: Statements -> Bool
-statementsHasReturn x =
+statementsEndsWithReturn :: Statements -> Bool
+statementsEndsWithReturn x =
   case x of
     StatementsReturn _ -> True
     StatementsExpression _ Nothing -> False
-    StatementsExpression _ (Just x') -> statementsHasReturn x'
+    StatementsExpression _ (Just x') -> statementsEndsWithReturn x'
 
 -- | Prepend a list of expressions, as statements, to an existing statement.
 expressionSequenceToStatements :: Maybe Statements -> [Expression] -> Statements
