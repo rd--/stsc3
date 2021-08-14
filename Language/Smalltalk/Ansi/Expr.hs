@@ -48,7 +48,7 @@ blockBodyExpr (St.BlockBody arg tmp stm) =
   (maybe [] (statementsExprList Return) stm)
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
-methodDefinitionExpr (St.MethodDefinition _ pat tmp stm) =
+methodDefinitionExpr (St.MethodDefinition _ _ pat tmp stm) =
   Lambda
   (St.patternArguments pat)
   (maybe St.emptyTemporaries id tmp)

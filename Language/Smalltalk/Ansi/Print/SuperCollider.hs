@@ -107,7 +107,7 @@ sc_patternSelector pat =
     KeywordPattern kp -> sc_keywordSelector (map fst kp)
 
 sc_methodDefinition_pp :: Maybe Char -> MethodDefinition -> String
-sc_methodDefinition_pp maybeStar (MethodDefinition _ p t s) =
+sc_methodDefinition_pp maybeStar (MethodDefinition _ _ p t s) =
   strjn [maybe "" return maybeStar
         ,sc_patternSelector p
         ,"{"

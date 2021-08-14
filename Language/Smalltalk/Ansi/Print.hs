@@ -49,10 +49,10 @@ programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 programInitializerDefinition_pp = initializerDefinition_pp
 
 {-
-> methodDefinition_pp $ stParse methodDefinition "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
+> methodDefinition_pp $ stParse (methodDefinition "") "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 -}
 methodDefinition_pp :: MethodDefinition -> String
-methodDefinition_pp (MethodDefinition _ p t s) = strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
+methodDefinition_pp (MethodDefinition _ _ p t s) = strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 {-
 > pattern_pp (stParse messagePattern "midicps")

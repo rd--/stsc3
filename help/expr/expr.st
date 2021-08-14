@@ -285,3 +285,8 @@ self assert: '\0' equals: '\0'
 
 'Vector'
 ((1,2,3) instVarAt: 2 put: 4) = 4                  "=> true"
+
+'Reflection'
+Array methods inspect
+(Array methods at: 1)
+(Array methods at: 1) invokeOn: #(1 2 3) with: #(2)

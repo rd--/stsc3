@@ -220,7 +220,8 @@ type MethodCategory = String
 
 -- | 3.4.2
 data MethodDefinition =
-  MethodDefinition {methodCategory :: Maybe MethodCategory
+  MethodDefinition {methodClass :: Identifier
+                   ,methodCategory :: Maybe MethodCategory
                    ,methodPattern :: Pattern
                    ,methodTemporaries :: Maybe Temporaries
                    ,methodStatements :: Maybe Statements}
@@ -228,14 +229,11 @@ data MethodDefinition =
 
 -- | Does MethodDefinition end with a Return (local).
 methodDefinitionHasReturn :: MethodDefinition -> Bool
-methodDefinitionHasReturn x =
-  case x of
-    MethodDefinition _ _ _ Nothing -> False
-    MethodDefinition _ _ _ (Just s) -> statementsHasReturn s
+methodDefinitionHasReturn = maybe False statementsHasReturn . methodStatements
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
-> p = stParse methodDefinition
+> p = stParse (methodDefinition "")
 > p "p"
 > p "p q"
 > p "p ^q"
@@ -251,12 +249,12 @@ methodDefinitionHasReturn x =
 > p "* anObject ^self shallowCopy *= anObject"
 
 -}
-methodDefinition :: P MethodDefinition
-methodDefinition = do
+methodDefinition :: Identifier -> P MethodDefinition
+methodDefinition cl = do
   p <- messagePattern
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (MethodDefinition Nothing p t s)
+  return (MethodDefinition cl Nothing p t s)
 
 data Pattern
   = UnaryPattern Identifier
@@ -293,7 +291,7 @@ patternArguments pat =
 
 -- | Derive method selector from definition.
 methodSelector :: MethodDefinition -> Selector
-methodSelector (MethodDefinition _ p _ _) = patternSelector p
+methodSelector = patternSelector . methodPattern
 
 -- | Untyped identifier for method selector.
 methodSignature :: MethodDefinition -> Identifier

@@ -35,7 +35,7 @@ classDefinition = do
           Just "nil" -> Nothing
           Nothing -> Just "Object"
           _ -> somSuperclassName
-  (instanceVariableNames,instanceMethods,classVariableNames,classMethods) <- St.inParentheses classBody
+  (instanceVariableNames,instanceMethods,classVariableNames,classMethods) <- St.inParentheses (classBody className)
   return (St.ClassDefinition
           className
           superclassName
@@ -50,32 +50,32 @@ classDefinition = do
           Nothing)
 
 -- | Instance fields and methods, optionally class fields and methods.
-classBody :: St.P ([St.Identifier], [St.MethodDefinition], [St.Identifier], [St.MethodDefinition])
-classBody = do
+classBody :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition], [St.Identifier], [St.MethodDefinition])
+classBody cl = do
   iv <- P.option [] St.temporariesIdentifierSequence
-  im <- P.many methodDefinition
-  (cv,cm) <- P.option ([],[]) classSide
+  im <- P.many (methodDefinition cl)
+  (cv,cm) <- P.option ([],[]) (classSide cl)
   return (iv,im,cv,cm)
 
 -- | Class fields and class methods.
-classSide :: St.P ([St.Identifier], [St.MethodDefinition])
-classSide = do
+classSide :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition])
+classSide cl = do
   _ <- separator
   t <- P.option [] St.temporariesIdentifierSequence
-  m <- P.many methodDefinition
+  m <- P.many (methodDefinition cl)
   return (t,m)
 
 {- | Method definition.
 
 > St.stParse methodDefinition "sumSqr: x = ( ^(self * self) + (x * x) )"
 -}
-methodDefinition :: St.P St.MethodDefinition
-methodDefinition = do
+methodDefinition :: St.Identifier -> St.P St.MethodDefinition
+methodDefinition cl = do
   P.notFollowedBy separator
   p <- St.messagePattern
   _ <- equalSign
   MethodBlock t s <- primitive P.<|> St.inParentheses methodBlock
-  return (St.MethodDefinition Nothing p t s)
+  return (St.MethodDefinition cl Nothing p t s)
 
 -- | Method block.  Arguments are given by the methodPattern.
 data MethodBlock =
@@ -108,6 +108,7 @@ somMethodIsPrimitive m =
     St.MethodDefinition
       _
       _
+      _
       Nothing
       (Just (St.StatementsExpression
               (St.ExprBasic
@@ -124,7 +125,7 @@ somMethodIsPrimitive m =
      This parser must disallow this, which is done using notFollowedBy as a prefix rule.
 
 > St.stParse separator "-----------" == "----"
-> St.stParse methodDefinition "---- new = (| t | q. r. ^s)" -- fail
+> St.stParse (methodDefinition "") "---- new = (| t | q. r. ^s)" -- fail
 -}
 separator :: St.P String
 separator = St.lexeme (P.string "----" St.>>~ P.many (P.char '-'))

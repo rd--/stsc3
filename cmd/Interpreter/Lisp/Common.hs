@@ -10,8 +10,6 @@ import Data.Char {- base -}
 import Data.List {- base -}
 import System.IO {- base -}
 
-import qualified Data.Map as Map {- containers -}
-
 import qualified Sound.SC3 as SC3 {- hsc3 -}
 import qualified Sound.SC3.UGen.Plain as Plain {- hsc3 -}
 
@@ -536,9 +534,9 @@ envSine p1 p2 = do
   u2 <- objectToUGen p2
   return (UGenObject (SC3.envelope_to_ugen (SC3.envSine u1 u2)))
 
-coreDict :: Env.Dict Name (Object t)
+coreDict :: MonadIO m => m (Env.Dict Name (Object t))
 coreDict =
-  Map.fromList
+  Env.dictFromList
   [("true",UGenObject (SC3.int_to_ugen 1))
   ,("false",UGenObject (SC3.int_to_ugen 0))]
 
@@ -550,4 +548,4 @@ getProgram s h = do
   if r then getProgram s' h else return s'
 
 initialEnvironment :: IO (Env.Env Name (Object t))
-initialEnvironment = Env.envNewFrom coreDict
+initialEnvironment = coreDict >>= Env.envNewFrom
