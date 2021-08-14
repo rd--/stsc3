@@ -74,7 +74,7 @@ initializerDefinition_pp (InitializerDefinition t s) =
   strjn [maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 blockBody_pp :: BlockBody -> String
-blockBody_pp (BlockBody a t s) =
+blockBody_pp (BlockBody _ a t s) =
   strjn ["["
         ,maybe "" (printf "%s|" . strjn . map blockArgument_pp) a
         ,maybe "" temporaries_pp t

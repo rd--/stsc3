@@ -25,6 +25,7 @@ library
   build-tool-depends:   alex:alex,
                         happy:happy
   exposed-modules:      Language.Smalltalk.Ansi,
+                        Language.Smalltalk.Ansi.Annotate,
                         Language.Smalltalk.Ansi.Expr,
                         Language.Smalltalk.Ansi.Expr.Print,
                         Language.Smalltalk.Ansi.Parser,

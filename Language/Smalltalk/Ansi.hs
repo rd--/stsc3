@@ -297,6 +297,17 @@ methodSelector = patternSelector . methodPattern
 methodSignature :: MethodDefinition -> Identifier
 methodSignature = selectorIdentifier . methodSelector
 
+-- | A method name is a (className,methodSignature)
+type MethodName = (Identifier,Identifier)
+
+-- | Calculate MethodName from MethodDefinition.
+methodName :: MethodDefinition -> MethodName
+methodName m = (methodClass m,methodSignature m)
+
+-- | Method name in traditional Smalltalk form, ie. ClassName>>methodSignature.
+methodNameIdentifier :: MethodName -> Identifier
+methodNameIdentifier (cl,sg) = cl ++ ">>" ++ sg
+
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
 > p = stParse messagePattern
@@ -432,16 +443,19 @@ nonEmptyInitializerDefinition = do
 blockConstructor :: P BlockBody
 blockConstructor = inBrackets blockBody
 
+{- | A block has optional arguments, optional temporaries and optional statements.
+     The method name field is not assigned by the parser, see methodDefinitionAnnotateBlocks.
+-}
 data BlockBody =
-  BlockBody (Maybe [BlockArgument]) (Maybe Temporaries) (Maybe Statements)
+  BlockBody {blockMethodName :: Maybe MethodName
+            ,blockArguments :: Maybe [BlockArgument]
+            ,blockTemporaries :: Maybe Temporaries
+            ,blockStatements :: Maybe Statements}
   deriving (Eq,Show)
 
 -- | Does BlockBody end with a Return (non-local).
 blockBodyHasReturn :: BlockBody -> Bool
-blockBodyHasReturn x =
-  case x of
-    BlockBody _ _ Nothing -> False
-    BlockBody _ _ (Just s) -> statementsHasReturn s
+blockBodyHasReturn = maybe False statementsHasReturn . blockStatements
 
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
@@ -461,7 +475,7 @@ blockBody = do
   a <- P.optionMaybe (P.try (P.many1 blockArgument >>~ verticalBar))
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (BlockBody a t s)
+  return (BlockBody Nothing a t s)
 
 -- | An identifier for a block argument.  Written with a ':' prefix.
 type BlockArgument = Identifier

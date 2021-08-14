@@ -29,7 +29,7 @@ evalExpr expr =
     Expr.Assignment lhs rhs -> evalAssignment lhs rhs
     Expr.Return _ -> throwError "Return"
     Expr.Send e m -> evalSend e m
-    Expr.Lambda arg tmp stm -> get >>= \e -> return (BlockObject e (arg,tmp,stm))
+    Expr.Lambda _ arg tmp stm -> get >>= \e -> return (BlockObject e (arg,tmp,stm))
     Expr.Array x -> arrayToObject =<< (mapM evalExpr x)
     Expr.Begin x -> fmap last (mapM evalExpr x)
     Expr.Init tmp stm -> evalTemporariesStatements tmp stm

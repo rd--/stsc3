@@ -63,7 +63,7 @@ evalBinaryMessageSeq o sq =
    5. returning the saved result
 -}
 evalBlock :: Env.Env Name ObjectAnsi -> St.BlockBody -> [ObjectAnsi] -> VMAnsi ObjectAnsi
-evalBlock blockEnvironment (St.BlockBody maybeBlockArguments blockTemporaries blockStatements) arguments = do
+evalBlock blockEnvironment (St.BlockBody _ maybeBlockArguments blockTemporaries blockStatements) arguments = do
   let blockArguments = fromMaybe [] maybeBlockArguments
   when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
   extendedBlockEnvironment <- extendEnvironment blockEnvironment (zip blockArguments arguments)

@@ -181,7 +181,7 @@ arrayexpression :: { [St.BasicExpression] }
 blockbody :: { St.BlockBody }
         : maybe_blockarguments
           maybe_temporaries
-          maybe_statements                     { St.BlockBody $1 $2 $3 }
+          maybe_statements                     { St.BlockBody Nothing $1 $2 $3 }
 
 maybe_blockarguments :: { Maybe [St.BlockArgument] }
         : {- empty -}                          { Nothing }

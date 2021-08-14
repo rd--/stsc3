@@ -9,6 +9,7 @@ module Language.Smalltalk.Som where
 import qualified Text.Parsec as P {- parsec -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Annotate as St {- stsc3 -}
 
 {- | Run parser for Som class definition.
 
@@ -43,8 +44,8 @@ classDefinition = do
           instanceVariableNames
           classVariableNames
           []
-          instanceMethods
-          classMethods
+          (map St.methodDefinitionAnnotateBlocks instanceMethods)
+          (map St.methodDefinitionAnnotateBlocks classMethods)
           Nothing
           Nothing
           Nothing)
@@ -54,7 +55,7 @@ classBody :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition], [St.
 classBody cl = do
   iv <- P.option [] St.temporariesIdentifierSequence
   im <- P.many (methodDefinition cl)
-  (cv,cm) <- P.option ([],[]) (classSide cl)
+  (cv,cm) <- P.option ([],[]) (classSide (St.metaclassName cl))
   return (iv,im,cv,cm)
 
 -- | Class fields and class methods.

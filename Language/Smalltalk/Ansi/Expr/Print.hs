@@ -1,3 +1,4 @@
+-- | An s-expression printer for the Ansi.Expr Ast type.
 module Language.Smalltalk.Ansi.Expr.Print where
 
 import Text.Printf {- base -}
@@ -6,6 +7,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
+-- | Tidy printer for Message, avoids trailing whitespace.
 messagePrint :: Message -> String
 messagePrint (Message s e) =
   case e of
@@ -31,7 +33,7 @@ exprPrint expr =
     Assignment i e -> printf "(:= %s %s)" i (exprPrint e)
     Return e -> printf "(^ %s)" (exprPrint e)
     Send e m -> printf "(. %s %s)" (exprPrint e) (messagePrint m)
-    Lambda a (St.Temporaries t) e ->
+    Lambda _ a (St.Temporaries t) e ->
       let x = unwords (map exprPrint e)
       in case (a,t) of
         ([],[]) -> printf "(\\ %s)" x

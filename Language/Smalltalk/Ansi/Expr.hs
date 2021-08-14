@@ -12,6 +12,19 @@ data Message =
   Message St.Selector [Expr]
   deriving (Eq, Show)
 
+-- | Lambda terms store their Smalltalk definitions (either blocks or methods)
+data LambdaDefinition =
+    BlockLambda St.BlockBody
+  | MethodLambda St.MethodDefinition
+  deriving (Eq, Show)
+
+-- | Shows the method name (or Workspace for non-method blocks) and lambda type.
+lambdaDefinitionShow :: LambdaDefinition -> String
+lambdaDefinitionShow ld =
+  case ld of
+    BlockLambda b -> "Block from " ++ maybe "Workspace" St.methodNameIdentifier (St.blockMethodName b)
+    MethodLambda m -> "Method " ++ St.methodNameIdentifier (St.methodName m)
+
 {- | A standard applicative Expression type.
      Send replaces Apply.
      Block and Method bodies are written as Lambda.
@@ -25,7 +38,7 @@ data Expr =
   | Assignment St.Identifier Expr
   | Return Expr -- ^ Block (non local) or Method (local) return.
   | Send Expr Message
-  | Lambda [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body.
+  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body.
   | Array [Expr]
   | Begin [Expr]
   | Init St.Temporaries [Expr]
@@ -41,18 +54,22 @@ primaryExpr p =
     St.PrimaryArrayExpression x -> Array (map basicExpressionExpr x)
 
 blockBodyExpr :: St.BlockBody -> Expr
-blockBodyExpr (St.BlockBody arg tmp stm) =
-  Lambda
-  (maybe [] id arg)
-  (maybe St.emptyTemporaries id tmp)
-  (maybe [] (statementsExprList Return) stm)
+blockBodyExpr blockBody =
+  let St.BlockBody _ arg tmp stm = blockBody
+  in Lambda
+     (BlockLambda blockBody)
+     (maybe [] id arg)
+     (maybe St.emptyTemporaries id tmp)
+     (maybe [] (statementsExprList Return) stm)
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
-methodDefinitionExpr (St.MethodDefinition _ _ pat tmp stm) =
-  Lambda
-  (St.patternArguments pat)
-  (maybe St.emptyTemporaries id tmp)
-  (maybe [] (statementsExprList Return) stm)
+methodDefinitionExpr methodDefinition =
+  let (St.MethodDefinition _ _ pat tmp stm) = methodDefinition
+  in Lambda
+     (MethodLambda methodDefinition)
+     (St.patternArguments pat)
+     (maybe St.emptyTemporaries id tmp)
+     (maybe [] (statementsExprList Return) stm)
 
 unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
 unaryMessagesExpr e u =

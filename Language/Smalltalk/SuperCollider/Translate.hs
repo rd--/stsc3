@@ -47,7 +47,7 @@ scPrimarySt p =
 
 scBlockBodySt :: ScBlockBody -> St.BlockBody
 scBlockBodySt (ScBlockBody arg tmp stm) =
-  St.BlockBody arg (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+  St.BlockBody Nothing arg (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
 scBinaryArgumentSt :: ScBinaryArgument -> St.BinaryArgument
 scBinaryArgumentSt (ScBinaryArgument p m) =

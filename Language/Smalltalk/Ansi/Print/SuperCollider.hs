@@ -145,7 +145,7 @@ pp_inBraces = pp_inChars ('{','}')
 > p ":x :y | (x * x) + (y * y)]"
 -}
 sc_blockBody_pp :: BlockBody -> String
-sc_blockBody_pp (BlockBody a t s) =
+sc_blockBody_pp (BlockBody _ a t s) =
   pp_inBraces$
   strjn [maybe "" (printf "arg %s;" . strjnComma . map sc_blockArgument_pp) a
         ,maybe "" sc_temporaries_pp t
