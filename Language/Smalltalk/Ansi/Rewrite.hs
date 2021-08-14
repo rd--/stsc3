@@ -1,4 +1,4 @@
--- | Ast rewriting functions.
+-- | Ansi Ast rewriting functions.
 module Language.Smalltalk.Ansi.Rewrite where
 
 import Data.Bifunctor {- base -}
