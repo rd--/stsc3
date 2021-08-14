@@ -32,6 +32,7 @@ library
                         Language.Smalltalk.Ansi.Print,
                         Language.Smalltalk.Ansi.Print.SuperCollider,
                         Language.Smalltalk.Ansi.Lexer,
+                        Language.Smalltalk.Ansi.Rewrite,
                         Language.Smalltalk.Ansi.Token,
                         Language.Smalltalk.FileOut,
                         Language.Smalltalk.Som,
