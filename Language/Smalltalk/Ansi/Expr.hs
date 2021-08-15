@@ -44,6 +44,10 @@ data Expr =
   | Init St.Temporaries [Expr]
   deriving (Eq, Show)
 
+-- | Is expression the reservered word "super"?
+exprIsSuper :: Expr -> Bool
+exprIsSuper = (==) (Identifier "super")
+
 primaryExpr :: St.Primary -> Expr
 primaryExpr p =
   case p of
