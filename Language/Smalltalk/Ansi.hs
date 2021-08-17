@@ -951,7 +951,7 @@ characterLiteral = fmap CharacterLiteral quotedCharacter
 
 > p = stParse stringLiteral
 > p "'x'" == StringLiteral "x"
-> p "'\\n'"
+> p "'\\n'" == StringLiteral "\\n"
 -}
 stringLiteral :: P Literal
 stringLiteral = fmap StringLiteral quotedString
@@ -1207,12 +1207,14 @@ quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
 
 -- * 3.5.8
 
+-- | String quote character is '
 type QuotedString = String
 
 {- | quotedString ::= stringDelimiter stringBody stringDelimiter
 
 > p = stParse quotedString
 > p "''" == ""
+> p "''''" == "'"
 > p "' xy'" == " xy"
 > p "'x''y'" == "x'y"
 > p "'''x''y'''" == "'x'y'"

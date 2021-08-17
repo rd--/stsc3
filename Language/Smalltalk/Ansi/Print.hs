@@ -152,10 +152,10 @@ literal_pp :: Literal -> String
 literal_pp lit =
   case lit of
     NumberLiteral n -> number_pp n
-    StringLiteral s -> printf "'%s'" s
-    CharacterLiteral c -> printf "$%c" c
-    SymbolLiteral s -> printf "#'%s'" s
-    SelectorLiteral s -> printf "#%s" (selector_pp s)
+    StringLiteral s -> quotedString_pp (quoteQuote s)
+    CharacterLiteral c -> quotedCharacter_pp c
+    SymbolLiteral s -> hashedString_pp (quoteQuote s)
+    SelectorLiteral s -> hashedString_pp (selector_pp s)
     ArrayLiteral a -> printf "#(%s)" (strjn (map (either literal_pp id) a))
 
 number_pp :: Number -> String
@@ -166,6 +166,10 @@ quotedCharacter_pp = printf "$%c"
 
 quotedString_pp :: QuotedString -> String
 quotedString_pp = printf "'%s'"
+
+-- | Quote quote character using quote.
+quoteQuote :: String -> String
+quoteQuote = concatMap (\x -> if x == '\'' then "''" else [x])
 
 hashedString_pp :: HashedString -> String
 hashedString_pp = printf "#'%s'"

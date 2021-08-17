@@ -276,6 +276,7 @@ OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the n
 1 to: 10 do: [:x| 5 atRandom println
 
 'String'
+'quoted''string'
 'text' isLetters = true                           "=> true"
 '0123' isDigits = true                            "=> true"
 '    ' isWhiteSpace = true                        "=> true"
@@ -283,6 +284,10 @@ OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the n
 self assert: 1 equals: '\\' length
 self assert: '\0' equals: '\0'
 #'x' = 'x'                                        "=> true"
+#'x' hashcode = 'x' hashcode                      "=> true"
+
+'Symbol'
+#'quoted''symbol'
 
 'Vector'
 ((1,2,3) instVarAt: 2 put: 4) = 4                 "=> true"

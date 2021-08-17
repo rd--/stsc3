@@ -179,6 +179,7 @@ stringCharacter = nonEscapedChar P.<|> escapedChar
 > p = St.stParse escapedStringBody
 > p "\\n" == "\n"
 > p "x\\'" == "x'"
+> p "''" -- ?
 -}
 escapedStringBody :: St.P String
 escapedStringBody = P.many stringCharacter
