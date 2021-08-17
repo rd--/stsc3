@@ -17,11 +17,13 @@ import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
 
 import Interpreter.Lisp.Common {- stsc3 -}
 
-type Proc = ([St.BlockArgument],St.Temporaries,[Expr.Expr])
+type Expr = Expr.Expr ()
+type Message = Expr.Message ()
+type Proc = ([St.BlockArgument],St.Temporaries,[Expr])
 type VMExpr t = VM Proc t
 type ObjectExpr = Object Proc
 
-evalExpr :: Expr.Expr -> VMExpr ObjectExpr
+evalExpr :: Expr -> VMExpr ObjectExpr
 evalExpr expr =
   case expr of
     Expr.Identifier x -> lookupIdentifier x
@@ -34,13 +36,13 @@ evalExpr expr =
     Expr.Begin x -> fmap last (mapM evalExpr x)
     Expr.Init tmp stm -> evalTemporariesStatements tmp stm
 
-evalAssignment :: St.Identifier -> Expr.Expr -> VMExpr ObjectExpr
+evalAssignment :: St.Identifier -> Expr -> VMExpr ObjectExpr
 evalAssignment lhs rhs = do
   env <- get
   rhsValue <- evalExpr rhs
   liftIO (Env.envSet env lhs rhsValue)
 
-evalSend :: Expr.Expr -> Expr.Message -> VMExpr ObjectExpr
+evalSend :: Expr -> Message -> VMExpr ObjectExpr
 evalSend rcv (Expr.Message msg arg) = do
   p <- evalExpr rcv
   keywordValues <- mapM evalExpr arg
@@ -96,7 +98,7 @@ evalBlock blockEnvironment (blockArguments, blockTemporaries, blockStatements) a
   put currentEnvironment
   return result
 
-evalTemporariesStatements :: St.Temporaries -> [Expr.Expr] -> VMExpr ObjectExpr
+evalTemporariesStatements :: St.Temporaries -> [Expr] -> VMExpr ObjectExpr
 evalTemporariesStatements tm st = do
   case (St.temporariesLength tm,st) of
     (_,[]) -> return NilObject

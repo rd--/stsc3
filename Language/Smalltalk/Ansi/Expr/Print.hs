@@ -8,7 +8,7 @@ import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
 -- | Tidy printer for Message, avoids trailing whitespace.
-messagePrint :: Message -> String
+messagePrint :: Message t -> String
 messagePrint (Message s e) =
   case e of
     [] -> printf "(~ %s)" (St.selectorIdentifier s)
@@ -25,7 +25,7 @@ messagePrint (Message s e) =
      The array operator is '%'.
      The sequence operator is '>>'.
 -}
-exprPrint :: Expr -> String
+exprPrint :: Expr t -> String
 exprPrint expr =
   case expr of
     Identifier i -> i

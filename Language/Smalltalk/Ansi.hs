@@ -291,7 +291,11 @@ patternArguments pat =
     BinaryPattern _ p -> [p]
     KeywordPattern kp -> map snd kp
 
--- | Derive method selector from definition.
+-- | Method argument list.
+methodArguments :: MethodDefinition -> [Identifier]
+methodArguments = patternArguments . methodPattern
+
+-- | Method selector.
 methodSelector :: MethodDefinition -> Selector
 methodSelector = patternSelector . methodPattern
 
@@ -357,7 +361,7 @@ keywordPattern = do
   fmap KeywordPattern (P.many1 (P.try f))
 
 -- | 3.4.2
-data Temporaries = Temporaries [Identifier] deriving (Eq, Show)
+data Temporaries = Temporaries {temporariesIdentifiers :: [Identifier]} deriving (Eq, Show)
 
 -- | Number of temporaries.
 temporariesLength :: Temporaries -> Int
