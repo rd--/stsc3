@@ -282,9 +282,10 @@ OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the n
 ('string' substringFrom: 2 to: 4) = 'tri'         "=> true"
 self assert: 1 equals: '\\' length
 self assert: '\0' equals: '\0'
+#'x' = 'x'                                        "=> true"
 
 'Vector'
-((1,2,3) instVarAt: 2 put: 4) = 4                  "=> true"
+((1,2,3) instVarAt: 2 put: 4) = 4                 "=> true"
 
 'Reflection'
 Array methods inspect
