@@ -6,10 +6,14 @@
 -}
 module Language.Smalltalk.Som where
 
+import System.FilePath {- filepath -}
+
 import qualified Text.Parsec as P {- parsec -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Annotate as St {- stsc3 -}
+
+-- * Parser
 
 {- | Run parser for Som class definition.
 
@@ -195,3 +199,46 @@ escapedStringBody = P.many stringCharacter
 -- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
 somEscapedString :: String -> String
 somEscapedString = St.stParse escapedStringBody
+
+-- * Class list
+
+-- | The list of standard (required) Som classes.
+somStandardClassList :: [St.Identifier]
+somStandardClassList =
+  ["Array"
+  ,"Block1","Block2","Block3","Block"
+  ,"Boolean"
+  ,"Class"
+  ,"Dictionary"
+  ,"Double"
+  ,"False"
+  ,"HashEntry"
+  ,"Hashtable"
+  ,"Integer"
+  ,"Metaclass"
+  ,"Method"
+  ,"Nil"
+  ,"Object"
+  ,"Pair"
+  ,"Primitive"
+  ,"Set"
+  ,"String"
+  ,"Symbol"
+  ,"System"
+  ,"True"
+  ,"Vector"]
+
+-- * IO
+
+-- | Load ClassDefinition from named file.
+somLoadClassDefinition :: FilePath -> IO St.ClassDefinition
+somLoadClassDefinition fn = do
+  txt <- readFile fn
+  return (parseSomClassDefinition txt)
+
+-- | Load list of class definitions into association list.
+somLoadClassList :: FilePath -> [St.Identifier] -> IO [(St.Identifier, St.ClassDefinition)]
+somLoadClassList somDirectory classList = do
+  let somClassFilename nm = somDirectory </> nm <.> "som"
+  c <- mapM (somLoadClassDefinition . somClassFilename) classList
+  return (zip classList c)
