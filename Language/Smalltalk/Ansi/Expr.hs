@@ -46,9 +46,8 @@ data Expr t =
   | Init St.Temporaries [Expr t]
   deriving (Functor, Foldable, Traversable, Eq, Show)
 
-{-
+-- | Reification type.
 data Exp = Expr (Expr Exp)
--}
 
 -- | Is expression the reservered word "super"?
 exprIsSuper :: Expr t -> Bool
