@@ -150,9 +150,14 @@ equalSign = St.lexeme (P.char '=')
      \\   backslash character
      \0   zero byte character
 
+     The Som rule for \' is not compatible with the Smalltalk rules.
+     In Smalltalk '''' is a string with a single quote character.
+     In Som it is two empty strings alongside one another.
+
 > p = St.stParse escapedChar
 > p "\\n" == '\n'
 > p "\\0" == '\0'
+> p "\\'" == '\''
 -}
 escapedChar :: St.P Char
 escapedChar = do
@@ -162,13 +167,16 @@ escapedChar = do
 
 {- | Any character that is not one of the characters that are escaped at escapedChar.
      Som also requires that newlines be allowed in strings, so these are excluded.
+     The implementation here uses an Ansi Smalltalk parser, so the input may include unquoted quotes.
+     For this reason they are allowed.
 
 > p = St.stParse nonEscapedChar
 > p "x" == 'x'
-> p "\n" == "\n"
+> p "\n" == '\n'
+> p "'" == '\''
 -}
 nonEscapedChar :: St.P Char
-nonEscapedChar = P.noneOf "\t\b\r\f'\\\0"
+nonEscapedChar = P.noneOf "\t\b\r\f\\\0" -- '
 
 -- | Either an escaped or a non-escaped character.
 stringCharacter :: St.P Char
@@ -179,7 +187,7 @@ stringCharacter = nonEscapedChar P.<|> escapedChar
 > p = St.stParse escapedStringBody
 > p "\\n" == "\n"
 > p "x\\'" == "x'"
-> p "''" -- ?
+> p "'" == "'"
 -}
 escapedStringBody :: St.P String
 escapedStringBody = P.many stringCharacter
