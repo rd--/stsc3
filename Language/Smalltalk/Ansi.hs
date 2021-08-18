@@ -21,12 +21,12 @@ import Data.Functor.Identity {- base -}
 import Data.List.Split {- split -}
 
 import qualified Text.Parsec as P {- parsec -}
-import qualified Text.Parsec.Language as P {- parsec -}
-import qualified Text.Parsec.String as P {- parsec -}
-import qualified Text.Parsec.Token as P {- parsec -}
+import qualified Text.Parsec.Language as Language {- parsec -}
+import qualified Text.Parsec.String as String {- parsec -}
+import qualified Text.Parsec.Token as Token {- parsec -}
 
 -- | A 'Char' parser with no user state.
-type P a = P.GenParser Char () a
+type P a = String.GenParser Char () a
 
 -- | Run p then q, returning result of p.
 (>>~) :: Monad m => m t -> m u -> m t
@@ -34,27 +34,27 @@ p >>~ q = p >>= \x -> q >> return x
 
 -- | /p/ consuming any trailing separators.
 lexeme :: P t -> P t
-lexeme = P.lexeme stLexer
+lexeme = Token.lexeme stLexer
 
 -- | Smalltalk language definition (for token parser)
-stLanguageDef :: P.GenLanguageDef String () Identity
+stLanguageDef :: Language.GenLanguageDef String () Identity
 stLanguageDef =
-  P.LanguageDef
-  {P.commentStart = "\""
-  ,P.commentEnd = "\""
-  ,P.commentLine = "" -- NIL
-  ,P.nestedComments = False
-  ,P.identStart = letter
-  ,P.identLetter = letter P.<|> P.digit
-  ,P.opStart = binaryCharacter
-  ,P.opLetter = binaryCharacter
-  ,P.reservedNames = stReservedIdentifiers
-  ,P.reservedOpNames = []
-  ,P.caseSensitive = True}
+  Token.LanguageDef
+  {Token.commentStart = "\""
+  ,Token.commentEnd = "\""
+  ,Token.commentLine = "" -- NIL
+  ,Token.nestedComments = False
+  ,Token.identStart = letter
+  ,Token.identLetter = letter P.<|> P.digit
+  ,Token.opStart = binaryCharacter
+  ,Token.opLetter = binaryCharacter
+  ,Token.reservedNames = stReservedIdentifiers
+  ,Token.reservedOpNames = []
+  ,Token.caseSensitive = True}
 
 -- | Lexer
-stLexer :: P.GenTokenParser String () Identity
-stLexer = P.makeTokenParser stLanguageDef
+stLexer :: Token.GenTokenParser String () Identity
+stLexer = Token.makeTokenParser stLanguageDef
 
 {-
 import Data.Char {- base -}
@@ -527,7 +527,7 @@ expressionSequenceToStatements stm =
 > stParse period "." == "."
 -}
 period :: P String
-period = P.dot stLexer
+period = Token.dot stLexer
 
 {- | <statements> ::= (<return statement> ['.']) | (<expression> ['.' [<statements>]])
 
@@ -690,13 +690,13 @@ data Messages
   deriving (Eq,Show)
 
 inParentheses :: P t -> P t
-inParentheses = P.parens stLexer
+inParentheses = Token.parens stLexer
 
 inBraces :: P t -> P t
-inBraces = P.braces stLexer
+inBraces = Token.braces stLexer
 
 inBrackets :: P t -> P t
-inBrackets = P.brackets stLexer
+inBrackets = Token.brackets stLexer
 
 {- | <primary> ::= identifier | <literal> | <block constructor> | ( '(' <expression> ')' )
 
@@ -863,7 +863,7 @@ keywordArgument = do
   return (KeywordArgument p u b)
 
 cascadeSeparator :: P String
-cascadeSeparator = P.semi stLexer
+cascadeSeparator = Token.semi stLexer
 
 type CascadedMessages = [Messages]
 
@@ -1089,7 +1089,7 @@ type OrdinaryIdentifier = String
 > p "x0" == "x0"
 -}
 ordinaryIdentifier :: P OrdinaryIdentifier
-ordinaryIdentifier = P.identifier stLexer
+ordinaryIdentifier = Token.identifier stLexer
 
 {- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
 
@@ -1166,7 +1166,7 @@ type BinaryIdentifier = Identifier
 -- > stParse binarySelector "+" == BinarySelector "+"
 -- > stParse binarySelector "+p" == BinarySelector "+" -- +1 must parse as selector=+ argument=1
 binarySelector :: P Selector
-binarySelector = fmap BinarySelector (P.operator stLexer)
+binarySelector = fmap BinarySelector (Token.operator stLexer)
 
 -- | returnOperator ::= '^'
 returnOperator :: P Char
@@ -1192,7 +1192,7 @@ digits = lexeme (P.many1 P.digit)
 
 -- | float ::= mantissa [exponentLetter exponent]
 float :: P Double
-float = P.float stLexer
+float = Token.float stLexer
 
 -- * 3.5.7
 
