@@ -17,6 +17,7 @@ import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 import qualified Interpreter.Lisp.Ansi {- stsc3 -}
 import qualified Interpreter.Lisp.Expr {- stsc3 -}
+import qualified Interpreter.Som.Repl {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program.
 st_cat_parsec :: String -> String
@@ -52,12 +53,15 @@ stsc3_draw evalFile fn = evalFile fn >>= Dot.draw . SC3.out 0
 
 main :: IO ()
 main = do
+  let somDirectory = "/home/rohan/opt/src/som/SOM/Smalltalk/"
   a <- getArgs
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
-    ["repl","ansi"] -> Interpreter.Lisp.Ansi.replInit
-    ["repl","expr"] -> Interpreter.Lisp.Expr.replInit
+    ["repl","ansi"] -> Interpreter.Lisp.Ansi.replMain
+    ["repl","expr"] -> Interpreter.Lisp.Expr.replMain
+    ["repl","som"] -> Interpreter.Som.Repl.replMain somDirectory
+    "run":"som":cl:arg -> Interpreter.Som.Repl.loadAndRunClass somDirectory cl arg
     ["draw","ansi",fn] -> stsc3_draw Interpreter.Lisp.Ansi.evalSmalltalkFile fn
     ["draw","expr",fn] -> stsc3_draw Interpreter.Lisp.Expr.evalSmalltalkFile fn
     ["play","ansi",fn] -> stsc3_play Interpreter.Lisp.Ansi.evalSmalltalkFile fn

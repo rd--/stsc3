@@ -57,17 +57,39 @@ $
 
 ## repl
 
-An interpreter for Smalltalk programs where the only data type is the
-SuperCollider Unit Generator.  The interpreter can run the Smalltalk
-SuperCollider help graphs directly, without requiring a Smalltalk
-system.  However it is _not_ a Smalltalk system, it is rather a
-dialect of Lisp with Smalltalk syntax.  It is implemented using
-Haskell SuperCollider, and inherits all of it's behaviour from that
-system.  Math at constant UGens is optimised, so printing for constant
-expressions is ordinary.
+There are two interpreters.
+
+One is a simple implementation of the Simple Object Model.
 
 ~~~~
-$ stsc3 repl
+$ stsc3 repl som
+> TestHarness new run: #('TestHarness.som')
+...
+Total number of tests:           122
+Number of unsupported optionals: 3
+Number of successful tests:      122
+Number of assertions tested:     640
+> Harness new run: #('Harness' 'Bounce')
+...
+Total Runtime: 1924501us
+^D
+$
+~~~~
+
+The other is an interpreter for Smalltalk programs where the only
+data type is the SuperCollider Unit Generator.  It has two forms, one
+interprets the Ansi Ast directly, the other interprets a simplified
+expression Ast.
+
+This interpreter can run the Smalltalk SuperCollider help graphs
+directly, without requiring a Smalltalk system.  However it is _not_ a
+Smalltalk system, it is rather a dialect of Lisp with Smalltalk
+syntax.  It is implemented using Haskell SuperCollider, and inherits
+all of it's behaviour from that system.  Math at constant UGens is
+optimised, so printing for constant expressions is ordinary.
+
+~~~~
+$ stsc3 repl ansi
 1 + 2
 result: 3.0
 [:x | x * x] value: 4

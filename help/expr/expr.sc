@@ -149,6 +149,26 @@ w * ((x + y).z)
 {SinOsc.ar(mul: 0.1)}.play
 {arg x; x + 1}.value(3) == 4            // true
 {^nil}.value                            // return in non-method
+f = {arg x=1, y; [x,y]}
+f.value == [1,nil]
+f.value() == [1,nil]
+f.value(3) == [3,nil]
+f.value(x:3) == [3,nil]
+f.value(3,2,1) == [3,2]
+f.value(z:1,x:3) == [3,nil]
+f = {arg x, y, z; [x,y,z]}
+f.value(1,2,3,4,5,6,z:7,y:8,x:9) == [9,8,7] // true
+[1,2,3].collect({'x'.postln}) == ['x','x','x']
+[1,2,3].collect({arg i; i * i}) == [1,4,9]
+[1,2,3].collect({arg i, j; i * j}) == [2,4,6]
+[1,2,3].collect({arg i, j, k = 3; i * j * k}) == [0,6,18]
+
+'Methods'
+-3.abs == 3
+-3.abs() == 3
+-3.abs(1) == 3
+-3.abs(x:0) == 0
+-3.performList(selector: 'abs', arglist: [1,2,3]) == 3
 
 'Temporaries'
 {var x; }

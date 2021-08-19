@@ -116,8 +116,8 @@ replCont env = do
     Left msg -> putStrLn ("error: " ++ msg) >> replCont env
     Right res -> putStrLn ("result: " ++ show res) >> replCont env'
 
-replInit :: IO ()
-replInit = do
+replMain :: IO ()
+replMain = do
   env <- initialEnvironment
   replCont env
 

@@ -19,6 +19,7 @@ library
   build-depends:        array,
                         base >= 4.7 && < 5,
                         filepath,
+                        hmt-base == 0.20.*,
                         parsec,
                         split
   default-language:     Haskell2010
@@ -53,6 +54,9 @@ library
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
                     containers,
+                    directory,
+                    hashable,
+                    hmt-base == 0.20.*,
                     hsc3 == 0.20.*,
                     hsc3-db == 0.20.*,
                     hsc3-dot == 0.20.*,
@@ -60,12 +64,26 @@ executable stsc3
                     hsc3-lang == 0.20.*,
                     hsc3-lisp == 0.20.*,
                     mtl,
-                    stsc3
+                    random,
+                    stsc3,
+                    text,
+                    time,
+                    vector
   hs-source-dirs:   cmd
   main-is:          stsc3.hs
   other-modules:    Interpreter.Lisp.Common
                     Interpreter.Lisp.Ansi
                     Interpreter.Lisp.Expr
+                    Interpreter.Som.Core
+                    Interpreter.Som.Int
+                    Interpreter.Som.Primitives
+                    Interpreter.Som.Ref
+                    Interpreter.Som.Repl
+                    Interpreter.Som.Str
+                    Interpreter.Som.Sym
+                    Interpreter.Som.Tbl
+                    Interpreter.Som.Types
+                    Interpreter.Som.Vec
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs
 
