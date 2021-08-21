@@ -13,7 +13,7 @@ These sequence takes one of two forms:
   <chunk>!<chunk>! ... !<whitespace>!
   !<reader>!<stream>!
 
-The parser here accepts only a subset of the second form, that required to add methods to classes.
+The parser here accepts only a subset of the second form, that required to add methods or comments to classes.
 It assumes that stream is a sequence of chunks ending with an empty chunk.
 
 -}
@@ -119,15 +119,19 @@ reader = P.char '!' >> nonEmptyChunk
 
 {- | Parser for an Eval segment, a single non-empty chunk.
 
-> St.stParse fileOutEvalSegment " x ! " == FileOutEvalSegment " x "
+> p = St.stParse fileOutEvalSegment
+> p " x ! " == FileOutEvalSegment " x "
+> p "X x!\n!Y y! !" == FileOutEvalSegment "X x"
 -}
 fileOutEvalSegment :: St.P FileOutSegment
 fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
 
 {- | Parser for Reader segment.  Does not delete leading spaces.
 
-> St.stParse fileOutReaderSegment "!reader method: arg! chunk! !"
-> St.stParse fileOutReaderSegment "!p! q! !"
+> p = St.stParse fileOutReaderSegment
+> p "!reader method: arg! chunk! !"
+> p "!p! q! !"
+> p "!Z z! c! !"
 -}
 fileOutReaderSegment :: St.P FileOutSegment
 fileOutReaderSegment = do
@@ -153,6 +157,7 @@ fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
 > p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'! !"
 > p "!p ! q ! ! x ! !"
 > p "x ! y ! !p ! q ! ! z ! !"
+> p "X x!\nY y!\n!Z z! c! !"
 -}
 fileOut :: St.P FileOut
 fileOut = P.many1 (P.try fileOutSegment) St.>>~ P.optional emptyChunk
