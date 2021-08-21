@@ -271,3 +271,7 @@ somSystemClassPath = do
 -}
 somFindClassFile :: St.Identifier -> IO (Maybe FilePath)
 somFindClassFile cls = somClassPath >>= \path -> Directory.path_scan_recursively path (cls ++ ".som")
+
+-- | Load the class file for a named class.
+somLoadClassFile :: St.Identifier -> IO (Maybe St.ClassDefinition)
+somLoadClassFile x = somFindClassFile x >>= mapM somLoadClassDefinition

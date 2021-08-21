@@ -1,4 +1,6 @@
--- | Evalulator and VM
+{- | Variable lookup and assignment,
+     expression evalulation,
+     interpreter primitives -}
 module Interpreter.Som.Core where
 
 import Control.Monad {- base -}
@@ -125,8 +127,6 @@ contextAddBlockContext blockObject arguments = do
   when (length blockArguments /= length arguments) (vmError "contextAddBlockContext: arity error")
   localVariables <- localVariablesDict (zip blockArguments arguments) blockTemporaries
   return (contextAdd blockContext (BlockContext blockObject localVariables))
-
--- * Context/VM
 
 -- | Lookup value in current context.
 vmContextLookup :: Symbol -> VM Object
@@ -570,7 +570,8 @@ systemLoadClassMaybe x = do
 
 {- | Loads the named class and all of it's superclasses that are not already loaded.
      Assign each class in the global dictionary.
-     Returns the last class loaded (ie. not necessarily the initial class requested)
+     Returns the last class loaded (ie. not necessarily the initial class requested).
+     Halts when arriving at a class that is already loaded.
 -}
 systemLoadAndAssignClassesAbove :: Symbol -> VM (Maybe Object)
 systemLoadAndAssignClassesAbove x = do
@@ -578,11 +579,9 @@ systemLoadAndAssignClassesAbove x = do
   case existing of
       Just _ -> return existing
       Nothing -> do
-        maybeFile <- liftIO (Som.somFindClassFile x)
-        case maybeFile of
-          Just fn -> do
-            txt <- liftIO (readFile fn) -- file should exist, c.f. somFindClassFile
-            let cd = Som.parseSomClassDefinition txt
+        maybeCd <- liftIO (Som.somLoadClassFile x)
+        case maybeCd of
+          Just cd -> do
             co <- classObject cd
             _ <- case St.superclassName cd of
                    Just sp -> systemLoadAndAssignClassesAbove sp

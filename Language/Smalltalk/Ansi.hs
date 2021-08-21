@@ -16,6 +16,7 @@ Literal (3.4.6)
 -}
 module Language.Smalltalk.Ansi where
 
+import Data.Char {- base -}
 import Data.Functor.Identity {- base -}
 
 import Data.List.Split {- split -}
@@ -56,15 +57,15 @@ stLanguageDef =
 stLexer :: Token.GenTokenParser String () Identity
 stLexer = Token.makeTokenParser stLanguageDef
 
-{-
-import Data.Char {- base -}
-deleteLeadingSpaces :: String -> String
-deleteLeadingSpaces = dropWhile isSpace
--}
-
 -- | Run parser and report any error.  Does not delete leading spaces.
 stParse :: P t -> String -> t
 stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
+
+-- | Delete leading spaces and run stParse.
+stParseInitial :: P t -> String -> t
+stParseInitial p =
+  let deleteLeadingSpaces = dropWhile isSpace
+  in stParse p . deleteLeadingSpaces
 
 -- * 3.3 Smalltalk Abstract Program Grammar
 
@@ -1209,6 +1210,12 @@ quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
 
 -- | String quote character is '
 type QuotedString = String
+
+-- | Remove quote characters from QuotedString.
+--
+-- > unquoteQuotedString "'string'" == "string"
+unquoteQuotedString :: QuotedString -> String
+unquoteQuotedString x = take (length x - 2) (drop 1 x)
 
 {- | quotedString ::= stringDelimiter stringBody stringDelimiter
 

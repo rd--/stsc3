@@ -46,5 +46,5 @@ main = st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ug
 
 {-
 import Sound.SC3.UGen.DB.Bindings.SOM {- hsc3-db -}
-som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/som/SC3-UGen.som" ugen
+som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/lib/som/ugen" ugen
 -}

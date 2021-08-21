@@ -60,7 +60,7 @@ $
 There are two interpreters.
 
 One is a simple implementation of the Simple Object Model.
-
+It reads the location of class library files from the environment variable `SOM_CLASS_PATH`.
 ~~~~
 $ stsc3 repl som
 > TestHarness new run: #('TestHarness.som')
