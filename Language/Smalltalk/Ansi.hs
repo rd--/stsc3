@@ -250,7 +250,6 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 > p "p: q r. ^s"
 > p "printElementsOn: aStream aStream nextPut: $(."
 > p "* anObject ^self shallowCopy *= anObject"
-
 -}
 methodDefinition :: Identifier -> P MethodDefinition
 methodDefinition cl = do

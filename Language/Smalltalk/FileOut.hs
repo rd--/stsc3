@@ -13,7 +13,8 @@ These sequence takes one of two forms:
   <chunk>!<chunk>! ... !<whitespace>!
   !<reader>!<stream>!
 
-The parser here accepts only a subset of the second form, that required to add methods or comments to classes.
+The parser here accepts only a subset of the second form
+That required to add methods or comments to classes.
 It assumes that stream is a sequence of chunks ending with an empty chunk.
 
 -}
@@ -129,14 +130,20 @@ fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
 {- | Parser for Reader segment.  Does not delete leading spaces.
 
 > p = St.stParse fileOutReaderSegment
-> p "!reader method: arg! chunk! !"
+> p "!reader methodsFor: arg! chunk! !"
+> p "!reader class methodsFor: arg! chunk! !"
+> p "!reader commentStamp: arg! chunk!"
 > p "!p! q! !"
 > p "!Z z! c! !"
 -}
 fileOutReaderSegment :: St.P FileOutSegment
 fileOutReaderSegment = do
   r <- reader
-  s <- chunkSequence
+  s <- case words r of
+         _:"commentStamp:":_ -> fmap return nonEmptyChunk
+         _:"class":"methodsFor:":_ -> chunkSequence
+         _:"methodsFor:":_ -> chunkSequence
+         _ -> P.unexpected ("fileOutReaderSegment: " ++ r)
   return (FileOutReaderSegment r s)
 
 {- | Parser for FileOut segment.
@@ -144,8 +151,8 @@ fileOutReaderSegment = do
 > p = St.stParse fileOutSegment
 > p "'A string chunk!!'!" == FileOutEvalSegment "'A string chunk!'"
 > p "\"A comment chunk!!\"!" == FileOutEvalSegment "\"A comment chunk!\""
-> p "!reader method: arg! chunk one!!! chunk two!!! !"
-> p "!p ! q ! !"
+> p "!reader methodsFor: arg! chunk one!!! chunk two!!! !"
+> p "!p ! q ! !" -- fail
 -}
 fileOutSegment :: St.P FileOutSegment
 fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
@@ -248,16 +255,32 @@ trySequence sq x =
                Just r -> Just r
 
 evalFileOutSegment :: FileOutSegment -> Maybe FileOutEntry
-evalFileOutSegment = trySequence [evalSegmentClassDeclaration,evalSegmentClassComment,readerSegmentMethodDefinitions]
+evalFileOutSegment =
+  trySequence
+  [evalSegmentClassDeclaration
+  ,evalSegmentClassComment
+  ,readerSegmentMethodDefinitions]
+
+isComment :: FileOutSegment -> Bool
+isComment fo =
+  case fo of
+    FileOutEvalSegment txt -> head txt == '"' && last txt == '"'
+    _ -> False
+
+isString :: FileOutSegment -> Bool
+isString fo =
+  case fo of
+    FileOutEvalSegment txt -> head txt == '\'' && last txt == '\''
+    _ -> False
 
 evalFileOut :: FileOut -> [Maybe FileOutEntry]
-evalFileOut = map evalFileOutSegment
+evalFileOut = map evalFileOutSegment . filter (\x -> not (isComment x || isString x))
 
 evalFileOutSubset :: FileOut -> [FileOutEntry]
 evalFileOutSubset = mapMaybe evalFileOutSegment
 
 evalFileOutOrError :: FileOut -> [FileOutEntry]
-evalFileOutOrError = map (fromMaybe (error "evalFileOut")) . evalFileOut
+evalFileOutOrError = map (fromMaybe (error "evalFileOut: parse failed")) . evalFileOut
 
 {-
 
