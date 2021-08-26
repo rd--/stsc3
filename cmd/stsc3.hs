@@ -40,7 +40,7 @@ sc_cat fn = do
 help :: [String]
 help =
     ["stsc3 command [arguments]"
-    ," sc cat supercollider-program-file..."
+    ," sc cat fragment supercollider-program-file..."
     ," st cat {parsec|happy} smalltalk-program-file..."
     ," repl {ansi|expr}"
     ]
