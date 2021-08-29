@@ -109,6 +109,17 @@ $c class = Character                              "=> true"
 {p. q}
 {p + q. r s: t. u v}
 
+'Interval'
+(1 to: 9 by: 2) asArray                           "=> #(1 3 5 7 9)"
+(1 to: 9 by: 2) + 1                               "=> (2 to: 10 by: 2)"
+1 + (1 to: 9 by: 2)                               "=> #(2 4 6 8 10)"
+(1 to: 9 by: 2) * 2                               "=> #(2 6 10 14 18)"
+(9 to: 1) asArray                                 "=> #()"
+(9 to: 1 by: -1) asArray                          "=> #(9 8 7 6 5 4 3 2 1)"
+(1 to: 9 by: 2) collect: [:a | a + a]             "=> #(2 6 10 14 18)"
+(0.5 to: 4.5 by: 0.5) asArray                     "=> #(0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5)"
+(1 to: 2) sin                                     "=> #(0.8414709848078965 0.9092974268256817)"
+
 'Keyword'
 Transcript show: 'text'                           "=> prints text (no newline)"
 2 max: 3                                          "=> 3"
