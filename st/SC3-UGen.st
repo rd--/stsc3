@@ -29,9 +29,6 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
-!AllpassN class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !AllpassN class methodsFor: 'instance creation'!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
@@ -116,9 +113,6 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     freq := 0.0. root := 0.0. exp := 0.3333!
 !
 
-!AmpComp class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !AmpComp class methodsFor: 'instance creation'!
   freq: freq root: root exp: exp
@@ -197,9 +191,6 @@ Amplitude comment: 'Amplitude follower'!
     in := 0.0. attackTime := 0.01. releaseTime := 0.01!
 !
 
-!Amplitude class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Amplitude class methodsFor: 'instance creation'!
   in: in attackTime: attackTime releaseTime: releaseTime
@@ -276,9 +267,6 @@ Blip comment: 'Band limited impulse oscillator.'!
     freq := 440.0. numharm := 200.0!
 !
 
-!Blip class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Blip class methodsFor: 'instance creation'!
   freq: freq numharm: numharm
@@ -351,9 +339,6 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     in := 0.0. freq := 1200.0. rq := 1.0!
 !
 
-!BLowPass class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !BLowPass class methodsFor: 'instance creation'!
   in: in freq: freq rq: rq
@@ -432,9 +417,6 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     in := 0.0. freq := 440.0. rq := 1.0!
 !
 
-!BPF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !BPF class methodsFor: 'instance creation'!
   in: in freq: freq rq: rq
@@ -509,9 +491,6 @@ BPZ2 comment: 'Two zero fixed midpass.'!
     in := 0.0!
 !
 
-!BPZ2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !BPZ2 class methodsFor: 'instance creation'!
   in: in
@@ -570,9 +549,6 @@ BrownNoise comment: 'Brown Noise.'!
     !
 !
 
-!BrownNoise class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !BrownNoise class methodsFor: 'instance creation'!
    mul: mul
@@ -626,9 +602,6 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     in := 0.0. lo := 0.0. hi := 1.0!
 !
 
-!Clip class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Clip class methodsFor: 'instance creation'!
   in: in lo: lo hi: hi
@@ -709,9 +682,6 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
-!CombC class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !CombC class methodsFor: 'instance creation'!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
@@ -798,9 +768,6 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
-!CombL class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !CombL class methodsFor: 'instance creation'!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
@@ -887,9 +854,6 @@ CombN comment: 'Comb delay line with no interpolation.'!
     in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
 !
 
-!CombN class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !CombN class methodsFor: 'instance creation'!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
@@ -966,9 +930,6 @@ ControlDur comment: 'Duration of one block'!
     !
 !
 
-!ControlDur class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !ControlDur class methodsFor: 'instance creation'!
    mul: mul
@@ -1018,9 +979,6 @@ Crackle comment: 'Chaotic noise function.'!
     chaosParam := 1.5!
 !
 
-!Crackle class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Crackle class methodsFor: 'instance creation'!
   chaosParam: chaosParam
@@ -1085,9 +1043,6 @@ Decay comment: 'Exponential decay'!
     in := 0.0. decayTime := 1.0!
 !
 
-!Decay class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Decay class methodsFor: 'instance creation'!
   in: in decayTime: decayTime
@@ -1160,9 +1115,6 @@ Decay2 comment: 'Exponential decay'!
     in := 0.0. attackTime := 0.01. decayTime := 1.0!
 !
 
-!Decay2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Decay2 class methodsFor: 'instance creation'!
   in: in attackTime: attackTime decayTime: decayTime
@@ -1241,9 +1193,6 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     bufnum := 0.0. in := 0.0. octave := 12.0!
 !
 
-!DegreeToKey class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !DegreeToKey class methodsFor: 'instance creation'!
   bufnum: bufnum in: in octave: octave
@@ -1322,9 +1271,6 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     in := 0.0. maxdelaytime := 0.2. delaytime := 0.2!
 !
 
-!DelayN class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !DelayN class methodsFor: 'instance creation'!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime
@@ -1403,9 +1349,6 @@ Demand comment: 'Demand results from demand rate UGens.'!
     trig := 0.0. reset := 0.0!
 !
 
-!Demand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Demand class methodsFor: 'instance creation'!
   trig: trig reset: reset demandUGens: demandUGens
@@ -1484,9 +1427,6 @@ Diwhite comment: 'Demand rate white noise random generator.'!
     length := 100000000.0. lo := 0.0. hi := 1.0!
 !
 
-!Diwhite class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Diwhite class methodsFor: 'instance creation'!
   length: length lo: lo hi: hi
@@ -1563,9 +1503,6 @@ Drand comment: 'Demand rate random sequence generator.'!
     repeats := 1.0!
 !
 
-!Drand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Drand class methodsFor: 'instance creation'!
   repeats: repeats list: list
@@ -1636,9 +1573,6 @@ Dseq comment: 'Demand rate sequence generator.'!
     repeats := 1.0!
 !
 
-!Dseq class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Dseq class methodsFor: 'instance creation'!
   repeats: repeats list: list
@@ -1709,9 +1643,6 @@ Dshuf comment: 'Demand rate random sequence generator'!
     repeats := 1.0!
 !
 
-!Dshuf class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Dshuf class methodsFor: 'instance creation'!
   repeats: repeats list: list
@@ -1780,9 +1711,6 @@ Dust comment: 'Random impulses.'!
     density := 0.0!
 !
 
-!Dust class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Dust class methodsFor: 'instance creation'!
   density: density
@@ -1845,9 +1773,6 @@ Dust2 comment: 'Random impulses.'!
     density := 0.0!
 !
 
-!Dust2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Dust2 class methodsFor: 'instance creation'!
   density: density
@@ -1916,9 +1841,6 @@ Duty comment: 'Demand results from demand rate UGens.'!
     dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0!
 !
 
-!Duty class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Duty class methodsFor: 'instance creation'!
   dur: dur reset: reset doneAction: doneAction level: level
@@ -2009,9 +1931,6 @@ EnvGen comment: 'Envelope generator'!
     gate := 1.0. levelScale := 1.0. levelBias := 0.0. timeScale := 1.0. doneAction := 0.0!
 !
 
-!EnvGen class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !EnvGen class methodsFor: 'instance creation'!
   gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope
@@ -2106,9 +2025,6 @@ ExpRand comment: 'Exponential single random number generator.'!
     lo := 0.01. hi := 1.0!
 !
 
-!ExpRand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !ExpRand class methodsFor: 'instance creation'!
   lo: lo hi: hi
@@ -2181,9 +2097,6 @@ Formant comment: 'Formant oscillator'!
     fundfreq := 440.0. formfreq := 1760.0. bwfreq := 880.0!
 !
 
-!Formant class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Formant class methodsFor: 'instance creation'!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq
@@ -2260,9 +2173,6 @@ FSinOsc comment: 'Fast sine oscillator.'!
     freq := 440.0. iphase := 0.0!
 !
 
-!FSinOsc class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !FSinOsc class methodsFor: 'instance creation'!
   freq: freq iphase: iphase
@@ -2337,9 +2247,6 @@ FreeVerb comment: 'A reverb'!
     in := 0.0. mix := 0.33. room := 0.5. damp := 0.5!
 !
 
-!FreeVerb class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !FreeVerb class methodsFor: 'instance creation'!
   in: in mix: mix room: room damp: damp
@@ -2438,9 +2345,6 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     ampdist := 1.0. durdist := 1.0. adparam := 1.0. ddparam := 1.0. minfreq := 440.0. maxfreq := 660.0. ampscale := 0.5. durscale := 0.5. initCPs := 12.0. knum := 0.0!
 !
 
-!Gendy1 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Gendy1 class methodsFor: 'instance creation'!
   ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum
@@ -2571,9 +2475,6 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     trigger := 0.0. dur := 1.0. carfreq := 440.0. modfreq := 200.0. index := 1.0. pan := 0.0. envbufnum := -1.0. maxGrains := 512.0!
 !
 
-!GrainFM class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !GrainFM class methodsFor: 'instance creation'!
   numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains
@@ -2700,9 +2601,6 @@ GreyholeRaw comment: 'algorithmic delay'!
     in1 := 0.0. in2 := 0.0. damping := 0.0. delaytime := 2.0. diffusion := 0.5. feedback := 0.9. moddepth := 0.1. modfreq := 2.0. size := 1.0!
 !
 
-!GreyholeRaw class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !GreyholeRaw class methodsFor: 'instance creation'!
   in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
@@ -2831,9 +2729,6 @@ GVerb comment: 'A two-channel reverb'!
     in := 0.0. roomsize := 10.0. revtime := 3.0. damping := 0.5. inputbw := 0.5. spread := 15.0. drylevel := 1.0. earlyreflevel := 0.7. taillevel := 0.5. maxroomsize := 300.0!
 !
 
-!GVerb class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !GVerb class methodsFor: 'instance creation'!
   in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
@@ -2950,9 +2845,6 @@ Hasher comment: 'Scrambled value with a hash function.'!
     in := 0.0!
 !
 
-!Hasher class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Hasher class methodsFor: 'instance creation'!
   in: in
@@ -3017,9 +2909,6 @@ HPF comment: '2nd order Butterworth highpass filter.'!
     in := 0.0. freq := 440.0!
 !
 
-!HPF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !HPF class methodsFor: 'instance creation'!
   in: in freq: freq
@@ -3088,9 +2977,6 @@ HPZ1 comment: 'Two point difference filter'!
     in := 0.0!
 !
 
-!HPZ1 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !HPZ1 class methodsFor: 'instance creation'!
   in: in
@@ -3155,9 +3041,6 @@ IRand comment: 'Single integer random number generator.'!
     lo := 0.0. hi := 127.0!
 !
 
-!IRand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !IRand class methodsFor: 'instance creation'!
   lo: lo hi: hi
@@ -3228,9 +3111,6 @@ Impulse comment: 'Impulse oscillator.'!
     freq := 440.0. phase := 0.0!
 !
 
-!Impulse class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Impulse class methodsFor: 'instance creation'!
   freq: freq phase: phase
@@ -3299,9 +3179,6 @@ In comment: 'Read a signal from a bus.'!
     bus := 0.0!
 !
 
-!In class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !In class methodsFor: 'instance creation'!
   numChan: numChan bus: bus
@@ -3370,9 +3247,6 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     bus := 0.0!
 !
 
-!InFeedback class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !InFeedback class methodsFor: 'instance creation'!
   numChan: numChan bus: bus
@@ -3449,9 +3323,6 @@ Klank comment: 'Bank of resonators'!
     input := 0.0. freqscale := 1.0. freqoffset := 0.0. decayscale := 1.0!
 !
 
-!Klank class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Klank class methodsFor: 'instance creation'!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
@@ -3540,9 +3411,6 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
     freq := 440.0. iphase := 0.0!
 !
 
-!LFCub class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFCub class methodsFor: 'instance creation'!
   freq: freq iphase: iphase
@@ -3611,9 +3479,6 @@ LFNoise0 comment: 'Step noise'!
     freq := 500.0!
 !
 
-!LFNoise0 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFNoise0 class methodsFor: 'instance creation'!
   freq: freq
@@ -3676,9 +3541,6 @@ LFNoise1 comment: 'Ramp noise'!
     freq := 500.0!
 !
 
-!LFNoise1 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFNoise1 class methodsFor: 'instance creation'!
   freq: freq
@@ -3741,9 +3603,6 @@ LFNoise2 comment: 'Quadratic noise.'!
     freq := 500.0!
 !
 
-!LFNoise2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFNoise2 class methodsFor: 'instance creation'!
   freq: freq
@@ -3810,9 +3669,6 @@ LFPulse comment: 'pulse oscillator'!
     freq := 440.0. iphase := 0.0. width := 0.5!
 !
 
-!LFPulse class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFPulse class methodsFor: 'instance creation'!
   freq: freq iphase: iphase width: width
@@ -3889,9 +3745,6 @@ LFSaw comment: 'Sawtooth oscillator'!
     freq := 440.0. iphase := 0.0!
 !
 
-!LFSaw class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFSaw class methodsFor: 'instance creation'!
   freq: freq iphase: iphase
@@ -3962,9 +3815,6 @@ LFTri comment: 'Triangle oscillator'!
     freq := 440.0. iphase := 0.0!
 !
 
-!LFTri class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LFTri class methodsFor: 'instance creation'!
   freq: freq iphase: iphase
@@ -4035,9 +3885,6 @@ LPF comment: '2nd order Butterworth lowpass filter'!
     in := 0.0. freq := 440.0!
 !
 
-!LPF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LPF class methodsFor: 'instance creation'!
   in: in freq: freq
@@ -4108,9 +3955,6 @@ Lag comment: 'Exponential lag'!
     in := 0.0. lagTime := 0.1!
 !
 
-!Lag class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Lag class methodsFor: 'instance creation'!
   in: in lagTime: lagTime
@@ -4183,9 +4027,6 @@ LagUD comment: 'Exponential lag'!
     in := 0.0. lagTimeU := 0.1. lagTimeD := 0.1!
 !
 
-!LagUD class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LagUD class methodsFor: 'instance creation'!
   in: in lagTimeU: lagTimeU lagTimeD: lagTimeD
@@ -4262,9 +4103,6 @@ Lag2 comment: 'Exponential lag'!
     in := 0.0. lagTime := 0.1!
 !
 
-!Lag2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Lag2 class methodsFor: 'instance creation'!
   in: in lagTime: lagTime
@@ -4335,9 +4173,6 @@ Lag3 comment: 'Exponential lag'!
     in := 0.0. lagTime := 0.1!
 !
 
-!Lag3 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Lag3 class methodsFor: 'instance creation'!
   in: in lagTime: lagTime
@@ -4408,9 +4243,6 @@ Latch comment: 'Sample and hold'!
     in := 0.0. trig := 0.0!
 !
 
-!Latch class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Latch class methodsFor: 'instance creation'!
   in: in trig: trig
@@ -4481,9 +4313,6 @@ LeakDC comment: 'Remove DC'!
     in := 0.0. coef := 0.995!
 !
 
-!LeakDC class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LeakDC class methodsFor: 'instance creation'!
   in: in coef: coef
@@ -4556,9 +4385,6 @@ Limiter comment: 'Peak limiter'!
     in := 0.0. level := 1.0. dur := 0.01!
 !
 
-!Limiter class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Limiter class methodsFor: 'instance creation'!
   in: in level: level dur: dur
@@ -4639,9 +4465,6 @@ Line comment: 'Line generator.'!
     start := 0.0. end := 1.0. dur := 1.0. doneAction := 0.0!
 !
 
-!Line class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Line class methodsFor: 'instance creation'!
   start: start end: end dur: dur doneAction: doneAction
@@ -4730,9 +4553,6 @@ LinExp comment: 'Map a linear range to an exponential range'!
     in := 0.0. srclo := 0.0. srchi := 1.0. dstlo := 1.0. dsthi := 2.0!
 !
 
-!LinExp class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LinExp class methodsFor: 'instance creation'!
   in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
@@ -4821,9 +4641,6 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
     numChannels := 1.0. numFrames := 1.0!
 !
 
-!LocalBuf class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LocalBuf class methodsFor: 'instance creation'!
   numChannels: numChannels numFrames: numFrames
@@ -4892,9 +4709,6 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
     !
 !
 
-!LocalIn class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LocalIn class methodsFor: 'instance creation'!
   numChan: numChan default: default
@@ -4963,9 +4777,6 @@ LocalOut comment: 'Write to buses local to a synth.'!
     !
 !
 
-!LocalOut class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !LocalOut class methodsFor: 'instance creation'!
   channelsArray: channelsArray
@@ -5050,9 +4861,6 @@ MiRings comment: 'a resonator'!
     in := 0.0. trig := 0.0. pit := 60.0. struct := 0.25. bright := 0.5. damp := 0.7. pos := 0.25. model := 0.0. poly := 1.0. intern_exciter := 0.0. easteregg := 0.0. bypass := 0.0!
 !
 
-!MiRings class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !MiRings class methodsFor: 'instance creation'!
   in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
@@ -5166,7 +4974,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
 
 !ModDif methodsFor: 'accessing'!
   x ^x!
-  x: i x := i!
+  x: xValue x := xValue!
   y ^y!
   y: x y := x!
   mod ^mod!
@@ -5185,9 +4993,6 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     x := 0.0. y := 0.0. mod := 1.0!
 !
 
-!ModDif class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !ModDif class methodsFor: 'instance creation'!
   x: x y: y mod: mod
@@ -5268,9 +5073,6 @@ MouseX comment: 'Cursor tracking UGen.'!
     minval := 0.0. maxval := 1.0. warp := 0.0. lag := 0.2!
 !
 
-!MouseX class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !MouseX class methodsFor: 'instance creation'!
   minval: minval maxval: maxval warp: warp lag: lag
@@ -5357,9 +5159,6 @@ MouseY comment: 'Cursor tracking UGen.'!
     minval := 0.0. maxval := 1.0. warp := 0.0. lag := 0.2!
 !
 
-!MouseY class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !MouseY class methodsFor: 'instance creation'!
   minval: minval maxval: maxval warp: warp lag: lag
@@ -5444,9 +5243,6 @@ MulAdd comment: 'Multiply add'!
     in := 0.0. mul := 0.0. add := 0.0!
 !
 
-!MulAdd class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !MulAdd class methodsFor: 'instance creation'!
   in: in mul: mul add: add
@@ -5493,9 +5289,6 @@ OnePole comment: 'One pole filter.'!
     in := 0.0. coef := 0.5!
 !
 
-!OnePole class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !OnePole class methodsFor: 'instance creation'!
   in: in coef: coef
@@ -5566,9 +5359,6 @@ Out comment: 'Write a signal to a bus.'!
     bus := 0.0!
 !
 
-!Out class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Out class methodsFor: 'instance creation'!
   bus: bus channelsArray: channelsArray
@@ -5641,9 +5431,6 @@ Pan2 comment: 'Two channel equal power pan.'!
     in := 0.0. pos := 0.0. level := 1.0!
 !
 
-!Pan2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Pan2 class methodsFor: 'instance creation'!
   in: in pos: pos level: level
@@ -5726,9 +5513,6 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     trig := 0.0. rate := 1.0. start := 0.0. end := 1.0. resetPos := 0.0!
 !
 
-!Phasor class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Phasor class methodsFor: 'instance creation'!
   trig: trig rate: rate start: start end: end resetPos: resetPos
@@ -5811,9 +5595,6 @@ PinkNoise comment: 'Pink Noise.'!
     !
 !
 
-!PinkNoise class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !PinkNoise class methodsFor: 'instance creation'!
    mul: mul
@@ -5871,9 +5652,6 @@ PitchShift comment: 'Time domain pitch shifter.'!
     in := 0.0. windowSize := 0.2. pitchRatio := 1.0. pitchDispersion := 0.0. timeDispersion := 0.0!
 !
 
-!PitchShift class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !PitchShift class methodsFor: 'instance creation'!
   in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
@@ -5970,9 +5748,6 @@ Pluck comment: 'A Karplus-Strong UGen'!
     in := 0.0. trig := 1.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0. coef := 0.5!
 !
 
-!Pluck class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Pluck class methodsFor: 'instance creation'!
   in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef
@@ -6067,9 +5842,6 @@ Pulse comment: 'Band limited pulse wave.'!
     freq := 440.0. width := 0.5!
 !
 
-!Pulse class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Pulse class methodsFor: 'instance creation'!
   freq: freq width: width
@@ -6140,9 +5912,6 @@ PulseCount comment: 'Pulse counter.'!
     trig := 0.0. reset := 0.0!
 !
 
-!PulseCount class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !PulseCount class methodsFor: 'instance creation'!
   trig: trig reset: reset
@@ -6215,9 +5984,6 @@ PulseDivider comment: 'Pulse divider.'!
     trig := 0.0. div := 2.0. start := 0.0!
 !
 
-!PulseDivider class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !PulseDivider class methodsFor: 'instance creation'!
   trig: trig div: div start: start
@@ -6296,9 +6062,6 @@ RHPF comment: 'A resonant high pass filter.'!
     in := 0.0. freq := 440.0. rq := 1.0!
 !
 
-!RHPF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !RHPF class methodsFor: 'instance creation'!
   in: in freq: freq rq: rq
@@ -6377,9 +6140,6 @@ RLPF comment: 'A resonant low pass filter.'!
     in := 0.0. freq := 440.0. rq := 1.0!
 !
 
-!RLPF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !RLPF class methodsFor: 'instance creation'!
   in: in freq: freq rq: rq
@@ -6456,9 +6216,6 @@ Rand comment: 'Single random number generator.'!
     lo := 0.0. hi := 1.0!
 !
 
-!Rand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Rand class methodsFor: 'instance creation'!
   lo: lo hi: hi
@@ -6531,9 +6288,6 @@ Resonz comment: 'Resonant filter.'!
     in := 0.0. freq := 440.0. bwr := 1.0!
 !
 
-!Resonz class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Resonz class methodsFor: 'instance creation'!
   in: in freq: freq bwr: bwr
@@ -6612,9 +6366,6 @@ Ringz comment: 'Ringing filter.'!
     in := 0.0. freq := 440.0. decaytime := 1.0!
 !
 
-!Ringz class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Ringz class methodsFor: 'instance creation'!
   in: in freq: freq decaytime: decaytime
@@ -6691,9 +6442,6 @@ RunningMax comment: 'Track maximum level.'!
     in := 0.0. trig := 0.0!
 !
 
-!RunningMax class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !RunningMax class methodsFor: 'instance creation'!
   in: in trig: trig
@@ -6758,9 +6506,6 @@ SampleDur comment: 'Duration of one sample.'!
     !
 !
 
-!SampleDur class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SampleDur class methodsFor: 'instance creation'!
    mul: mul
@@ -6806,9 +6551,6 @@ SampleRate comment: 'Server sample rate.'!
     !
 !
 
-!SampleRate class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SampleRate class methodsFor: 'instance creation'!
    mul: mul
@@ -6858,9 +6600,6 @@ Saw comment: 'Band limited sawtooth.'!
     freq := 440.0!
 !
 
-!Saw class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Saw class methodsFor: 'instance creation'!
   freq: freq
@@ -6925,9 +6664,6 @@ Select comment: 'Select output from an array of inputs.'!
     which := 0.0!
 !
 
-!Select class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Select class methodsFor: 'instance creation'!
   which: which array: array
@@ -7002,9 +6738,6 @@ SetBuf comment: 'Set local buffer'!
     buf := 0.0. offset := 0.0. length := 0.0!
 !
 
-!SetBuf class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SetBuf class methodsFor: 'instance creation'!
   buf: buf offset: offset length: length array: array
@@ -7087,9 +6820,6 @@ SetResetFF comment: 'Set-reset flip flop.'!
     trig := 0.0. reset := 0.0!
 !
 
-!SetResetFF class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SetResetFF class methodsFor: 'instance creation'!
   trig: trig reset: reset
@@ -7160,9 +6890,6 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
     freq := 440.0. phase := 0.0!
 !
 
-!SinOsc class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SinOsc class methodsFor: 'instance creation'!
   freq: freq phase: phase
@@ -7233,9 +6960,6 @@ SinOscFB comment: 'Feedback FM oscillator'!
     freq := 440.0. feedback := 0.0!
 !
 
-!SinOscFB class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !SinOscFB class methodsFor: 'instance creation'!
   freq: freq feedback: feedback
@@ -7306,9 +7030,6 @@ Sweep comment: 'Triggered linear ramp'!
     trig := 0.0. rate := 1.0!
 !
 
-!Sweep class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Sweep class methodsFor: 'instance creation'!
   trig: trig rate: rate
@@ -7385,9 +7106,6 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     dur := 1.0. reset := 0.0. doneAction := 0.0. level := 1.0. gapFirst := 0.0!
 !
 
-!TDuty class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !TDuty class methodsFor: 'instance creation'!
   dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst
@@ -7478,9 +7196,6 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     lo := 0.01. hi := 1.0. trig := 0.0!
 !
 
-!TExpRand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !TExpRand class methodsFor: 'instance creation'!
   lo: lo hi: hi trig: trig
@@ -7555,9 +7270,6 @@ Timer comment: 'Returns time since last triggered.'!
     trig := 0.0!
 !
 
-!Timer class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Timer class methodsFor: 'instance creation'!
   trig: trig
@@ -7624,9 +7336,6 @@ TIRand comment: 'Triggered integer random number generator.'!
     lo := 0.0. hi := 127.0. trig := 0.0!
 !
 
-!TIRand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !TIRand class methodsFor: 'instance creation'!
   lo: lo hi: hi trig: trig
@@ -7705,9 +7414,6 @@ TRand comment: 'Triggered random number generator.'!
     lo := 0.0. hi := 1.0. trig := 0.0!
 !
 
-!TRand class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !TRand class methodsFor: 'instance creation'!
   lo: lo hi: hi trig: trig
@@ -7784,9 +7490,6 @@ Trig comment: 'Timed trigger.'!
     in := 0.0. dur := 0.1!
 !
 
-!Trig class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Trig class methodsFor: 'instance creation'!
   in: in dur: dur
@@ -7857,9 +7560,6 @@ Trig1 comment: 'Timed trigger.'!
     in := 0.0. dur := 0.1!
 !
 
-!Trig1 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !Trig1 class methodsFor: 'instance creation'!
   in: in dur: dur
@@ -7932,9 +7632,6 @@ VarSaw comment: 'Variable duty saw'!
     freq := 440.0. iphase := 0.0. width := 0.5!
 !
 
-!VarSaw class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !VarSaw class methodsFor: 'instance creation'!
   freq: freq iphase: iphase width: width
@@ -8005,9 +7702,6 @@ WhiteNoise comment: 'White noise.'!
     !
 !
 
-!WhiteNoise class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !WhiteNoise class methodsFor: 'instance creation'!
    mul: mul
@@ -8063,9 +7757,6 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     inA := 0.0. inB := 0.0. pan := 0.0. level := 1.0!
 !
 
-!XFade2 class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !XFade2 class methodsFor: 'instance creation'!
   inA: inA inB: inB pan: pan level: level
@@ -8152,9 +7843,6 @@ XLine comment: 'Exponential line generator.'!
     start := 1.0. end := 2.0. dur := 1.0. doneAction := 0.0!
 !
 
-!XLine class methodsFor: 'instance creation'!
-  new ^ self basicNew initialize!
-!
 
 !XLine class methodsFor: 'instance creation'!
   start: start end: end dur: dur doneAction: doneAction

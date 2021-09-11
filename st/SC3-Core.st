@@ -296,9 +296,6 @@ MCE comment: 'Multiple Channel Expansion'!
 !
 
 !MCE class methodsFor: 'instance creation'!
-  new
-    ^self basicNew initialize
-  !
   source: x
     ^self new source: x
   !
