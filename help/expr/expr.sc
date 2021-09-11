@@ -323,3 +323,16 @@ SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 1 min: (2 max: s) == 1   // true
 5 min: 2 + 2 == 4        // true (keyword operator binds as keyword message in smalltalk)
 5 min: 2 . neg + 6 == 4  // true
+
+'Interval'
+1.to(9) + 1 == Interval.new(2, 10, 1)             // true
+1.to(9) - 1 == Interval.new(0, 8, 1)              // true
+1.to(9) * 3 == Interval.new(3, 27, 3)             // true
+(1.to(9) * 3).asArray == 3.series(6,27)           // true ; (3,6 .. 27)
+(0.to(9) * 3).at(5) == 15                         // true
+0.5.to(4.5,0.5) == Interval.new(0.5, 4.5, 0.5)    // true
+1.to(1e15)                                        // Interval
+1.to(9).collect({arg i; i + i})                   // [2, 4, 6, 8, 10, 12, 14, 16, 18]
+1.to(9,2).collect({arg i; i + i})                 // [ 2, 6, 10, 14, 18 ]
+9.to(1,-1).asArray == 9.series(nil,1)             // true ; (9 .. 1)
+9.to(1).asArray == []                             // true
