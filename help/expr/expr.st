@@ -286,6 +286,12 @@ OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the n
 1 to: 5 do: [:x| Transcript show: x]              "=> print 1 to 5"
 1 to: 10 do: [:x| 5 atRandom println
 
+'Number'
+9 \\ 4 = 1                                        "=> true ; modulo ; sc>>%"
+-9 \\ 4 = 3                                       "=> true"
+9 \\ -4 = -3                                      "=> true"
+0.9 \\ 0.4                                        "=> ~ 0.1"
+
 'String'
 'quoted''string'
 'text' isLetters = true                           "=> true"

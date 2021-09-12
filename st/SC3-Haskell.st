@@ -75,7 +75,7 @@
   !
 !
 
-!MCE methodsFor: 'printing'!
+!Mce methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
     '(' putOn: fd.
@@ -127,10 +127,17 @@
     ']' putOn: fd
   !
   printHaskellOn: fd
-    "Print my hsc3 MCE representation."
+    "Print my hsc3 Mce representation."
     '(mce ' putOn: fd.
     self printHaskellArrayOn: fd.
     ')' putOn: fd
+  !
+!
+
+!Interval methodsFor: 'printing'!
+  printHaskellOn: fd
+    "Print my hsc3 Mce representation."
+    self asArray printHaskellOn: fd
   !
 !
 

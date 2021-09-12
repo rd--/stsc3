@@ -7,6 +7,10 @@ uop =
   ,("log",25),("sin",28),("cos",29),("tanh",36)
   ,("distort",42)]
 
+{- | Binary operators.
+
+     Smalltalk modulo is \\ but use % here.
+-}
 binop :: [(String, Int)]
 binop =
   [("+",0),("-",1),("*",2),("/",4),("%",5),("/=",7),("<",8),(">",9)

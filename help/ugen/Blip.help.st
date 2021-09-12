@@ -21,5 +21,5 @@ f := [:x |
  f1 := x at: 1. f2 := x at: 2. t1 := x at: 3. f3 := x at: 4. f4 := x at: 5. t2 := x at: 6. q := x at: 7.
  o := Blip freq: (Line start: f1 end: f2 dur: t1 doneAction: 0) numharm: 200 mul: 0.5.
  Resonz in: o freq: (Line start: f3 end: f4 dur: t2 doneAction: 0) bwr: q].
-(p collect: f) mce mix
+(p collect: f) asUGen mix
 

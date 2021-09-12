@@ -1,3 +1,18 @@
+!AbstractUGen methodsFor: 'coercing'!
+  generality
+    "Float is 400, UGen is more general than Float."
+    ^500
+  !
+  coerce: aNumber
+    "Coerce argument (which will be some form of Number) to a UGen"
+    ^aNumber asUGen
+  !
+  zero
+    "Gnu has a curious coercion scheme.  It rewrites x < y as (x - y) < 0."
+    0 asUGen
+  !
+!
+
 !String methodsFor: 'file i/o'!
   readTextFile
     "Read entire contents from file as String."
@@ -74,6 +89,27 @@
     ^result !
 !
 
+!Array methodsFor: 'coercing'!
+  generality
+    "UGen is 500, Array is more general than UGen?"
+    ^600
+  !
+  coerce: aNumber
+    "Coerce argument (which will be some form of Number) to a UGen"
+    ^(self size) replicate: aNumber
+  !
+!
+
+!Array methodsFor: 'converting'!
+  adaptToCollection: rcvr andSend: selector
+  "If I am involved in arithmetic with another Collection, return a Collection of
+  the results of each element combined with the scalar in that expression."
+  rcvr isSequenceable & self isSequenceable ifFalse:
+    [self error: 'Only sequenceable collections may be combined arithmetically'].
+  ^ rcvr with: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
+  !
+!
+
 !Number methodsFor: 'converting'!
   adaptToCollection: rcvr andSend: selector
     "If I am involved in arithmetic with a Collection, return a Collection of the results of each element combined with me in that expression."
@@ -84,6 +120,12 @@
 !Number methodsFor: 'mathematical functions'!
   ** aNumber
     ^ self raisedTo: aNumber
+  !
+!
+
+!Number methodsFor: 'testing'!
+  isZero
+    ^self = 0
   !
 !
 

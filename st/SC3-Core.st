@@ -8,33 +8,22 @@ Object subclass: #AbstractUGen
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen class methodsFor: 'instance creation'!
-  ar
-    ^self new ugenRate: #ar
-  !
   ar: d
     "
     Support for SuperCollider type class instantiation.
-    Note there are also ar and and kr instance methods.
+    Note there are also ar and kr instance methods, which are quite different.
+    There are no unary methods, SC messages always allow arguments.
     "
-    ^self ar setParamsFromOrderedDictionary: d
-  !
-  kr
-    ^self new ugenRate: #kr
+    ^self new ugenRate: #ar ; setParamsFromOrderedDictionary: d
   !
   kr: d
-    ^self kr setParamsFromOrderedDictionary: d
-  !
-  ir
-    ^self new ugenRate: #ir
+    ^self new ugenRate: #kr ; setParamsFromOrderedDictionary: d
   !
   ir: d
-    ^self ir setParamsFromOrderedDictionary: d
-  !
-  dr
-    ^self new ugenRate: #dr
+    ^self new ugenRate: #ir ; setParamsFromOrderedDictionary: d
   !
   dr: d
-    ^self dr setParamsFromOrderedDictionary: d
+    ^self new ugenRate: #dr ; setParamsFromOrderedDictionary: d
   !
 !
 
@@ -54,6 +43,31 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
+!AbstractUGen methodsFor: 'converting'!
+  adaptToInteger: rcvr andSend: selector
+    "If I am involved in arithmetic with an Integer, convert it to a UGen."
+    ^rcvr asUGen perform: selector with: self
+  !
+  adaptToFraction: rcvr andSend: selector
+    "If I am involved in arithmetic with a Fraction, convert it to a UGen."
+    ^rcvr asUGen perform: selector with: self
+  !
+!
+
+!AbstractUGen methodsFor: 'testing'!
+  isZero
+    "In the general case false, c.f. Constant.
+     Required for general Number / UGen math."
+    ^false
+  !
+!
+
+!AbstractUGen methodsFor: 'math'!
+  ** aNumber
+    ^self raisedTo: aNumber
+  !
+!
+
 !AbstractUGen methodsFor: 'collecting'!
   addToUGenSet: c
     "Add inputs to UGen set.  Only actual instances of UGen are collected."
@@ -69,7 +83,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen methodsFor: 'multi-channel expansion'!
   mce
-    ^MCE source: self
+    ^Mce source: self
   !
   transpose
     ^self mce transpose
@@ -254,14 +268,14 @@ Rate comment: 'UGen Processing Rate'!
   !
 !
 
-AbstractUGen subclass: #MCE
+AbstractUGen subclass: #Mce
   instanceVariableNames: 'source transform'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-MCE comment: 'Multiple Channel Expansion'!
+Mce comment: 'Multiple Channel Expansion'!
 
 !Array methodsFor: 'collecting'!
   addToUGenSet: c
@@ -269,13 +283,19 @@ MCE comment: 'Multiple Channel Expansion'!
   !
 !
 
-!MCE methodsFor: 'collecting'!
+!Interval methodsFor: 'collecting'!
+  addToUGenSet: c
+    self asArray addToUGenSet: c
+  !
+!
+
+!Mce methodsFor: 'collecting'!
   addToUGenSet: c
     source addToUGenSet: c
   !
 !
 
-!MCE methodsFor: 'accessing'!
+!Mce methodsFor: 'accessing'!
   source: x source := x
   !
   source ^source
@@ -288,20 +308,20 @@ MCE comment: 'Multiple Channel Expansion'!
   !
 !
 
-!MCE methodsFor: 'initialization'!
+!Mce methodsFor: 'initialization'!
   initialize
     source := nil.
     transform := nil
   !
 !
 
-!MCE class methodsFor: 'instance creation'!
+!Mce class methodsFor: 'instance creation'!
   source: x
     ^self new source: x
   !
 !
 
-!MCE methodsFor: 'transforms'!
+!Mce methodsFor: 'transforms'!
   reverse
     ^self copy transform: #(#mceReverse)
   !
@@ -316,15 +336,27 @@ MCE comment: 'Multiple Channel Expansion'!
   !
 !
 
+!AbstractUGen methodsFor: 'transforms'!
+  reverse
+    "Mce reverse"
+    ^self mce reverse
+  !
+  transpose
+    "Mce transpose"
+    ^self mce transpose
+  !
+!
+
 !Interval methodsFor: 'multi-channel expansion'!
-  mce
-    ^self asArray mce
+  asUGen
+    ^self asArray asUGen
   !
 !
 
 !Array methodsFor: 'multi-channel expansion'!
-  mce
-    ^MCE source: self
+  asUGen
+    "Array as UGen (ie. Mce)"
+    ^Mce source: self
   !
 !
 
@@ -473,6 +505,12 @@ AbstractUGen subclass: #Constant
 
 Constant comment: 'Constant Numerical Value'!
 
+!Constant methodsFor: 'testing'!
+  isZero
+    ^k isZero
+  !
+!
+
 !Constant methodsFor: 'collecting'!
   addToUGenSet: c
   !
@@ -495,7 +533,7 @@ Constant comment: 'Constant Numerical Value'!
 !
 
 !Number methodsFor: 'UGen constants'!
-  constant
+  asUGen
     ^Constant k: self
   !
 !

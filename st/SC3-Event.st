@@ -48,7 +48,7 @@ EventParam comment: 'Event Parameters'!
 
 !EventParam class methodsFor: 'instance creation'!
   fromUGen: u
-    "Create EventParam object from MCE UGen"
+    "Create EventParam object from Mce UGen"
     | e |
     e := self new.
     e w: (u at: 1).

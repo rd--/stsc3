@@ -39,15 +39,6 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^u!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
     |u|
     u := self new.
@@ -56,27 +47,9 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^(u * mul)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(u * mul)!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
@@ -122,14 +95,6 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     u root: root.
     u exp: exp.
     ^u!
-  at: at freq: freq root: root exp: exp
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u root: root.
-    u exp: exp.
-    ^u!
   freq: freq root: root exp: exp mul: mul
     |u|
     u := self new.
@@ -137,25 +102,9 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     u root: root.
     u exp: exp.
     ^(u * mul)!
-  at: at freq: freq root: root exp: exp mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u root: root.
-    u exp: exp.
-    ^(u * mul)!
   freq: freq root: root exp: exp mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u root: root.
-    u exp: exp.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq root: root exp: exp mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u root: root.
     u exp: exp.
@@ -200,14 +149,6 @@ Amplitude comment: 'Amplitude follower'!
     u attackTime: attackTime.
     u releaseTime: releaseTime.
     ^u!
-  at: at in: in attackTime: attackTime releaseTime: releaseTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u attackTime: attackTime.
-    u releaseTime: releaseTime.
-    ^u!
   in: in attackTime: attackTime releaseTime: releaseTime mul: mul
     |u|
     u := self new.
@@ -215,25 +156,9 @@ Amplitude comment: 'Amplitude follower'!
     u attackTime: attackTime.
     u releaseTime: releaseTime.
     ^(u * mul)!
-  at: at in: in attackTime: attackTime releaseTime: releaseTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u attackTime: attackTime.
-    u releaseTime: releaseTime.
-    ^(u * mul)!
   in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u attackTime: attackTime.
-    u releaseTime: releaseTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u attackTime: attackTime.
     u releaseTime: releaseTime.
@@ -275,36 +200,15 @@ Blip comment: 'Band limited impulse oscillator.'!
     u freq: freq.
     u numharm: numharm.
     ^u!
-  at: at freq: freq numharm: numharm
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u numharm: numharm.
-    ^u!
   freq: freq numharm: numharm mul: mul
     |u|
     u := self new.
     u freq: freq.
     u numharm: numharm.
     ^(u * mul)!
-  at: at freq: freq numharm: numharm mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u numharm: numharm.
-    ^(u * mul)!
   freq: freq numharm: numharm mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u numharm: numharm.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq numharm: numharm mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u numharm: numharm.
     ^(MulAdd in: u mul: mul add: add)!
@@ -348,14 +252,6 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     u freq: freq.
     u rq: rq.
     ^u!
-  at: at in: in freq: freq rq: rq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^u!
   in: in freq: freq rq: rq mul: mul
     |u|
     u := self new.
@@ -363,25 +259,9 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     u freq: freq.
     u rq: rq.
     ^(u * mul)!
-  at: at in: in freq: freq rq: rq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(u * mul)!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq rq: rq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u rq: rq.
@@ -426,14 +306,6 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     u freq: freq.
     u rq: rq.
     ^u!
-  at: at in: in freq: freq rq: rq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^u!
   in: in freq: freq rq: rq mul: mul
     |u|
     u := self new.
@@ -441,25 +313,9 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     u freq: freq.
     u rq: rq.
     ^(u * mul)!
-  at: at in: in freq: freq rq: rq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(u * mul)!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq rq: rq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u rq: rq.
@@ -498,32 +354,14 @@ BPZ2 comment: 'Two zero fixed midpass.'!
     u := self new.
     u in: in.
     ^u!
-  at: at in: in
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^u!
   in: in mul: mul
     |u|
     u := self new.
     u in: in.
     ^(u * mul)!
-  at: at in: in mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^(u * mul)!
   in: in mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -556,20 +394,10 @@ BrownNoise comment: 'Brown Noise.'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -611,14 +439,6 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     u lo: lo.
     u hi: hi.
     ^u!
-  at: at in: in lo: lo hi: hi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lo: lo.
-    u hi: hi.
-    ^u!
   in: in lo: lo hi: hi mul: mul
     |u|
     u := self new.
@@ -626,25 +446,9 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     u lo: lo.
     u hi: hi.
     ^(u * mul)!
-  at: at in: in lo: lo hi: hi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lo: lo.
-    u hi: hi.
-    ^(u * mul)!
   in: in lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u lo: lo.
-    u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in lo: lo hi: hi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u lo: lo.
     u hi: hi.
@@ -692,15 +496,6 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^u!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
     |u|
     u := self new.
@@ -709,27 +504,9 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^(u * mul)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(u * mul)!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
@@ -778,15 +555,6 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^u!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
     |u|
     u := self new.
@@ -795,27 +563,9 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^(u * mul)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(u * mul)!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
@@ -864,15 +614,6 @@ CombN comment: 'Comb delay line with no interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^u!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
     |u|
     u := self new.
@@ -881,27 +622,9 @@ CombN comment: 'Comb delay line with no interpolation.'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     ^(u * mul)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(u * mul)!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
@@ -937,20 +660,10 @@ ControlDur comment: 'Duration of one block'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -986,32 +699,14 @@ Crackle comment: 'Chaotic noise function.'!
     u := self new.
     u chaosParam: chaosParam.
     ^u!
-  at: at chaosParam: chaosParam
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u chaosParam: chaosParam.
-    ^u!
   chaosParam: chaosParam mul: mul
     |u|
     u := self new.
     u chaosParam: chaosParam.
     ^(u * mul)!
-  at: at chaosParam: chaosParam mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u chaosParam: chaosParam.
-    ^(u * mul)!
   chaosParam: chaosParam mul: mul add: add
     |u|
     u := self new.
-    u chaosParam: chaosParam.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at chaosParam: chaosParam mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u chaosParam: chaosParam.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -1051,36 +746,15 @@ Decay comment: 'Exponential decay'!
     u in: in.
     u decayTime: decayTime.
     ^u!
-  at: at in: in decayTime: decayTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u decayTime: decayTime.
-    ^u!
   in: in decayTime: decayTime mul: mul
     |u|
     u := self new.
     u in: in.
     u decayTime: decayTime.
     ^(u * mul)!
-  at: at in: in decayTime: decayTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u decayTime: decayTime.
-    ^(u * mul)!
   in: in decayTime: decayTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u decayTime: decayTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in decayTime: decayTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u decayTime: decayTime.
     ^(MulAdd in: u mul: mul add: add)!
@@ -1124,14 +798,6 @@ Decay2 comment: 'Exponential decay'!
     u attackTime: attackTime.
     u decayTime: decayTime.
     ^u!
-  at: at in: in attackTime: attackTime decayTime: decayTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u attackTime: attackTime.
-    u decayTime: decayTime.
-    ^u!
   in: in attackTime: attackTime decayTime: decayTime mul: mul
     |u|
     u := self new.
@@ -1139,25 +805,9 @@ Decay2 comment: 'Exponential decay'!
     u attackTime: attackTime.
     u decayTime: decayTime.
     ^(u * mul)!
-  at: at in: in attackTime: attackTime decayTime: decayTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u attackTime: attackTime.
-    u decayTime: decayTime.
-    ^(u * mul)!
   in: in attackTime: attackTime decayTime: decayTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u attackTime: attackTime.
-    u decayTime: decayTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in attackTime: attackTime decayTime: decayTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u attackTime: attackTime.
     u decayTime: decayTime.
@@ -1202,14 +852,6 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     u in: in.
     u octave: octave.
     ^u!
-  at: at bufnum: bufnum in: in octave: octave
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u bufnum: bufnum.
-    u in: in.
-    u octave: octave.
-    ^u!
   bufnum: bufnum in: in octave: octave mul: mul
     |u|
     u := self new.
@@ -1217,25 +859,9 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     u in: in.
     u octave: octave.
     ^(u * mul)!
-  at: at bufnum: bufnum in: in octave: octave mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u bufnum: bufnum.
-    u in: in.
-    u octave: octave.
-    ^(u * mul)!
   bufnum: bufnum in: in octave: octave mul: mul add: add
     |u|
     u := self new.
-    u bufnum: bufnum.
-    u in: in.
-    u octave: octave.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at bufnum: bufnum in: in octave: octave mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u bufnum: bufnum.
     u in: in.
     u octave: octave.
@@ -1280,14 +906,6 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     ^u!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul
     |u|
     u := self new.
@@ -1295,25 +913,9 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     ^(u * mul)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    ^(u * mul)!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
@@ -1358,14 +960,6 @@ Demand comment: 'Demand results from demand rate UGens.'!
     u reset: reset.
     u demandUGens: demandUGens.
     ^u!
-  at: at trig: trig reset: reset demandUGens: demandUGens
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    u demandUGens: demandUGens.
-    ^u!
   trig: trig reset: reset demandUGens: demandUGens mul: mul
     |u|
     u := self new.
@@ -1373,25 +967,9 @@ Demand comment: 'Demand results from demand rate UGens.'!
     u reset: reset.
     u demandUGens: demandUGens.
     ^(u * mul)!
-  at: at trig: trig reset: reset demandUGens: demandUGens mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    u demandUGens: demandUGens.
-    ^(u * mul)!
   trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u reset: reset.
-    u demandUGens: demandUGens.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u reset: reset.
     u demandUGens: demandUGens.
@@ -1436,14 +1014,6 @@ Diwhite comment: 'Demand rate white noise random generator.'!
     u lo: lo.
     u hi: hi.
     ^u!
-  at: at length: length lo: lo hi: hi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u length: length.
-    u lo: lo.
-    u hi: hi.
-    ^u!
   length: length lo: lo hi: hi mul: mul
     |u|
     u := self new.
@@ -1451,25 +1021,9 @@ Diwhite comment: 'Demand rate white noise random generator.'!
     u lo: lo.
     u hi: hi.
     ^(u * mul)!
-  at: at length: length lo: lo hi: hi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u length: length.
-    u lo: lo.
-    u hi: hi.
-    ^(u * mul)!
   length: length lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
-    u length: length.
-    u lo: lo.
-    u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at length: length lo: lo hi: hi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u length: length.
     u lo: lo.
     u hi: hi.
@@ -1511,36 +1065,15 @@ Drand comment: 'Demand rate random sequence generator.'!
     u repeats: repeats.
     u list: list.
     ^u!
-  at: at repeats: repeats list: list
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^u!
   repeats: repeats list: list mul: mul
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
     ^(u * mul)!
-  at: at repeats: repeats list: list mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^(u * mul)!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
-    u repeats: repeats.
-    u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at repeats: repeats list: list mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u repeats: repeats.
     u list: list.
     ^(MulAdd in: u mul: mul add: add)!
@@ -1581,36 +1114,15 @@ Dseq comment: 'Demand rate sequence generator.'!
     u repeats: repeats.
     u list: list.
     ^u!
-  at: at repeats: repeats list: list
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^u!
   repeats: repeats list: list mul: mul
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
     ^(u * mul)!
-  at: at repeats: repeats list: list mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^(u * mul)!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
-    u repeats: repeats.
-    u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at repeats: repeats list: list mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u repeats: repeats.
     u list: list.
     ^(MulAdd in: u mul: mul add: add)!
@@ -1651,36 +1163,15 @@ Dshuf comment: 'Demand rate random sequence generator'!
     u repeats: repeats.
     u list: list.
     ^u!
-  at: at repeats: repeats list: list
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^u!
   repeats: repeats list: list mul: mul
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
     ^(u * mul)!
-  at: at repeats: repeats list: list mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u repeats: repeats.
-    u list: list.
-    ^(u * mul)!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
-    u repeats: repeats.
-    u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at repeats: repeats list: list mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u repeats: repeats.
     u list: list.
     ^(MulAdd in: u mul: mul add: add)!
@@ -1718,32 +1209,14 @@ Dust comment: 'Random impulses.'!
     u := self new.
     u density: density.
     ^u!
-  at: at density: density
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u density: density.
-    ^u!
   density: density mul: mul
     |u|
     u := self new.
     u density: density.
     ^(u * mul)!
-  at: at density: density mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u density: density.
-    ^(u * mul)!
   density: density mul: mul add: add
     |u|
     u := self new.
-    u density: density.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at density: density mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u density: density.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -1780,32 +1253,14 @@ Dust2 comment: 'Random impulses.'!
     u := self new.
     u density: density.
     ^u!
-  at: at density: density
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u density: density.
-    ^u!
   density: density mul: mul
     |u|
     u := self new.
     u density: density.
     ^(u * mul)!
-  at: at density: density mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u density: density.
-    ^(u * mul)!
   density: density mul: mul add: add
     |u|
     u := self new.
-    u density: density.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at density: density mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u density: density.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -1851,15 +1306,6 @@ Duty comment: 'Demand results from demand rate UGens.'!
     u doneAction: doneAction.
     u level: level.
     ^u!
-  at: at dur: dur reset: reset doneAction: doneAction level: level
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    ^u!
   dur: dur reset: reset doneAction: doneAction level: level mul: mul
     |u|
     u := self new.
@@ -1868,27 +1314,9 @@ Duty comment: 'Demand results from demand rate UGens.'!
     u doneAction: doneAction.
     u level: level.
     ^(u * mul)!
-  at: at dur: dur reset: reset doneAction: doneAction level: level mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    ^(u * mul)!
   dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add
     |u|
     u := self new.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u dur: dur.
     u reset: reset.
     u doneAction: doneAction.
@@ -1943,17 +1371,6 @@ EnvGen comment: 'Envelope generator'!
     u doneAction: doneAction.
     u envelope: envelope.
     ^u!
-  at: at gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u gate: gate.
-    u levelScale: levelScale.
-    u levelBias: levelBias.
-    u timeScale: timeScale.
-    u doneAction: doneAction.
-    u envelope: envelope.
-    ^u!
   gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul
     |u|
     u := self new.
@@ -1964,31 +1381,9 @@ EnvGen comment: 'Envelope generator'!
     u doneAction: doneAction.
     u envelope: envelope.
     ^(u * mul)!
-  at: at gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u gate: gate.
-    u levelScale: levelScale.
-    u levelBias: levelBias.
-    u timeScale: timeScale.
-    u doneAction: doneAction.
-    u envelope: envelope.
-    ^(u * mul)!
   gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add
     |u|
     u := self new.
-    u gate: gate.
-    u levelScale: levelScale.
-    u levelBias: levelBias.
-    u timeScale: timeScale.
-    u doneAction: doneAction.
-    u envelope: envelope.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u gate: gate.
     u levelScale: levelScale.
     u levelBias: levelBias.
@@ -2033,36 +1428,15 @@ ExpRand comment: 'Exponential single random number generator.'!
     u lo: lo.
     u hi: hi.
     ^u!
-  at: at lo: lo hi: hi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^u!
   lo: lo hi: hi mul: mul
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     ^(u * mul)!
-  at: at lo: lo hi: hi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^(u * mul)!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     ^(MulAdd in: u mul: mul add: add)!
@@ -2106,14 +1480,6 @@ Formant comment: 'Formant oscillator'!
     u formfreq: formfreq.
     u bwfreq: bwfreq.
     ^u!
-  at: at fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u fundfreq: fundfreq.
-    u formfreq: formfreq.
-    u bwfreq: bwfreq.
-    ^u!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul
     |u|
     u := self new.
@@ -2121,25 +1487,9 @@ Formant comment: 'Formant oscillator'!
     u formfreq: formfreq.
     u bwfreq: bwfreq.
     ^(u * mul)!
-  at: at fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u fundfreq: fundfreq.
-    u formfreq: formfreq.
-    u bwfreq: bwfreq.
-    ^(u * mul)!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add
     |u|
     u := self new.
-    u fundfreq: fundfreq.
-    u formfreq: formfreq.
-    u bwfreq: bwfreq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u fundfreq: fundfreq.
     u formfreq: formfreq.
     u bwfreq: bwfreq.
@@ -2181,36 +1531,15 @@ FSinOsc comment: 'Fast sine oscillator.'!
     u freq: freq.
     u iphase: iphase.
     ^u!
-  at: at freq: freq iphase: iphase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^u!
   freq: freq iphase: iphase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^(u * mul)!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -2257,15 +1586,6 @@ FreeVerb comment: 'A reverb'!
     u room: room.
     u damp: damp.
     ^u!
-  at: at in: in mix: mix room: room damp: damp
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u mix: mix.
-    u room: room.
-    u damp: damp.
-    ^u!
   in: in mix: mix room: room damp: damp mul: mul
     |u|
     u := self new.
@@ -2274,27 +1594,9 @@ FreeVerb comment: 'A reverb'!
     u room: room.
     u damp: damp.
     ^(u * mul)!
-  at: at in: in mix: mix room: room damp: damp mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u mix: mix.
-    u room: room.
-    u damp: damp.
-    ^(u * mul)!
   in: in mix: mix room: room damp: damp mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u mix: mix.
-    u room: room.
-    u damp: damp.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in mix: mix room: room damp: damp mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u mix: mix.
     u room: room.
@@ -2361,21 +1663,6 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     u initCPs: initCPs.
     u knum: knum.
     ^u!
-  at: at ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u ampdist: ampdist.
-    u durdist: durdist.
-    u adparam: adparam.
-    u ddparam: ddparam.
-    u minfreq: minfreq.
-    u maxfreq: maxfreq.
-    u ampscale: ampscale.
-    u durscale: durscale.
-    u initCPs: initCPs.
-    u knum: knum.
-    ^u!
   ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul
     |u|
     u := self new.
@@ -2390,39 +1677,9 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     u initCPs: initCPs.
     u knum: knum.
     ^(u * mul)!
-  at: at ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u ampdist: ampdist.
-    u durdist: durdist.
-    u adparam: adparam.
-    u ddparam: ddparam.
-    u minfreq: minfreq.
-    u maxfreq: maxfreq.
-    u ampscale: ampscale.
-    u durscale: durscale.
-    u initCPs: initCPs.
-    u knum: knum.
-    ^(u * mul)!
   ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul add: add
     |u|
     u := self new.
-    u ampdist: ampdist.
-    u durdist: durdist.
-    u adparam: adparam.
-    u ddparam: ddparam.
-    u minfreq: minfreq.
-    u maxfreq: maxfreq.
-    u ampscale: ampscale.
-    u durscale: durscale.
-    u initCPs: initCPs.
-    u knum: knum.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u ampdist: ampdist.
     u durdist: durdist.
     u adparam: adparam.
@@ -2490,20 +1747,6 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     u envbufnum: envbufnum.
     u maxGrains: maxGrains.
     ^u!
-  at: at numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u trigger: trigger.
-    u dur: dur.
-    u carfreq: carfreq.
-    u modfreq: modfreq.
-    u index: index.
-    u pan: pan.
-    u envbufnum: envbufnum.
-    u maxGrains: maxGrains.
-    ^u!
   numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul
     |u|
     u := self new.
@@ -2517,37 +1760,9 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     u envbufnum: envbufnum.
     u maxGrains: maxGrains.
     ^(u * mul)!
-  at: at numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u trigger: trigger.
-    u dur: dur.
-    u carfreq: carfreq.
-    u modfreq: modfreq.
-    u index: index.
-    u pan: pan.
-    u envbufnum: envbufnum.
-    u maxGrains: maxGrains.
-    ^(u * mul)!
   numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add
     |u|
     u := self new.
-    u numChan: numChan.
-    u trigger: trigger.
-    u dur: dur.
-    u carfreq: carfreq.
-    u modfreq: modfreq.
-    u index: index.
-    u pan: pan.
-    u envbufnum: envbufnum.
-    u maxGrains: maxGrains.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u numChan: numChan.
     u trigger: trigger.
     u dur: dur.
@@ -2616,20 +1831,6 @@ GreyholeRaw comment: 'algorithmic delay'!
     u modfreq: modfreq.
     u size: size.
     ^u!
-  at: at in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in1: in1.
-    u in2: in2.
-    u damping: damping.
-    u delaytime: delaytime.
-    u diffusion: diffusion.
-    u feedback: feedback.
-    u moddepth: moddepth.
-    u modfreq: modfreq.
-    u size: size.
-    ^u!
   in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul
     |u|
     u := self new.
@@ -2643,37 +1844,9 @@ GreyholeRaw comment: 'algorithmic delay'!
     u modfreq: modfreq.
     u size: size.
     ^(u * mul)!
-  at: at in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in1: in1.
-    u in2: in2.
-    u damping: damping.
-    u delaytime: delaytime.
-    u diffusion: diffusion.
-    u feedback: feedback.
-    u moddepth: moddepth.
-    u modfreq: modfreq.
-    u size: size.
-    ^(u * mul)!
   in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add
     |u|
     u := self new.
-    u in1: in1.
-    u in2: in2.
-    u damping: damping.
-    u delaytime: delaytime.
-    u diffusion: diffusion.
-    u feedback: feedback.
-    u moddepth: moddepth.
-    u modfreq: modfreq.
-    u size: size.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in1: in1.
     u in2: in2.
     u damping: damping.
@@ -2745,21 +1918,6 @@ GVerb comment: 'A two-channel reverb'!
     u taillevel: taillevel.
     u maxroomsize: maxroomsize.
     ^u!
-  at: at in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u roomsize: roomsize.
-    u revtime: revtime.
-    u damping: damping.
-    u inputbw: inputbw.
-    u spread: spread.
-    u drylevel: drylevel.
-    u earlyreflevel: earlyreflevel.
-    u taillevel: taillevel.
-    u maxroomsize: maxroomsize.
-    ^u!
   in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul
     |u|
     u := self new.
@@ -2774,39 +1932,9 @@ GVerb comment: 'A two-channel reverb'!
     u taillevel: taillevel.
     u maxroomsize: maxroomsize.
     ^(u * mul)!
-  at: at in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u roomsize: roomsize.
-    u revtime: revtime.
-    u damping: damping.
-    u inputbw: inputbw.
-    u spread: spread.
-    u drylevel: drylevel.
-    u earlyreflevel: earlyreflevel.
-    u taillevel: taillevel.
-    u maxroomsize: maxroomsize.
-    ^(u * mul)!
   in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u roomsize: roomsize.
-    u revtime: revtime.
-    u damping: damping.
-    u inputbw: inputbw.
-    u spread: spread.
-    u drylevel: drylevel.
-    u earlyreflevel: earlyreflevel.
-    u taillevel: taillevel.
-    u maxroomsize: maxroomsize.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u roomsize: roomsize.
     u revtime: revtime.
@@ -2852,32 +1980,14 @@ Hasher comment: 'Scrambled value with a hash function.'!
     u := self new.
     u in: in.
     ^u!
-  at: at in: in
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^u!
   in: in mul: mul
     |u|
     u := self new.
     u in: in.
     ^(u * mul)!
-  at: at in: in mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^(u * mul)!
   in: in mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -2917,36 +2027,15 @@ HPF comment: '2nd order Butterworth highpass filter.'!
     u in: in.
     u freq: freq.
     ^u!
-  at: at in: in freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    ^u!
   in: in freq: freq mul: mul
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     ^(u * mul)!
-  at: at in: in freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    ^(u * mul)!
   in: in freq: freq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
@@ -2984,32 +2073,14 @@ HPZ1 comment: 'Two point difference filter'!
     u := self new.
     u in: in.
     ^u!
-  at: at in: in
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^u!
   in: in mul: mul
     |u|
     u := self new.
     u in: in.
     ^(u * mul)!
-  at: at in: in mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    ^(u * mul)!
   in: in mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -3049,36 +2120,15 @@ IRand comment: 'Single integer random number generator.'!
     u lo: lo.
     u hi: hi.
     ^u!
-  at: at lo: lo hi: hi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^u!
   lo: lo hi: hi mul: mul
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     ^(u * mul)!
-  at: at lo: lo hi: hi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^(u * mul)!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3119,36 +2169,15 @@ Impulse comment: 'Impulse oscillator.'!
     u freq: freq.
     u phase: phase.
     ^u!
-  at: at freq: freq phase: phase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u phase: phase.
-    ^u!
   freq: freq phase: phase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u phase: phase.
     ^(u * mul)!
-  at: at freq: freq phase: phase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u phase: phase.
-    ^(u * mul)!
   freq: freq phase: phase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u phase: phase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq phase: phase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u phase: phase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3187,36 +2216,15 @@ In comment: 'Read a signal from a bus.'!
     u numChan: numChan.
     u bus: bus.
     ^u!
-  at: at numChan: numChan bus: bus
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u bus: bus.
-    ^u!
   numChan: numChan bus: bus mul: mul
     |u|
     u := self new.
     u numChan: numChan.
     u bus: bus.
     ^(u * mul)!
-  at: at numChan: numChan bus: bus mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u bus: bus.
-    ^(u * mul)!
   numChan: numChan bus: bus mul: mul add: add
     |u|
     u := self new.
-    u numChan: numChan.
-    u bus: bus.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at numChan: numChan bus: bus mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u numChan: numChan.
     u bus: bus.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3255,36 +2263,15 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     u numChan: numChan.
     u bus: bus.
     ^u!
-  at: at numChan: numChan bus: bus
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u bus: bus.
-    ^u!
   numChan: numChan bus: bus mul: mul
     |u|
     u := self new.
     u numChan: numChan.
     u bus: bus.
     ^(u * mul)!
-  at: at numChan: numChan bus: bus mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u bus: bus.
-    ^(u * mul)!
   numChan: numChan bus: bus mul: mul add: add
     |u|
     u := self new.
-    u numChan: numChan.
-    u bus: bus.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at numChan: numChan bus: bus mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u numChan: numChan.
     u bus: bus.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3334,16 +2321,6 @@ Klank comment: 'Bank of resonators'!
     u decayscale: decayscale.
     u specificationsArrayRef: specificationsArrayRef.
     ^u!
-  at: at input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u input: input.
-    u freqscale: freqscale.
-    u freqoffset: freqoffset.
-    u decayscale: decayscale.
-    u specificationsArrayRef: specificationsArrayRef.
-    ^u!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul
     |u|
     u := self new.
@@ -3353,29 +2330,9 @@ Klank comment: 'Bank of resonators'!
     u decayscale: decayscale.
     u specificationsArrayRef: specificationsArrayRef.
     ^(u * mul)!
-  at: at input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u input: input.
-    u freqscale: freqscale.
-    u freqoffset: freqoffset.
-    u decayscale: decayscale.
-    u specificationsArrayRef: specificationsArrayRef.
-    ^(u * mul)!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add
     |u|
     u := self new.
-    u input: input.
-    u freqscale: freqscale.
-    u freqoffset: freqoffset.
-    u decayscale: decayscale.
-    u specificationsArrayRef: specificationsArrayRef.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u input: input.
     u freqscale: freqscale.
     u freqoffset: freqoffset.
@@ -3419,36 +2376,15 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
     u freq: freq.
     u iphase: iphase.
     ^u!
-  at: at freq: freq iphase: iphase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^u!
   freq: freq iphase: iphase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^(u * mul)!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3486,32 +2422,14 @@ LFNoise0 comment: 'Step noise'!
     u := self new.
     u freq: freq.
     ^u!
-  at: at freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^u!
   freq: freq mul: mul
     |u|
     u := self new.
     u freq: freq.
     ^(u * mul)!
-  at: at freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^(u * mul)!
   freq: freq mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -3548,32 +2466,14 @@ LFNoise1 comment: 'Ramp noise'!
     u := self new.
     u freq: freq.
     ^u!
-  at: at freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^u!
   freq: freq mul: mul
     |u|
     u := self new.
     u freq: freq.
     ^(u * mul)!
-  at: at freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^(u * mul)!
   freq: freq mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -3610,32 +2510,14 @@ LFNoise2 comment: 'Quadratic noise.'!
     u := self new.
     u freq: freq.
     ^u!
-  at: at freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^u!
   freq: freq mul: mul
     |u|
     u := self new.
     u freq: freq.
     ^(u * mul)!
-  at: at freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^(u * mul)!
   freq: freq mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -3678,14 +2560,6 @@ LFPulse comment: 'pulse oscillator'!
     u iphase: iphase.
     u width: width.
     ^u!
-  at: at freq: freq iphase: iphase width: width
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^u!
   freq: freq iphase: iphase width: width mul: mul
     |u|
     u := self new.
@@ -3693,25 +2567,9 @@ LFPulse comment: 'pulse oscillator'!
     u iphase: iphase.
     u width: width.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase width: width mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^(u * mul)!
   freq: freq iphase: iphase width: width mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase width: width mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     u width: width.
@@ -3753,36 +2611,15 @@ LFSaw comment: 'Sawtooth oscillator'!
     u freq: freq.
     u iphase: iphase.
     ^u!
-  at: at freq: freq iphase: iphase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^u!
   freq: freq iphase: iphase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^(u * mul)!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3823,36 +2660,15 @@ LFTri comment: 'Triangle oscillator'!
     u freq: freq.
     u iphase: iphase.
     ^u!
-  at: at freq: freq iphase: iphase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^u!
   freq: freq iphase: iphase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    ^(u * mul)!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3893,36 +2709,15 @@ LPF comment: '2nd order Butterworth lowpass filter'!
     u in: in.
     u freq: freq.
     ^u!
-  at: at in: in freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    ^u!
   in: in freq: freq mul: mul
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     ^(u * mul)!
-  at: at in: in freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    ^(u * mul)!
   in: in freq: freq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
@@ -3963,36 +2758,15 @@ Lag comment: 'Exponential lag'!
     u in: in.
     u lagTime: lagTime.
     ^u!
-  at: at in: in lagTime: lagTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^u!
   in: in lagTime: lagTime mul: mul
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
     ^(u * mul)!
-  at: at in: in lagTime: lagTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^(u * mul)!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in lagTime: lagTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u lagTime: lagTime.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4036,14 +2810,6 @@ LagUD comment: 'Exponential lag'!
     u lagTimeU: lagTimeU.
     u lagTimeD: lagTimeD.
     ^u!
-  at: at in: in lagTimeU: lagTimeU lagTimeD: lagTimeD
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTimeU: lagTimeU.
-    u lagTimeD: lagTimeD.
-    ^u!
   in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul
     |u|
     u := self new.
@@ -4051,25 +2817,9 @@ LagUD comment: 'Exponential lag'!
     u lagTimeU: lagTimeU.
     u lagTimeD: lagTimeD.
     ^(u * mul)!
-  at: at in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTimeU: lagTimeU.
-    u lagTimeD: lagTimeD.
-    ^(u * mul)!
   in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u lagTimeU: lagTimeU.
-    u lagTimeD: lagTimeD.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u lagTimeU: lagTimeU.
     u lagTimeD: lagTimeD.
@@ -4111,36 +2861,15 @@ Lag2 comment: 'Exponential lag'!
     u in: in.
     u lagTime: lagTime.
     ^u!
-  at: at in: in lagTime: lagTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^u!
   in: in lagTime: lagTime mul: mul
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
     ^(u * mul)!
-  at: at in: in lagTime: lagTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^(u * mul)!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in lagTime: lagTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u lagTime: lagTime.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4181,36 +2910,15 @@ Lag3 comment: 'Exponential lag'!
     u in: in.
     u lagTime: lagTime.
     ^u!
-  at: at in: in lagTime: lagTime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^u!
   in: in lagTime: lagTime mul: mul
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
     ^(u * mul)!
-  at: at in: in lagTime: lagTime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u lagTime: lagTime.
-    ^(u * mul)!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in lagTime: lagTime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u lagTime: lagTime.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4251,36 +2959,15 @@ Latch comment: 'Sample and hold'!
     u in: in.
     u trig: trig.
     ^u!
-  at: at in: in trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    ^u!
   in: in trig: trig mul: mul
     |u|
     u := self new.
     u in: in.
     u trig: trig.
     ^(u * mul)!
-  at: at in: in trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    ^(u * mul)!
   in: in trig: trig mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u trig: trig.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4321,36 +3008,15 @@ LeakDC comment: 'Remove DC'!
     u in: in.
     u coef: coef.
     ^u!
-  at: at in: in coef: coef
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u coef: coef.
-    ^u!
   in: in coef: coef mul: mul
     |u|
     u := self new.
     u in: in.
     u coef: coef.
     ^(u * mul)!
-  at: at in: in coef: coef mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u coef: coef.
-    ^(u * mul)!
   in: in coef: coef mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in coef: coef mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u coef: coef.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4394,14 +3060,6 @@ Limiter comment: 'Peak limiter'!
     u level: level.
     u dur: dur.
     ^u!
-  at: at in: in level: level dur: dur
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u level: level.
-    u dur: dur.
-    ^u!
   in: in level: level dur: dur mul: mul
     |u|
     u := self new.
@@ -4409,25 +3067,9 @@ Limiter comment: 'Peak limiter'!
     u level: level.
     u dur: dur.
     ^(u * mul)!
-  at: at in: in level: level dur: dur mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u level: level.
-    u dur: dur.
-    ^(u * mul)!
   in: in level: level dur: dur mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u level: level.
-    u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in level: level dur: dur mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u level: level.
     u dur: dur.
@@ -4475,15 +3117,6 @@ Line comment: 'Line generator.'!
     u dur: dur.
     u doneAction: doneAction.
     ^u!
-  at: at start: start end: end dur: dur doneAction: doneAction
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^u!
   start: start end: end dur: dur doneAction: doneAction mul: mul
     |u|
     u := self new.
@@ -4492,27 +3125,9 @@ Line comment: 'Line generator.'!
     u dur: dur.
     u doneAction: doneAction.
     ^(u * mul)!
-  at: at start: start end: end dur: dur doneAction: doneAction mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^(u * mul)!
   start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     |u|
     u := self new.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at start: start end: end dur: dur doneAction: doneAction mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u start: start.
     u end: end.
     u dur: dur.
@@ -4564,16 +3179,6 @@ LinExp comment: 'Map a linear range to an exponential range'!
     u dstlo: dstlo.
     u dsthi: dsthi.
     ^u!
-  at: at in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u srclo: srclo.
-    u srchi: srchi.
-    u dstlo: dstlo.
-    u dsthi: dsthi.
-    ^u!
   in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul
     |u|
     u := self new.
@@ -4583,29 +3188,9 @@ LinExp comment: 'Map a linear range to an exponential range'!
     u dstlo: dstlo.
     u dsthi: dsthi.
     ^(u * mul)!
-  at: at in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u srclo: srclo.
-    u srchi: srchi.
-    u dstlo: dstlo.
-    u dsthi: dsthi.
-    ^(u * mul)!
   in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u srclo: srclo.
-    u srchi: srchi.
-    u dstlo: dstlo.
-    u dsthi: dsthi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u srclo: srclo.
     u srchi: srchi.
@@ -4649,36 +3234,15 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
     u numChannels: numChannels.
     u numFrames: numFrames.
     ^u!
-  at: at numChannels: numChannels numFrames: numFrames
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChannels: numChannels.
-    u numFrames: numFrames.
-    ^u!
   numChannels: numChannels numFrames: numFrames mul: mul
     |u|
     u := self new.
     u numChannels: numChannels.
     u numFrames: numFrames.
     ^(u * mul)!
-  at: at numChannels: numChannels numFrames: numFrames mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChannels: numChannels.
-    u numFrames: numFrames.
-    ^(u * mul)!
   numChannels: numChannels numFrames: numFrames mul: mul add: add
     |u|
     u := self new.
-    u numChannels: numChannels.
-    u numFrames: numFrames.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at numChannels: numChannels numFrames: numFrames mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u numChannels: numChannels.
     u numFrames: numFrames.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4717,36 +3281,15 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
     u numChan: numChan.
     u default: default.
     ^u!
-  at: at numChan: numChan default: default
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u default: default.
-    ^u!
   numChan: numChan default: default mul: mul
     |u|
     u := self new.
     u numChan: numChan.
     u default: default.
     ^(u * mul)!
-  at: at numChan: numChan default: default mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u numChan: numChan.
-    u default: default.
-    ^(u * mul)!
   numChan: numChan default: default mul: mul add: add
     |u|
     u := self new.
-    u numChan: numChan.
-    u default: default.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at numChan: numChan default: default mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u numChan: numChan.
     u default: default.
     ^(MulAdd in: u mul: mul add: add)!
@@ -4784,32 +3327,14 @@ LocalOut comment: 'Write to buses local to a synth.'!
     u := self new.
     u channelsArray: channelsArray.
     ^u!
-  at: at channelsArray: channelsArray
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u channelsArray: channelsArray.
-    ^u!
   channelsArray: channelsArray mul: mul
     |u|
     u := self new.
     u channelsArray: channelsArray.
     ^(u * mul)!
-  at: at channelsArray: channelsArray mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u channelsArray: channelsArray.
-    ^(u * mul)!
   channelsArray: channelsArray mul: mul add: add
     |u|
     u := self new.
-    u channelsArray: channelsArray.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at channelsArray: channelsArray mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u channelsArray: channelsArray.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -4879,23 +3404,6 @@ MiRings comment: 'a resonator'!
     u easteregg: easteregg.
     u bypass: bypass.
     ^u!
-  at: at in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    u pit: pit.
-    u struct: struct.
-    u bright: bright.
-    u damp: damp.
-    u pos: pos.
-    u model: model.
-    u poly: poly.
-    u intern_exciter: intern_exciter.
-    u easteregg: easteregg.
-    u bypass: bypass.
-    ^u!
   in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul
     |u|
     u := self new.
@@ -4912,43 +3420,9 @@ MiRings comment: 'a resonator'!
     u easteregg: easteregg.
     u bypass: bypass.
     ^(u * mul)!
-  at: at in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    u pit: pit.
-    u struct: struct.
-    u bright: bright.
-    u damp: damp.
-    u pos: pos.
-    u model: model.
-    u poly: poly.
-    u intern_exciter: intern_exciter.
-    u easteregg: easteregg.
-    u bypass: bypass.
-    ^(u * mul)!
   in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u trig: trig.
-    u pit: pit.
-    u struct: struct.
-    u bright: bright.
-    u damp: damp.
-    u pos: pos.
-    u model: model.
-    u poly: poly.
-    u intern_exciter: intern_exciter.
-    u easteregg: easteregg.
-    u bypass: bypass.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u trig: trig.
     u pit: pit.
@@ -5002,14 +3476,6 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     u y: y.
     u mod: mod.
     ^u!
-  at: at x: x y: y mod: mod
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u x: x.
-    u y: y.
-    u mod: mod.
-    ^u!
   x: x y: y mod: mod mul: mul
     |u|
     u := self new.
@@ -5017,25 +3483,9 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     u y: y.
     u mod: mod.
     ^(u * mul)!
-  at: at x: x y: y mod: mod mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u x: x.
-    u y: y.
-    u mod: mod.
-    ^(u * mul)!
   x: x y: y mod: mod mul: mul add: add
     |u|
     u := self new.
-    u x: x.
-    u y: y.
-    u mod: mod.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at x: x y: y mod: mod mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u x: x.
     u y: y.
     u mod: mod.
@@ -5083,15 +3533,6 @@ MouseX comment: 'Cursor tracking UGen.'!
     u warp: warp.
     u lag: lag.
     ^u!
-  at: at minval: minval maxval: maxval warp: warp lag: lag
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^u!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul
     |u|
     u := self new.
@@ -5100,27 +3541,9 @@ MouseX comment: 'Cursor tracking UGen.'!
     u warp: warp.
     u lag: lag.
     ^(u * mul)!
-  at: at minval: minval maxval: maxval warp: warp lag: lag mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^(u * mul)!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     |u|
     u := self new.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u minval: minval.
     u maxval: maxval.
     u warp: warp.
@@ -5169,15 +3592,6 @@ MouseY comment: 'Cursor tracking UGen.'!
     u warp: warp.
     u lag: lag.
     ^u!
-  at: at minval: minval maxval: maxval warp: warp lag: lag
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^u!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul
     |u|
     u := self new.
@@ -5186,27 +3600,9 @@ MouseY comment: 'Cursor tracking UGen.'!
     u warp: warp.
     u lag: lag.
     ^(u * mul)!
-  at: at minval: minval maxval: maxval warp: warp lag: lag mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^(u * mul)!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     |u|
     u := self new.
-    u minval: minval.
-    u maxval: maxval.
-    u warp: warp.
-    u lag: lag.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u minval: minval.
     u maxval: maxval.
     u warp: warp.
@@ -5252,14 +3648,6 @@ MulAdd comment: 'Multiply add'!
     u mul: mul.
     u add: add.
     ^u!
-  at: at in: in mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u mul: mul.
-    u add: add.
-    ^u!
 !
 
 UGen subclass: #OnePole
@@ -5297,36 +3685,15 @@ OnePole comment: 'One pole filter.'!
     u in: in.
     u coef: coef.
     ^u!
-  at: at in: in coef: coef
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u coef: coef.
-    ^u!
   in: in coef: coef mul: mul
     |u|
     u := self new.
     u in: in.
     u coef: coef.
     ^(u * mul)!
-  at: at in: in coef: coef mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u coef: coef.
-    ^(u * mul)!
   in: in coef: coef mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in coef: coef mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u coef: coef.
     ^(MulAdd in: u mul: mul add: add)!
@@ -5367,36 +3734,15 @@ Out comment: 'Write a signal to a bus.'!
     u bus: bus.
     u channelsArray: channelsArray.
     ^u!
-  at: at bus: bus channelsArray: channelsArray
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u bus: bus.
-    u channelsArray: channelsArray.
-    ^u!
   bus: bus channelsArray: channelsArray mul: mul
     |u|
     u := self new.
     u bus: bus.
     u channelsArray: channelsArray.
     ^(u * mul)!
-  at: at bus: bus channelsArray: channelsArray mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u bus: bus.
-    u channelsArray: channelsArray.
-    ^(u * mul)!
   bus: bus channelsArray: channelsArray mul: mul add: add
     |u|
     u := self new.
-    u bus: bus.
-    u channelsArray: channelsArray.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at bus: bus channelsArray: channelsArray mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u bus: bus.
     u channelsArray: channelsArray.
     ^(MulAdd in: u mul: mul add: add)!
@@ -5440,14 +3786,6 @@ Pan2 comment: 'Two channel equal power pan.'!
     u pos: pos.
     u level: level.
     ^u!
-  at: at in: in pos: pos level: level
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u pos: pos.
-    u level: level.
-    ^u!
   in: in pos: pos level: level mul: mul
     |u|
     u := self new.
@@ -5455,25 +3793,9 @@ Pan2 comment: 'Two channel equal power pan.'!
     u pos: pos.
     u level: level.
     ^(u * mul)!
-  at: at in: in pos: pos level: level mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u pos: pos.
-    u level: level.
-    ^(u * mul)!
   in: in pos: pos level: level mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u pos: pos.
-    u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in pos: pos level: level mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u pos: pos.
     u level: level.
@@ -5524,16 +3846,6 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     u end: end.
     u resetPos: resetPos.
     ^u!
-  at: at trig: trig rate: rate start: start end: end resetPos: resetPos
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u rate: rate.
-    u start: start.
-    u end: end.
-    u resetPos: resetPos.
-    ^u!
   trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul
     |u|
     u := self new.
@@ -5543,29 +3855,9 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     u end: end.
     u resetPos: resetPos.
     ^(u * mul)!
-  at: at trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u rate: rate.
-    u start: start.
-    u end: end.
-    u resetPos: resetPos.
-    ^(u * mul)!
   trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u rate: rate.
-    u start: start.
-    u end: end.
-    u resetPos: resetPos.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u rate: rate.
     u start: start.
@@ -5602,20 +3894,10 @@ PinkNoise comment: 'Pink Noise.'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -5663,16 +3945,6 @@ PitchShift comment: 'Time domain pitch shifter.'!
     u pitchDispersion: pitchDispersion.
     u timeDispersion: timeDispersion.
     ^u!
-  at: at in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u windowSize: windowSize.
-    u pitchRatio: pitchRatio.
-    u pitchDispersion: pitchDispersion.
-    u timeDispersion: timeDispersion.
-    ^u!
   in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul
     |u|
     u := self new.
@@ -5682,29 +3954,9 @@ PitchShift comment: 'Time domain pitch shifter.'!
     u pitchDispersion: pitchDispersion.
     u timeDispersion: timeDispersion.
     ^(u * mul)!
-  at: at in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u windowSize: windowSize.
-    u pitchRatio: pitchRatio.
-    u pitchDispersion: pitchDispersion.
-    u timeDispersion: timeDispersion.
-    ^(u * mul)!
   in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u windowSize: windowSize.
-    u pitchRatio: pitchRatio.
-    u pitchDispersion: pitchDispersion.
-    u timeDispersion: timeDispersion.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u windowSize: windowSize.
     u pitchRatio: pitchRatio.
@@ -5760,17 +4012,6 @@ Pluck comment: 'A Karplus-Strong UGen'!
     u decaytime: decaytime.
     u coef: coef.
     ^u!
-  at: at in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    u coef: coef.
-    ^u!
   in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul
     |u|
     u := self new.
@@ -5781,31 +4022,9 @@ Pluck comment: 'A Karplus-Strong UGen'!
     u decaytime: decaytime.
     u coef: coef.
     ^(u * mul)!
-  at: at in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    u coef: coef.
-    ^(u * mul)!
   in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u trig: trig.
-    u maxdelaytime: maxdelaytime.
-    u delaytime: delaytime.
-    u decaytime: decaytime.
-    u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u trig: trig.
     u maxdelaytime: maxdelaytime.
@@ -5850,36 +4069,15 @@ Pulse comment: 'Band limited pulse wave.'!
     u freq: freq.
     u width: width.
     ^u!
-  at: at freq: freq width: width
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u width: width.
-    ^u!
   freq: freq width: width mul: mul
     |u|
     u := self new.
     u freq: freq.
     u width: width.
     ^(u * mul)!
-  at: at freq: freq width: width mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u width: width.
-    ^(u * mul)!
   freq: freq width: width mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq width: width mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u width: width.
     ^(MulAdd in: u mul: mul add: add)!
@@ -5920,36 +4118,15 @@ PulseCount comment: 'Pulse counter.'!
     u trig: trig.
     u reset: reset.
     ^u!
-  at: at trig: trig reset: reset
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    ^u!
   trig: trig reset: reset mul: mul
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
     ^(u * mul)!
-  at: at trig: trig reset: reset mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    ^(u * mul)!
   trig: trig reset: reset mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u reset: reset.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig reset: reset mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u reset: reset.
     ^(MulAdd in: u mul: mul add: add)!
@@ -5993,14 +4170,6 @@ PulseDivider comment: 'Pulse divider.'!
     u div: div.
     u start: start.
     ^u!
-  at: at trig: trig div: div start: start
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u div: div.
-    u start: start.
-    ^u!
   trig: trig div: div start: start mul: mul
     |u|
     u := self new.
@@ -6008,25 +4177,9 @@ PulseDivider comment: 'Pulse divider.'!
     u div: div.
     u start: start.
     ^(u * mul)!
-  at: at trig: trig div: div start: start mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u div: div.
-    u start: start.
-    ^(u * mul)!
   trig: trig div: div start: start mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u div: div.
-    u start: start.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig div: div start: start mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u div: div.
     u start: start.
@@ -6071,14 +4224,6 @@ RHPF comment: 'A resonant high pass filter.'!
     u freq: freq.
     u rq: rq.
     ^u!
-  at: at in: in freq: freq rq: rq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^u!
   in: in freq: freq rq: rq mul: mul
     |u|
     u := self new.
@@ -6086,25 +4231,9 @@ RHPF comment: 'A resonant high pass filter.'!
     u freq: freq.
     u rq: rq.
     ^(u * mul)!
-  at: at in: in freq: freq rq: rq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(u * mul)!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq rq: rq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u rq: rq.
@@ -6149,14 +4278,6 @@ RLPF comment: 'A resonant low pass filter.'!
     u freq: freq.
     u rq: rq.
     ^u!
-  at: at in: in freq: freq rq: rq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^u!
   in: in freq: freq rq: rq mul: mul
     |u|
     u := self new.
@@ -6164,25 +4285,9 @@ RLPF comment: 'A resonant low pass filter.'!
     u freq: freq.
     u rq: rq.
     ^(u * mul)!
-  at: at in: in freq: freq rq: rq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(u * mul)!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq rq: rq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u rq: rq.
@@ -6224,36 +4329,15 @@ Rand comment: 'Single random number generator.'!
     u lo: lo.
     u hi: hi.
     ^u!
-  at: at lo: lo hi: hi
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^u!
   lo: lo hi: hi mul: mul
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     ^(u * mul)!
-  at: at lo: lo hi: hi mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    ^(u * mul)!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     ^(MulAdd in: u mul: mul add: add)!
@@ -6297,14 +4381,6 @@ Resonz comment: 'Resonant filter.'!
     u freq: freq.
     u bwr: bwr.
     ^u!
-  at: at in: in freq: freq bwr: bwr
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u bwr: bwr.
-    ^u!
   in: in freq: freq bwr: bwr mul: mul
     |u|
     u := self new.
@@ -6312,25 +4388,9 @@ Resonz comment: 'Resonant filter.'!
     u freq: freq.
     u bwr: bwr.
     ^(u * mul)!
-  at: at in: in freq: freq bwr: bwr mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u bwr: bwr.
-    ^(u * mul)!
   in: in freq: freq bwr: bwr mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u bwr: bwr.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq bwr: bwr mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u bwr: bwr.
@@ -6375,14 +4435,6 @@ Ringz comment: 'Ringing filter.'!
     u freq: freq.
     u decaytime: decaytime.
     ^u!
-  at: at in: in freq: freq decaytime: decaytime
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u decaytime: decaytime.
-    ^u!
   in: in freq: freq decaytime: decaytime mul: mul
     |u|
     u := self new.
@@ -6390,25 +4442,9 @@ Ringz comment: 'Ringing filter.'!
     u freq: freq.
     u decaytime: decaytime.
     ^(u * mul)!
-  at: at in: in freq: freq decaytime: decaytime mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u freq: freq.
-    u decaytime: decaytime.
-    ^(u * mul)!
   in: in freq: freq decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u freq: freq.
-    u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in freq: freq decaytime: decaytime mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u freq: freq.
     u decaytime: decaytime.
@@ -6450,36 +4486,15 @@ RunningMax comment: 'Track maximum level.'!
     u in: in.
     u trig: trig.
     ^u!
-  at: at in: in trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    ^u!
   in: in trig: trig mul: mul
     |u|
     u := self new.
     u in: in.
     u trig: trig.
     ^(u * mul)!
-  at: at in: in trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u trig: trig.
-    ^(u * mul)!
   in: in trig: trig mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u trig: trig.
     ^(MulAdd in: u mul: mul add: add)!
@@ -6513,20 +4528,10 @@ SampleDur comment: 'Duration of one sample.'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -6558,20 +4563,10 @@ SampleRate comment: 'Server sample rate.'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -6607,32 +4602,14 @@ Saw comment: 'Band limited sawtooth.'!
     u := self new.
     u freq: freq.
     ^u!
-  at: at freq: freq
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^u!
   freq: freq mul: mul
     |u|
     u := self new.
     u freq: freq.
     ^(u * mul)!
-  at: at freq: freq mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    ^(u * mul)!
   freq: freq mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -6672,36 +4649,15 @@ Select comment: 'Select output from an array of inputs.'!
     u which: which.
     u array: array.
     ^u!
-  at: at which: which array: array
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u which: which.
-    u array: array.
-    ^u!
   which: which array: array mul: mul
     |u|
     u := self new.
     u which: which.
     u array: array.
     ^(u * mul)!
-  at: at which: which array: array mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u which: which.
-    u array: array.
-    ^(u * mul)!
   which: which array: array mul: mul add: add
     |u|
     u := self new.
-    u which: which.
-    u array: array.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at which: which array: array mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u which: which.
     u array: array.
     ^(MulAdd in: u mul: mul add: add)!
@@ -6748,15 +4704,6 @@ SetBuf comment: 'Set local buffer'!
     u length: length.
     u array: array.
     ^u!
-  at: at buf: buf offset: offset length: length array: array
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u buf: buf.
-    u offset: offset.
-    u length: length.
-    u array: array.
-    ^u!
   buf: buf offset: offset length: length array: array mul: mul
     |u|
     u := self new.
@@ -6765,27 +4712,9 @@ SetBuf comment: 'Set local buffer'!
     u length: length.
     u array: array.
     ^(u * mul)!
-  at: at buf: buf offset: offset length: length array: array mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u buf: buf.
-    u offset: offset.
-    u length: length.
-    u array: array.
-    ^(u * mul)!
   buf: buf offset: offset length: length array: array mul: mul add: add
     |u|
     u := self new.
-    u buf: buf.
-    u offset: offset.
-    u length: length.
-    u array: array.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at buf: buf offset: offset length: length array: array mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u buf: buf.
     u offset: offset.
     u length: length.
@@ -6828,36 +4757,15 @@ SetResetFF comment: 'Set-reset flip flop.'!
     u trig: trig.
     u reset: reset.
     ^u!
-  at: at trig: trig reset: reset
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    ^u!
   trig: trig reset: reset mul: mul
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
     ^(u * mul)!
-  at: at trig: trig reset: reset mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u reset: reset.
-    ^(u * mul)!
   trig: trig reset: reset mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u reset: reset.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig reset: reset mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u reset: reset.
     ^(MulAdd in: u mul: mul add: add)!
@@ -6898,36 +4806,15 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
     u freq: freq.
     u phase: phase.
     ^u!
-  at: at freq: freq phase: phase
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u phase: phase.
-    ^u!
   freq: freq phase: phase mul: mul
     |u|
     u := self new.
     u freq: freq.
     u phase: phase.
     ^(u * mul)!
-  at: at freq: freq phase: phase mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u phase: phase.
-    ^(u * mul)!
   freq: freq phase: phase mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u phase: phase.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq phase: phase mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u phase: phase.
     ^(MulAdd in: u mul: mul add: add)!
@@ -6968,36 +4855,15 @@ SinOscFB comment: 'Feedback FM oscillator'!
     u freq: freq.
     u feedback: feedback.
     ^u!
-  at: at freq: freq feedback: feedback
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u feedback: feedback.
-    ^u!
   freq: freq feedback: feedback mul: mul
     |u|
     u := self new.
     u freq: freq.
     u feedback: feedback.
     ^(u * mul)!
-  at: at freq: freq feedback: feedback mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u feedback: feedback.
-    ^(u * mul)!
   freq: freq feedback: feedback mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u feedback: feedback.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq feedback: feedback mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u feedback: feedback.
     ^(MulAdd in: u mul: mul add: add)!
@@ -7038,36 +4904,15 @@ Sweep comment: 'Triggered linear ramp'!
     u trig: trig.
     u rate: rate.
     ^u!
-  at: at trig: trig rate: rate
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u rate: rate.
-    ^u!
   trig: trig rate: rate mul: mul
     |u|
     u := self new.
     u trig: trig.
     u rate: rate.
     ^(u * mul)!
-  at: at trig: trig rate: rate mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    u rate: rate.
-    ^(u * mul)!
   trig: trig rate: rate mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    u rate: rate.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig rate: rate mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     u rate: rate.
     ^(MulAdd in: u mul: mul add: add)!
@@ -7117,16 +4962,6 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     u level: level.
     u gapFirst: gapFirst.
     ^u!
-  at: at dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    u gapFirst: gapFirst.
-    ^u!
   dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul
     |u|
     u := self new.
@@ -7136,29 +4971,9 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     u level: level.
     u gapFirst: gapFirst.
     ^(u * mul)!
-  at: at dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    u gapFirst: gapFirst.
-    ^(u * mul)!
   dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add
     |u|
     u := self new.
-    u dur: dur.
-    u reset: reset.
-    u doneAction: doneAction.
-    u level: level.
-    u gapFirst: gapFirst.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u dur: dur.
     u reset: reset.
     u doneAction: doneAction.
@@ -7205,14 +5020,6 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     u hi: hi.
     u trig: trig.
     ^u!
-  at: at lo: lo hi: hi trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^u!
   lo: lo hi: hi trig: trig mul: mul
     |u|
     u := self new.
@@ -7220,25 +5027,9 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     u hi: hi.
     u trig: trig.
     ^(u * mul)!
-  at: at lo: lo hi: hi trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(u * mul)!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     u trig: trig.
@@ -7277,32 +5068,14 @@ Timer comment: 'Returns time since last triggered.'!
     u := self new.
     u trig: trig.
     ^u!
-  at: at trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    ^u!
   trig: trig mul: mul
     |u|
     u := self new.
     u trig: trig.
     ^(u * mul)!
-  at: at trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u trig: trig.
-    ^(u * mul)!
   trig: trig mul: mul add: add
     |u|
     u := self new.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u trig: trig.
     ^(MulAdd in: u mul: mul add: add)!
 !
@@ -7345,14 +5118,6 @@ TIRand comment: 'Triggered integer random number generator.'!
     u hi: hi.
     u trig: trig.
     ^u!
-  at: at lo: lo hi: hi trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^u!
   lo: lo hi: hi trig: trig mul: mul
     |u|
     u := self new.
@@ -7360,25 +5125,9 @@ TIRand comment: 'Triggered integer random number generator.'!
     u hi: hi.
     u trig: trig.
     ^(u * mul)!
-  at: at lo: lo hi: hi trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(u * mul)!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     u trig: trig.
@@ -7423,14 +5172,6 @@ TRand comment: 'Triggered random number generator.'!
     u hi: hi.
     u trig: trig.
     ^u!
-  at: at lo: lo hi: hi trig: trig
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^u!
   lo: lo hi: hi trig: trig mul: mul
     |u|
     u := self new.
@@ -7438,25 +5179,9 @@ TRand comment: 'Triggered random number generator.'!
     u hi: hi.
     u trig: trig.
     ^(u * mul)!
-  at: at lo: lo hi: hi trig: trig mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(u * mul)!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
-    u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at lo: lo hi: hi trig: trig mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u lo: lo.
     u hi: hi.
     u trig: trig.
@@ -7498,36 +5223,15 @@ Trig comment: 'Timed trigger.'!
     u in: in.
     u dur: dur.
     ^u!
-  at: at in: in dur: dur
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u dur: dur.
-    ^u!
   in: in dur: dur mul: mul
     |u|
     u := self new.
     u in: in.
     u dur: dur.
     ^(u * mul)!
-  at: at in: in dur: dur mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u dur: dur.
-    ^(u * mul)!
   in: in dur: dur mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in dur: dur mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u dur: dur.
     ^(MulAdd in: u mul: mul add: add)!
@@ -7568,36 +5272,15 @@ Trig1 comment: 'Timed trigger.'!
     u in: in.
     u dur: dur.
     ^u!
-  at: at in: in dur: dur
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u dur: dur.
-    ^u!
   in: in dur: dur mul: mul
     |u|
     u := self new.
     u in: in.
     u dur: dur.
     ^(u * mul)!
-  at: at in: in dur: dur mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u in: in.
-    u dur: dur.
-    ^(u * mul)!
   in: in dur: dur mul: mul add: add
     |u|
     u := self new.
-    u in: in.
-    u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at in: in dur: dur mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u in: in.
     u dur: dur.
     ^(MulAdd in: u mul: mul add: add)!
@@ -7641,14 +5324,6 @@ VarSaw comment: 'Variable duty saw'!
     u iphase: iphase.
     u width: width.
     ^u!
-  at: at freq: freq iphase: iphase width: width
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^u!
   freq: freq iphase: iphase width: width mul: mul
     |u|
     u := self new.
@@ -7656,25 +5331,9 @@ VarSaw comment: 'Variable duty saw'!
     u iphase: iphase.
     u width: width.
     ^(u * mul)!
-  at: at freq: freq iphase: iphase width: width mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^(u * mul)!
   freq: freq iphase: iphase width: width mul: mul add: add
     |u|
     u := self new.
-    u freq: freq.
-    u iphase: iphase.
-    u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at freq: freq iphase: iphase width: width mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u freq: freq.
     u iphase: iphase.
     u width: width.
@@ -7709,20 +5368,10 @@ WhiteNoise comment: 'White noise.'!
     u := self new.
     
     ^(u * mul)!
-  at: at mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    ^(u * mul)!
    mul: mul add: add
     |u|
     u := self new.
     
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     ^(MulAdd in: u mul: mul add: add)!
 !
 
@@ -7767,15 +5416,6 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     u pan: pan.
     u level: level.
     ^u!
-  at: at inA: inA inB: inB pan: pan level: level
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u inA: inA.
-    u inB: inB.
-    u pan: pan.
-    u level: level.
-    ^u!
   inA: inA inB: inB pan: pan level: level mul: mul
     |u|
     u := self new.
@@ -7784,27 +5424,9 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     u pan: pan.
     u level: level.
     ^(u * mul)!
-  at: at inA: inA inB: inB pan: pan level: level mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u inA: inA.
-    u inB: inB.
-    u pan: pan.
-    u level: level.
-    ^(u * mul)!
   inA: inA inB: inB pan: pan level: level mul: mul add: add
     |u|
     u := self new.
-    u inA: inA.
-    u inB: inB.
-    u pan: pan.
-    u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at inA: inA inB: inB pan: pan level: level mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u inA: inA.
     u inB: inB.
     u pan: pan.
@@ -7853,15 +5475,6 @@ XLine comment: 'Exponential line generator.'!
     u dur: dur.
     u doneAction: doneAction.
     ^u!
-  at: at start: start end: end dur: dur doneAction: doneAction
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^u!
   start: start end: end dur: dur doneAction: doneAction mul: mul
     |u|
     u := self new.
@@ -7870,27 +5483,9 @@ XLine comment: 'Exponential line generator.'!
     u dur: dur.
     u doneAction: doneAction.
     ^(u * mul)!
-  at: at start: start end: end dur: dur doneAction: doneAction mul: mul
-    |u|
-    u := self new.
-    u ugenRate: at.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^(u * mul)!
   start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     |u|
     u := self new.
-    u start: start.
-    u end: end.
-    u dur: dur.
-    u doneAction: doneAction.
-    ^(MulAdd in: u mul: mul add: add)!
-  at: at start: start end: end dur: dur doneAction: doneAction mul: mul add: add
-    |u|
-    u := self new.
-    u ugenRate: at.
     u start: start.
     u end: end.
     u dur: dur.

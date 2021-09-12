@@ -1,7 +1,7 @@
 "tw 0011 (f0) ; https://twitter.com/redFrik/status/23182604046"
 | s f |
 s := [:o :i |
-  SinOsc freq: ({i. i + 0.0001} mce raisedTo: 2) * (f value: o value: i - 1)
+  SinOsc freq: ({i. i + 0.0001} asUGen raisedTo: 2) * (f value: o value: i - 1)
          phase: (f value: o value: (i - 1)) * 0.0001
          mul: (f value: o value: i - 1)].
 f := [:o :i |
