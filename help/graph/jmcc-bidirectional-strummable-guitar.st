@@ -24,10 +24,10 @@ mousex := MouseX kr: {}.
 nd := [:i|
   |trigger pluck1 period1 string1 pluck2 period2 string2|
   trigger := HPZ1 kr: {mousex > (0.25 + (i * 0.1))}.
-  pluck1 := (PinkNoise ar: {}) * (Decay kr: {trigger max: 0. 0.05}).
+  pluck1 := PinkNoise ar: {Decay kr: {trigger max: 0. 0.05}}.
   period1 := (pitch1 at: i) midicps reciprocal.
   string1 := CombL ar: {pluck1. period1. period1. 4}.
-  pluck2 := (BrownNoise ar: {}) * (Decay kr: {trigger negated max: 0. 0.05}).
+  pluck2 := BrownNoise ar: {Decay kr: {trigger negated max: 0. 0.05}}.
   period2 := (pitch2 at: i) midicps reciprocal.
   string2 := CombL ar: {pluck2. period2. period2. -4}.
   Pan2 ar: {string1 + string2. i * 0.2 - 0.5}].

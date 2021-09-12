@@ -68,7 +68,7 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
     | m a |
     m := (y - x) / 2.
     a := x + m.
-    ^self mul: m add: a.
+    ^self * m + a.
   !
 !
 

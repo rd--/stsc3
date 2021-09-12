@@ -19,6 +19,7 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
 
 !AllpassN methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #AllpassN.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
@@ -46,7 +47,8 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
@@ -54,7 +56,9 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #AmpComp
@@ -76,6 +80,7 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
 
 !AmpComp methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #AmpComp.
     paramNames := #(#freq #root #exp).
     mceNames := #().
@@ -101,14 +106,17 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     u freq: freq.
     u root: root.
     u exp: exp.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq root: root exp: exp mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u root: root.
     u exp: exp.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Amplitude
@@ -130,6 +138,7 @@ Amplitude comment: 'Amplitude follower'!
 
 !Amplitude methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Amplitude.
     paramNames := #(#in #attackTime #releaseTime).
     mceNames := #().
@@ -155,14 +164,17 @@ Amplitude comment: 'Amplitude follower'!
     u in: in.
     u attackTime: attackTime.
     u releaseTime: releaseTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u attackTime: attackTime.
     u releaseTime: releaseTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Blip
@@ -182,6 +194,7 @@ Blip comment: 'Band limited impulse oscillator.'!
 
 !Blip methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Blip.
     paramNames := #(#freq #numharm).
     mceNames := #().
@@ -205,13 +218,16 @@ Blip comment: 'Band limited impulse oscillator.'!
     u := self new.
     u freq: freq.
     u numharm: numharm.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq numharm: numharm mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u numharm: numharm.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #BLowPass
@@ -233,6 +249,7 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
 
 !BLowPass methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #BLowPass.
     paramNames := #(#in #freq #rq).
     mceNames := #().
@@ -258,14 +275,17 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #BPF
@@ -287,6 +307,7 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
 
 !BPF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #BPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
@@ -312,14 +333,17 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #BPZ2
@@ -337,6 +361,7 @@ BPZ2 comment: 'Two zero fixed midpass.'!
 
 !BPZ2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #BPZ2.
     paramNames := #(#in).
     mceNames := #().
@@ -358,12 +383,15 @@ BPZ2 comment: 'Two zero fixed midpass.'!
     |u|
     u := self new.
     u in: in.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in mul: mul add: add
     |u|
     u := self new.
     u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #BrownNoise
@@ -377,6 +405,7 @@ BrownNoise comment: 'Brown Noise.'!
 
 !BrownNoise methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #BrownNoise.
     paramNames := #().
     mceNames := #().
@@ -389,16 +418,17 @@ BrownNoise comment: 'Brown Noise.'!
 
 
 !BrownNoise class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Clip
@@ -420,6 +450,7 @@ Clip comment: 'Clip a signal outside given thresholds.'!
 
 !Clip methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Clip.
     paramNames := #(#in #lo #hi).
     mceNames := #().
@@ -445,14 +476,17 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     u in: in.
     u lo: lo.
     u hi: hi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u lo: lo.
     u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #CombC
@@ -476,6 +510,7 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
 
 !CombC methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #CombC.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
@@ -503,7 +538,8 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
@@ -511,7 +547,9 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #CombL
@@ -535,6 +573,7 @@ CombL comment: 'Comb delay line with linear interpolation.'!
 
 !CombL methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #CombL.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
@@ -562,7 +601,8 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
@@ -570,7 +610,9 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #CombN
@@ -594,6 +636,7 @@ CombN comment: 'Comb delay line with no interpolation.'!
 
 !CombN methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #CombN.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
@@ -621,7 +664,8 @@ CombN comment: 'Comb delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
@@ -629,7 +673,9 @@ CombN comment: 'Comb delay line with no interpolation.'!
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
     u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #ControlDur
@@ -643,6 +689,7 @@ ControlDur comment: 'Duration of one block'!
 
 !ControlDur methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #ControlDur.
     paramNames := #().
     mceNames := #().
@@ -655,16 +702,17 @@ ControlDur comment: 'Duration of one block'!
 
 
 !ControlDur class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Crackle
@@ -682,6 +730,7 @@ Crackle comment: 'Chaotic noise function.'!
 
 !Crackle methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Crackle.
     paramNames := #(#chaosParam).
     mceNames := #().
@@ -703,12 +752,15 @@ Crackle comment: 'Chaotic noise function.'!
     |u|
     u := self new.
     u chaosParam: chaosParam.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   chaosParam: chaosParam mul: mul add: add
     |u|
     u := self new.
     u chaosParam: chaosParam.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Decay
@@ -728,6 +780,7 @@ Decay comment: 'Exponential decay'!
 
 !Decay methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Decay.
     paramNames := #(#in #decayTime).
     mceNames := #().
@@ -751,13 +804,16 @@ Decay comment: 'Exponential decay'!
     u := self new.
     u in: in.
     u decayTime: decayTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in decayTime: decayTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u decayTime: decayTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Decay2
@@ -779,6 +835,7 @@ Decay2 comment: 'Exponential decay'!
 
 !Decay2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Decay2.
     paramNames := #(#in #attackTime #decayTime).
     mceNames := #().
@@ -804,14 +861,17 @@ Decay2 comment: 'Exponential decay'!
     u in: in.
     u attackTime: attackTime.
     u decayTime: decayTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in attackTime: attackTime decayTime: decayTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u attackTime: attackTime.
     u decayTime: decayTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #DegreeToKey
@@ -833,6 +893,7 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
 
 !DegreeToKey methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #DegreeToKey.
     paramNames := #(#bufnum #in #octave).
     mceNames := #().
@@ -858,14 +919,17 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     u bufnum: bufnum.
     u in: in.
     u octave: octave.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   bufnum: bufnum in: in octave: octave mul: mul add: add
     |u|
     u := self new.
     u bufnum: bufnum.
     u in: in.
     u octave: octave.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #DelayN
@@ -887,6 +951,7 @@ DelayN comment: 'Simple delay line with no interpolation.'!
 
 !DelayN methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #DelayN.
     paramNames := #(#in #maxdelaytime #delaytime).
     mceNames := #().
@@ -912,14 +977,17 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u maxdelaytime: maxdelaytime.
     u delaytime: delaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Demand
@@ -941,6 +1009,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
 
 !Demand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Demand.
     paramNames := #(#trig #reset).
     mceNames := #(#demandUGens).
@@ -966,14 +1035,17 @@ Demand comment: 'Demand results from demand rate UGens.'!
     u trig: trig.
     u reset: reset.
     u demandUGens: demandUGens.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
     u demandUGens: demandUGens.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Diwhite
@@ -995,6 +1067,7 @@ Diwhite comment: 'Demand rate white noise random generator.'!
 
 !Diwhite methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Diwhite.
     paramNames := #(#length #lo #hi).
     mceNames := #().
@@ -1020,14 +1093,17 @@ Diwhite comment: 'Demand rate white noise random generator.'!
     u length: length.
     u lo: lo.
     u hi: hi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   length: length lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
     u length: length.
     u lo: lo.
     u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Drand
@@ -1047,6 +1123,7 @@ Drand comment: 'Demand rate random sequence generator.'!
 
 !Drand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Drand.
     paramNames := #(#repeats).
     mceNames := #(#list).
@@ -1070,13 +1147,16 @@ Drand comment: 'Demand rate random sequence generator.'!
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Dseq
@@ -1096,6 +1176,7 @@ Dseq comment: 'Demand rate sequence generator.'!
 
 !Dseq methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Dseq.
     paramNames := #(#repeats).
     mceNames := #(#list).
@@ -1119,13 +1200,16 @@ Dseq comment: 'Demand rate sequence generator.'!
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Dshuf
@@ -1145,6 +1229,7 @@ Dshuf comment: 'Demand rate random sequence generator'!
 
 !Dshuf methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Dshuf.
     paramNames := #(#repeats).
     mceNames := #(#list).
@@ -1168,13 +1253,16 @@ Dshuf comment: 'Demand rate random sequence generator'!
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   repeats: repeats list: list mul: mul add: add
     |u|
     u := self new.
     u repeats: repeats.
     u list: list.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Dust
@@ -1192,6 +1280,7 @@ Dust comment: 'Random impulses.'!
 
 !Dust methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Dust.
     paramNames := #(#density).
     mceNames := #().
@@ -1213,12 +1302,15 @@ Dust comment: 'Random impulses.'!
     |u|
     u := self new.
     u density: density.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   density: density mul: mul add: add
     |u|
     u := self new.
     u density: density.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Dust2
@@ -1236,6 +1328,7 @@ Dust2 comment: 'Random impulses.'!
 
 !Dust2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Dust2.
     paramNames := #(#density).
     mceNames := #().
@@ -1257,12 +1350,15 @@ Dust2 comment: 'Random impulses.'!
     |u|
     u := self new.
     u density: density.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   density: density mul: mul add: add
     |u|
     u := self new.
     u density: density.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Duty
@@ -1286,6 +1382,7 @@ Duty comment: 'Demand results from demand rate UGens.'!
 
 !Duty methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Duty.
     paramNames := #(#dur #reset #doneAction #level).
     mceNames := #().
@@ -1313,7 +1410,8 @@ Duty comment: 'Demand results from demand rate UGens.'!
     u reset: reset.
     u doneAction: doneAction.
     u level: level.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add
     |u|
     u := self new.
@@ -1321,7 +1419,9 @@ Duty comment: 'Demand results from demand rate UGens.'!
     u reset: reset.
     u doneAction: doneAction.
     u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #EnvGen
@@ -1349,6 +1449,7 @@ EnvGen comment: 'Envelope generator'!
 
 !EnvGen methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #EnvGen.
     paramNames := #(#gate #levelScale #levelBias #timeScale #doneAction).
     mceNames := #(#envelope).
@@ -1380,7 +1481,8 @@ EnvGen comment: 'Envelope generator'!
     u timeScale: timeScale.
     u doneAction: doneAction.
     u envelope: envelope.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add
     |u|
     u := self new.
@@ -1390,7 +1492,9 @@ EnvGen comment: 'Envelope generator'!
     u timeScale: timeScale.
     u doneAction: doneAction.
     u envelope: envelope.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #ExpRand
@@ -1410,6 +1514,7 @@ ExpRand comment: 'Exponential single random number generator.'!
 
 !ExpRand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #ExpRand.
     paramNames := #(#lo #hi).
     mceNames := #().
@@ -1433,13 +1538,16 @@ ExpRand comment: 'Exponential single random number generator.'!
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Formant
@@ -1461,6 +1569,7 @@ Formant comment: 'Formant oscillator'!
 
 !Formant methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Formant.
     paramNames := #(#fundfreq #formfreq #bwfreq).
     mceNames := #().
@@ -1486,14 +1595,17 @@ Formant comment: 'Formant oscillator'!
     u fundfreq: fundfreq.
     u formfreq: formfreq.
     u bwfreq: bwfreq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add
     |u|
     u := self new.
     u fundfreq: fundfreq.
     u formfreq: formfreq.
     u bwfreq: bwfreq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #FSinOsc
@@ -1513,6 +1625,7 @@ FSinOsc comment: 'Fast sine oscillator.'!
 
 !FSinOsc methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #FSinOsc.
     paramNames := #(#freq #iphase).
     mceNames := #().
@@ -1536,13 +1649,16 @@ FSinOsc comment: 'Fast sine oscillator.'!
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #FreeVerb
@@ -1566,6 +1682,7 @@ FreeVerb comment: 'A reverb'!
 
 !FreeVerb methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #FreeVerb.
     paramNames := #(#in #mix #room #damp).
     mceNames := #().
@@ -1593,7 +1710,8 @@ FreeVerb comment: 'A reverb'!
     u mix: mix.
     u room: room.
     u damp: damp.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in mix: mix room: room damp: damp mul: mul add: add
     |u|
     u := self new.
@@ -1601,7 +1719,9 @@ FreeVerb comment: 'A reverb'!
     u mix: mix.
     u room: room.
     u damp: damp.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Gendy1
@@ -1637,6 +1757,7 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
 
 !Gendy1 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Gendy1.
     paramNames := #(#ampdist #durdist #adparam #ddparam #minfreq #maxfreq #ampscale #durscale #initCPs #knum).
     mceNames := #().
@@ -1676,7 +1797,8 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     u durscale: durscale.
     u initCPs: initCPs.
     u knum: knum.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul add: add
     |u|
     u := self new.
@@ -1690,7 +1812,9 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     u durscale: durscale.
     u initCPs: initCPs.
     u knum: knum.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #GrainFM
@@ -1722,6 +1846,7 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
 
 !GrainFM methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #GrainFM.
     paramNames := #(#trigger #dur #carfreq #modfreq #index #pan #envbufnum #maxGrains).
     mceNames := #().
@@ -1759,7 +1884,8 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     u pan: pan.
     u envbufnum: envbufnum.
     u maxGrains: maxGrains.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add
     |u|
     u := self new.
@@ -1772,7 +1898,9 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     u pan: pan.
     u envbufnum: envbufnum.
     u maxGrains: maxGrains.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #GreyholeRaw
@@ -1806,6 +1934,7 @@ GreyholeRaw comment: 'algorithmic delay'!
 
 !GreyholeRaw methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #GreyholeRaw.
     paramNames := #(#in1 #in2 #damping #delaytime #diffusion #feedback #moddepth #modfreq #size).
     mceNames := #().
@@ -1843,7 +1972,8 @@ GreyholeRaw comment: 'algorithmic delay'!
     u moddepth: moddepth.
     u modfreq: modfreq.
     u size: size.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add
     |u|
     u := self new.
@@ -1856,7 +1986,9 @@ GreyholeRaw comment: 'algorithmic delay'!
     u moddepth: moddepth.
     u modfreq: modfreq.
     u size: size.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #GVerb
@@ -1892,6 +2024,7 @@ GVerb comment: 'A two-channel reverb'!
 
 !GVerb methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #GVerb.
     paramNames := #(#in #roomsize #revtime #damping #inputbw #spread #drylevel #earlyreflevel #taillevel #maxroomsize).
     mceNames := #().
@@ -1931,7 +2064,8 @@ GVerb comment: 'A two-channel reverb'!
     u earlyreflevel: earlyreflevel.
     u taillevel: taillevel.
     u maxroomsize: maxroomsize.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul add: add
     |u|
     u := self new.
@@ -1945,7 +2079,9 @@ GVerb comment: 'A two-channel reverb'!
     u earlyreflevel: earlyreflevel.
     u taillevel: taillevel.
     u maxroomsize: maxroomsize.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Hasher
@@ -1963,6 +2099,7 @@ Hasher comment: 'Scrambled value with a hash function.'!
 
 !Hasher methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Hasher.
     paramNames := #(#in).
     mceNames := #().
@@ -1984,12 +2121,15 @@ Hasher comment: 'Scrambled value with a hash function.'!
     |u|
     u := self new.
     u in: in.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in mul: mul add: add
     |u|
     u := self new.
     u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #HPF
@@ -2009,6 +2149,7 @@ HPF comment: '2nd order Butterworth highpass filter.'!
 
 !HPF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #HPF.
     paramNames := #(#in #freq).
     mceNames := #().
@@ -2032,13 +2173,16 @@ HPF comment: '2nd order Butterworth highpass filter.'!
     u := self new.
     u in: in.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #HPZ1
@@ -2056,6 +2200,7 @@ HPZ1 comment: 'Two point difference filter'!
 
 !HPZ1 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #HPZ1.
     paramNames := #(#in).
     mceNames := #().
@@ -2077,12 +2222,15 @@ HPZ1 comment: 'Two point difference filter'!
     |u|
     u := self new.
     u in: in.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in mul: mul add: add
     |u|
     u := self new.
     u in: in.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #IRand
@@ -2102,6 +2250,7 @@ IRand comment: 'Single integer random number generator.'!
 
 !IRand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #IRand.
     paramNames := #(#lo #hi).
     mceNames := #().
@@ -2125,13 +2274,16 @@ IRand comment: 'Single integer random number generator.'!
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Impulse
@@ -2151,6 +2303,7 @@ Impulse comment: 'Impulse oscillator.'!
 
 !Impulse methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Impulse.
     paramNames := #(#freq #phase).
     mceNames := #().
@@ -2174,13 +2327,16 @@ Impulse comment: 'Impulse oscillator.'!
     u := self new.
     u freq: freq.
     u phase: phase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq phase: phase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u phase: phase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #In
@@ -2198,6 +2354,7 @@ In comment: 'Read a signal from a bus.'!
 
 !In methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #In.
     paramNames := #(#bus).
     mceNames := #().
@@ -2221,13 +2378,16 @@ In comment: 'Read a signal from a bus.'!
     u := self new.
     u numChan: numChan.
     u bus: bus.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   numChan: numChan bus: bus mul: mul add: add
     |u|
     u := self new.
     u numChan: numChan.
     u bus: bus.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #InFeedback
@@ -2245,6 +2405,7 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
 
 !InFeedback methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #InFeedback.
     paramNames := #(#bus).
     mceNames := #().
@@ -2268,13 +2429,16 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     u := self new.
     u numChan: numChan.
     u bus: bus.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   numChan: numChan bus: bus mul: mul add: add
     |u|
     u := self new.
     u numChan: numChan.
     u bus: bus.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Klank
@@ -2300,6 +2464,7 @@ Klank comment: 'Bank of resonators'!
 
 !Klank methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Klank.
     paramNames := #(#input #freqscale #freqoffset #decayscale).
     mceNames := #(#specificationsArrayRef).
@@ -2329,7 +2494,8 @@ Klank comment: 'Bank of resonators'!
     u freqoffset: freqoffset.
     u decayscale: decayscale.
     u specificationsArrayRef: specificationsArrayRef.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add
     |u|
     u := self new.
@@ -2338,7 +2504,9 @@ Klank comment: 'Bank of resonators'!
     u freqoffset: freqoffset.
     u decayscale: decayscale.
     u specificationsArrayRef: specificationsArrayRef.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFCub
@@ -2358,6 +2526,7 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
 
 !LFCub methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFCub.
     paramNames := #(#freq #iphase).
     mceNames := #().
@@ -2381,13 +2550,16 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFNoise0
@@ -2405,6 +2577,7 @@ LFNoise0 comment: 'Step noise'!
 
 !LFNoise0 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFNoise0.
     paramNames := #(#freq).
     mceNames := #().
@@ -2426,12 +2599,15 @@ LFNoise0 comment: 'Step noise'!
     |u|
     u := self new.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFNoise1
@@ -2449,6 +2625,7 @@ LFNoise1 comment: 'Ramp noise'!
 
 !LFNoise1 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFNoise1.
     paramNames := #(#freq).
     mceNames := #().
@@ -2470,12 +2647,15 @@ LFNoise1 comment: 'Ramp noise'!
     |u|
     u := self new.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFNoise2
@@ -2493,6 +2673,7 @@ LFNoise2 comment: 'Quadratic noise.'!
 
 !LFNoise2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFNoise2.
     paramNames := #(#freq).
     mceNames := #().
@@ -2514,12 +2695,15 @@ LFNoise2 comment: 'Quadratic noise.'!
     |u|
     u := self new.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFPulse
@@ -2541,6 +2725,7 @@ LFPulse comment: 'pulse oscillator'!
 
 !LFPulse methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFPulse.
     paramNames := #(#freq #iphase #width).
     mceNames := #().
@@ -2566,14 +2751,17 @@ LFPulse comment: 'pulse oscillator'!
     u freq: freq.
     u iphase: iphase.
     u width: width.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase width: width mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFSaw
@@ -2593,6 +2781,7 @@ LFSaw comment: 'Sawtooth oscillator'!
 
 !LFSaw methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFSaw.
     paramNames := #(#freq #iphase).
     mceNames := #().
@@ -2616,13 +2805,16 @@ LFSaw comment: 'Sawtooth oscillator'!
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LFTri
@@ -2642,6 +2834,7 @@ LFTri comment: 'Triangle oscillator'!
 
 !LFTri methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LFTri.
     paramNames := #(#freq #iphase).
     mceNames := #().
@@ -2665,13 +2858,16 @@ LFTri comment: 'Triangle oscillator'!
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LPF
@@ -2691,6 +2887,7 @@ LPF comment: '2nd order Butterworth lowpass filter'!
 
 !LPF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LPF.
     paramNames := #(#in #freq).
     mceNames := #().
@@ -2714,13 +2911,16 @@ LPF comment: '2nd order Butterworth lowpass filter'!
     u := self new.
     u in: in.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Lag
@@ -2740,6 +2940,7 @@ Lag comment: 'Exponential lag'!
 
 !Lag methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Lag.
     paramNames := #(#in #lagTime).
     mceNames := #().
@@ -2763,13 +2964,16 @@ Lag comment: 'Exponential lag'!
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LagUD
@@ -2791,6 +2995,7 @@ LagUD comment: 'Exponential lag'!
 
 !LagUD methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LagUD.
     paramNames := #(#in #lagTimeU #lagTimeD).
     mceNames := #().
@@ -2816,14 +3021,17 @@ LagUD comment: 'Exponential lag'!
     u in: in.
     u lagTimeU: lagTimeU.
     u lagTimeD: lagTimeD.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u lagTimeU: lagTimeU.
     u lagTimeD: lagTimeD.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Lag2
@@ -2843,6 +3051,7 @@ Lag2 comment: 'Exponential lag'!
 
 !Lag2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Lag2.
     paramNames := #(#in #lagTime).
     mceNames := #().
@@ -2866,13 +3075,16 @@ Lag2 comment: 'Exponential lag'!
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Lag3
@@ -2892,6 +3104,7 @@ Lag3 comment: 'Exponential lag'!
 
 !Lag3 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Lag3.
     paramNames := #(#in #lagTime).
     mceNames := #().
@@ -2915,13 +3128,16 @@ Lag3 comment: 'Exponential lag'!
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in lagTime: lagTime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u lagTime: lagTime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Latch
@@ -2941,6 +3157,7 @@ Latch comment: 'Sample and hold'!
 
 !Latch methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Latch.
     paramNames := #(#in #trig).
     mceNames := #().
@@ -2964,13 +3181,16 @@ Latch comment: 'Sample and hold'!
     u := self new.
     u in: in.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in trig: trig mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LeakDC
@@ -2990,6 +3210,7 @@ LeakDC comment: 'Remove DC'!
 
 !LeakDC methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LeakDC.
     paramNames := #(#in #coef).
     mceNames := #().
@@ -3013,13 +3234,16 @@ LeakDC comment: 'Remove DC'!
     u := self new.
     u in: in.
     u coef: coef.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in coef: coef mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Limiter
@@ -3041,6 +3265,7 @@ Limiter comment: 'Peak limiter'!
 
 !Limiter methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Limiter.
     paramNames := #(#in #level #dur).
     mceNames := #().
@@ -3066,14 +3291,17 @@ Limiter comment: 'Peak limiter'!
     u in: in.
     u level: level.
     u dur: dur.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in level: level dur: dur mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u level: level.
     u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Line
@@ -3097,6 +3325,7 @@ Line comment: 'Line generator.'!
 
 !Line methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Line.
     paramNames := #(#start #end #dur #doneAction).
     mceNames := #().
@@ -3124,7 +3353,8 @@ Line comment: 'Line generator.'!
     u end: end.
     u dur: dur.
     u doneAction: doneAction.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     |u|
     u := self new.
@@ -3132,7 +3362,9 @@ Line comment: 'Line generator.'!
     u end: end.
     u dur: dur.
     u doneAction: doneAction.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LinExp
@@ -3158,6 +3390,7 @@ LinExp comment: 'Map a linear range to an exponential range'!
 
 !LinExp methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LinExp.
     paramNames := #(#in #srclo #srchi #dstlo #dsthi).
     mceNames := #().
@@ -3187,7 +3420,8 @@ LinExp comment: 'Map a linear range to an exponential range'!
     u srchi: srchi.
     u dstlo: dstlo.
     u dsthi: dsthi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add
     |u|
     u := self new.
@@ -3196,7 +3430,9 @@ LinExp comment: 'Map a linear range to an exponential range'!
     u srchi: srchi.
     u dstlo: dstlo.
     u dsthi: dsthi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LocalBuf
@@ -3216,6 +3452,7 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
 
 !LocalBuf methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LocalBuf.
     paramNames := #(#numChannels #numFrames).
     mceNames := #().
@@ -3239,13 +3476,16 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
     u := self new.
     u numChannels: numChannels.
     u numFrames: numFrames.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   numChannels: numChannels numFrames: numFrames mul: mul add: add
     |u|
     u := self new.
     u numChannels: numChannels.
     u numFrames: numFrames.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LocalIn
@@ -3263,6 +3503,7 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
 
 !LocalIn methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LocalIn.
     paramNames := #().
     mceNames := #(#default).
@@ -3286,13 +3527,16 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
     u := self new.
     u numChan: numChan.
     u default: default.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   numChan: numChan default: default mul: mul add: add
     |u|
     u := self new.
     u numChan: numChan.
     u default: default.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #LocalOut
@@ -3310,6 +3554,7 @@ LocalOut comment: 'Write to buses local to a synth.'!
 
 !LocalOut methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #LocalOut.
     paramNames := #().
     mceNames := #(#channelsArray).
@@ -3331,12 +3576,15 @@ LocalOut comment: 'Write to buses local to a synth.'!
     |u|
     u := self new.
     u channelsArray: channelsArray.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   channelsArray: channelsArray mul: mul add: add
     |u|
     u := self new.
     u channelsArray: channelsArray.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #MiRings
@@ -3376,6 +3624,7 @@ MiRings comment: 'a resonator'!
 
 !MiRings methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #MiRings.
     paramNames := #(#in #trig #pit #struct #bright #damp #pos #model #poly #intern_exciter #easteregg #bypass).
     mceNames := #().
@@ -3419,7 +3668,8 @@ MiRings comment: 'a resonator'!
     u intern_exciter: intern_exciter.
     u easteregg: easteregg.
     u bypass: bypass.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add
     |u|
     u := self new.
@@ -3435,7 +3685,9 @@ MiRings comment: 'a resonator'!
     u intern_exciter: intern_exciter.
     u easteregg: easteregg.
     u bypass: bypass.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #ModDif
@@ -3457,6 +3709,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
 
 !ModDif methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #ModDif.
     paramNames := #(#x #y #mod).
     mceNames := #().
@@ -3482,14 +3735,17 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     u x: x.
     u y: y.
     u mod: mod.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   x: x y: y mod: mod mul: mul add: add
     |u|
     u := self new.
     u x: x.
     u y: y.
     u mod: mod.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #MouseX
@@ -3513,6 +3769,7 @@ MouseX comment: 'Cursor tracking UGen.'!
 
 !MouseX methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #MouseX.
     paramNames := #(#minval #maxval #warp #lag).
     mceNames := #().
@@ -3540,7 +3797,8 @@ MouseX comment: 'Cursor tracking UGen.'!
     u maxval: maxval.
     u warp: warp.
     u lag: lag.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     |u|
     u := self new.
@@ -3548,7 +3806,9 @@ MouseX comment: 'Cursor tracking UGen.'!
     u maxval: maxval.
     u warp: warp.
     u lag: lag.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #MouseY
@@ -3572,6 +3832,7 @@ MouseY comment: 'Cursor tracking UGen.'!
 
 !MouseY methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #MouseY.
     paramNames := #(#minval #maxval #warp #lag).
     mceNames := #().
@@ -3599,7 +3860,8 @@ MouseY comment: 'Cursor tracking UGen.'!
     u maxval: maxval.
     u warp: warp.
     u lag: lag.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     |u|
     u := self new.
@@ -3607,44 +3869,6 @@ MouseY comment: 'Cursor tracking UGen.'!
     u maxval: maxval.
     u warp: warp.
     u lag: lag.
-    ^(MulAdd in: u mul: mul add: add)!
-!
-
-UGen subclass: #MulAdd
-  instanceVariableNames: 'in mul add'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-MulAdd comment: 'Multiply add'!
-
-!MulAdd methodsFor: 'accessing'!
-  in ^in!
-  in: x in := x!
-  mul ^mul!
-  mul: x mul := x!
-  add ^add!
-  add: x add := x!
-!
-
-!MulAdd methodsFor: 'initialization'!
-  initialize
-    ugenName := #MulAdd.
-    paramNames := #(#in #mul #add).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    in := 0.0. mul := 0.0. add := 0.0!
-!
-
-
-!MulAdd class methodsFor: 'instance creation'!
-  in: in mul: mul add: add
-    |u|
-    u := self new.
-    u in: in.
     u mul: mul.
     u add: add.
     ^u!
@@ -3667,6 +3891,7 @@ OnePole comment: 'One pole filter.'!
 
 !OnePole methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #OnePole.
     paramNames := #(#in #coef).
     mceNames := #().
@@ -3690,13 +3915,16 @@ OnePole comment: 'One pole filter.'!
     u := self new.
     u in: in.
     u coef: coef.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in coef: coef mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Out
@@ -3716,6 +3944,7 @@ Out comment: 'Write a signal to a bus.'!
 
 !Out methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Out.
     paramNames := #(#bus).
     mceNames := #(#channelsArray).
@@ -3739,13 +3968,16 @@ Out comment: 'Write a signal to a bus.'!
     u := self new.
     u bus: bus.
     u channelsArray: channelsArray.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   bus: bus channelsArray: channelsArray mul: mul add: add
     |u|
     u := self new.
     u bus: bus.
     u channelsArray: channelsArray.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Pan2
@@ -3767,6 +3999,7 @@ Pan2 comment: 'Two channel equal power pan.'!
 
 !Pan2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Pan2.
     paramNames := #(#in #pos #level).
     mceNames := #().
@@ -3792,14 +4025,17 @@ Pan2 comment: 'Two channel equal power pan.'!
     u in: in.
     u pos: pos.
     u level: level.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in pos: pos level: level mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u pos: pos.
     u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Phasor
@@ -3825,6 +4061,7 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
 
 !Phasor methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Phasor.
     paramNames := #(#trig #rate #start #end #resetPos).
     mceNames := #().
@@ -3854,7 +4091,8 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     u start: start.
     u end: end.
     u resetPos: resetPos.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add
     |u|
     u := self new.
@@ -3863,7 +4101,9 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     u start: start.
     u end: end.
     u resetPos: resetPos.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #PinkNoise
@@ -3877,6 +4117,7 @@ PinkNoise comment: 'Pink Noise.'!
 
 !PinkNoise methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #PinkNoise.
     paramNames := #().
     mceNames := #().
@@ -3889,16 +4130,17 @@ PinkNoise comment: 'Pink Noise.'!
 
 
 !PinkNoise class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #PitchShift
@@ -3924,6 +4166,7 @@ PitchShift comment: 'Time domain pitch shifter.'!
 
 !PitchShift methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #PitchShift.
     paramNames := #(#in #windowSize #pitchRatio #pitchDispersion #timeDispersion).
     mceNames := #().
@@ -3953,7 +4196,8 @@ PitchShift comment: 'Time domain pitch shifter.'!
     u pitchRatio: pitchRatio.
     u pitchDispersion: pitchDispersion.
     u timeDispersion: timeDispersion.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul add: add
     |u|
     u := self new.
@@ -3962,7 +4206,9 @@ PitchShift comment: 'Time domain pitch shifter.'!
     u pitchRatio: pitchRatio.
     u pitchDispersion: pitchDispersion.
     u timeDispersion: timeDispersion.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Pluck
@@ -3990,6 +4236,7 @@ Pluck comment: 'A Karplus-Strong UGen'!
 
 !Pluck methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Pluck.
     paramNames := #(#in #trig #maxdelaytime #delaytime #decaytime #coef).
     mceNames := #().
@@ -4021,7 +4268,8 @@ Pluck comment: 'A Karplus-Strong UGen'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     u coef: coef.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul add: add
     |u|
     u := self new.
@@ -4031,7 +4279,9 @@ Pluck comment: 'A Karplus-Strong UGen'!
     u delaytime: delaytime.
     u decaytime: decaytime.
     u coef: coef.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Pulse
@@ -4051,6 +4301,7 @@ Pulse comment: 'Band limited pulse wave.'!
 
 !Pulse methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Pulse.
     paramNames := #(#freq #width).
     mceNames := #().
@@ -4074,13 +4325,16 @@ Pulse comment: 'Band limited pulse wave.'!
     u := self new.
     u freq: freq.
     u width: width.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq width: width mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #PulseCount
@@ -4100,6 +4354,7 @@ PulseCount comment: 'Pulse counter.'!
 
 !PulseCount methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #PulseCount.
     paramNames := #(#trig #reset).
     mceNames := #().
@@ -4123,13 +4378,16 @@ PulseCount comment: 'Pulse counter.'!
     u := self new.
     u trig: trig.
     u reset: reset.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig reset: reset mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #PulseDivider
@@ -4151,6 +4409,7 @@ PulseDivider comment: 'Pulse divider.'!
 
 !PulseDivider methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #PulseDivider.
     paramNames := #(#trig #div #start).
     mceNames := #().
@@ -4176,14 +4435,17 @@ PulseDivider comment: 'Pulse divider.'!
     u trig: trig.
     u div: div.
     u start: start.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig div: div start: start mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
     u div: div.
     u start: start.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #RHPF
@@ -4205,6 +4467,7 @@ RHPF comment: 'A resonant high pass filter.'!
 
 !RHPF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #RHPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
@@ -4230,14 +4493,17 @@ RHPF comment: 'A resonant high pass filter.'!
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #RLPF
@@ -4259,6 +4525,7 @@ RLPF comment: 'A resonant low pass filter.'!
 
 !RLPF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #RLPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
@@ -4284,14 +4551,17 @@ RLPF comment: 'A resonant low pass filter.'!
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq rq: rq mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u rq: rq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Rand
@@ -4311,6 +4581,7 @@ Rand comment: 'Single random number generator.'!
 
 !Rand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Rand.
     paramNames := #(#lo #hi).
     mceNames := #().
@@ -4334,13 +4605,16 @@ Rand comment: 'Single random number generator.'!
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Resonz
@@ -4362,6 +4636,7 @@ Resonz comment: 'Resonant filter.'!
 
 !Resonz methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Resonz.
     paramNames := #(#in #freq #bwr).
     mceNames := #().
@@ -4387,14 +4662,17 @@ Resonz comment: 'Resonant filter.'!
     u in: in.
     u freq: freq.
     u bwr: bwr.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq bwr: bwr mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u bwr: bwr.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Ringz
@@ -4416,6 +4694,7 @@ Ringz comment: 'Ringing filter.'!
 
 !Ringz methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Ringz.
     paramNames := #(#in #freq #decaytime).
     mceNames := #().
@@ -4441,14 +4720,17 @@ Ringz comment: 'Ringing filter.'!
     u in: in.
     u freq: freq.
     u decaytime: decaytime.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in freq: freq decaytime: decaytime mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u freq: freq.
     u decaytime: decaytime.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #RunningMax
@@ -4468,6 +4750,7 @@ RunningMax comment: 'Track maximum level.'!
 
 !RunningMax methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #RunningMax.
     paramNames := #(#in #trig).
     mceNames := #().
@@ -4491,13 +4774,16 @@ RunningMax comment: 'Track maximum level.'!
     u := self new.
     u in: in.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in trig: trig mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SampleDur
@@ -4511,6 +4797,7 @@ SampleDur comment: 'Duration of one sample.'!
 
 !SampleDur methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SampleDur.
     paramNames := #().
     mceNames := #().
@@ -4523,16 +4810,17 @@ SampleDur comment: 'Duration of one sample.'!
 
 
 !SampleDur class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SampleRate
@@ -4546,6 +4834,7 @@ SampleRate comment: 'Server sample rate.'!
 
 !SampleRate methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SampleRate.
     paramNames := #().
     mceNames := #().
@@ -4558,16 +4847,17 @@ SampleRate comment: 'Server sample rate.'!
 
 
 !SampleRate class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Saw
@@ -4585,6 +4875,7 @@ Saw comment: 'Band limited sawtooth.'!
 
 !Saw methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Saw.
     paramNames := #(#freq).
     mceNames := #().
@@ -4606,12 +4897,15 @@ Saw comment: 'Band limited sawtooth.'!
     |u|
     u := self new.
     u freq: freq.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Select
@@ -4631,6 +4925,7 @@ Select comment: 'Select output from an array of inputs.'!
 
 !Select methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Select.
     paramNames := #(#which).
     mceNames := #(#array).
@@ -4654,13 +4949,16 @@ Select comment: 'Select output from an array of inputs.'!
     u := self new.
     u which: which.
     u array: array.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   which: which array: array mul: mul add: add
     |u|
     u := self new.
     u which: which.
     u array: array.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SetBuf
@@ -4684,6 +4982,7 @@ SetBuf comment: 'Set local buffer'!
 
 !SetBuf methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SetBuf.
     paramNames := #(#buf #offset #length).
     mceNames := #(#array).
@@ -4711,7 +5010,8 @@ SetBuf comment: 'Set local buffer'!
     u offset: offset.
     u length: length.
     u array: array.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   buf: buf offset: offset length: length array: array mul: mul add: add
     |u|
     u := self new.
@@ -4719,7 +5019,9 @@ SetBuf comment: 'Set local buffer'!
     u offset: offset.
     u length: length.
     u array: array.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SetResetFF
@@ -4739,6 +5041,7 @@ SetResetFF comment: 'Set-reset flip flop.'!
 
 !SetResetFF methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SetResetFF.
     paramNames := #(#trig #reset).
     mceNames := #().
@@ -4762,13 +5065,16 @@ SetResetFF comment: 'Set-reset flip flop.'!
     u := self new.
     u trig: trig.
     u reset: reset.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig reset: reset mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SinOsc
@@ -4788,6 +5094,7 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
 
 !SinOsc methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SinOsc.
     paramNames := #(#freq #phase).
     mceNames := #().
@@ -4811,13 +5118,16 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
     u := self new.
     u freq: freq.
     u phase: phase.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq phase: phase mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u phase: phase.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #SinOscFB
@@ -4837,6 +5147,7 @@ SinOscFB comment: 'Feedback FM oscillator'!
 
 !SinOscFB methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #SinOscFB.
     paramNames := #(#freq #feedback).
     mceNames := #().
@@ -4860,13 +5171,16 @@ SinOscFB comment: 'Feedback FM oscillator'!
     u := self new.
     u freq: freq.
     u feedback: feedback.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq feedback: feedback mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u feedback: feedback.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Sweep
@@ -4886,6 +5200,7 @@ Sweep comment: 'Triggered linear ramp'!
 
 !Sweep methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Sweep.
     paramNames := #(#trig #rate).
     mceNames := #().
@@ -4909,13 +5224,16 @@ Sweep comment: 'Triggered linear ramp'!
     u := self new.
     u trig: trig.
     u rate: rate.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig rate: rate mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
     u rate: rate.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #TDuty
@@ -4941,6 +5259,7 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
 
 !TDuty methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #TDuty.
     paramNames := #(#dur #reset #doneAction #level #gapFirst).
     mceNames := #().
@@ -4970,7 +5289,8 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     u doneAction: doneAction.
     u level: level.
     u gapFirst: gapFirst.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add
     |u|
     u := self new.
@@ -4979,7 +5299,9 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     u doneAction: doneAction.
     u level: level.
     u gapFirst: gapFirst.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #TExpRand
@@ -5001,6 +5323,7 @@ TExpRand comment: 'Triggered exponential random number generator.'!
 
 !TExpRand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #TExpRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
@@ -5026,14 +5349,17 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Timer
@@ -5051,6 +5377,7 @@ Timer comment: 'Returns time since last triggered.'!
 
 !Timer methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Timer.
     paramNames := #(#trig).
     mceNames := #().
@@ -5072,12 +5399,15 @@ Timer comment: 'Returns time since last triggered.'!
     |u|
     u := self new.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   trig: trig mul: mul add: add
     |u|
     u := self new.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #TIRand
@@ -5099,6 +5429,7 @@ TIRand comment: 'Triggered integer random number generator.'!
 
 !TIRand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #TIRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
@@ -5124,14 +5455,17 @@ TIRand comment: 'Triggered integer random number generator.'!
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #TRand
@@ -5153,6 +5487,7 @@ TRand comment: 'Triggered random number generator.'!
 
 !TRand methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #TRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
@@ -5178,14 +5513,17 @@ TRand comment: 'Triggered random number generator.'!
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   lo: lo hi: hi trig: trig mul: mul add: add
     |u|
     u := self new.
     u lo: lo.
     u hi: hi.
     u trig: trig.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Trig
@@ -5205,6 +5543,7 @@ Trig comment: 'Timed trigger.'!
 
 !Trig methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Trig.
     paramNames := #(#in #dur).
     mceNames := #().
@@ -5228,13 +5567,16 @@ Trig comment: 'Timed trigger.'!
     u := self new.
     u in: in.
     u dur: dur.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in dur: dur mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #Trig1
@@ -5254,6 +5596,7 @@ Trig1 comment: 'Timed trigger.'!
 
 !Trig1 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #Trig1.
     paramNames := #(#in #dur).
     mceNames := #().
@@ -5277,13 +5620,16 @@ Trig1 comment: 'Timed trigger.'!
     u := self new.
     u in: in.
     u dur: dur.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   in: in dur: dur mul: mul add: add
     |u|
     u := self new.
     u in: in.
     u dur: dur.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #VarSaw
@@ -5305,6 +5651,7 @@ VarSaw comment: 'Variable duty saw'!
 
 !VarSaw methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #VarSaw.
     paramNames := #(#freq #iphase #width).
     mceNames := #().
@@ -5330,14 +5677,17 @@ VarSaw comment: 'Variable duty saw'!
     u freq: freq.
     u iphase: iphase.
     u width: width.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   freq: freq iphase: iphase width: width mul: mul add: add
     |u|
     u := self new.
     u freq: freq.
     u iphase: iphase.
     u width: width.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #WhiteNoise
@@ -5351,6 +5701,7 @@ WhiteNoise comment: 'White noise.'!
 
 !WhiteNoise methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #WhiteNoise.
     paramNames := #().
     mceNames := #().
@@ -5363,16 +5714,17 @@ WhiteNoise comment: 'White noise.'!
 
 
 !WhiteNoise class methodsFor: 'instance creation'!
-   mul: mul
+  mul: mul
     |u|
     u := self new.
-    
-    ^(u * mul)!
-   mul: mul add: add
+    u mul: mul.
+    ^u!
+  mul: mul add: add
     |u|
     u := self new.
-    
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #XFade2
@@ -5396,6 +5748,7 @@ XFade2 comment: 'Equal power two channel cross fade.'!
 
 !XFade2 methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #XFade2.
     paramNames := #(#inA #inB #pan #level).
     mceNames := #().
@@ -5423,7 +5776,8 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     u inB: inB.
     u pan: pan.
     u level: level.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   inA: inA inB: inB pan: pan level: level mul: mul add: add
     |u|
     u := self new.
@@ -5431,7 +5785,9 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     u inB: inB.
     u pan: pan.
     u level: level.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 UGen subclass: #XLine
@@ -5455,6 +5811,7 @@ XLine comment: 'Exponential line generator.'!
 
 !XLine methodsFor: 'initialization'!
   initialize
+    super initialize.
     ugenName := #XLine.
     paramNames := #(#start #end #dur #doneAction).
     mceNames := #().
@@ -5482,7 +5839,8 @@ XLine comment: 'Exponential line generator.'!
     u end: end.
     u dur: dur.
     u doneAction: doneAction.
-    ^(u * mul)!
+    u mul: mul.
+    ^u!
   start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     |u|
     u := self new.
@@ -5490,7 +5848,9 @@ XLine comment: 'Exponential line generator.'!
     u end: end.
     u dur: dur.
     u doneAction: doneAction.
-    ^(MulAdd in: u mul: mul add: add)!
+    u mul: mul.
+    u add: add.
+    ^u!
 !
 
 

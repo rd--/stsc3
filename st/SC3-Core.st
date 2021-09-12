@@ -31,10 +31,13 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   paramNameFromIndex: i
     "Get parameter name given index.
      Parameter names are separated into paramNames and mceNames.
-     This does not allow mul: and add: inputs."
-    | n |
+     The implicit names mul: and add: follow."
+    | n m |
     n := self paramNames size.
-    i > n ifTrue: [^self mceNames at: i - n] ifFalse: [^self paramNames at: i]
+    m := self mceNames size.
+    i <= n ifTrue: [^self paramNames at: i].
+    i <= (n + m) ifTrue: [^self mceNames at: i - n].
+    ^#(#mul #add) at: i - n - m
   !
   setParamsFromOrderedDictionary: d
     "Set UGen parameters from an array of either ugen inputs or (name,input) associations."
@@ -103,13 +106,23 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !
 
 AbstractUGen subclass: #UGen
-  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
+  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId mul add'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-UGen comment: 'Unit Generator.  ugenId is assigned during graph serialisation since identityHash is not unique'!
+UGen comment: 'Unit Generator.
+ugenId is assigned during graph serialisation since identityHash is not unique.
+All UGens have mul and add inputs, so these variables are defined here.
+'!
+
+!UGen methodsFor: 'initialization'!
+  initialize
+    mul := 1.
+    add := 0.
+  !
+!
 
 !UGen methodsFor: 'accessing'!
   mceNames ^mceNames
@@ -140,6 +153,14 @@ UGen comment: 'Unit Generator.  ugenId is assigned during graph serialisation si
   !
   ugenId: x ugenId := x
   !
+  mul ^mul
+  !
+  mul: x mul := x
+  !
+  add ^add
+  !
+  add: x add := x
+  !
 !
 
 !UGen methodsFor: 'collecting'!
@@ -148,7 +169,9 @@ UGen comment: 'Unit Generator.  ugenId is assigned during graph serialisation si
     addFunc := [:x | (self perform: x) addToUGenSet: c].
     c add: self.
     paramNames do: addFunc.
-    mceNames do: addFunc
+    mceNames do: addFunc.
+    mul = 1 ifFalse: [mul addToUGenSet: c].
+    add = 0 ifFalse: [add addToUGenSet: c]
   !
 !
 
@@ -404,9 +427,6 @@ Mix comment: 'UGen Mixer'!
 !
 
 !AbstractUGen methodsFor: 'arithmetic'!
-  mul: mul add: add
-    ^MulAdd in: self mul: mul add: add
-  !
   mix
     ^Mix source: self
   !

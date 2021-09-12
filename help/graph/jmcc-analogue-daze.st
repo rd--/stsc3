@@ -9,7 +9,7 @@ f := [:octave :clockRate :pwmrate :fltrate|
   sq := sequ value: patternCps.
   pwm := (SinOsc kr: {pwmrate. (2 * Float pi) rand}) * 0.4 + 0.5.
   cf := (SinOsc kr: {fltrate. (2 * Float pi) rand}) * 1400 + 2000.
-  RLPF ar: {(LFPulse ar: {Lag kr: {sq. 0.05}. 0. pwm}) * 0.1. cf. 1 / 15}].
+  RLPF ar: {LFPulse ar: {Lag kr: {sq. 0.05}. 0. pwm. 0.1}. cf. 1 / 15}].
 a := (2 mceFill: [:i | LFNoise0 ar: {(LFNoise1 kr: #(0.3)) * 6000 + 8000}]) * 0.07.
 x := (Decay ar: {Impulse ar: #(2 0). 0.15}) * a.
 g := x + {f valueWithArguments: #(1 8 0.31 0.2). f valueWithArguments: #(0 2 0.13 0.11)}.
