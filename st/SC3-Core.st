@@ -29,7 +29,9 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen methodsFor: 'accessing'!
   paramNameFromIndex: i
-    "Get parameter name given index. Parameter names are separated into paramNames and mceNames."
+    "Get parameter name given index.
+     Parameter names are separated into paramNames and mceNames.
+     This does not allow mul: and add: inputs."
     | n |
     n := self paramNames size.
     i > n ifTrue: [^self mceNames at: i - n] ifFalse: [^self paramNames at: i]
@@ -50,6 +52,10 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
   adaptToFraction: rcvr andSend: selector
     "If I am involved in arithmetic with a Fraction, convert it to a UGen."
+    ^rcvr asUGen perform: selector with: self
+  !
+  adaptToCollection: rcvr andSend: selector
+    "If I am involved in arithmetic with a Collection, convert it to a UGen."
     ^rcvr asUGen perform: selector with: self
   !
 !
