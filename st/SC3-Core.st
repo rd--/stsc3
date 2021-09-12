@@ -391,10 +391,10 @@ Mce comment: 'Multiple Channel Expansion'!
 
 !Number methodsFor: 'enumerating'!
   mceFill: f
-    ^(self arrayFill: f) mce
+    ^(self arrayFill: f) asUGen
   !
   mceFillZeroIndexed: f
-    ^(self arrayFillZeroIndexed: f) mce
+    ^(self arrayFillZeroIndexed: f) asUGen
   !
 !
 

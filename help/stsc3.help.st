@@ -431,9 +431,13 @@ FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/jrhb-gcd.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/nc-sctutorial.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/nv-899-04.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/nv-tw-40.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/nv-tw-41.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/pj-forest-sounds.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/rd-chrd.st' evalFile play.
 '/home/rohan/sw/stsc3/help/graph/tw-tw-01.st' evalFile play.
+'/home/rohan/sw/stsc3/help/graph/tw-tw-02.st' evalFile play.
 
 SC3 reset.
 

@@ -80,7 +80,7 @@ EventControl comment: 'Event Control Input'!
   k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc
     | v |
     v := (Interval from: 0 to: (numVoices - 1)) asArray.
-    ^(v collect: [:c | voiceFunc value: (self k0: k0 c: (c0 + c)) value: c]) mce
+    ^(v collect: [:c | voiceFunc value: (self k0: k0 c: (c0 + c)) value: c]) asUGen
   !
   numVoices: numVoices voiceFunc: voiceFunc
     | k0 c0 |

@@ -7,4 +7,4 @@
  y := (CombL in: z maxdelaytime: 0.1 delaytime: (y_ kr) decaytime: 15) mix.
  x := y.
  (1 to: a) do: [:i | x := AllpassN in: x maxdelaytime: 0.050 delaytime: {Rand lo: 0 hi: 0.05. Rand lo: 0 hi: 0.05} decaytime: 1].
- x mul: 0.2 add: s] value: 6 value: 5 value: 4
+ x * 0.2 + s] value: 6 value: 5 value: 4
