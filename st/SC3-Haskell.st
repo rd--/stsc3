@@ -135,6 +135,9 @@
     self printHaskellArrayOn: fd.
     ')' putOn: fd
   !
+  play
+    self asUGen play.
+  !
 !
 
 !Interval methodsFor: 'printing'!

@@ -5,7 +5,7 @@ f := [:octave :clockRate :pwmrate :fltrate|
   |sequ tr patternCps sq pwm cf|
   sequ := [:s | Demand kr: {tr. 0. Dseq dr: {#dinf. s}}].
   tr := Impulse kr: {clockRate. 0}.
-  patternCps := (pattern + (12 * octave)) asUGen midicps.
+  patternCps := (pattern + (12 * octave)) midicps.
   sq := sequ value: patternCps.
   pwm := (SinOsc kr: {pwmrate. (2 * Float pi) rand}) * 0.4 + 0.5.
   cf := (SinOsc kr: {fltrate. (2 * Float pi) rand}) * 1400 + 2000.

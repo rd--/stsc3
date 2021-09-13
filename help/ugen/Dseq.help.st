@@ -20,10 +20,14 @@ sequ := [:s :tr | Demand trig: tr reset: 0 demandUGens: (Dseq repeats: #dinf lis
 t := Impulse freq: 6 phase: 0.
 n0 := sequ value: #(60 62 63 58 48 55) value: t.
 n1 := sequ value: #(63 60 48 62 55 58) value: t.
-LFSaw freq: {n0. n1} mce midicps iphase: 0 mul: 0.05
+LFSaw freq: {n0. n1} midicps iphase: 0 mul: 0.05
 
 "Dseq ; rather than Mce expansion at tr, it can be clearer to view tr as a functor"
-| m o |
-m := [:f | Demand trig: (Impulse freq: f phase: 0) reset: 0 demandUGens: (Dseq repeats: #dinf list: #(60 63 67 69))].
-o := SinOsc freq: (#(2 3 5) collect: m) asUGen midicps kr phase: 0 mul: 0.1.
+|m o|
+m := [:f|
+  |tr sq|
+  tr := Impulse freq: f phase: 0.
+  sq := Dseq repeats: #dinf list: #(60 63 67 69).
+  (Demand trig: tr reset: 0 demandUGens: sq) midicps kr].
+o := SinOsc freq: (#(2 3 5) collect: m) phase: 0 mul: 0.1.
 Splay input: o

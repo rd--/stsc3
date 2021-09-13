@@ -2,8 +2,8 @@
 |n t f o|
 n := Diwhite length: #dinf lo: 60 hi: 72.
 t := Impulse freq: 10 phase: 0.
-f := Demand trig: t reset: 0 demandUGens: n midicps.
-o := SinOsc freq: {f. f + 0.7} mce kr phase: 0.
+f := (Demand trig: t reset: 0 demandUGens: n midicps) kr.
+o := SinOsc freq: {f. f + 0.7} phase: 0.
 o cubed cubed * 0.1
 
 "Demand ; rate: notation"

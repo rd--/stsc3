@@ -7,4 +7,4 @@ sr := MouseX kr: {1000. SampleRate ir: {0.1}. 1. 0.2}.
 bitSz := MouseY kr: {1. 24. 1. 0.2}.
 downSample := Latch ar: {src. Impulse ar: {sr. 0}}.
 bitRedux := downSample round: {0.5 asUGen raisedTo: bitSz}.
-{downSample. bitRedux} asUGen
+{downSample. bitRedux}

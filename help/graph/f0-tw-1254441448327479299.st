@@ -6,7 +6,7 @@ c := 0.021.
 d := (LFTri freq: b / 999 iphase: 0) % 1.
 m := LFTri freq: b * c iphase: 0.
 l := (m * 7 + 20) + (Dseq repeats: #dinf list: (b asUGen % m * 5 + 6)).
-j := Duty dur: (e asUGen / (12 asUGen raisedTo: m)) reset: 0 doneAction: 0 level: l.
+j := Duty dur: (e / (12 asUGen raisedTo: m)) reset: 0 doneAction: 0 level: l.
 f := (DegreeToKey bufnum: (b asLocalBuf) in: j octave: 12) midicps.
 y := Decay2 in: (Impulse freq: {2/3. 1.5. 3. 1.5. 3} phase: 0) attackTime: c decayTime: d mul: d.
 o := SinOscFB freq: f feedback: (((LFTri freq: (c / b) iphase: 0) + 1) / 3) mul: y.
@@ -20,7 +20,7 @@ c := 0.021.
 d := LFTri freq: b / 999 iphase: 0.
 m := LFTri freq: b * c iphase: 0.
 l := m * 7 + 20 + (Dseq repeats: #dinf list: b asUGen % m * 5 + 6).
-j := Duty dur: (e asUGen / (12 asUGen raisedTo: m)) reset: 0 doneAction: 0 level: l.
+j := Duty dur: (e / (12 asUGen raisedTo: m)) reset: 0 doneAction: 0 level: l.
 k := DegreeToKey bufnum: (b asLocalBuf) in: j octave: 12.
 o := SinOscFB freq: k midicps feedback: (LFTri freq: (c / b) iphase: 1 mul: d % 1).
 FreeVerb in: (Splay input: o) mix: 0.1 room: 1 damp: 0.5 mul: 0.15

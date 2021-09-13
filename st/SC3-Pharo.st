@@ -24,3 +24,9 @@
     ^FileList openOn: self
   !
 !
+
+!Collection methodsFor: 'arithmetic'!
+  isZero
+    ^false
+  !
+!

@@ -1,6 +1,6 @@
 "f0 ; https://twitter.com/redFrik/status/1105496695637454848"
 | b w s x y z m o f rq |
-b := (1 to: 15) asUGen / 151.
+b := (1 to: 15) / 151.
 w := (VarSaw freq: b iphase: b width: 1 / 5.15 mul: 1 add: 1.5) ceil.
 s := Select which: ((VarSaw freq: 1 / 15 iphase: 1 / 5 width: b mul: 5) ceil + 5 / 5) array: {51 * 1.5. 51. 151}.
 x := Lag in: s lagTime: b.

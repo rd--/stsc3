@@ -75,7 +75,7 @@ EventControl comment: 'Event Control Input'!
 
 !EventControl class methodsFor: 'instance creation'!
   k0: k0 c: c
-    ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * 10))) kr mce.
+    ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * 10))) kr asMce.
   !
   k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc
     | v |

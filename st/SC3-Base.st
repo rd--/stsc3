@@ -1,7 +1,20 @@
-!Array methodsFor: 'rearranging'!
+!SequenceableCollection methodsFor: 'rearranging'!
   transpose
     "Transpose rows and columns of two-dimensional array"
     ^(1 to: self first size) collect: [:c | self collect: [:r | r at: c]]
+  !
+  groupsOf: n
+    "My elements taken n at a time. Ignore any leftovers at the end."
+    ^(n to: self size by: n) collect: [:index | self copyFrom: index - n + 1 to: index]
+  !
+!
+
+!SequenceableCollection methodsFor: 'rearranging'!
+  withExtending: other collect: aBlock
+    "Like with:collect: but cycle shorter list."
+    |n|
+    n := self size max: other size.
+    ^(1 to: n) collect: [:index| aBlock value: (self atWrap: index) value: (other atWrap: index)]
   !
 !
 

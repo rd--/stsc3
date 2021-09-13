@@ -7,4 +7,4 @@ b := [:d |
   RHPF in: n1 freq: n2 rq: 0.03 mul: (d at: 4)]].
 x := b value: #(14 400 500 0.06).
 y := b value: #(20 800 1000 0.10).
-{x value. x value} asUGen + {y value. y value} asUGen
+{x value. x value} + {y value. y value}

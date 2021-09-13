@@ -11,3 +11,19 @@
     ^lo * ((hi / lo) ln * self) exp
   !
 !
+
+!Collection methodsFor: 'arithmetic'!
+  abs
+    ^self collect: [:x| x abs]
+  !
+  midicps
+    ^self collect: [:x| x midicps]
+  !
+!
+
+!SequenceableCollection methodsFor: 'arithmetic'!
+  +~ other
+    "Like + but cycles shorter collection"
+    ^self withExtending: other collect: [:i :j| i + j]
+  !
+!

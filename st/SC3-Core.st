@@ -91,17 +91,19 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !
 
 !AbstractUGen methodsFor: 'multi-channel expansion'!
-  mce
+  asMce
+    "Mark UGen as Mce.
+     This is necessary because the current implementation defers expansion to hsc3."
     ^Mce source: self
   !
   transpose
-    ^self mce transpose
+    ^self asMce transpose
   !
   at: x
-    ^self mce at: x
+    ^self asMce at: x
   !
   clump: x
-    ^self mce clump: x
+    ^self asMce clump: x
   !
 !
 
@@ -368,11 +370,11 @@ Mce comment: 'Multiple Channel Expansion'!
 !AbstractUGen methodsFor: 'transforms'!
   reverse
     "Mce reverse"
-    ^self mce reverse
+    ^self asMce reverse
   !
   transpose
     "Mce transpose"
-    ^self mce transpose
+    ^self asMce transpose
   !
 !
 
@@ -447,6 +449,21 @@ SC3 comment: 'SuperCollider3'!
 !SC3 class methodsFor: 'server control'!
   reset
     'hsc3-scsynth reset' systemCommand
+  !
+  playNamedGraph: graphName
+    ^(SC3 stsc3HelpGraphFile: graphName)  evalFile play
+  !
+!
+
+!SC3 class methodsFor: 'environment'!
+  stsc3Directory
+    ^'/home/rohan/sw/stsc3'
+  !
+  stsc3File: fileName
+    ^SC3 stsc3Directory , '/' , fileName
+  !
+  stsc3HelpGraphFile: graphName
+    ^SC3 stsc3File: 'help/graph/' , graphName , '.st'
   !
 !
 

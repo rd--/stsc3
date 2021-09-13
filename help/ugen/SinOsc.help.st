@@ -36,7 +36,7 @@ f0 := 220.
 f1 := 221.25.
 d := (f1 - f0) abs.
 i := Impulse freq: d phase: 0 mul: ((SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0).
-SinOsc freq: {f0. f1} mce phase: 0 mul: 0.1 add: i
+SinOsc freq: {f0. f1} phase: 0 mul: 0.1 add: i
 
 "sinOsc ; When two tones are sounded together, a tone of lower frequency is
 frequently heard. Such a tone is called a combination tone.  The most
@@ -46,7 +46,7 @@ f1 := 300.
 f2 := 300 * 3 / 2. "450"
 f3 := (f2 - f1) abs. "150"
 a3 := (SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0.
-(SinOsc freq: {f1. f2. f3} mce phase: 0 mul: {0.1. 0.1. a3} mce) mix
+(SinOsc freq: {f1. f2. f3} phase: 0 mul: {0.1. 0.1. a3}) mix
 
 "sinOsc ; with frequency of zero, operates as table lookup variant of sin"
 | mk_phasor ph o1 o2 o3 |
@@ -55,7 +55,7 @@ ph := mk_phasor value: 0 value: Float pi * 2 value: 440.
 o1 := SinOsc freq: 440 phase: 0.
 o2 := SinOsc freq: 0 phase: ph.
 o3 := ph sin.
-{o1. XFade2 inA: o2 inB: o3 pan: (LFTri freq: 0.1 iphase: 0) kr level: 1} asUGen * 0.1
+{o1. XFade2 inA: o2 inB: o3 pan: (LFTri freq: 0.1 iphase: 0) kr level: 1} * 0.1
 
 "sinOsc ; 15.5 khz"
 Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75

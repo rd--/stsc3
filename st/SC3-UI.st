@@ -122,12 +122,15 @@ SC3Browser comment: 'List view on UGen graph fragments'!
   draw
     (self files at: index) evalFile draw
   !
-  menu: m shifted: _i
+  menu: m
     m add: 'play (p)' target: self selector: #play.
     m add: 'stop (s)' target: SC3 selector: #reset.
     m add: 'edit (e)' target: self selector: #edit.
     m add: 'draw (d)' target: self selector: #draw.
     ^m
+  !
+  menu: m shifted: _i
+    ^self menu: m
   !
   key: k from: _i
     k == $p ifTrue: [self play].
