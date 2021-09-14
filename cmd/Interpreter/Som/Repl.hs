@@ -5,6 +5,8 @@ import System.Environment {- base -}
 import System.IO {- base -}
 import Text.Printf {- base -}
 
+import qualified Language.Smalltalk.Som as Som {- stsc3 -}
+
 import Interpreter.Som.Core {- stsc3 -}
 import Interpreter.Som.Types {- stsc3 -}
 
@@ -27,9 +29,11 @@ replContinue vmState = do
     Left msg -> putStrLn ("error: " ++ msg) >> replContinue vmState
     Right res -> putStr "result: " >> objectPrint res >> replContinue vmState'
 
--- | Main function for read-eval-print loop.
+{- | Main function for read-eval-print loop.
+     Requires the SOM class directory.
+-}
 replMain :: FilePath -> IO ()
-replMain somDirectory = initialGlobalDictionary somDirectory >>= vmStateInit >>= replContinue
+replMain dir = initialGlobalDictionary dir >>= vmStateInit >>= replContinue
 
 {- | Generate Smalltalk expression to load and run class.
 
@@ -41,14 +45,15 @@ runSomClassSmalltalk cl arg =
   in printf "%s new run: #(%s)" cl (unwords (map quote (cl : arg)))
 
 {- | Load and run Smalltalk class.
+     Requires the SOM class directory.
 
 > loadAndRunClass "TestHarness" []
 > loadAndRunClass "TestHarness" ["String"]
 > loadAndRunClass "Harness" ["Bounce"]
 -}
 loadAndRunClass :: FilePath -> String -> [String] -> IO ()
-loadAndRunClass somDirectory cl arg = do
-  st <- initialGlobalDictionary somDirectory >>= vmStateInit
+loadAndRunClass dir cl arg = do
+  st <- initialGlobalDictionary dir >>= vmStateInit
   (result,_) <- vmEval st (runSomClassSmalltalk cl arg)
   case result of
     Left msg -> putStrLn ("error: " ++ msg)
@@ -60,8 +65,8 @@ loadAndRunClass somDirectory cl arg = do
 -}
 somReplMain :: IO ()
 somReplMain = do
-  let somDirectory = "/home/rohan/opt/src/som/SOM/Smalltalk/"
-  a <- getArgs
-  case a of
-    [] -> replMain somDirectory
-    cl:arg -> loadAndRunClass somDirectory cl arg
+  dir <- Som.somSystemClassPath
+  arg <- getArgs
+  case arg of
+    [] -> replMain dir
+    cl:somArg -> loadAndRunClass dir cl somArg

@@ -105,7 +105,7 @@ doublePositiveInfinity o arg = case (o,arg) of
 -- | Double class>>fromString: (String|Symbol -> Double)
 doubleFromString :: Primitive
 doubleFromString = binaryPrimitive "Double class>>fromString:" (\arg1 arg2 -> case (arg1,arg2) of
-  (DataClass _ _ _,DataString x) -> fmap doubleObject (stringReadDouble x)
+  (DataClass _ _ _,DataString x) -> fmap doubleObject (unicodeStringReadDouble x)
   _ -> Nothing)
 
 -- * Primitives for Integer
@@ -119,7 +119,7 @@ integerAsString = unaryPrimitive "Integer>>asString" (\arg -> case arg of
 -- | Integer class>>fromString: (String|Symbol -> Integer)
 integerFromString :: Primitive
 integerFromString = binaryPrimitive "Integer class>>fromString:" (\arg1 arg2 -> case (arg1,arg2) of
-  (DataClass _ _ _,DataString x) -> fmap integerObject (stringReadInteger x)
+  (DataClass _ _ _,DataString x) -> fmap integerObject (unicodeStringReadInteger x)
   _ -> Nothing)
 
 doubleAsFractional :: Double -> Object
@@ -272,7 +272,7 @@ stringAll f = unaryPrimitive "stringAll" (\arg1 -> case arg1 of
 stringPrimSubstringFromTo :: Primitive
 stringPrimSubstringFromTo = ternaryPrimitive "String>>primSubstringFrom:to:" (\arg1 arg2 arg3 -> case (arg1,arg2,arg3) of
   (DataString str1,DataInteger int1,DataInteger int2) ->
-    Just (unicodeStringObject (stringSubstringFromTo str1 int1 int2))
+    Just (unicodeStringObject (unicodeStringSubstringFromTo str1 int1 int2))
   _ -> Nothing)
 
 -- * Primitives for Symbol
@@ -378,11 +378,11 @@ systemTime (Object nm obj) arg = case (obj,arg) of
   (DataSystem,[]) -> fmap (integerObject . toLargeInteger . (`div` 1000)) vmSystemTicksInt
   _ -> prError ("System>>time " ++ fromSymbol nm)
 
--- *
+-- * Table
 
 primitiveTable :: PrimitiveTable
 primitiveTable =
-  map (\((c,m),f) -> ((symbol c,symbol m),f))
+  map (\((c,m),f) -> ((toSymbol c,toSymbol m),f))
   [
   -- Array
    (("Array","at:"),arrayAt)

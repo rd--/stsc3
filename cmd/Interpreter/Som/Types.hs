@@ -40,13 +40,16 @@ type Tbl = Vec (Symbol,IORef Object)
 -- | Identifier.
 type Id = Int
 
-{- | Method contexts have an identifier to receive non-local returns.
-     Block contexts store the Block object to report cases of escaped blocks.
-     Both store local variables (arguments and temporaries).
+{- | Method contexts store:
+       1. a context identifier to receive non-local returns
+       2. the receiver
+     Block contexts store:
+       1. the Block object to report cases of escaped blocks.
+     In addition both store local variables (arguments and temporaries) as a Dict.
 -}
 data ContextNode =
-    MethodContext Id Object Dict -- ^ Context identififier, receiver, local variables (arguments and temporaries)
-  | BlockContext Object Dict -- ^ Block object, local variables (arguments and temporaries)
+    MethodContext Id Object Dict
+  | BlockContext Object Dict
   | NilContext
   deriving (Eq)
 
@@ -70,14 +73,20 @@ type StExpr = Expr.Expr ()
 
 -- * Object
 
--- | Data associated with an object.
+{- | Data associated with an object.
+
+     Som:
+       Som has no Character class
+       Som strings are immutable
+       Symbol is a subclass of String
+-}
 data ObjectData
   = DataNil
   | DataBoolean Bool
   | DataInteger LargeInteger
   | DataDouble Double
-  | DataCharacter Char -- ^ Som: Som has no Character class
-  | DataString UnicodeString -- ^ Som: Som strings are immutable ; Som:Symbol is a subclass of Som:String
+  | DataCharacter Char
+  | DataString UnicodeString
   | DataArray (IORef (Vec Object))
   | DataClass (St.ClassDefinition,Bool) Tbl (Vec Object,Vec Object) -- ^ Class definition and level, class variables, method caches
   | DataMethod Symbol St.MethodDefinition StExpr -- ^ Holder, definition, lambda StExpr
@@ -98,10 +107,10 @@ type ObjectTable = [(Symbol,Object)]
 type Primitive = Object -> [Object] -> VM Object
 
 -- | (Class,MethodSignature) -> Primitive table
-type PrimitiveTable = [((Symbol, Symbol),Primitive)]
+type PrimitiveTable = [((Symbol,Symbol),Primitive)]
 
 -- | Dictionary form of a PrimitiveTable
-type PrimitiveDictionary = Map.Map (Symbol, Symbol) Primitive
+type PrimitiveDictionary = Map.Map (Symbol,Symbol) Primitive
 
 {- | The VM state holds:
      - startTime, required for System>>ticks and System>>time
@@ -256,7 +265,10 @@ objectToString (Object nm obj) =
     DataInteger x -> show x
     DataDouble x -> show x
     DataCharacter x -> ['$',x]
-    DataString x -> if nm == symbol "Symbol" then concat ["#'",fromUnicodeString x,"'"] else concat ["'",fromUnicodeString x,"'"]
+    DataString x ->
+      if nm == toSymbol "Symbol"
+      then concat ["#'",fromUnicodeString x,"'"]
+      else concat ["'",fromUnicodeString x,"'"]
     DataArray _ -> "instance of Array"
     DataClass (x,isMeta) _ _ -> (if isMeta then St.metaclassName else id) (St.className x)
     DataMethod holder method _ -> concat [fromSymbol holder,">>",St.methodSignature method]
@@ -345,10 +357,10 @@ objectAssignInstanceVariable object key value =
 reservedObject :: String -> Object
 reservedObject x =
   case x of
-    "true" -> Object (symbol "True") (DataBoolean True)
-    "false" -> Object (symbol "False") (DataBoolean False)
-    "nil" -> Object (symbol "Nil") DataNil
-    "system" -> Object (symbol "System") DataSystem
+    "true" -> Object (toSymbol "True") (DataBoolean True)
+    "false" -> Object (toSymbol "False") (DataBoolean False)
+    "nil" -> Object (toSymbol "Nil") DataNil
+    "system" -> Object (toSymbol "System") DataSystem
     _ -> error "reservedObject"
 
 -- | nil
@@ -358,8 +370,8 @@ nilObject = reservedObject "nil"
 -- | Make class and instance method caches.
 classMethodCache :: St.ClassDefinition -> (Vec Object,Vec Object)
 classMethodCache cd =
-  let im = map (methodObject (symbol (St.className cd))) (St.instanceMethods cd)
-      cm = map (methodObject (symbol (St.classMetaclassName cd))) (St.classMethods cd)
+  let im = map (methodObject (toSymbol (St.className cd))) (St.instanceMethods cd)
+      cm = map (methodObject (toSymbol (St.classMetaclassName cd))) (St.classMethods cd)
   in (Vector.fromList im,Vector.fromList cm)
 
 -- | A Tbl with all variables set to nil.
@@ -371,33 +383,36 @@ variablesTbl variableNames = tblFromList (zip variableNames (repeat nilObject))
 -}
 classObject :: MonadIO m => St.ClassDefinition -> m Object
 classObject cd = do
-  let classVarNames = map symbol (St.classVariableNames cd)
+  let classVarNames = map toSymbol (St.classVariableNames cd)
   tbl <- variablesTbl classVarNames
-  return (Object (symbol (St.classMetaclassName cd)) (DataClass (cd,False) tbl (classMethodCache cd)))
+  return (Object
+           (toSymbol (St.classMetaclassName cd))
+           (DataClass (cd,False) tbl (classMethodCache cd)))
 
 {- | Create method Object for named Class.
      This is the point at which the MethodDefinition is translated to Expr form.
 -}
 methodObject :: Symbol -> St.MethodDefinition -> Object
-methodObject holder method = Object (symbol "Method") (DataMethod holder method (Expr.methodDefinitionExpr method))
+methodObject holder method =
+  Object (toSymbol "Method") (DataMethod holder method (Expr.methodDefinitionExpr method))
 
 integerObject :: LargeInteger -> Object
-integerObject x = Object (symbol "Integer") (DataInteger x)
+integerObject x = Object (toSymbol "Integer") (DataInteger x)
 
 doubleObject :: Double -> Object
-doubleObject x = Object (symbol "Double") (DataDouble x)
+doubleObject x = Object (toSymbol "Double") (DataDouble x)
 
 characterObject :: Char -> Object
-characterObject x = Object (symbol "Character") (DataCharacter x)
+characterObject x = Object (toSymbol "Character") (DataCharacter x)
 
 unicodeStringObject :: UnicodeString -> Object
-unicodeStringObject x = Object (symbol "String") (DataString x)
+unicodeStringObject x = Object (toSymbol "String") (DataString x)
 
 stringObject :: String -> Object
 stringObject = unicodeStringObject . toUnicodeString . Som.somEscapedString
 
 unicodeSymbolObject :: UnicodeString -> Object
-unicodeSymbolObject x = Object (symbol "Symbol") (DataString x)
+unicodeSymbolObject x = Object (toSymbol "Symbol") (DataString x)
 
 symbolObject :: String -> Object
 symbolObject = unicodeSymbolObject . toUnicodeString . Som.somEscapedString
@@ -414,7 +429,7 @@ trueObject = booleanObject True
 arrayFromVec :: MonadIO m => Vec Object -> m Object
 arrayFromVec e = do
   a <- liftIO (newIORef e)
-  return (Object (symbol "Array") (DataArray a))
+  return (Object (toSymbol "Array") (DataArray a))
 
 arrayFromList :: MonadIO m => [Object] -> m Object
 arrayFromList e = arrayFromVec (Vector.fromList e)
@@ -437,14 +452,15 @@ arrayLiteralElemObject e =
     Right x -> return (reservedObject x)
 
 {- | Mark an Object as being a Return Object (from a Block or Method).
-     Include the contextId the value is returning to, and the Block that is returning (if it is a Block and not a Method).
+     Include the contextId the value is returning to,
+     and the Block that is returning (if it is a Block and not a Method).
      It is an error if the object returned is already Return Object.
 -}
 returnObject :: Except.MonadError String m => Id -> Maybe Object -> Object -> m Object
 returnObject pc blockObject x =
   if isReturnObject x
   then Except.throwError "returnObject: Return"
-  else return (Object (symbol "Return") (DataReturn pc blockObject x))
+  else return (Object (toSymbol "Return") (DataReturn pc blockObject x))
 
 -- * Object predicates
 
@@ -468,7 +484,8 @@ localVariablesDict :: MonadIO m => ObjectTable -> [Symbol] -> m Dict
 localVariablesDict args tmp = Env.dictRefFromList (args ++ zip tmp (repeat nilObject))
 
 methodContextNode :: MonadIO m => Id -> Object -> ObjectTable -> St.Temporaries -> m ContextNode
-methodContextNode pc rcv arg (St.Temporaries tmp) = fmap (MethodContext pc rcv) (localVariablesDict arg (map symbol tmp))
+methodContextNode pc rcv arg (St.Temporaries tmp) =
+  fmap (MethodContext pc rcv) (localVariablesDict arg (map toSymbol tmp))
 
 -- | The empty context.  It is ordinarily an error to encounter this.
 nilContext :: Context

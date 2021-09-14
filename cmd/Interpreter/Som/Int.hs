@@ -1,4 +1,6 @@
--- | Type for Smalltalk integers.  The Som testsuite requires >64bit.
+{- | Type for Smalltalk integers.
+     The Som testsuite requires >64bit.
+-}
 module Interpreter.Som.Int where
 
 import Data.Bits {- base -}

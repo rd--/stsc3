@@ -11,6 +11,8 @@ import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
+import qualified Language.Smalltalk.Som as Som {- stsc3 -}
+
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
@@ -37,23 +39,25 @@ sc_cat fn = do
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scExpressionPrint) expr_fragments
 
-help :: [String]
-help =
-    ["stsc3 command [arguments]"
-    ," sc cat fragment supercollider-program-file..."
-    ," st cat {parsec|happy} smalltalk-program-file..."
-    ," repl {ansi|expr}"
-    ]
-
 stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_play evalFile fn = evalFile fn >>= SC3.audition
 
 stsc3_draw :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_draw evalFile fn = evalFile fn >>= Dot.draw . SC3.out 0
 
+help :: [String]
+help =
+    ["stsc3 command [arguments]"
+    ," {draw|play} {ansi|expr} file"
+    ," sc cat fragment supercollider-program-file..."
+    ," st cat {parsec|happy} smalltalk-program-file..."
+    ," repl {ansi|expr|som}"
+    ," run som class arguments..."
+    ]
+
 main :: IO ()
 main = do
-  let somDirectory = "/home/rohan/opt/src/som/SOM/Smalltalk/"
+  somDirectory <- Som.somSystemClassPath
   a <- getArgs
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
