@@ -222,7 +222,7 @@ type MethodCategory = String
 -- | 3.4.2
 data MethodDefinition =
   MethodDefinition {methodClass :: Identifier
-                   ,methodCategory :: Maybe MethodCategory
+                   ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
                    ,methodPattern :: Pattern
                    ,methodTemporaries :: Maybe Temporaries
                    ,methodStatements :: Maybe Statements}
@@ -453,7 +453,7 @@ blockConstructor = inBrackets blockBody
      The method name field is not assigned by the parser, see methodDefinitionAnnotateBlocks.
 -}
 data BlockBody =
-  BlockBody {blockMethodName :: Maybe MethodName
+  BlockBody {blockMethodName :: Maybe MethodName -- ^ Meta data
             ,blockArguments :: Maybe [BlockArgument]
             ,blockTemporaries :: Maybe Temporaries
             ,blockStatements :: Maybe Statements}

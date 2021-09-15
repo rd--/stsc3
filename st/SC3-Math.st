@@ -27,3 +27,16 @@
     ^self withExtending: other collect: [:i :j| i + j]
   !
 !
+
+!Interval methodsFor: 'arithmetic'!
+  * number
+    ^number isZero
+      ifTrue: [^self asArray * 0]
+      ifFalse: [start * number to: stop * number by: step * number]
+  !
+  / number
+    ^number isZero
+      ifTrue: [^self asArray * 0]
+      ifFalse: [start / number to: stop / number by: step / number]
+  !
+!

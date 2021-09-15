@@ -19,6 +19,9 @@ classDefinitionSummary c =
      ,l " Class methods:      " (map St.methodSignature) St.classMethods
      ,m " Class initializer:  " St.initializerDefinition_pp St.classInitializer]
 
+classDefinitionPrintSummary :: St.ClassDefinition -> IO ()
+classDefinitionPrintSummary = putStrLn . unlines . classDefinitionSummary
+
 {- | Traverse block body looking for any return statements.
      Note that a block that has a return statement may not execute it.
 

@@ -13,13 +13,14 @@ These sequence takes one of two forms:
   <chunk>!<chunk>! ... !<whitespace>!
   !<reader>!<stream>!
 
-The parser here accepts only a subset of the second form
-That required to add methods or comments to classes.
+The parser here accepts only a subset of the second form,
+that required to add methods (methodsFor:) or comments (commentStamp:) to classes.
 It assumes that stream is a sequence of chunks ending with an empty chunk.
 
 -}
 module Language.Smalltalk.FileOut where
 
+import Data.List {- base -}
 import Data.Maybe {- base -}
 
 import qualified Text.Parsec as P {- parsec -}
@@ -55,6 +56,77 @@ data FileOutEntry =
   | FileOutMethodsFor St.Identifier Bool [St.MethodDefinition]
   -- ^ (class,classmethods?,[methods])
   deriving (Eq, Show)
+
+{- | All entries are related to a class.  Retrieves class name.
+     For class declarations this is the class being declared, not the super class.
+-}
+fileOutEntryClass :: FileOutEntry -> St.Identifier
+fileOutEntryClass e =
+  case e of
+    FileOutClassDeclaration _ x _ _ _ -> x
+    FileOutClassComment x _ -> x
+    FileOutMethodsFor x _ _ -> x
+
+-- | The set of classes that have entries.
+fileOutEntryClassSet :: [FileOutEntry] -> [St.Identifier]
+fileOutEntryClassSet = nub . map fileOutEntryClass
+
+-- | Category of entry.
+fileOutEntryType :: FileOutEntry -> String
+fileOutEntryType e =
+  case e of
+    FileOutClassDeclaration _ _ _ _ _ -> "ClassDeclaration"
+    FileOutClassComment _ _ -> "ClassComment"
+    FileOutMethodsFor _ c _ -> (if c then "Class" else "Instance") ++ "MethodsFor"
+
+-- | Method definitions of entry, or error if not a MethodsFor entry.
+fileOutEntryMethodDefinitions :: FileOutEntry -> [St.MethodDefinition]
+fileOutEntryMethodDefinitions e =
+  case e of
+    FileOutMethodsFor _ _ m -> m
+    _ -> error "fileOutEntryMethodDefinitions"
+
+-- | (ClassDeclaration,ClassComment,[ClassMethodsFor],[InstanceMethodsFor])
+type FileOutClassDef = (FileOutEntry,FileOutEntry,[FileOutEntry],[FileOutEntry])
+
+-- | Derive FileOutClassDef for named class.
+fileOutEntryClassDef :: [FileOutEntry] -> St.Identifier -> Maybe FileOutClassDef
+fileOutEntryClassDef e x =
+  let r = filter ((== x) . fileOutEntryClass) e
+      cd = filter ((== "ClassDeclaration") . fileOutEntryType) r
+      cc = filter ((== "ClassComment") . fileOutEntryType) r
+      cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
+      im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
+  in case (cd,cc) of
+       ([cd1],[cc1]) -> Just (cd1,cc1,cm,im)
+       _ -> Nothing
+
+fileOutEntryClassDefOrError :: [FileOutEntry] -> St.Identifier -> FileOutClassDef
+fileOutEntryClassDefOrError e = fromMaybe (error "fileOutEntryClassDef: not class definition") . fileOutEntryClassDef e
+
+-- | Translate FileOutClassDef to Ansi ClassDefinition.
+fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
+fileOutClassDefToClassDefinition (cd,cc,cm,im) =
+  let FileOutClassDeclaration superclassName className instanceVariables classVariables category = cd
+      FileOutClassComment _className comment = cc
+      importedPoolNames = []
+      instanceMethods = concatMap fileOutEntryMethodDefinitions im
+      classMethods = concatMap fileOutEntryMethodDefinitions cm
+  in St.ClassDefinition
+     className
+     (Just superclassName)
+     St.noInstanceState
+     instanceVariables
+     classVariables
+     importedPoolNames
+     instanceMethods
+     classMethods
+     Nothing
+     (Just category)
+     (Just comment)
+
+fileOutEntryClassDefinition :: [FileOutEntry] -> St.Identifier -> Maybe St.ClassDefinition
+fileOutEntryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutEntryClassDef e
 
 -- * Parser
 
@@ -197,6 +269,7 @@ evalSegmentClassDeclaration fo =
     FileOutEvalSegment txt -> parseFileOutClassDeclaration (St.stParseInitial St.basicExpression txt)
     _ -> Nothing
 
+-- | Parse a subclass:instanceVariableNames:classVariableNames:poolDictionaries:category: message send.
 parseFileOutClassDeclaration :: St.BasicExpression -> Maybe FileOutEntry
 parseFileOutClassDeclaration e =
   case e of
@@ -218,6 +291,7 @@ evalSegmentClassComment fo =
     FileOutEvalSegment txt -> parseFileOutClassComment (St.stParseInitial St.basicExpression txt)
     _ -> Nothing
 
+-- | Parse a comment: message send.
 parseFileOutClassComment :: St.BasicExpression -> Maybe FileOutEntry
 parseFileOutClassComment e =
   case e of
@@ -234,6 +308,9 @@ parseMethodsForMethod isClassMethod classname category txt =
   (St.stParse (St.methodDefinition (classname ++ if isClassMethod then " class" else "")) txt)
   {St.methodCategory = Just (St.unquoteQuotedString category)}
 
+{- | Parse a methodsFor: message send.
+     The receiver is either the name of a class, the class of such.
+-}
 readerSegmentMethodDefinitions :: FileOutSegment -> Maybe FileOutEntry
 readerSegmentMethodDefinitions fo =
   case fo of
@@ -261,12 +338,14 @@ evalFileOutSegment =
   ,evalSegmentClassComment
   ,readerSegmentMethodDefinitions]
 
+-- | Predicate to decide if a segment is a comment.
 isComment :: FileOutSegment -> Bool
 isComment fo =
   case fo of
     FileOutEvalSegment txt -> head txt == '"' && last txt == '"'
     _ -> False
 
+-- | Predicate to decide if a segment is a string.
 isString :: FileOutSegment -> Bool
 isString fo =
   case fo of
@@ -287,6 +366,13 @@ evalFileOutOrError = map (fromMaybe (error "evalFileOut: parse failed")) . evalF
 load fn = loadFileOut ("/home/rohan/sw/stsc3/st/" ++ fn)
 nms = words "Base Core Env Event Haskell Math Random UGen-Composite UI"
 x <- mapM (\nm -> load ("SC3-" ++ nm ++ ".st")) nms
-mapM_ (print . evalFileOutOrError) x
+e = concatMap evalFileOutOrError x
+length e
+
+c = fileOutEntryClassSet e
+length c
+
+wr = mapM_ (putStrLn . unlines. Language.Smalltalk.Ansi.Query.classDefinitionSummary) . fileOutEntryClassDefinition e
+mapM_ wr c
 
 -}
