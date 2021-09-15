@@ -219,13 +219,22 @@ nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 -- | Method category (non-Ansi)
 type MethodCategory = String
 
--- | 3.4.2
+{- | 3.4.2
+
+     It is a convention that method comments, if they exist, are written directly after the pattern.
+     This parser presently does not store Method comments, however there is a placeholder field.
+     In order to store comments:
+       - the stLanguageDef should not define comment start and end
+       - there should be a comment preserving lexeme form, lexemeWithMaybeComment
+       - methodPattern should be such a lexeme
+-}
 data MethodDefinition =
   MethodDefinition {methodClass :: Identifier
                    ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
                    ,methodPattern :: Pattern
                    ,methodTemporaries :: Maybe Temporaries
-                   ,methodStatements :: Maybe Statements}
+                   ,methodStatements :: Maybe Statements
+                   ,methodComment :: Maybe String}
   deriving (Eq,Show)
 
 {- | Does MethodDefinition end with a Return (local).
@@ -250,13 +259,15 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 > p "p: q r. ^s"
 > p "printElementsOn: aStream aStream nextPut: $(."
 > p "* anObject ^self shallowCopy *= anObject"
+> p "p \"c\" ^q"
 -}
 methodDefinition :: Identifier -> P MethodDefinition
 methodDefinition cl = do
-  p <- messagePattern
+  p <- messagePattern -- messagePattern is a token and consumes trailing comments
+  c <- P.optionMaybe comment -- this is always Nothing
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (MethodDefinition cl Nothing p t s)
+  return (MethodDefinition cl Nothing p t s c)
 
 data Pattern
   = UnaryPattern Identifier

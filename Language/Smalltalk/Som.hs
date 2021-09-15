@@ -82,7 +82,7 @@ methodDefinition cl = do
   p <- St.messagePattern
   _ <- equalSign
   MethodBlock t s <- primitive P.<|> St.inParentheses methodBlock
-  return (St.MethodDefinition cl Nothing p t s)
+  return (St.MethodDefinition cl Nothing p t s Nothing)
 
 -- | Method block.  Arguments are given by the methodPattern.
 data MethodBlock =
@@ -123,7 +123,8 @@ somMethodIsPrimitive m =
                   (St.PrimaryIdentifier "primitive")
                   Nothing
                   Nothing))
-              Nothing)) -> True
+              Nothing))
+      _ -> True
     _ -> False
 
 {- | Seperator for instance and class methods.

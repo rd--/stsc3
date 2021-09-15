@@ -17,7 +17,9 @@ classDefinitionSummary c =
      ,l " Class variables:    " id St.classVariableNames
      ,l " Instance methods:   " (map St.methodSignature) St.instanceMethods
      ,l " Class methods:      " (map St.methodSignature) St.classMethods
-     ,m " Class initializer:  " St.initializerDefinition_pp St.classInitializer]
+     ,m " Class initializer:  " St.initializerDefinition_pp St.classInitializer
+     ,m " Class category:     " id St.classCategory
+     ,m " Class comment:      " id St.classComment]
 
 classDefinitionPrintSummary :: St.ClassDefinition -> IO ()
 classDefinitionPrintSummary = putStrLn . unlines . classDefinitionSummary

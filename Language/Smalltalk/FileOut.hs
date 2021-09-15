@@ -67,7 +67,9 @@ fileOutEntryClass e =
     FileOutClassComment x _ -> x
     FileOutMethodsFor x _ _ -> x
 
--- | The set of classes that have entries.
+{- | The set of classes that have entries.
+     This includes classes that have method definitions but no declarations.
+-}
 fileOutEntryClassSet :: [FileOutEntry] -> [St.Identifier]
 fileOutEntryClassSet = nub . map fileOutEntryClass
 
@@ -89,7 +91,10 @@ fileOutEntryMethodDefinitions e =
 -- | (ClassDeclaration,ClassComment,[ClassMethodsFor],[InstanceMethodsFor])
 type FileOutClassDef = (FileOutEntry,FileOutEntry,[FileOutEntry],[FileOutEntry])
 
--- | Derive FileOutClassDef for named class.
+{- | Derive FileOutClassDef for named class.
+     Requires that there is a ClassDeclaration.
+     Will generate a default ClassComment if none is present.
+-}
 fileOutEntryClassDef :: [FileOutEntry] -> St.Identifier -> Maybe FileOutClassDef
 fileOutEntryClassDef e x =
   let r = filter ((== x) . fileOutEntryClass) e
@@ -98,6 +103,7 @@ fileOutEntryClassDef e x =
       cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
       im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
   in case (cd,cc) of
+       ([cd1],[]) -> Just (cd1,FileOutClassComment x "No comment",cm,im)
        ([cd1],[cc1]) -> Just (cd1,cc1,cm,im)
        _ -> Nothing
 
