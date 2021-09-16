@@ -60,6 +60,18 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   !
 !
 
+!AbstractUGen methodsFor: 'panning'!
+  splay
+    ^Splay input: self
+  !
+!
+
+!Array methodsFor: 'panning'!
+  splay
+    ^Splay input: self
+  !
+!
+
 !AbstractUGen methodsFor: 'arithmetic'!
   inExpRangeFrom: x to: y
     ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y

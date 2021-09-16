@@ -7,4 +7,4 @@ d := ((VarSaw freq: (b / 181.8) iphase: 0 width: 0.5) inExpRangeFrom: (1.81 / 81
 c := (VarSaw freq: (1 / 8) iphase: (1 / b) width: 0.5) + 8.18 * 1.8.
 z := (VarSaw freq: (1 / 81.8) iphase: 0 width: 0.5) inRangeFrom: (1.8 raisedTo: (-1)) to: (8.1 / 8.18).
 p := (Pluck in: x trig: t maxdelaytime: (1.8 / 181.8) delaytime: d decaytime: c coef: z) * (VarSaw freq: (1.8 / b) iphase: 0 width: 0.5) / 1.8.
-HPF in: (Splay input: p) freq: (18 / 1.81)
+HPF in: p splay freq: (18 / 1.81)

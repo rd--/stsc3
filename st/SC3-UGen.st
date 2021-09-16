@@ -3748,6 +3748,64 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     ^u!
 !
 
+UGen subclass: #MoogLadder
+  instanceVariableNames: 'in ffreq res'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MoogLadder comment: 'Moog Filter Emulation'!
+
+!MoogLadder methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  ffreq ^ffreq!
+  ffreq: x ffreq := x!
+  res ^res!
+  res: x res := x!
+!
+
+!MoogLadder methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MoogLadder.
+    paramNames := #(#in #ffreq #res).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. ffreq := 440.0. res := 0.0!
+!
+
+
+!MoogLadder class methodsFor: 'instance creation'!
+  in: in ffreq: ffreq res: res
+    |u|
+    u := self new.
+    u in: in.
+    u ffreq: ffreq.
+    u res: res.
+    ^u!
+  in: in ffreq: ffreq res: res mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u ffreq: ffreq.
+    u res: res.
+    u mul: mul.
+    ^u!
+  in: in ffreq: ffreq res: res mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u ffreq: ffreq.
+    u res: res.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
 UGen subclass: #MouseX
   instanceVariableNames: 'minval maxval warp lag'
   classVariableNames: ''

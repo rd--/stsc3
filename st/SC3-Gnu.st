@@ -105,13 +105,30 @@
   !
 !
 
+!Interval methodsFor: 'coercing'!
+  generality
+    "Array is 600, Array is less general than Array?"
+    ^550
+  !
+  coerce: aNumber
+    "Coerce argument (which will be some form of Number) to a UGen"
+    ^(self size) replicate: aNumber
+  !
+!
+
 !Array methodsFor: 'converting'!
   adaptToCollection: rcvr andSend: selector
-  "If I am involved in arithmetic with another Collection, return a Collection of
-  the results of each element combined with the scalar in that expression."
-  rcvr isSequenceable & self isSequenceable ifFalse:
-    [self error: 'Only sequenceable collections may be combined arithmetically'].
-  ^ rcvr with: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
+    "If I am involved in arithmetic with another Collection, return a Collection of
+    the results of each element combined with the scalar in that expression."
+    rcvr isSequenceable & self isSequenceable ifFalse:
+      [self error: 'Only sequenceable collections may be combined arithmetically'].
+    ^rcvr with: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
+  !
+!
+
+!Interval methodsFor: 'converting'!
+  adaptToCollection: rcvr andSend: selector
+    ^self asArray adaptToCollection: rcvr andSend: selector
   !
 !
 
@@ -157,6 +174,14 @@
         elementAndIndexBlock
           value: (self at: index)
           value: index]
+  !
+!
+
+!SequenceableCollection methodsFor: 'accessing'!
+  atWrap: index
+    "Answer the index'th element of the receiver.  If index is out of bounds,
+     let it wrap around from the end to the beginning until it is in bounds."
+    ^ self at: index - 1 \\ self size + 1
   !
 !
 

@@ -2,10 +2,10 @@
 (SinOsc freq: (4 asUGen ** (200 arraySeries: 0 step: 0.002) * 300) phase: 0) mix * 0.02
 
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit) ; psuedo-doppler"
-Splay input: (SinOsc freq: (2 asUGen ** (100 arraySeries: 0 step: 0.002) * 120) phase: 0) level: 0.1
+(SinOsc freq: (2 asUGen ** (100 arraySeries: 0 step: 0.002) * 120) phase: 0 mul: 0.1) splay
 
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit) ; psuedo-doppler-formants"
-Splay input: (Saw freq: (2 asUGen ** (100 arraySeries: 0 step: 0.002) * 120)) level: 0.1
+(Saw freq: (2 asUGen ** (100 arraySeries: 0 step: 0.002) * 120) mul: 0.1) splay
 
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit)"
 |k b n f0 f|
@@ -14,7 +14,7 @@ b := 2. "4 ; c.f. 2, 3, 4"
 n := 0.02. "0.002 ; c.f. 0.002 0.004 0.01 0.05 0.1 0.125"
 f0 := 180. "300 ; c.f. 120 180 240"
 f := b asUGen ** (k arraySeries: 0 step: n).
-Splay input: (SinOsc freq: f * f0 phase: 0) level: 0.1
+(SinOsc freq: f * f0 phase: 0 mul: 0.1) splay
 
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit)"
 |t sinosc k b n f0 fMul e|

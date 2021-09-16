@@ -222,9 +222,9 @@ type MethodCategory = String
 {- | 3.4.2
 
      It is a convention that method comments, if they exist, are written directly after the pattern.
-     This parser presently does not store Method comments, however there is a placeholder field.
+     The parser presently does not store Method comments, however there is a placeholder field.
      In order to store comments:
-       - the stLanguageDef should not define comment start and end
+       - stLanguageDef should not define comment start and end
        - there should be a comment preserving lexeme form, lexemeWithMaybeComment
        - methodPattern should be such a lexeme
 -}
