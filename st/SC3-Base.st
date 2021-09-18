@@ -50,3 +50,10 @@
     ^(self arrayFillZeroIndexed: f) sum
   !
 !
+
+!Number methodsFor: 'enumerating'!
+  iota
+    "Array of sequence from 1 to myself"
+    ^(1 to: self) asArray
+  !
+!

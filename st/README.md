@@ -53,3 +53,17 @@ It depends upon [hsc3](https://hackage.haskell.org/package/hsc3),
 
 There was previously a [SC3-Lisp.st](?t=stsc3&e=st/SC3-Lisp.st) file that is now deleted.
 It wrote graphs for [rsc3](?t=rsc3).
+
+* * *
+
+Squeak:
+
+- MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess'
+- MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/CommandShell'
+
+Cuis:
+
+Visit the following files in the FileBrowser and select `Install Package`
+
+- https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev/blob/master/CompatibilityPackages/SqueakCompatibility.pck.st
+- https://github.com/Cuis-Smalltalk/OSProcess/blob/master/OSProcess.pck.st

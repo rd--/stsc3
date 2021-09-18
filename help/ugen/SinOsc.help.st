@@ -76,7 +76,7 @@ f := m collect: l.
 (SinOsc freq: f * 500 phase: 0 mul: a * 0.05) splay
 
 "sinOsc ; non-implicit ugen rate"
-SinOsc at: #ar freq: 440 phase: 0 mul: 0.1
+SinOsc ar: #(440 0 0.1)
 
 "----"
 o := SinOsc freq: 440 phase: 0

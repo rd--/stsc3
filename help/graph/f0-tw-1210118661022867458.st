@@ -1,6 +1,6 @@
 "f0 ; https://twitter.com/redFrik/status/1210118661022867458"
 | b d g l f o c p |
-b := 1 / (2 to: 7) asArray.
+b := 1 / (2 to: 7).
 d := 48 reciprocal.
 g := 0 cos cos.
 l := #(0 -16 0 -16 0 0 -16 0 -16 0 -16 0 0 0 -16 -16 47 0 -16 0 -16 0 -16 0 0 -16 0 0 -16 0 0 0 0 0 -5 -16 -16 -15).

@@ -107,7 +107,7 @@
 
 !Interval methodsFor: 'coercing'!
   generality
-    "Array is 600, Array is less general than Array?"
+    "Array is 600, Interval is less general than Array?"
     ^550
   !
   coerce: aNumber
