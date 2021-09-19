@@ -467,23 +467,23 @@ SC3 comment: 'SuperCollider3'!
   !
 !
 
-AbstractUGen subclass: #MRG
+AbstractUGen subclass: #Mrg
   instanceVariableNames: 'lhs rhs'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-MRG comment: 'Multiple Root Graph'!
+Mrg comment: 'Multiple Root Graph'!
 
-!MRG methodsFor: 'collecting'!
+!Mrg methodsFor: 'collecting'!
   addToUGenSet: c
     lhs addToUGenSet: c.
     rhs addToUGenSet: c
   !
 !
 
-!MRG methodsFor: 'accessing'!
+!Mrg methodsFor: 'accessing'!
   lhs ^lhs
   !
   lhs: x lhs := x
@@ -494,7 +494,7 @@ MRG comment: 'Multiple Root Graph'!
   !
 !
 
-!MRG class methodsFor: 'instance creation'!
+!Mrg class methodsFor: 'instance creation'!
   lhs: x rhs: y
     | u |
     u := self new.

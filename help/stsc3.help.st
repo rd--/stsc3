@@ -98,7 +98,8 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Random - Array"
 
-{1. 2. 3. 4. 5} atRandom "random element of Array ; i.e. atRandom ; choose"
+#(1 2 3 4 5) atRandom "random element of Array ; i.e. atRandom ; choose"
+#(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
 100 arrayFill: [:i | #(1 2 3 4 5) atRandom] "=> 100 randomly chosen numbers"
 100 arrayFill: [:i | {#a. #b. #c. #d. #e} atRandom] "=> 100 randomly chosen symbols"
 

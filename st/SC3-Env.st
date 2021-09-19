@@ -48,6 +48,9 @@ Env comment: 'Specification for a segmented envelope'!
     u offset: p6.
     ^u
   !
+  levels: p1 times: p2 curves: p3
+    ^Env levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
+  !
 !
 
 !Env methodsFor: 'envelope coordinates'!
@@ -73,8 +76,11 @@ Env comment: 'Specification for a segmented envelope'!
   gen: g doneAction: d
     ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coord
   !
+  gen: g
+    ^self gen: g doneAction: 0
+  !
   gen
-    ^self gen: 1 doneAction: 0
+    ^self gen: 1
   !
 !
 

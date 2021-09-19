@@ -88,7 +88,7 @@
   !
 !
 
-!MRG methodsFor: 'printing'!
+!Mrg methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
     '(mrg2 ' putOn: fd.

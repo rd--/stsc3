@@ -243,7 +243,7 @@ evalUnaryUGenMessage o m = do
     "log" -> liftUGen log o
     "max" -> objectToArray "max" o >>= mapM objectToDouble >>= return . doubleToObject . maximum
     "mce" -> return o
-    "midicps" -> liftUGen SC3.midiCPS o
+    "midicps" -> liftUGen SC3.midiCps o
     "mix" -> liftUGen SC3.mix o
     "negated" -> liftUGen negate o
     "play" -> liftIO (SC3.audition x) >> return NilObject

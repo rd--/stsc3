@@ -68,6 +68,17 @@
   !
 !
 
+!SequenceableCollection methodsFor: 'randomness'!
+  shuffle
+    "Durstenfeld's version of the Fisher-Yates shuffle"
+    self size to: 2 by: -1 do: [ :i |
+      self swap: i with: (i atRandom) ]
+  !
+  shuffled
+    ^self copy shuffle
+  !
+!
+
 !Collection methodsFor: 'math functions'!
   sum
     "Sum elements of collection."

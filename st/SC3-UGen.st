@@ -119,6 +119,69 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     ^u!
 !
 
+UGen subclass: #AmpCompA
+  instanceVariableNames: 'freq root minAmp rootAmp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+AmpCompA comment: 'Basic psychoacoustic amplitude compensation (ANSI A-weighting curve).'!
+
+!AmpCompA methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  root ^root!
+  root: x root := x!
+  minAmp ^minAmp!
+  minAmp: x minAmp := x!
+  rootAmp ^rootAmp!
+  rootAmp: x rootAmp := x!
+!
+
+!AmpCompA methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #AmpCompA.
+    paramNames := #(#freq #root #minAmp #rootAmp).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 1000.0. root := 0.0. minAmp := 0.32. rootAmp := 1.0!
+!
+
+
+!AmpCompA class methodsFor: 'instance creation'!
+  freq: freq root: root minAmp: minAmp rootAmp: rootAmp
+    |u|
+    u := self new.
+    u freq: freq.
+    u root: root.
+    u minAmp: minAmp.
+    u rootAmp: rootAmp.
+    ^u!
+  freq: freq root: root minAmp: minAmp rootAmp: rootAmp mul: mul
+    |u|
+    u := self new.
+    u freq: freq.
+    u root: root.
+    u minAmp: minAmp.
+    u rootAmp: rootAmp.
+    u mul: mul.
+    ^u!
+  freq: freq root: root minAmp: minAmp rootAmp: rootAmp mul: mul add: add
+    |u|
+    u := self new.
+    u freq: freq.
+    u root: root.
+    u minAmp: minAmp.
+    u rootAmp: rootAmp.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
 UGen subclass: #Amplitude
   instanceVariableNames: 'in attackTime releaseTime'
   classVariableNames: ''
@@ -758,6 +821,190 @@ Crackle comment: 'Chaotic noise function.'!
     |u|
     u := self new.
     u chaosParam: chaosParam.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
+UGen subclass: #CuspL
+  instanceVariableNames: 'freq a b xi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+CuspL comment: 'Cusp map chaotic generator'!
+
+!CuspL methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  xi ^xi!
+  xi: x xi := x!
+!
+
+!CuspL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #CuspL.
+    paramNames := #(#freq #a #b #xi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.0. b := 1.9. xi := 0.0!
+!
+
+
+!CuspL class methodsFor: 'instance creation'!
+  freq: freq a: a b: b xi: xi
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u xi: xi.
+    ^u!
+  freq: freq a: a b: b xi: xi mul: mul
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u xi: xi.
+    u mul: mul.
+    ^u!
+  freq: freq a: a b: b xi: xi mul: mul add: add
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u xi: xi.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
+UGen subclass: #Dbufrd
+  instanceVariableNames: 'bufnum phase loop'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Dbufrd comment: 'Buffer read demand ugen'!
+
+!Dbufrd methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  phase ^phase!
+  phase: x phase := x!
+  loop ^loop!
+  loop: x loop := x!
+!
+
+!Dbufrd methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Dbufrd.
+    paramNames := #(#bufnum #phase #loop).
+    mceNames := #().
+    ugenRate := #dr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. phase := 0.0. loop := 1.0!
+!
+
+
+!Dbufrd class methodsFor: 'instance creation'!
+  bufnum: bufnum phase: phase loop: loop
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    ^u!
+  bufnum: bufnum phase: phase loop: loop mul: mul
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u mul: mul.
+    ^u!
+  bufnum: bufnum phase: phase loop: loop mul: mul add: add
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
+UGen subclass: #Dbufwr
+  instanceVariableNames: 'bufnum phase input loop'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Dbufwr comment: 'Buffer write demand ugen'!
+
+!Dbufwr methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  phase ^phase!
+  phase: x phase := x!
+  input ^input!
+  input: x input := x!
+  loop ^loop!
+  loop: x loop := x!
+!
+
+!Dbufwr methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Dbufwr.
+    paramNames := #(#bufnum #phase #input #loop).
+    mceNames := #().
+    ugenRate := #dr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. phase := 0.0. input := 0.0. loop := 1.0!
+!
+
+
+!Dbufwr class methodsFor: 'instance creation'!
+  bufnum: bufnum phase: phase input: input loop: loop
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u input: input.
+    u loop: loop.
+    ^u!
+  bufnum: bufnum phase: phase input: input loop: loop mul: mul
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u input: input.
+    u loop: loop.
+    u mul: mul.
+    ^u!
+  bufnum: bufnum phase: phase input: input loop: loop mul: mul add: add
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u input: input.
+    u loop: loop.
     u mul: mul.
     u add: add.
     ^u!
@@ -2436,6 +2683,54 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     u := self new.
     u numChan: numChan.
     u bus: bus.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
+UGen subclass: #K2A
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+K2A comment: 'Control to audio rate converter.'!
+
+!K2A methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!K2A methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #K2A.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!K2A class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u mul: mul.
+    ^u!
+  in: in mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
     u mul: mul.
     u add: add.
     ^u!
@@ -5743,6 +6038,94 @@ VarSaw comment: 'Variable duty saw'!
     u freq: freq.
     u iphase: iphase.
     u width: width.
+    u mul: mul.
+    u add: add.
+    ^u!
+!
+
+UGen subclass: #Vibrato
+  instanceVariableNames: 'freq rate depth delay onset rateVariation depthVariation iphase trig'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Vibrato comment: 'The Vibrato oscillator models a slow frequency modulation.'!
+
+!Vibrato methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  rate ^rate!
+  rate: x rate := x!
+  depth ^depth!
+  depth: x depth := x!
+  delay ^delay!
+  delay: x delay := x!
+  onset ^onset!
+  onset: x onset := x!
+  rateVariation ^rateVariation!
+  rateVariation: x rateVariation := x!
+  depthVariation ^depthVariation!
+  depthVariation: x depthVariation := x!
+  iphase ^iphase!
+  iphase: x iphase := x!
+  trig ^trig!
+  trig: x trig := x!
+!
+
+!Vibrato methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Vibrato.
+    paramNames := #(#freq #rate #depth #delay #onset #rateVariation #depthVariation #iphase #trig).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 440.0. rate := 6.0. depth := 0.02. delay := 0.0. onset := 0.0. rateVariation := 0.04. depthVariation := 0.1. iphase := 0.0. trig := 0.0!
+!
+
+
+!Vibrato class methodsFor: 'instance creation'!
+  freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig
+    |u|
+    u := self new.
+    u freq: freq.
+    u rate: rate.
+    u depth: depth.
+    u delay: delay.
+    u onset: onset.
+    u rateVariation: rateVariation.
+    u depthVariation: depthVariation.
+    u iphase: iphase.
+    u trig: trig.
+    ^u!
+  freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul
+    |u|
+    u := self new.
+    u freq: freq.
+    u rate: rate.
+    u depth: depth.
+    u delay: delay.
+    u onset: onset.
+    u rateVariation: rateVariation.
+    u depthVariation: depthVariation.
+    u iphase: iphase.
+    u trig: trig.
+    u mul: mul.
+    ^u!
+  freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul add: add
+    |u|
+    u := self new.
+    u freq: freq.
+    u rate: rate.
+    u depth: depth.
+    u delay: delay.
+    u onset: onset.
+    u rateVariation: rateVariation.
+    u depthVariation: depthVariation.
+    u iphase: iphase.
+    u trig: trig.
     u mul: mul.
     u add: add.
     ^u!

@@ -3,7 +3,7 @@
     | p q |
     p := self numChannels: 1 numFrames: x size.
     q := SetBuf buf: p offset: 0 length: x size array: x.
-    ^MRG lhs: p rhs: q
+    ^Mrg lhs: p rhs: q
   !
 !
 
@@ -124,6 +124,27 @@ TChoose comment: 'Randomly select one of several inputs on trigger.'!
     ^Select which: (TIRand lo: 0 hi: (array size - 1) trig: trig) array: array
   !
   kr: d
-    ^self trig: (d at: 1) value array: (d at: 2) value.
+    ^(self trig: (d at: 1) value array: (d at: 2) value) kr
+  !
+!
+
+UGen subclass: #PMOsc
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'
+!
+
+PMOsc comment: 'Phase modulation sine oscillator pair.'!
+
+!PMOsc class methodsFor: 'instance creation'!
+  carfreq: cf modfreq: mf pmindex: pm modphase: mp
+    ^SinOsc freq: cf phase: (SinOsc freq: mf phase: mp) * pm
+  !
+  carfreq: cf modfreq: mf pmindex: pm modphase: mp mul: mul
+    ^(self carfreq: cf modfreq: mf pmindex: pm modphase: mp) * mul
+  !
+  ar: d
+    ^self carfreq: (d at: 1) value modfreq: (d at: 2) value pmindex: (d at: 3) value modphase: (d at: 4) value
   !
 !

@@ -24,16 +24,16 @@ binop =
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
 ugen =
-  ["AllpassN","AmpComp","Amplitude"
+  ["AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Blip","BLowPass","BPF","BPZ2","BrownNoise"
-  ,"Clip","CombC","CombL","CombN","ControlDur","Crackle"
-  ,"Decay","Decay2","DegreeToKey","DelayN","Demand","Diwhite","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
+  ,"Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
+  ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","Diwhite","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"Formant","FSinOsc","FreeVerb"
   ,"Gendy1","GrainFM","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback"
-  ,"Klank"
+  ,"K2A","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
   ,"MiRings","ModDif","MoogLadder","MouseX","MouseY","OnePole","Out"
@@ -41,7 +41,7 @@ ugen =
   ,"RHPF","RLPF","Rand","Resonz","Ringz","RunningMax"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"TDuty","TExpRand","Timer","TIRand","TRand","Trig","Trig1"
-  ,"VarSaw"
+  ,"VarSaw","Vibrato"
   ,"WhiteNoise"
   ,"XFade2","XLine"]
 

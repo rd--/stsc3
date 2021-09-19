@@ -1,6 +1,6 @@
 Cabal-Version:      2.4
 Name:               stsc3
-Version:            0.19
+Version:            0.20
 Synopsis:           Smalltalk SuperCollider
 Description:        Smalltalk SuperCollider
 License:            GPL-3.0-only
