@@ -1,12 +1,12 @@
 "https://sccode.org/1-590 (dm)"
 | shift_register amp pulse rate trans trig octave note chord cf mf sig cmp |
-shift_register := [ :length :trig :in |
+shift_register := [ :length :tr :in |
   | buf count |
   buf := LocalBuf numChannels: 1 numFrames: length.
-  count := PulseCount trig: trig reset: 0.
+  count := PulseCount trig: tr reset: 0.
   Mrg
-    lhs: (Demand trig: trig reset: 0 demandUGens: (Dbufrd bufnum: buf phase: (1 to: length) + count loop: 1) reverse)
-    rhs: (Demand trig: trig reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1)) ].
+    lhs: (Demand trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse)
+    rhs: (Demand trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1)) ].
 amp := 0.1.
 pulse := Impulse freq: 1 / 16 phase: 0.
 rate := TChoose trig: pulse array: #(3 5 10).
@@ -21,4 +21,4 @@ sig := PMOsc carfreq: cf modfreq: mf pmindex: ((Env levels: #(3 3 0) times: #(0 
 cmp := (sig * (AmpCompA freq: chord root: 0 minAmp: 0.32 rootAmp: 1) * amp) mix.
 rvb := GVerb in: (BPF in: cmp freq: 90 midicps rq: 1)
              roomsize: 50 revtime: 8 damping: 0.5 inputbw: 0.5 spread: 15 drylevel: 0 earlyreflevel: 0.7 taillevel: 0.5 maxroomsize: 300.
-XFade2 inA: (Array with: cmp with: cmp) inB: rvb pan: 0.2 level: 1
+XFade2 inA: (Mce with: cmp with: cmp) inB: rvb pan: 0.2 level: 1

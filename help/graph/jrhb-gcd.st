@@ -7,6 +7,6 @@ d := i frac.
 a := (ModDif x: d y: 0.5 mod: 1) negated + 0.8.
 z1 := (i gcd: x) + d.
 z2 := (i lcm: x) + d.
-freq := ({z1. z2} asUGen transpose abs + 1) * 120.
+freq := (Mce with: z1 with: z2) transpose abs + 1 * 120.
 c := AmpComp freq: freq kr root: 261 exp: 0.33 mul: a.
 (SinOsc freq: freq kr phase: 0 mul: c kr) mix * 0.01

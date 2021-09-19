@@ -119,7 +119,7 @@
 !Interval methodsFor: 'coercing'!
   generality
     "Array is 600, Interval is less general than Array?"
-    ^550
+    ^590
   !
   coerce: aNumber
     "Coerce argument (which will be some form of Number) to a UGen"
@@ -152,7 +152,11 @@
 
 !Number methodsFor: 'mathematical functions'!
   ** aNumber
-    ^ self raisedTo: aNumber
+    "Gnu Smalltalk doesn't implement **.
+     Special cases for UGens and Collections."
+    (aNumber isKindOf: AbstractUGen) ifTrue: [^self asUGen raisedTo: aNumber].
+    (aNumber isKindOf: Collection) ifTrue: [^aNumber collect: [ :x | self ** x]].
+    ^self raisedTo: aNumber
   !
 !
 
@@ -174,6 +178,12 @@
   !
   / arg
     ^arg adaptToCollection: self andSend: #/
+  !
+  // arg
+    ^arg adaptToCollection: self andSend: #//
+  !
+  raisedTo: arg
+    ^arg adaptToCollection: self andSend: #raisedTo:
   !
 !
 

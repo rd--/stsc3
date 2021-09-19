@@ -200,8 +200,8 @@
 !Constant methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
-    '(constant ' putOn: fd.
+    '(constant (' putOn: fd.
     self k asString putOn: fd.
-    ') ' putOn: fd
+    ')) ' putOn: fd
   !
 !

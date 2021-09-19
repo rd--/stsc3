@@ -29,4 +29,3 @@ SystemOrganization addCategory: #'Sound-SC3'!
     (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)
   !
 !
-

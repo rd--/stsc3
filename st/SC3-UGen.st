@@ -6327,9 +6327,12 @@ XLine comment: 'Exponential line generator.'!
   floor ^ UnaryOpUGen specialIndex: 9 a: self!
   frac ^ UnaryOpUGen specialIndex: 10 a: self!
   cubed ^ UnaryOpUGen specialIndex: 13 a: self!
+  exp ^ UnaryOpUGen specialIndex: 15 a: self!
   reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
   midicps ^ UnaryOpUGen specialIndex: 17 a: self!
-  log ^ UnaryOpUGen specialIndex: 25 a: self!
+  ln ^ UnaryOpUGen specialIndex: 25 a: self!
+  log2 ^ UnaryOpUGen specialIndex: 26 a: self!
+  log ^ UnaryOpUGen specialIndex: 27 a: self!
   sin ^ UnaryOpUGen specialIndex: 28 a: self!
   cos ^ UnaryOpUGen specialIndex: 29 a: self!
   tanh ^ UnaryOpUGen specialIndex: 36 a: self!

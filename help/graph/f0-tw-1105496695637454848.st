@@ -8,6 +8,6 @@ y := VarSaw freq: b + 5 iphase: 0 width: 0.5.
 z := VarSaw freq: b iphase: b width: b mul: b / 5 add: #(1.5 5 1).
 m := VarSaw freq: 5 - b iphase: b width: b mul: 5 add: 5.
 o := VarSaw freq: (w * x + y * z) kr iphase: b width: (VarSaw freq: b iphase: 0 width: 0.5) kr + 5 / 15 mul: (m > 1.515) kr.
-f := 1515 asUGen raisedTo: ((VarSaw freq: 1 - b / 5 iphase: 0 width: 0.5) / 15 + 1 + b).
-rq := (1.5 asUGen raisedTo: (VarSaw freq: b iphase: 0 width: 0.5)) / 5.
+f := 1515 ** ((VarSaw freq: 1 - b / 5 iphase: 0 width: 0.5) / 15 + 1 + b).
+rq := (1.5 ** (VarSaw freq: b iphase: 0 width: 0.5)) / 5.
 (BLowPass in: o freq: f kr rq: rq kr mul: 1 / 5) splay

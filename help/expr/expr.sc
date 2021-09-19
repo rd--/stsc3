@@ -44,11 +44,13 @@ x.y.z
 x.y.z.y
 
 'Binary Methods'
-4 + 5 == 9                               // true
-1 ! 2 == [1,1]                           // true
-1 @ 2 == Point.new(x: 1, y: 2)           // true
+4 + 5 == 9                                        // true
+1 ! 2 == [1,1]                                    // true
+1 @ 2 == Point.new(x: 1, y: 2)                    // true
 1 @ 2
-1 % 2
+1 % 2 == 1                                        // true
+1.5 % 0.5 == 0                                    // true
+(5.iota % 2) == [0,1,0,1,0]                       // true
 1 & 2
 1 * 2
 1 + 2

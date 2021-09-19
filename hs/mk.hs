@@ -1,15 +1,22 @@
 import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
 
+{- | Unary operators
+
+     Sc>>log is natural, ie. St>>ln
+     Sc>>log2 is base 2, ie. St>>log2
+     Sc>>log10 is base 10, ie. St>>log
+-}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10),("cubed",13),("reciprocal",16),("midicps",17)
-  ,("log",25),("sin",28),("cos",29),("tanh",36)
+  ,("frac",10),("cubed",13),("exp",15),("reciprocal",16),("midicps",17)
+  ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42)]
 
 {- | Binary operators.
 
-     Smalltalk modulo is \\ but use % here.
+     Sc>>** is St>>raisedTo:
+     Smalltalk modulo is rem: but use % here.
 -}
 binop :: [(String, Int)]
 binop =

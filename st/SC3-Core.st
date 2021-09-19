@@ -77,6 +77,23 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
+!Number methodsFor: 'math'!
+  % aNumber
+    "% is the SC floating point modulo operator."
+    ^self asUGen % aNumber
+  !
+!
+
+!Collection methodsFor: 'arithmetic'!
+  ** arg
+    ^arg adaptToCollection: self andSend: #**
+  !
+  % arg
+    "% is the SC floating point modulo operator."
+    ^arg adaptToCollection: self andSend: #%
+  !
+!
+
 !AbstractUGen methodsFor: 'collecting'!
   addToUGenSet: c
     "Add inputs to UGen set.  Only actual instances of UGen are collected."
@@ -349,6 +366,9 @@ Mce comment: 'Multiple Channel Expansion'!
 !Mce class methodsFor: 'instance creation'!
   source: x
     ^self new source: x
+  !
+  with: c1 with: c2
+    ^Mce source: (Array with: c1 with: c2)
   !
 !
 
