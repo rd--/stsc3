@@ -56,4 +56,8 @@
     "Array of sequence from 1 to myself"
     ^(1 to: self) asArray
   !
+  from: start by: step
+    "Array of myself places from start by step"
+    ^(start to: self - 1 * step + start by: step) asArray
+  !
 !

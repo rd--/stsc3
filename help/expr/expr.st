@@ -122,6 +122,9 @@ $c class = Character                              "=> true"
 (1 to: 9 by: 2) collect: [:a | a + a]             "=> #(2 6 10 14 18)"
 (0.5 to: 4.5 by: 0.5) asArray                     "=> #(0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5)"
 (1 to: 2) sin                                     "=> #(0.8414709848078965 0.9092974268256817)"
+9 iota                                            "=> #(1 2 3 4 5 6 7 8 9)"
+5 from: 1 by: 2                                   "=> #(1 3 5 7 9)"
+(9 from: 1 by: 1) = 9 iota                        "=> true"
 
 'Keyword'
 Transcript show: 'text'                           "=> prints text (no newline)"
