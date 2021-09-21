@@ -59,6 +59,7 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
 UGen subclass: #AmpComp
@@ -117,6 +118,7 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:root:exp:!
 !
 
 UGen subclass: #AmpCompA
@@ -180,6 +182,7 @@ AmpCompA comment: 'Basic psychoacoustic amplitude compensation (ANSI A-weighting
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:root:minAmp:rootAmp:!
 !
 
 UGen subclass: #Amplitude
@@ -238,6 +241,7 @@ Amplitude comment: 'Amplitude follower'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
 UGen subclass: #Blip
@@ -291,6 +295,7 @@ Blip comment: 'Band limited impulse oscillator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:numharm:!
 !
 
 UGen subclass: #BLowPass
@@ -349,6 +354,7 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:rq:!
 !
 
 UGen subclass: #BPF
@@ -407,6 +413,7 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:rq:!
 !
 
 UGen subclass: #BPZ2
@@ -455,6 +462,7 @@ BPZ2 comment: 'Two zero fixed midpass.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:!
 !
 
 UGen subclass: #BrownNoise
@@ -492,6 +500,7 @@ BrownNoise comment: 'Brown Noise.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #Clip
@@ -550,6 +559,7 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:lo:hi:!
 !
 
 UGen subclass: #CombC
@@ -613,6 +623,7 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
 UGen subclass: #CombL
@@ -676,6 +687,7 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
 UGen subclass: #CombN
@@ -739,6 +751,7 @@ CombN comment: 'Comb delay line with no interpolation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
 UGen subclass: #ControlDur
@@ -776,6 +789,7 @@ ControlDur comment: 'Duration of one block'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #Crackle
@@ -824,6 +838,7 @@ Crackle comment: 'Chaotic noise function.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#chaosParam:!
 !
 
 UGen subclass: #CuspL
@@ -887,6 +902,7 @@ CuspL comment: 'Cusp map chaotic generator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:a:b:xi:!
 !
 
 UGen subclass: #Dbufrd
@@ -945,6 +961,7 @@ Dbufrd comment: 'Buffer read demand ugen'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#bufnum:phase:loop:!
 !
 
 UGen subclass: #Dbufwr
@@ -1008,6 +1025,7 @@ Dbufwr comment: 'Buffer write demand ugen'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#bufnum:phase:input:loop:!
 !
 
 UGen subclass: #Decay
@@ -1061,6 +1079,7 @@ Decay comment: 'Exponential decay'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:decayTime:!
 !
 
 UGen subclass: #Decay2
@@ -1119,6 +1138,7 @@ Decay2 comment: 'Exponential decay'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:attackTime:decayTime:!
 !
 
 UGen subclass: #DegreeToKey
@@ -1177,6 +1197,7 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#bufnum:in:octave:!
 !
 
 UGen subclass: #DelayN
@@ -1235,6 +1256,7 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
 UGen subclass: #Demand
@@ -1293,6 +1315,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:reset:demandUGens:!
 !
 
 UGen subclass: #Diwhite
@@ -1351,6 +1374,7 @@ Diwhite comment: 'Demand rate white noise random generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#length:lo:hi:!
 !
 
 UGen subclass: #Drand
@@ -1404,6 +1428,7 @@ Drand comment: 'Demand rate random sequence generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#repeats:list:!
 !
 
 UGen subclass: #Dseq
@@ -1457,6 +1482,7 @@ Dseq comment: 'Demand rate sequence generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#repeats:list:!
 !
 
 UGen subclass: #Dshuf
@@ -1510,6 +1536,7 @@ Dshuf comment: 'Demand rate random sequence generator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#repeats:list:!
 !
 
 UGen subclass: #Dust
@@ -1558,6 +1585,7 @@ Dust comment: 'Random impulses.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#density:!
 !
 
 UGen subclass: #Dust2
@@ -1606,6 +1634,7 @@ Dust2 comment: 'Random impulses.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#density:!
 !
 
 UGen subclass: #Duty
@@ -1669,6 +1698,7 @@ Duty comment: 'Demand results from demand rate UGens.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#dur:reset:doneAction:level:!
 !
 
 UGen subclass: #EnvGen
@@ -1742,6 +1772,7 @@ EnvGen comment: 'Envelope generator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#gate:levelScale:levelBias:timeScale:doneAction:envelope:!
 !
 
 UGen subclass: #ExpRand
@@ -1795,6 +1826,7 @@ ExpRand comment: 'Exponential single random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:!
 !
 
 UGen subclass: #Formant
@@ -1853,6 +1885,7 @@ Formant comment: 'Formant oscillator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#fundfreq:formfreq:bwfreq:!
 !
 
 UGen subclass: #FSinOsc
@@ -1906,6 +1939,7 @@ FSinOsc comment: 'Fast sine oscillator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:!
 !
 
 UGen subclass: #FreeVerb
@@ -1969,6 +2003,7 @@ FreeVerb comment: 'A reverb'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:mix:room:damp:!
 !
 
 UGen subclass: #Gendy1
@@ -2062,6 +2097,7 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#ampdist:durdist:adparam:ddparam:minfreq:maxfreq:ampscale:durscale:initCPs:knum:!
 !
 
 UGen subclass: #GrainFM
@@ -2148,6 +2184,7 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:!
 !
 
 UGen subclass: #GreyholeRaw
@@ -2236,6 +2273,7 @@ GreyholeRaw comment: 'algorithmic delay'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in1:in2:damping:delaytime:diffusion:feedback:moddepth:modfreq:size:!
 !
 
 UGen subclass: #GVerb
@@ -2329,6 +2367,7 @@ GVerb comment: 'A two-channel reverb'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:roomsize:revtime:damping:inputbw:spread:drylevel:earlyreflevel:taillevel:maxroomsize:!
 !
 
 UGen subclass: #Hasher
@@ -2377,6 +2416,7 @@ Hasher comment: 'Scrambled value with a hash function.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:!
 !
 
 UGen subclass: #HPF
@@ -2430,6 +2470,7 @@ HPF comment: '2nd order Butterworth highpass filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:!
 !
 
 UGen subclass: #HPZ1
@@ -2478,6 +2519,7 @@ HPZ1 comment: 'Two point difference filter'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:!
 !
 
 UGen subclass: #IRand
@@ -2531,6 +2573,7 @@ IRand comment: 'Single integer random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:!
 !
 
 UGen subclass: #Impulse
@@ -2584,6 +2627,7 @@ Impulse comment: 'Impulse oscillator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:phase:!
 !
 
 UGen subclass: #In
@@ -2635,6 +2679,7 @@ In comment: 'Read a signal from a bus.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#numChan:bus:!
 !
 
 UGen subclass: #InFeedback
@@ -2686,6 +2731,7 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#numChan:bus:!
 !
 
 UGen subclass: #K2A
@@ -2734,6 +2780,7 @@ K2A comment: 'Control to audio rate converter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:!
 !
 
 UGen subclass: #Klank
@@ -2802,6 +2849,7 @@ Klank comment: 'Bank of resonators'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:!
 !
 
 UGen subclass: #LFCub
@@ -2855,6 +2903,7 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:!
 !
 
 UGen subclass: #LFNoise0
@@ -2903,6 +2952,7 @@ LFNoise0 comment: 'Step noise'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:!
 !
 
 UGen subclass: #LFNoise1
@@ -2951,6 +3001,7 @@ LFNoise1 comment: 'Ramp noise'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:!
 !
 
 UGen subclass: #LFNoise2
@@ -2999,6 +3050,7 @@ LFNoise2 comment: 'Quadratic noise.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:!
 !
 
 UGen subclass: #LFPulse
@@ -3057,6 +3109,7 @@ LFPulse comment: 'pulse oscillator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:width:!
 !
 
 UGen subclass: #LFSaw
@@ -3110,6 +3163,7 @@ LFSaw comment: 'Sawtooth oscillator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:!
 !
 
 UGen subclass: #LFTri
@@ -3163,6 +3217,7 @@ LFTri comment: 'Triangle oscillator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:!
 !
 
 UGen subclass: #LPF
@@ -3216,6 +3271,7 @@ LPF comment: '2nd order Butterworth lowpass filter'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:!
 !
 
 UGen subclass: #Lag
@@ -3269,6 +3325,7 @@ Lag comment: 'Exponential lag'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:lagTime:!
 !
 
 UGen subclass: #LagUD
@@ -3327,6 +3384,7 @@ LagUD comment: 'Exponential lag'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:lagTimeU:lagTimeD:!
 !
 
 UGen subclass: #Lag2
@@ -3380,6 +3438,7 @@ Lag2 comment: 'Exponential lag'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:lagTime:!
 !
 
 UGen subclass: #Lag3
@@ -3433,6 +3492,7 @@ Lag3 comment: 'Exponential lag'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:lagTime:!
 !
 
 UGen subclass: #Latch
@@ -3486,6 +3546,7 @@ Latch comment: 'Sample and hold'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:trig:!
 !
 
 UGen subclass: #LeakDC
@@ -3539,6 +3600,7 @@ LeakDC comment: 'Remove DC'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:coef:!
 !
 
 UGen subclass: #Limiter
@@ -3597,6 +3659,7 @@ Limiter comment: 'Peak limiter'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:level:dur:!
 !
 
 UGen subclass: #Line
@@ -3660,6 +3723,7 @@ Line comment: 'Line generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#start:end:dur:doneAction:!
 !
 
 UGen subclass: #LinExp
@@ -3728,6 +3792,7 @@ LinExp comment: 'Map a linear range to an exponential range'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
 !
 
 UGen subclass: #LocalBuf
@@ -3781,6 +3846,7 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#numChannels:numFrames:!
 !
 
 UGen subclass: #LocalIn
@@ -3832,6 +3898,7 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#numChan:default:!
 !
 
 UGen subclass: #LocalOut
@@ -3880,6 +3947,7 @@ LocalOut comment: 'Write to buses local to a synth.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#channelsArray:!
 !
 
 UGen subclass: #MiRings
@@ -3983,6 +4051,7 @@ MiRings comment: 'a resonator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:!
 !
 
 UGen subclass: #ModDif
@@ -4041,6 +4110,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#x:y:mod:!
 !
 
 UGen subclass: #MoogLadder
@@ -4099,6 +4169,7 @@ MoogLadder comment: 'Moog Filter Emulation'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:ffreq:res:!
 !
 
 UGen subclass: #MouseX
@@ -4162,6 +4233,7 @@ MouseX comment: 'Cursor tracking UGen.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
 UGen subclass: #MouseY
@@ -4225,6 +4297,7 @@ MouseY comment: 'Cursor tracking UGen.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
 UGen subclass: #OnePole
@@ -4278,6 +4351,7 @@ OnePole comment: 'One pole filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:coef:!
 !
 
 UGen subclass: #Out
@@ -4331,6 +4405,7 @@ Out comment: 'Write a signal to a bus.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#bus:channelsArray:!
 !
 
 UGen subclass: #Pan2
@@ -4389,6 +4464,7 @@ Pan2 comment: 'Two channel equal power pan.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:pos:level:!
 !
 
 UGen subclass: #Phasor
@@ -4457,6 +4533,7 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:rate:start:end:resetPos:!
 !
 
 UGen subclass: #PinkNoise
@@ -4494,6 +4571,7 @@ PinkNoise comment: 'Pink Noise.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #PitchShift
@@ -4562,6 +4640,7 @@ PitchShift comment: 'Time domain pitch shifter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:windowSize:pitchRatio:pitchDispersion:timeDispersion:!
 !
 
 UGen subclass: #Pluck
@@ -4635,6 +4714,7 @@ Pluck comment: 'A Karplus-Strong UGen'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:trig:maxdelaytime:delaytime:decaytime:coef:!
 !
 
 UGen subclass: #Pulse
@@ -4688,6 +4768,7 @@ Pulse comment: 'Band limited pulse wave.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:width:!
 !
 
 UGen subclass: #PulseCount
@@ -4741,6 +4822,7 @@ PulseCount comment: 'Pulse counter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:reset:!
 !
 
 UGen subclass: #PulseDivider
@@ -4799,6 +4881,7 @@ PulseDivider comment: 'Pulse divider.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:div:start:!
 !
 
 UGen subclass: #RHPF
@@ -4857,6 +4940,7 @@ RHPF comment: 'A resonant high pass filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:rq:!
 !
 
 UGen subclass: #RLPF
@@ -4915,6 +4999,7 @@ RLPF comment: 'A resonant low pass filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:rq:!
 !
 
 UGen subclass: #Rand
@@ -4968,6 +5053,7 @@ Rand comment: 'Single random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:!
 !
 
 UGen subclass: #Resonz
@@ -5026,6 +5112,7 @@ Resonz comment: 'Resonant filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:bwr:!
 !
 
 UGen subclass: #Ringz
@@ -5084,6 +5171,7 @@ Ringz comment: 'Ringing filter.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:freq:decaytime:!
 !
 
 UGen subclass: #RunningMax
@@ -5137,6 +5225,7 @@ RunningMax comment: 'Track maximum level.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:trig:!
 !
 
 UGen subclass: #SampleDur
@@ -5174,6 +5263,7 @@ SampleDur comment: 'Duration of one sample.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #SampleRate
@@ -5211,6 +5301,7 @@ SampleRate comment: 'Server sample rate.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #Saw
@@ -5259,6 +5350,7 @@ Saw comment: 'Band limited sawtooth.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:!
 !
 
 UGen subclass: #Select
@@ -5312,6 +5404,7 @@ Select comment: 'Select output from an array of inputs.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#which:array:!
 !
 
 UGen subclass: #SetBuf
@@ -5375,6 +5468,7 @@ SetBuf comment: 'Set local buffer'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#buf:offset:length:array:!
 !
 
 UGen subclass: #SetResetFF
@@ -5428,6 +5522,7 @@ SetResetFF comment: 'Set-reset flip flop.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:reset:!
 !
 
 UGen subclass: #SinOsc
@@ -5481,6 +5576,7 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:phase:!
 !
 
 UGen subclass: #SinOscFB
@@ -5534,6 +5630,7 @@ SinOscFB comment: 'Feedback FM oscillator'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:feedback:!
 !
 
 UGen subclass: #Sweep
@@ -5587,6 +5684,7 @@ Sweep comment: 'Triggered linear ramp'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:rate:!
 !
 
 UGen subclass: #TDuty
@@ -5655,6 +5753,7 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#dur:reset:doneAction:level:gapFirst:!
 !
 
 UGen subclass: #TExpRand
@@ -5713,6 +5812,7 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:trig:!
 !
 
 UGen subclass: #Timer
@@ -5761,6 +5861,7 @@ Timer comment: 'Returns time since last triggered.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#trig:!
 !
 
 UGen subclass: #TIRand
@@ -5819,6 +5920,7 @@ TIRand comment: 'Triggered integer random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:trig:!
 !
 
 UGen subclass: #TRand
@@ -5877,6 +5979,7 @@ TRand comment: 'Triggered random number generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#lo:hi:trig:!
 !
 
 UGen subclass: #Trig
@@ -5930,6 +6033,7 @@ Trig comment: 'Timed trigger.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:dur:!
 !
 
 UGen subclass: #Trig1
@@ -5983,6 +6087,7 @@ Trig1 comment: 'Timed trigger.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#in:dur:!
 !
 
 UGen subclass: #VarSaw
@@ -6041,6 +6146,7 @@ VarSaw comment: 'Variable duty saw'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:iphase:width:!
 !
 
 UGen subclass: #Vibrato
@@ -6129,6 +6235,7 @@ Vibrato comment: 'The Vibrato oscillator models a slow frequency modulation.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#freq:rate:depth:delay:onset:rateVariation:depthVariation:iphase:trig:!
 !
 
 UGen subclass: #WhiteNoise
@@ -6166,6 +6273,7 @@ WhiteNoise comment: 'White noise.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #XFade2
@@ -6229,6 +6337,7 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#inA:inB:pan:level:!
 !
 
 UGen subclass: #XLine
@@ -6292,6 +6401,7 @@ XLine comment: 'Exponential line generator.'!
     u mul: mul.
     u add: add.
     ^u!
+  primaryFactoryMethod ^#start:end:dur:doneAction:!
 !
 
 

@@ -106,13 +106,19 @@ scExpressionRewritePrecedence e =
     ScExprAssignment x y -> ScExprAssignment x (scExpressionRewritePrecedence y)
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewritePrecedence True x)
 
+scInitializerDefinitionRewritePrecedence :: ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionRewritePrecedence (ScInitializerDefinition tmp stm) =
+  ScInitializerDefinition
+  (fmap (map scTemporariesRewritePrecedence) tmp)
+  (fmap scStatementsRewritePrecedence stm)
+
 scKeywordArgumentRewritePrecedence :: ScKeywordArgument -> ScKeywordArgument
 scKeywordArgumentRewritePrecedence (ScKeywordArgument k v) =
   ScKeywordArgument k (scBasicExpressionRewritePrecedence True v)
 
 scDotMessageRewritePrecedence :: ScDotMessage -> ScDotMessage
 scDotMessageRewritePrecedence (ScDotMessage i a) =
-  ScDotMessage i (fmap (map scKeywordArgumentRewritePrecedence) a)
+  ScDotMessage i (map scKeywordArgumentRewritePrecedence a)
 
 scMessagesRewritePrecedence :: ScMessages -> ScMessages
 scMessagesRewritePrecedence m =
@@ -153,12 +159,13 @@ scPrimaryRewritePrecedence p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewritePrecedence x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewritePrecedence x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map (scBasicExpressionRewritePrecedence True) x)
+    ScPrimaryImplictMessageSend x a -> ScPrimaryImplictMessageSend x (map (scBasicExpressionRewritePrecedence True) a)
 
 -- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
 scRewritePrecedenceViewer :: String -> String
 scRewritePrecedenceViewer =
-  Sc.scExpressionPrint .
-  scExpressionRewritePrecedence .
+  Sc.scInitializerDefinitionPrint .
+  scInitializerDefinitionRewritePrecedence .
   Sc.superColliderParser .
   Sc.alexScanTokens
 

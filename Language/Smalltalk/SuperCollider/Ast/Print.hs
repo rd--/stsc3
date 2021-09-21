@@ -29,6 +29,7 @@ scPrimaryPrint p =
     ScPrimaryBlock x -> inBraces (scBlockBodyPrint x)
     ScPrimaryExpression x -> inParen (scExpressionPrint x)
     ScPrimaryArrayExpression x -> inBrackets (intercalate "," (map scBasicExpressionPrint x))
+    ScPrimaryImplictMessageSend x a -> x ++ inParen (intercalate "," (map scBasicExpressionPrint a))
 
 scJoin :: [String] -> String
 scJoin = concat
@@ -72,7 +73,7 @@ scMessagesPrint m =
     ScMessagesBinary m1 -> scBinaryMessagesPrint m1
 
 scDotMessagePrint :: ScDotMessage -> String
-scDotMessagePrint (ScDotMessage i a) = scJoin [".",i,maybePrint scKeywordArgumentsPrint a]
+scDotMessagePrint (ScDotMessage i a) = scJoin [".",i,if null a then "" else scKeywordArgumentsPrint a]
 
 inParen :: String -> String
 inParen x = "(" ++ x ++ ")"
@@ -110,3 +111,7 @@ scExpressionPrint e =
   case e of
     ScExprAssignment i e1 -> scJoin [i," = ",scExpressionPrint e1]
     ScExprBasic e1 -> scBasicExpressionPrint e1
+
+scInitializerDefinitionPrint :: ScInitializerDefinition -> String
+scInitializerDefinitionPrint (ScInitializerDefinition tmp stm) =
+  unlines (maybe [] (map scTemporariesPrint) tmp ++ [maybe "" scStatementsPrint stm])

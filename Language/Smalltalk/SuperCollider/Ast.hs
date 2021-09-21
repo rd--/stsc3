@@ -25,8 +25,6 @@ The Sc expression "x.y(a).z.y(b) + c" would be written "(((x y: a) z) y: b) + c"
 -}
 module Language.Smalltalk.SuperCollider.Ast where
 
-import Data.Maybe {- maybe -}
-
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | Identifier with perhaps an initializer expression.
@@ -34,6 +32,11 @@ type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
 
 -- | 3.4.2. Sequence of temporaries, single var statement.
 type ScTemporaries = [ScTemporary]
+
+-- | 3.4.3
+data ScInitializerDefinition =
+  ScInitializerDefinition (Maybe [ScTemporaries]) (Maybe ScStatements)
+  deriving (Eq,Show)
 
 -- | 3.4.4
 data ScBlockBody =
@@ -81,13 +84,16 @@ scBasicExpressionToPrimary e =
     ScBasicExpression p Nothing -> p
     _ -> ScPrimaryExpression (ScExprBasic e)
 
--- | 3.4.5.2 Reuse the Smalltalk Literal type.
+{- | 3.4.5.2 Reuse the Smalltalk Literal type.
+     The Sc notation "x(...)" is an implicit message send.
+-}
 data ScPrimary
   = ScPrimaryIdentifier St.Identifier
   | ScPrimaryLiteral St.Literal
   | ScPrimaryBlock ScBlockBody
   | ScPrimaryExpression ScExpression
   | ScPrimaryArrayExpression [ScBasicExpression]
+  | ScPrimaryImplictMessageSend St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
 
 -- | 3.4.5.3
@@ -96,15 +102,17 @@ data ScMessages
   | ScMessagesBinary [ScBinaryMessage]
   deriving (Eq,Show)
 
--- | For translation we want to distinguish between x.y and x.y(),
---   so that x.abs does not send abs: #().
+{- | Sc allows x.y() although this is a kind of nonsense.
+     Here we allow x.y as a unary message and x.y(z...) for n-ary messages where n >= 1.
+     Ie. an empty parameter list indicates a unary message.
+-}
 data ScDotMessage =
-  ScDotMessage St.Identifier (Maybe [ScKeywordArgument])
+  ScDotMessage St.Identifier [ScKeywordArgument]
   deriving (Eq, Show)
 
 -- | Does message have parameters, i.e. written as .q()
 scDotMessageIsKeyword :: ScDotMessage -> Bool
-scDotMessageIsKeyword (ScDotMessage _ m) = isJust m
+scDotMessageIsKeyword (ScDotMessage _ m) = not (null m)
 
 -- | Are any messages in the sequence keyword messages.
 scDotMessagesHaveKeyword :: [ScDotMessage] -> Bool

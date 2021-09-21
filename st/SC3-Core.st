@@ -8,6 +8,9 @@ Object subclass: #AbstractUGen
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen class methodsFor: 'instance creation'!
+  apply: arg
+    ^self perform: (self primaryFactoryMethod) withArguments: arg
+  !
   ar: d
     "
     Support for SuperCollider type class instantiation.

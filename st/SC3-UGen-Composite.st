@@ -74,13 +74,23 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
 
 !AbstractUGen methodsFor: 'arithmetic'!
   inExpRangeFrom: x to: y
+    "LinExp with input range of (-1,1)"
     ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y
   !
   inRangeFrom: x to: y
+    "LinLin with input range of (-1,1)"
     | m a |
     m := (y - x) / 2.
     a := x + m.
     ^self * m + a.
+  !
+  exprange: anAssoc
+    "inExpRangeFrom:to: from Association"
+    ^self inExpRangeFrom: anAssoc key to: anAssoc value
+  !
+  range: anAssoc
+    "inRangeFrom:to: from Association"
+    ^self inRangeFrom: anAssoc key to: anAssoc value
   !
 !
 

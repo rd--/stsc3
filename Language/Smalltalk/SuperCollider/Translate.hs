@@ -20,7 +20,7 @@ scDotMessagesForSmalltalk m =
          _ -> error ("scDotMessagesForSmalltalk: " ++ show m)
   else (m,Nothing)
 
--- | Sc pi is translated to "Float pi"
+-- | Sc pi is translated to "(Float pi)"
 scPiSt :: St.Primary
 scPiSt =
   St.PrimaryExpression
@@ -28,6 +28,19 @@ scPiSt =
     (St.BasicExpression
       (St.PrimaryIdentifier "Float")
       (Just (St.MessagesUnary [St.UnaryMessage "pi"] Nothing Nothing))
+      Nothing))
+
+-- | The Sc implicit message send x(...) is translated as (x apply: {...})
+scImplictMessageSendSt :: St.Identifier -> [ScBasicExpression] -> St.Primary
+scImplictMessageSendSt x a =
+  St.PrimaryExpression
+  (St.ExprBasic
+    (St.BasicExpression
+      (St.PrimaryIdentifier x)
+      (Just (St.MessagesKeyword
+              (St.KeywordMessage
+                [("apply:"
+                 ,St.KeywordArgument (St.PrimaryArrayExpression (map scBasicExpressionSt a)) Nothing Nothing)])))
       Nothing))
 
 scPrimarySt :: ScPrimary -> St.Primary
@@ -44,6 +57,7 @@ scPrimarySt p =
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
     ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
     ScPrimaryArrayExpression x -> St.PrimaryArrayExpression (map scBasicExpressionSt x)
+    ScPrimaryImplictMessageSend x a -> scImplictMessageSendSt x a
 
 scBlockBodySt :: ScBlockBody -> St.BlockBody
 scBlockBodySt (ScBlockBody arg tmp stm) =
@@ -73,14 +87,14 @@ scKeywordArgumentSt (ScKeywordArgument k e) =
 scDotMessageKeywordSt :: ScDotMessage -> St.KeywordMessage
 scDotMessageKeywordSt (ScDotMessage i a) =
   case a of
-    Nothing -> error "scDotMessageKeywordSt: Unary"
-    Just [p] -> St.KeywordMessage [(i ++ ":",scKeywordArgumentSt p)]
-    _ -> error "scDotMessageKeywordSt: non Array"
+    [] -> error "scDotMessageKeywordSt: Unary"
+    [p] -> St.KeywordMessage [(i ++ ":",scKeywordArgumentSt p)] -- binary
+    _ -> error "scDotMessageKeywordSt: N-ary messages not translated"
 
 scDotMessageUnarySt :: ScDotMessage -> St.UnaryMessage
 scDotMessageUnarySt (ScDotMessage i a) =
   case a of
-    Nothing -> St.UnaryMessage i
+    [] -> St.UnaryMessage i
     _ -> error ("scDotMessageUnarySt: argument: " ++ show a)
 
 scMessagesSt :: ScMessages -> St.Messages
@@ -130,6 +144,10 @@ scExpressionSt e =
     ScExprAssignment i e1 -> St.ExprAssignment (St.Assignment i (scExpressionSt e1))
     ScExprBasic e1 -> St.ExprBasic (scBasicExpressionSt e1)
 
+scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
+scInitializerDefinitionSt (ScInitializerDefinition tmp stm) =
+   St.InitializerDefinition (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+
 {-
 
 import Language.Smalltalk.SuperCollider.Ast.Print
@@ -141,8 +159,12 @@ import qualified Language.Smalltalk.Ansi.Print as St
 
 p = superColliderParser . alexScanTokens
 x = scExpressionPrint . p
-rw = St.expression_pp . scExpressionSt . scExpressionRewrite . p
+rw = St.expression_pp . scExpressionSt . scExpressionRewrite False . p
 
-rw "p + q.r.s(a).t.u(b)" == "p + ((q r s: ({a})) t u: ({b}))"
-
+rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5})"
+rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k})"
+rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})})"
+rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b)"
+rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {})"
+rw "p.q(r,s)" -- error
 -}

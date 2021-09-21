@@ -26,24 +26,26 @@ scTemporariesPartition tmp =
       tmpExpr = mapMaybe scTemporaryInitialiser (concat tmp)
   in (tmpNames,tmpExpr)
 
-scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
-scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stm) =
-  let stmRw = fmap scStatementsRewriteTemporaries stm
+scTmpStmRwTmp :: Maybe [ScTemporaries] -> Maybe ScStatements -> (Maybe [ScTemporaries], Maybe ScStatements)
+scTmpStmRwTmp tmpMaybe stmMaybe =
+  let stmRw = fmap scStatementsRewriteTemporaries stmMaybe
   in case tmpMaybe of
-       Nothing -> ScBlockBody arg Nothing stmRw
+       Nothing -> (Nothing, stmRw)
        Just tmp ->
          let (tmpNames,tmpExpr) = scTemporariesPartition tmp
              idToTmp k = (k,Nothing)
              maybeTmp = if null tmpNames
-                        then error "scBlockBodyRewriteTemporaries"
+                        then error "scTmpStmRwTmp"
                         else Just [map idToTmp tmpNames]
              tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
          in case tmpExpr of
-           [] -> ScBlockBody arg maybeTmp stmRw
-           _ -> ScBlockBody
-                arg
-                maybeTmp
-                (Just (scExpressionSequenceToStatements stmRw tmpExprRw))
+           [] -> (maybeTmp, stmRw)
+           _ -> (maybeTmp, Just (scExpressionSequenceToStatements stmRw tmpExprRw))
+
+scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
+scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stmMaybe) =
+  let (tmp,stm) = scTmpStmRwTmp tmpMaybe stmMaybe
+  in ScBlockBody arg tmp stm
 
 scStatementsRewriteTemporaries :: ScStatements -> ScStatements
 scStatementsRewriteTemporaries s =
@@ -65,7 +67,7 @@ scKeywordArgumentRewriteTemporaries (ScKeywordArgument k v) =
 
 scDotMessageRewriteTemporaries :: ScDotMessage -> ScDotMessage
 scDotMessageRewriteTemporaries (ScDotMessage i a) =
-  ScDotMessage i (fmap (map scKeywordArgumentRewriteTemporaries) a)
+  ScDotMessage i (map scKeywordArgumentRewriteTemporaries a)
 
 scBinaryMessageRewriteTemporaries :: ScBinaryMessage -> ScBinaryMessage
 scBinaryMessageRewriteTemporaries (ScBinaryMessage i a) =
@@ -89,6 +91,11 @@ scExpressionRewriteTemporaries e =
     ScExprAssignment x y -> ScExprAssignment x (scExpressionRewriteTemporaries y)
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteTemporaries x)
 
+scInitializerDefinitionRewriteTemporaries :: ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionRewriteTemporaries (ScInitializerDefinition tmpMaybe stmMaybe) =
+  let (tmp,stm) = scTmpStmRwTmp tmpMaybe stmMaybe
+  in ScInitializerDefinition tmp stm
+
 scPrimaryRewriteTemporaries :: ScPrimary -> ScPrimary
 scPrimaryRewriteTemporaries p =
   case p of
@@ -97,12 +104,13 @@ scPrimaryRewriteTemporaries p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteTemporaries x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteTemporaries x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
+    ScPrimaryImplictMessageSend x a -> ScPrimaryImplictMessageSend x (map scBasicExpressionRewriteTemporaries a)
 
 -- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
 scRewriteTemporariesViewer :: String -> String
 scRewriteTemporariesViewer =
-  Sc.scExpressionPrint .
-  scExpressionRewriteTemporaries .
+  Sc.scInitializerDefinitionPrint .
+  scInitializerDefinitionRewriteTemporaries .
   Sc.superColliderParser .
   Sc.alexScanTokens
 

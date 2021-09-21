@@ -37,7 +37,7 @@ sc_cat :: FilePath -> IO ()
 sc_cat fn = do
   txt_fragments <- Polyglot.read_file_fragments fn
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
-  mapM_ (putStrLn . Sc.scExpressionPrint) expr_fragments
+  mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
 stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_play evalFile fn = evalFile fn >>= SC3.audition

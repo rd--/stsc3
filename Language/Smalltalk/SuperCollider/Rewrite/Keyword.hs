@@ -9,7 +9,7 @@ Rewrite Keyword messages to have a single association array as argument.
 .ar()                    => ar
 .ar(440, 0)              => ar: {440. 0}
 .ar(440, phase: 0)       => ar: {440. #phase -> 0}
-.ar(freq: 440, phase: 0) => at: #ar freq: 440 phase: 0
+.ar(freq: 440, phase: 0) => ar: {#freq: -> 440. #phase: -> 0}
 
 For the more general case of translating a SuperCollider like notation to a Smalltalk like notation:
 
@@ -59,7 +59,13 @@ scKeywordArgumentsRewriteKeyword p =
 
 scDotMessageRewriteKeyword :: ScDotMessage -> ScDotMessage
 scDotMessageRewriteKeyword (ScDotMessage m a) =
-  ScDotMessage m (fmap scKeywordArgumentsRewriteKeyword a)
+  ScDotMessage m (scKeywordArgumentsRewriteKeyword a)
+
+scInitializerDefinitionRewriteKeyword :: ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionRewriteKeyword (ScInitializerDefinition tmp stm) =
+  ScInitializerDefinition
+  (fmap (map scTemporariesRewriteKeyword) tmp)
+  (fmap scStatementsRewriteKeyword stm)
 
 scExpressionRewriteKeyword :: ScExpression -> ScExpression
 scExpressionRewriteKeyword e =
@@ -101,6 +107,7 @@ scPrimaryRewriteKeyword p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteKeyword x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteKeyword x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteKeyword x)
+    ScPrimaryImplictMessageSend x a -> ScPrimaryImplictMessageSend x (map scBasicExpressionRewriteKeyword a)
 
 scBinaryArgumentRewriteKeyword :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewriteKeyword (ScBinaryArgument p m) =
@@ -121,8 +128,8 @@ scMessagesRewriteKeyword m =
 -- | Viewer for keyword rewriter. Reads, rewrites and prints Sc expression.
 scRewriteKeywordViewer :: String -> String
 scRewriteKeywordViewer =
-  Sc.scExpressionPrint .
-  scExpressionRewriteKeyword .
+  Sc.scInitializerDefinitionPrint .
+  scInitializerDefinitionRewriteKeyword .
   Sc.superColliderParser .
   Sc.alexScanTokens
 

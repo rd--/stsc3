@@ -7,9 +7,6 @@
     "My elements taken n at a time. Ignore any leftovers at the end."
     ^(n to: self size by: n) collect: [:index | self copyFrom: index - n + 1 to: index]
   !
-!
-
-!SequenceableCollection methodsFor: 'rearranging'!
   withExtending: other collect: aBlock
     "Like with:collect: but cycle shorter list."
     |n|
@@ -59,5 +56,20 @@
   from: start by: step
     "Array of myself places from start by step"
     ^(start to: self - 1 * step + start by: step) asArray
+  !
+!
+
+!BlockClosure methodsFor: 'enumerating'!
+  dup: aNumber
+    "An array of aNumber places,
+     each filled by sending value to myself if I have no arguments,
+     or value: counter if I have one argument.
+
+    [ 10 rand ] dup: 10
+    [ :x | x / 2 ] dup: 10
+    "
+    | fillFunc |
+    fillFunc := (self numArgs = 1) ifTrue: [ self ] ifFalse: [ [ :x | self value ] ].
+    ^aNumber arrayFill: fillFunc
   !
 !

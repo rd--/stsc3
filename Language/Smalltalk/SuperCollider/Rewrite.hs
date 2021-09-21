@@ -49,33 +49,51 @@ This transformation at the Sc Ast.
 -}
 module Language.Smalltalk.SuperCollider.Rewrite where
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+
 import Language.Smalltalk.SuperCollider.Rewrite.Keyword
 import Language.Smalltalk.SuperCollider.Rewrite.Precedence
 import Language.Smalltalk.SuperCollider.Rewrite.Temporaries
 
-scExpressionRewrite :: ScExpression -> ScExpression
-scExpressionRewrite =
+scExpressionRewrite :: Bool -> ScExpression -> ScExpression
+scExpressionRewrite rewriteNary =
   scExpressionRewritePrecedence .
   scExpressionRewriteTemporaries .
-  scExpressionRewriteKeyword
+  if rewriteNary then scExpressionRewriteKeyword else id
+
+{- | Option to rewrite n-ary expressions as arrays.
+     Else N-ary expressions will be an error on translation.
+-}
+scInitializerDefinitionRewrite :: Bool -> ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionRewrite rewriteNary =
+  scInitializerDefinitionRewritePrecedence .
+  scInitializerDefinitionRewriteTemporaries .
+  if rewriteNary then scInitializerDefinitionRewriteKeyword else id
+
+-- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
+scRewriteViewer :: Bool -> String -> String
+scRewriteViewer rewriteNary =
+  Sc.scInitializerDefinitionPrint .
+  scInitializerDefinitionRewrite rewriteNary .
+  Sc.superColliderParser .
+  Sc.alexScanTokens
 
 {-
 
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc
+rw = scRewriteViewer False
+rw "p.q" == "p.q\n"
+rw "p.q.r" == "p.q.r\n"
+rw "p.q + r" == "p.q + r\n"
+rw "p.q(x)" == "p.q(x)\n"
+rw "p.q(x) + r" == "(p.q(x)) + r\n"
 
-rw = Sc.scExpressionPrint . scExpressionRewrite . Sc.superColliderParser . Sc.alexScanTokens
-
-rw = Sc.scExpressionPrint . scExpressionRewritePrecedence . Sc.superColliderParser . Sc.alexScanTokens
-rw "p.q()" == "p.q()" -- only one message, can be keyword
-rw "p.q().r()" == "(p.q()).r()" -- nested trailing
-rw "p.q + r" == "p.q + r" -- unary no parens
-rw "p.q() + r" == "(p.q()) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
-
-rw = Sc.scExpressionPrint . scExpressionRewriteTemporaries . Sc.superColliderParser . Sc.alexScanTokens
-
-rw = Sc.scExpressionPrint . scExpressionRewriteKeyword . Sc.superColliderParser . Sc.alexScanTokens
+rw = scRewriteViewer True
+rw "p.q(x)" == "p.q([x])" -- only one message, can be keyword
+rw "p.q(x).r(y)" == "(p.q([x])).r([y])" -- nested trailing
+rw "p.q(x) + r" == "(p.q([x])) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
+rw "p.q + r" == "(p.q([])) + r" -- unary is the same
 
 -}

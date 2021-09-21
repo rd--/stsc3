@@ -12,7 +12,12 @@ Env curveNameDictionary "curve name dictionary"
 SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
 SinOsc new freq: 440 ; phase: 0 "freq: and phase: are instance methods and ; is the cascade operator"
 SinOsc new inspect "initialize sets default values for parameters"
-
+SinOsc perform: #freq:phase: withArguments: #(220 1)
+SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
+SinOsc primaryFactoryMethod = #freq:phase:
+SinOsc apply: {220. 0.5} "in C-Smalltalk notation SinOsc(220,0.5) translates to this"
+PinkNoise primaryFactoryMethod = #new
+PinkNoise apply: {} "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc ar: {220. Float pi}
 SinOsc ar: {#freq: -> 110. #phase: -> (Float pi / 4)}
 SinOsc ar: {#phase: -> 1. #freq: -> 55}
@@ -170,6 +175,12 @@ x' "=> newline x"
 (1 to: 5) select: [:x | x > 3] "=> #(4 5) ; filter"
 (1 to: 5) copyFrom: 2 to: 5 "=> #(2 3 4 5) ; drop"
 (1 to: 5) at: 3 "=> 3 ; haskell=! ; one-indexed"
+
+"Association"
+
+#x -> 1 "=> Association key: #x value: 1"
+Association key: #x value: 1 "=> #x -> 1"
+0.1 -> 0.9
 
 "Dictionary"
 
@@ -468,6 +479,8 @@ SC3 reset.
 | factorial |
 factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
+[10 rand] dup: 10 "=> #(7 8 10 3 6 6 7 8 3 4)"
+[] class = BlockClosure
 
 "Som"
 TestHarness new run: #('TestHarness.som').

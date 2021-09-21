@@ -44,6 +44,9 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 
 %%
 
+initializerdefinition :: { ScInitializerDefinition }
+        : maybe_temporaries_seq maybe_statements { ScInitializerDefinition $1 $2 }
+
 expression :: { ScExpression }
         : identifier '=' expression            { ScExprAssignment $1 $3 }
         | basicexpression                      { ScExprBasic $1 }
@@ -72,10 +75,9 @@ dotmessage :: { ScDotMessage }
         : '.' identifier
               maybe_keywordargument_seq        { ScDotMessage $2 $3}
 
-maybe_keywordargument_seq :: { Maybe [ScKeywordArgument] }
-        : {- empty -}                          { Nothing }
-        | '(' ')'                              { Just [] }
-        | '(' keywordargument_seq ')'          { Just $2 }
+maybe_keywordargument_seq :: { [ScKeywordArgument] }
+        : {- empty -}                          { [] }
+        | '(' keywordargument_seq ')'          { $2 }
 
 keywordargument_seq :: { [ScKeywordArgument] }
         : keywordargument                      { [$1] }
@@ -109,6 +111,7 @@ primary :: { ScPrimary }
         | '{' blockbody '}'                    { ScPrimaryBlock $2 }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
+        | identifier '(' arrayexpression ')'   { ScPrimaryImplictMessageSend $1 $3 }
 
 reserveridentifier :: { St.Identifier }
         : nil                                  { "nil" }
