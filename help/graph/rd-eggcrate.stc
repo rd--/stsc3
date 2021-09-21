@@ -1,0 +1,11 @@
+// eggcrate ; rd
+var eggcrate = {arg e; (e.x * pi).cos * (e.y * pi).sin};
+var p = #[64, 72, 96, 128, 256, 6400, 7200, 8400, 9600];
+var x = BrownNoise();
+var y = BrownNoise();
+var t = Dust(2.4);
+var f0 = TChoose(t, p);
+var f1 = TChoose(t, p);
+var f = eggcrate.value(x @ y).range(f0 -> f1);
+var a = x.range(0 -> 0.1);
+Pan2(SinOsc(f.kr, 0).mix, y.kr, a.kr)

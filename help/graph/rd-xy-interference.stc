@@ -1,0 +1,10 @@
+// xy interference (rd)
+var x = MouseX(20, 22000, 0, #[0.005,0.025]);
+var y = MouseY(20, 22000, 0, #[0.005,0.075]);
+var nd = {
+  arg i;
+  var n = LFNoise0(#[5, 9]).kr;
+  var a = SinOsc(x + n, 0);
+  var b = SinOsc(y, 0);
+  a * b};
+3.mixFill(nd) * 0.35

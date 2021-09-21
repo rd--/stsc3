@@ -133,6 +133,7 @@ TChoose comment: 'Randomly select one of several inputs on trigger.'!
   trig: trig array: array
     ^Select which: (TIRand lo: 0 hi: (array size - 1) trig: trig) array: array
   !
+  primaryFactoryMethod ^#trig:array:!
   kr: d
     ^(self trig: (d at: 1) value array: (d at: 2) value) kr
   !

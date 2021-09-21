@@ -78,6 +78,9 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   ** aNumber
     ^self raisedTo: aNumber
   !
+  @ aUGen
+    ^Point x: self y: aUGen
+  !
 !
 
 !Number methodsFor: 'math'!

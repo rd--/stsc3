@@ -5,7 +5,11 @@
 module Language.Smalltalk.SuperCollider.Translate where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Rewrite as Sc {- stsc3 -}
 
 {- | This is for translating, it allows either
      a Unary sequence with an optional ending Keyword,
@@ -148,23 +152,26 @@ scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
 scInitializerDefinitionSt (ScInitializerDefinition tmp stm) =
    St.InitializerDefinition (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
+-- * Text translator
+
+-- | Parse C-Smalltalk InitializerDefinition.
+stcParseInitializerDefinition :: String -> St.InitializerDefinition
+stcParseInitializerDefinition s =
+  let eSc = Sc.superColliderParser (Sc.alexScanTokens s)
+  in scInitializerDefinitionSt (Sc.scInitializerDefinitionRewrite False eSc)
+
+-- | Translate C-Smalltalk program text to Smalltalk.
+stcToSt :: String -> String
+stcToSt = St.initializerDefinition_pp . stcParseInitializerDefinition
+
 {-
 
-import Language.Smalltalk.SuperCollider.Ast.Print
-import Language.Smalltalk.SuperCollider.Lexer
-import Language.Smalltalk.SuperCollider.Parser
-import Language.Smalltalk.SuperCollider.Rewrite
-
-import qualified Language.Smalltalk.Ansi.Print as St
-
-p = superColliderParser . alexScanTokens
-x = scExpressionPrint . p
-rw = St.expression_pp . scExpressionSt . scExpressionRewrite False . p
-
-rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5})"
-rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k})"
-rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})})"
-rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b)"
-rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {})"
+rw = stcToSt
+rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5}) .\n"
+rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k}) .\n"
+rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})}) .\n"
+rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b) .\n"
+rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {}) .\n"
 rw "p.q(r,s)" -- error
+
 -}
