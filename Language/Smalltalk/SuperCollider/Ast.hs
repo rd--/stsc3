@@ -104,7 +104,7 @@ data ScMessages
 
 {- | Sc allows x.y() although this is a kind of nonsense.
      Here we allow x.y as a unary message and x.y(z...) for n-ary messages where n >= 1.
-     Ie. an empty parameter list indicates a unary message.
+     Ie. an empty parameter list here indicates a unary message.
 -}
 data ScDotMessage =
   ScDotMessage St.Identifier [ScKeywordArgument]

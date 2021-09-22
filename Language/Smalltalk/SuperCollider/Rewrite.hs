@@ -3,8 +3,8 @@
 The three main tasks are:
 
 - changing the precedence rules
-- packaging method parameters into a dictionary (array of associations)
 - rewriting variable declarations
+- packaging method parameters into a dictionary (array of associations) (not required for .stc -> .st)
 
 The SuperCollider message precedence rule is Dot > Binary.
 The Smalltalk message precedence rule is Unary > Binary > Keyword.
@@ -25,16 +25,6 @@ This transformation at the Sc Ast.
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))
 
-Method parameters are collated into an array of associations.
-
-- p.q(a,b)          => p q: {a. b}
-- p.q(x: a, b)      => p q: {#x: -> a. b}
-
-This transformation at the Sc Ast.
-
-- p.q(a,b)          => p.q([a,b])
-- p.q(x: a, b)      => p.q([\x: -> a,b])
-
 Temporary variables in SuperCollider may have initialisers and there may be multiple sets.
 These must be rewritten to as a single set of names and a sequence of assignments.
 
@@ -45,6 +35,16 @@ This transformation at the Sc Ast.
 
 - var p, q = a;     => var p, q; q = a;
 - var p = a; var q; => var p, q; p = a;
+
+Method parameters are collated into an array of associations.
+
+- p.q(a,b)          => p q: {a. b}
+- p.q(x: a, b)      => p q: {#x: -> a. b}
+
+This transformation at the Sc Ast.
+
+- p.q(a,b)          => p.q([a,b])
+- p.q(x: a, b)      => p.q([\x: -> a,b])
 
 -}
 module Language.Smalltalk.SuperCollider.Rewrite where

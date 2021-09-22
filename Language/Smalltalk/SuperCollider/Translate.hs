@@ -4,6 +4,8 @@
 -}
 module Language.Smalltalk.SuperCollider.Translate where
 
+import qualified Data.List.Split as Split {- split -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
@@ -88,12 +90,25 @@ scKeywordArgumentSt (ScKeywordArgument k e) =
                Nothing
                Nothing
 
+{- | For .stc to .st translation message names are allowed to have interior colons.
+     This means "c at: i put: i" can be written as "c.at:put(i, j)".
+     In addition "r.value(i, j)" is understood to mean "r value: i value: j".
+     That is, if the message name has fewer parts than there are arguments, supply the implicit name "value" for the missing parts.
+-}
 scDotMessageKeywordSt :: ScDotMessage -> St.KeywordMessage
-scDotMessageKeywordSt (ScDotMessage i a) =
-  case a of
-    [] -> error "scDotMessageKeywordSt: Unary"
-    [p] -> St.KeywordMessage [(i ++ ":",scKeywordArgumentSt p)] -- binary
-    _ -> error "scDotMessageKeywordSt: N-ary messages not translated"
+scDotMessageKeywordSt (ScDotMessage nm arg) =
+  let extendWithValue = True
+      nmParts = Split.splitOn ":" nm
+      nmSize = length nmParts
+      argSize = length arg
+      messageParts = if extendWithValue && nmSize < argSize
+                     then take argSize (nmParts ++ repeat "value")
+                     else nmParts
+  in if null arg
+     then error "scDotMessageKeywordSt: Unary"
+     else if length messageParts == argSize
+          then St.KeywordMessage (zipWith (\i j -> (i ++ ":",scKeywordArgumentSt j)) messageParts arg)
+          else error "scDotMessageKeywordSt: N-ary messages name degree mismatch"
 
 scDotMessageUnarySt :: ScDotMessage -> St.UnaryMessage
 scDotMessageUnarySt (ScDotMessage i a) =
@@ -172,6 +187,12 @@ rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k}) .\n"
 rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})}) .\n"
 rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b) .\n"
 rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {}) .\n"
-rw "p.q(r,s)" -- error
+rw "p.q:r(i,j)" == "p q: i r: j .\n"
+rw "x + p.at:put(x, y)" == "x + (p at: x put: y) .\n"
+rw "f.value(i, j)" == "f value: i value: j .\n"
+rw "c.put(i, j)" == "c put: i value: j .\n"
+rw "p.q:r(i)" -- error ; arity mismatch
+rw "p.q:(i)" -- error ; message names may not have trailing colons
+rw "p.q(x: i)" -- error ; keywords are not allowed
 
 -}

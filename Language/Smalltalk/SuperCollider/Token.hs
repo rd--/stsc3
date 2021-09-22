@@ -19,6 +19,7 @@ data Token =
   | ThisIdentifier
 
   | Identifier String
+  | NaryMessageName String -- .stc
   | Keyword String
   | BinarySelector String
   | ReturnOperator
