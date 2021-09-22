@@ -1,0 +1,5 @@
+// https://twitter.com/redFrik/status/1166129504747773954
+var f = {arg i; i + 3.33 + LFTri(3 / 3333, 0)}.dup(3) % 3 * 33 * (3 / (3 * pi) + LFPulse(0.003 * 3, 0, 0.5));
+var q = LFTri(3 * 3 ** [3.3, 3] + (LFTri([3, pi], 0)), 3) * (LFPulse(pi, 0, 0.5) / 3 * LFTri(0.003, 0));
+var r = ((LFTri(f, 3) * {arg i; i + 3}.dup(3)).product.tanh * [3, 333 * LFTri(3 / 3333, 0), 33]).splay.sin + q / 3;
+r + ({arg i; PitchShift(r, 3 / 33, 3 / 3 + i * 3, 3 / 33, 3 / 33)}.dup(3)).sum / 6

@@ -391,6 +391,9 @@ Mce comment: 'Multiple Channel Expansion'!
   clump: x
     ^self copy transform: (Array with: #mceClump with: x)
   !
+  product
+    ^self copy transform: #(#mceProduct)
+  !
 !
 
 !AbstractUGen methodsFor: 'transforms'!
@@ -401,6 +404,9 @@ Mce comment: 'Multiple Channel Expansion'!
   transpose
     "Mce transpose"
     ^self asMce transpose
+  !
+  product
+    ^self asMce product
   !
 !
 
