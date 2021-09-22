@@ -5318,6 +5318,105 @@ PinkNoise comment: 'Pink Noise.'!
   primaryFactoryMethod ^#new!
 !
 
+UGen subclass: #Pitch
+  instanceVariableNames: 'in initFreq minFreq maxFreq execFreq maxBinsPerOctave median ampThreshold peakThreshold downSample clar'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Pitch comment: 'Autocorrelation pitch follower'!
+
+!Pitch methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  initFreq ^initFreq!
+  initFreq: x initFreq := x!
+  minFreq ^minFreq!
+  minFreq: x minFreq := x!
+  maxFreq ^maxFreq!
+  maxFreq: x maxFreq := x!
+  execFreq ^execFreq!
+  execFreq: x execFreq := x!
+  maxBinsPerOctave ^maxBinsPerOctave!
+  maxBinsPerOctave: x maxBinsPerOctave := x!
+  median ^median!
+  median: x median := x!
+  ampThreshold ^ampThreshold!
+  ampThreshold: x ampThreshold := x!
+  peakThreshold ^peakThreshold!
+  peakThreshold: x peakThreshold := x!
+  downSample ^downSample!
+  downSample: x downSample := x!
+  clar ^clar!
+  clar: x clar := x!
+!
+
+!Pitch methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Pitch.
+    paramNames := #(#in #initFreq #minFreq #maxFreq #execFreq #maxBinsPerOctave #median #ampThreshold #peakThreshold #downSample #clar).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. initFreq := 440.0. minFreq := 60.0. maxFreq := 4000.0. execFreq := 100.0. maxBinsPerOctave := 16.0. median := 1.0. ampThreshold := 0.01. peakThreshold := 0.5. downSample := 1.0. clar := 0.0!
+!
+
+
+!Pitch class methodsFor: 'instance creation'!
+  in: in initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq maxBinsPerOctave: maxBinsPerOctave median: median ampThreshold: ampThreshold peakThreshold: peakThreshold downSample: downSample clar: clar
+    |u|
+    u := self new.
+    u in: in.
+    u initFreq: initFreq.
+    u minFreq: minFreq.
+    u maxFreq: maxFreq.
+    u execFreq: execFreq.
+    u maxBinsPerOctave: maxBinsPerOctave.
+    u median: median.
+    u ampThreshold: ampThreshold.
+    u peakThreshold: peakThreshold.
+    u downSample: downSample.
+    u clar: clar.
+    ^u!
+  in: in initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq maxBinsPerOctave: maxBinsPerOctave median: median ampThreshold: ampThreshold peakThreshold: peakThreshold downSample: downSample clar: clar mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u initFreq: initFreq.
+    u minFreq: minFreq.
+    u maxFreq: maxFreq.
+    u execFreq: execFreq.
+    u maxBinsPerOctave: maxBinsPerOctave.
+    u median: median.
+    u ampThreshold: ampThreshold.
+    u peakThreshold: peakThreshold.
+    u downSample: downSample.
+    u clar: clar.
+    u mul: mul.
+    ^u!
+  in: in initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq maxBinsPerOctave: maxBinsPerOctave median: median ampThreshold: ampThreshold peakThreshold: peakThreshold downSample: downSample clar: clar mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u initFreq: initFreq.
+    u minFreq: minFreq.
+    u maxFreq: maxFreq.
+    u execFreq: execFreq.
+    u maxBinsPerOctave: maxBinsPerOctave.
+    u median: median.
+    u ampThreshold: ampThreshold.
+    u peakThreshold: peakThreshold.
+    u downSample: downSample.
+    u clar: clar.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:initFreq:minFreq:maxFreq:execFreq:maxBinsPerOctave:median:ampThreshold:peakThreshold:downSample:clar:!
+!
+
 UGen subclass: #PitchShift
   instanceVariableNames: 'in windowSize pitchRatio pitchDispersion timeDispersion'
   classVariableNames: ''

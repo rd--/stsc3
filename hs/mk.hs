@@ -44,7 +44,7 @@ ugen =
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
   ,"MiRings","ModDif","MoogFF","MoogLadder","MouseX","MouseY","OnePole","Out"
-  ,"Pan2","Phasor","PinkNoise","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
+  ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","RecordBuf","Resonz","Ringz","RunningMax"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","TRand","Trig","Trig1"
