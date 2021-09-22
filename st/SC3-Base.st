@@ -15,6 +15,13 @@
   !
 !
 
+!SequenceableCollection methodsFor: 'enumerating'!
+  withIndexCollectZeroIndexed: f
+    "sum of arrayFillZeroIndexed"
+    ^self withIndexCollect: [ :e :i | f value: e value: i - 1 ]
+  !
+!
+
 !Integer methodsFor: 'enumerating'!
   arraySeries: start step: step
     "Fill with ramp of values"

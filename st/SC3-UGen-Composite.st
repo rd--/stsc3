@@ -187,3 +187,18 @@ LinLin comment: 'Map a linear range to a linear range'!
     ^Mrg lhs: self rhs: (ClearBuf buf: self)
   !
 !
+
+AbstractUGen subclass: #Select2
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Select2 comment: 'Select one of two branches based on predicate signal'!
+
+!Select2 class methodsFor: 'instance creation'!
+  predicate: predicate ifTrue: trueUGen ifFalse: falseUGen
+    ^(predicate * (trueUGen - falseUGen)) + falseUGen
+  !
+  primaryFactoryMethod ^#predicate:ifTrue:ifFalse:!
+!

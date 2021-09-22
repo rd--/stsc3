@@ -1,3 +1,67 @@
+UGen subclass: #AllpassC
+  instanceVariableNames: 'in maxdelaytime delaytime decaytime'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+AllpassC comment: 'Schroeder allpass delay line with cubic interpolation.'!
+
+!AllpassC methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  maxdelaytime ^maxdelaytime!
+  maxdelaytime: x maxdelaytime := x!
+  delaytime ^delaytime!
+  delaytime: x delaytime := x!
+  decaytime ^decaytime!
+  decaytime: x decaytime := x!
+!
+
+!AllpassC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #AllpassC.
+    paramNames := #(#in #maxdelaytime #delaytime #decaytime).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
+!
+
+
+!AllpassC class methodsFor: 'instance creation'!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    u mul: mul.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
+!
+
 UGen subclass: #AllpassL
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
@@ -2613,6 +2677,83 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
   primaryFactoryMethod ^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:!
 !
 
+UGen subclass: #GrainSin
+  instanceVariableNames: 'trigger dur freq pan envbufnum maxGrains'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+GrainSin comment: 'Granular synthesis with sine tones'!
+
+!GrainSin methodsFor: 'accessing'!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  dur ^dur!
+  dur: x dur := x!
+  freq ^freq!
+  freq: x freq := x!
+  pan ^pan!
+  pan: x pan := x!
+  envbufnum ^envbufnum!
+  envbufnum: x envbufnum := x!
+  maxGrains ^maxGrains!
+  maxGrains: x maxGrains := x!
+!
+
+!GrainSin methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #GrainSin.
+    paramNames := #(#trigger #dur #freq #pan #envbufnum #maxGrains).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    trigger := 0.0. dur := 1.0. freq := 440.0. pan := 0.0. envbufnum := -1.0. maxGrains := 512.0!
+!
+
+
+!GrainSin class methodsFor: 'instance creation'!
+  numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u dur: dur.
+    u freq: freq.
+    u pan: pan.
+    u envbufnum: envbufnum.
+    u maxGrains: maxGrains.
+    ^u!
+  numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u dur: dur.
+    u freq: freq.
+    u pan: pan.
+    u envbufnum: envbufnum.
+    u maxGrains: maxGrains.
+    u mul: mul.
+    ^u!
+  numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u dur: dur.
+    u freq: freq.
+    u pan: pan.
+    u envbufnum: envbufnum.
+    u maxGrains: maxGrains.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#numChan:trigger:dur:freq:pan:envbufnum:maxGrains:!
+!
+
 UGen subclass: #GreyholeRaw
   instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
   classVariableNames: ''
@@ -3158,6 +3299,65 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
     u add: add.
     ^u!
   primaryFactoryMethod ^#numChan:bus:!
+!
+
+UGen subclass: #InRange
+  instanceVariableNames: 'in lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+InRange comment: 'Tests if a signal is within a given range.'!
+
+!InRange methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!InRange methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #InRange.
+    paramNames := #(#in #lo #hi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. lo := 0.0. hi := 1.0!
+!
+
+
+!InRange class methodsFor: 'instance creation'!
+  in: in lo: lo hi: hi
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  in: in lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  in: in lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:lo:hi:!
 !
 
 UGen subclass: #K2A
@@ -6994,6 +7194,65 @@ WhiteNoise comment: 'White noise.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#new!
+!
+
+UGen subclass: #Wrap
+  instanceVariableNames: 'in lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Wrap comment: 'Wrap a signal outside given thresholds.'!
+
+!Wrap methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!Wrap methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Wrap.
+    paramNames := #(#in #lo #hi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. lo := 0.0. hi := 1.0!
+!
+
+
+!Wrap class methodsFor: 'instance creation'!
+  in: in lo: lo hi: hi
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  in: in lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  in: in lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:lo:hi:!
 !
 
 UGen subclass: #XFade2

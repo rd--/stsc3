@@ -31,15 +31,15 @@ binop =
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
 ugen =
-  ["AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
+  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"BBandPass","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
   ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"Formant","FSinOsc","FreeVerb"
-  ,"Gendy1","GrainFM","GreyholeRaw","GVerb"
+  ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
-  ,"IRand","Impulse","In","InFeedback"
+  ,"IRand","Impulse","In","InFeedback","InRange"
   ,"K2A","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
@@ -49,7 +49,7 @@ ugen =
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","TRand","Trig","Trig1"
   ,"VarSaw","Vibrato"
-  ,"WhiteNoise"
+  ,"WhiteNoise","Wrap"
   ,"XFade2","XLine"]
 
 main :: IO ()
