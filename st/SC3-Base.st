@@ -73,3 +73,10 @@
     ^aNumber arrayFill: fillFunc
   !
 !
+
+!Collection methodsFor: 'maths'!
+  mean
+    "Sum of myself divided by my size"
+    ^self sum / self size
+  !
+!

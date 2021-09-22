@@ -90,6 +90,7 @@ MessageNames openMessageNames. "open Message Names tool"
 2.0 rand: 3.0 "=> uniform random Float in 2 to 3"
 4.0 rand2 "=> uniform random Float in -4 to 4"
 1.0 exprand: 2.0 "=> exponential distribution"
+0.2 rand + 0.1 "=> uniform random Float in 0.1 to 0.3"
 
 100 arrayFill: [:i | 5.0 rand] "=> 100 random Floats in 0 to 5"
 

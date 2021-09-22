@@ -522,12 +522,14 @@ Mrg comment: 'Multiple Root Graph'!
 
 !Mrg class methodsFor: 'instance creation'!
   lhs: x rhs: y
+    "Multiple root graph.  The left hand input is the signal to be heard, the right hand side is the signal to be stored"
     | u |
     u := self new.
     u lhs: x.
     u rhs: y.
     ^u
   !
+  primaryFactoryMethod ^#lhs:rhs:!
 !
 
 AbstractUGen subclass: #Control

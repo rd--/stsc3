@@ -99,12 +99,22 @@ EnvBuilder comment: 'Envelope types'!
     self subclassResponsibility
   !
   envGen: g doneAction: d
-    "Make EnvGen instance with indicated doneAction"
+    "Make EnvGen instance with indicated gate and doneAction"
     ^(self env) gen: g doneAction: d
   !
+  envGen: g
+    "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
+    ^self envGen: g doneAction: 0
+  !
   envGen
-    "Make EnvGen instance with default gate (1) and doneAction (doNothing)"
+    "Make EnvGen instance with default gate (1) and doneAction (0=doNothing)"
     ^self envGen: 1 doneAction: 0
+  !
+!
+
+!EnvBuilder class methodsFor: 'instance creation'!
+  apply: arg
+    ^self perform: (self primaryFactoryMethod) withArguments: arg
   !
 !
 
@@ -185,6 +195,7 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
     u curves: p5.
     ^u
   !
+  primaryFactoryMethod ^#attackTime:sustainTime:releaseTime:level:curves:!
 !
 
 !EnvLinen methodsFor: 'envelope coordinates'!

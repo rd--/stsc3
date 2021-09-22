@@ -159,3 +159,31 @@ PMOsc comment: 'Phase modulation sine oscillator pair.'!
     ^self carfreq: (d at: 1) value modfreq: (d at: 2) value pmindex: (d at: 3) value modphase: (d at: 4) value
   !
 !
+
+!AbstractUGen methodsFor: 'smoothing'!
+  lag: lagTime
+    ^Lag in: self lagTime: lagTime
+  !
+!
+
+AbstractUGen subclass: #LinLin
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinLin comment: 'Map a linear range to a linear range'!
+
+!LinLin class methodsFor: 'instance creation'!
+  in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
+    ^(in - srclo) / (srchi - srclo) * (dsthi - dstlo) + dstlo
+  !
+  primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
+!
+
+!AbstractUGen methodsFor: 'buffer management'!
+  clearBuf
+    "ClearBuf does not copy the buffer number through so this is an Mrg node."
+    ^Mrg lhs: self rhs: (ClearBuf buf: self)
+  !
+!

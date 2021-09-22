@@ -1,0 +1,6 @@
+// dark sea horns (jl)
+var x = LocalIn(2, 0);
+var a = (SinOsc(65, x * LFNoise1(0.1) * 3) * LFNoise1(3) * 6).tanh;
+1.to(9).do({arg i; a = AllpassL(a, 0.3, {0.2.rand + 0.1}.dup(2), 5)});
+a = a.tanh;
+Mrg(a * 0.1, LocalOut(a))

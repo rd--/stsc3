@@ -138,6 +138,9 @@
   play
     self asUGen play.
   !
+  draw
+    self asUGen draw.
+  !
 !
 
 !Interval methodsFor: 'printing'!

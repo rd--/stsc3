@@ -1,3 +1,67 @@
+UGen subclass: #AllpassL
+  instanceVariableNames: 'in maxdelaytime delaytime decaytime'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+AllpassL comment: 'Schroeder allpass delay line with linear interpolation.'!
+
+!AllpassL methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  maxdelaytime ^maxdelaytime!
+  maxdelaytime: x maxdelaytime := x!
+  delaytime ^delaytime!
+  delaytime: x delaytime := x!
+  decaytime ^decaytime!
+  decaytime: x decaytime := x!
+!
+
+!AllpassL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #AllpassL.
+    paramNames := #(#in #maxdelaytime #delaytime #decaytime).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. maxdelaytime := 0.2. delaytime := 0.2. decaytime := 1.0!
+!
+
+
+!AllpassL class methodsFor: 'instance creation'!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    u mul: mul.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    u decaytime: decaytime.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
+!
+
 UGen subclass: #AllpassN
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
@@ -244,6 +308,65 @@ Amplitude comment: 'Amplitude follower'!
   primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
+UGen subclass: #BBandPass
+  instanceVariableNames: 'in freq bw'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BBandPass comment: 'Band Pass Filter'!
+
+!BBandPass methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  bw ^bw!
+  bw: x bw := x!
+!
+
+!BBandPass methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BBandPass.
+    paramNames := #(#in #freq #bw).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 1200.0. bw := 1.0!
+!
+
+
+!BBandPass class methodsFor: 'instance creation'!
+  in: in freq: freq bw: bw
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    ^u!
+  in: in freq: freq bw: bw mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    u mul: mul.
+    ^u!
+  in: in freq: freq bw: bw mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:freq:bw:!
+!
+
 UGen subclass: #Blip
   instanceVariableNames: 'freq numharm'
   classVariableNames: ''
@@ -465,6 +588,65 @@ BPZ2 comment: 'Two zero fixed midpass.'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #BRF
+  instanceVariableNames: 'in freq rq'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BRF comment: '2nd order Butterworth band reject filter.'!
+
+!BRF methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  rq ^rq!
+  rq: x rq := x!
+!
+
+!BRF methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BRF.
+    paramNames := #(#in #freq #rq).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. rq := 1.0!
+!
+
+
+!BRF class methodsFor: 'instance creation'!
+  in: in freq: freq rq: rq
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u rq: rq.
+    ^u!
+  in: in freq: freq rq: rq mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u rq: rq.
+    u mul: mul.
+    ^u!
+  in: in freq: freq rq: rq mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u rq: rq.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:freq:rq:!
+!
+
 UGen subclass: #BrownNoise
   instanceVariableNames: ''
   classVariableNames: ''
@@ -501,6 +683,186 @@ BrownNoise comment: 'Brown Noise.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#new!
+!
+
+UGen subclass: #BufRd
+  instanceVariableNames: 'bufnum phase loop interpolation'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BufRd comment: 'Buffer reading oscillator.'!
+
+!BufRd methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  phase ^phase!
+  phase: x phase := x!
+  loop ^loop!
+  loop: x loop := x!
+  interpolation ^interpolation!
+  interpolation: x interpolation := x!
+!
+
+!BufRd methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BufRd.
+    paramNames := #(#bufnum #phase #loop #interpolation).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. phase := 0.0. loop := 1.0. interpolation := 2.0!
+!
+
+
+!BufRd class methodsFor: 'instance creation'!
+  numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u interpolation: interpolation.
+    ^u!
+  numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u interpolation: interpolation.
+    u mul: mul.
+    ^u!
+  numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul add: add
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u interpolation: interpolation.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#numChan:bufnum:phase:loop:interpolation:!
+!
+
+UGen subclass: #BufWr
+  instanceVariableNames: 'bufnum phase loop inputArray'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BufWr comment: 'Buffer writing oscillator.'!
+
+!BufWr methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  phase ^phase!
+  phase: x phase := x!
+  loop ^loop!
+  loop: x loop := x!
+  inputArray ^inputArray!
+  inputArray: x inputArray := x!
+!
+
+!BufWr methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BufWr.
+    paramNames := #(#bufnum #phase #loop).
+    mceNames := #(#inputArray).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. phase := 0.0. loop := 1.0!
+!
+
+
+!BufWr class methodsFor: 'instance creation'!
+  bufnum: bufnum phase: phase loop: loop inputArray: inputArray
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u inputArray: inputArray.
+    ^u!
+  bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u inputArray: inputArray.
+    u mul: mul.
+    ^u!
+  bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul add: add
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u phase: phase.
+    u loop: loop.
+    u inputArray: inputArray.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#bufnum:phase:loop:inputArray:!
+!
+
+UGen subclass: #ClearBuf
+  instanceVariableNames: 'buf'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ClearBuf comment: '(Undocumented class)'!
+
+!ClearBuf methodsFor: 'accessing'!
+  buf ^buf!
+  buf: x buf := x!
+!
+
+!ClearBuf methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ClearBuf.
+    paramNames := #(#buf).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    buf := 0.0!
+!
+
+
+!ClearBuf class methodsFor: 'instance creation'!
+  buf: buf
+    |u|
+    u := self new.
+    u buf: buf.
+    ^u!
+  buf: buf mul: mul
+    |u|
+    u := self new.
+    u buf: buf.
+    u mul: mul.
+    ^u!
+  buf: buf mul: mul add: add
+    |u|
+    u := self new.
+    u buf: buf.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#buf:!
 !
 
 UGen subclass: #Clip
@@ -1316,6 +1678,70 @@ Demand comment: 'Demand results from demand rate UGens.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#trig:reset:demandUGens:!
+!
+
+UGen subclass: #DetectSilence
+  instanceVariableNames: 'in amp time doneAction'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DetectSilence comment: 'Detect when input falls below an amplitude threshold'!
+
+!DetectSilence methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  amp ^amp!
+  amp: x amp := x!
+  time ^time!
+  time: x time := x!
+  doneAction ^doneAction!
+  doneAction: x doneAction := x!
+!
+
+!DetectSilence methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DetectSilence.
+    paramNames := #(#in #amp #time #doneAction).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. amp := 0.0001. time := 0.1. doneAction := 0.0!
+!
+
+
+!DetectSilence class methodsFor: 'instance creation'!
+  in: in amp: amp time: time doneAction: doneAction
+    |u|
+    u := self new.
+    u in: in.
+    u amp: amp.
+    u time: time.
+    u doneAction: doneAction.
+    ^u!
+  in: in amp: amp time: time doneAction: doneAction mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u amp: amp.
+    u time: time.
+    u doneAction: doneAction.
+    u mul: mul.
+    ^u!
+  in: in amp: amp time: time doneAction: doneAction mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u amp: amp.
+    u time: time.
+    u doneAction: doneAction.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:amp:time:doneAction:!
 !
 
 UGen subclass: #Diwhite
@@ -3053,6 +3479,60 @@ LFNoise2 comment: 'Quadratic noise.'!
   primaryFactoryMethod ^#freq:!
 !
 
+UGen subclass: #LFPar
+  instanceVariableNames: 'freq iphase'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFPar comment: 'Parabolic oscillator'!
+
+!LFPar methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  iphase ^iphase!
+  iphase: x iphase := x!
+!
+
+!LFPar methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFPar.
+    paramNames := #(#freq #iphase).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 440.0. iphase := 0.0!
+!
+
+
+!LFPar class methodsFor: 'instance creation'!
+  freq: freq iphase: iphase
+    |u|
+    u := self new.
+    u freq: freq.
+    u iphase: iphase.
+    ^u!
+  freq: freq iphase: iphase mul: mul
+    |u|
+    u := self new.
+    u freq: freq.
+    u iphase: iphase.
+    u mul: mul.
+    ^u!
+  freq: freq iphase: iphase mul: mul add: add
+    |u|
+    u := self new.
+    u freq: freq.
+    u iphase: iphase.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#freq:iphase:!
+!
+
 UGen subclass: #LFPulse
   instanceVariableNames: 'freq iphase width'
   classVariableNames: ''
@@ -4113,6 +4593,70 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
   primaryFactoryMethod ^#x:y:mod:!
 !
 
+UGen subclass: #MoogFF
+  instanceVariableNames: 'in freq gain reset'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MoogFF comment: 'Moog VCF implementation, designed by Federico Fontana'!
+
+!MoogFF methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  gain ^gain!
+  gain: x gain := x!
+  reset ^reset!
+  reset: x reset := x!
+!
+
+!MoogFF methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MoogFF.
+    paramNames := #(#in #freq #gain #reset).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 100.0. gain := 2.0. reset := 0.0!
+!
+
+
+!MoogFF class methodsFor: 'instance creation'!
+  in: in freq: freq gain: gain reset: reset
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u gain: gain.
+    u reset: reset.
+    ^u!
+  in: in freq: freq gain: gain reset: reset mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u gain: gain.
+    u reset: reset.
+    u mul: mul.
+    ^u!
+  in: in freq: freq gain: gain reset: reset mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u gain: gain.
+    u reset: reset.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:freq:gain:reset:!
+!
+
 UGen subclass: #MoogLadder
   instanceVariableNames: 'in ffreq res'
   classVariableNames: ''
@@ -5056,6 +5600,95 @@ Rand comment: 'Single random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
+UGen subclass: #RecordBuf
+  instanceVariableNames: 'bufnum offset recLevel preLevel run loop trigger doneAction inputArray'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RecordBuf comment: 'Record or overdub into a Buffer.'!
+
+!RecordBuf methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  offset ^offset!
+  offset: x offset := x!
+  recLevel ^recLevel!
+  recLevel: x recLevel := x!
+  preLevel ^preLevel!
+  preLevel: x preLevel := x!
+  run ^run!
+  run: x run := x!
+  loop ^loop!
+  loop: x loop := x!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  doneAction ^doneAction!
+  doneAction: x doneAction := x!
+  inputArray ^inputArray!
+  inputArray: x inputArray := x!
+!
+
+!RecordBuf methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RecordBuf.
+    paramNames := #(#bufnum #offset #recLevel #preLevel #run #loop #trigger #doneAction).
+    mceNames := #(#inputArray).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. offset := 0.0. recLevel := 1.0. preLevel := 0.0. run := 1.0. loop := 1.0. trigger := 1.0. doneAction := 0.0!
+!
+
+
+!RecordBuf class methodsFor: 'instance creation'!
+  bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u offset: offset.
+    u recLevel: recLevel.
+    u preLevel: preLevel.
+    u run: run.
+    u loop: loop.
+    u trigger: trigger.
+    u doneAction: doneAction.
+    u inputArray: inputArray.
+    ^u!
+  bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray mul: mul
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u offset: offset.
+    u recLevel: recLevel.
+    u preLevel: preLevel.
+    u run: run.
+    u loop: loop.
+    u trigger: trigger.
+    u doneAction: doneAction.
+    u inputArray: inputArray.
+    u mul: mul.
+    ^u!
+  bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray mul: mul add: add
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u offset: offset.
+    u recLevel: recLevel.
+    u preLevel: preLevel.
+    u run: run.
+    u loop: loop.
+    u trigger: trigger.
+    u doneAction: doneAction.
+    u inputArray: inputArray.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#bufnum:offset:recLevel:preLevel:run:loop:trigger:doneAction:inputArray:!
+!
+
 UGen subclass: #Resonz
   instanceVariableNames: 'in freq bwr'
   classVariableNames: ''
@@ -5813,6 +6446,93 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#lo:hi:trig:!
+!
+
+UGen subclass: #TGrains
+  instanceVariableNames: 'trigger bufnum rate centerPos dur pan amp interp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+TGrains comment: 'Buffer granulator.'!
+
+!TGrains methodsFor: 'accessing'!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  rate ^rate!
+  rate: x rate := x!
+  centerPos ^centerPos!
+  centerPos: x centerPos := x!
+  dur ^dur!
+  dur: x dur := x!
+  pan ^pan!
+  pan: x pan := x!
+  amp ^amp!
+  amp: x amp := x!
+  interp ^interp!
+  interp: x interp := x!
+!
+
+!TGrains methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #TGrains.
+    paramNames := #(#trigger #bufnum #rate #centerPos #dur #pan #amp #interp).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    trigger := 0.0. bufnum := 0.0. rate := 1.0. centerPos := 0.0. dur := 0.1. pan := 0.0. amp := 0.1. interp := 4.0!
+!
+
+
+!TGrains class methodsFor: 'instance creation'!
+  numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u bufnum: bufnum.
+    u rate: rate.
+    u centerPos: centerPos.
+    u dur: dur.
+    u pan: pan.
+    u amp: amp.
+    u interp: interp.
+    ^u!
+  numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp mul: mul
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u bufnum: bufnum.
+    u rate: rate.
+    u centerPos: centerPos.
+    u dur: dur.
+    u pan: pan.
+    u amp: amp.
+    u interp: interp.
+    u mul: mul.
+    ^u!
+  numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp mul: mul add: add
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u trigger: trigger.
+    u bufnum: bufnum.
+    u rate: rate.
+    u centerPos: centerPos.
+    u dur: dur.
+    u pan: pan.
+    u amp: amp.
+    u interp: interp.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#numChan:trigger:bufnum:rate:centerPos:dur:pan:amp:interp:!
 !
 
 UGen subclass: #Timer

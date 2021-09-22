@@ -1,7 +1,7 @@
-"down-sample (adc) ; autotranslate"
+"down-sample (adc)"
 |f nh src sr|
-f := LFNoise2 kr: #(8 200 300).
-nh := LFNoise2 kr: #(3 10 20).
-src := Blip ar: {f. nh}.
-sr := MouseX kr: {1000. SampleRate ir: {0.1}. 1. 0.2}.
-Latch ar: {src. Impulse ar: {sr. 0}}
+f := LFNoise2 freq: 8 mul: 200 add: 300.
+nh := LFNoise2 freq: 3 mul: 10 add: 20.
+src := Blip freq: f kr numharm: nh kr.
+sr := MouseX minval: 1000 maxval: SampleRate new * 0.1 warp: 1 lag: 0.2.
+Latch in: src trig: (Impulse freq: sr phase: 0)
