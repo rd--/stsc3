@@ -1,5 +1,5 @@
 prefix = ~/opt
-cmd = stsc3
+cmd = stc-to-st.sh # stsc3 is built by .cabal
 
 % : %.hs
 	ghc -Wall -fwarn-tabs -O2 --make $<

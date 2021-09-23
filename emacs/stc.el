@@ -12,7 +12,7 @@
     (shell-command-on-region
      (region-beginning)
      (region-end)
-     "r.stc-to-st.sh"
+     "stc-to-st.sh"
      standard-output)))
 
 (defun stc-eval-region ()
