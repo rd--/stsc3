@@ -68,6 +68,19 @@
   !
 !
 
+!Integer methodsFor: 'bit manipulation'!
+  << shiftAmount
+    "left shift"
+    shiftAmount < 0 ifTrue: [self error: 'negative arg'].
+    ^ self bitShift: shiftAmount
+  !
+  >> shiftAmount
+    "right shift"
+    shiftAmount < 0 ifTrue: [self error: 'negative arg'].
+    ^ self bitShift: 0 - shiftAmount
+  !
+!
+
 !SequenceableCollection methodsFor: 'randomness'!
   shuffle
     "Durstenfeld's version of the Fisher-Yates shuffle"
@@ -90,6 +103,10 @@
   !
   sqrt
     ^ self collect: [:each | each sqrt]
+  !
+  reciprocal
+    "Return the reciever full of reciprocated elements"
+    ^ self collect: [:a | a reciprocal]
   !
 !
 

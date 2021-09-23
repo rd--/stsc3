@@ -128,6 +128,9 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   clump: x
     ^self asMce clump: x
   !
+  rotate: x
+    ^self asMce rotate: x
+  !
 !
 
 AbstractUGen subclass: #UGen
@@ -394,6 +397,9 @@ Mce comment: 'Multiple Channel Expansion'!
   product
     ^self copy transform: #(#mceProduct)
   !
+  rotate: n
+    ^self copy transform: (Array with: #mceRotate with: n)
+  !
 !
 
 !AbstractUGen methodsFor: 'transforms'!
@@ -630,22 +636,20 @@ Constant comment: 'Constant Numerical Value'!
   !
 !
 
-Object subclass: #OverlapTexture
+AbstractUGen subclass: #MulAdd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-OverlapTexture comment: 'Texture Generator'!
+MulAdd comment: 'Multiply add'!
 
-!OverlapTexture class methodsFor: 'texture generation'!
-  graphFunc: graphFunc sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
-    ^overlap mixFill: [:i |
-      | t s e |
-      t := Impulse freq: (1 / (sustainTime + (transitionTime * 2))) phase: (i / overlap).
-      s := graphFunc value: t.
-      e := EnvLinen attackTime: transitionTime sustainTime: sustainTime releaseTime: transitionTime level: 1 curves: #(#sin #sin #sin).
-      s * (e env gen: t doneAction: 0)]
+!MulAdd class methodsFor: 'instance creation'!
+  in: in mul: mul add: add
+    in mul: mul.
+    in add: add.
+    ^in
   !
+  primaryFactoryMethod ^#in:mul:add:!
 !

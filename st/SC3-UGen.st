@@ -5044,6 +5044,65 @@ MouseY comment: 'Cursor tracking UGen.'!
   primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
+UGen subclass: #Normalizer
+  instanceVariableNames: 'in level dur'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Normalizer comment: 'Flattens dynamics.'!
+
+!Normalizer methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  level ^level!
+  level: x level := x!
+  dur ^dur!
+  dur: x dur := x!
+!
+
+!Normalizer methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Normalizer.
+    paramNames := #(#in #level #dur).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. level := 1.0. dur := 0.01!
+!
+
+
+!Normalizer class methodsFor: 'instance creation'!
+  in: in level: level dur: dur
+    |u|
+    u := self new.
+    u in: in.
+    u level: level.
+    u dur: dur.
+    ^u!
+  in: in level: level dur: dur mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u level: level.
+    u dur: dur.
+    u mul: mul.
+    ^u!
+  in: in level: level dur: dur mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u level: level.
+    u dur: dur.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:level:dur:!
+!
+
 UGen subclass: #OnePole
   instanceVariableNames: 'in coef'
   classVariableNames: ''
@@ -6940,6 +6999,55 @@ TIRand comment: 'Triggered integer random number generator.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#lo:hi:trig:!
+!
+
+UGen subclass: #ToggleFF
+  instanceVariableNames: 'trig'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ToggleFF comment: 'Toggle flip flop.'!
+
+!ToggleFF methodsFor: 'accessing'!
+  trig ^trig!
+  trig: x trig := x!
+!
+
+!ToggleFF methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ToggleFF.
+    paramNames := #(#trig).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    trig := 0.0!
+!
+
+
+!ToggleFF class methodsFor: 'instance creation'!
+  trig: trig
+    |u|
+    u := self new.
+    u trig: trig.
+    ^u!
+  trig: trig mul: mul
+    |u|
+    u := self new.
+    u trig: trig.
+    u mul: mul.
+    ^u!
+  trig: trig mul: mul add: add
+    |u|
+    u := self new.
+    u trig: trig.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#trig:!
 !
 
 UGen subclass: #TRand
