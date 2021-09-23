@@ -29,3 +29,13 @@ Smalltalk SuperCollider - Filein (Squeak) - 2021-06-13
 
 <iframe src="https://player.vimeo.com/video/562309999" frameborder="0" allowfullscreen="true" width="640" height="360" >
 </iframe>
+
+Smalltalk SuperCollider - Auditory Illusion - 2021-09-19
+
+<iframe src="https://player.vimeo.com/video/612253823" frameborder="0" allowfullscreen="true" width="640" height="360" >
+</iframe>
+
+Smalltalk SuperCollider - C-Smalltalk to Smalltalk Translator - 2021-09-21
+
+<iframe src="https://player.vimeo.com/video/612232664" frameborder="0" allowfullscreen="true" width="640" height="360" >
+</iframe>
