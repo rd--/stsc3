@@ -75,9 +75,6 @@ a := #(0.25 0.25 1 0.8 0.5 0.9 0.4 0.3 0.6 0.1 0.1).
 f := m collect: l.
 (SinOsc freq: f * 500 phase: 0 mul: a * 0.05) splay
 
-"sinOsc ; non-implicit ugen rate"
-SinOsc ar: #(440 0 0.1)
-
 "----"
 o := SinOsc freq: 440 phase: 0
 o hash
