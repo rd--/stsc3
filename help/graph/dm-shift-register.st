@@ -1,5 +1,5 @@
 "https://sccode.org/1-590 (dm)"
-| shift_register amp pulse rate trans trig octave note chord cf mf sig cmp |
+| shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
 shift_register := [ :length :tr :in |
   | buf count |
   buf := LocalBuf numChannels: 1 numFrames: length.

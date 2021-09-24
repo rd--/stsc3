@@ -3,7 +3,7 @@
 gen := [:tr |
   | chrd scale octaves mnn chd |
   chrd := [:m |
-    | ds d f z e p |
+    | ds d f z e p o |
     ds := 3.
     d := #(5 4 5 7 4 5) * ds.
     f := (TXLine start: m end: (TRand lo: 0.05 hi: 0.5 trig: tr) + m dur: d trig: tr) midicps.
