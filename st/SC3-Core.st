@@ -186,6 +186,13 @@ All UGens have mul and add inputs, so these variables are defined here.
   !
 !
 
+!UGen methodsFor: 'arithmetic'!
+  mul: mul add: add
+    self mul: mul.
+    self add: add
+  !
+!
+
 UGen subclass: #BinaryOpUGen
   instanceVariableNames: 'a b'
   classVariableNames: ''
