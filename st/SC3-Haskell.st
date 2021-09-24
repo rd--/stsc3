@@ -144,10 +144,16 @@
     self printHaskellArrayOn: fd.
     ')' putOn: fd
   !
+  writeHaskellTo: fn
+    "Allow Array to be root of UGen graph"
+    self asUGen writeHaskellTo: fn
+  !
   play
+    "Allow Array to be root of UGen graph"
     self asUGen play.
   !
   draw
+    "Allow Array to be root of UGen graph"
     self asUGen draw.
   !
 !
