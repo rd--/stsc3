@@ -9,7 +9,7 @@ import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10),("cubed",13),("exp",15),("reciprocal",16),("midicps",17)
+  ,("frac",10),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17)
   ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42)]
 
@@ -32,9 +32,9 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"BBandPass","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
+  ,"BBandPass","BBandStop","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
   ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dshuf","Dust","Dust2","Duty"
+  ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"Formant","FSinOsc","FreeVerb"
   ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
@@ -42,8 +42,8 @@ ugen =
   ,"IRand","Impulse","In","InFeedback","InRange"
   ,"K2A","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
-  ,"MiRings","ModDif","MoogFF","MoogLadder","MouseX","MouseY"
+  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
+  ,"MantissaMask","MiRings","ModDif","MoogFF","MoogLadder","MouseX","MouseY"
   ,"Normalizer"
   ,"OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"

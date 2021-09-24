@@ -11,23 +11,6 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   apply: arg
     ^self perform: (self primaryFactoryMethod) withArguments: arg
   !
-  ar: d
-    "
-    Support for SuperCollider type class instantiation.
-    Note there are also ar and kr instance methods, which are quite different.
-    There are no unary methods, SC messages always allow arguments.
-    "
-    ^self new ugenRate: #ar ; setParamsFromOrderedDictionary: d
-  !
-  kr: d
-    ^self new ugenRate: #kr ; setParamsFromOrderedDictionary: d
-  !
-  ir: d
-    ^self new ugenRate: #ir ; setParamsFromOrderedDictionary: d
-  !
-  dr: d
-    ^self new ugenRate: #dr ; setParamsFromOrderedDictionary: d
-  !
 !
 
 !AbstractUGen methodsFor: 'accessing'!
@@ -322,6 +305,12 @@ Rate comment: 'UGen Processing Rate'!
   !
   dr
     ^Rate source: self rate: #dr
+  !
+!
+
+!Array methodsFor: 'rate control'!
+  kr
+    ^self asUGen kr
   !
 !
 

@@ -26,14 +26,13 @@ scDotMessagesForSmalltalk m =
          _ -> error ("scDotMessagesForSmalltalk: " ++ show m)
   else (m,Nothing)
 
--- | Sc pi is translated to "(Float pi)"
-scPiSt :: St.Primary
-scPiSt =
+scFloatConstant :: St.Identifier -> St.Primary
+scFloatConstant x =
   St.PrimaryExpression
   (St.ExprBasic
     (St.BasicExpression
       (St.PrimaryIdentifier "Float")
-      (Just (St.MessagesUnary [St.UnaryMessage "pi"] Nothing Nothing))
+      (Just (St.MessagesUnary [St.UnaryMessage x] Nothing Nothing))
       Nothing))
 
 -- | The Sc implicit message send x(...) is translated as (x apply: {...})
@@ -52,12 +51,11 @@ scImplictMessageSendSt x a =
 scPrimarySt :: ScPrimary -> St.Primary
 scPrimarySt p =
   case p of
-    ScPrimaryIdentifier "pi" -> scPiSt
     ScPrimaryIdentifier x ->
         case x of
           "this" -> St.PrimaryIdentifier "self"
-          "inf" -> St.PrimaryIdentifier "Infinity"
-          "pi" -> scPiSt
+          "pi" -> scFloatConstant "pi"
+          "inf" -> scFloatConstant "infinity"
           _ -> St.PrimaryIdentifier x
     ScPrimaryLiteral x -> St.PrimaryLiteral x
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)

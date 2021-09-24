@@ -122,6 +122,15 @@
   !
 !
 
+!Float methodsFor: 'printing'!
+  printHaskellOn: fd
+    "Print my hsc3 representation.  Special cased for Infinity"
+    | txt |
+    txt := (self = Float infinity) ifTrue: ['dinf'] ifFalse: [self asString].
+    txt putOn: fd
+  !
+!
+
 !Array methodsFor: 'printing'!
   printHaskellArrayOn: fd
     "Print my hsc3 representation."

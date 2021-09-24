@@ -5,4 +5,4 @@ nd := [ :i |
  t := Impulse freq: (2 ** i) / 32 phase: 1 / 2 mul: (0.6 ** i) * 40.
  f := (4 ** (LFNoise0 freq: 1 / 16)) * 300.
  (RLPF in: t freq: f kr rq: 0.005) sin ].
-Splay input: (8 mceFillZeroIndexed: nd) level: 0.25
+Splay input: (8 arrayFillZeroIndexed: nd) level: 0.25

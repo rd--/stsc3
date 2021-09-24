@@ -248,3 +248,9 @@
     ^ (self min: aMin) max: aMax
   !
 !
+
+!Float class methodsFor: 'constants'!
+  infinity
+    ^FloatD infinity
+  !
+!

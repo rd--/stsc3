@@ -197,6 +197,7 @@ x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 "Collections"
 
 #(1 2 3 4 5) sum = 15 "=> true"
+#(1 2 3 4 5) product == (1 * 2 * 3 * 4 * 5) "=> true"
 
 "Class"
 

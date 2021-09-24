@@ -79,11 +79,18 @@
     fillFunc := (self numArgs = 1) ifTrue: [ self ] ifFalse: [ [ :x | self value ] ].
     ^aNumber arrayFill: fillFunc
   !
+  dup
+    ^self dup: 2
+  !
 !
 
 !Collection methodsFor: 'maths'!
   mean
     "Sum of myself divided by my size"
     ^self sum / self size
+  !
+  product
+    "Fold of multiply"
+    ^self inject: 1 into: [ :i :j | i * j ]
   !
 !

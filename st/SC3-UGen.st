@@ -431,6 +431,65 @@ BBandPass comment: 'Band Pass Filter'!
   primaryFactoryMethod ^#in:freq:bw:!
 !
 
+UGen subclass: #BBandStop
+  instanceVariableNames: 'in freq bw'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BBandStop comment: 'Band reject filter'!
+
+!BBandStop methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  bw ^bw!
+  bw: x bw := x!
+!
+
+!BBandStop methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BBandStop.
+    paramNames := #(#in #freq #bw).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 1200.0. bw := 1.0!
+!
+
+
+!BBandStop class methodsFor: 'instance creation'!
+  in: in freq: freq bw: bw
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    ^u!
+  in: in freq: freq bw: bw mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    u mul: mul.
+    ^u!
+  in: in freq: freq bw: bw mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u bw: bw.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:freq:bw:!
+!
+
 UGen subclass: #Blip
   instanceVariableNames: 'freq numharm'
   classVariableNames: ''
@@ -1973,6 +2032,65 @@ Dseq comment: 'Demand rate sequence generator.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#repeats:list:!
+!
+
+UGen subclass: #Dseries
+  instanceVariableNames: 'length start step'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Dseries comment: 'Demand rate arithmetic series UGen.'!
+
+!Dseries methodsFor: 'accessing'!
+  length ^length!
+  length: x length := x!
+  start ^start!
+  start: x start := x!
+  step ^step!
+  step: x step := x!
+!
+
+!Dseries methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Dseries.
+    paramNames := #(#length #start #step).
+    mceNames := #().
+    ugenRate := #dr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    length := 100000000.0. start := 1.0. step := 1.0!
+!
+
+
+!Dseries class methodsFor: 'instance creation'!
+  length: length start: start step: step
+    |u|
+    u := self new.
+    u length: length.
+    u start: start.
+    u step: step.
+    ^u!
+  length: length start: start step: step mul: mul
+    |u|
+    u := self new.
+    u length: length.
+    u start: start.
+    u step: step.
+    u mul: mul.
+    ^u!
+  length: length start: start step: step mul: mul add: add
+    |u|
+    u := self new.
+    u length: length.
+    u start: start.
+    u step: step.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#length:start:step:!
 !
 
 UGen subclass: #Dshuf
@@ -4175,6 +4293,65 @@ Lag3 comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTime:!
 !
 
+UGen subclass: #Lag3UD
+  instanceVariableNames: 'in lagTimeU lagTimeD'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Lag3UD comment: 'Exponential lag'!
+
+!Lag3UD methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  lagTimeU ^lagTimeU!
+  lagTimeU: x lagTimeU := x!
+  lagTimeD ^lagTimeD!
+  lagTimeD: x lagTimeD := x!
+!
+
+!Lag3UD methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Lag3UD.
+    paramNames := #(#in #lagTimeU #lagTimeD).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. lagTimeU := 0.1. lagTimeD := 0.1!
+!
+
+
+!Lag3UD class methodsFor: 'instance creation'!
+  in: in lagTimeU: lagTimeU lagTimeD: lagTimeD
+    |u|
+    u := self new.
+    u in: in.
+    u lagTimeU: lagTimeU.
+    u lagTimeD: lagTimeD.
+    ^u!
+  in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u lagTimeU: lagTimeU.
+    u lagTimeD: lagTimeD.
+    u mul: mul.
+    ^u!
+  in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u lagTimeU: lagTimeU.
+    u lagTimeD: lagTimeD.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:lagTimeU:lagTimeD:!
+!
+
 UGen subclass: #Latch
   instanceVariableNames: 'in trig'
   classVariableNames: ''
@@ -4628,6 +4805,60 @@ LocalOut comment: 'Write to buses local to a synth.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#channelsArray:!
+!
+
+UGen subclass: #MantissaMask
+  instanceVariableNames: 'in bits'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MantissaMask comment: 'Reduce precision.'!
+
+!MantissaMask methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  bits ^bits!
+  bits: x bits := x!
+!
+
+!MantissaMask methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MantissaMask.
+    paramNames := #(#in #bits).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. bits := 3.0!
+!
+
+
+!MantissaMask class methodsFor: 'instance creation'!
+  in: in bits: bits
+    |u|
+    u := self new.
+    u in: in.
+    u bits: bits.
+    ^u!
+  in: in bits: bits mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u bits: bits.
+    u mul: mul.
+    ^u!
+  in: in bits: bits mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u bits: bits.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:bits:!
 !
 
 UGen subclass: #MiRings
@@ -7623,6 +7854,7 @@ XLine comment: 'Exponential line generator.'!
   floor ^ UnaryOpUGen specialIndex: 9 a: self!
   frac ^ UnaryOpUGen specialIndex: 10 a: self!
   cubed ^ UnaryOpUGen specialIndex: 13 a: self!
+  sqrt ^ UnaryOpUGen specialIndex: 14 a: self!
   exp ^ UnaryOpUGen specialIndex: 15 a: self!
   reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
   midicps ^ UnaryOpUGen specialIndex: 17 a: self!

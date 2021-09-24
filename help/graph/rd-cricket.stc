@@ -1,0 +1,5 @@
+// cricket (rd)
+var e = Decay2(Impulse({Rand(10, 13)}.dup, 0), 0.001, 0.005);
+var f = SinOsc({Rand(10, 13)}.dup, 0) * e * {Rand(4, 7)}.dup;
+var r4 = {TRand(2220, 2227, Impulse(0.7, 0))}.dup;
+SinOsc(r4.kr, 0) * f.kr * 0.25
