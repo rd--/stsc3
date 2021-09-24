@@ -43,6 +43,10 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
     "If I am involved in arithmetic with a Fraction, convert it to a UGen."
     ^rcvr asUGen perform: selector with: self
   !
+  adaptToFloat: rcvr andSend: selector
+    "If I am involved in arithmetic with a Float, convert it to a UGen."
+    ^rcvr asUGen perform: selector with: self
+  !
   adaptToCollection: rcvr andSend: selector
     "If I am involved in arithmetic with a Collection, convert it to a UGen."
     ^rcvr asUGen perform: selector with: self
