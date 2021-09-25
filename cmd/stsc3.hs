@@ -1,10 +1,10 @@
 import System.Environment {- base -}
 
 import qualified Sound.SC3 as SC3 {- hsc3 -}
+import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
+
 
 import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
-
-import qualified Sound.SC3.Graphs.Polyglot as Polyglot {- hsc3-graphs -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
@@ -36,7 +36,7 @@ st_cat which fn = do
 
 sc_cat :: FilePath -> IO ()
 sc_cat fn = do
-  txt_fragments <- Polyglot.read_file_fragments fn
+  txt_fragments <- Help.read_file_fragments fn
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
