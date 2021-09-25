@@ -111,10 +111,24 @@ $
 
 There are two related but distinct translators.
 
-One translates a subset of SuperCollider to Smalltalk, the other translates a notation I will C-Smalltalk to Smalltalk.
+The first translates a subset of SuperCollider to Smalltalk.
+
+It follows the SuperCollider rules for message names and parameters (ie. parameters are always dictionaries).
+
+The second translates a SuperCollider like notation called C-Smalltalk to Smalltalk.
+
+C-Smalltalk is an alternate notation for writing Smalltalk programs.
 
 C-Smalltalk files have a `.stc` file extension.
 
-There are numerous examples at `stsc3/help/graph`, and they are included in the `hsc3-graphs` polyglot archive.
+There are numerous examples at `stsc3/help/graph`, and they are also included in the `hsc3-graphs` polyglot archive.
 
-There is an `stc.el` emacs mode at `stsc3/emacs`.
+There is an `stc.el` Emacs mode at `stsc3/emacs` which runs the translator and sends the translated text to GNU Smalltalk.
+
+The translator reads the source text from `stdin` and writes the the translated text to `stdout`.
+
+````
+$ stsc3 -h | grep translate
+ translate {sc | stc} st
+$
+````

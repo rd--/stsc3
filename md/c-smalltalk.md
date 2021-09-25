@@ -2,9 +2,11 @@
 
 A C-like syntax for [Smalltalk](https://squeak.org/).
 
-The syntax is essentially the core [SuperCollider](https://www.audiosynth.com/) syntax.
+The syntax is essentially the core [SuperCollider](https://www.audiosynth.com/) syntax, which is C-like.
 
-C-Smalltalk syntax is an interesting complement to Smalltalk syntax, it supports:
+C-Smalltalk syntax is an interesting complement to Smalltalk syntax.
+
+It supports:
 
 - a concise notation for performing a _primary_ message at an object
 - a concise and uniform notation for chaining both unary and n-ary messages
@@ -27,7 +29,7 @@ The notation `SinOsc(440, 0)` is allowed in SuperCollider but has a different me
 It is syntax for `SinOsc.apply([440, 0])`.
 
 `apply:` is ordinarily defined as `perform:withArguments:` at the `primaryFactoryMethod` of the receiver. [2]
-(This terminolgy is from [Newspeak](https://newspeaklanguage.org/).)
+(This terminology is from [Newspeak](https://newspeaklanguage.org/).)
 
 The primaryFactoryMethod of `SinOsc` is `freq:phase:`, and so on for all of the SuperCollider UGens.
 
@@ -50,9 +52,7 @@ In addition, if the number of parts of the message name is less than the number 
 
 It is therefore possible to provide aliases for commonly used messages, i.e. `put:value:` as an alias for `at:put:`.
 
-It is an error for the message name to have more parts than there are arguments, i.e. `r.p:q(i)` is an error.
-
-(Note this is not a form of variable arity messages.  r.m(i)` and `r.m(i,j)` are distinct messages, `m:` and `m:value:`.)
+It is an error for the message name to have more parts than there are arguments, i.e. `r.p:q(i)` is an error. [4]
 
 ## Keywords
 
@@ -64,7 +64,10 @@ In cases where keyword arguments are appropriate, ordinary Smalltalk syntax is p
 
 * * *
 
-1: In adddition to the C-Smalltalk to Smalltalk translator `stsc3` also has a SuperCollider to Smalltalk translator.
+1: In addition to the C-Smalltalk to Smalltalk translator `stsc3` also has a SuperCollider to Smalltalk translator.
+
+C-Smalltalk is two of the three rewriting rules of the the SuperCollider to Smalltalk translator,
+see [Rewrite.hs](https://gitlab.com/rd--/stsc3/-/blob/master/Language/Smalltalk/SuperCollider/Rewrite.hs) for details.
 
 2: apply: is generally defined as:
 
@@ -73,7 +76,7 @@ apply: arg
     ^self perform: (self primaryFactoryMethod) withArguments: arg
 ````
 
-3: This is in distincton to SuperCollider where
+3: This is in distinction to SuperCollider where
    `X(i, j, k)` translates as `X.new(i, j, k)` and
    `x(i, j, k)` translates as `i.x(j, k)`.
 
@@ -83,3 +86,6 @@ Rand(0,9) // a Rand
 ````
 
 It is not as common for non `Class` objects to understand `primaryFactoryMethod`, however `arg c; c(...);` is a standard idiom.
+
+4: Implicit keyword message names is not a form of variable arity messages.
+`r.m(i)` and `r.m(i, j)` are distinct messages, `m:` and `m:value:`.
