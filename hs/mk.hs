@@ -24,7 +24,7 @@ binop =
   ,("<=",10),(">=",11),("min:",12),("max:",13)
   ,("bitAnd:",14),("bitOr:",15)
   ,("lcm:",17),("gcd:",18),("round:",19)
-  ,("raisedTo:",25)
+  ,("truncateTo:",21),("raisedTo:",25)
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
   ,("amclip:",40),("clip2:",42)]
 
@@ -40,7 +40,7 @@ ugen =
   ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","InRange"
-  ,"K2A","Klank"
+  ,"K2A","Klang","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinRand","LocalBuf","LocalIn","LocalOut"
   ,"MantissaMask","MiRings","ModDif","MoogFF","MoogLadder","MouseX","MouseY"

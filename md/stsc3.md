@@ -106,3 +106,15 @@ result: {1.0. 3.0. 2.0. 4.0}
 ^d
 $
 ~~~~
+
+## translate
+
+There are two related but distinct translators.
+
+One translates a subset of SuperCollider to Smalltalk, the other translates a notation I will C-Smalltalk to Smalltalk.
+
+C-Smalltalk files have a `.stc` file extension.
+
+There are numerous examples at `stsc3/help/graph`, and they are included in the `hsc3-graphs` polyglot archive.
+
+There is an `stc.el` emacs mode at `stsc3/emacs`.

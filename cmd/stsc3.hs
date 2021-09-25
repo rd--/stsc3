@@ -46,9 +46,6 @@ stsc3_play evalFile fn = evalFile fn >>= SC3.audition
 stsc3_draw :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_draw evalFile fn = evalFile fn >>= Dot.draw . SC3.out 0
 
-stc_to_st :: IO ()
-stc_to_st = interact Sc.stcToSt
-
 help :: [String]
 help =
     ["stsc3 command [arguments]"
@@ -57,7 +54,7 @@ help =
     ," st cat {parsec|happy} smalltalk-program-file..."
     ," repl {ansi|expr|som}"
     ," run som class arguments..."
-    ," translate stc-to-st"
+    ," translate {sc | stc} st"
     ]
 
 main :: IO ()
@@ -76,6 +73,7 @@ main = do
     ["play","ansi",fn] -> stsc3_play Interpreter.Lisp.Ansi.evalSmalltalkFile fn
     ["play","expr",fn] -> stsc3_play Interpreter.Lisp.Expr.evalSmalltalkFile fn
     ["stop"] -> SC3.withSC3 SC3.reset
-    ["translate","stc-to-st"] -> stc_to_st
+    ["translate","sc","st"] -> interact Sc.scToSt
+    ["translate","stc","st"] -> interact Sc.stcToSt
     _ -> putStrLn (unlines help)
 

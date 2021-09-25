@@ -165,7 +165,19 @@ scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
 scInitializerDefinitionSt (ScInitializerDefinition tmp stm) =
    St.InitializerDefinition (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
--- * Text translator
+-- * SuperCollider to Smalltalk translator
+
+-- | Parse and translate SuperCollider InitializerDefinition.
+scParseInitializerDefinition :: String -> St.InitializerDefinition
+scParseInitializerDefinition s =
+  let eSc = Sc.superColliderParser (Sc.alexScanTokens s)
+  in scInitializerDefinitionSt (Sc.scInitializerDefinitionRewrite True eSc)
+
+-- | Translate SuperCollider program text to Smalltalk.
+scToSt :: String -> String
+scToSt = St.initializerDefinition_pp . scParseInitializerDefinition
+
+-- * C-Smalltalk translator
 
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition

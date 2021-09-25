@@ -60,7 +60,7 @@ executable stsc3
                     hsc3 == 0.20.*,
                     hsc3-db == 0.20.*,
                     hsc3-dot == 0.20.*,
-                    hsc3-graphs == 0.20.*,
+                    hsc3-graphs == 0.20.*, -- cyclical...
                     hsc3-lang == 0.20.*,
                     hsc3-lisp == 0.20.*,
                     mtl,

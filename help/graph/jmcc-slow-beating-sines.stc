@@ -1,0 +1,36 @@
+// slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
+var n = 20;
+var d = 5.0;
+var p = OrderedCollection.new(3 * n);
+var q = OrderedCollection.new(3 * n);
+var f = {arg freq; Klang(1, 0, KlankSpec(freq, nil, {0.0.rand(2 * pi)}.dup(3 * n)))};
+n.iota.do({
+  arg i;
+  var freq = 24.0.rand(84.0).midicps;
+  p.add(freq);
+  p.add(freq + d.rand2);
+  p.add(freq + d.rand2);
+  q.add(freq + d.rand2);
+  q.add(freq + d.rand2);
+  q.add(freq + d.rand2)});
+[p, q].collect(f) * 0.1 / n
+
+//---- slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
+var n = 20;
+var d = 5.0;
+var p = OrderedCollection.new(3 * n);
+var q = OrderedCollection.new(3 * n);
+var f = {arg freq; Klang(1, 0, KlankSpec(freq, nil, {Rand(0, 2 * pi)}.dup(3 * n)))};
+n.iota.do({
+  arg i;
+  var freq = (24 + Rand(0, 60)).midicps;
+  p.add(freq);
+  p.add(freq + Rand(d.negated, d));
+  p.add(freq + Rand(d.negated, d))});
+n.iota.do({
+  arg i;
+  var freq = p.at(3 * i);
+  q.add(freq + Rand(d.negated, d));
+  q.add(freq + Rand(d.negated, d));
+  q.add(freq + Rand(d.negated, d))});
+[p, q].collect(f) * 0.1 / n

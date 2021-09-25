@@ -3527,6 +3527,65 @@ K2A comment: 'Control to audio rate converter.'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #Klang
+  instanceVariableNames: 'freqscale freqoffset specificationsArrayRef'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Klang comment: 'Sine oscillator bank'!
+
+!Klang methodsFor: 'accessing'!
+  freqscale ^freqscale!
+  freqscale: x freqscale := x!
+  freqoffset ^freqoffset!
+  freqoffset: x freqoffset := x!
+  specificationsArrayRef ^specificationsArrayRef!
+  specificationsArrayRef: x specificationsArrayRef := x!
+!
+
+!Klang methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Klang.
+    paramNames := #(#freqscale #freqoffset).
+    mceNames := #(#specificationsArrayRef).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freqscale := 1.0. freqoffset := 0.0!
+!
+
+
+!Klang class methodsFor: 'instance creation'!
+  freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef
+    |u|
+    u := self new.
+    u freqscale: freqscale.
+    u freqoffset: freqoffset.
+    u specificationsArrayRef: specificationsArrayRef.
+    ^u!
+  freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef mul: mul
+    |u|
+    u := self new.
+    u freqscale: freqscale.
+    u freqoffset: freqoffset.
+    u specificationsArrayRef: specificationsArrayRef.
+    u mul: mul.
+    ^u!
+  freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef mul: mul add: add
+    |u|
+    u := self new.
+    u freqscale: freqscale.
+    u freqoffset: freqoffset.
+    u specificationsArrayRef: specificationsArrayRef.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#freqscale:freqoffset:specificationsArrayRef:!
+!
+
 UGen subclass: #Klank
   instanceVariableNames: 'input freqscale freqoffset decayscale specificationsArrayRef'
   classVariableNames: ''
@@ -8002,6 +8061,7 @@ XLine comment: 'Exponential line generator.'!
   lcm: b ^ BinaryOpUGen specialIndex: 17 a: self b: b!
   gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b!
   round: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
+  truncateTo: b ^ BinaryOpUGen specialIndex: 21 a: self b: b!
   raisedTo: b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
   bitShiftLeft: b ^ BinaryOpUGen specialIndex: 26 a: self b: b!
   bitShiftRight: b ^ BinaryOpUGen specialIndex: 27 a: self b: b!
