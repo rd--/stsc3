@@ -9,9 +9,19 @@
   !
   withExtending: other collect: aBlock
     "Like with:collect: but cycle shorter list."
-    |n|
+    | n |
     n := self size max: other size.
-    ^(1 to: n) collect: [:index| aBlock value: (self atWrap: index) value: (other atWrap: index)]
+    ^(1 to: n) collect: [ :index | aBlock value: (self atWrap: index) value: (other atWrap: index) ]
+  !
+  extendCyclically: n
+    "Myself extended to n places by cycling"
+    ^(1 to: n) collect: [ :index | self atWrap: index ]
+  !
+  extendToBeOfEqualSize
+    "All of my collections extended to to be of the same size as my largest collection"
+    | n |
+    n := (self collect: [ :e | e size ]) max.
+    ^self collect: [ :e | e extendCyclically: n ]
   !
 !
 
@@ -22,21 +32,24 @@
   !
 !
 
-!Integer methodsFor: 'enumerating'!
-  arraySeries: start step: step
-    "Fill with ramp of values"
-    ^(1 to: self) collect: [:i| (step * (i - 1)) + start]
+!Array class methodsFor: 'enumerating'!
+  series: size value: start value: step
+    "SC idiom to make an arithmetic series (ramp)"
+    ^(1 to: size) collect: [ :i | (step * (i - 1)) + start ]
   !
-  arrayGeom: start grow: grow
-    "Fill with geometric series.  What is the Smalltalk method for this pattern."
-    |accum|
+  geom: size value: start value: grow
+    "SC idiom to make a geometric series."
+    | accum |
     accum := start.
-    ^(1 to: self) collect: [:i| |entry| entry := accum. accum := grow * accum. entry]
+    ^(1 to: size) collect: [ :i | | entry | entry := accum. accum := grow * accum. entry ]
   !
-  arrayFill: f
-    "Array of (1 to: self) collected with f"
-    ^(1 to: self) collect: [:i | f value: i]
+  fill: size value: aBlock
+    "SC idiom to fill an array using a block"
+    ^(1 to: size) collect: [ :i | aBlock value: i ]
   !
+!
+
+!Integer methodsFor: 'enumerating'!
   arrayFillZeroIndexed: f
     "Array of (0 to: self - 1) collected with f"
     ^(1 to: self) collect: [:i | f value: (i - 1)]

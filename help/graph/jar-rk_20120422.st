@@ -1,6 +1,6 @@
 "rukano; Apr 22, 2012; Re: Epic Pads (jar)"
 | freq gen fmod rqmod sig amp |
-freq := 24 arrayFill: [:i | (LFNoise2 freq: 1 mul: 0.011 add: 1) * #(60 64 65 67) atRandom midicps].
+freq := [(LFNoise2 freq: 1 mul: 0.011 add: 1) * #(60 64 65 67) atRandom midicps] dup: 24.
 gen := LFSaw freq: freq iphase: 0 mul: 0.1.
 fmod := (LFCub freq: (1 / 12) iphase: 0) range: 1 -> (MouseX minval: 2 maxval: 16 warp: 0 lag: 0.2).
 rqmod := LFNoise2 freq: 1 mul: 0.011 add: 1.

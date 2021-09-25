@@ -11,7 +11,7 @@ uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
   ,("frac",10),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17)
   ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
-  ,("distort",42)]
+  ,("distort",42),("softclip",43)]
 
 {- | Binary operators.
 
@@ -42,13 +42,13 @@ ugen =
   ,"IRand","Impulse","In","InFeedback","InRange"
   ,"K2A","Klank"
   ,"LFCub","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LocalBuf","LocalIn","LocalOut"
+  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinRand","LocalBuf","LocalIn","LocalOut"
   ,"MantissaMask","MiRings","ModDif","MoogFF","MoogLadder","MouseX","MouseY"
   ,"Normalizer"
   ,"OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","RecordBuf","Resonz","Ringz","RunningMax"
-  ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Sweep"
+  ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slope","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1"
   ,"VarSaw","Vibrato"
   ,"WhiteNoise","Wrap"

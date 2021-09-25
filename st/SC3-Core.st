@@ -118,6 +118,12 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   rotate: x
     ^self asMce rotate: x
   !
+  dup: x
+    x replicate: self
+  !
+  dup
+    self dup: 2
+  !
 !
 
 AbstractUGen subclass: #UGen

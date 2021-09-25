@@ -3,7 +3,7 @@ var amp = 0.07;
 var density = MouseX(0.01, 1, 0, 0.1);
 var dmul = density.reciprocal * 0.5 * amp;
 var dadd = amp - dmul;
-var rapf = {arg in; AllpassN(in, 0.05, 2.arrayFill({arg ix; Rand(0, 0.05)}), 1)};
+var rapf = {arg in; AllpassN(in, 0.05, {Rand(0, 0.05)}.dup, 1)};
 var mkFreq = {
   var n0 = LFNoise0(Select(IRand(0, 2), #[1, 0.5, 0.25]));
   Lag((n0 * 7 + 66 + Rand(-30, 30)).round(1), 0.2).midicps};

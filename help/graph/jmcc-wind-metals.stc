@@ -1,0 +1,7 @@
+// wind metals (jmcc) ; texture=overlap,5,2,12,inf
+var n = 6;
+var exc = {BrownNoise()}.dup * 0.007 * (LFNoise1(ExpRand(0.125, 0.5)) * 0.75 + 0.25).max(0);
+var f = {Rand(0, Rand(500.0, 8000.0)) + ExpRand(60, 4000)}.dup(n);
+var dt = {Rand(0.1, 2.0)}.dup(n);
+var s = Klank(exc, 1, 0, 1, KlankSpec(f, nil, dt)) * 0.1;
+s.softclip

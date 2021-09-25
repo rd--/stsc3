@@ -4652,6 +4652,65 @@ LinExp comment: 'Map a linear range to an exponential range'!
   primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
 !
 
+UGen subclass: #LinRand
+  instanceVariableNames: 'lo hi minmax'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinRand comment: 'Skewed random number generator.'!
+
+!LinRand methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+  minmax ^minmax!
+  minmax: x minmax := x!
+!
+
+!LinRand methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LinRand.
+    paramNames := #(#lo #hi #minmax).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0. minmax := 0.0!
+!
+
+
+!LinRand class methodsFor: 'instance creation'!
+  lo: lo hi: hi minmax: minmax
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u minmax: minmax.
+    ^u!
+  lo: lo hi: hi minmax: minmax mul: mul
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u minmax: minmax.
+    u mul: mul.
+    ^u!
+  lo: lo hi: hi minmax: minmax mul: mul add: add
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u minmax: minmax.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#lo:hi:minmax:!
+!
+
 UGen subclass: #LocalBuf
   instanceVariableNames: 'numChannels numFrames'
   classVariableNames: ''
@@ -6855,6 +6914,55 @@ SinOscFB comment: 'Feedback FM oscillator'!
   primaryFactoryMethod ^#freq:feedback:!
 !
 
+UGen subclass: #Slope
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Slope comment: 'Slope of signal'!
+
+!Slope methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!Slope methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Slope.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!Slope class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u mul: mul.
+    ^u!
+  in: in mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #Sweep
   instanceVariableNames: 'trig rate'
   classVariableNames: ''
@@ -6907,6 +7015,60 @@ Sweep comment: 'Triggered linear ramp'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#trig:rate:!
+!
+
+UGen subclass: #SyncSaw
+  instanceVariableNames: 'syncFreq sawFreq'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SyncSaw comment: 'Hard sync sawtooth wave.'!
+
+!SyncSaw methodsFor: 'accessing'!
+  syncFreq ^syncFreq!
+  syncFreq: x syncFreq := x!
+  sawFreq ^sawFreq!
+  sawFreq: x sawFreq := x!
+!
+
+!SyncSaw methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SyncSaw.
+    paramNames := #(#syncFreq #sawFreq).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    syncFreq := 440.0. sawFreq := 440.0!
+!
+
+
+!SyncSaw class methodsFor: 'instance creation'!
+  syncFreq: syncFreq sawFreq: sawFreq
+    |u|
+    u := self new.
+    u syncFreq: syncFreq.
+    u sawFreq: sawFreq.
+    ^u!
+  syncFreq: syncFreq sawFreq: sawFreq mul: mul
+    |u|
+    u := self new.
+    u syncFreq: syncFreq.
+    u sawFreq: sawFreq.
+    u mul: mul.
+    ^u!
+  syncFreq: syncFreq sawFreq: sawFreq mul: mul add: add
+    |u|
+    u := self new.
+    u syncFreq: syncFreq.
+    u sawFreq: sawFreq.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#syncFreq:sawFreq:!
 !
 
 UGen subclass: #TDuty
@@ -7865,5 +8027,6 @@ XLine comment: 'Exponential line generator.'!
   cos ^ UnaryOpUGen specialIndex: 29 a: self!
   tanh ^ UnaryOpUGen specialIndex: 36 a: self!
   distort ^ UnaryOpUGen specialIndex: 42 a: self!
+  softclip ^ UnaryOpUGen specialIndex: 43 a: self!
 !
 
