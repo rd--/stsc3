@@ -10,5 +10,5 @@ install: $(cmd)
 	cp $(cmd) $(prefix)/bin
 
 clean:
-	rm -f *.hi *.o $(cmd)
+	rm -f *.hi *.o # $(cmd)
 	rm -f */*/*.hi */*/*.o
