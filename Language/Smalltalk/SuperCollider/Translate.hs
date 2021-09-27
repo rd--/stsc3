@@ -205,4 +205,9 @@ rw "p.q:r(i)" -- error ; arity mismatch
 rw "p.q:(i)" -- error ; message names may not have trailing colons
 rw "p.q(x: i)" -- error ; keywords are not allowed
 
+rw = scToSt
+scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"
+scToSt "p.q:r(i)" -- error ; this is an error in Sc and is reported here but with an odd message
+scToSt "p.q()" -- error ; this was dis-allowed for stcToSt ; it's not neccesary in Sc but it is allowed
+
 -}

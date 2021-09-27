@@ -10,17 +10,15 @@ The parser is for a minimal subset of SuperCollider
 and does not recognise the following constructs:
 
 ~~~~
-P()       => P.new()
 p.(q)     => p.value(q)
 `p        => Ref.new(p)
 p q: r    => p.q(r)
-q(p)      => p.q
 |p|       => arg p;
 p[q]      => p.at(q)
 p[q]=r    => p.put(q,r)
 p.q(*r)   => p.performList(\q,r)
 p.q {}    => p.q({})
-(p..q)    => p.to(q).asArray
+(p..q)    => p.series(nil,q)
 (p,q..r)  => p.series(q,r)
 ~~~~
 
@@ -109,26 +107,23 @@ $
 
 ## translate
 
-There are two related but distinct translators.
+There are two related translators.
 
-The first translates a subset of SuperCollider to Smalltalk.
+The first translates a subset of the SuperCollider syntax as a C-like notation for Smalltalk programs.
 
-It follows the SuperCollider rules for message names and parameters (ie. parameters are always dictionaries).
+There are examples at `stsc3/help/graph`, and these are included in the `hsc3-graphs` polyglot archive.
 
-The second translates a SuperCollider like notation called C-Smalltalk to Smalltalk.
-
-C-Smalltalk is an alternate notation for writing Smalltalk programs.
-
-C-Smalltalk files have a `.stc` file extension.
-
-There are numerous examples at `stsc3/help/graph`, and they are also included in the `hsc3-graphs` polyglot archive.
+The files have a`.stc` file extension (for C-Smalltalk).
 
 There is an `stc.el` Emacs mode at `stsc3/emacs` which runs the translator and sends the translated text to GNU Smalltalk.
 
-The translator reads the source text from `stdin` and writes the the translated text to `stdout`.
+The second translator additionally rewrites message parameters as arrays with optional keywords (a kind of dictionary)
+and can be used to translate SuperCollider programs to Smalltalk programs.
+
+In both cases the translator reads the source text from `stdin` and writes the the translated text to `stdout`.
 
 ````
 $ stsc3 -h | grep translate
- translate {sc | stc} st
+ translate {stc | sc} st
 $
 ````
