@@ -66,8 +66,8 @@ In cases where keyword arguments are appropriate, ordinary Smalltalk syntax is p
 
 1: In addition to the C-Smalltalk to Smalltalk translator `stsc3` also has a SuperCollider to Smalltalk translator.
 
-C-Smalltalk is two of the three rewriting rules of the the SuperCollider to Smalltalk translator,
-see [Rewrite.hs](https://gitlab.com/rd--/stsc3/-/blob/master/Language/Smalltalk/SuperCollider/Rewrite.hs) for details.
+This second translator additionally rewrites message parameters as arrays with optional keywords (a kind of dictionary).
+See [Rewrite.hs](https://gitlab.com/rd--/stsc3/-/blob/master/Language/Smalltalk/SuperCollider/Rewrite.hs) for details.
 
 2: apply: is generally defined as:
 
