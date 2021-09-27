@@ -120,10 +120,15 @@ There is an `stc.el` Emacs mode at `stsc3/emacs` which runs the translator and s
 The second translator additionally rewrites message parameters as arrays with optional keywords (a kind of dictionary)
 and can be used to translate SuperCollider programs to Smalltalk programs.
 
-In both cases the translator reads the source text from `stdin` and writes the the translated text to `stdout`.
+In both cases the translator reads the source text from `stdin` and writes the the translated text to `stdout`, unless named files are given.
 
 ````
 $ stsc3 -h | grep translate
- translate {stc | sc} st
+ translate {stc | sc} st [input-file output-file]
+$ stsc3 translate stc st < help/graph/jmcc-analog-bubbles.stc
+|o f|
+o := (LFSaw apply: {#(8 7.23) . 0}) * 3 + 80 .
+f := (LFSaw apply: {0.4 . 0}) * 24 + o .
+(CombN apply: {(SinOsc apply: {f midicps . 0}) * 0.04 . 0.2 . 0.2 . 4}) * 0.1 .
 $
 ````

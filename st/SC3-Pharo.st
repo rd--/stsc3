@@ -14,9 +14,6 @@
   evalString
     ^OpalCompiler evaluate: self
   !
-  evalFile
-    ^self readTextFile evalString
-  !
   systemCommand
     ^LibC runCommand: self
   !

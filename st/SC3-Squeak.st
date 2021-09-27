@@ -16,10 +16,8 @@ SystemOrganization addCategory: #'Sound-SC3'!
   evalString
     ^Compiler evaluate: self
   !
-  evalFile
-    ^self readTextFile evalString
-  !
   systemCommand
+    "Run command synchronously.  Note, waitForCommand: hangs Squeak?"
     ^OSProcess command: self
   !
   fileListOn

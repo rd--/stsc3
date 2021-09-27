@@ -33,10 +33,6 @@
     "Evaluate string."
     ^Behavior evaluate: self
   !
-  evalFile
-    "evalString of readTextFile."
-    ^self readTextFile evalString
-  !
   systemCommand
     "Run system command."
     ^Smalltalk system: self

@@ -494,8 +494,8 @@ SC3 comment: 'SuperCollider3'!
   reset
     'hsc3-scsynth reset' systemCommand
   !
-  playNamedGraph: graphName
-    ^(SC3 stsc3HelpGraphFile: graphName)  evalFile play
+  playNamedGraph: graphFileName
+    SC3 playFile: (SC3 stsc3HelpGraphFile: graphFileName).
   !
 !
 
@@ -506,8 +506,42 @@ SC3 comment: 'SuperCollider3'!
   stsc3File: fileName
     ^SC3 stsc3Directory , '/' , fileName
   !
-  stsc3HelpGraphFile: graphName
-    ^SC3 stsc3File: 'help/graph/' , graphName , '.st'
+  stsc3HelpGraphFile: graphFileName
+    ^SC3 stsc3File: 'help/graph/' , graphFileName
+  !
+!
+
+!SC3 class methodsFor: 'c smalltalk'!
+  stcFileToSt: fileName
+    "Translate .stc file to Smalltalk."
+    | tmp cmd |
+    tmp := '/tmp/stcFileToSt.st'.
+    cmd := 'stsc3 translate stc st ' , fileName , ' ' , tmp.
+    cmd systemCommand.
+    (Delay forMilliseconds: 250) wait. "..."
+    ^tmp readTextFile.
+  !
+  stcToSt: stcText
+    | tmp |
+    tmp := '/tmp/stcToSt.st'.
+    tmp writeTextFile: [ :fd | stcText putOn: fd ].
+    ^SC3 stcFileToSt: tmp
+  !
+  evalStOrStcFile: fileName
+    "Evaluate an expression read from a file.  The file may be either a Smalltalk (.st) or a C-Smalltalk (.stc) file"
+    | fileText |
+    fileText := (fileName endsWith: '.stc') ifTrue: [SC3 stcFileToSt: fileName] ifFalse: [fileName readTextFile].
+    ^fileText evalString
+  !
+  evalText: text fromFile: fileName
+    "Evaluate text, deciding if it needs to be translated from C-Smalltalk based on the name of the file the text is from"
+    (fileName endsWith: '.stc') ifTrue: [^(SC3 stcToSt: text) evalString] ifFalse: [^text evalString].
+  !
+  playFile: fileName
+    (SC3 evalStOrStcFile: fileName) play
+  !
+  drawFile: fileName
+    (SC3 evalStOrStcFile: fileName) draw
   !
 !
 

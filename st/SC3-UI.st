@@ -54,15 +54,19 @@ SC3Editor comment: 'Editor for UGen graph fragments'!
 
 !SC3Editor methodsFor: 'operating'!
   text
-    ^self fileName readTextFile
+    ^fileName readTextFile
   !
   play
-    editor textMorph selection asString evalString play
+    | text |
+    text := editor textMorph selection asString.
+    (SC3 evalText: text fromFile: fileName) play
   !
   draw
-    editor textMorph selection asString evalString draw
+    | text |
+    text := editor textMorph selection asString.
+    (SC3 evalText: text fromFile: fileName) draw
   !
-  menu: m shifted: _i
+  menu: m shifted: i
     m add: 'play (p)' target: self selector: #play.
     m add: 'stop (s)' target: SC3 selector: #reset.
     m add: 'draw (d)' target: self selector: #draw.
@@ -99,7 +103,11 @@ SC3Browser comment: 'List view on UGen graph fragments'!
   !
   index: x index := x. self changed: #index
   !
-  files ^(directoryName dirAllFilesWithExt: '.st') sort
+  files
+    | st stc |
+    st := (directoryName dirAllFilesWithExt: '.st').
+    stc := (directoryName dirAllFilesWithExt: '.stc').
+    ^(st , stc) sort
   !
 !
 
@@ -114,13 +122,13 @@ SC3Browser comment: 'List view on UGen graph fragments'!
 
 !SC3Browser methodsFor: 'operating'!
   play
-    (self files at: index) evalFile play
+    SC3 playFile: (self files at: index)
   !
   edit
     SC3Editor openOn: (self files at: index)
   !
   draw
-    (self files at: index) evalFile draw
+    SC3 drawFile: (self files at: index)
   !
   menu: m
     m add: 'play (p)' target: self selector: #play.
@@ -129,10 +137,10 @@ SC3Browser comment: 'List view on UGen graph fragments'!
     m add: 'draw (d)' target: self selector: #draw.
     ^m
   !
-  menu: m shifted: _i
+  menu: m shifted: i
     ^self menu: m
   !
-  key: k from: _i
+  key: k from: i
     k == $p ifTrue: [self play].
     k == $s ifTrue: [SC3 reset].
     k == $e ifTrue: [self edit].

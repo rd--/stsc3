@@ -54,8 +54,14 @@ help =
     ," st cat {parsec|happy} smalltalk-program-file..."
     ," repl {ansi|expr|som}"
     ," run som class arguments..."
-    ," translate {sc | stc} st"
+    ," translate {sc | stc} st [input-file output-file]"
     ]
+
+-- | Like interact but with named files.
+procFile :: FilePath -> FilePath -> (String -> String) -> IO ()
+procFile inFile outFile strFunc = do
+  txt <- readFile inFile
+  writeFile outFile (strFunc txt)
 
 main :: IO ()
 main = do
@@ -73,7 +79,6 @@ main = do
     ["play","ansi",fn] -> stsc3_play Interpreter.Lisp.Ansi.evalSmalltalkFile fn
     ["play","expr",fn] -> stsc3_play Interpreter.Lisp.Expr.evalSmalltalkFile fn
     ["stop"] -> SC3.withSC3 SC3.reset
-    ["translate","sc","st"] -> interact Sc.scToSt
-    ["translate","stc","st"] -> interact Sc.stcToSt
+    ["translate",ty,"st"] -> interact (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
+    ["translate",ty,"st",inFile,outFile] -> procFile inFile outFile (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
     _ -> putStrLn (unlines help)
-

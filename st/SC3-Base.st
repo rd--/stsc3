@@ -107,3 +107,10 @@
     ^self inject: 1 into: [ :i :j | i * j ]
   !
 !
+
+!String methodsFor: 'file i/o'!
+  evalFile
+    "evalString of readTextFile."
+    ^self readTextFile evalString
+  !
+!

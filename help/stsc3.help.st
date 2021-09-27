@@ -351,6 +351,7 @@ Form fromUser asMorph openInWorld. "squeak ; screenshot selection"
 d := {'a'->1. 'b'->2. 'c'->'3'} as: Dictionary.
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out]. "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in]. "read"
+FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
 
 "Smalltalk"
 
@@ -400,82 +401,87 @@ FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
 
 "Help Graphs"
 
-SC3 playNamedGraph: 'adc-bit-reduction'.
-SC3 playNamedGraph: 'adc-down-sample'.
-SC3 playNamedGraph: 'es-tw-435684664200540161'.
-SC3 playNamedGraph: 'es-tw-570012853274615808'.
-SC3 playNamedGraph: 'f0-pkt-00'.
-SC3 playNamedGraph: 'f0-tw-0011'.
-SC3 playNamedGraph: 'f0-tw-0041'.
-SC3 playNamedGraph: 'f0-tw-0045'.
-SC3 playNamedGraph: 'f0-tw-0077'.
-SC3 playNamedGraph: 'f0-tw-0084'.
-SC3 playNamedGraph: 'f0-tw-0121'.
-SC3 playNamedGraph: 'f0-tw-0125'.
-SC3 playNamedGraph: 'f0-tw-0456384156159574016'.
-SC3 playNamedGraph: 'f0-tw-0839296011982024704'.
-SC3 playNamedGraph: 'f0-tw-1105496695637454848'.
-SC3 playNamedGraph: 'f0-tw-1125557217086857216'.
-SC3 playNamedGraph: 'f0-tw-1210118661022867458'.
-SC3 playNamedGraph: 'f0-tw-1254441448327479299'. "<= multiple graphs"
-SC3 playNamedGraph: 'f0-tw-1338987643057688579'.
-SC3 playNamedGraph: 'f0-tw-1343283697840226307'.
-SC3 playNamedGraph: 'f0-tw-1395040511795372038'.
-SC3 playNamedGraph: 'f0-tw-456384156159574016'.
-SC3 playNamedGraph: 'jar-1-4Qx'.
-SC3 playNamedGraph: 'jar-rk_20120422'.
-SC3 playNamedGraph: 'jh-4157'.
-SC3 playNamedGraph: 'jl-1-9'.
-SC3 playNamedGraph: 'jl-bitwise'.
-SC3 playNamedGraph: 'jl-rain-thunder'.
-SC3 playNamedGraph: 'jmcc-analog-bubbles-mouse'.
-SC3 playNamedGraph: 'jmcc-analog-bubbles'.
-SC3 playNamedGraph: 'jmcc-analogue-daze'.
-SC3 playNamedGraph: 'jmcc-babbling-brook'.
-SC3 playNamedGraph: 'jmcc-berlin-1977'.
-SC3 playNamedGraph: 'jmcc-bidirectional-strummable-guitar'.
-SC3 playNamedGraph: 'jmcc-birdies'.
-SC3 playNamedGraph: 'jmcc-demanding-studies'.
-SC3 playNamedGraph: 'jmcc-harmonic-swimming'.
-SC3 playNamedGraph: 'jmcc-harmonic-tumbling'.
-SC3 playNamedGraph: 'jmcc-harmonic-zither'.
-SC3 playNamedGraph: 'jmcc-inharmonic-warbulence'.
-SC3 playNamedGraph: 'jmcc-lfo-modulation'.
-SC3 playNamedGraph: 'jmcc-modal-space'.
-SC3 playNamedGraph: 'jmcc-moto-rev'.
-SC3 playNamedGraph: 'jmcc-narrow-band-filtered-crackle-noise'.
-SC3 playNamedGraph: 'jmcc-plucked-strings'.
-SC3 playNamedGraph: 'jmcc-pulsing-bottles-ir'.
-SC3 playNamedGraph: 'jmcc-pulsing-bottles'.
-SC3 playNamedGraph: 'jmcc-random-pulsations'.
-SC3 playNamedGraph: 'jmcc-random-sine-waves'.
-SC3 playNamedGraph: 'jmcc-reverberated-sine-percussion'.
-SC3 playNamedGraph: 'jmcc-sample-and-hold-liquidities'.
-SC3 playNamedGraph: 'jmcc-scratchy'.
-SC3 playNamedGraph: 'jmcc-sprinkler-mouse'.
-SC3 playNamedGraph: 'jmcc-sprinkler'.
-SC3 playNamedGraph: 'jmcc-strummable-guitar'.
-SC3 playNamedGraph: 'jmcc-strummable-silk'.
-SC3 playNamedGraph: 'jmcc-sweepy-noise'.
-SC3 playNamedGraph: 'jmcc-synthetic-piano'.
-SC3 playNamedGraph: 'jmcc-tank'.
-SC3 playNamedGraph: 'jmcc-theremin'.
-SC3 playNamedGraph: 'jmcc-uplink'.
-SC3 playNamedGraph: 'jmcc-why-supercollider'.
-SC3 playNamedGraph: 'jrhb-gcd'.
-SC3 playNamedGraph: 'nc-sctutorial'.
-SC3 playNamedGraph: 'nv-899-04'.
-SC3 playNamedGraph: 'nv-tw-40'.
-SC3 playNamedGraph: 'nv-tw-41'.
-SC3 playNamedGraph: 'pj-forest-sounds'.
-SC3 playNamedGraph: 'rd-chrd'.
-SC3 playNamedGraph: 'rd-eggcrate'.
-SC3 playNamedGraph: 'rd-xy-interference'.
-SC3 playNamedGraph: 'tb-1-4Tw'.
-SC3 playNamedGraph: 'tw-tw-01'.
-SC3 playNamedGraph: 'tw-tw-02'.
+SC3 playNamedGraph: 'adc-bit-reduction.st'
+SC3 playNamedGraph: 'adc-down-sample.st'
+SC3 playNamedGraph: 'es-tw-435684664200540161.st'
+SC3 playNamedGraph: 'es-tw-570012853274615808.st'
+SC3 playNamedGraph: 'f0-pkt-00.st'
+SC3 playNamedGraph: 'f0-tw-0011.st'
+SC3 playNamedGraph: 'f0-tw-0041.st'
+SC3 playNamedGraph: 'f0-tw-0045.st'
+SC3 playNamedGraph: 'f0-tw-0077.st'
+SC3 playNamedGraph: 'f0-tw-0084.st'
+SC3 playNamedGraph: 'f0-tw-0121.st'
+SC3 playNamedGraph: 'f0-tw-0125.st'
+SC3 playNamedGraph: 'f0-tw-0456384156159574016.st'
+SC3 playNamedGraph: 'f0-tw-0839296011982024704.st'
+SC3 playNamedGraph: 'f0-tw-1105496695637454848.st'
+SC3 playNamedGraph: 'f0-tw-1125557217086857216.st'
+SC3 playNamedGraph: 'f0-tw-1210118661022867458.st'
+SC3 playNamedGraph: 'f0-tw-1254441448327479299.st' "<= multiple graphs"
+SC3 playNamedGraph: 'f0-tw-1338987643057688579.st'
+SC3 playNamedGraph: 'f0-tw-1343283697840226307.st'
+SC3 playNamedGraph: 'f0-tw-1395040511795372038.st'
+SC3 playNamedGraph: 'f0-tw-456384156159574016.st'
+SC3 playNamedGraph: 'jar-1-4Qx.st'
+SC3 playNamedGraph: 'jar-rk_20120422.st'
+SC3 playNamedGraph: 'jh-4157.st'
+SC3 playNamedGraph: 'jl-1-9.st'
+SC3 playNamedGraph: 'jl-bitwise.st'
+SC3 playNamedGraph: 'jl-rain-thunder.st'
+SC3 playNamedGraph: 'jmcc-analog-bubbles-mouse.st'
+SC3 playNamedGraph: 'jmcc-analog-bubbles.st'
+SC3 playNamedGraph: 'jmcc-analogue-daze.st'
+SC3 playNamedGraph: 'jmcc-babbling-brook.st'
+SC3 playNamedGraph: 'jmcc-berlin-1977.st'
+SC3 playNamedGraph: 'jmcc-bidirectional-strummable-guitar.st'
+SC3 playNamedGraph: 'jmcc-birdies.st'
+SC3 playNamedGraph: 'jmcc-demanding-studies.st'
+SC3 playNamedGraph: 'jmcc-harmonic-swimming.st'
+SC3 playNamedGraph: 'jmcc-harmonic-tumbling.st'
+SC3 playNamedGraph: 'jmcc-harmonic-zither.st'
+SC3 playNamedGraph: 'jmcc-inharmonic-warbulence.st'
+SC3 playNamedGraph: 'jmcc-lfo-modulation.st'
+SC3 playNamedGraph: 'jmcc-modal-space.st'
+SC3 playNamedGraph: 'jmcc-moto-rev.st'
+SC3 playNamedGraph: 'jmcc-narrow-band-filtered-crackle-noise.st'
+SC3 playNamedGraph: 'jmcc-plucked-strings.st'
+SC3 playNamedGraph: 'jmcc-pulsing-bottles-ir.st'
+SC3 playNamedGraph: 'jmcc-pulsing-bottles.st'
+SC3 playNamedGraph: 'jmcc-random-pulsations.st'
+SC3 playNamedGraph: 'jmcc-random-sine-waves.st'
+SC3 playNamedGraph: 'jmcc-reverberated-sine-percussion.st'
+SC3 playNamedGraph: 'jmcc-sample-and-hold-liquidities.st'
+SC3 playNamedGraph: 'jmcc-scratchy.st'
+SC3 playNamedGraph: 'jmcc-sprinkler-mouse.st'
+SC3 playNamedGraph: 'jmcc-sprinkler.st'
+SC3 playNamedGraph: 'jmcc-strummable-guitar.st'
+SC3 playNamedGraph: 'jmcc-strummable-silk.st'
+SC3 playNamedGraph: 'jmcc-sweepy-noise.st'
+SC3 playNamedGraph: 'jmcc-synthetic-piano.st'
+SC3 playNamedGraph: 'jmcc-tank.st'
+SC3 playNamedGraph: 'jmcc-theremin.st'
+SC3 playNamedGraph: 'jmcc-uplink.st'
+SC3 playNamedGraph: 'jmcc-why-supercollider.st'
+SC3 playNamedGraph: 'jrhb-gcd.st'
+SC3 playNamedGraph: 'nc-sctutorial.st'
+SC3 playNamedGraph: 'nv-899-04.st'
+SC3 playNamedGraph: 'nv-tw-40.st'
+SC3 playNamedGraph: 'nv-tw-41.st'
+SC3 playNamedGraph: 'pj-forest-sounds.st'
+SC3 playNamedGraph: 'rd-chrd.st'
+SC3 playNamedGraph: 'rd-eggcrate.st'
+SC3 playNamedGraph: 'rd-xy-interference.st'
+SC3 playNamedGraph: 'tb-1-4Tw.st'
+SC3 playNamedGraph: 'tw-tw-01.st'
+SC3 playNamedGraph: 'tw-tw-02.st' "<= multiple graphs"
 
 SC3 reset.
+
+"Stc"
+SC3 stcToSt: 'p.q(r)'
+SC3 stcFileToSt: (SC3 stsc3HelpGraphFile: 'jmcc-analog-bubbles.stc')
+SC3 playNamedGraph: 'jmcc-analog-bubbles.stc'
 
 "Blocks"
 | factorial |
@@ -483,6 +489,9 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
 [10 rand] dup: 10 "=> #(7 8 10 3 6 6 7 8 3 4)"
 [] class = BlockClosure
+
+"Delay"
+(Delay forMilliseconds: 500) wait
 
 "Som"
 TestHarness new run: #('TestHarness.som').
