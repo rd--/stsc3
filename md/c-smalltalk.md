@@ -1,14 +1,12 @@
 # C-Smalltalk
 
-A C-like syntax for [Smalltalk](https://squeak.org/).
-
-The syntax is essentially the core [SuperCollider](https://www.audiosynth.com/) syntax, which is C-like.
+A C-like syntax for [Smalltalk](https://squeak.org/) that is a subset of the [SuperCollider](https://www.audiosynth.com/) syntax.
 
 C-Smalltalk syntax is an interesting complement to Smalltalk syntax.
 
 It supports:
 
-- a concise notation for performing a _primary_ message at an object
+- a concise notation for performing a primary message at an object
 - a concise and uniform notation for chaining both unary and n-ary messages
 - a two-level precedence model (unary and n-ary messages bind equally and more closely than binary messages)
 - implicit grouping of message argument expressions
