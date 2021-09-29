@@ -1,6 +1,6 @@
 "MiRings ; 0=MODAL_RESONATOR ; event control ; i.e. hsc3-sensel-ll -v -m 16"
 | f |
-f := [:e :i |
+f := [ :e :i |
   | tr |
   tr := Trig1 in: e w dur: ControlDur new.
   MiRings in: 0
@@ -15,5 +15,5 @@ f := [:e :i |
           intern_exciter: 0
           easteregg: 0
           bypass: 0
-          mul: e z].
+          mul: e z ].
 (EventControl numVoices: 16 voiceFunc: f) mix * 4
