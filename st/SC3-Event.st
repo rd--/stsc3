@@ -64,7 +64,7 @@ EventParam comment: 'Event Parameters'!
   !
 !
 
-Object subclass: #EventControl
+AbstractUGen subclass: #EventControl
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -74,18 +74,20 @@ Object subclass: #EventControl
 EventControl comment: 'Event Control Input'!
 
 !EventControl class methodsFor: 'instance creation'!
-  k0: k0 c: c
-    ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * 10))) kr asMce.
+  k0: k0 stp: stp c: c
+    ^EventParam fromUGen: (In numChan: 9 bus: (k0 + (c * stp))) kr asMce.
   !
-  k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc
+  k0: k0 stp: stp c0: c0 numVoices: numVoices voiceFunc: voiceFunc
     | v |
     v := 0 to: numVoices - 1.
-    ^(v collect: [:c | voiceFunc value: (self k0: k0 c: (c0 + c)) value: c]) asUGen
+    ^(v collect: [ :c | voiceFunc value: (self k0: k0 stp: stp c: (c0 + c)) value: c]) asUGen
   !
   numVoices: numVoices voiceFunc: voiceFunc
-    | k0 c0 |
+    | k0 stp c0 |
     k0 := Control name: 'eventAddr' init: 13000.
+    stp := Control name: 'eventIncr' init: 10.
     c0 := Control name: 'eventZero' init: 0.
     ^self k0: k0 c0: c0 numVoices: numVoices voiceFunc: voiceFunc.
   !
+  primaryFactoryMethod ^#numVoices:voiceFunc:!
 !
