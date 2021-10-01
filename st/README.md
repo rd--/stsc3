@@ -67,3 +67,10 @@ Visit the following files in the FileBrowser and select `Install Package`
 
 - https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev/blob/master/CompatibilityPackages/SqueakCompatibility.pck.st
 - https://github.com/Cuis-Smalltalk/OSProcess/blob/master/OSProcess.pck.st
+
+* * *
+
+Notes:
+
+- stream << items      =   items putOn: stream
+- item putOn: stream   =   stream nextPut: item

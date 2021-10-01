@@ -146,48 +146,30 @@ All UGens have mul and add inputs, so these variables are defined here.
 !
 
 !UGen methodsFor: 'accessing'!
-  mceNames ^mceNames
-  !
-  mceNames: x mceNames := x
-  !
-  numChan ^numChan
-  !
-  numChan: x numChan := x
-  !
-  paramNames ^paramNames
-  !
-  paramNames: x paramNames := x
-  !
-  specialIndex ^specialIndex
-  !
-  specialIndex: x specialIndex := x
-  !
-  ugenName ^ugenName
-  !
-  ugenName: x ugenName := x
-  !
-  ugenRate ^ugenRate
-  !
-  ugenRate: x ugenRate := x
-  !
-  ugenId ^ugenId
-  !
-  ugenId: x ugenId := x
-  !
-  mul ^mul
-  !
-  mul: x mul := x
-  !
-  add ^add
-  !
-  add: x add := x
-  !
+  mceNames ^mceNames!
+  mceNames: x mceNames := x!
+  numChan ^numChan!
+  numChan: x numChan := x!
+  paramNames ^paramNames!
+  paramNames: x paramNames := x!
+  specialIndex ^specialIndex!
+  specialIndex: x specialIndex := x!
+  ugenName ^ugenName!
+  ugenName: x ugenName := x!
+  ugenRate ^ugenRate!
+  ugenRate: x ugenRate := x!
+  ugenId ^ugenId!
+  ugenId: x ugenId := x!
+  mul ^mul!
+  mul: x mul := x!
+  add ^add!
+  add: x add := x!
 !
 
 !UGen methodsFor: 'collecting'!
   addToUGenSet: c
     | addFunc |
-    addFunc := [:x | (self perform: x) addToUGenSet: c].
+    addFunc := [ :x | (self perform: x) addToUGenSet: c ].
     c add: self.
     paramNames do: addFunc.
     mceNames do: addFunc.
@@ -213,14 +195,10 @@ UGen subclass: #BinaryOpUGen
 BinaryOpUGen comment: 'Binary Operators'!
 
 !BinaryOpUGen methodsFor: 'accessing'!
-  a ^a
-  !
-  a: x a := x
-  !
-  b ^b
-  !
-  b: x b := x
-  !
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
 !
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
@@ -251,10 +229,8 @@ UGen subclass: #UnaryOpUGen
 UnaryOpUGen comment: 'Unary Operators'!
 
 !UnaryOpUGen methodsFor: 'accessing'!
-  a ^a
-  !
-  a: x a := x
-  !
+  a ^a!
+  a: x a := x!
 !
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
@@ -290,14 +266,10 @@ Rate comment: 'UGen Processing Rate'!
 !
 
 !Rate methodsFor: 'accessing'!
-  rate ^rate
-  !
-  rate: x rate := x
-  !
-  source ^source
-  !
-  source: x source := x
-  !
+  rate ^rate!
+  rate: x rate := x!
+  source ^source!
+  source: x source := x!
 !
 
 !Rate class methodsFor: 'instance creation'!
@@ -359,16 +331,11 @@ Mce comment: 'Multiple Channel Expansion'!
 !
 
 !Mce methodsFor: 'accessing'!
-  source: x source := x
-  !
-  source ^source
-  !
-  transform: x transform := x
-  !
-  transform ^transform
-  !
-  size ^source size
-  !
+  source: x source := x!
+  source ^source!
+  transform: x transform := x!
+  transform ^transform!
+  size ^source size!
 !
 
 !Mce methodsFor: 'initialization'!
@@ -460,16 +427,15 @@ Mix comment: 'UGen Mixer'!
 !
 
 !Mix methodsFor: 'accessing'!
-  source ^source
-  !
-  source: x source := x
-  !
+  source ^source!
+  source: x source := x!
 !
 
 !Mix class methodsFor: 'instance creation'!
   source: x
     ^self new source: x
   !
+  primaryFactoryMethod ^#source:!
 !
 
 !AbstractUGen methodsFor: 'arithmetic'!
@@ -562,14 +528,10 @@ Mrg comment: 'Multiple Root Graph'!
 !
 
 !Mrg methodsFor: 'accessing'!
-  lhs ^lhs
-  !
-  lhs: x lhs := x
-  !
-  rhs ^rhs
-  !
-  rhs: x rhs := x
-  !
+  lhs ^lhs!
+  lhs: x lhs := x!
+  rhs ^rhs!
+  rhs: x rhs := x!
 !
 
 !Mrg class methodsFor: 'instance creation'!
@@ -599,14 +561,10 @@ Control comment: 'Control Input'!
 !
 
 !Control methodsFor: 'accessing'!
-  name ^name
-  !
-  name: x name := x
-  !
-  init ^init
-  !
-  init: x init := x
-  !
+  name ^name!
+  name: x name := x!
+  init ^init!
+  init: x init := x!
 !
 
 !Control class methodsFor: 'instance creation'!
@@ -640,10 +598,8 @@ Constant comment: 'Constant Numerical Value'!
 !
 
 !Constant methodsFor: 'accessing'!
-  k ^k
-  !
-  k: x k := x
-  !
+  k ^k!
+  k: x k := x!
 !
 
 !Constant class methodsFor: 'instance creation'!

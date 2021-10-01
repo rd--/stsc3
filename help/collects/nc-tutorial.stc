@@ -1,0 +1,89 @@
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html
+var n = 11;
+var f = {
+    var freq = Rand(50, 560.3);
+    var numcps = Rand(2, 20);
+    var knum = MulAdd(SinOsc(ExpRand(0.02, 0.2),  0), numcps / 2,  numcps / 2);
+    Pan2(Gendy1(6.rand, 6.rand, 1.0.rand, 1.0.rand, freq , freq,  1.0.rand,  1.0.rand,  numcps,  knum.kr),  1.0.rand2, 0.5 / n.sqrt)
+};
+Resonz(Mix(f.dup(n)), MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; sawtooth
+var n = 10;
+var f = {
+    arg i;
+    var mult = (-1 ** i) * (0.5 / (i + 1));
+    SinOsc(440 * (i + 1), 0) * mult
+};
+Pan2(n.mixFillZeroIndexed(f), 0, 1 / n);
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; square
+var n = 10;
+var f = {
+    arg i;
+    var harmonicnumber = 2 * i + 1;
+    SinOsc(440 * harmonicnumber, 0) / harmonicnumber
+};
+Pan2(n.mixFillZeroIndexed(f), 0, 1 / n);
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; triangle
+var n = 10;
+var f = {
+    arg i;
+    var harmonicnumber = 2 * i + 1;
+    var mult = (-1 ** (harmonicnumber - 1 / 2)) * (1 / (harmonicnumber * harmonicnumber));
+    SinOsc(440 * harmonicnumber, 0) * mult
+};
+Pan2(n.mixFillZeroIndexed(f), 0, 1 / n);
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; bell spectra
+var rat = [0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
+var amp = [0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1] * 0.1;
+Mix(SinOsc(500 * rat, 0) * amp)
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.4 ; fm
+var modfreq = MouseX(1, 440, 1, 0.2);
+var modindex = MouseY(0.0, 10.0, 0, 0.2);
+SinOsc(SinOsc(modfreq,0) * modfreq * modindex + 440, 0) * 0.25
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.4 ; fm
+var carfreq = 440;
+var harmonicity = MouseX(0, 10, 0, 0.2).round(1);
+var modindex = MouseY(0.0, 10.0, 0, 0.2);
+var modfreq = carfreq * harmonicity;
+SinOsc(carfreq + (SinOsc(modfreq, 0) * modfreq * modindex), 0.0) * 0.1
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.4 ; pm
+var modfreq = MouseX(1,1000, 1, 0.2);
+var modindex = MouseY(0.0, 100.0, 0, 0.2);
+var conversion = 2 * pi / SampleRate();
+SinOsc(0, Phasor(0, 440 * conversion, 0, 2 * pi, 0) + (modfreq * modindex * conversion * SinOsc(modfreq, 0))) * 0.25
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.4 ; pm ; equivalent
+var modfreq = MouseX(1,1000, 1, 0.2);
+var modindex = MouseY(0.0, 100.0, 0, 0.2);
+var conversion = 2 * pi / SampleRate();
+SinOsc(440, (modfreq * modindex * conversion * SinOsc(modfreq, 0))) * 0.25
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; chorus
+Mix(Saw(#[440, 443 ,437]) * 0.1)
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; am, fm, chorus
+var src = Saw(#[440, 443, 437] + (SinOsc(100, 0) * 100));
+var amp = LFSaw(Line(3, 17, 3, 0),0) * 0.5 + 0.5 * Line(1, 0, 10, 0);
+Mix(Resonz(src, XLine(10000, 10, 10, 0), Line(1, 0.05, 10, 0)) * amp)
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; bell patch
+var spectrum = #[0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
+var amplitudes = #[0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1];
+var numpartials = spectrum.size;
+var modfreqs1 = {Rand(1, 5)}.dup(numpartials);
+var modfreqs2 = {Rand(0.1, 3)}.dup(numpartials);
+var decaytimes = {arg i; Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials))))}.dup(numpartials);
+var partial = {
+    arg i;
+	var freq = spectrum.at(i) + (SinOsc(modfreqs1.at(i), 0) * 0.005) * 500;
+	var amp = 0.1 * Line(1, 0, decaytimes.at(i), 0) * (SinOsc(modfreqs2.at(i), 0) * 0.1 + 0.9 * amplitudes.at(i));
+	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
+};
+Mix(partial.dup(spectrum.size));

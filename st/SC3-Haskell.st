@@ -3,8 +3,8 @@
     "Write my hsc3 representation to a file."
     | c |
     c := self ugenSet.
-    c asArray with: (1 to: c size) do: [:u :i | u ugenId: i]. "<- assign id to UGens for serialisation"
-    fn writeTextFile: [:fd |
+    c asArray with: (1 to: c size) do: [ :u :i | u ugenId: i ]. "<- assign id to UGens for serialisation"
+    fn writeTextFile: [ :fd |
      'let {' putOn: fd.
      c do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].
      '} in ' putOn: fd.
@@ -35,13 +35,13 @@
   !
   printHaskellDefinitionOn: fd
     "Print my hsc3 definition."
-    |hasMulAdd mce nc|
+    | hasMulAdd mce nc |
     hasMulAdd := (mul ~= 1) or: (add ~= 0).
     hasMulAdd ifTrue: ['(mulAddOptimised ' putOn: fd.].
     '(mkUGen Nothing all_rates ' putOn: fd.
     ugenRate isArray
-     ifTrue: ['(Right ' putOn: fd. ugenRate printHaskellArrayOn: fd. ') ' putOn: fd]
-     ifFalse: ['(Left ' putOn: fd. ugenRate asString putOn: fd. ') ' putOn: fd].
+      ifTrue: ['(Right ' putOn: fd. ugenRate printHaskellArrayOn: fd. ') ' putOn: fd]
+      ifFalse: ['(Left ' putOn: fd. ugenRate asString putOn: fd. ') ' putOn: fd].
     ugenName asString printHaskellOn: fd.
     fd space.
     '[' putOn: fd.
@@ -82,7 +82,7 @@
   printHaskellOn: fd
     "Print my hsc3 representation."
     '(' putOn: fd.
-    transform notNil ifTrue: [transform do: [:x | x printHaskellOn: fd. fd space]].
+    transform notNil ifTrue: [ transform do: [ :x | x printHaskellOn: fd. fd space ] ].
     source printHaskellOn: fd.
     ')' putOn: fd
   !
@@ -126,7 +126,7 @@
   printHaskellOn: fd
     "Print my hsc3 representation.  Special cased for Infinity"
     | txt |
-    txt := (self = Float infinity) ifTrue: ['dinf'] ifFalse: [self asString].
+    txt := (self = Float infinity) ifTrue: [ 'dinf' ] ifFalse: [ self asString ].
     txt putOn: fd
   !
 !
@@ -135,7 +135,7 @@
   printHaskellArrayOn: fd
     "Print my hsc3 representation."
     '[' putOn: fd.
-    self do: [:x | x printHaskellOn: fd. ] separatedBy: [',' putOn: fd].
+    self do: [ :x | x printHaskellOn: fd. ] separatedBy: [ ',' putOn: fd ].
     ']' putOn: fd
   !
   printHaskellOn: fd
@@ -166,11 +166,15 @@
 !
 
 !String methodsFor: 'printing'!
+  asHaskell
+    ^'"' , self , '"'
+  !
   printHaskellOn: fd
     "Print my hsc3 representation."
-    $" putOn: fd.
-    self putOn: fd.
-    $" putOn: fd
+    fd
+      nextPut: $";
+      nextPutAll: self;
+      nextPut: $"
   !
 !
 
@@ -184,13 +188,16 @@
 !Splay methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
-  '(splay ' putOn: fd.
-  #(#input #spread #level #center #levelComp) do: [:x| (self perform: x) printHaskellOn: fd] separatedBy: [' ' putOn: fd].
-  ') ' putOn: fd
+    '(splay ' putOn: fd.
+    #(#input #spread #level #center #levelComp) do: [ :x | (self perform: x) printHaskellOn: fd ] separatedBy: [ ' ' putOn: fd ].
+    ') ' putOn: fd
   !
 !
 
 !True methodsFor: 'printing'!
+  asHaskell
+    'True'
+  !
   printHaskellOn: fd
     "Print my hsc3 representation."
     'True' putOn: fd
@@ -198,6 +205,9 @@
 !
 
 !False methodsFor: 'printing'!
+  asHaskell
+    'False'
+  !
   printHaskellOn: fd
     "Print my hsc3 representation."
     'False' putOn: fd
@@ -207,19 +217,21 @@
 !Control methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
-    '(control kr ' putOn: fd.
-    self name asString printHaskellOn: fd.
-    fd space.
-    self init asString putOn: fd.
-    ') ' putOn: fd
+    fd
+      nextPutAll: '(control kr ';
+      nextPutAll: self name asString asHaskell;
+      space;
+      nextPutAll: self init asString;
+      nextPutAll: ') '
   !
 !
 
 !Constant methodsFor: 'printing'!
   printHaskellOn: fd
     "Print my hsc3 representation."
-    '(constant (' putOn: fd.
-    self k asString putOn: fd.
-    ')) ' putOn: fd
+    fd
+      nextPutAll: '(constant (';
+      nextPutAll: self k asString;
+      nextPutAll: ')) '
   !
 !

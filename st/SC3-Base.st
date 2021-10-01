@@ -92,6 +92,9 @@
     fillFunc := (self numArgs = 1) ifTrue: [ self ] ifFalse: [ [ :x | self value ] ].
     ^aNumber arrayFill: fillFunc
   !
+  dupZeroIndexed: aNumber
+    ^[ :x | self value: x - 1 ] dup: aNumber
+  !
   dup
     ^self dup: 2
   !

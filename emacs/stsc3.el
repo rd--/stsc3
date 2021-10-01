@@ -44,6 +44,13 @@
   "Delete trailing newlines from string."
   (replace-regexp-in-string "\n\\'" "" s))
 
+(defun stsc3-ugen-exemplar ()
+  "Insert an exemplar UGen before <point>."
+  (interactive)
+  (let ((p (format "hsc3-help ugen exemplar st %s" (thing-at-point 'symbol))))
+    (insert " ")
+    (insert (stsc3-remove-trailing-newline (shell-command-to-string p)))))
+
 (defun stsc3-filein-current-file ()
   "Filein the current buffer file name to Smalltalk."
   (interactive)

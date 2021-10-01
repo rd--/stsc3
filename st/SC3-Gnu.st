@@ -39,7 +39,7 @@
   !
   putOn: fd
   "Run nextPut: for each character in self."
-    ^1 to: self size do: [:i | fd nextPut: (self at: i)]
+    ^1 to: self size do: [ :i | fd nextPut: (self at: i) ]
   !
 !
 
