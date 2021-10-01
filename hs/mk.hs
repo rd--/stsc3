@@ -48,7 +48,7 @@ ugen =
   ,"OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"RHPF","RLPF","Rand","RecordBuf","Resonz","Ringz","RunningMax"
-  ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slope","Sweep","SyncSaw"
+  ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slope","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1"
   ,"VarSaw","Vibrato"
   ,"WhiteNoise","Wrap"

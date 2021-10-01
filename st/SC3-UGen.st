@@ -7022,6 +7022,80 @@ Slope comment: 'Slope of signal'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #Stepper
+  instanceVariableNames: 'trig reset min max step resetval'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Stepper comment: 'Pulse counter.'!
+
+!Stepper methodsFor: 'accessing'!
+  trig ^trig!
+  trig: x trig := x!
+  reset ^reset!
+  reset: x reset := x!
+  min ^min!
+  min: x min := x!
+  max ^max!
+  max: x max := x!
+  step ^step!
+  step: x step := x!
+  resetval ^resetval!
+  resetval: x resetval := x!
+!
+
+!Stepper methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Stepper.
+    paramNames := #(#trig #reset #min #max #step #resetval).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    trig := 0.0. reset := 0.0. min := 0.0. max := 7.0. step := 1.0. resetval := 0.0!
+!
+
+
+!Stepper class methodsFor: 'instance creation'!
+  trig: trig reset: reset min: min max: max step: step resetval: resetval
+    |u|
+    u := self new.
+    u trig: trig.
+    u reset: reset.
+    u min: min.
+    u max: max.
+    u step: step.
+    u resetval: resetval.
+    ^u!
+  trig: trig reset: reset min: min max: max step: step resetval: resetval mul: mul
+    |u|
+    u := self new.
+    u trig: trig.
+    u reset: reset.
+    u min: min.
+    u max: max.
+    u step: step.
+    u resetval: resetval.
+    u mul: mul.
+    ^u!
+  trig: trig reset: reset min: min max: max step: step resetval: resetval mul: mul add: add
+    |u|
+    u := self new.
+    u trig: trig.
+    u reset: reset.
+    u min: min.
+    u max: max.
+    u step: step.
+    u resetval: resetval.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#trig:reset:min:max:step:resetval:!
+!
+
 UGen subclass: #Sweep
   instanceVariableNames: 'trig rate'
   classVariableNames: ''

@@ -364,6 +364,9 @@ Mce comment: 'Multiple Channel Expansion'!
   at: x
     ^self copy transform: (Array with: #mceChannel with: x - 1)
   !
+  atWrap: x
+    ^self copy transform: (Array with: #mceChannelWrap with: x - 1)
+  !
   clump: x
     ^self copy transform: (Array with: #mceClump with: x)
   !

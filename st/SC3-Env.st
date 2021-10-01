@@ -51,23 +51,32 @@ Env comment: 'Specification for a segmented envelope'!
   levels: p1 times: p2 curves: p3
     ^Env levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
   !
+  levels: p1 times: p2
+    ^Env levels: p1 times: p2 curves: #(1)
+  !
+  primaryFactoryMethod ^#levels:times:curves:releaseNode:loopNode:offset:!
+  apply: arg
+    ^self perform: (self primaryFactoryMethod) withArguments: arg
+  !
 !
 
 !Env methodsFor: 'envelope coordinates'!
   coord
     | n r d |
-    n := times size.
+    n := levels size - 1.
     r := Array new: ((n + 1) * 4).
     r at: 1 put: (levels at: 1).
     r at: 2 put: n.
     r at: 3 put: (releaseNode ifNil: [-99] ifNotNil: [releaseNode]).
     r at: 4 put: (loopNode ifNil: [-99] ifNotNil: [loopNode]).
     d := self curveNameDictionary.
-    (1 to: n) do: [: i |
+    (1 to: n) do: [ :i |
+      | c |
+      c := curves atWrap: i.
       r at: (1 + (i * 4)) put: (levels at: (i + 1)).
-      r at: (2 + (i * 4)) put: (times at: i).
-      r at: (3 + (i * 4)) put: (d at: (curves at: i) ifAbsent: [5]).
-      r at: (4 + (i * 4)) put: ((curves at: i) isSymbol ifTrue: [0] ifFalse: [curves at: i]) ].
+      r at: (2 + (i * 4)) put: (times atWrap: i).
+      r at: (3 + (i * 4)) put: (d at: c ifAbsent: [5]).
+      r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [0] ifFalse: [c]) ].
     ^r
   !
 !
