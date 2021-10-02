@@ -2614,6 +2614,75 @@ FreeVerb comment: 'A reverb'!
   primaryFactoryMethod ^#in:mix:room:damp:!
 !
 
+UGen subclass: #FreeVerb2
+  instanceVariableNames: 'in in2 mix room damp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FreeVerb2 comment: 'A two-channel reverb'!
+
+!FreeVerb2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  in2 ^in2!
+  in2: x in2 := x!
+  mix ^mix!
+  mix: x mix := x!
+  room ^room!
+  room: x room := x!
+  damp ^damp!
+  damp: x damp := x!
+!
+
+!FreeVerb2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FreeVerb2.
+    paramNames := #(#in #in2 #mix #room #damp).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. in2 := 0.0. mix := 0.33. room := 0.5. damp := 0.5!
+!
+
+
+!FreeVerb2 class methodsFor: 'instance creation'!
+  in: in in2: in2 mix: mix room: room damp: damp
+    |u|
+    u := self new.
+    u in: in.
+    u in2: in2.
+    u mix: mix.
+    u room: room.
+    u damp: damp.
+    ^u!
+  in: in in2: in2 mix: mix room: room damp: damp mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u in2: in2.
+    u mix: mix.
+    u room: room.
+    u damp: damp.
+    u mul: mul.
+    ^u!
+  in: in in2: in2 mix: mix room: room damp: damp mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u in2: in2.
+    u mix: mix.
+    u room: room.
+    u damp: damp.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:in2:mix:room:damp:!
+!
+
 UGen subclass: #Gendy1
   instanceVariableNames: 'ampdist durdist adparam ddparam minfreq maxfreq ampscale durscale initCPs knum'
   classVariableNames: ''

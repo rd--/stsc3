@@ -36,7 +36,7 @@ ugen =
   ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
-  ,"Formant","FSinOsc","FreeVerb"
+  ,"Formant","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IRand","Impulse","In","InFeedback","InRange"

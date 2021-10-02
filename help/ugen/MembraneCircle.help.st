@@ -1,6 +1,6 @@
 "membraneCircle ; event control ; note limited voice count"
 | f |
-f := [ :e :ix |
+f := [ :e |
   | loss wobble tension env exc |
   loss := LinExp in: e y srclo: 0 srchi: 1 dstlo: 0.99999 dsthi: 0.99950.
   wobble := SinOsc freq: 2 phase: 0.

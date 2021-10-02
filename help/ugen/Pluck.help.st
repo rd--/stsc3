@@ -1,6 +1,6 @@
 "pluck ; event control"
 | f |
-f := [ :e :i |
+f := [ :e |
   | n dm dl sig |
   n := WhiteNoise mul: e z.
   dm := 1 / 220.

@@ -1,6 +1,6 @@
 "LagUD ; event control"
 | f |
-f := [ :e :i |
+f := [ :e |
  | o w |
  o := SinOsc freq: (e x * 24 + 48) midicps phase: 0.
  w := LagUD in: e w lagTimeU: 0.001 lagTimeD: 2.0.

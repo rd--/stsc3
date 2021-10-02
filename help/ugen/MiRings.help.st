@@ -1,6 +1,6 @@
 "MiRings ; 0=MODAL_RESONATOR ; event control ; i.e. hsc3-sensel-ll -v -m 16"
 | f |
-f := [ :e :i |
+f := [ :e |
   | tr |
   tr := Trig1 in: e w dur: ControlDur new.
   MiRings in: 0

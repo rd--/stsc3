@@ -23,7 +23,7 @@ SinOsc freq: x phase: 0 mul: y
 
 "SinOsc ; simple bell-like tone"
 | f a o e |
-f := #(0.5 1.0 1.19 1.56 2.0 2.51 2.66 3.01 4.1) collect: [:x | x * 500].
+f := #(0.5 1.0 1.19 1.56 2.0 2.51 2.66 3.01 4.1) collect: [ :x | x * 500 ].
 a := #(0.25 1.0 0.8 0.5 0.9 0.4 0.3 0.6 0.1).
 o := SinOsc freq: f phase: 0 mul: a.
 e := EnvPerc attackTime: 0.01 releaseTime: 10 level: 0.1 curves: #(-4 -4).
@@ -50,7 +50,7 @@ a3 := (SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0.
 
 "sinOsc ; with frequency of zero, operates as table lookup variant of sin"
 | mk_phasor ph o1 o2 o3 |
-mk_phasor := [:l :r :f | Phasor trig: 0 rate: (SampleDur new * (r - l) * f) ir start: l end: r resetPos: l].
+mk_phasor := [ :l :r :f | Phasor trig: 0 rate: (SampleDur new * (r - l) * f) ir start: l end: r resetPos: l ].
 ph := mk_phasor value: 0 value: Float pi * 2 value: 440.
 o1 := SinOsc freq: 440 phase: 0.
 o2 := SinOsc freq: 0 phase: ph.
@@ -62,14 +62,14 @@ Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75
 
 "sinOsc ; event control"
 | f |
-f := [:e :i |
- Pan2 in: (SinOsc freq: (e x * 24 + 48) midicps phase: 0) pos: e o * 2 - 1 level: e z * e w * 0.5].
+f := [ :e |
+ Pan2 in: (SinOsc freq: (e x * 24 + 48) midicps phase: 0) pos: e o * 2 - 1 level: e z * e w * 0.5 ].
 (EventControl numVoices: 16 voiceFunc: f) mix
 
 "sinOsc ; gliss"
 | t l m a f |
 t := 60.
-l := [:x | XLine start: (x at: 1) end: (x at: 2) dur: t doneAction: 0].
+l := [ :x | XLine start: (x at: 1) end: (x at: 2) dur: t doneAction: 0 ].
 m := #((0.5 0.5) (0.5 1) (1 1.19) (1.19 1.56) (1.56 2) (2.51 2) (3.01 2.66) (4.1 3.01) (4.1 4.1)).
 a := #(0.25 0.25 1 0.8 0.5 0.9 0.4 0.3 0.6 0.1 0.1).
 f := m collect: l.
@@ -80,7 +80,7 @@ o := SinOsc freq: 440 phase: 0
 o hash
 o freq
 o perform: #freq
-o paramNames collect: [:x | o perform: x]
+o paramNames collect: [ :x | o perform: x ]
 o class == SinOsc
 o class name == #SinOsc
 o ugenRate == #ar
