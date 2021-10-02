@@ -5028,6 +5028,65 @@ MantissaMask comment: 'Reduce precision.'!
   primaryFactoryMethod ^#in:bits:!
 !
 
+UGen subclass: #MembraneCircle
+  instanceVariableNames: 'excitation tension loss'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
+
+!MembraneCircle methodsFor: 'accessing'!
+  excitation ^excitation!
+  excitation: x excitation := x!
+  tension ^tension!
+  tension: x tension := x!
+  loss ^loss!
+  loss: x loss := x!
+!
+
+!MembraneCircle methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MembraneCircle.
+    paramNames := #(#excitation #tension #loss).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    excitation := 0.0. tension := 0.05. loss := 0.99999!
+!
+
+
+!MembraneCircle class methodsFor: 'instance creation'!
+  excitation: excitation tension: tension loss: loss
+    |u|
+    u := self new.
+    u excitation: excitation.
+    u tension: tension.
+    u loss: loss.
+    ^u!
+  excitation: excitation tension: tension loss: loss mul: mul
+    |u|
+    u := self new.
+    u excitation: excitation.
+    u tension: tension.
+    u loss: loss.
+    u mul: mul.
+    ^u!
+  excitation: excitation tension: tension loss: loss mul: mul add: add
+    |u|
+    u := self new.
+    u excitation: excitation.
+    u tension: tension.
+    u loss: loss.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#excitation:tension:loss:!
+!
+
 UGen subclass: #MiRings
   instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
   classVariableNames: ''
@@ -8593,6 +8652,7 @@ XLine comment: 'Exponential line generator.'!
   ceil ^ UnaryOpUGen specialIndex: 8 a: self!
   floor ^ UnaryOpUGen specialIndex: 9 a: self!
   frac ^ UnaryOpUGen specialIndex: 10 a: self!
+  squared ^ UnaryOpUGen specialIndex: 12 a: self!
   cubed ^ UnaryOpUGen specialIndex: 13 a: self!
   sqrt ^ UnaryOpUGen specialIndex: 14 a: self!
   exp ^ UnaryOpUGen specialIndex: 15 a: self!

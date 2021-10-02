@@ -9,7 +9,7 @@ import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17)
+  ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17)
   ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42),("softclip",43)]
 
@@ -43,7 +43,7 @@ ugen =
   ,"K2A","Klang","Klank"
   ,"LFCub","LFDNoise3","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinRand","LocalBuf","LocalIn","LocalOut"
-  ,"MantissaMask","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY"
+  ,"MantissaMask","MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY"
   ,"Normalizer"
   ,"OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
