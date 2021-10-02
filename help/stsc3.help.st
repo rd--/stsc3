@@ -2,6 +2,7 @@
 '/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn "open Workspace on named file"
 
 SC3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
+SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on the hsc3-graphs database"
 
 "Envelope"
 
@@ -387,17 +388,18 @@ ObjectMemory snapshot: '/tmp/stsc3.img'. "save image file (to indicated image fi
 ObjectMemory compact. "garbage collection (major)"
 ObjectMemory scavenge. "garbage collection (minor)"
 ObjectMemory current inspect. "vm memory statistics"
+File image asString. "location of image file"
 
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Env.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Event.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
 
 "Help Graphs"
 
