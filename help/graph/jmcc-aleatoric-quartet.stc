@@ -12,5 +12,5 @@ var mkSig = {
   var x = PinkNoise() * (LFNoise1(8) * dmul + dadd).max(0);
   Pan2(CombL(x, 0.02, mkFreq.value.reciprocal, 3), Rand(-1, 1), 1)};
 var g = 4.mixFill(mkSig);
-5.iota.do({arg ix; g = rapf.value(g)});
+5.timesRepeat({g = rapf.value(g)});
 LeakDC(g, 0.995)

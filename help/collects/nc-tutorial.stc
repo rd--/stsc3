@@ -86,7 +86,7 @@ var partial = {
 	var amp = 0.1 * Line(1, 0, decaytimes.at(i), 0) * (SinOsc(modfreqs2.at(i), 0) * 0.1 + 0.9 * amplitudes.at(i));
 	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
 };
-Mix(partial.dup(spectrum.size));
+Mix(partial.dup(spectrum.size))
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 SinOsc(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 100, 0) * 0.1
