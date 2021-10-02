@@ -3709,6 +3709,55 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
+UGen subclass: #LFDNoise3
+  instanceVariableNames: 'freq'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFDNoise3 comment: 'Dynamic cubic noise'!
+
+!LFDNoise3 methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+!
+
+!LFDNoise3 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFDNoise3.
+    paramNames := #(#freq).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 500.0!
+!
+
+
+!LFDNoise3 class methodsFor: 'instance creation'!
+  freq: freq
+    |u|
+    u := self new.
+    u freq: freq.
+    ^u!
+  freq: freq mul: mul
+    |u|
+    u := self new.
+    u freq: freq.
+    u mul: mul.
+    ^u!
+  freq: freq mul: mul add: add
+    |u|
+    u := self new.
+    u freq: freq.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#freq:!
+!
+
 UGen subclass: #LFNoise0
   instanceVariableNames: 'freq'
   classVariableNames: ''
@@ -5265,6 +5314,65 @@ MoogLadder comment: 'Moog Filter Emulation'!
   primaryFactoryMethod ^#in:ffreq:res:!
 !
 
+UGen subclass: #MouseButton
+  instanceVariableNames: 'minval maxval lag'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MouseButton comment: 'Mouse button UGen.'!
+
+!MouseButton methodsFor: 'accessing'!
+  minval ^minval!
+  minval: x minval := x!
+  maxval ^maxval!
+  maxval: x maxval := x!
+  lag ^lag!
+  lag: x lag := x!
+!
+
+!MouseButton methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MouseButton.
+    paramNames := #(#minval #maxval #lag).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    minval := 0.0. maxval := 1.0. lag := 0.2!
+!
+
+
+!MouseButton class methodsFor: 'instance creation'!
+  minval: minval maxval: maxval lag: lag
+    |u|
+    u := self new.
+    u minval: minval.
+    u maxval: maxval.
+    u lag: lag.
+    ^u!
+  minval: minval maxval: maxval lag: lag mul: mul
+    |u|
+    u := self new.
+    u minval: minval.
+    u maxval: maxval.
+    u lag: lag.
+    u mul: mul.
+    ^u!
+  minval: minval maxval: maxval lag: lag mul: mul add: add
+    |u|
+    u := self new.
+    u minval: minval.
+    u maxval: maxval.
+    u lag: lag.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#minval:maxval:lag:!
+!
+
 UGen subclass: #MouseX
   instanceVariableNames: 'minval maxval warp lag'
   classVariableNames: ''
@@ -6566,6 +6674,342 @@ RunningMax comment: 'Track maximum level.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#in:trig:!
+!
+
+UGen subclass: #RBezier
+  instanceVariableNames: 'haltAfter dx freq phase param'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RBezier comment: '(Undocumented class)'!
+
+!RBezier methodsFor: 'accessing'!
+  haltAfter ^haltAfter!
+  haltAfter: x haltAfter := x!
+  dx ^dx!
+  dx: x dx := x!
+  freq ^freq!
+  freq: x freq := x!
+  phase ^phase!
+  phase: x phase := x!
+  param ^param!
+  param: x param := x!
+!
+
+!RBezier methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RBezier.
+    paramNames := #(#haltAfter #dx #freq #phase).
+    mceNames := #(#param).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    haltAfter := 100.0. dx := 0.0001. freq := 440.0. phase := 0.0!
+!
+
+
+!RBezier class methodsFor: 'instance creation'!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
+    |u|
+    u := self new.
+    u haltAfter: haltAfter.
+    u dx: dx.
+    u freq: freq.
+    u phase: phase.
+    u param: param.
+    ^u!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul
+    |u|
+    u := self new.
+    u haltAfter: haltAfter.
+    u dx: dx.
+    u freq: freq.
+    u phase: phase.
+    u param: param.
+    u mul: mul.
+    ^u!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add
+    |u|
+    u := self new.
+    u haltAfter: haltAfter.
+    u dx: dx.
+    u freq: freq.
+    u phase: phase.
+    u param: param.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
+!
+
+UGen subclass: #RDX7Env
+  instanceVariableNames: 'gate data r1 r2 r3 r4 l1 l2 l3 l4 ol'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RDX7Env comment: '(Undocumented class)'!
+
+!RDX7Env methodsFor: 'accessing'!
+  gate ^gate!
+  gate: x gate := x!
+  data ^data!
+  data: x data := x!
+  r1 ^r1!
+  r1: x r1 := x!
+  r2 ^r2!
+  r2: x r2 := x!
+  r3 ^r3!
+  r3: x r3 := x!
+  r4 ^r4!
+  r4: x r4 := x!
+  l1 ^l1!
+  l1: x l1 := x!
+  l2 ^l2!
+  l2: x l2 := x!
+  l3 ^l3!
+  l3: x l3 := x!
+  l4 ^l4!
+  l4: x l4 := x!
+  ol ^ol!
+  ol: x ol := x!
+!
+
+!RDX7Env methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RDX7Env.
+    paramNames := #(#gate #data #r1 #r2 #r3 #r4 #l1 #l2 #l3 #l4 #ol).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    gate := 0.0. data := 0.0. r1 := 0.0. r2 := 0.0. r3 := 0.0. r4 := 0.0. l1 := 0.0. l2 := 0.0. l3 := 0.0. l4 := 0.0. ol := 0.0!
+!
+
+
+!RDX7Env class methodsFor: 'instance creation'!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
+    |u|
+    u := self new.
+    u gate: gate.
+    u data: data.
+    u r1: r1.
+    u r2: r2.
+    u r3: r3.
+    u r4: r4.
+    u l1: l1.
+    u l2: l2.
+    u l3: l3.
+    u l4: l4.
+    u ol: ol.
+    ^u!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul
+    |u|
+    u := self new.
+    u gate: gate.
+    u data: data.
+    u r1: r1.
+    u r2: r2.
+    u r3: r3.
+    u r4: r4.
+    u l1: l1.
+    u l2: l2.
+    u l3: l3.
+    u l4: l4.
+    u ol: ol.
+    u mul: mul.
+    ^u!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul add: add
+    |u|
+    u := self new.
+    u gate: gate.
+    u data: data.
+    u r1: r1.
+    u r2: r2.
+    u r3: r3.
+    u r4: r4.
+    u l1: l1.
+    u l2: l2.
+    u l3: l3.
+    u l4: l4.
+    u ol: ol.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#gate:data:r1:r2:r3:r4:l1:l2:l3:l4:ol:!
+!
+
+UGen subclass: #RExpRandN
+  instanceVariableNames: 'lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RExpRandN comment: '(Undocumented class)'!
+
+!RExpRandN methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!RExpRandN methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RExpRandN.
+    paramNames := #(#lo #hi).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0!
+!
+
+
+!RExpRandN class methodsFor: 'instance creation'!
+  numChan: numChan lo: lo hi: hi
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#numChan:lo:hi:!
+!
+
+UGen subclass: #RRandN
+  instanceVariableNames: 'lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RRandN comment: '(Undocumented class)'!
+
+!RRandN methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!RRandN methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RRandN.
+    paramNames := #(#lo #hi).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0!
+!
+
+
+!RRandN class methodsFor: 'instance creation'!
+  numChan: numChan lo: lo hi: hi
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#numChan:lo:hi:!
+!
+
+UGen subclass: #RTScramble
+  instanceVariableNames: 'trigger inputs'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RTScramble comment: '(Undocumented class)'!
+
+!RTScramble methodsFor: 'accessing'!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  inputs ^inputs!
+  inputs: x inputs := x!
+!
+
+!RTScramble methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RTScramble.
+    paramNames := #(#trigger).
+    mceNames := #(#inputs).
+    ugenRate := #kr.
+    numChan := #mceInput.
+    specialIndex := 0.
+    ugenId := nil.
+    trigger := 0.0!
+!
+
+
+!RTScramble class methodsFor: 'instance creation'!
+  trigger: trigger inputs: inputs
+    |u|
+    u := self new.
+    u trigger: trigger.
+    u inputs: inputs.
+    ^u!
+  trigger: trigger inputs: inputs mul: mul
+    |u|
+    u := self new.
+    u trigger: trigger.
+    u inputs: inputs.
+    u mul: mul.
+    ^u!
+  trigger: trigger inputs: inputs mul: mul add: add
+    |u|
+    u := self new.
+    u trigger: trigger.
+    u inputs: inputs.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#trigger:inputs:!
 !
 
 UGen subclass: #SampleDur

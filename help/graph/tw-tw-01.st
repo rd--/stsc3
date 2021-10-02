@@ -4,7 +4,7 @@ s := [ :k |
   | f |
   f := [ :i |
     | x |
-    x := Impulse freq: (k == 0 ifTrue: [1] ifFalse: [0.5 ** i / k]) phase: 0.
+    x := Impulse freq: (k == 0 ifTrue: [ 1 ] ifFalse: [ 0.5 ** i / k ]) phase: 0.
     SinOsc freq: i phase: (SinOsc freq: ((i + k) ** i) phase: 0) / (Decay in: x decayTime: (Mce with: i with: i + 1) mul: k) kr ].
   6 mixFill: f ].
 z := 16 mixFill: s.

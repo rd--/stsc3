@@ -489,7 +489,9 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
 [10 rand] dup: 10 "=> #(7 8 10 3 6 6 7 8 3 4)"
 [] class = BlockClosure
-[: x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
+[ :x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
+([ 1 ] cull: 2) == 1 "=> true"
+([ :x | x ] cull: 2) == 2 "=> true"
 
 "Delay"
 (Delay forMilliseconds: 500) wait

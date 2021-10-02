@@ -1,8 +1,8 @@
 "chrd (rd) ; graph rewrite"
 | gen |
-gen := [:tr |
+gen := [ :tr |
   | chrd scale octaves mnn chd |
-  chrd := [:m |
+  chrd := [ :m |
     | ds d f z e p o |
     ds := 3.
     d := #(5 4 5 7 4 5) * ds.
@@ -11,10 +11,10 @@ gen := [:tr |
     e := z envGen: tr doneAction: 0.
     p := TXLine start: (TRand lo: -1 hi: 1 trig: tr) end: (TRand lo: -1 hi: 1 trig: tr) dur: d trig: tr.
     o := SinOsc freq: f kr phase: 0.
-    (Pan2 in: o pos: p level: e) mix].
+    (Pan2 in: o pos: p level: e) mix ].
   scale := #(0 2 4 5 7 9 11).
   octaves := #(4 5 6 7).
   mnn := (scale collect: [ :n | octaves collect: [ :o | n + (o * 12) ] ]) concatenation.
-  chd := [TChoose trig: tr array: mnn] dup: 6.
-  9 mixFill: [ :i | chrd value: chd ] ].
+  chd := [ TChoose trig: tr array: mnn ] dup: 6.
+  9 mixFill: [ chrd value: chd ] ].
 OverlapTexture graphFunc: gen sustainTime: 21 transitionTime: 0 overlap: 3

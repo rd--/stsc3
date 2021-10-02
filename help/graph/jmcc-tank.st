@@ -1,7 +1,7 @@
 "tank (jmcc)"
 | r_allpass pling bang tank signal |
 r_allpass := [ :z | AllpassN in: z maxdelaytime: 0.03 delaytime: [Rand lo: 0.005 hi: 0.02] dup decaytime: 1 ].
-pling := [ :j |
+pling := [
   | d f p s1 s2 |
   d := Dust density: 0.2.
   f := ExpRand lo: 300 hi: 2200.
@@ -26,5 +26,5 @@ tank := [ :i |
   l7 := l6 + i.
   Mrg lhs: l7 rhs: (LocalOut channelsArray: l7) ].
 signal := (12 mixFill: pling) + bang.
-(1 to: 4) do: [ :i | signal := r_allpass value: signal ].
+4 timesRepeat: [ signal := r_allpass value: signal ].
 tank value: signal

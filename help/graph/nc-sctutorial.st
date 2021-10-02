@@ -1,7 +1,7 @@
 "https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1"
 | n mk x y |
 n := 11.
-mk := [:i |
+mk := [
  | freq numcps knum gen |
  freq := 50.0 rand: 560.3.
  numcps := 2 rand: 20.

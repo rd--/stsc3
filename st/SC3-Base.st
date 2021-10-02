@@ -27,7 +27,7 @@
 
 !SequenceableCollection methodsFor: 'enumerating'!
   withIndexCollectZeroIndexed: f
-    "sum of arrayFillZeroIndexed"
+    "Zero indexed variant of #withIndexCollect:"
     ^self withIndexCollect: [ :e :i | f value: e value: i - 1 ]
   !
 !
@@ -41,29 +41,33 @@
     "SC idiom to make a geometric series."
     | accum |
     accum := start.
-    ^(1 to: size) collect: [ :i | | entry | entry := accum. accum := grow * accum. entry ]
+    ^(1 to: size) collect: [ :i |
+      | entry |
+      entry := accum.
+      accum := grow * accum.
+      entry ]
   !
   fill: size value: aBlock
     "SC idiom to fill an array using a block"
-    ^(1 to: size) collect: [ :i | aBlock value: i ]
+    ^(1 to: size) collect: [ :i | aBlock cull: i ]
   !
 !
 
 !Integer methodsFor: 'enumerating'!
-  arrayFillZeroIndexed: f
-    "Array of (0 to: self - 1) collected with f"
-    ^(1 to: self) collect: [:i | f value: (i - 1)]
+  arrayFill: aBlock
+    ^(1 to: self) collect: [ :i | aBlock cull: i ]
   !
-  replicate: x
-    "Array of self places each being x"
-    ^self arrayFill: [:i | x]
+  arrayFillZeroIndexed: f
+    ^(1 to: self) collect: [ :i | f cull: i - 1 ]
+  !
+  replicate: item
+    "Array of myself number of places, each being item"
+    ^self arrayFill: [ item ]
   !
   mixFill: f
-    "sum of arrayFill"
     ^(self arrayFill: f) sum
   !
   mixFillZeroIndexed: f
-    "sum of arrayFillZeroIndexed"
     ^(self arrayFillZeroIndexed: f) sum
   !
 !
@@ -88,12 +92,10 @@
     [ 10 rand ] dup: 10
     [ :x | x / 2 ] dup: 10
     "
-    | fillFunc |
-    fillFunc := (self numArgs = 1) ifTrue: [ self ] ifFalse: [ [ :x | self value ] ].
-    ^aNumber arrayFill: fillFunc
+    ^aNumber arrayFill: self
   !
   dupZeroIndexed: aNumber
-    ^[ :x | self value: x - 1 ] dup: aNumber
+    ^[ :x | self cull: x - 1 ] dup: aNumber
   !
   dup
     ^self dup: 2
