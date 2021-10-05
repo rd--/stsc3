@@ -11,6 +11,10 @@
     "Random Integer between -self and self (inclusive)"
     ^(self negated) rand: self
   !
+  exprand: n
+    "Random Float with exponential distribution between self and n (inclusive)"
+    ^1.0 rand linExpFrom: self asFloat to: n asFloat.
+  !
 !
 
 !Float methodsFor: 'randomness'!

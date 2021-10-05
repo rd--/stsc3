@@ -2437,6 +2437,80 @@ ExpRand comment: 'Exponential single random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
+UGen subclass: #FFT
+  instanceVariableNames: 'buffer in hop wintype active winsize'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FFT comment: 'Fast Fourier Transform'!
+
+!FFT methodsFor: 'accessing'!
+  buffer ^buffer!
+  buffer: x buffer := x!
+  in ^in!
+  in: x in := x!
+  hop ^hop!
+  hop: x hop := x!
+  wintype ^wintype!
+  wintype: x wintype := x!
+  active ^active!
+  active: x active := x!
+  winsize ^winsize!
+  winsize: x winsize := x!
+!
+
+!FFT methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FFT.
+    paramNames := #(#buffer #in #hop #wintype #active #winsize).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    buffer := 0.0. in := 0.0. hop := 0.5. wintype := 0.0. active := 1.0. winsize := 0.0!
+!
+
+
+!FFT class methodsFor: 'instance creation'!
+  buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u in: in.
+    u hop: hop.
+    u wintype: wintype.
+    u active: active.
+    u winsize: winsize.
+    ^u!
+  buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u in: in.
+    u hop: hop.
+    u wintype: wintype.
+    u active: active.
+    u winsize: winsize.
+    u mul: mul.
+    ^u!
+  buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul add: add
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u in: in.
+    u hop: hop.
+    u wintype: wintype.
+    u active: active.
+    u winsize: winsize.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#buffer:in:hop:wintype:active:winsize:!
+!
+
 UGen subclass: #Formant
   instanceVariableNames: 'fundfreq formfreq bwfreq'
   classVariableNames: ''
@@ -3276,58 +3350,63 @@ HPZ1 comment: 'Two point difference filter'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #IRand
-  instanceVariableNames: 'lo hi'
+UGen subclass: #IFFT
+  instanceVariableNames: 'buffer wintype winsize'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'!
 
-IRand comment: 'Single integer random number generator.'!
+IFFT comment: 'Inverse Fast Fourier Transform'!
 
-!IRand methodsFor: 'accessing'!
-  lo ^lo!
-  lo: x lo := x!
-  hi ^hi!
-  hi: x hi := x!
+!IFFT methodsFor: 'accessing'!
+  buffer ^buffer!
+  buffer: x buffer := x!
+  wintype ^wintype!
+  wintype: x wintype := x!
+  winsize ^winsize!
+  winsize: x winsize := x!
 !
 
-!IRand methodsFor: 'initialization'!
+!IFFT methodsFor: 'initialization'!
   initialize
     super initialize.
-    ugenName := #IRand.
-    paramNames := #(#lo #hi).
+    ugenName := #IFFT.
+    paramNames := #(#buffer #wintype #winsize).
     mceNames := #().
-    ugenRate := #ir.
+    ugenRate := #ar.
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
-    lo := 0.0. hi := 127.0!
+    buffer := 0.0. wintype := 0.0. winsize := 0.0!
 !
 
 
-!IRand class methodsFor: 'instance creation'!
-  lo: lo hi: hi
+!IFFT class methodsFor: 'instance creation'!
+  buffer: buffer wintype: wintype winsize: winsize
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
+    u buffer: buffer.
+    u wintype: wintype.
+    u winsize: winsize.
     ^u!
-  lo: lo hi: hi mul: mul
+  buffer: buffer wintype: wintype winsize: winsize mul: mul
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
+    u buffer: buffer.
+    u wintype: wintype.
+    u winsize: winsize.
     u mul: mul.
     ^u!
-  lo: lo hi: hi mul: mul add: add
+  buffer: buffer wintype: wintype winsize: winsize mul: mul add: add
     |u|
     u := self new.
-    u lo: lo.
-    u hi: hi.
+    u buffer: buffer.
+    u wintype: wintype.
+    u winsize: winsize.
     u mul: mul.
     u add: add.
     ^u!
-  primaryFactoryMethod ^#lo:hi:!
+  primaryFactoryMethod ^#buffer:wintype:winsize:!
 !
 
 UGen subclass: #Impulse
@@ -3545,6 +3624,60 @@ InRange comment: 'Tests if a signal is within a given range.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#in:lo:hi:!
+!
+
+UGen subclass: #IRand
+  instanceVariableNames: 'lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+IRand comment: 'Single integer random number generator.'!
+
+!IRand methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!IRand methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #IRand.
+    paramNames := #(#lo #hi).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 127.0!
+!
+
+
+!IRand class methodsFor: 'instance creation'!
+  lo: lo hi: hi
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#lo:hi:!
 !
 
 UGen subclass: #K2A
@@ -6369,6 +6502,65 @@ PulseDivider comment: 'Pulse divider.'!
     u add: add.
     ^u!
   primaryFactoryMethod ^#trig:div:start:!
+!
+
+UGen subclass: #PV_RandComb
+  instanceVariableNames: 'buffer wipe trig'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+PV_RandComb comment: 'Pass random bins.'!
+
+!PV_RandComb methodsFor: 'accessing'!
+  buffer ^buffer!
+  buffer: x buffer := x!
+  wipe ^wipe!
+  wipe: x wipe := x!
+  trig ^trig!
+  trig: x trig := x!
+!
+
+!PV_RandComb methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #PV_RandComb.
+    paramNames := #(#buffer #wipe #trig).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    buffer := 0.0. wipe := 0.0. trig := 0.0!
+!
+
+
+!PV_RandComb class methodsFor: 'instance creation'!
+  buffer: buffer wipe: wipe trig: trig
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u wipe: wipe.
+    u trig: trig.
+    ^u!
+  buffer: buffer wipe: wipe trig: trig mul: mul
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u wipe: wipe.
+    u trig: trig.
+    u mul: mul.
+    ^u!
+  buffer: buffer wipe: wipe trig: trig mul: mul add: add
+    |u|
+    u := self new.
+    u buffer: buffer.
+    u wipe: wipe.
+    u trig: trig.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#buffer:wipe:trig:!
 !
 
 UGen subclass: #RHPF

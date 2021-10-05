@@ -157,6 +157,7 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
     u curves: p4.
     ^u
   !
+  primaryFactoryMethod ^#attackTime:releaseTime:level:curves:!
 !
 
 !EnvPerc methodsFor: 'envelope coordinates'!
@@ -299,6 +300,7 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
     u curves: p6.
     ^u
   !
+  primaryFactoryMethod ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:!
 !
 
 !EnvADSR methodsFor: 'envelope coordinates'!

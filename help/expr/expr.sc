@@ -338,3 +338,9 @@ SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 1.to(9,2).collect({arg i; i + i})                 // [ 2, 6, 10, 14, 18 ]
 9.to(1,-1).asArray == 9.series(nil,1)             // true ; (9 .. 1)
 9.to(1).asArray == []                             // true
+
+'Collection'
+[1, 3, 2, 9, 4, 5, 7, 8, 6].maxItem               // 9
+
+'SequencableCollection'
+[1, 3, 2, 9, 4, 5, 7, 8, 6].sort                  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
