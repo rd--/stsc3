@@ -222,7 +222,7 @@ SinOsc superclass superclass superclass name = #Object. "true"
 SinOsc superclass superclass superclass superclass. "nil ; ProtoObject"
 
 SinOsc subclasses size = 0. "true"
-UGen subclasses size = 104. "true"
+UGen subclasses size = 153. "true"
 
 SinOsc methodDict. "Squeak"
 SinOsc methodDictionary. "Gnu Smalltalk"

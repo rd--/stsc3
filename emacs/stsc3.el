@@ -44,11 +44,17 @@
   "Delete trailing newlines from string."
   (replace-regexp-in-string "\n\\'" "" s))
 
-(defun stsc3-ugen-exemplar ()
-  "Insert an exemplar UGen before <point>."
-  (interactive)
-  (let ((p (format "hsc3-help ugen exemplar st %s" (thing-at-point 'symbol))))
-    (insert " ")
+(defun stsc3-ugen-list ()
+  "List of SuperCollider UGen names."
+  (split-string (shell-command-to-string "hsc3-db list ugen all st")))
+
+(defvar stsc3-ugen-history nil
+  "List of recently selected UGens.")
+
+(defun stsc3-ugen-exemplar (ugen-name)
+  "Insert an exemplar UGen instance at <point>."
+  (interactive (list (completing-read "UGen: " (stsc3-ugen-list) nil t nil 'stsc3-ugen-list)))
+  (let ((p (format "hsc3-help ugen exemplar st %s" ugen-name)))
     (insert (stsc3-remove-trailing-newline (shell-command-to-string p)))))
 
 (defun stsc3-filein-current-file ()
@@ -156,6 +162,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map (kbd "C-c >") 'stsc3-see-smalltalk)
   (define-key map (kbd "C-c C-c") 'stsc3-send-current-line)
   (define-key map (kbd "C-c C-h") 'stsc3-help)
+  (define-key map (kbd "C-c C-u") 'stsc3-ugen-exemplar)
   (define-key map (kbd "C-c C-a") 'stsc3-play-region)
   (define-key map (kbd "C-c C-g") 'stsc3-draw-region)
   (define-key map (kbd "C-c C-i") 'stsc3-interrupt-smalltalk)
@@ -167,13 +174,14 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   "Smalltalk SuperCollider Menu"
   (define-key map [menu-bar stsc3] (cons "Smalltalk-SuperCollider" (make-sparse-keymap "Smalltalk-SuperCollider")))
   (define-key map [menu-bar stsc3 help] (cons "Help" (make-sparse-keymap "Help")))
-  (define-key map [menu-bar stsc3 help stsc3] '("STSC3 Help" . stsc3-help))
+  (define-key map [menu-bar stsc3 help stsc3] '("StSc3 Help" . stsc3-help))
+  (define-key map [menu-bar stsc3 help ugen] '("UGen Exemplar" . stsc3-ugen-exemplar))
   (define-key map [menu-bar stsc3 expression] (cons "Expression" (make-sparse-keymap "Expression")))
   (define-key map [menu-bar stsc3 expression stop] '("Stop (interrupt and reset)" . stsc3-stop))
   (define-key map [menu-bar stsc3 expression send-current-line] '("Send current line" . stsc3-send-current-line))
   (define-key map [menu-bar stsc3 expression draw-region] '("Draw region" . stsc3-draw-region))
   (define-key map [menu-bar stsc3 expression play-region] '("Play region" . stsc3-play-region))
-  (define-key map [menu-bar stsc3 scsynth] (cons "SCSynth" (make-sparse-keymap "SCSynth")))
+  (define-key map [menu-bar stsc3 scsynth] (cons "ScSynth" (make-sparse-keymap "SCSynth")))
   (define-key map [menu-bar stsc3 scsynth quit] '("Quit scsynth" . stsc3-quit-scsynth))
   (define-key map [menu-bar stsc3 scsynth reset] '("Reset scsynth" . stsc3-reset-scsynth))
   (define-key map [menu-bar stsc3 Smalltalk] (cons "Smalltalk" (make-sparse-keymap "Smalltalk")))
