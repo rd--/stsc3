@@ -1,4 +1,7 @@
-; .stc files contain smalltalk code written in c-smalltalk (supercollider) notation
+;;; stc.el --- C-Smalltalk SuperCollider
+
+;;; Commentary:
+; .stc files contain Smalltalk code written in C-Smalltalk (SuperCollider) notation.
 
 (require 'comint)
 (require 'thingatpt)
@@ -6,8 +9,10 @@
 (require 'stsc3)
 (require 'sclang-mode)
 
+;;; Code:
+
 (defun stc-process-region ()
-  "Translate region from C-Smalltalk to Smalltalk notation, return result as string"
+  "Translate region from C-Smalltalk to Smalltalk notation, return result as string."
   (with-output-to-string
     (shell-command-on-region
      (region-beginning)
@@ -16,12 +21,12 @@
      standard-output)))
 
 (defun stc-eval-region ()
-  "Evaluate region"
+  "Evaluate region."
   (interactive)
   (stsc3-send-string (stc-process-region)))
 
 (defun stc-send-region-msg (msg)
-  "Send region to Smalltalk, appending msg."
+  "Send region to Smalltalk, appending MSG."
   (let ((str (stc-process-region)))
     (stsc3-send-string (format "[%s] value %s " str msg))))
 
@@ -39,7 +44,7 @@
   "Keymap for stc mode.")
 
 (defun stc-mode-keybindings (map)
-  "Install stc keybindings into `map'."
+  "Install stc keybindings into MAP."
   (define-key map (kbd "C-c C-e") 'stc-eval-region)
   (define-key map (kbd "C-c C-a") 'stc-play-region)
   (define-key map (kbd "C-c C-g") 'stc-draw-region))
@@ -61,3 +66,5 @@
 (add-to-list 'auto-mode-alist '("\\.stc$" . stc-mode))
 
 (provide 'stc)
+
+;;; stc.el ends here

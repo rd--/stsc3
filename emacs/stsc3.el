@@ -1,3 +1,6 @@
+;;; stsc3.el --- Smalltalk SuperCollider
+
+;;; Commentary:
 ; Indentation and font locking is courtesy `smalltalk-mode' mode.
 ; Inter-process communication is courtesy `comint'.
 ; Symbol at point acquisition is courtesy `thingatpt'.
@@ -7,6 +10,8 @@
 (require 'comint)
 (require 'thingatpt)
 (require 'find-lisp)
+
+;;; Code:
 
 (defcustom stsc3-buffer "*stsc3*"
   "*The name of the stsc3 Smalltalk process buffer."
@@ -18,11 +23,11 @@
 (defvar stsc3-directory nil
   "*The stsc3 directory (default=nil).")
 
-(defun stsc3-send-string (s)
-  "Send string and newline to Smalltalk."
+(defun stsc3-send-string (str)
+  "Send STR and newline to Smalltalk."
   (if (comint-check-proc stsc3-buffer)
-      (comint-send-string stsc3-buffer (concat s "\n"))
-    (error "no stsc3 process?")))
+      (comint-send-string stsc3-buffer (concat str "\n"))
+    (error "No stsc3 process?")))
 
 (defun stsc3-send-quit ()
   "Quit Smalltalk."
@@ -30,6 +35,7 @@
   (stsc3-send-string "ObjectMemory quit"))
 
 (defun stsc3-find-files (dir rgx)
+  "Find files at DIR matching RGX."
   (mapc (lambda (filename)
           (find-file-other-window filename))
         (find-lisp-find-files dir rgx)))
@@ -40,9 +46,9 @@
   (let ((rgx (concat "^" (thing-at-point 'symbol) "\\.help\\.st$")))
     (stsc3-find-files (concat stsc3-directory "help/") rgx)))
 
-(defun stsc3-remove-trailing-newline (s)
-  "Delete trailing newlines from string."
-  (replace-regexp-in-string "\n\\'" "" s))
+(defun stsc3-remove-trailing-newline (str)
+  "Delete trailing newlines from STR."
+  (replace-regexp-in-string "\n\\'" "" str))
 
 (defun stsc3-ugen-list ()
   "List of SuperCollider UGen names."
@@ -51,10 +57,10 @@
 (defvar stsc3-ugen-history nil
   "List of recently selected UGens.")
 
-(defun stsc3-ugen-exemplar (ugen-name)
-  "Insert an exemplar UGen instance at <point>."
+(defun stsc3-ugen-exemplar (ugen)
+  "Insert an exemplar for UGEN instance at <point>."
   (interactive (list (completing-read "UGen: " (stsc3-ugen-list) nil t nil 'stsc3-ugen-list)))
-  (let ((p (format "hsc3-help ugen exemplar st %s" ugen-name)))
+  (let ((p (format "hsc3-help ugen exemplar st %s" ugen)))
     (insert (stsc3-remove-trailing-newline (shell-command-to-string p)))))
 
 (defun stsc3-filein-current-file ()
@@ -86,7 +92,7 @@
   (stsc3-send-string (format "[%s] value" (stsc3-region-string))))
 
 (defun stsc3-send-region-msg (msg)
-  "Send region to Smalltalk, appending msg."
+  "Send region to Smalltalk, appending MSG."
   (let ((str (stsc3-region-string)))
     (stsc3-send-string (format "[%s] value %s " str msg))))
 
@@ -157,7 +163,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   "Smalltalk SuperCollider keymap.")
 
 (defun stsc3-mode-keybindings (map)
-  "Smalltalk SuperCollider keybindings."
+  "Add Smalltalk SuperCollider keybindings to MAP."
   (define-key map (kbd "C-c <") 'stsc3-filein-current-file)
   (define-key map (kbd "C-c >") 'stsc3-see-smalltalk)
   (define-key map (kbd "C-c C-c") 'stsc3-send-current-line)
@@ -171,7 +177,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map (kbd "C-c C-.") 'stsc3-stop))
 
 (defun stsc3-mode-menu (map)
-  "Smalltalk SuperCollider Menu"
+  "Add Smalltalk SuperCollider Menu to MAP."
   (define-key map [menu-bar stsc3] (cons "Smalltalk-SuperCollider" (make-sparse-keymap "Smalltalk-SuperCollider")))
   (define-key map [menu-bar stsc3 help] (cons "Help" (make-sparse-keymap "Help")))
   (define-key map [menu-bar stsc3 help stsc3] '("StSc3 Help" . stsc3-help))
@@ -209,3 +215,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
 (add-to-list 'auto-mode-alist '("\\.st$" . stsc3-mode))
 
 (provide 'stsc3)
+
+(provide 'stsc3)
+
+;;; stsc3.el ends here
