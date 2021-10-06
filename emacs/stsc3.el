@@ -216,6 +216,4 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
 
 (provide 'stsc3)
 
-(provide 'stsc3)
-
 ;;; stsc3.el ends here
