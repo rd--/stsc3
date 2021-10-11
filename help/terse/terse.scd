@@ -44,6 +44,17 @@ pi == 3.141592653589793                                     // pi (3.14159265358
 1.exp                                                       // e (2.718281828459)
 100.rand                                                    // random number in (0, self-1)
 
+'Assignment'
+
+var x = 5;                                                  // assignment with initializer expression
+x = 5                                                       // assignment
+x = y = z = 6                                               // compound assignment
+x = (y = 6) + 1                                             // compound assignment
+x = 1.2.hash                                                // hash value for object
+y = x.copy                                                  // copy object
+y = x.shallowCopy                                           // copy object (not overridden)
+y = x.deepCopy                                              // copy object and instance vars
+
 'Array'
 
 Array.new(4) == []                                          // new array
@@ -152,6 +163,22 @@ Env.allSubclasses == [Penv]                                 // subclasses of cla
 (9.rand > 4).if('ifTrue', 'ifFalse').postln                 // if then else
 2.rand.switch(0, { 'A'.postln }, 1, { 'B'.postln })         // switch
 
+'Constants'
+
+true                                                        // true constant
+false                                                       // false constant
+nil                                                         // nil object constant
+1                                                           // integer constants
+3.14                                                        // float constants
+-1                                                          // negative constants
+"Hello"                                                     // string constant (\ quotes quote)
+$a                                                          // character constant
+$                                                           // character constant (space)
+'aSymbol'                                                   // symbol constants
+'a Symbol'                                                  // symbol constants (space)
+#[3, 2, 1]                                                  // array constants
+#['a', "a", $a, 1]                                          // mixing of types allowed
+
 'Conversion'
 
 1.0.asInteger == 1                                          // convert number to integer (truncates in Squeak)
@@ -190,6 +217,14 @@ d.occurrencesOf(3) == 1                                     // number of occuren
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
 
+'Interpreter'
+
+this.class == Interpreter                                   // context in which interactive commands
+this.interpret("1 + 2") == 3                                // interpret string
+this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
+this.s.class == Server                                      // by convention the Interpreter variable s has the default scsynth
+this.executeFile("program.scd")                             // run program text
+
 'Interval'
 
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
@@ -200,10 +235,33 @@ Interval.new( 0, 12, 3).size == 5                           // number of element
 
 4.do({ 'x'.postln}) == 4                                    // times repeat loop (int)
 4.do({ arg x; x.postln }) == 4                              // for loop (int)
+4.reverseDo({ arg x; x.postln }) == 4                       // for loop (int, reversed)
 1.to(5).do({ arg x; x.postln }) == 1.to(5)                  // for loop (interval)
 [1, 2, 3, 4, 5].do({ arg x; x.postln }) == [1, 2, 3, 4, 5]  // for loop (collection)
 1.for(5, { arg x; x.postln }) == 1                          // for loop
+1.forBy(9, 2, { arg x; x.postln }) == 1                     // for by loop
 { 9.rand > 3 }.while({ 'x'.postln }) == nil                 // while loop
+
+'Files'
+
+File.open("/tmp/x", "w").put('x').close                     // open file, put value, close file
+File.use("/tmp/x", "w", {arg f; f.put('x') })               // use file to put value
+File.exists("/tmp/x") == true                               // file exists predicate
+File.fileSize("/tmp/x") == 1                                // file size (bytes)
+File.readAllString("/tmp/x") == "x"                         // read file contents
+File.use("/tmp/x", "r", {arg f; f.getChar }) == $x          // use file to read character
+File.delete("/tmp/x")                                       // delete file
+
+'Functions (Blocks)'
+
+x = { }                                                     // blocks are objects and may be assigned to a variable
+{ nil; 1 }.value == 1                                       // value is last expression evaluated unless explicit return
+{ { 1 }.value }.value == 1                                  // blocks may be nested
+{ arg x; var y = x; y }.value(1) == 1                       // specification { arguments localvars expressions }
+{ ^1 }.value                                                // ^expression terminates block & method (exits all nested blocks)
+{ 'x'.postln }.value                                        // simple block usage
+{ arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
+{ arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
 
 'Magnitude'
 
@@ -271,6 +329,20 @@ pi.raddeg == 180                                            // radiansToDegrees
 "text".postln                                               // write text to post window (console)
 'sym'.postln                                                // write object to post window (console)
 
+'Pseudo variables'
+
+false.class == False                                        // constant (instance of False)
+nil.class == Nil                                            // constant (instance of Nil)
+pi.class == Float                                           // constant (instance of Float)
+super.class == Interpreter                                  // super (self starting name lookup at parent)
+this.class == Interpreter                                   // self
+thisFunction.class == Function                              // context
+thisFunctionDef.class == FunctionDef                        // context
+thisMethod.class == Method                                  // context
+thisProcess.class == Main                                   // context
+thisThread.class == Thread                                  // context
+true.class == True                                          // constant (instance of True)
+
 'SequenceableCollection'
 
 [1, 3, 2, 4, 5].sort(nil) == [1, 2, 3, 4, 5]                // sort using default comparison
@@ -308,8 +380,8 @@ pi.raddeg == 180                                            // radiansToDegrees
 String.browse                                               // browse specified class
 Server.default.inspect                                      // open object inspector window
 nil.halt                                                    // breakpoint to stop interpreter
-"Error string".error                                        // print error string
-"Error string".reportError                                  // print error string and print backtrace
+"Text".error                                                // print error string
+"Text".reportError                                          // print error string and print backtrace
 nil.doesNotUnderstand('unknownMessage')                     // flag message is not handled
 nil.shouldNotImplement                                      // flag message should not be implemented
 nil.subclassResponsibility                                  // flag message as abstract
