@@ -339,6 +339,7 @@ EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!
     u level: p2.
     ^u
   !
+  primaryFactoryMethod ^#dur:level:!
 !
 
 !EnvSine methodsFor: 'envelope coordinates'!

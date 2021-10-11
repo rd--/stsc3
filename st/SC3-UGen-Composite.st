@@ -100,6 +100,27 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   !
 !
 
+AbstractUGen subclass: #TLine
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'
+!
+
+TLine comment: 'Triggered Line.'!
+
+!TLine class methodsFor: 'instance creation'!
+  start: start end: end dur: dur trig: trig
+    | env |
+    env := Env levels: (Array with: start with: start with: end)
+               times: (Array with: 0 with: dur)
+               curves: #(#lin #lin)
+               releaseNode: -1 loopNode: -1 offset: 0.
+    ^EnvGen gate: trig levelScale: 1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: env coord
+  !
+  primaryFactoryMethod ^#start:end:dur:trig:!
+!
+
 AbstractUGen subclass: #TXLine
   instanceVariableNames: ''
   classVariableNames: ''
@@ -118,6 +139,7 @@ TXLine comment: 'Triggered XLine.'!
                releaseNode: -1 loopNode: -1 offset: 0.
     ^EnvGen gate: trig levelScale: 1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: env coord
   !
+  primaryFactoryMethod ^#start:end:dur:trig:!
 !
 
 UGen subclass: #TChoose
