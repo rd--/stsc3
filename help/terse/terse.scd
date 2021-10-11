@@ -40,8 +40,8 @@ pi.raddeg == 180.0                                          // convert radians t
 0.0.tan == 0.0                                              // tangent
 10.max(20) == 20                                            // get maximum of two numbers
 10.min(20) == 10                                            // get minimum of two numbers
-pi == 3.141592653589793                                     // pi
-1.exp                                                       // e
+pi == 3.141592653589793                                     // pi (3.141592653589793)
+1.exp                                                       // e (2.718281828459)
 100.rand                                                    // random number in (0, self-1)
 
 'Array'
@@ -51,27 +51,27 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
 #[1, 2, 3, 4] == [1, 2, 3, 4]                               // literal array syntax
 [1, 2, 3, 4].at(0) == 1                                     // indexing (access element in slot at index)
-[1, 2, 3, 4].collect({arg x; x * x}) == [1, 4, 9, 16]       // map function over elements
-[1, 2, 3, 4].detect({arg x; x > 2}) == 3                    // find first element for which predicate holds
-[1, 2, 3, 4].detectIndex({arg x; x > 2}) == 2               // find index of first element for which predicate holds
-[1, 2, 3, 4].do({arg x; x.postln}) == [1, 2, 3, 4]          // run function at each element
-[1, 2, 3, 4].inject(0, {arg z, e; e - z}) == 2              // left fold: (1 - 0)
-[1, 2, 3, 4].injectr(0, {arg z, e; e - z}) == -2            // right fold
+[1, 2, 3, 4].collect({ arg x; x * x }) == [1, 4, 9, 16]     // map function over elements
+[1, 2, 3, 4].detect({ arg x; x > 2 }) == 3                  // find first element for which predicate holds
+[1, 2, 3, 4].detectIndex({ arg x; x > 2 }) == 2             // find index of first element for which predicate holds
+[1, 2, 3, 4].do({ arg x; x.postln }) == [1, 2, 3, 4]        // run function at each element
+[1, 2, 3, 4].inject(0, { arg z, e; e - z }) == 2            // left fold: (1 - 0)
+[1, 2, 3, 4].injectr(0, { arg z, e; e - z }) == -2          // right fold
 [].isEmpty == true                                          // Array -> Bool
 [1, 2, 3, 4].includes(3) == true                            // has element
 [1, 2, 3, 4].put(0, '1') == ['1', 2, 3, 4]                  // set element at index
-[1, 2, 3, 4].reject({arg x; x > 2}) == [1, 2]               // filter elements
-[1, 2, 3, 4].select({arg x; x > 2}) == [3, 4]               // filter elements
+[1, 2, 3, 4].reject({ arg x; x > 2 }) == [1, 2]             // filter elements
+[1, 2, 3, 4].select({ arg x; x > 2 }) == [3, 4]             // filter elements
 [1, 2, 3, 4].scramble                                       // randomly shuffle elements
 [1, 2, 3, 4].size == 4                                      // array length
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
 
 'Assignment'
 
-{var x, y, z; nil}                                          // variable declaration
-{var x; x = 5; x == 5}                                      // assignment (set variable x to 5)
-{var x, y, z; x = y = z = 5; [x, y, z] == [5, 5, 5]}        // compound assignment (set variables x y and z all to 5)
-{var x, y; x = (y = 5) + 1; [x, y] == [6, 5]}               // expression assignment
+{ var x, y, z; nil }                                        // variable declaration
+{ var x; x = 5; x == 5 }                                    // assignment (set variable x to 5)
+{ var x, y, z; x = y = z = 5; [x, y, z] == [5, 5, 5] }      // compound assignment (set variables x y and z all to 5)
+{ var x, y; x = (y = 5) + 1; [x, y] == [6, 5] }             // expression assignment
 
 'Association'
 
@@ -93,9 +93,9 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 
 true == true                                                // constant
 false == false                                              // constant
-true.if({'ifTrue'.postln})                                  // if then
-false.if({'ifTrue'.postln}, {'ifFalse'.postln})             // if then else (do)
-true.if({'ifTrue'}, {'ifFalse'}).postln                     // if then else (value)
+true.if({ 'ifTrue'.postln })                                // if then, c.f. conditional statements
+false.if({ 'ifTrue'.postln }, { 'ifFalse'.postln })         // if then else (do)
+true.if({ 'ifTrue' }, { 'ifFalse' }).postln                 // if then else (value)
 true.not.not == true                                        // not
 1.isKindOf(Number) == true                                  // test if object is class or subclass of
 1.isMemberOf(Integer) == true                               // test if object is type of class
@@ -147,10 +147,10 @@ Env.allSubclasses == [Penv]                                 // subclasses of cla
 
 'Conditional Statements'
 
-(9.rand > 4).if({ "ifTrue".postln })                        // if then
-(9.rand > 4).if({ "ifTrue".postln }, { "ifFalse".postln })  // if then else
-(9.rand > 4).if("ifTrue", "ifFalse").postln                 // if then else
-2.rand.switch(0, { "A".postln }, 1, { "B".postln })         // switch
+(9.rand > 4).if({ 'ifTrue'.postln })                        // if then
+(9.rand > 4).if({ 'ifTrue'.postln }, { 'ifFalse'.postln })  // if then else
+(9.rand > 4).if('ifTrue', 'ifFalse').postln                 // if then else
+2.rand.switch(0, { 'A'.postln }, 1, { 'B'.postln })         // switch
 
 'Conversion'
 
@@ -176,25 +176,25 @@ Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString         // Mon Apr 12 14:57:
 d = Dictionary.new(4)                                       // new empty dictionary
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence
-d.associationsDo({arg x; x.postln})                         // run f at associations of dictionary
+d.associationsDo({ arg x; x.postln })                       // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
-d.do({arg x; x.postln})                                     // run f at values of dictionary
+d.do({ arg x; x.postln })                                   // run f at values of dictionary
 d.includes(3) == true                                       // does dictionary have indicated value
 d.includesKey('z') == true                                  // does dictionary have indicated key
 d.keys == Set.newFrom(['x', 'y', 'z'])                      // set of keys at dictionary
-d.keysDo({arg x; x.postln})                                 // run f at keys of dictionary
-d.keysValuesDo({arg k, v; [k, v].postln})                   // run f at keys & values of dictionary
+d.keysDo({ arg x; x.postln })                               // run f at keys of dictionary
+d.keysValuesDo({ arg k, v; [k, v].postln })                 // run f at keys & values of dictionary
 d.occurrencesOf(3) == 1                                     // number of occurences of value in dictionary
-{d.removeAt('x') == 1; d.add('x' -> 1)}.value               // remove (and return value associated with) key from dictionary
+{ d.removeAt('x') == 1; d.add('x' -> 1) }.value             // remove (and return value associated with) key from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
-d.values.sort({arg i, j; i <= j}) == List.newFrom([1, 2, 3])// list of values at dictionary
+d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
 
 'Interval'
 
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
 Interval.new( 0, 12, 3).size == 5                           // number of elements in interval
-2.to(14, 4).collect({arg x; x * x}) == [4, 36, 100, 196]    // to method at Integer
+2.to(14, 4).collect({ arg x; x * x }) == [4, 36, 100, 196]  // to method at Integer
 
 'Iteration'
 
@@ -274,7 +274,7 @@ pi.raddeg == 180                                            // radiansToDegrees
 'SequenceableCollection'
 
 [1, 3, 2, 4, 5].sort(nil) == [1, 2, 3, 4, 5]                // sort using default comparison
-[1, 3, 2, 4, 5].sort({arg i, j; i <= j}) == [1, 2, 3, 4, 5] // sort using provided comparison
+[1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
 
 'String'
 
