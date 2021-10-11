@@ -153,8 +153,8 @@ Env.allSubclasses == [Penv]                                 // subclasses of cla
 
 'Comments'
 
-"comment"                                                   // until end of line comment
-"comment"                                                   // /* multi-line, interior-line comment */
+"until end of line comment"                                 // until end of line comment
+"multi-line or interior-line comment"                       // /* multi-line or interior-line comment */
 
 'Conditional Statements'
 
