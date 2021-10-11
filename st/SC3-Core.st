@@ -635,7 +635,7 @@ Constant comment: 'Constant Numerical Value'!
   !
 !
 
-Object subclass: #OverlapTexture
+AbstractUGen subclass: #OverlapTexture
    instanceVariableNames: ''
    classVariableNames: ''
    poolDictionaries: ''
@@ -646,13 +646,14 @@ OverlapTexture comment: 'Texture Generator'!
 
 !OverlapTexture class methodsFor: 'texture generation'!
   graphFunc: graphFunc sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
-    ^overlap mixFill: [:i |
+    ^overlap mixFill: [ :i |
       | t s e |
       t := Impulse freq: (1 / (sustainTime + (transitionTime * 2))) phase: (i / overlap).
       s := graphFunc value: t.
       e := EnvLinen attackTime: transitionTime sustainTime: sustainTime releaseTime: transitionTime level: 1 curves: #(#sin #sin #sin).
-      s * (e env gen: t doneAction: 0)]
+      s * (e env gen: t doneAction: 0) ]
   !
+  primaryFactoryMethod ^#graphFunc:sustainTime:transitionTime:overlap:!
 !
 
 AbstractUGen subclass: #MulAdd

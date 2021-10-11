@@ -2511,6 +2511,65 @@ FFT comment: 'Fast Fourier Transform'!
   primaryFactoryMethod ^#buffer:in:hop:wintype:active:winsize:!
 !
 
+UGen subclass: #Fold
+  instanceVariableNames: 'in lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Fold comment: 'Fold a signal outside given thresholds.'!
+
+!Fold methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!Fold methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Fold.
+    paramNames := #(#in #lo #hi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. lo := 0.0. hi := 1.0!
+!
+
+
+!Fold class methodsFor: 'instance creation'!
+  in: in lo: lo hi: hi
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  in: in lo: lo hi: hi mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    ^u!
+  in: in lo: lo hi: hi mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:lo:hi:!
+!
+
 UGen subclass: #Formant
   instanceVariableNames: 'fundfreq formfreq bwfreq'
   classVariableNames: ''

@@ -1,0 +1,18 @@
+// analogue daze (jmcc) #3
+var pattern = #[55, 63, 60, 63, 57, 65, 62, 65];
+var f = {
+    arg octave, clockRate, pwmrate, fltrate;
+    var sequ = {arg s, tr; Demand(tr.kr, 0, Dseq(inf, s))};
+    var tr = Impulse(clockRate, 0);
+    var patternCps = (pattern + (12 * octave)).midicps;
+    var sq = sequ.value(patternCps, tr);
+    var pwm = SinOsc(pwmrate, (2 * pi).rand) * 0.4 + 0.5;
+    var cf = SinOsc(fltrate, (2 * pi).rand) * 1400 + 2000;
+    RLPF(LFPulse(Lag(sq, 0.05).kr, 0, pwm.kr) * 0.1, cf.kr, 1/15);
+};
+var a = { LFNoise0(LFNoise1(0.3) * 6000 + 8000).kr }.dup * 0.07;
+var x = Decay(Impulse(2, 0), 0.15) * a;
+var g = x + [f.value(1, 8, 0.31, 0.2),  f.value(0, 2, 0.13, 0.11)];
+var z = CombN(g, 0.375, 0.375, 5) + g.reverse * 0.4;
+var e = EnvLinen(2, 56, 2, 1, #['lin']);
+z * e.envGen
