@@ -1,3 +1,5 @@
 Derived from Chris Rathman's Terse Guide to Smalltalk
 
 <https://www.angelfire.com/tx4/cus/notes/smalltalk.html>
+
+The terse.scd file is written to be comprehensible to the .stc parser (ie. it is in the .stc subset of .scd)

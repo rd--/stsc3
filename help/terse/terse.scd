@@ -81,13 +81,13 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 
 'Bitwise Manipulation'
 
-0xFF.bitAnd(0x0F) == 0x0F                                   // and bits
-0xF0.bitOr(0x0F) == 0xFF                                    // or bits
-0xFF.bitXor(0x0F) == 0xF0                                   // xor bits
-0xFF.bitNot == -0x100                                       // invert bits
-0x0F.leftShift(4) == 0xF0                                   // left shift
-0xF0.rightShift(4) == 0x0F                                  // right shift
-0x80.bitTest(7) == true                                     // bit at position (0|1) [!Squeak]
+2.bitAnd(3) == 2                                            // and bits
+2.bitOr(3) == 3                                             // or bits
+2.bitXor(3) == 1                                            // xor bits
+3.bitNot == -4                                              // invert bits
+2.leftShift(3) == 16                                        // left shift
+16.rightShift(3) == 2                                       // right shift
+2.bitTest(1) == true                                        // bit at position (0|1) [!Squeak]
 
 'Booleans'
 
