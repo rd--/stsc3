@@ -68,7 +68,7 @@ pattern_pp pat =
     KeywordPattern kp -> strjn (concatMap (\(k,a) -> [k,a]) kp)
 
 temporaries_pp :: Temporaries -> String
-temporaries_pp (Temporaries t) = printf "|%s|\n" (strjn t)
+temporaries_pp (Temporaries t) = printf "| %s |\n" (strjn t)
 
 initializerDefinition_pp :: InitializerDefinition -> String
 initializerDefinition_pp (InitializerDefinition t s) =
@@ -77,7 +77,7 @@ initializerDefinition_pp (InitializerDefinition t s) =
 blockBody_pp :: BlockBody -> String
 blockBody_pp (BlockBody _ a t s) =
   strjn ["["
-        ,maybe "" (printf "%s|" . strjn . map blockArgument_pp) a
+        ,maybe "" (printf "%s |" . strjn . map blockArgument_pp) a
         ,maybe "" temporaries_pp t
         ,maybe "" statements_pp s
         ,"]"]
@@ -123,7 +123,7 @@ primary_pp pr =
     PrimaryLiteral l -> literal_pp l
     PrimaryBlock b -> blockBody_pp b
     PrimaryExpression e -> printf "(%s)" (expression_pp e)
-    PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map basicExpression_pp a))
+    PrimaryArrayExpression a -> printf "{%s}" (intercalate ". " (map basicExpression_pp a))
 
 unaryMessage_pp :: UnaryMessage -> String
 unaryMessage_pp = selectorIdentifier . unaryMessageSelector

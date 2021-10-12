@@ -428,7 +428,7 @@ true.class == True                                          // constant (instanc
 
 'Symbol'
 
-'symbol'.class == Symbol                                     // symbol
+'symbol'.class == Symbol                                    // symbol
 Symbol.superclass == Object                                 // Symbol is not a subclass of String
 'symbol'.asString == "symbol"                               // convert to string
 'x y'.asCompileString == "'x y'"                            // convert to quoted string
