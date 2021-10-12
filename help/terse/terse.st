@@ -68,6 +68,10 @@ Float e = 2.718281828459045                                 "exp constant"
 123 isMemberOf: SmallInteger                                "test if object is type of class"
 123 respondsTo: #sqrt                                       "test if object responds to message"
 
+"Collection"
+
+#(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
+
 "Conversion"
 
 3.99 asInteger = 4                                          "convert number to integer (truncates in Squeak)"

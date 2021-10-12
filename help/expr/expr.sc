@@ -1,67 +1,4 @@
-'Comments'
-x // y
-
-'Literals'
-0
-1
--1
-1.2
--1.2
-inf
-$x
-$.
-$$
-"x"
-'x'
-\x
-
-'Literal Arrays'
-#[]
-#[1]
-#[1.2]
-#["x"]
-#['x']
-#[\x]
-#[1,2,3]
-#[1.2,3.4,5.6]
-
-'Pseudo Variables'
-pi
-true
-false
-this // self in Smalltalk
-
-'Assignment'
-a = 24
-x = y
-x = 99.9
-x = \y
-x = 'y'
-
-'Unary Methods'
-x.y
-x.y.z
-x.y.z.y
-
 'Binary Methods'
-4 + 5 == 9                                        // true
-1 ! 2 == [1,1]                                    // true
-1 @ 2 == Point.new(x: 1, y: 2)                    // true
-1 @ 2
-1 % 2 == 1                                        // true
-1.5 % 0.5 == 0                                    // true
-(5.iota % 2) == [0,1,0,1,0]                       // true
-1 & 2
-1 * 2
-1 + 2
-1 < 2
-1 > 2
-1 ? 2
-1 / 2
-1 - 2
-1 | 2
-1 <> 2
-1 == 2
 4 + 5 * 6
 4 + 5 * 6 / 7
 1.2 ** i / 16
@@ -243,50 +180,11 @@ p.q(x:a,b)               // p.q([\x: -> (a),b])
 p.q(a,x:b)               // p.q([a,\x: -> (b)])
 p.q(a,x: b.c(y: d,e))    // p.q([a,\x: -> (b.c([\y: -> (d),e]))])
 
-'Boolean'
-1 != 2 == true                // => true
-true.and(false) == false      // => true
-true.or(false) == true        // => true
-true || false == true         // => true
-true && false == false        // => true
-
-
-'Strings'
-"x" + "y" == "x y"            // => true
-"x" ++ "y" == "xy"            // => true
-"".isEmpty == true            // true
-"text".copyRange(2,2) == "x"  // true
-"text".copyRange(1,2) == "ex" // true
-
-'Symbols'
-'x 1'.asString == "x 1"            // true
-'x $ x'.asString == "x $ x"        // true
-'x y'.class == Symbol              // true
-'x y'.asCompileString == "'x y'"   // true
-\x.class == Symbol                 // true
-\x.asCompileString == "'x'"        // true
-
-'Array'
-Array.new(6).size == 0        // => true
-Array.newClear(6).size == 6   // => true
-
 'Integer Math'
 5.div(2) == 2                 // => true
 7.div(3) == 2                 // => true
 -5.div(2) == -3               // => true
 -7.div(3) == -3               // => true
-
-'Complex'
-Complex.new(-1,0).pow(1/2)
-
-'Classes'
-SinOsc.name == 'SinOsc'                 // true
-SinOsc.class.class == Class             // true
-SinOsc.superclass == PureUGen           // true
-SinOsc.superclass.superclass == UGen    // true
-SinOsc.subclasses == nil                // true
-UGen.subclasses.size == 325             // true
-SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 
 'Iteration'
 4.for(5,{arg x; [\for,x].postln})
@@ -298,9 +196,6 @@ SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 
 'Randomness'
 {var i=0,x=nil; {x=1.0.rand; i=i+1; x>0.1}.while({[x,i].postln})}.value
-
-'Bitwise'
-0 | 1 == 1               // true
 
 'Variable Arguments'
 -3.abs == 3
@@ -338,9 +233,3 @@ SinOsc.superclasses == [PureUGen, UGen, AbstractFunction, Object] // true
 1.to(9,2).collect({arg i; i + i})                 // [ 2, 6, 10, 14, 18 ]
 9.to(1,-1).asArray == 9.series(nil,1)             // true ; (9 .. 1)
 9.to(1).asArray == []                             // true
-
-'Collection'
-[1, 3, 2, 9, 4, 5, 7, 8, 6].maxItem               // 9
-
-'SequencableCollection'
-[1, 3, 2, 9, 4, 5, 7, 8, 6].sort                  // [1, 2, 3, 4, 5, 6, 7, 8, 9]

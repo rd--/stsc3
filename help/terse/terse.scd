@@ -43,6 +43,7 @@ pi.raddeg == 180.0                                          // convert radians t
 pi == 3.141592653589793                                     // pi (3.141592653589793)
 1.exp                                                       // e (2.718281828459)
 100.rand                                                    // random number in (0, self-1)
+4 + 5 * 6 == 54                                             // operators are evaluated left to right
 
 'Assignment'
 
@@ -57,18 +58,26 @@ y = x.deepCopy                                              // copy object and i
 
 'Array'
 
-Array.new(4) == []                                          // new array
+Array.new(4) == []                                          // new empty array
+Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
+Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by calling function
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
 #[1, 2, 3, 4] == [1, 2, 3, 4]                               // literal array syntax
+#[]                                                         // empty literal array
+#[1, 3.14, 'x', \x, "x"]                                    // heterogenous literal array
 [1, 2, 3, 4].at(0) == 1                                     // indexing (access element in slot at index)
 [1, 2, 3, 4].collect({ arg x; x * x }) == [1, 4, 9, 16]     // map function over elements
 [1, 2, 3, 4].detect({ arg x; x > 2 }) == 3                  // find first element for which predicate holds
 [1, 2, 3, 4].detectIndex({ arg x; x > 2 }) == 2             // find index of first element for which predicate holds
-[1, 2, 3, 4].do({ arg x; x.postln }) == [1, 2, 3, 4]        // run function at each element
+[1, 2, 3, 4].do({ arg x; x.postln }) == [1, 2, 3, 4]        // iterate over array (run function at each element)
 [1, 2, 3, 4].inject(0, { arg z, e; e - z }) == 2            // left fold: (1 - 0)
 [1, 2, 3, 4].injectr(0, { arg z, e; e - z }) == -2          // right fold
-[].isEmpty == true                                          // Array -> Bool
+[].isEmpty == true                                          // is array empty
+[1, 2, 3, 4].includes(3) == true                            // test if element is in array
+[1, 2, 3, 4].copyRange(1, 2) == [2, 3]                      // subarray
+[1, 2, 3, 4].every({ arg x; x < 5 }) == true                // test if all elements meet condition
+[1, 2, 3, 4].any({ arg x; x == 3 }) == true                 // test if any elements meet condition
 [1, 2, 3, 4].includes(3) == true                            // has element
 [1, 2, 3, 4].put(0, '1') == ['1', 2, 3, 4]                  // set element at index
 [1, 2, 3, 4].reject({ arg x; x > 2 }) == [1, 2]             // filter elements
@@ -76,6 +85,11 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 [1, 2, 3, 4].scramble                                       // randomly shuffle elements
 [1, 2, 3, 4].size == 4                                      // array length
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
+{ 1 }.dup(3) == [1, 1, 1]                                   // Array.fill notation
+{ 1 } ! 3 == [1, 1, 1]                                      // infix Array.fill notation
+Array.series(4, 3, 2) == [3, 5, 7, 9]                       // arithmetic series (size from by)
+Array.geom(4, 3, 2) == [3, 6, 12, 24]                       // geometric series (size from by)
+3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
 
 'Assignment'
 
@@ -86,7 +100,8 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 
 'Association'
 
-('x' -> 1) == Association.new('x', 1)                       // literal syntax
+Association.new('x', 1)                                     // associate key with value
+'x' -> 1 == Association.new('x', 1)                         // literal syntax
 ('x' -> 1).key == 'x'                                       // key (left hand side) of association
 ('x' -> 1).value == 1                                       // value (right hand side) of association
 
@@ -99,11 +114,21 @@ Array.newClear(4) == [nil, nil, nil, nil]                   // new array with sl
 2.leftShift(3) == 16                                        // left shift
 16.rightShift(3) == 2                                       // right shift
 2.bitTest(1) == true                                        // bit at position (0|1) [!Squeak]
+2 & 3 == 2                                                  // and bits operator
+2 | 3 == 3                                                  // or bits operator
+2 << 3 == 16                                                // left shift operator
+16 >> 3 == 2                                                // right shift operator
 
 'Booleans'
 
 true == true                                                // constant
 false == false                                              // constant
+1 == 1 == true                                              // equality predicate (operator)
+1 != 2 == true                                              // equality predicate (operator)
+true.and(false) == false                                    // logical and
+true.or(false) == true                                      // logical or
+true && false == false                                      // logical and (operator)
+true || false == true                                       // logical or (operator)
 true.if({ 'ifTrue'.postln })                                // if then, c.f. conditional statements
 false.if({ 'ifTrue'.postln }, { 'ifFalse'.postln })         // if then else (do)
 true.if({ 'ifTrue' }, { 'ifFalse' }).postln                 // if then else (value)
@@ -135,26 +160,41 @@ $1.isDecDigit== true                                        // is [0-9]
 $l.isLower == true                                          // is lower case
 $ .isSpace == true                                          // is whitespace
 $U.isUpper == true                                          // is upper case
+#[$., $$, $ ]                                               // notable characters (period, dollar, space)
 
 'Class'
 
 String.name == 'String'                                     // class name
+String.class == Meta_String                                 // meta class
+String.class.class == Class                                 // class of class is Class
 String.instVarNames                                         // immediate instance variable names
 String.classVarNames                                        // immediate class variable names
 String.methods.inspect                                      // methods for class
 String.methods.collect({ arg m; m.name })                   // message selectors for class
 String.superclass == RawArray                               // immediate superclass
-String.subclasses == nil                                    // immediate subclasses
-String.allSubclasses == nil                                 // accumulated subclasses
-Env.allSubclasses == [Penv]                                 // subclasses of class
+String.superclasses.size == 5                               // all superclass
+UGen.superclasses == [AbstractFunction, Object]             // superclass sequence
+UGen.subclasses.size == 362                                 // immediate subclasses
+UGen.allSubclasses.size == 884                              // accumulated subclasses
 1.class == Integer                                          // class of value
 1.isKindOf(Number) == true                                  // is an instance of a class or a subclass
 1.respondsTo('exp') == true                                 // responds to message
+
+'Collection'
+
+[1, 3, 2, 9, 4, 5, 7, 8, 6].maxItem == 9                    // maximum item
 
 'Comments'
 
 "until end of line comment"                                 // until end of line comment
 "multi-line or interior-line comment"                       // /* multi-line or interior-line comment */
+
+'Complex'
+
+Complex.new(-1, 0).real == -1                              // real part of complex number
+Complex.new(-1, 0).imag == 0                               // imaginary part of complex number
+Complex.new(-1, 0) + 1                                     // complex addition with scalar
+Complex.new(-1, 0).pow(1 / 2)                              // complex math
 
 'Conditional Statements'
 
@@ -168,14 +208,17 @@ Env.allSubclasses == [Penv]                                 // subclasses of cla
 true                                                        // true constant
 false                                                       // false constant
 nil                                                         // nil object constant
+inf.class == Float                                          // Infinity constant (instance of Float)
 1                                                           // integer constants
 3.14                                                        // float constants
--1                                                          // negative constants
+-1                                                          // negative integer constants
+-3.14                                                       // negative float constants
 "Hello"                                                     // string constant (\ quotes quote)
 $a                                                          // character constant
 $                                                           // character constant (space)
 'aSymbol'                                                   // symbol constants
 'a Symbol'                                                  // symbol constants (space)
+\aSymbol                                                    // prefix symbol notation
 #[3, 2, 1]                                                  // array constants
 #['a', "a", $a, 1]                                          // mixing of types allowed
 
@@ -262,6 +305,7 @@ x = { }                                                     // blocks are object
 { 'x'.postln }.value                                        // simple block usage
 { arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
 { arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
+({ arg x; x * 2 } <> { arg x; x + 3 }).value(4) == 14       // function composition
 
 'Magnitude'
 
@@ -289,6 +333,7 @@ x = { }                                                     // blocks are object
 3.neg == -3                                                 // negation
 3.odd == true                                               // oddness predicate
 pi == 3.1415926535898                                       // constant pi (Float pi)
+inf                                                         // constant positive infinity
 2.pow(3) == 8                                               // i to the power of j
 5.reciprocal == 0.2                                         // 1 / x
 (pi/2).sin == 1                                             // sine
@@ -304,25 +349,26 @@ pi.raddeg == 180                                            // radiansToDegrees
 9.perform('sqrt') == 3                                      // indirect method invocation (unary)
 1.perform('min', 2) == 1                                    // indirect method invocation (binary)
 1.perform('+', 2) == 3                                      // indirect method invocation (operator)
-1.exp.log == 1                                              // method chaining (log of exp of 1)
+1.exp.log == 1                                              // unary method chaining (log of exp of 1)
+1.min(2).max(3) == 3                                        // n-ary method chaining
 
 'Point'
 
-200@100                                                     // obtain a new point
-(200@100).x                                                 // x coordinate
-(200@100).y                                                 // y coordinate
-0 - (200@100)                                               // negates x and y
-(0 - (200@100)).abs                                         // absolute value of x and y
-200@100 + 1                                                 // add scale to both x and y
-200@100 - 1                                                 // subtract scale from both x and y
-200@100 * 2                                                 // multiply x and y by scale
-200@100 / 2                                                 // divide x and y by scale
-(200@100).div(2)                                            // divide x and y by scale
-200@100 % 3                                                 // modulo of x and y by scale
-200@100 + (50@25)                                           // add points
-200@100 - (50@25)                                           // subtract points
-200@100 * (3@4)                                             // multiply points
-200@100 / (3@4)                                             // divide points
+200 @ 100 == Point.new(200, 100)                            // obtain a new point
+(200 @ 100).x                                               // x coordinate
+(200 @ 100).y                                               // y coordinate
+0 - (200 @ 100)                                             // negates x and y
+(0 - (200 @ 100)).abs                                       // absolute value of x and y
+200 @ 100 + 1                                               // add scale to both x and y
+200 @ 100 - 1                                               // subtract scale from both x and y
+200 @ 100 * 2                                               // multiply x and y by scale
+200 @ 100 / 2                                               // divide x and y by scale
+(200 @ 100).div(2)                                          // divide x and y by scale
+200 @ 100 % 3                                               // modulo of x and y by scale
+200 @ 100 + (50 @ 25)                                       // add points
+200 @ 100 - (50 @ 25)                                       // subtract points
+200 @ 100 * (3 @ 4)                                         // multiply points
+200 @ 100 / (3 @ 4)                                         // divide points
 
 'Post'
 
@@ -334,6 +380,7 @@ pi.raddeg == 180                                            // radiansToDegrees
 false.class == False                                        // constant (instance of False)
 nil.class == Nil                                            // constant (instance of Nil)
 pi.class == Float                                           // constant (instance of Float)
+inf.class == Float                                          // constant (infinity, instance of Float)
 super.class == Interpreter                                  // super (self starting name lookup at parent)
 this.class == Interpreter                                   // self
 thisFunction.class == Function                              // context
@@ -343,24 +390,32 @@ thisProcess.class == Main                                   // context
 thisThread.class == Thread                                  // context
 true.class == True                                          // constant (instance of True)
 
+'Random values'
+
+{ 9.rand }.dup(9)                                           // random integers (0 to self)
+{ 0.9.rand }.dup(3)                                         // random floats (0 to self)
+#[1, 2, 3, 4, 5].choose                                     // random element of collection
+{ 3.rrand(9) }.dup(9)                                       // random integer in range
+{ 0.3.rrand(0.9) }.dup(3)                                   // random float in range
+
 'SequenceableCollection'
 
-[1, 3, 2, 4, 5].sort(nil) == [1, 2, 3, 4, 5]                // sort using default comparison
+[1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
 [1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
 
 'String'
 
 "quoted string"                                             // quoted string
-"str" ++ "ing" == "string"                                  // catenation
-"one" + "two" == "one two"                                  // catenation with space
+"x" ++ "y" == "xy"                                          // catenation
+"x" + "y" == "x y"                                          // catenation with space
 "/usr" +/+ "local" == "/usr/local"                          // file path catenation
 "string".ascii == [115, 116, 114, 105, 110, 103]            // String -> [Int]
 "3.4".asFloat == 3.4                                        // parse float
 "3".asInteger == 3                                          // parse integer
 "string".asSymbol == 'string'                               // String -> Symbol
 "string".at(4) == $n                                        // indexing
+"".isEmpty == true                                          // empty string predicate
 "string".isEmpty == false                                   // is empty string
-"".isEmpty == true                                          // empty string
 "string".mutable == false                                   // string literals are immutable
 'string'.asString.put(3, $u) == "strung"                    // mutate string setting char at indexed slot
 'string'.asString.removeAt(5) == $g                         // mutate string removing char at slot
@@ -368,12 +423,23 @@ true.class == True                                          // constant (instanc
 "str ing".split($ ) == ["str", "ing"]                       // split at char
 "a" < "b" == true                                           // string comparison
 "dcba".copy.sort == "abcd"                                  // inplace string sort
+"text".copyRange(1,2) == "ex"                               // substring
+"text".copyRange(2,2) == "x"                                // substring (single character)
 
 'Symbol'
 
-'symbol'.asString == "symbol"                               // Symbol -> String
+'symbol'.class == Symbol                                     // symbol
+Symbol.superclass == Object                                 // Symbol is not a subclass of String
+'symbol'.asString == "symbol"                               // convert to string
+'x y'.asCompileString == "'x y'"                            // convert to quoted string
 'a' ++ 'b' == "ab"                                          // Symbol -> Symbol -> String, c.f. (#a , #b) = 'ab'
 'a' < 'b' == true                                           // symbol ordering
+
+'Temporaries'
+
+{ var x; x }.value == nil                                   // uninitialised variables are nil
+{ var x = 1, y = 2; [x, y] }.value == [1, 2]                // var can introduce multiple temporaries
+{ var x; var y = 0, z; [x, y, z] }.value == [nil, 0, nil]   // there can be multiple var sequences
 
 'Debugging'
 
