@@ -86,3 +86,14 @@ $A asciiValue = 65                                          "convert character t
 "Symbols"
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
+
+"Debugging"
+
+nil yourself = nil                                          "returns receiver"
+nil inspect                                                 "open object inspector window"
+nil halt                                                    "breakpoint to halt interpreter"
+nil halt: 'Reason'                                          "halt with indicateed text"
+nil error: 'Reason'                                         "error with indicated text"
+nil shouldNotImplement                                      "flag message should not be implemented"
+nil subclassResponsibility                                  "flag message as abstract"
+nil primitiveFailed                                         "system primitive failed"

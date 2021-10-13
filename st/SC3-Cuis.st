@@ -8,7 +8,7 @@
   dirAllFilesWithExt: ext
     |c|
     c := OrderedCollection new.
-    (self asDirectoryEntry) allFilesDo: [:x | c add: (x name)] matches: [:x | (x name) endsWith: ext].
+    (self asDirectoryEntry) allFilesDo: [ :x | c add: x name ] matches: [ :x | x name endsWith: ext ].
     ^c asArray
   !
   evalString
@@ -18,7 +18,7 @@
     ^OSProcess command: self
   !
   putOn: fd
-    ^1 to: self size do: [:i | fd nextPut: (self at: i)]
+    ^1 to: self size do: [ :i | fd nextPut: (self at: i) ]
   !
   fileListOn
     ^FileListWindow openFileList "does not open on self..."

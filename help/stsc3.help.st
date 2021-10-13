@@ -6,37 +6,32 @@ SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 
 "Envelope"
 
-Env curveNameDictionary "curve name dictionary"
+Env new curveNameDictionary "curve name dictionary"
 
 "UGen"
 
+SinOsc new inspect "initialize sets default values for parameters"
 SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
 SinOsc new freq: 440 ; phase: 0 "freq: and phase: are instance methods and ; is the cascade operator"
-SinOsc new inspect "initialize sets default values for parameters"
+SinOsc primaryFactoryMethod = #freq:phase: "objects may indicate a primary factory method"
+SinOsc apply: #(220 0.5) "perform:withArguments: at the primary factory method, in C-Smalltalk notation SinOsc(220, 0.5) translates to this"
+PinkNoise primaryFactoryMethod = #new "the primary factory method may be new"
+PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc perform: #freq:phase: withArguments: #(220 1)
 SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
-SinOsc primaryFactoryMethod = #freq:phase:
-SinOsc apply: {220. 0.5} "in C-Smalltalk notation SinOsc(220,0.5) translates to this"
-PinkNoise primaryFactoryMethod = #new
-PinkNoise apply: {} "in C-Smalltalk notation PinkNoise() translates to this"
-SinOsc ar: {220. Float pi}
-SinOsc ar: {#freq: -> 110. #phase: -> (Float pi / 4)}
-SinOsc ar: {#phase: -> 1. #freq: -> 55}
-SinOsc ar: {22.5. #phase: -> 0}
-BrownNoise ar
 
-"File I/O - Text"
+"File I/O - Text - Squeak, Gnu, Cuis"
 
 '/tmp/str.text' writeTextFile: [:fd | 5.0 asString putOn: fd].
 '/tmp/str.text' readTextFile.
 
-"File I/O - Directory"
+"File I/O - Directory - Squeak, Gnu, Cuis"
 
 '/home/rohan/sw/stsc3/help/' dirAllFilesWithExt: '.st'. "recursive directory listing by file extension"
 
-"Evaluate"
+"Evaluate - Squeak, Gnu, Cuis"
 
-'1+1' evalString = 2 "=> true ; evaluate string"
+'1 + 1' evalString = 2 "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
 "SC3"

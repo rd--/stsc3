@@ -89,6 +89,11 @@ Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with sl
 { 1 } ! 3 == [1, 1, 1]                                      // infix Array.fill notation
 Array.series(4, 3, 2) == [3, 5, 7, 9]                       // arithmetic series (size from by)
 Array.geom(4, 3, 2) == [3, 6, 12, 24]                       // geometric series (size from by)
+Array.iota(4) == [0, 1, 2, 3]                               // array with counter
+Array.iota(3, 2) == [[0, 1], [2, 3], [4, 5]]                // matrix with counter
+Array.rand(4, 1, 9)                                         // array of random numbers (uniform distribution)
+Array.linrand(4, 1, 9)                                      // array of random numbers (linear distribution)
+Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
 
 'Assignment'
@@ -164,9 +169,10 @@ $U.isUpper == true                                          // is upper case
 
 'Class'
 
+String.isKindOf(Class) == true                              // class
 String.name == 'String'                                     // class name
-String.class == Meta_String                                 // meta class
-String.class.class == Class                                 // class of class is Class
+String.class == Meta_String                                 // meta class (class of a class)
+String.class.class == Class                                 // class of a meta class is Class
 String.instVarNames                                         // immediate instance variable names
 String.classVarNames                                        // immediate class variable names
 String.methods.inspect                                      // methods for class
@@ -177,12 +183,30 @@ UGen.superclasses == [AbstractFunction, Object]             // superclass sequen
 UGen.subclasses.size == 362                                 // immediate subclasses
 UGen.allSubclasses.size == 884                              // accumulated subclasses
 1.class == Integer                                          // class of value
-1.isKindOf(Number) == true                                  // is an instance of a class or a subclass
+1.isKindOf(Number) == true                                  // is instance of a class or a subclass
+1.isMemberOf(Integer) == true                               // is instance of a class
 1.respondsTo('exp') == true                                 // responds to message
 
 'Collection'
 
-[1, 3, 2, 9, 4, 5, 7, 8, 6].maxItem == 9                    // maximum item
+[].isEmpty == true                                          // is collection empty
+[9, 4, 5, 7, 8, 6].size == 6                                // size of collection
+[9, 4, 5, 7, 8, 6].maxItem == 9                             // maximum item in collection
+[9, 4, 5, 7, 8, 6].minItem == 4                             // minimum item in collection
+[9, 4, 5, 7, 8, 6].sum == 39                                // sum of collection (inject 0 +)
+[9, 4, 5, 7, 8, 6].mean == 6.5                              // sum of collection divided by size
+[9, 4, 5, 7, 8, 6].product == 60480                         // product of collection (inject 1 *)
+[9, 4, 5, 7, 8, 6].inject(0, { arg z, e; e + z }) == 39     // sum of collection
+[9, 4, 5, 7, 8, 6].inject(1, { arg z, e; e * z }) == 60480  // product of collection
+[9, 4, 5, 7, 8, 6].includes(7) == true                      // is element in collection
+[9, 4, 5, 7, 8, 6].count({ arg item; item.even }) == 3      // count elements that satisfy predicate
+[9, 4, 5, 7, 8, 6].any({ arg item; item.even }) == true     // do any elements satisfy predicate
+[9, 4, 5, 7, 8, 6].every({ arg item; item.even }) == false  // do all elements satisfy predicate
+[9, 4, 5, 7, 8, 6].occurrencesOf(7) == 1                    // count elements that are equal to object
+[1, 2, 3].union([3, 4, 5]) == [1, 2, 3, 4, 5]               // combine two collections
+[1, 2, 3].isSubsetOf([1, 2, 3, 4, 5]) == true               // is one collection a subset of the other
+[1, [2, 3], [4, [5, 6]]].maxDepth == 3                      // tree depth of collection
+[1, [2, 3], [4, [5, 6]]].deepCollect(3, { arg x; x -> '.'}) // tree collect to indicated depth
 
 'Comments'
 
@@ -452,3 +476,4 @@ nil.doesNotUnderstand('unknownMessage')                     // flag message is n
 nil.shouldNotImplement                                      // flag message should not be implemented
 nil.subclassResponsibility                                  // flag message as abstract
 nil.primitiveFailed                                         // system primitive failed
+thisProcess.recompile                                       // recompile the class library
