@@ -5080,6 +5080,70 @@ LinRand comment: 'Skewed random number generator.'!
   primaryFactoryMethod ^#lo:hi:minmax:!
 !
 
+UGen subclass: #LinXFade2
+  instanceVariableNames: 'inA inB pan level'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinXFade2 comment: 'Two channel linear crossfade.'!
+
+!LinXFade2 methodsFor: 'accessing'!
+  inA ^inA!
+  inA: x inA := x!
+  inB ^inB!
+  inB: x inB := x!
+  pan ^pan!
+  pan: x pan := x!
+  level ^level!
+  level: x level := x!
+!
+
+!LinXFade2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LinXFade2.
+    paramNames := #(#inA #inB #pan #level).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    inA := 0.0. inB := 0.0. pan := 0.0. level := 1.0!
+!
+
+
+!LinXFade2 class methodsFor: 'instance creation'!
+  inA: inA inB: inB pan: pan level: level
+    |u|
+    u := self new.
+    u inA: inA.
+    u inB: inB.
+    u pan: pan.
+    u level: level.
+    ^u!
+  inA: inA inB: inB pan: pan level: level mul: mul
+    |u|
+    u := self new.
+    u inA: inA.
+    u inB: inB.
+    u pan: pan.
+    u level: level.
+    u mul: mul.
+    ^u!
+  inA: inA inB: inB pan: pan level: level mul: mul add: add
+    |u|
+    u := self new.
+    u inA: inA.
+    u inB: inB.
+    u pan: pan.
+    u level: level.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#inA:inB:pan:level:!
+!
+
 UGen subclass: #LocalBuf
   instanceVariableNames: 'numChannels numFrames'
   classVariableNames: ''

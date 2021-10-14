@@ -1,0 +1,12 @@
+// pentatonic pipes (jmcc) ; mousex on right half of screen causes pulsation
+var n = 5;
+var env = EnvLinen(0.2, 8, 1, 20, [\sine]);
+var mode = #[0, 3, 5, 7, 10].asLocalBuf;
+var root = 36 + 12.rand;
+var z = OverlapTexture({
+    arg tr;
+    var f = (DegreeToKey(mode, TRand(0, 20, tr), 12) + root).midicps;
+    Pan2((Resonz(PinkNoise() * env.envGen(tr), f, 0.002) * 4).distort * 0.2, TRand(-1, 1, tr), 1);
+}, 10, 0.01, n);
+z = z * LinXFade2(1, SinOsc(5, 0).max(0), MouseX(0, 1, 0, 0.2) > 0.5, 1).kr;
+CombN(z, 0.3, 0.3, 8) + z.reverse

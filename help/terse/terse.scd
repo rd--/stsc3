@@ -58,6 +58,7 @@ y = x.deepCopy                                              // copy object and i
 
 'Array'
 
+Array.new.isKindOf(SequenceableCollection) == true          // arrays are sequenceable collections
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
@@ -189,7 +190,9 @@ UGen.allSubclasses.size == 884                              // accumulated subcl
 
 'Collection'
 
+Collection.allSubclasses.size == 41                         // collection class
 [].isEmpty == true                                          // is collection empty
+[1, 2, 3] == [1, 2, 3]                                      // are collections equal
 [9, 4, 5, 7, 8, 6].size == 6                                // size of collection
 [9, 4, 5, 7, 8, 6].maxItem == 9                             // maximum item in collection
 [9, 4, 5, 7, 8, 6].minItem == 4                             // minimum item in collection
@@ -207,6 +210,8 @@ UGen.allSubclasses.size == 884                              // accumulated subcl
 [1, 2, 3].isSubsetOf([1, 2, 3, 4, 5]) == true               // is one collection a subset of the other
 [1, [2, 3], [4, [5, 6]]].maxDepth == 3                      // tree depth of collection
 [1, [2, 3], [4, [5, 6]]].deepCollect(3, { arg x; x -> '.'}) // tree collect to indicated depth
+[1, 2, 3, 4, 5].choose                                      // random element of collection
+[1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15)               // weighted random element of collection (weights sum to 1)
 
 'Comments'
 
@@ -233,6 +238,7 @@ true                                                        // true constant
 false                                                       // false constant
 nil                                                         // nil object constant
 inf.class == Float                                          // Infinity constant (instance of Float)
+pi.class == Float                                           // pi constant (instance of Float)
 1                                                           // integer constants
 3.14                                                        // float constants
 -1                                                          // negative integer constants
@@ -312,11 +318,11 @@ Interval.new( 0, 12, 3).size == 5                           // number of element
 'Files'
 
 File.open("/tmp/x", "w").put('x').close                     // open file, put value, close file
-File.use("/tmp/x", "w", {arg f; f.put('x') })               // use file to put value
+File.use("/tmp/x", "w", { arg f; f.put('x') })              // use file to put value
 File.exists("/tmp/x") == true                               // file exists predicate
 File.fileSize("/tmp/x") == 1                                // file size (bytes)
-File.readAllString("/tmp/x") == "x"                         // read file contents
-File.use("/tmp/x", "r", {arg f; f.getChar }) == $x          // use file to read character
+File.readAllString("/tmp/x") == "x"                         // read file contents (string)
+File.use("/tmp/x", "r", { arg f; f.getChar }) == $x         // use file to read character
 File.delete("/tmp/x")                                       // delete file
 
 'Functions (Blocks)'
@@ -376,6 +382,13 @@ pi.raddeg == 180                                            // radiansToDegrees
 1.exp.log == 1                                              // unary method chaining (log of exp of 1)
 1.min(2).max(3) == 3                                        // n-ary method chaining
 
+'Nil'
+
+nil.class == Nil                                            // nil
+nil ? 'x' == 'x'                                            // right hand side if nil
+'x' ? 'y' == 'x'                                            // left hand side unless nil
+nil.isNil == true                                           // is nil
+
 'Point'
 
 200 @ 100 == Point.new(200, 100)                            // obtain a new point
@@ -419,13 +432,38 @@ true.class == True                                          // constant (instanc
 { 9.rand }.dup(9)                                           // random integers (0 to self)
 { 0.9.rand }.dup(3)                                         // random floats (0 to self)
 #[1, 2, 3, 4, 5].choose                                     // random element of collection
+#[1, 2, 3, 4, 5].wchoose(#[1, 2, 3, 4, 5] / 15)             // weighted random element of collection (weights sum to 1)
 { 3.rrand(9) }.dup(9)                                       // random integer in range
 { 0.3.rrand(0.9) }.dup(3)                                   // random float in range
 
+'Routine'
+
+f = { arg x; var y = x * 2; var z = y.yield; f.value(z) }   // yield send the receiver to the coroutine (it is received by next)
+r = Routine.new(f)                                          // a routine is instantiated on a function
+1.to(9).collect({ arg i; var j = r.next(i); i -> j })       // next sends a value to a routine (resume, value, and run are synonyms)
+
 'SequenceableCollection'
 
+SequenceableCollection.allSubclasses.size == 180            // sequencable collection class
+[1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences
 [1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
 [1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
+[1, 2, 3, 4, 5].keep(3) == [1, 2, 3]                        // keep first n items
+[1, 2, 3, 4, 5].drop(2) == [3, 4, 5]                        // discard first n items
+[1, 3, 5, 7, 9].isSeries == true                            // is array an arithmetic series
+[1, 3, 5, 7, 9].resamp0(9) == [1, 3, 3, 5, 5, 7, 7, 9, 9]   // resampler
+[1, 3, 5, 7, 9].resamp1(9) == [1, 2, 3, 4, 5, 6, 7, 8, 9]   // linear interpolating resampler
+[1, 3, 5, 7, 9].copyRange(2, 4) == [5, 7, 9]                // copy part of collection
+[1, 3, 5, 7, 9].find([5, 7, 9]) == 2                        // locate index of subsequence
+[1, 3, 5, 7, 9].indexOf(5) == 2                             // index of element (compared using ==)
+[1, 3, 5, 7, 9].first == 1                                  // first element of
+[1, 3, 5, 7, 9].last == 9                                   // last element of
+[1, 3, 5, 7, 9].middle == 5                                 // middle element of
+[1, 3, 5, 7, 9].clump(3) == [[1, 3, 5], [7, 9]]             // groups of n elements
+[1, 3, 5, 7, 9].clumps([2, 1]) == [[1, 3], [5], [7, 9]]     // groups of n elements
+[1, 3, 5, 7, 9].clump(2).flatten == [1, 3, 5, 7, 9]         // concatentate
+[1, 3, 5, 7, 9].integrate == [1, 4, 9, 16, 25]              // incremental sum
+[1, 4, 9, 16, 25].differentiate == [1, 3, 5, 7, 9]          // pairwise difference
 
 'String'
 
