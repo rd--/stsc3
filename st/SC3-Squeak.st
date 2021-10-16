@@ -1,3 +1,4 @@
+SystemOrganization addCategory: #'Sound-OSC'!
 SystemOrganization addCategory: #'Sound-SC3'!
 
 !String methodsFor: 'file i/o'!
@@ -31,5 +32,11 @@ SystemOrganization addCategory: #'Sound-SC3'!
   workspaceOn
     "Open a Workspace on myself (I am the name of a file)"
     (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)
+  !
+!
+
+!PositionableStream methodsFor: 'binary i/o'!
+  nextFloat32Put: aFloat
+    self nextNumber: 4 put: aFloat asIEEE32BitWord
   !
 !

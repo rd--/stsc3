@@ -493,6 +493,18 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 "Delay"
 (Delay forMilliseconds: 500) wait
 
+"Open Sound Control - Fudi"
+m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
+m inspect
+m descriptor
+m putOscOn: stdout
+m putFudiOn: stdout
+
+1234 putOscOn: stdout "must be in network byte order"
+3.14 putOscOn: stdout "must be in network byte order"
+'rq' putOscOn: stdout "must be 4-byte aligned and nul terminated"
+#(1 2 3) asByteArray putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"
+
 "Som"
 TestHarness new run: #('TestHarness.som').
 TestHarness new run: #('TestHarness.som' 'ArrayTest').

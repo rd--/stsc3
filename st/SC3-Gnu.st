@@ -256,3 +256,12 @@
     ^self valueWithArguments: {p1. p2. p3. p4}
   !
 !
+
+!FileDescriptor methodsFor: 'binary i/o'!
+  nextInt32Put: anInt
+    ^self nextPutLong: anInt
+  !
+  nextFloat32Put: anInt
+    ^self nextPutFloat: anInt
+  !
+!
