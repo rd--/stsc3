@@ -181,8 +181,9 @@ globalDefinitionExpr :: St.GlobalDefinition -> Expr t
 globalDefinitionExpr (St.GlobalDefinition k v) =
   Assignment k (maybe (Identifier "nil") initializerDefinitionExpr v)
 
+-- | Ansi 3.4.3
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr t
 initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
   Init
   (maybe St.emptyTemporaries id tmp)
-  (maybe [] (statementsExprList (\_ -> error "Illegal return")) stm)
+  (maybe [] (statementsExprList Return) stm)

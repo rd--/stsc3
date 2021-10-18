@@ -1,4 +1,4 @@
-"Arithmetic expressions"
+'Arithmetic expressions'
 
 6 + 3 = 9                                                   "addition"
 6 - 3 = 3                                                   "subtraction"
@@ -49,7 +49,22 @@ Float pi = 3.141592653589793                                "pi"
 Float e = 2.718281828459045                                 "exp constant"
 100 atRandom                                                "random number in (1,self)"
 
-"Bitwise Manipulation"
+'Assignment'
+
+x := 5                                                      "assignment"
+x := y := z := 6                                            "compound assignment"
+x := (y := 6) + 1                                           "assignment value, y = 6, x = 7"
+x := Object new                                             "bind to allocated instance of a class"
+x := 123 class                                              "discover the object class"
+x := Integer superclass                                     "discover the superclass of a class"
+x := Object allInstances                                    "get an array of all instances of a class"
+x := Integer allSuperclasses                                "get all superclasses of a class"
+x := 1.2 hash                                               "hash value for object"
+y := x copy                                                 "copy object"
+y := x shallowCopy                                          "copy object (not overridden)"
+y := x deepCopy                                             "copy object and instance vars"
+
+'Bitwise Manipulation'
 
 (16rFF bitAnd: 16r0F) = 16r0F                               "and bits"
 (16rF0 bitOr: 16r0F) = 16rFF                                "or bits"
@@ -62,17 +77,17 @@ Float e = 2.718281828459045                                 "exp constant"
 (16rFF anyMask: 16r0F) = true                               "test if any bits set in mask set in receiver"
 (16rFF noMask: 16r0F) = false                               "test if all bits set in mask clear in receiver"
 
-"Booleans"
+'Booleans'
 
 123 isKindOf: Number                                        "test if object is class or subclass of"
 123 isMemberOf: SmallInteger                                "test if object is type of class"
 123 respondsTo: #sqrt                                       "test if object responds to message"
 
-"Collection"
+'Collection'
 
 #(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
 
-"Conversion"
+'Conversion'
 
 3.99 asInteger = 4                                          "convert number to integer (truncates in Squeak)"
 3.99 asFraction                                             "convert number to fraction (399/100)"
@@ -83,11 +98,11 @@ $A asciiValue = 65                                          "convert character t
 3.99 storeString = '3.99'                                   "convert object to string via storeOn:"
 (15 radix: 16) = '16rF'                                     "convert to string in given base"
 
-"Symbols"
+'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
 
-"Debugging"
+'Debugging'
 
 nil yourself = nil                                          "returns receiver"
 nil inspect                                                 "open object inspector window"

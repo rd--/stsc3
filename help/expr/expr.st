@@ -1,9 +1,11 @@
 'Comments'
+
 x                                                 "x"
 nil                                               "()"
 []                                                "\n '"
 
 'Identifiers'
+
 p
 P
 pq
@@ -12,6 +14,7 @@ p_q
 p1
 
 'Literals'
+
 0                                                 "=> integer"
 1                                                 "=> integer"
 -1                                                "=> negative integer"
@@ -45,15 +48,15 @@ $                                                 "=> $ "
 #(#(0 1) #(2 3))
 
 'Pseudo Variables'
+
 self                                              "=> nil ; this in SuperCollider"
-self := nil                                       "=> error ; cannot store into"
 super                                             "=> nil"
 true                                              "=> true"
 false                                             "=> false"
 nil                                               "=> nil"
-nil := nil                                        "=> error ; cannot store into"
 
 'Assignment'
+
 a := 24
 x := y
 x := 99.9
@@ -63,6 +66,7 @@ p := q
 p_q := r
 
 'Unary Methods'
+
 x y
 x y z
 x y z y
@@ -76,6 +80,7 @@ Float negativeInfinity                            "=> -Infinity"
 SinOsc class class class name = 'Metaclass class'
 
 'Binary Methods'
+
 true = false                                      "=> false ; == in Sc"
 true ~= false                                     "=> true  ; != in Sc"
 1 ~= 2 = true                                     "=> true"
@@ -107,6 +112,7 @@ true | false                                      "=> true"
 $c class = Character                              "=> true"
 
 'Array Expressions'
+
 {1. 2}                                            "=> (1 2)"
 {1 + 2. 3 min: 4. 5 abs}                          "=> (3 3 5)"
 {p. q}
@@ -127,6 +133,7 @@ $c class = Character                              "=> true"
 (9 from: 1 by: 1) = 9 iota                        "=> true"
 
 'Keyword'
+
 Transcript show: 'text'                           "=> prints text (no newline)"
 2 max: 3                                          "=> 3"
 1 min: 2 max: 3                                   "=> 3"
@@ -143,6 +150,7 @@ nil ifNil: [1]                                    "=> 1"
 SinOsc new perform: #freq: with: 110
 
 'Unary & Binary & Keyword Methods'
+
 4 + 5 negated                                     "=> -1"
 4 + 5 negated + 6                                 "=> 5"
 4 negated + 5                                     "=> 1"
@@ -161,6 +169,7 @@ w * (x + y) - z
 (w * (x + y) z + a) b
 
 'Parenthesised Expression'
+
 x y + z
 (x y)
 (x + y) z
@@ -183,6 +192,7 @@ w * ((x + y) z)
 (1 + ((2 * 3) squared) / 4) negated
 
 'Blocks'
+
 []
 [] = []                                           "=> false"
 [:x| y]
@@ -191,6 +201,7 @@ w * ((x + y) z)
 four := [:x| x + 1] value: 3
 
 'Initializer Definition'
+
 |a b| a := 1 . ^ a + b .
 SinOsc freq: (69 midicps) phase: 0 mul: 0.1
 SinOsc freq: (69 midicps) phase: 0 mul: 0.1
@@ -199,6 +210,7 @@ SinOsc freq: (69 midicps) phase: 0 mul: 0.1
 [:x | x * x] value: Float pi * 2
 
 'Block Constructor'
+
 [1]
 [^1]
 [:a| |t|]
@@ -206,6 +218,7 @@ SinOsc freq: (69 midicps) phase: 0 mul: 0.1
 [:a| |t u| t := [:b| |v w| z] . x . y]
 
 'Statements'
+
 ^p
 ^p.
 p
@@ -216,6 +229,7 @@ p. ^q
 p. q.
 
 'Return Statement'
+
 ^1
 ^p
 ^a value + b value + c value
@@ -223,9 +237,11 @@ p. q.
 [[^0] value. Transcript show: 'x'] value
 
 'Method block body'
+
 440 * (2 ** ((self - 69) * (1 / 12)))
 
 'Expression'
+
 p := 1
 p := q
 p
@@ -245,6 +261,7 @@ o m: true
 self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
 
 'Assignment'
+
 p := 1
 p := q
 p := 2.0
@@ -253,6 +270,7 @@ p := 8 mixFill: [:i| |n trigger pluck freq z metal| n := 15 ]
 p := q := r := nil
 
 'Basic Expression'
+
 1
 p
 1 negate
@@ -268,6 +286,7 @@ w * ((x + y) z)
 w * (x + y) z
 
 'Unary Messages'
+
 abs
 abs square
 abs square + p
@@ -278,6 +297,7 @@ abs square + p + q k1: p1 k2: p2
 q r: x
 
 'Cascaded Messages'
+
 p q ; r ; s ; t
 (1 + 3 ; + 3) = 4                                 "=> true"
 Transcript show: 'hello'; show: 'world'; cr.      "=> prints hello then world then carriage return"
@@ -288,34 +308,39 @@ Point new setX: 25 setY: 35; isZero               "=> false"
 OrderedCollection new add: 1 ; add: 2 ; yourself  "=> adds 1 and then 2 to the new collection"
 
 'Integer'
-1 to: 5 do: [:x| x println]                       "=> print 1 to 5"
-1 to: 5 do: [:x| Transcript show: x]              "=> print 1 to 5"
-1 to: 10 do: [:x| 5 atRandom println
+
+1 to: 5 do: [ :x | Transcript show: x asString ]            "=> print 1 to 5"
+1 to: 10 do: [ :x | Transcript show: 5 atRandom asString ]  "=> print 10 random numbers in (1,5)"
 
 'Number'
+
 9 \\ 4 = 1                                        "=> true ; modulo ; sc>>%"
 -9 \\ 4 = 3                                       "=> true"
 9 \\ -4 = -3                                      "=> true"
 0.9 \\ 0.4                                        "=> ~ 0.1"
 
 'String'
+
 'quoted''string'
 'text' isLetters = true                           "=> true"
 '0123' isDigits = true                            "=> true"
 '    ' isWhiteSpace = true                        "=> true"
 ('string' substringFrom: 2 to: 4) = 'tri'         "=> true"
-self assert: 1 equals: '\\' length
-self assert: '\0' equals: '\0'
+'\\' size = 2                                     "=> true"
+'\0' = '\0'                                       "=> true"
 #'x' = 'x'                                        "=> true"
 #'x' hashcode = 'x' hashcode                      "=> true"
 
 'Symbol'
+
 #'quoted''symbol'
 
 'Vector'
+
 ((1,2,3) instVarAt: 2 put: 4) = 4                 "=> true"
 
 'Reflection'
+
 Array methods inspect
 (Array methods at: 1)
 (Array methods at: 1) invokeOn: #(1 2 3) with: #(2)

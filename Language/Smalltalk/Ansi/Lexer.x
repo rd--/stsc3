@@ -20,6 +20,8 @@ $graphic       = $printable # $white
 @exponent    = e \-? @decimal
 @integer     = \-? @decimal
 @float       = \-? @decimal \. @decimal @exponent?
+@quotequote  = \' \'
+@string      = $printable # \' | @quotequote
 
 tokens :-
 
@@ -53,10 +55,11 @@ tokens :-
   @float | @decimal @exponent           { \s -> Float (read s) }
   @integer                              { \s -> Integer (read s) }
   "$" [$graphic \ ]                     { \s -> QuotedChar (s !! 1) }
-  \' ($printable # \')* \'              { \s -> QuotedString (removeOuter 1 s) }
-  \# \' ($printable # \')* \'           { \s -> HashedString (removeOuter 2 s) }
+  \' @string* \'                        { \s -> QuotedString (removeOuter 1 s) }
+  \# \' @string* \'                     { \s -> HashedString (removeOuter 2 s) }
 
 {
+-- | Remove k items from the start and one item from the end.
 removeOuter :: Int -> [t] -> [t]
 removeOuter k x = take (length x - k - 1) (drop k x)
 
