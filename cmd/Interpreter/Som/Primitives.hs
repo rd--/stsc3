@@ -122,12 +122,6 @@ integerFromString = binaryPrimitive "Integer class>>fromString:" (\arg1 arg2 -> 
   (DataClass _ _ _,DataString x) -> fmap integerObject (unicodeStringReadInteger x)
   _ -> Nothing)
 
-doubleAsFractional :: Double -> Object
-doubleAsFractional x =
-  case properFraction x of
-    (i,0) -> integerObject i
-    _ -> doubleObject x
-
 objectAsDouble :: Object -> VM Double
 objectAsDouble o = case o of
   Object _ (DataInteger x) -> return (fromIntegral x)
@@ -142,24 +136,9 @@ numberReduce o = case o of
   _ -> prError "numberReduce"
 -}
 
-numNumNumPrimitive :: String -> (Double -> Double -> Double) -> Primitive
-numNumNumPrimitive msg f rcv arg = case arg of
-  [arg1] -> do
-    lhs <- objectAsDouble rcv
-    rhs <- objectAsDouble arg1
-    return (doubleAsFractional (f lhs rhs))
-  _ -> prError msg
-
 -- | Integer>>//
 integerFractionalDivision :: Primitive
 integerFractionalDivision = numNumNumPrimitive "Integer>>//" (/)
-
-numNumPrimitive :: String -> (Double -> Double) -> Primitive
-numNumPrimitive msg f rcv arg = case arg of
-  [] -> do
-    lhs <- objectAsDouble rcv
-    return (doubleAsFractional (f lhs))
-  _ -> prError msg
 
 -- | Integer>>sqrt
 integerSquareRoot :: Primitive
@@ -396,19 +375,19 @@ primitiveTable =
   ,(("Class","methods"),classMethods)
   ,(("Class","name"),className)
   -- Double
-  ,(("Double","+"),floatNumFloatPrimitive "+" (+))
-  ,(("Double","-"),floatNumFloatPrimitive "-" (-))
-  ,(("Double","*"),floatNumFloatPrimitive "*" (*))
-  --,(("Double","/"),floatNumFloatPrimitive (/)) -- ? Som
-  ,(("Double","//"),floatNumFloatPrimitive "//" (/)) -- Som
-  ,(("Double","%"),floatNumFloatPrimitive "%" mod')
-  ,(("Double","sqrt"),floatFloatPrimitive "sqrt" sqrt)
-  ,(("Double","round"),floatIntPrimitive "round" round) -- Som (roundTowardPositive in IEEE 754-2008)
-  ,(("Double","asInteger"),floatIntPrimitive "asInteger" truncate) -- Som
-  ,(("Double","cos"),floatFloatPrimitive "cos" cos)
-  ,(("Double","sin"),floatFloatPrimitive "sin" sin)
-  ,(("Double","="),floatNumBoolPrimitive "=" (==))
-  ,(("Double","<"),floatNumBoolPrimitive "<" (<))
+  ,(("Double","+"),doubleNumDoublePrimitive "+" (+))
+  ,(("Double","-"),doubleNumDoublePrimitive "-" (-))
+  ,(("Double","*"),doubleNumDoublePrimitive "*" (*))
+  --,(("Double","/"),doubleNumDoublePrimitive (/)) -- ? Som
+  ,(("Double","//"),doubleNumDoublePrimitive "//" (/)) -- Som
+  ,(("Double","%"),doubleNumDoublePrimitive "%" mod')
+  ,(("Double","sqrt"),doubleDoublePrimitive "sqrt" sqrt)
+  ,(("Double","round"),doubleIntPrimitive "round" round) -- Som (roundTowardPositive in IEEE 754-2008)
+  ,(("Double","asInteger"),doubleIntPrimitive "asInteger" truncate) -- Som
+  ,(("Double","cos"),doubleDoublePrimitive "cos" cos)
+  ,(("Double","sin"),doubleDoublePrimitive "sin" sin)
+  ,(("Double","="),doubleNumBoolPrimitive "=" (==))
+  ,(("Double","<"),doubleNumBoolPrimitive "<" (<))
   ,(("Double","asString"),doubleAsString)
   ,(("Double class","PositiveInfinity"),doublePositiveInfinity)
   ,(("Double class","fromString:"),doubleFromString)
@@ -429,7 +408,7 @@ primitiveTable =
   ,(("Integer",">>>"),intIntIntPrimitive ">>" shiftRight)
   ,(("Integer","bitXor:"),intIntIntPrimitive "bitXor:" Data.Bits.xor)
   ,(("Integer","asString"),integerAsString)
-  ,(("Integer","asDouble"),intFloatPrimitive "asDouble" fromIntegral)
+  ,(("Integer","asDouble"),intDoublePrimitive "asDouble" fromIntegral)
   ,(("Integer","as32BitUnsignedValue"),intIntPrimitive "as32BitUnsignedValue" as32BitUnsignedValue)
   ,(("Integer","as32BitSignedValue"),intIntPrimitive "as32BitSignedValue" as32BitSignedValue)
   ,(("Integer class","fromString:"),integerFromString)
@@ -495,13 +474,34 @@ ternaryPrimitive nm fun o@(Object _ obj) arg = case arg of
                Nothing -> objectError o ("ternaryPrimitive: " ++ nm)
   _ -> objectListError arg ("ternaryPrimitive: arity: " ++ nm)
 
+doubleAsFractional :: Double -> Object
+doubleAsFractional x =
+  case properFraction x of
+    (i,0) -> integerObject i
+    _ -> doubleObject x
+
+numNumPrimitive :: String -> (Double -> Double) -> Primitive
+numNumPrimitive msg f rcv arg = case arg of
+  [] -> do
+    lhs <- objectAsDouble rcv
+    return (doubleAsFractional (f lhs))
+  _ -> prError msg
+
+numNumNumPrimitive :: String -> (Double -> Double -> Double) -> Primitive
+numNumNumPrimitive msg f rcv arg = case arg of
+  [arg1] -> do
+    lhs <- objectAsDouble rcv
+    rhs <- objectAsDouble arg1
+    return (doubleAsFractional (f lhs rhs))
+  _ -> prError msg
+
 intIntPrimitive :: String -> (LargeInteger -> LargeInteger) -> Primitive
 intIntPrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
   DataInteger p1 -> Just (integerObject (fun p1))
   _ -> Nothing)
 
-intFloatPrimitive :: String -> (LargeInteger -> Double) -> Primitive
-intFloatPrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
+intDoublePrimitive :: String -> (LargeInteger -> Double) -> Primitive
+intDoublePrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
   DataInteger p1 -> Just (doubleObject (fun p1))
   _ -> Nothing)
 
@@ -528,24 +528,24 @@ intNumBoolPrimitive nm fun1 fun2 = binaryPrimitive nm (\arg1 arg2 -> case (arg1,
   (DataInteger p1,DataDouble p2) -> Just (booleanObject (fun2 (fromIntegral p1) p2))
   _ -> Nothing)
 
-floatFloatPrimitive :: String -> (Double -> Double) -> Primitive
-floatFloatPrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
+doubleDoublePrimitive :: String -> (Double -> Double) -> Primitive
+doubleDoublePrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
   DataDouble p1 -> Just (doubleObject (fun p1))
   _ -> Nothing)
 
-floatIntPrimitive :: String -> (Double -> LargeInteger) -> Primitive
-floatIntPrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
+doubleIntPrimitive :: String -> (Double -> LargeInteger) -> Primitive
+doubleIntPrimitive nm fun = unaryPrimitive nm (\arg1 -> case arg1 of
   DataDouble p1 -> Just (integerObject (fun p1))
   _ -> Nothing)
 
-floatNumFloatPrimitive :: String -> (Double -> Double -> Double) -> Primitive
-floatNumFloatPrimitive nm fun = binaryPrimitive nm (\arg1 arg2 -> case (arg1,arg2) of
+doubleNumDoublePrimitive :: String -> (Double -> Double -> Double) -> Primitive
+doubleNumDoublePrimitive nm fun = binaryPrimitive nm (\arg1 arg2 -> case (arg1,arg2) of
   (DataDouble p1,DataInteger p2) -> Just (doubleObject (fun p1 (fromIntegral p2)))
   (DataDouble p1,DataDouble p2) -> Just (doubleObject (fun p1 p2))
   _ -> Nothing)
 
-floatNumBoolPrimitive :: String -> (Double -> Double -> Bool) -> Primitive
-floatNumBoolPrimitive nm fun = binaryPrimitive nm (\arg1 arg2 -> case (arg1,arg2) of
+doubleNumBoolPrimitive :: String -> (Double -> Double -> Bool) -> Primitive
+doubleNumBoolPrimitive nm fun = binaryPrimitive nm (\arg1 arg2 -> case (arg1,arg2) of
   (DataDouble p1,DataInteger p2) -> Just (booleanObject (fun p1 (fromIntegral p2)))
   (DataDouble p1,DataDouble p2) -> Just (booleanObject (fun p1 p2))
   _ -> Nothing)

@@ -85,10 +85,10 @@ data ObjectData
   | DataBoolean Bool
   | DataInteger LargeInteger
   | DataDouble Double
-  | DataCharacter Char
+  | DataCharacter Char -- ^ Not in SOM
   | DataString UnicodeString
-  | DataArray (IORef (Vec Object))
-  | DataClass (St.ClassDefinition,Bool) Tbl (Vec Object,Vec Object) -- ^ Class definition and level, class variables, method caches
+  | DataArray (IORef (Vec Object)) -- ^ Arrays are mutable
+  | DataClass (St.ClassDefinition, Bool) Tbl (Vec Object,Vec Object) -- ^ Class definition and level, class variables, method caches
   | DataMethod Symbol St.MethodDefinition StExpr -- ^ Holder, definition, lambda StExpr
   | DataPrimitive Symbol Symbol -- ^ Holder & Signature
   | DataBlock Id Context StExpr -- ^ Identity, context, lambda StExpr
@@ -103,7 +103,7 @@ data Object = Object Symbol ObjectData deriving (Eq)
 -- | Table of named objects.
 type ObjectTable = [(Symbol,Object)]
 
--- | Primitive (receiver -> argmuments -> result)
+-- | Primitive (receiver -> arguments -> result)
 type Primitive = Object -> [Object] -> VM Object
 
 -- | (Class,MethodSignature) -> Primitive table

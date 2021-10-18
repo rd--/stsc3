@@ -45,7 +45,7 @@ ugenShow :: SC3.UGen -> String
 ugenShow x =
   case x of
     SC3.UGen (SC3.CConstant c) -> show (SC3.constantValue c)
-    SC3.UGen (SC3.CMce m _) -> "{" ++ intercalate ". " (map ugenShow (SC3.mce_elem m)) ++ "}"
+    SC3.UGen (SC3.CMce m _) -> "{" ++ intercalate ". " (map ugenShow (SC3.mce_to_list m)) ++ "}"
     _ -> show x
 
 instance Show (Object t) where
