@@ -1,3 +1,5 @@
+"A Terse Guide to SuperCollider - c.f. http://wiki.squeak.org/squeak/5699 by Chris Rathman"
+
 'Arithmetic expressions'
 
 6 + 3 == 9                                                  // addition
@@ -24,8 +26,8 @@
 -5.abs == 5                                                 // absolute value
 3.99.round == 4                                             // round
 3.99.trunc == 3                                             // truncate
-3.99.round(1) == 4.0                                        // round to specified decimal places"
-3.99.trunc(1) == 3.0                                        // truncate to specified decimal places"
+3.99.round(1) == 4.0                                        // round to specified decimal places
+3.99.trunc(1) == 3.0                                        // truncate to specified decimal places
 3.99.floor == 3                                             // round down
 3.99.ceil == 4                                              // round up
 5.factorial == 120                                          // factorial
@@ -44,17 +46,6 @@ pi == 3.141592653589793                                     // pi (3.14159265358
 1.exp                                                       // e (2.718281828459)
 100.rand                                                    // random number in (0, self-1)
 4 + 5 * 6 == 54                                             // operators are evaluated left to right
-
-'Assignment'
-
-var x = 5;                                                  // assignment with initializer expression
-x = 5                                                       // assignment
-x = y = z = 6                                               // compound assignment
-x = (y = 6) + 1                                             // compound assignment
-x = 1.2.hash                                                // hash value for object
-y = x.copy                                                  // copy object
-y = x.shallowCopy                                           // copy object (not overridden)
-y = x.deepCopy                                              // copy object and instance vars
 
 'Array'
 
@@ -99,10 +90,20 @@ Array.exprand(4, 1, 9)                                      // array of random n
 
 'Assignment'
 
-{ var x, y, z; nil }                                        // variable declaration
-{ var x; x = 5; x == 5 }                                    // assignment (set variable x to 5)
-{ var x, y, z; x = y = z = 5; [x, y, z] == [5, 5, 5] }      // compound assignment (set variables x y and z all to 5)
-{ var x, y; x = (y = 5) + 1; [x, y] == [6, 5] }             // expression assignment
+var x;                                                      // variable declaration
+var x, y, z;                                                // variable declarations (multiple)
+var x = 5;                                                  // variable declaration with initializer expression
+x = 5                                                       // assignment
+x = y = z = 6                                               // compound assignment
+x = (y = 6) + 1                                             // compound (expression) assignment
+x = 1.2.hash                                                // hash value for object
+y = x.copy                                                  // copy object
+y = x.shallowCopy                                           // copy object (not overridden)
+y = x.deepCopy                                              // copy object and instance vars
+{ var x; x = 5; x == 5 }.value                              // assignment (set variable x to 5)
+{ var x, y; x = y = 5; [x, y] == [5, 5] }.value             // compound assignment (set variables x and y to 5)
+{ var x, y; x = (y = 5) + 1; [x, y] == [6, 5] }.value       // expression assignment
+{ var x = 1; var y = x + 1, z = y; [x, z] == [1, 2] }.value // multiple variable declarations
 
 'Association'
 
@@ -374,8 +375,8 @@ pi.raddeg == 180                                            // radiansToDegrees
 'Method'
 
 9.sqrt == 3                                                 // unary method
-1.min(2) == 1                                               // binary "keyword" method
-1 + 2 == 3                                                  // binary "operator" method
+1.min(2) == 1                                               // keyword method
+1 + 2 == 3                                                  // binary operator method
 9.perform('sqrt') == 3                                      // indirect method invocation (unary)
 1.perform('min', 2) == 1                                    // indirect method invocation (binary)
 1.perform('+', 2) == 3                                      // indirect method invocation (operator)

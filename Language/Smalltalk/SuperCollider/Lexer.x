@@ -61,8 +61,4 @@ tokens :-
 {
 removeOuter :: Int -> [t] -> [t]
 removeOuter k x = take (length x - k - 1) (drop k x)
-
-smalltalkLexerTest = do
-  s <- getContents
-  print (alexScanTokens s)
 }

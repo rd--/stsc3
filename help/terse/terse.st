@@ -1,3 +1,5 @@
+'A Terse Guide to Smalltalk - c.f. http://wiki.squeak.org/squeak/5699 by Chris Rathman'
+
 'Arithmetic expressions'
 
 6 + 3 = 9                                                   "addition"
@@ -64,6 +66,13 @@ y := x copy                                                 "copy object"
 y := x shallowCopy                                          "copy object (not overridden)"
 y := x deepCopy                                             "copy object and instance vars"
 
+'Association'
+
+Association key: #x value: 1                                "associate key with value"
+#x -> 1 = (Association key: #x value: 1)                    "literal syntax"
+(#x -> 1) key = #x                                          "key (left hand side) of association"
+(#x -> 1) value = 1                                         "value (right hand side) of association"
+
 'Bitwise Manipulation'
 
 (16rFF bitAnd: 16r0F) = 16r0F                               "and bits"
@@ -82,6 +91,28 @@ y := x deepCopy                                             "copy object and ins
 123 isKindOf: Number                                        "test if object is class or subclass of"
 123 isMemberOf: SmallInteger                                "test if object is type of class"
 123 respondsTo: #sqrt                                       "test if object responds to message"
+true = true                                                 "constant"
+false = false                                               "constant"
+1 = 1 = true                                                "equality predicate (operator)"
+1 ~= 2 = true                                               "equality predicate (operator)"
+(true and: false) = false                                   "logical and"
+(true or: false) = true                                     "logical or"
+true & false = false                                        "logical and (operator)"
+true | false = true                                         "logical or (operator)"
+(false and: ['and' error]) = false                          "logical and (short-circuit)"
+(true or: ['or' error]) = true                              "logical or"
+true not not = true                                         "not"
+nil isNil = true                                            "test if object is nil"
+1 positive = true                                           "test if number is positive"
+0 strictlyPositive = false                                  "test if number is greater than zero"
+-1 negative = true                                          "test if number is negative"
+2 even = true                                               "test if number is even"
+1 odd = true                                                "test if number is odd"
+1 isInteger = true                                          "test if object is integer"
+1.0 isFloat = true                                          "test if object is float"
+1.0 isNumber = true                                         "test if object is number"
+$A isUppercase = true                                       "test if upper case character"
+$a isLowercase = true                                       "test if lower case character"
 
 'Collection'
 
