@@ -349,7 +349,7 @@ x = { }                                                     // blocks are object
 'Math'
 
 -3.abs == 3                                                 // absolute value
-1.5.ceil== 2                                                // ceiling (round up)
+1.5.ceil == 2                                               // ceiling (round up)
 0.cos == 1                                                  // cosine
 180.degrad == pi                                            // degreesToRadians
 2.even == true                                              // eveness predicate
