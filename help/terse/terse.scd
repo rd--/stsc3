@@ -350,8 +350,8 @@ List.newUsing([1, 3, 2, 4, 5])                              // list from array
 [1, 3, 2, 4, 5].asList                                      // list from collection
 [1, 3, 2, 4, 5].asList.asArray                              // list to array
 {var l = [1, 3, 2, 4, 5].asList; [l.reverse, l]}.value      // list reverse (copying)
-[1, 3, 2, 4, 5].add(6)                                      // add element at end (snoc)
-[1, 3, 2, 4, 5].addFirst(6)                                 // add element at start (cons)
+[1, 3, 2, 4, 5].asList.add(6)                               // add element at end (snoc)
+[1, 3, 2, 4, 5].asList.addFirst(6)                          // add element at start (cons)
 {var l = [1, 3, 2, 4, 5].asList; [l.pop == 5, l]}.value     // remove (in place) and return last element
 {var l = [1, 2, 4].asList.put(2, 3); l}.value               // replace (in place) element at index
 {var l = [1, 2, 4].asList.insert(2, 3); l}.value            // insert (in place) element at index
