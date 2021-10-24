@@ -49,7 +49,8 @@ pi == 3.141592653589793                                     // pi (3.14159265358
 
 'Array'
 
-Array.new.isKindOf(SequenceableCollection) == true          // arrays are sequenceable collections
+Array.new.isKindOf(Collection) == true                      // c.f. Collection
+Array.new.isKindOf(SequenceableCollection) == true          // c.f. SequenceableCollection
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
@@ -293,7 +294,7 @@ d.values.sort({ arg i, j; i <= j })                         // list of values at
 
 'Interpreter'
 
-this.class == Interpreter                                   // context in which interactive commands
+this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
 this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
 this.s.class == Server                                      // by convention the Interpreter variable s has the default scsynth
@@ -447,6 +448,7 @@ r = Routine.new(f)                                          // a routine is inst
 
 SequenceableCollection.allSubclasses.size == 180            // sequencable collection class
 [1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences
+[1, 3, 2, 4, 5].reverse == [5, 4, 2, 3, 1]                  // reverse sequence
 [1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
 [1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
 [1, 2, 3, 4, 5].keep(3) == [1, 2, 3]                        // keep first n items

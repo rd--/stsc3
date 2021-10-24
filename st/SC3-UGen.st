@@ -5021,6 +5021,65 @@ LinExp comment: 'Map a linear range to an exponential range'!
   primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
 !
 
+UGen subclass: #LinPan2
+  instanceVariableNames: 'in pos level'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinPan2 comment: 'Two channel linear pan.'!
+
+!LinPan2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  pos ^pos!
+  pos: x pos := x!
+  level ^level!
+  level: x level := x!
+!
+
+!LinPan2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LinPan2.
+    paramNames := #(#in #pos #level).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. pos := 0.0. level := 1.0!
+!
+
+
+!LinPan2 class methodsFor: 'instance creation'!
+  in: in pos: pos level: level
+    |u|
+    u := self new.
+    u in: in.
+    u pos: pos.
+    u level: level.
+    ^u!
+  in: in pos: pos level: level mul: mul
+    |u|
+    u := self new.
+    u in: in.
+    u pos: pos.
+    u level: level.
+    u mul: mul.
+    ^u!
+  in: in pos: pos level: level mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u pos: pos.
+    u level: level.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:pos:level:!
+!
+
 UGen subclass: #LinRand
   instanceVariableNames: 'lo hi minmax'
   classVariableNames: ''
