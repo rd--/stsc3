@@ -76,6 +76,8 @@ Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with sl
 [1, 2, 3, 4].reject({ arg x; x > 2 }) == [1, 2]             // filter elements
 [1, 2, 3, 4].select({ arg x; x > 2 }) == [3, 4]             // filter elements
 [1, 2, 3, 4].scramble                                       // randomly shuffle elements
+[1, 2, 3, 4].mirror == [1, 2, 3, 4, 3, 2, 1]                // append reverse of prefix of array
+[[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
 [1, 2, 3, 4].size == 4                                      // array length
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
 { 1 }.dup(3) == [1, 1, 1]                                   // Array.fill notation
@@ -88,6 +90,7 @@ Array.rand(4, 1, 9)                                         // array of random n
 Array.linrand(4, 1, 9)                                      // array of random numbers (linear distribution)
 Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
+{var x = [1, 2, 3]; x.reverse; x == [1, 2, 3]}.value        // reverse array (in place)
 
 'Assignment'
 
@@ -338,6 +341,21 @@ x = { }                                                     // blocks are object
 { arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
 { arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
 ({ arg x; x * 2 } <> { arg x; x + 3 }).value(4) == 14       // function composition
+
+'List'
+
+List.new.isKindOf(Collection) == true                       // c.f. Collection
+List.new.isKindOf(SequenceableCollection) == true           // c.f. SequenceableCollection
+List.newUsing([1, 3, 2, 4, 5])                              // list from array
+[1, 3, 2, 4, 5].asList                                      // list from collection
+[1, 3, 2, 4, 5].asList.asArray                              // list to array
+[1, 3, 2, 4, 5].asList.reverse                              // list reverse (copying)
+[1, 3, 2, 4, 5].add(6)                                      // add element at end (snoc)
+[1, 3, 2, 4, 5].addFirst(6)                                 // add element at start (cons)
+{var l = [1, 3, 2, 4, 5].asList; [l.pop == 5, l]}.value     // remove (in place) and return last element
+{var l = [1, 2, 4].asList.put(2, 3); l}.value               // replace (in place) element at index
+{var l = [1, 2, 4].asList.insert(2, 3); l}.value            // insert (in place) element at index
+{var l = [1, 2, 4].asList; [l.removeAt(2), l]}.value        // remove (in place) and return element at index
 
 'Magnitude'
 
