@@ -14,7 +14,7 @@ import qualified Sound.SC3.UGen.DB.Record as DB {- hsc3-db -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
-import Interpreter.Lisp.Common {- stsc3 -}
+import Interpreter.Lisp.Common as Common {- stsc3 -}
 
 type VMAnsi t = VM St.BlockBody t
 type ObjectAnsi = Object St.BlockBody
@@ -62,10 +62,10 @@ evalBinaryMessageSeq o sq =
    4. restoring the saved environment;
    5. returning the saved result
 -}
-evalBlock :: Env.Env Name ObjectAnsi -> St.BlockBody -> [ObjectAnsi] -> VMAnsi ObjectAnsi
-evalBlock blockEnvironment (St.BlockBody _ maybeBlockArguments blockTemporaries blockStatements) arguments = do
+evalBlock :: Bool -> Env.Env Name ObjectAnsi -> St.BlockBody -> [ObjectAnsi] -> VMAnsi ObjectAnsi
+evalBlock cullArguments blockEnvironment (St.BlockBody _ maybeBlockArguments blockTemporaries blockStatements) arguments = do
   let blockArguments = fromMaybe [] maybeBlockArguments
-  when (length blockArguments /= length arguments) (throwError "evalBlock: wrong number of arguments?")
+  when (not cullArguments || (length blockArguments /= length arguments)) (throwError "evalBlock: wrong number of arguments?")
   extendedBlockEnvironment <- extendEnvironment blockEnvironment (zip blockArguments arguments)
   currentEnvironment <- get
   put extendedBlockEnvironment
@@ -78,7 +78,8 @@ evalUnaryMessage o (St.UnaryMessage m) =
   case o of
     BlockObject e x ->
       case m of
-        "value" -> evalBlock e x []
+        "value" -> evalBlock False e x []
+        "dup" -> replicateM 2 (evalBlock False e x []) >>= Common.arrayToObject
         _ -> throwError ("evalUnaryMessage: BlockObject: " ++ m)
     ClassObject c ->
       case (c,m) of
@@ -113,7 +114,7 @@ evalKeywordMessage o k = do
   let keywordNames = map fst k
       keywordArguments = zip keywordNames keywordValues
   case o of
-    BlockObject e x -> evalBlock e x keywordValues
+    BlockObject e x -> evalBlock False e x keywordValues
     UGenClassObject x u -> evalKeywordUGenClassMessage x u keywordArguments
     UGenObject _ -> evalKeywordUGenMessage evalBlock o keywordArguments
     ClassObject x -> evalKeywordClassMessage evalBlock x keywordArguments

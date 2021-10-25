@@ -36,10 +36,13 @@ data Object t
   | SymbolObject String -- ^ There is no separate string type.
   | BlockObject (Env.Env Name (Object t)) t
 
--- | VM is simply an environment.
-type VM o t = Env.EnvMonad IO Name (Object o) t
+-- | State monad wrapped in Exception monad.
+type EnvMonad m k v r = ExceptT String (StateT (Env.Env k v) m) r
 
-type EvalBlock t = Env.Env Name (Object t) -> t -> [Object t] -> VM t (Object t)
+-- | VM is simply an environment.
+type VM o t = EnvMonad IO Name (Object o) t
+
+type EvalBlock t = Bool -> Env.Env Name (Object t) -> t -> [Object t] -> VM t (Object t)
 
 ugenShow :: SC3.UGen -> String
 ugenShow x =
@@ -302,12 +305,13 @@ intReplicate p1 p2 = do
   u <- objectToUGen p2
   return (mceToObject (replicate i u))
 
+-- | This culls the argument to evalBlock, i.e. allow blocks of zero arguments.
 mceFill :: EvalBlock t -> Bool -> (SC3.UGen -> SC3.UGen) -> Object t -> Object t -> VM t (Object t)
 mceFill evalBlock zeroIndexed f k blockObject = do
   i <- objectToInt "mceFill" k
   (e,b) <- objectToBlock blockObject
   let j = map intToObject (if zeroIndexed then [0 .. i - 1] else [1 .. i])
-  a <- mapM (\x -> evalBlock e b [x]) j
+  a <- mapM (\x -> evalBlock True e b [x]) j
   u <- mapM objectToUGen a
   return (UGenObject (f (SC3.mce u)))
 
@@ -315,21 +319,21 @@ mceDo :: EvalBlock t -> Object t -> Object t -> VM t (Object t)
 mceDo evalBlock o aBlock = do
   a <- objectToArray "mceDo" o
   case aBlock of
-    BlockObject env blockBody -> mapM_ (evalBlock env blockBody . return) a >> return NilObject
+    BlockObject env blockBody -> mapM_ (evalBlock False env blockBody . return) a >> return NilObject
     _ -> throwError "mceDo"
 
 mceInjectInto :: EvalBlock t -> Object t -> Object t -> Object t -> VM t (Object t)
 mceInjectInto evalBlock o aValue aBlock = do
   u <- objectToMCE "mceInjectInto" o
   case aBlock of
-    BlockObject env blockBody -> foldM (\i j -> evalBlock env blockBody [i,j]) aValue (map UGenObject u)
+    BlockObject env blockBody -> foldM (\i j -> evalBlock False env blockBody [i,j]) aValue (map UGenObject u)
     _ -> throwError "mceInjectInto?"
 
 mceCollect :: EvalBlock t -> Object t -> Object t -> VM t (Object t)
 mceCollect evalBlock o aBlock = do
   x <- objectToUGen o
   case aBlock of
-    BlockObject env blockBody -> arrayToObject =<< (mapM (evalBlock env blockBody . return . UGenObject) (SC3.mceChannels x))
+    BlockObject env blockBody -> arrayToObject =<< (mapM (evalBlock False env blockBody . return . UGenObject) (SC3.mceChannels x))
     _ -> throwError "mceCollect?"
 
 mceWithCollect :: EvalBlock t -> Object t -> Object t -> Object t -> VM t (Object t)
@@ -338,7 +342,7 @@ mceWithCollect evalBlock o aUGen aBlock = do
   y <- objectToUGen aUGen
   let m = transpose [SC3.mceChannels x,SC3.mceChannels y]
   case aBlock of
-    BlockObject env blockBody -> arrayToObject =<< (mapM (evalBlock env blockBody . map UGenObject) m)
+    BlockObject env blockBody -> arrayToObject =<< (mapM (evalBlock False env blockBody . map UGenObject) m)
     _ -> throwError "mceWithCollect?"
 
 intToDo :: EvalBlock t -> Object t -> Object t -> Object t -> VM t (Object t)
@@ -347,7 +351,7 @@ intToDo evalBlock p1 p2 aBlock = do
   i2 <- objectToInt "intToDo" p2
   let a = map intToObject [i1 .. i2]
   case aBlock of
-    BlockObject env blockBody -> mapM_ (evalBlock env blockBody . return) a >> return NilObject
+    BlockObject env blockBody -> mapM_ (evalBlock False env blockBody . return) a >> return NilObject
     _ -> throwError "intToDo?"
 
 liftUGen :: (SC3.UGen -> SC3.UGen) -> Object t -> VM t (Object t)
@@ -410,7 +414,7 @@ ifTrueIfFalse evalBlock p1 p2 p3 = do
   aBool <- objectToInt "ifTrueIfFalse" p1
   (e1,b1) <- objectToBlock p2
   (e2,b2) <- objectToBlock p3
-  if aBool /= 0 then evalBlock e1 b1 [] else evalBlock e2 b2 []
+  if aBool /= 0 then evalBlock False e1 b1 [] else evalBlock False e2 b2 []
 
 controlInput :: Object t -> Object t -> VM t (Object t)
 controlInput p1 p2 = do
@@ -438,6 +442,7 @@ evalKeywordClassMessage evalBlock x keywordArguments = do
         ("OverlapTexture",[("graphFunc:",p1),("sustainTime:",p2),("transitionTime:",p3),("overlap:",p4)]) ->
           overlapTexture evalBlock p1 p2 p3 p4
         ("Splay",[("input:",p1)]) -> liftUGen (\input -> SC3.splay input 1 1 0 True) p1
+        ("Splay",[("input:",p1),("level:",p2)]) -> liftUGen2 (\input level -> SC3.splay input 1 level 0 True) p1 p2
         ("Splay",[("input:",p1),("spread:",p2),("level:",p3),("center:",p4)]) ->
           liftUGen4 (\p1' p2' p3' p4' -> SC3.splay p1' p2' p3' p4' True) p1 p2 p3 p4
         ("TChoose",[("trig:",p1),("array:",p2)]) -> tChoose p1 p2
@@ -447,8 +452,8 @@ evalKeywordClassMessage evalBlock x keywordArguments = do
 evalKeywordUGenMessage :: EvalBlock t -> Object t -> [(String,Object t)] -> VM t (Object t)
 evalKeywordUGenMessage evalBlock o keywordArguments =
   case keywordArguments of
-    [("arrayFill:",p1)] -> mceFill evalBlock False id o p1 -- synonym for mceFill
-    [("arrayFillZeroIndexed:",p1)] -> mceFill evalBlock True id o p1 -- synonym for mceFillZeroIndexed
+    [("arrayFill:",p1)] -> mceFill evalBlock False id o p1 -- synonym for mceFill:
+    [("arrayFillZeroIndexed:",p1)] -> mceFill evalBlock True id o p1 -- synonym for mceFillZeroIndexed:
     [("at:",p1)] -> mceAt o p1
     [("bitAnd:",p1)] -> liftUGen2 (.&.) o p1
     [("bitOr:",p1)] -> liftUGen2 (.|.) o p1
@@ -515,8 +520,8 @@ overlapTexture evalBlock graphFunc sustainTime transitionTime overlap = do
   t2 <- objectToUGen transitionTime
   k <- objectToInt "overlapTexture" overlap
   let tr_seq = map (\i -> SC3.impulse SC3.kr (1 / (t1 + (t2 * 2))) (SC3.constant i / SC3.constant k)) [0 .. k - 1]
-      en_seq = map (\tr-> SC3.envGen SC3.kr tr 1 0 1 SC3.DoNothing (SC3.envelope [0,1,1,0] [t1,t2,t1] [SC3.EnvSin])) tr_seq
-  a <- mapM (\x -> evalBlock e b [x]) (map UGenObject tr_seq)
+      en_seq = map (\tr -> SC3.envGen SC3.kr tr 1 0 1 SC3.DoNothing (SC3.envelope [0,1,1,0] [t1,t2,t1] [SC3.EnvSin])) tr_seq
+  a <- mapM (\x -> evalBlock False e b [x]) (map UGenObject tr_seq)
   u <- mapM objectToUGen a
   return (UGenObject (SC3.mix (SC3.mce (zipWith (*) u en_seq))))
 
