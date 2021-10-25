@@ -55,6 +55,10 @@ Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
 Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by calling function
+Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
+Array.new(3).add(1).addAll([2, 3]) == [1, 2, 3]             // add all elements of collection to end of array
+{ var x = [1, 2]; [x.remove(2), x] }.value == [2, [1]]      // remove element from array (in place)
+[1, 2, 3, 4].removeAll([3, 4]) == [1, 2]                    // remove all elements of collection from array
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
 #[1, 2, 3, 4] == [1, 2, 3, 4]                               // literal array syntax
 #[]                                                         // empty literal array
@@ -77,6 +81,9 @@ Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with sl
 [1, 2, 3, 4].select({ arg x; x > 2 }) == [3, 4]             // filter elements
 [1, 2, 3, 4].scramble                                       // randomly shuffle elements
 [1, 2, 3, 4].mirror == [1, 2, 3, 4, 3, 2, 1]                // append reverse of prefix of array
+[[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
+[1, 3, 5, 2, 4, 6].unlace(3) == [[1, 2], [3, 4], [5, 6]]    // inverse of lace, argument tells number of subarrays
+[1, 4, 2, 5, 3, 6].unlace(2) == [[1, 2, 3], [4, 5, 6]]      // inverse of lace, argument tells number of subarrays
 [[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
 [1, 2, 3, 4].size == 4                                      // array length
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
@@ -217,6 +224,7 @@ Collection.allSubclasses.size == 41                         // collection class
 [1, [2, 3], [4, [5, 6]]].deepCollect(3, { arg x; x -> '.'}) // tree collect to indicated depth
 [1, 2, 3, 4, 5].choose                                      // random element of collection
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15)               // weighted random element of collection (weights sum to 1)
+[1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 
 'Comments'
 
@@ -485,6 +493,24 @@ SequenceableCollection.allSubclasses.size == 180            // sequencable colle
 [1, 3, 5, 7, 9].clump(2).flatten == [1, 3, 5, 7, 9]         // concatentate
 [1, 3, 5, 7, 9].integrate == [1, 4, 9, 16, 25]              // incremental sum
 [1, 4, 9, 16, 25].differentiate == [1, 3, 5, 7, 9]          // pairwise difference
+
+'Set'
+
+Set.new.isKindOf(Collection) == true                        // c.f. Collection
+Set.new(4).size == 0                                        // allocate empty set for up to 4 elements
+[1, 2, 3, 4].asSet                                          // set from array
+Set.new(4).add(1).add(2).add(3) == [1, 2, 3].asSet          // add elements to collection
+Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements of collection to collection
+[1, 2, 3, 4].asSet.remove(3) == [1, 2, 4].asSet             // remove element from collection
+[1, 2, 3, 4].asSet.removeAll([3, 4]) == [1, 2].asSet        // remove all elements of collection from collection
+[1, 2, 3, 4].asSet.includes(3) == true                      // test if element is in collection
+[1, 2, 3, 4].asSet.size == 4                                // number of elements
+[1, 2, 3].asSet.sect([2, 3, 4].asSet) == [2, 3].asSet       // set intersection (p + q)
+[1, 2].asSet.union([2, 3].asSet) == [1, 2, 3].asSet         // set union (p & q)
+[1, 2, 3].asSet.difference([2, 3, 4].asSet) == [1].asSet    // set difference (p - q)
+[1].asSet.symmetricDifference([2].asSet) == [1, 2].asSet    // symmetric difference ((p - q) + (q - p))
+[2, 3].asSet.isSubsetOf([1, 2, 3, 4].asSet) == true         // subset of
+[1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array
 
 'String'
 
