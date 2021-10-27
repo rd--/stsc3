@@ -2,3 +2,8 @@
 var o = LFSaw(#[8, 7.23], 0) * 3 + 80;
 var f = LFSaw(0.4, 0) * 24 + o;
 CombN(SinOsc(f.midicps, 0) * 0.04, 0.2, 0.2, 4) * 0.1
+
+// analog bubbles (jmcc) #1 ; filtermethods
+var o = LFSaw(#[8, 7.23], 0).mul(3).add(80);
+var f = LFSaw(0.4, 0).mul(24).add(o);
+SinOsc(f.midicps, 0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)

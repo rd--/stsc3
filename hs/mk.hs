@@ -1,4 +1,6 @@
+import Sound.SC3.UGen.DB {- hsc3-db -}
 import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
+import Sound.SC3.UGen.DB.Record {- hsc3-db -}
 
 {- | Unary operators
 
@@ -57,7 +59,10 @@ ugen =
   ,"XFade2","XLine"]
 
 main :: IO ()
-main = st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
+main = do
+  st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
+  let flt = filter u_is_unary_filter (map u_lookup_cs_err ugen)
+  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (st_filter_methods flt)
 
 {-
 import Sound.SC3.UGen.DB.Bindings.SOM {- hsc3-db -}

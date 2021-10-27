@@ -10,3 +10,16 @@ var z = OverlapTexture({
 }, 10, 0.01, n);
 z = z * LinXFade2(1, SinOsc(5, 0).max(0), MouseX(0, 1, 0, 0.2) > 0.5, 1).kr;
 CombN(z, 0.3, 0.3, 8) + z.reverse
+
+// pentatonic pipes (jmcc) ; filtermethods
+var n = 5;
+var env = EnvLinen(0.2, 8, 1, 20, [\sine]);
+var mode = #[0, 3, 5, 7, 10].asLocalBuf;
+var root = 36 + 12.rand;
+var z = OverlapTexture({
+    arg tr;
+    var f = tr.tRand(0, 20).degreeToKey(mode, 12).add(root).midicps;
+    PinkNoise().mul(env.envGen(tr)).resonz(f, 0.002).mul(4).distort.mul(0.2).pan2(tr.tRand(-1, 1), 1);
+}, 10, 0.01, n);
+z = SinOsc(5, 0).max(0).mul(z);
+z.combN(0.3, 0.3, 8).add(z.reverse)

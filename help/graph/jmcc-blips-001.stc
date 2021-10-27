@@ -6,7 +6,7 @@ var z = OverlapTexture({
         var nh = TXLine(TExpRand(2, 100, tr), TExpRand(2, 100, tr), 4, tr);
         Blip(f, nh)
     };
-    Pan2(blips.value * blips.value, Line(TRand(-1, 1, tr), TRand(-1, 1, tr), 4, 0), 0.3)
+    Pan2(blips.value * blips.value, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), 4, tr), 0.3)
 }, 2, 1, 12);
 z = z.distort;
 6.timesRepeat({ z = AllpassN(z, 0.05, { Rand(0, 0.05) }.dup, 4) });

@@ -3,7 +3,7 @@ var root = 5;
 var scale = #[0, 2, 4, 5, 7, 9, 11] + root;
 var oct = #[24, 36, 48, 60, 72, 84];
 var f = (scale.choose + oct.choose).midicps;
-var x = {BrownNoise()}.dup * 0.007 * (LFNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).max(0);
-var d = [Array.series(12, f, f), Array.geom(12, 1, 0.7.rand(0.9)), {1.0.rand(3.0)}.dup(12)].transpose.concatenation;
+var x = { BrownNoise() }.dup * 0.007 * (LFNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).max(0);
+var d = [Array.series(12, f, f), Array.geom(12, 1, 0.7.rand(0.9)), { 1.0.rand(3.0) }.dup(12)].transpose.concatenation;
 var k = Klank(x, 1, 0, 1, d);
 (k * 0.1).softclip

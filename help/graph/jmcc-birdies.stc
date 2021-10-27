@@ -1,10 +1,21 @@
 // birdies (jmcc) #6
 OverlapTexture({
     arg tr;
-    var p1 = { LFPulse(0.4 + TRand(0, 1, tr), 0, TRand(0, 0.8, tr) + 0.1) * (TRand(0, 3, tr) + 4) } ;
-    var p2 = LFPulse(0.2 + TRand(0, 0.5, tr), 0, 0.4) * 0.02;
-    var sw = LFSaw(p1.value + p1.value + 2, 0) * (1000 + TRand(0, 800, tr)).negated + 4000 + TRand(-1200, 1200, tr);
+    var p1 = { LFPulse(TRand(0.4, 1.4, tr), 0, TRand(0.1, 0.9, tr)) * TRand(4, 7, tr) } ;
+    var p2 = LFPulse(TRand(0.2, 0.7, tr), 0, 0.4) * 0.02;
+    var sw = LFSaw(p1.value + p1.value + 2, 0) * TRand(1000, 1800, tr).negated + 4000 + TRand(-1200, 1200, tr);
     var freq = Lag(sw, 0.05);
     var amp = Lag(p2, 0.3);
     Pan2(SinOsc(freq, 0), TRand(-1, 1, tr), amp)
+}, 7, 4, 4)
+
+// birdies (jmcc) #6 ; filtermethods
+OverlapTexture({
+    arg tr;
+    var p1 = { LFPulse(tr.tRand(0.4, 1.4), 0, tr.tRand(0.1, 0.9)).mul(tr.tRand(4, 7)) } ;
+    var p2 = LFPulse(tr.tRand(0.2, 0.7), 0, 0.4).mul(0.02);
+    var sw = LFSaw(p1.value.add(p1.value).add(2), 0).mul(tr.tRand(1000, 1800).negated).add(4000).add(tr.tRand(-1200, 1200));
+    var freq = sw.lag(0.05);
+    var amp = p2.lag(0.3);
+    SinOsc(freq, 0).pan2(tr.tRand(-1, 1), amp)
 }, 7, 4, 4)

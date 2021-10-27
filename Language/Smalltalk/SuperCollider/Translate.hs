@@ -7,11 +7,11 @@ module Language.Smalltalk.SuperCollider.Translate where
 import qualified Data.List.Split as Split {- split -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as Print {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Rewrite as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Lexer {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Parser {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Rewrite as Rewrite {- stsc3 -}
 
 {- | This is for translating, it allows either
      a Unary sequence with an optional ending Keyword,
@@ -23,7 +23,7 @@ scDotMessagesForSmalltalk m =
   then case break scDotMessageIsKeyword m of
          (lhs,[]) -> (lhs,Nothing)
          (lhs,[k]) -> (lhs,Just k)
-         _ -> error ("scDotMessagesForSmalltalk: " ++ show m)
+         r -> error ("scDotMessagesForSmalltalk: " ++ show (m, r))
   else (m,Nothing)
 
 scFloatConstant :: St.Identifier -> St.Primary
@@ -170,28 +170,29 @@ scInitializerDefinitionSt (ScInitializerDefinition tmp stm) =
 -- | Parse and translate SuperCollider InitializerDefinition.
 scParseInitializerDefinition :: String -> St.InitializerDefinition
 scParseInitializerDefinition s =
-  let eSc = Sc.superColliderParser (Sc.alexScanTokens s)
-  in scInitializerDefinitionSt (Sc.scInitializerDefinitionRewrite True eSc)
+  let eSc = Parser.superColliderParser (Lexer.alexScanTokens s)
+  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite True eSc)
 
 -- | Translate SuperCollider program text to Smalltalk.
 scToSt :: String -> String
-scToSt = St.initializerDefinition_pp . scParseInitializerDefinition
+scToSt = Print.initializerDefinition_pp . scParseInitializerDefinition
 
 -- * C-Smalltalk translator
 
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
-  let eSc = Sc.superColliderParser (Sc.alexScanTokens s)
-  in scInitializerDefinitionSt (Sc.scInitializerDefinitionRewrite False eSc)
+  let eSc = Parser.superColliderParser (Lexer.alexScanTokens s)
+  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite False eSc)
 
 -- | Translate C-Smalltalk program text to Smalltalk.
 stcToSt :: String -> String
-stcToSt = St.initializerDefinition_pp . stcParseInitializerDefinition
+stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 
 {-
 
 rw = stcToSt
+rw "p(q.r(i).s).t(j) + k"
 rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5}) .\n"
 rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k}) .\n"
 rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})}) .\n"
@@ -204,6 +205,7 @@ rw "c.put(i, j)" == "c put: i value: j .\n"
 rw "p.q:r(i)" -- error ; arity mismatch
 rw "p.q:(i)" -- error ; message names may not have trailing colons
 rw "p.q(x: i)" -- error ; keywords are not allowed
+rw "p(q.r(i).s).t + k" -- "(p apply: {(q r: i) s}) t + k .\n"
 
 rw = scToSt
 scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"

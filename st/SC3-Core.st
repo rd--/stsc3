@@ -127,7 +127,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !
 
 AbstractUGen subclass: #UGen
-  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId mul add'
+  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -135,15 +135,8 @@ AbstractUGen subclass: #UGen
 
 UGen comment: 'Unit Generator.
 ugenId is assigned during graph serialisation since identityHash is not unique.
-All UGens have mul and add inputs, so these variables are defined here.
+All UGens have mul: and add: methods but there are no variables associated with these.
 '!
-
-!UGen methodsFor: 'initialization'!
-  initialize
-    mul := 1.
-    add := 0.
-  !
-!
 
 !UGen methodsFor: 'accessing'!
   mceNames ^mceNames!
@@ -160,10 +153,6 @@ All UGens have mul and add inputs, so these variables are defined here.
   ugenRate: x ugenRate := x!
   ugenId ^ugenId!
   ugenId: x ugenId := x!
-  mul ^mul!
-  mul: x mul := x!
-  add ^add!
-  add: x add := x!
 !
 
 !UGen methodsFor: 'collecting'!
@@ -173,12 +162,18 @@ All UGens have mul and add inputs, so these variables are defined here.
     c add: self.
     paramNames do: addFunc.
     mceNames do: addFunc.
-    mul = 1 ifFalse: [mul addToUGenSet: c].
-    add = 0 ifFalse: [add addToUGenSet: c]
   !
 !
 
 !UGen methodsFor: 'arithmetic'!
+  mul: x
+     "((p mul: q) mul: r) is (p * q * r) not (p * r)."
+      ^x = 1 ifTrue: [ self ] ifFalse: [ self * x ]
+  !
+  add: x
+     "((p add: q) add: r) is (p + q + r) not (p + r)."
+      ^x = 0 ifTrue: [ self ] ifFalse: [ self + x ]
+  !
   mul: mul add: add
     self mul: mul.
     self add: add

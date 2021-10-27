@@ -20,7 +20,7 @@ To translate, a Dot message sequence has parentheses inserted after each Keyword
 This transformation at the Sc Ast.
 
 - p.q(a).r          => (p.q(a)).r
-- p.q.r(a).s(b).t   => ((p.q.r(a)).s(b)) t
+- p.q.r(a).s(b).t   => (((p.q.r(a))).s(b)).t
 - p.q(a) + r        => (p.q(a)) + r
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))

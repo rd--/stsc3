@@ -1,5 +1,5 @@
 // tw 0020 (f0)
-var a = {arg freq; LFPulse(freq, 0, 0.5)};
+var a = { arg freq; LFPulse(freq, 0, 0.5) };
 var b = 4.iota;
 var a1 = a.value(b / 32) + 1 / 8;
 var a2 = a.value(a1) + 1 * b;

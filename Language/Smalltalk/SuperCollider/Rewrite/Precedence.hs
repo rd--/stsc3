@@ -95,7 +95,9 @@ scBasicExpressionRewritePrecedence isInit (ScBasicExpression p m) =
               (ScBasicExpression
                 (ScPrimaryExpression
                   (ScExprBasic
-                    (ScBasicExpression p (Just (ScMessagesDot (map dmRw lhs) Nothing)))))
+                    (ScBasicExpression
+                     (scPrimaryRewritePrecedenceMaybe rw p)
+                      (Just (ScMessagesDot (map dmRw lhs) Nothing)))))
                 (Just (ScMessagesDot
                         (map dmRw rhs)
                         (Just (map (scBinaryMessageRewritePrecedenceMaybe rw) b)))))
@@ -172,12 +174,20 @@ scRewritePrecedenceViewer =
 {-
 
 rw = scRewritePrecedenceViewer
-rw "p.q()" == "p.q()"
-rw "p.q().r()" == "(p.q()).r()"
-rw "p.q + r" == "p.q + r" -- unary no parens
-rw "p.q() + r" == "(p.q()) + r" -- parens ; singular requires if initial of binary, c.f. p.q()
-rw "p + q.r()" == "p + (q.r())" -- parens ; also it subsequent of binary (ie. in binary requires paren)
-rw "p.q(r + s.t())" == "p.q(r + (s.t()))" -- Binary within Dot/Keyword
+rw "p.q(a).r" == "(p.q(a)).r\n"
+rw "p.q.r(a).s(b).t" == "(((p.q.r(a))).s(b)).t\n"
+rw "p.q(a) + r" == "(p.q(a)) + r\n"
+rw "p.q(a).r + s" == "(p.q(a)).r + s\n"
+rw "p + q.r(a)" == "p + (q.r(a))\n"
+rw "p.q(i)"== "p.q(i)\n"
+rw "p.q(i).r" == "(p.q(i)).r\n"
+rw "p.q(i).r(j)" == "(p.q(i)).r(j)\n"
+rw "p.q + r" == "p.q + r\n" -- unary no parens
+rw "p.q(i) + r" == "(p.q(i)) + r\n" -- parens ; singular requires if initial of binary, c.f. p.q()
+rw "p + q.r(i)" == "p + (q.r(i))\n" -- parens ; also it subsequent of binary (ie. in binary requires paren)
+rw "p.q(r + s.t(i))" == "p.q(r + (s.t(i)))\n" -- Binary within Dot/Keyword
+rw "p.q(r.s(i).t).u(j)" == "(p.q((r.s(i)).t)).u(j)\n"
+rw "p.q(r.s(i).t).u(j) + k" == "((p.q((r.s(i)).t)).u(j)) + k\n"
 
 rd = Sc.superColliderParser . Sc.alexScanTokens
 

@@ -35,9 +35,7 @@
   !
   printHaskellDefinitionOn: fd
     "Print my hsc3 definition."
-    | hasMulAdd mce nc |
-    hasMulAdd := (mul ~= 1) or: (add ~= 0).
-    hasMulAdd ifTrue: ['(mulAddOptimised ' putOn: fd.].
+    | mce nc |
     '(mkUGen Nothing all_rates ' putOn: fd.
     ugenRate isArray
       ifTrue: ['(Right ' putOn: fd. ugenRate printHaskellArrayOn: fd. ') ' putOn: fd]
@@ -63,7 +61,6 @@
     self ugenId asString putOn: fd.
     ')' putOn: fd.
     ')' putOn: fd.
-    hasMulAdd ifTrue: [' (' putOn: fd. mul printHaskellOn: fd. ') (' putOn: fd. add printHaskellOn: fd. '))' putOn: fd]
   !
 !
 
