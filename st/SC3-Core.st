@@ -175,8 +175,11 @@ All UGens have mul: and add: methods but there are no variables associated with 
       ^x = 0 ifTrue: [ self ] ifFalse: [ self + x ]
   !
   mul: mul add: add
-    self mul: mul.
-    self add: add
+    ^(self mul: mul) add: add
+  !
+  mulAdd: mul value: add
+    ".stc alias for mul:add:"
+    ^self mul: mul add: add
   !
 !
 

@@ -18,12 +18,12 @@ var b = #[0, 2, 3.2, 5, 7, 9, 10].asLocalBuf;
 var k = MouseX(0, 15, 0, 0.1).degreeToKey(b, 12);
 var c = {
     arg n, r;
-    var o = SinOsc((k.add(r).add(n.mul(0.04))).midicps, 0).mul(0.1);
+    var o = SinOsc((k + r + (n * 0.04)).midicps, 0).mul(0.1);
     var t = LFPulse(#[48, 55].midicps, 0, 0.15);
-    var f = SinOsc(0.1, 0).mul(10).add(r).midicps;
+    var f = SinOsc(0.1, 0).mulAdd(10, r).midicps;
     var d = t.rlpf(f, 0.1).mul(0.1);
-    var m = o.add(d);
-    m.combN(0.31, 0.31, 2).add(m)
+    var m = o + d;
+    m.combN(0.31, 0.31, 2) + m
 };
 var n = LFNoise1([3, 3]);
-c.value(n, 48).add(c.value(n, 72)).mul(0.25)
+c.value(n, 48) + c.value(n, 72) * 0.25

@@ -1,6 +1,9 @@
-import Sound.SC3.UGen.DB {- hsc3-db -}
-import Sound.SC3.UGen.DB.Bindings.Smalltalk {- hsc3-db -}
-import Sound.SC3.UGen.DB.Record {- hsc3-db -}
+import Data.Maybe {- base -}
+
+import Sound.SC3.UGen.DB as Db {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Bindings.SuperCollider as Sc {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Bindings.Smalltalk as St {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
 
 {- | Unary operators
 
@@ -60,11 +63,21 @@ ugen =
 
 main :: IO ()
 main = do
-  st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
-  let flt = filter u_is_unary_filter (map u_lookup_cs_err ugen)
-  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (st_filter_methods flt)
+  St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
+  let flt = filter Record.u_is_unary_filter (map u_lookup_cs_err ugen)
+  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (St.st_filter_methods flt)
+
+-- * Sc
+
+sc_wr :: IO ()
+sc_wr = do
+  let u_fm = map u_lookup_cs_err (filter (`notElem` Sc.sc_filter_method_ignore_list) ugen)
+      u_ir = map u_lookup_cs_err (filter (`notElem` Sc.sc_implicit_rate_ignore_list) ugen)
+  --writeFile "/home/rohan/sw/stsc3/sc/FilterMethods.sc" (Sc.sc_filter_methods (filter Record.u_is_unary_filter u_fm))
+  writeFile "/home/rohan/sw/stsc3/sc/ImplicitRateConstructors.sc" (Sc.sc_implicit_rate_constructors (filter (isNothing . Record.ugen_filter) u_ir))
 
 {-
-import Sound.SC3.UGen.DB.Bindings.SOM {- hsc3-db -}
+-- * Som
+import Sound.SC3.UGen.Db.Bindings.SOM {- hsc3-db -}
 som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/lib/som/ugen" ugen
 -}

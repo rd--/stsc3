@@ -22,4 +22,4 @@ var z = OverlapTexture({
     PinkNoise().mul(env.envGen(tr)).resonz(f, 0.002).mul(4).distort.mul(0.2).pan2(tr.tRand(-1, 1), 1);
 }, 10, 0.01, n);
 z = SinOsc(5, 0).max(0).mul(z);
-z.combN(0.3, 0.3, 8).add(z.reverse)
+z.combN(0.3, 0.3, 8) + z.reverse

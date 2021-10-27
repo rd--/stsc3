@@ -18,10 +18,9 @@ OverlapTexture({
 // deep trip (jmcc) #9 ; graph rewrite ; filtermethods
 OverlapTexture({
     arg tr;
-    var f = LFNoise1(tr.tRand(0, 0.3)).mul(60).add(70).midicps;
+    var f = LFNoise1(tr.tRand(0, 0.3)).mulAdd(60, 70).midicps;
     var a = LFNoise2(f.mul(tr.tRand(0, 0.5))).mul((LFNoise1(tr.tRand(0, 8)).mul(SinOsc(tr.tRand(0, 40), 0)).mul(0.1)).max(0));
     var s = SinOsc(f, 0).mul(a).pan2(LFNoise1(tr.tRand(0, 5)), 1);
     var c = { s.combN(0.5, { tr.tRand(0, 0.2) + 0.3 }.dup, 20) };
-    c.dup.sum.add(s)
+    s + c.dup.sum
 }, 12, 4, 4)
-
