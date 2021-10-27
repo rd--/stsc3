@@ -36,7 +36,7 @@
   }
   bufWr {
     arg bufnum = 0.0,phase = 0.0,loop = 1.0;
-    "Reordering: [3,0,1,2] ".error;
+    "sc_filter_method: reordering not implemented: [3,0,1,2] ".error;
     ^BufWr.multiNew(this.rate,bufnum,phase,loop,this)
   }
   combC {
@@ -99,7 +99,7 @@
   }
   klank {
     arg freqscale = 1.0,freqoffset = 0.0,decayscale = 1.0,specificationsArrayRef = 0.0;
-    "Reordering: [4,0,1,2,3] ".error;
+    "sc_filter_method: reordering not implemented: [4,0,1,2,3] ".error;
     ^Klank.multiNew(this.rate,this,freqscale,freqoffset,decayscale,specificationsArrayRef)
   }
   lpf {
@@ -242,9 +242,9 @@
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate,this,dur)
   }
-}
 
-+ SequenceableCollection {
+}
++ Array {
   allpassC {
     arg maxdelaytime = 0.2,delaytime = 0.2,decaytime = 1.0;
     ^AllpassC.multiNew(this.rate,this,maxdelaytime,delaytime,decaytime)
@@ -282,7 +282,7 @@
   }
   bufWr {
     arg bufnum = 0.0,phase = 0.0,loop = 1.0;
-    "Reordering: [3,0,1,2] ".error;
+    "sc_filter_method: reordering not implemented: [3,0,1,2] ".error;
     ^BufWr.multiNew(this.rate,bufnum,phase,loop,this)
   }
   combC {
@@ -345,7 +345,7 @@
   }
   klank {
     arg freqscale = 1.0,freqoffset = 0.0,decayscale = 1.0,specificationsArrayRef = 0.0;
-    "Reordering: [4,0,1,2,3] ".error;
+    "sc_filter_method: reordering not implemented: [4,0,1,2,3] ".error;
     ^Klank.multiNew(this.rate,this,freqscale,freqoffset,decayscale,specificationsArrayRef)
   }
   lpf {
@@ -488,4 +488,5 @@
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate,this,dur)
   }
+
 }
