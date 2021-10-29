@@ -44,3 +44,8 @@ Smalltalk SuperCollider - C-Smalltalk to Smalltalk Translator - 2021-09-27
 
 <iframe src="https://player.vimeo.com/video/615732677" frameborder="0" allowfullscreen="true" width="640" height="360" >
 </iframe>
+
+.stc = SuperCollider & Smalltalk & Scheme - 2021-10-29
+
+<iframe src="https://player.vimeo.com/video/640256669" frameborder="0" allowfullscreen="true" width="640" height="360" >
+</iframe>
