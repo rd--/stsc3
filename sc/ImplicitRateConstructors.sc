@@ -7,14 +7,14 @@
 + ControlDur { *new { ^ControlDur.multiNew('scalar') } }
 + Crackle { *new { arg chaosParam = 1.5; ^Crackle.multiNew('audio', chaosParam) } }
 + CuspL { *new { arg freq = 22050.0, a = 1.0, b = 1.9, xi = 0.0; ^CuspL.multiNew('audio', freq, a, b, xi) } }
-+ Diwhite { *new { arg length = 1.0e8, lo = 0.0, hi = 1.0; "sc_implicit_rate_constructor: reordering not implemented: [1,2,0] ".error; ^Diwhite.multiNew('demand', length, lo, hi) } }
-+ Drand { *new { arg repeats = 1.0, list = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [1,0] ".error; ^Drand.multiNew('demand', repeats, list) } }
-+ Dseq { *new { arg repeats = 1.0, list = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [1,0] ".error; ^Dseq.multiNew('demand', repeats, list) } }
-+ Dshuf { *new { arg repeats = 1.0, list = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [1,0] ".error; ^Dshuf.multiNew('demand', repeats, list) } }
++ Diwhite { *new { arg lo = 0.0, hi = 1.0, length = 1.0e8; ^Diwhite.multiNew('demand', lo, hi, length) } }
++ Drand { *new { arg list = 0.0, repeats = 1.0; ^Drand.multiNew('demand', list, repeats) } }
++ Dseq { *new { arg list = 0.0, repeats = 1.0; ^Dseq.multiNew('demand', list, repeats) } }
++ Dshuf { *new { arg list = 0.0, repeats = 1.0; ^Dshuf.multiNew('demand', list, repeats) } }
 + Dust { *new { arg density = 0.0; ^Dust.multiNew('audio', density) } }
 + Dust2 { *new { arg density = 0.0; ^Dust2.multiNew('audio', density) } }
-+ Duty { *new { arg dur = 1.0, reset = 0.0, doneAction = 0.0, level = 1.0; "sc_implicit_rate_constructor: reordering not implemented: [0,1,3,2] ".error; ^Duty.multiNew('audio', dur, reset, doneAction, level) } }
-+ EnvGen { *new { arg gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0, envelope = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [5,0,1,2,3,4] ".error; ^EnvGen.multiNew('audio', gate, levelScale, levelBias, timeScale, doneAction, envelope) } }
++ Duty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0; ^Duty.multiNew('audio', dur, reset, level, doneAction) } }
++ EnvGen { *new { arg envelope = 0.0, gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0; ^EnvGen.multiNew('audio', envelope, gate, levelScale, levelBias, timeScale, doneAction) } }
 + Formant { *new { arg fundfreq = 440.0, formfreq = 1760.0, bwfreq = 880.0; ^Formant.multiNew('audio', fundfreq, formfreq, bwfreq) } }
 + FSinOsc { *new { arg freq = 440.0, iphase = 0.0; ^FSinOsc.multiNew('audio', freq, iphase) } }
 + Gendy1 { *new { arg ampdist = 1.0, durdist = 1.0, adparam = 1.0, ddparam = 1.0, minfreq = 440.0, maxfreq = 660.0, ampscale = 0.5, durscale = 0.5, initCPs = 12.0, knum = 0.0; ^Gendy1.multiNew('audio', ampdist, durdist, adparam, ddparam, minfreq, maxfreq, ampscale, durscale, initCPs, knum) } }
@@ -24,7 +24,7 @@
 + In { *new { arg bus = 0.0; ^In.multiNew('audio', bus) } }
 + InFeedback { *new { arg bus = 0.0; ^InFeedback.multiNew('audio', bus) } }
 + K2A { *new { arg in = 0.0; ^K2A.multiNew('audio', in) } }
-+ Klang { *new { arg freqscale = 1.0, freqoffset = 0.0, specificationsArrayRef = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [2,0,1] ".error; ^Klang.multiNew('audio', freqscale, freqoffset, specificationsArrayRef) } }
++ Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.multiNew('audio', specificationsArrayRef, freqscale, freqoffset) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.multiNew('audio', freq, iphase) } }
 + LFDNoise3 { *new { arg freq = 500.0; ^LFDNoise3.multiNew('audio', freq) } }
 + LFNoise0 { *new { arg freq = 500.0; ^LFNoise0.multiNew('audio', freq) } }
@@ -45,7 +45,7 @@
 + PinkNoise { *new { ^PinkNoise.multiNew('audio') } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.multiNew('control', in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + Pulse { *new { arg freq = 440.0, width = 0.5; ^Pulse.multiNew('audio', freq, width) } }
-+ RecordBuf { *new { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0, inputArray = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [8,0,1,2,3,4,5,6,7] ".error; ^RecordBuf.multiNew('audio', bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction, inputArray) } }
++ RecordBuf { *new { arg inputArray = 0.0, bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0; ^RecordBuf.multiNew('audio', inputArray, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + RBezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^RBezier.multiNew('audio', haltAfter, dx, freq, phase, param) } }
 + RDX7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^RDX7Env.multiNew('audio', gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol) } }
 + RExpRandN { *new { arg lo = 0.0, hi = 1.0; ^RExpRandN.multiNew('scalar', lo, hi) } }
@@ -56,7 +56,7 @@
 + SinOsc { *new { arg freq = 440.0, phase = 0.0; ^SinOsc.multiNew('audio', freq, phase) } }
 + SinOscFB { *new { arg freq = 440.0, feedback = 0.0; ^SinOscFB.multiNew('audio', freq, feedback) } }
 + SyncSaw { *new { arg syncFreq = 440.0, sawFreq = 440.0; ^SyncSaw.multiNew('audio', syncFreq, sawFreq) } }
-+ TDuty { *new { arg dur = 1.0, reset = 0.0, doneAction = 0.0, level = 1.0, gapFirst = 0.0; "sc_implicit_rate_constructor: reordering not implemented: [0,1,3,2,4] ".error; ^TDuty.multiNew('audio', dur, reset, doneAction, level, gapFirst) } }
++ TDuty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0, gapFirst = 0.0; ^TDuty.multiNew('audio', dur, reset, level, doneAction, gapFirst) } }
 + TGrains { *new { arg trigger = 0.0, bufnum = 0.0, rate = 1.0, centerPos = 0.0, dur = 0.1, pan = 0.0, amp = 0.1, interp = 4.0; ^TGrains.multiNew('audio', trigger, bufnum, rate, centerPos, dur, pan, amp, interp) } }
 + VarSaw { *new { arg freq = 440.0, iphase = 0.0, width = 0.5; ^VarSaw.multiNew('audio', freq, iphase, width) } }
 + Vibrato { *new { arg freq = 440.0, rate = 6.0, depth = 2.0e-2, delay = 0.0, onset = 0.0, rateVariation = 4.0e-2, depthVariation = 0.1, iphase = 0.0, trig = 0.0; ^Vibrato.multiNew('audio', freq, rate, depth, delay, onset, rateVariation, depthVariation, iphase, trig) } }

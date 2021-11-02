@@ -1,0 +1,9 @@
+(
+\name: "stsc3",
+\summary: "Filter Messages and Implicit Rates",
+\Author: "rd",
+\url: "https://gitlab.com/rd--/stsc3",
+\version: "0.0.1",
+\since: "2021",
+\status: "experimental"
+)

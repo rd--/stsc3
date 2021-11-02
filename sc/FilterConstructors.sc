@@ -7,7 +7,7 @@
 + BPF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^BPF.multiNew(in.rate, in, freq, rq) } }
 + BPZ2 { *new { arg in = 0.0;^BPZ2.multiNew(in.rate, in) } }
 + BRF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^BRF.multiNew(in.rate, in, freq, rq) } }
-+ BufWr { *new { arg bufnum = 0.0, phase = 0.0, loop = 1.0, inputArray = 0.0;"sc_filter_constructor: reordering not implemented: [3,0,1,2] ".error; ^BufWr.multiNew(inputArray.rate, bufnum, phase, loop, inputArray) } }
++ BufWr { *new { arg inputArray = 0.0, bufnum = 0.0, phase = 0.0, loop = 1.0;^BufWr.multiNew(inputArray.rate, inputArray, bufnum, phase, loop) } }
 + Clip { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Clip.multiNew(in.rate, in, lo, hi) } }
 + CombC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombC.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
 + CombL { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombL.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
@@ -26,7 +26,7 @@
 + HPF { *new { arg in = 0.0, freq = 440.0;^HPF.multiNew(in.rate, in, freq) } }
 + HPZ1 { *new { arg in = 0.0;^HPZ1.multiNew(in.rate, in) } }
 + InRange { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^InRange.multiNew(in.rate, in, lo, hi) } }
-+ Klank { *new { arg input = 0.0, freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0, specificationsArrayRef = 0.0;"sc_filter_constructor: reordering not implemented: [4,0,1,2,3] ".error; ^Klank.multiNew(input.rate, input, freqscale, freqoffset, decayscale, specificationsArrayRef) } }
++ Klank { *new { arg specificationsArrayRef = 0.0, input = 0.0, freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0;^Klank.multiNew(input.rate, specificationsArrayRef, input, freqscale, freqoffset, decayscale) } }
 + LPF { *new { arg in = 0.0, freq = 440.0;^LPF.multiNew(in.rate, in, freq) } }
 + Lag { *new { arg in = 0.0, lagTime = 0.1;^Lag.multiNew(in.rate, in, lagTime) } }
 + LagUD { *new { arg in = 0.0, lagTimeU = 0.1, lagTimeD = 0.1;^LagUD.multiNew(in.rate, in, lagTimeU, lagTimeD) } }

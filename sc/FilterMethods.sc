@@ -36,8 +36,7 @@
   }
   bufWr {
     arg bufnum = 0.0, phase = 0.0, loop = 1.0;
-    "sc_filter_method: reordering not implemented: [3,0,1,2] ".error;
-    ^BufWr.multiNew(this.rate, bufnum, phase, loop, this)
+    ^BufWr.multiNew(this.rate, this, bufnum, phase, loop)
   }
   combC {
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
@@ -98,9 +97,8 @@
     ^InRange.multiNew(this.rate, this, lo, hi)
   }
   klank {
-    arg freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0, specificationsArrayRef = 0.0;
-    "sc_filter_method: reordering not implemented: [4,0,1,2,3] ".error;
-    ^Klank.multiNew(this.rate, this, freqscale, freqoffset, decayscale, specificationsArrayRef)
+    arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0;
+    ^Klank.multiNew(this.rate, specificationsArrayRef, this, freqscale, freqoffset, decayscale)
   }
   lpf {
     arg freq = 440.0;
@@ -282,8 +280,7 @@
   }
   bufWr {
     arg bufnum = 0.0, phase = 0.0, loop = 1.0;
-    "sc_filter_method: reordering not implemented: [3,0,1,2] ".error;
-    ^BufWr.multiNew(this.rate, bufnum, phase, loop, this)
+    ^BufWr.multiNew(this.rate, this, bufnum, phase, loop)
   }
   combC {
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
@@ -344,9 +341,8 @@
     ^InRange.multiNew(this.rate, this, lo, hi)
   }
   klank {
-    arg freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0, specificationsArrayRef = 0.0;
-    "sc_filter_method: reordering not implemented: [4,0,1,2,3] ".error;
-    ^Klank.multiNew(this.rate, this, freqscale, freqoffset, decayscale, specificationsArrayRef)
+    arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0;
+    ^Klank.multiNew(this.rate, specificationsArrayRef, this, freqscale, freqoffset, decayscale)
   }
   lpf {
     arg freq = 440.0;
