@@ -61,11 +61,16 @@ ugen =
   ,"WhiteNoise","Wrap"
   ,"XFade2","XLine"]
 
+is_osc :: Record.U -> Bool
+is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)
+
 main :: IO ()
 main = do
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
-  let flt = filter Record.u_is_unary_filter (map u_lookup_cs_err ugen)
-  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (St.st_filter_methods flt)
+  let col = map u_lookup_cs_err ugen
+      flt = filter Record.u_is_unary_filter col
+      osc = filter is_osc col
+  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (St.st_filter_methods flt ++ St.st_first_input_methods osc)
 
 -- * Sc
 
@@ -74,7 +79,9 @@ sc_wr = do
   let u_fm = map u_lookup_cs_err (filter (`notElem` Sc.sc_filter_method_ignore_list) ugen)
       u_fc = map u_lookup_cs_err (filter (`notElem` []) ugen)
       u_ir = map u_lookup_cs_err (filter (`notElem` Sc.sc_implicit_rate_ignore_list) ugen)
+      u_osc = filter is_osc u_ir
   writeFile "/home/rohan/sw/stsc3/sc/FilterMethods.sc" (Sc.sc_filter_methods (filter Record.u_is_unary_filter u_fm))
+  writeFile "/home/rohan/sw/stsc3/sc/OscillatorMethods.sc" (Sc.sc_first_input_methods u_osc)
   writeFile "/home/rohan/sw/stsc3/sc/FilterConstructors.sc" (Sc.sc_filter_constructors (filter Record.u_is_unary_filter u_fc))
   writeFile "/home/rohan/sw/stsc3/sc/ImplicitRateConstructors.sc" (Sc.sc_implicit_rate_constructors (filter (isNothing . Record.ugen_filter) u_ir))
 

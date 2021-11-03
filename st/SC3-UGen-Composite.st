@@ -92,6 +92,14 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
     "inRangeFrom:to: from Association"
     ^self inRangeFrom: anAssoc key to: anAssoc value
   !
+  exprange: lo value: hi
+    ".stc exprange"
+    ^self inExpRangeFrom: lo to: hi
+  !
+  range: lo value: hi
+    ".stc range"
+    ^self inRangeFrom: lo to: hi
+  !
 !
 
 !SequenceableCollection methodsFor: 'UGen creation'!

@@ -7,3 +7,6 @@ CombN(SinOsc(f.midicps, 0) * 0.04, 0.2, 0.2, 4) * 0.1
 var o = LFSaw(#[8, 7.23], 0).mulAdd(3, 80);
 var f = LFSaw(0.4, 0).mulAdd(24, o);
 SinOsc(f.midicps, 0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
+
+// analog bubbles (jmcc) #1 ; left to right
+0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midicps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
