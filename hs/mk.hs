@@ -36,17 +36,17 @@ binop =
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
 ugen =
-  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"Balance2","BBandPass","BBandStop","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
-  ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
+  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude","AnalogFoldOsc"
+  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
+  ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CrossoverDistortion","CuspL"
+  ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayC","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
-  ,"FFT","Fold","Formant","FSinOsc","FreeVerb","FreeVerb2"
+  ,"FFT","Fold","Formant","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IFFT","Impulse","In","InFeedback","InRange","IRand"
   ,"K2A","Klang","Klank"
-  ,"LFCub","LFDNoise3","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
+  ,"LFCub","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut"
   ,"MantissaMask","MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY"
   ,"Normalizer"
@@ -68,7 +68,7 @@ main :: IO ()
 main = do
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
   let col = map u_lookup_cs_err ugen
-      flt = filter Record.u_is_unary_filter col
+      flt = filter Record.u_is_filter col
       osc = filter is_osc col
   writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (St.st_filter_methods flt ++ St.st_first_input_methods osc)
 
@@ -77,12 +77,12 @@ main = do
 sc_wr :: IO ()
 sc_wr = do
   let u_fm = map u_lookup_cs_err (filter (`notElem` Sc.sc_filter_method_ignore_list) ugen)
-      u_fc = map u_lookup_cs_err (filter (`notElem` []) ugen)
+      u_fc = map u_lookup_cs_err (filter (`notElem` Sc.sc_filter_constructor_ignore_list) ugen)
       u_ir = map u_lookup_cs_err (filter (`notElem` Sc.sc_implicit_rate_ignore_list) ugen)
-      u_osc = filter is_osc u_ir
-  writeFile "/home/rohan/sw/stsc3/sc/FilterMethods.sc" (Sc.sc_filter_methods (filter Record.u_is_unary_filter u_fm))
-  writeFile "/home/rohan/sw/stsc3/sc/OscillatorMethods.sc" (Sc.sc_first_input_methods u_osc)
-  writeFile "/home/rohan/sw/stsc3/sc/FilterConstructors.sc" (Sc.sc_filter_constructors (filter Record.u_is_unary_filter u_fc))
+      u_fi = map u_lookup_cs_err (filter (`notElem` Sc.sc_first_input_ignore_list) ugen)
+  writeFile "/home/rohan/sw/stsc3/sc/FilterMethods.sc" (Sc.sc_filter_methods (filter Record.u_is_filter u_fm))
+  writeFile "/home/rohan/sw/stsc3/sc/OscillatorMethods.sc" (Sc.sc_first_input_methods (filter is_osc u_fi))
+  writeFile "/home/rohan/sw/stsc3/sc/FilterConstructors.sc" (Sc.sc_filter_constructors (filter Record.u_is_filter u_fc))
   writeFile "/home/rohan/sw/stsc3/sc/ImplicitRateConstructors.sc" (Sc.sc_implicit_rate_constructors (filter (isNothing . Record.ugen_filter) u_ir))
 
 {-

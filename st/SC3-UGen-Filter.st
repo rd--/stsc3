@@ -8,6 +8,9 @@
   allpassN: maxdelaytime value: delaytime value: decaytime
     ^AllpassN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
   !
+  balance2: right value: pos value: level
+    ^Balance2 left: self right: right pos: pos level: level
+  !
   bBandPass: freq value: bw
     ^BBandPass in: self freq: freq bw: bw
   !
@@ -41,6 +44,9 @@
   combN: maxdelaytime value: delaytime value: decaytime
     ^CombN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
   !
+  crossoverDistortion: amp value: smooth
+    ^CrossoverDistortion in: self amp: amp smooth: smooth
+  !
   decay: decayTime
     ^Decay in: self decayTime: decayTime
   !
@@ -49,6 +55,9 @@
   !
   degreeToKey: bufnum value: octave
     ^DegreeToKey bufnum: bufnum in: self octave: octave
+  !
+  delayC: maxdelaytime value: delaytime
+    ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
@@ -67,6 +76,9 @@
   !
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
+  !
+  greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
+    ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
   !
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
@@ -118,6 +130,9 @@
   !
   linPan2: pos value: level
     ^LinPan2 in: self pos: pos level: level
+  !
+  linXFade2: inB value: pan value: level
+    ^LinXFade2 inA: self inB: inB pan: pan level: level
   !
   localOut
     ^LocalOut channelsArray: self
@@ -176,8 +191,11 @@
   rtScramble: inputs
     ^RTScramble trigger: self inputs: inputs
   !
-  select: which
-    ^Select which: which array: self
+  select: array
+    ^Select which: self array: array
+  !
+  setResetFF: reset
+    ^SetResetFF trig: self reset: reset
   !
   slope
     ^Slope in: self
@@ -212,6 +230,9 @@
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
   !
+  xFade2: inB value: pan value: level
+    ^XFade2 inA: self inB: inB pan: pan level: level
+  !
 
 !
 !AbstractUGen methodsFor: 'filtering'!
@@ -223,6 +244,9 @@
   !
   amplitude: attackTime value: releaseTime
     ^Amplitude in: self attackTime: attackTime releaseTime: releaseTime
+  !
+  analogFoldOsc: amp
+    ^AnalogFoldOsc freq: self amp: amp
   !
   blip: numharm
     ^Blip freq: self numharm: numharm
@@ -281,6 +305,9 @@
   formant: formfreq value: bwfreq
     ^Formant fundfreq: self formfreq: formfreq bwfreq: bwfreq
   !
+  freqShift: freq value: phase
+    ^FreqShift in: self freq: freq phase: phase
+  !
   fSinOsc: iphase
     ^FSinOsc freq: self iphase: iphase
   !
@@ -299,7 +326,7 @@
   impulse: phase
     ^Impulse freq: self phase: phase
   !
-  in
+  in'
     ^In bus: self
   !
   inFeedback
@@ -319,6 +346,9 @@
   !
   lfdNoise3
     ^LFDNoise3 freq: self
+  !
+  lfGauss: width value: iphase value: loop value: doneAction
+    ^LFGauss duration: self width: width iphase: iphase loop: loop doneAction: doneAction
   !
   lfNoise0
     ^LFNoise0 freq: self

@@ -124,6 +124,14 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   dup
     self dup: 2
   !
+  first
+    "First channel.  Useful for expressions that need to work with both 0 and 1 based index systems."
+    ^self asMce at: 1
+  !
+  second
+    "Second channel.  Useful for expressions that need to work with both 0 and 1 based index systems."
+    ^self asMce at: 2
+  !
 !
 
 AbstractUGen subclass: #UGen

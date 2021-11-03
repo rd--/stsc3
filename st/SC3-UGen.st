@@ -274,6 +274,47 @@ Amplitude comment: 'Amplitude follower'!
   primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
+UGen subclass: #AnalogFoldOsc
+  instanceVariableNames: 'freq amp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+AnalogFoldOsc comment: '(Undocumented class)'!
+
+!AnalogFoldOsc methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  amp ^amp!
+  amp: x amp := x!
+!
+
+!AnalogFoldOsc methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #AnalogFoldOsc.
+    paramNames := #(#freq #amp).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 100.0. amp := 1.0!
+!
+
+
+!AnalogFoldOsc class methodsFor: 'instance creation'!
+  freq: freq amp: amp
+    |u|
+    u := self new.
+    u freq: freq.
+    u amp: amp.
+    ^u!
+  freq: freq amp: amp mul: mul ^(AnalogFoldOsc freq: freq amp: amp) * mul!
+  freq: freq amp: amp mul: mul add: add ^(AnalogFoldOsc freq: freq amp: amp) * mul + add!
+  primaryFactoryMethod ^#freq:amp:!
+!
+
 UGen subclass: #Balance2
   instanceVariableNames: 'left right pos level'
   classVariableNames: ''
@@ -448,6 +489,35 @@ Blip comment: 'Band limited impulse oscillator.'!
   freq: freq numharm: numharm mul: mul ^(Blip freq: freq numharm: numharm) * mul!
   freq: freq numharm: numharm mul: mul add: add ^(Blip freq: freq numharm: numharm) * mul + add!
   primaryFactoryMethod ^#freq:numharm:!
+!
+
+UGen subclass: #BlockSize
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BlockSize comment: '(Undocumented class)'!
+
+
+!BlockSize methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BlockSize.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+
+!BlockSize class methodsFor: 'instance creation'!
+  mul: mul ^(BlockSize) * mul!
+  mul: mul add: add ^(BlockSize) * mul + add!
+  primaryFactoryMethod ^#new!
 !
 
 UGen subclass: #BLowPass
@@ -1034,6 +1104,50 @@ Crackle comment: 'Chaotic noise function.'!
   primaryFactoryMethod ^#chaosParam:!
 !
 
+UGen subclass: #CrossoverDistortion
+  instanceVariableNames: 'in amp smooth'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
+
+!CrossoverDistortion methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  amp ^amp!
+  amp: x amp := x!
+  smooth ^smooth!
+  smooth: x smooth := x!
+!
+
+!CrossoverDistortion methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #CrossoverDistortion.
+    paramNames := #(#in #amp #smooth).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. amp := 0.5. smooth := 0.5!
+!
+
+
+!CrossoverDistortion class methodsFor: 'instance creation'!
+  in: in amp: amp smooth: smooth
+    |u|
+    u := self new.
+    u in: in.
+    u amp: amp.
+    u smooth: smooth.
+    ^u!
+  in: in amp: amp smooth: smooth mul: mul ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul!
+  in: in amp: amp smooth: smooth mul: mul add: add ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul + add!
+  primaryFactoryMethod ^#in:amp:smooth:!
+!
+
 UGen subclass: #CuspL
   instanceVariableNames: 'freq a b xi'
   classVariableNames: ''
@@ -1299,6 +1413,50 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
   bufnum: bufnum in: in octave: octave mul: mul ^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul!
   bufnum: bufnum in: in octave: octave mul: mul add: add ^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul + add!
   primaryFactoryMethod ^#bufnum:in:octave:!
+!
+
+UGen subclass: #DelayC
+  instanceVariableNames: 'in maxdelaytime delaytime'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DelayC comment: 'Simple delay line with cubic interpolation.'!
+
+!DelayC methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  maxdelaytime ^maxdelaytime!
+  maxdelaytime: x maxdelaytime := x!
+  delaytime ^delaytime!
+  delaytime: x delaytime := x!
+!
+
+!DelayC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DelayC.
+    paramNames := #(#in #maxdelaytime #delaytime).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. maxdelaytime := 0.2. delaytime := 0.2!
+!
+
+
+!DelayC class methodsFor: 'instance creation'!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul ^(DelayC in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add ^(DelayC in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
 UGen subclass: #DelayN
@@ -2003,6 +2161,50 @@ Formant comment: 'Formant oscillator'!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul ^(Formant fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq) * mul!
   fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add ^(Formant fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq) * mul + add!
   primaryFactoryMethod ^#fundfreq:formfreq:bwfreq:!
+!
+
+UGen subclass: #FreqShift
+  instanceVariableNames: 'in freq phase'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FreqShift comment: 'Frequency Shifter.'!
+
+!FreqShift methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  phase ^phase!
+  phase: x phase := x!
+!
+
+!FreqShift methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FreqShift.
+    paramNames := #(#in #freq #phase).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 0.0. phase := 0.0!
+!
+
+
+!FreqShift class methodsFor: 'instance creation'!
+  in: in freq: freq phase: phase
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u phase: phase.
+    ^u!
+  in: in freq: freq phase: phase mul: mul ^(FreqShift in: in freq: freq phase: phase) * mul!
+  in: in freq: freq phase: phase mul: mul add: add ^(FreqShift in: in freq: freq phase: phase) * mul + add!
+  primaryFactoryMethod ^#in:freq:phase:!
 !
 
 UGen subclass: #FSinOsc
@@ -3023,6 +3225,56 @@ LFDNoise3 comment: 'Dynamic cubic noise'!
   freq: freq mul: mul ^(LFDNoise3 freq: freq) * mul!
   freq: freq mul: mul add: add ^(LFDNoise3 freq: freq) * mul + add!
   primaryFactoryMethod ^#freq:!
+!
+
+UGen subclass: #LFGauss
+  instanceVariableNames: 'duration width iphase loop doneAction'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFGauss comment: 'Gaussian function oscillator'!
+
+!LFGauss methodsFor: 'accessing'!
+  duration ^duration!
+  duration: x duration := x!
+  width ^width!
+  width: x width := x!
+  iphase ^iphase!
+  iphase: x iphase := x!
+  loop ^loop!
+  loop: x loop := x!
+  doneAction ^doneAction!
+  doneAction: x doneAction := x!
+!
+
+!LFGauss methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFGauss.
+    paramNames := #(#duration #width #iphase #loop #doneAction).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    duration := 1.0. width := 0.1. iphase := 0.0. loop := 1.0. doneAction := 0.0!
+!
+
+
+!LFGauss class methodsFor: 'instance creation'!
+  duration: duration width: width iphase: iphase loop: loop doneAction: doneAction
+    |u|
+    u := self new.
+    u duration: duration.
+    u width: width.
+    u iphase: iphase.
+    u loop: loop.
+    u doneAction: doneAction.
+    ^u!
+  duration: duration width: width iphase: iphase loop: loop doneAction: doneAction mul: mul ^(LFGauss duration: duration width: width iphase: iphase loop: loop doneAction: doneAction) * mul!
+  duration: duration width: width iphase: iphase loop: loop doneAction: doneAction mul: mul add: add ^(LFGauss duration: duration width: width iphase: iphase loop: loop doneAction: doneAction) * mul + add!
+  primaryFactoryMethod ^#duration:width:iphase:loop:doneAction:!
 !
 
 UGen subclass: #LFNoise0

@@ -1,6 +1,7 @@
 + AllpassC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^AllpassC.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
 + AllpassL { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^AllpassL.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
 + AllpassN { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^AllpassN.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
++ Balance2 { *new { arg left = 0.0, right = 0.0, pos = 0.0, level = 1.0;^Balance2.multiNew(left.rate, left, right, pos, level) } }
 + BBandPass { *new { arg in = 0.0, freq = 1200.0, bw = 1.0;^BBandPass.multiNew(in.rate, in, freq, bw) } }
 + BBandStop { *new { arg in = 0.0, freq = 1200.0, bw = 1.0;^BBandStop.multiNew(in.rate, in, freq, bw) } }
 + BLowPass { *new { arg in = 0.0, freq = 1200.0, rq = 1.0;^BLowPass.multiNew(in.rate, in, freq, rq) } }
@@ -12,15 +13,18 @@
 + CombC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombC.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
 + CombL { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombL.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
 + CombN { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombN.multiNew(in.rate, in, maxdelaytime, delaytime, decaytime) } }
++ CrossoverDistortion { *new { arg in = 0.0, amp = 0.5, smooth = 0.5;^CrossoverDistortion.multiNew(in.rate, in, amp, smooth) } }
 + Decay { *new { arg in = 0.0, decayTime = 1.0;^Decay.multiNew(in.rate, in, decayTime) } }
 + Decay2 { *new { arg in = 0.0, attackTime = 1.0e-2, decayTime = 1.0;^Decay2.multiNew(in.rate, in, attackTime, decayTime) } }
 + DegreeToKey { *new { arg bufnum = 0.0, in = 0.0, octave = 12.0;^DegreeToKey.multiNew(in.rate, bufnum, in, octave) } }
++ DelayC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2;^DelayC.multiNew(in.rate, in, maxdelaytime, delaytime) } }
 + DelayN { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2;^DelayN.multiNew(in.rate, in, maxdelaytime, delaytime) } }
 + Demand { *new { arg trig = 0.0, reset = 0.0, demandUGens = 0.0;^Demand.multiNew(trig.rate, trig, reset, demandUGens) } }
 + DetectSilence { *new { arg in = 0.0, amp = 1.0e-4, time = 0.1, doneAction = 0.0;^DetectSilence.multiNew(in.rate, in, amp, time, doneAction) } }
 + Fold { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Fold.multiNew(in.rate, in, lo, hi) } }
 + FreeVerb { *new { arg in = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb.multiNew(in.rate, in, mix, room, damp) } }
 + FreeVerb2 { *new { arg in = 0.0, in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb2.multiNew(in.rate, in, in2, mix, room, damp) } }
++ GreyholeRaw { *new { arg in1 = 0.0, in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;^GreyholeRaw.multiNew(in1.rate, in1, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size) } }
 + GVerb { *new { arg in = 0.0, roomsize = 10.0, revtime = 3.0, damping = 0.5, inputbw = 0.5, spread = 15.0, drylevel = 1.0, earlyreflevel = 0.7, taillevel = 0.5, maxroomsize = 300.0;^GVerb.multiNew(in.rate, in, roomsize, revtime, damping, inputbw, spread, drylevel, earlyreflevel, taillevel, maxroomsize) } }
 + Hasher { *new { arg in = 0.0;^Hasher.multiNew(in.rate, in) } }
 + HPF { *new { arg in = 0.0, freq = 440.0;^HPF.multiNew(in.rate, in, freq) } }
@@ -38,6 +42,7 @@
 + Limiter { *new { arg in = 0.0, level = 1.0, dur = 1.0e-2;^Limiter.multiNew(in.rate, in, level, dur) } }
 + LinExp { *new { arg in = 0.0, srclo = 0.0, srchi = 1.0, dstlo = 1.0, dsthi = 2.0;^LinExp.multiNew(in.rate, in, srclo, srchi, dstlo, dsthi) } }
 + LinPan2 { *new { arg in = 0.0, pos = 0.0, level = 1.0;^LinPan2.multiNew(in.rate, in, pos, level) } }
++ LinXFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^LinXFade2.multiNew(inA.rate, inA, inB, pan, level) } }
 + LocalOut { *new { arg channelsArray = 0.0;^LocalOut.multiNew(channelsArray.rate, channelsArray) } }
 + MantissaMask { *new { arg in = 0.0, bits = 3.0;^MantissaMask.multiNew(in.rate, in, bits) } }
 + ModDif { *new { arg x = 0.0, y = 0.0, mod = 1.0;^ModDif.multiNew(x.rate, x, y, mod) } }
@@ -57,6 +62,7 @@
 + Ringz { *new { arg in = 0.0, freq = 440.0, decaytime = 1.0;^Ringz.multiNew(in.rate, in, freq, decaytime) } }
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.multiNew(in.rate, in, trig) } }
 + RTScramble { *new { arg trigger = 0.0, inputs = 0.0;^RTScramble.multiNew(trigger.rate, trigger, inputs) } }
++ SetResetFF { *new { arg trig = 0.0, reset = 0.0;^SetResetFF.multiNew(trig.rate, trig, reset) } }
 + Slope { *new { arg in = 0.0;^Slope.multiNew(in.rate, in) } }
 + Stepper { *new { arg trig = 0.0, reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;^Stepper.multiNew(trig.rate, trig, reset, min, max, step, resetval) } }
 + Sweep { *new { arg trig = 0.0, rate = 1.0;^Sweep.multiNew(trig.rate, trig, rate) } }
@@ -68,3 +74,4 @@
 + Trig { *new { arg in = 0.0, dur = 0.1;^Trig.multiNew(in.rate, in, dur) } }
 + Trig1 { *new { arg in = 0.0, dur = 0.1;^Trig1.multiNew(in.rate, in, dur) } }
 + Wrap { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Wrap.multiNew(in.rate, in, lo, hi) } }
++ XFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^XFade2.multiNew(inA.rate, inA, inB, pan, level) } }

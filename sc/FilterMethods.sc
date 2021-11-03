@@ -11,6 +11,10 @@
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
     ^AllpassN.multiNew(this.rate, this, maxdelaytime, delaytime, decaytime)
   }
+  balance2 {
+    arg right = 0.0, pos = 0.0, level = 1.0;
+    ^Balance2.multiNew(this.rate, this, right, pos, level)
+  }
   bBandPass {
     arg freq = 1200.0, bw = 1.0;
     ^BBandPass.multiNew(this.rate, this, freq, bw)
@@ -50,6 +54,10 @@
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
     ^CombN.multiNew(this.rate, this, maxdelaytime, delaytime, decaytime)
   }
+  crossoverDistortion {
+    arg amp = 0.5, smooth = 0.5;
+    ^CrossoverDistortion.multiNew(this.rate, this, amp, smooth)
+  }
   decay {
     arg decayTime = 1.0;
     ^Decay.multiNew(this.rate, this, decayTime)
@@ -57,6 +65,10 @@
   decay2 {
     arg attackTime = 1.0e-2, decayTime = 1.0;
     ^Decay2.multiNew(this.rate, this, attackTime, decayTime)
+  }
+  delayC {
+    arg maxdelaytime = 0.2, delaytime = 0.2;
+    ^DelayC.multiNew(this.rate, this, maxdelaytime, delaytime)
   }
   delayN {
     arg maxdelaytime = 0.2, delaytime = 0.2;
@@ -77,6 +89,10 @@
   freeVerb2 {
     arg in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;
     ^FreeVerb2.multiNew(this.rate, this, in2, mix, room, damp)
+  }
+  greyholeRaw {
+    arg in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;
+    ^GreyholeRaw.multiNew(this.rate, this, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size)
   }
   gVerb {
     arg roomsize = 10.0, revtime = 3.0, damping = 0.5, inputbw = 0.5, spread = 15.0, drylevel = 1.0, earlyreflevel = 0.7, taillevel = 0.5, maxroomsize = 300.0;
@@ -131,6 +147,10 @@
   linPan2 {
     arg pos = 0.0, level = 1.0;
     ^LinPan2.multiNew(this.rate, this, pos, level)
+  }
+  linXFade2 {
+    arg inB = 0.0, pan = 0.0, level = 1.0;
+    ^LinXFade2.multiNew(this.rate, this, inB, pan, level)
   }
   localOut {
     ^LocalOut.multiNew(this.rate, this)
@@ -207,6 +227,10 @@
     arg inputs = 0.0;
     ^RTScramble.multiNew(this.rate, this, inputs)
   }
+  setResetFF {
+    arg reset = 0.0;
+    ^SetResetFF.multiNew(this.rate, this, reset)
+  }
   slope {
     ^Slope.multiNew(this.rate, this)
   }
@@ -243,6 +267,10 @@
   trig1 {
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate, this, dur)
+  }
+  xFade2 {
+    arg inB = 0.0, pan = 0.0, level = 1.0;
+    ^XFade2.multiNew(this.rate, this, inB, pan, level)
   }
 
 }
@@ -259,6 +287,10 @@
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
     ^AllpassN.multiNew(this.rate, this, maxdelaytime, delaytime, decaytime)
   }
+  balance2 {
+    arg right = 0.0, pos = 0.0, level = 1.0;
+    ^Balance2.multiNew(this.rate, this, right, pos, level)
+  }
   bBandPass {
     arg freq = 1200.0, bw = 1.0;
     ^BBandPass.multiNew(this.rate, this, freq, bw)
@@ -298,6 +330,10 @@
     arg maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;
     ^CombN.multiNew(this.rate, this, maxdelaytime, delaytime, decaytime)
   }
+  crossoverDistortion {
+    arg amp = 0.5, smooth = 0.5;
+    ^CrossoverDistortion.multiNew(this.rate, this, amp, smooth)
+  }
   decay {
     arg decayTime = 1.0;
     ^Decay.multiNew(this.rate, this, decayTime)
@@ -305,6 +341,10 @@
   decay2 {
     arg attackTime = 1.0e-2, decayTime = 1.0;
     ^Decay2.multiNew(this.rate, this, attackTime, decayTime)
+  }
+  delayC {
+    arg maxdelaytime = 0.2, delaytime = 0.2;
+    ^DelayC.multiNew(this.rate, this, maxdelaytime, delaytime)
   }
   delayN {
     arg maxdelaytime = 0.2, delaytime = 0.2;
@@ -325,6 +365,10 @@
   freeVerb2 {
     arg in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;
     ^FreeVerb2.multiNew(this.rate, this, in2, mix, room, damp)
+  }
+  greyholeRaw {
+    arg in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;
+    ^GreyholeRaw.multiNew(this.rate, this, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size)
   }
   gVerb {
     arg roomsize = 10.0, revtime = 3.0, damping = 0.5, inputbw = 0.5, spread = 15.0, drylevel = 1.0, earlyreflevel = 0.7, taillevel = 0.5, maxroomsize = 300.0;
@@ -379,6 +423,10 @@
   linPan2 {
     arg pos = 0.0, level = 1.0;
     ^LinPan2.multiNew(this.rate, this, pos, level)
+  }
+  linXFade2 {
+    arg inB = 0.0, pan = 0.0, level = 1.0;
+    ^LinXFade2.multiNew(this.rate, this, inB, pan, level)
   }
   localOut {
     ^LocalOut.multiNew(this.rate, this)
@@ -455,6 +503,10 @@
     arg inputs = 0.0;
     ^RTScramble.multiNew(this.rate, this, inputs)
   }
+  setResetFF {
+    arg reset = 0.0;
+    ^SetResetFF.multiNew(this.rate, this, reset)
+  }
   slope {
     ^Slope.multiNew(this.rate, this)
   }
@@ -491,6 +543,10 @@
   trig1 {
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate, this, dur)
+  }
+  xFade2 {
+    arg inB = 0.0, pan = 0.0, level = 1.0;
+    ^XFade2.multiNew(this.rate, this, inB, pan, level)
   }
 
 }
