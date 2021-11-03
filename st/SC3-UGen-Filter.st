@@ -104,6 +104,9 @@
   lag3UD: lagTimeU value: lagTimeD
     ^Lag3UD in: self lagTimeU: lagTimeU lagTimeD: lagTimeD
   !
+  latch: trig
+    ^Latch in: self trig: trig
+  !
   leakDC: coef
     ^LeakDC in: self coef: coef
   !
@@ -173,6 +176,9 @@
   rtScramble: inputs
     ^RTScramble trigger: self inputs: inputs
   !
+  select: which
+    ^Select which: which array: self
+  !
   slope
     ^Slope in: self
   !
@@ -206,8 +212,8 @@
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
   !
-!
 
+!
 !AbstractUGen methodsFor: 'filtering'!
   ampComp: root value: exp
     ^AmpComp freq: self root: root exp: exp
@@ -422,4 +428,5 @@
   xLine: end value: dur value: doneAction
     ^XLine start: self end: end dur: dur doneAction: doneAction
   !
+
 !

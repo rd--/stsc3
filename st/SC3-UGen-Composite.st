@@ -228,6 +228,11 @@ Select2 comment: 'Select one of two branches based on predicate signal'!
   primaryFactoryMethod ^#predicate:ifTrue:ifFalse:!
 !
 
+!AbstractUGen methodsFor: 'selecting'!
+  select2: trueUGen ifFalse: falseUGen ^Select2 predicate: self ifTrue: trueUGen ifFalse: falseUGen!
+  select2: trueUGen value: falseUGen "For .stc" ^Select2 predicate: self ifTrue: trueUGen ifFalse: falseUGen!
+!
+
 AbstractUGen subclass: #KlankSpec
   instanceVariableNames: ''
   classVariableNames: ''

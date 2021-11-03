@@ -274,6 +274,53 @@ Amplitude comment: 'Amplitude follower'!
   primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
+UGen subclass: #Balance2
+  instanceVariableNames: 'left right pos level'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Balance2 comment: 'Stereo signal balancer'!
+
+!Balance2 methodsFor: 'accessing'!
+  left ^left!
+  left: x left := x!
+  right ^right!
+  right: x right := x!
+  pos ^pos!
+  pos: x pos := x!
+  level ^level!
+  level: x level := x!
+!
+
+!Balance2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Balance2.
+    paramNames := #(#left #right #pos #level).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    left := 0.0. right := 0.0. pos := 0.0. level := 1.0!
+!
+
+
+!Balance2 class methodsFor: 'instance creation'!
+  left: left right: right pos: pos level: level
+    |u|
+    u := self new.
+    u left: left.
+    u right: right.
+    u pos: pos.
+    u level: level.
+    ^u!
+  left: left right: right pos: pos level: level mul: mul ^(Balance2 left: left right: right pos: pos level: level) * mul!
+  left: left right: right pos: pos level: level mul: mul add: add ^(Balance2 left: left right: right pos: pos level: level) * mul + add!
+  primaryFactoryMethod ^#left:right:pos:level:!
+!
+
 UGen subclass: #BBandPass
   instanceVariableNames: 'in freq bw'
   classVariableNames: ''

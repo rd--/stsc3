@@ -112,6 +112,10 @@
     arg lagTimeU = 0.1, lagTimeD = 0.1;
     ^Lag3UD.multiNew(this.rate, this, lagTimeU, lagTimeD)
   }
+  latch {
+    arg trig = 0.0;
+    ^Latch.multiNew(this.rate, this, trig)
+  }
   leakDC {
     arg coef = 0.995;
     ^LeakDC.multiNew(this.rate, this, coef)
@@ -355,6 +359,10 @@
   lag3UD {
     arg lagTimeU = 0.1, lagTimeD = 0.1;
     ^Lag3UD.multiNew(this.rate, this, lagTimeU, lagTimeD)
+  }
+  latch {
+    arg trig = 0.0;
+    ^Latch.multiNew(this.rate, this, trig)
   }
   leakDC {
     arg coef = 0.995;

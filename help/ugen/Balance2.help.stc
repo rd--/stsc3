@@ -1,0 +1,5 @@
+// Balance2
+Balance2(LFSaw(44, 0), Pulse(33, 0.5), SinOsc(Rand(0.25, 0.75), 0).kr, 0.1)
+
+// Balance2
+var o = SinOsc(#[440, 550], 0); Balance2(o.at(1), o.at(2), LFNoise0(4).kr, 0.3)

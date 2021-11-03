@@ -37,7 +37,7 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"BBandPass","BBandStop","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
+  ,"Balance2","BBandPass","BBandStop","Blip","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
   ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"

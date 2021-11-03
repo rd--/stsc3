@@ -33,6 +33,7 @@
 + Lag2 { *new { arg in = 0.0, lagTime = 0.1;^Lag2.multiNew(in.rate, in, lagTime) } }
 + Lag3 { *new { arg in = 0.0, lagTime = 0.1;^Lag3.multiNew(in.rate, in, lagTime) } }
 + Lag3UD { *new { arg in = 0.0, lagTimeU = 0.1, lagTimeD = 0.1;^Lag3UD.multiNew(in.rate, in, lagTimeU, lagTimeD) } }
++ Latch { *new { arg in = 0.0, trig = 0.0;^Latch.multiNew(in.rate, in, trig) } }
 + LeakDC { *new { arg in = 0.0, coef = 0.995;^LeakDC.multiNew(in.rate, in, coef) } }
 + Limiter { *new { arg in = 0.0, level = 1.0, dur = 1.0e-2;^Limiter.multiNew(in.rate, in, level, dur) } }
 + LinExp { *new { arg in = 0.0, srclo = 0.0, srchi = 1.0, dstlo = 1.0, dsthi = 2.0;^LinExp.multiNew(in.rate, in, srclo, srchi, dstlo, dsthi) } }
