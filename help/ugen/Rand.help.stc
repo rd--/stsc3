@@ -1,0 +1,5 @@
+// Rand
+SinOsc(Rand(220, 440), 0) * 0.1
+
+// Rand
+SinOsc({ Rand(220, 440) }.dup(7), 0).splay * 0.1

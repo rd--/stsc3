@@ -131,8 +131,8 @@
   linPan2: pos value: level
     ^LinPan2 in: self pos: pos level: level
   !
-  linXFade2: inB value: pan value: level
-    ^LinXFade2 inA: self inB: inB pan: pan level: level
+  linXFade2: inB value: pan
+    ^LinXFade2 inA: self inB: inB pan: pan
   !
   localOut
     ^LocalOut channelsArray: self

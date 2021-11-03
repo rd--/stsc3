@@ -251,6 +251,11 @@ KlankSpec comment: 'Format data for Klank UGen'!
   primaryFactoryMethod ^#freq:amp:time:!
 !
 
+Array methodsFor: 'Klang data'!
+  asKlangSpec ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
+  asKlankSpec ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
+!
+
 AbstractUGen subclass: #DynKlank
   instanceVariableNames: ''
   classVariableNames: ''
