@@ -1,0 +1,6 @@
+Experimental extensions to the SC class library to allow .stc graphs to be played using SC.
+
+At present many but not all .stc files in the help directories play.
+
+- UGens that reorder arguments have different notation in stsc3 and sc, ie. Klank, Dseq &etc.
+- The Sc autogen does not consider Mce inputs.

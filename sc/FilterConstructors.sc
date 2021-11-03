@@ -43,7 +43,7 @@
 + LinExp { *new { arg in = 0.0, srclo = 0.0, srchi = 1.0, dstlo = 1.0, dsthi = 2.0;^LinExp.multiNew(in.rate, in, srclo, srchi, dstlo, dsthi) } }
 + LinPan2 { *new { arg in = 0.0, pos = 0.0, level = 1.0;^LinPan2.multiNew(in.rate, in, pos, level) } }
 + LinXFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^LinXFade2.multiNew(inA.rate, inA, inB, pan, level) } }
-+ LocalOut { *new { arg channelsArray = 0.0;^LocalOut.multiNew(channelsArray.rate, channelsArray) } }
++ LocalOut { *new { arg channelsArray = 0.0;^LocalOut.multiNewList([channelsArray.first.rate] ++ channelsArray) } }
 + MantissaMask { *new { arg in = 0.0, bits = 3.0;^MantissaMask.multiNew(in.rate, in, bits) } }
 + ModDif { *new { arg x = 0.0, y = 0.0, mod = 1.0;^ModDif.multiNew(x.rate, x, y, mod) } }
 + MoogFF { *new { arg in = 0.0, freq = 100.0, gain = 2.0, reset = 0.0;^MoogFF.multiNew(in.rate, in, freq, gain, reset) } }

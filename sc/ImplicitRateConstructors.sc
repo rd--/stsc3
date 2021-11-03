@@ -39,7 +39,7 @@
 + LFSaw { *new { arg freq = 440.0, iphase = 0.0; ^LFSaw.multiNew('audio', freq, iphase) } }
 + LFTri { *new { arg freq = 440.0, iphase = 0.0; ^LFTri.multiNew('audio', freq, iphase) } }
 + Line { *new { arg start = 0.0, end = 1.0, dur = 1.0, doneAction = 0.0; ^Line.multiNew('audio', start, end, dur, doneAction) } }
-+ LocalIn { *new { arg numChannels = 1.0, default = 0.0; ^LocalIn.multiNew('audio', numChannels, default) } }
++ LocalIn { *new { arg numChannels = 1.0, default = 0.0; ^LocalIn.multiNew('audio', numChannels, *default) } }
 + MembraneCircle { *new { arg excitation = 0.0, tension = 5.0e-2, loss = 0.99999; ^MembraneCircle.multiNew('audio', excitation, tension, loss) } }
 + MiRings { *new { arg in = 0.0, trig = 0.0, pit = 60.0, struct = 0.25, bright = 0.5, damp = 0.7, pos = 0.25, model = 0.0, poly = 1.0, intern_exciter = 0.0, easteregg = 0.0, bypass = 0.0; ^MiRings.multiNew('audio', in, trig, pit, struct, bright, damp, pos, model, poly, intern_exciter, easteregg, bypass) } }
 + MouseButton { *new { arg minval = 0.0, maxval = 1.0, lag = 0.2; ^MouseButton.multiNew('control', minval, maxval, lag) } }
