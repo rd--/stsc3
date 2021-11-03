@@ -18,8 +18,10 @@ import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
+{-
 import qualified Interpreter.Lisp.Ansi {- stsc3 -}
 import qualified Interpreter.Lisp.Expr {- stsc3 -}
+-}
 import qualified Interpreter.Som.Repl {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program.
@@ -70,14 +72,18 @@ main = do
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
+{-
     ["repl","ansi"] -> Interpreter.Lisp.Ansi.replMain
     ["repl","expr"] -> Interpreter.Lisp.Expr.replMain
+-}
     ["repl","som"] -> Interpreter.Som.Repl.replMain somDirectory
     "run":"som":cl:arg -> Interpreter.Som.Repl.loadAndRunClass somDirectory cl arg
+{-
     ["draw","ansi",fn] -> stsc3_draw Interpreter.Lisp.Ansi.evalSmalltalkFile fn
     ["draw","expr",fn] -> stsc3_draw Interpreter.Lisp.Expr.evalSmalltalkFile fn
     ["play","ansi",fn] -> stsc3_play Interpreter.Lisp.Ansi.evalSmalltalkFile fn
     ["play","expr",fn] -> stsc3_play Interpreter.Lisp.Expr.evalSmalltalkFile fn
+-}
     ["stop"] -> SC3.withSC3 SC3.reset
     ["translate",ty,"st"] -> interact (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
     ["translate",ty,"st",inFile,outFile] -> procFile inFile outFile (if ty == "stc" then Sc.stcToSt else Sc.scToSt)

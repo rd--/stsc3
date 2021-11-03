@@ -1,0 +1,49 @@
+Cabal-Version:      2.4
+Name:               stsc3
+Version:            0.20
+License:            GPL-3.0-only
+Category:           Sound
+Copyright:          (c) Rohan Drape, 2019-2021
+Author:             Rohan Drape
+Maintainer:         rd@rohandrape.net
+Stability:          Experimental
+Homepage:           http://rohandrape.net/t/stsc3
+Tested-With:        GHC == 8.8.4
+Build-Type:         Simple
+
+executable stsc3
+  build-depends:    base >= 4.8 && < 5,
+                    containers,
+                    directory,
+                    hashable,
+                    hmt-base == 0.20.*,
+                    hsc3 == 0.20.*,
+                    hsc3-db == 0.20.*,
+                    hsc3-dot == 0.20.*,
+                    hsc3-lang == 0.20.*,
+                    hsc3-lisp == 0.20.*,
+                    mtl,
+                    random,
+                    stsc3,
+                    text,
+                    time,
+                    vector
+  hs-source-dirs:   cmd
+  main-is:          stsc3.hs
+  other-modules:
+                    Interpreter.Lisp.Common
+                    Interpreter.Lisp.Ansi
+                    Interpreter.Lisp.Expr
+                    Interpreter.Som.Core
+                    Interpreter.Som.Int
+                    Interpreter.Som.Primitives
+                    Interpreter.Som.Ref
+                    Interpreter.Som.Repl
+                    Interpreter.Som.Str
+                    Interpreter.Som.Sym
+                    Interpreter.Som.Tbl
+                    Interpreter.Som.Types
+                    Interpreter.Som.Vec
+  default-language: Haskell2010
+  ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs
+
