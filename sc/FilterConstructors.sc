@@ -42,7 +42,7 @@
 + Limiter { *new { arg in = 0.0, level = 1.0, dur = 1.0e-2;^Limiter.multiNew(in.rate, in, level, dur) } }
 + LinExp { *new { arg in = 0.0, srclo = 0.0, srchi = 1.0, dstlo = 1.0, dsthi = 2.0;^LinExp.multiNew(in.rate, in, srclo, srchi, dstlo, dsthi) } }
 + LinPan2 { *new { arg in = 0.0, pos = 0.0, level = 1.0;^LinPan2.multiNew(in.rate, in, pos, level) } }
-+ LinXFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^LinXFade2.multiNew(inA.rate, inA, inB, pan, level) } }
++ LinXFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0;^LinXFade2.multiNew(inA.rate, inA, inB, pan) } }
 + LocalOut { *new { arg channelsArray = 0.0;^LocalOut.multiNewList([channelsArray.first.rate] ++ channelsArray) } }
 + MantissaMask { *new { arg in = 0.0, bits = 3.0;^MantissaMask.multiNew(in.rate, in, bits) } }
 + ModDif { *new { arg x = 0.0, y = 0.0, mod = 1.0;^ModDif.multiNew(x.rate, x, y, mod) } }
@@ -61,6 +61,7 @@
 + Resonz { *new { arg in = 0.0, freq = 440.0, bwr = 1.0;^Resonz.multiNew(in.rate, in, freq, bwr) } }
 + Ringz { *new { arg in = 0.0, freq = 440.0, decaytime = 1.0;^Ringz.multiNew(in.rate, in, freq, decaytime) } }
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.multiNew(in.rate, in, trig) } }
++ Rotate2 { *new { arg x = 0.0, y = 0.0, pos = 0.0;^Rotate2.multiNew(x.rate, x, y, pos) } }
 + RTScramble { *new { arg trigger = 0.0, inputs = 0.0;^RTScramble.multiNew(trigger.rate, trigger, inputs) } }
 + SetResetFF { *new { arg trig = 0.0, reset = 0.0;^SetResetFF.multiNew(trig.rate, trig, reset) } }
 + Slope { *new { arg in = 0.0;^Slope.multiNew(in.rate, in) } }

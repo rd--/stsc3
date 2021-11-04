@@ -188,6 +188,9 @@
   runningMax: trig
     ^RunningMax in: self trig: trig
   !
+  rotate2: y value: pos
+    ^Rotate2 x: self y: y pos: pos
+  !
   rtScramble: inputs
     ^RTScramble trigger: self inputs: inputs
   !
@@ -325,6 +328,9 @@
   !
   impulse: phase
     ^Impulse freq: self phase: phase
+  !
+  in'
+    ^In bus: self
   !
   inFeedback
     ^InFeedback bus: self

@@ -5782,6 +5782,50 @@ RExpRandN comment: '(Undocumented class)'!
   primaryFactoryMethod ^#numChan:lo:hi:!
 !
 
+UGen subclass: #Rotate2
+  instanceVariableNames: 'x y pos'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Rotate2 comment: 'Rotate a sound field.'!
+
+!Rotate2 methodsFor: 'accessing'!
+  x ^x!
+  x: xValue x := xValue!
+  y ^y!
+  y: x y := x!
+  pos ^pos!
+  pos: x pos := x!
+!
+
+!Rotate2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Rotate2.
+    paramNames := #(#x #y #pos).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    x := 0.0. y := 0.0. pos := 0.0!
+!
+
+
+!Rotate2 class methodsFor: 'instance creation'!
+  x: x y: y pos: pos
+    |u|
+    u := self new.
+    u x: x.
+    u y: y.
+    u pos: pos.
+    ^u!
+  x: x y: y pos: pos mul: mul ^(Rotate2 x: x y: y pos: pos) * mul!
+  x: x y: y pos: pos mul: mul add: add ^(Rotate2 x: x y: y pos: pos) * mul + add!
+  primaryFactoryMethod ^#x:y:pos:!
+!
+
 UGen subclass: #RRandN
   instanceVariableNames: 'lo hi'
   classVariableNames: ''

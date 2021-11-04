@@ -149,8 +149,8 @@
     ^LinPan2.multiNew(this.rate, this, pos, level)
   }
   linXFade2 {
-    arg inB = 0.0, pan = 0.0, level = 1.0;
-    ^LinXFade2.multiNew(this.rate, this, inB, pan, level)
+    arg inB = 0.0, pan = 0.0;
+    ^LinXFade2.multiNew(this.rate, this, inB, pan)
   }
   localOut {
     ^LocalOut.multiNew(this.rate, this)
@@ -222,6 +222,10 @@
   runningMax {
     arg trig = 0.0;
     ^RunningMax.multiNew(this.rate, this, trig)
+  }
+  rotate2 {
+    arg y = 0.0, pos = 0.0;
+    ^Rotate2.multiNew(this.rate, this, y, pos)
   }
   rtScramble {
     arg inputs = 0.0;
@@ -425,8 +429,8 @@
     ^LinPan2.multiNew(this.rate, this, pos, level)
   }
   linXFade2 {
-    arg inB = 0.0, pan = 0.0, level = 1.0;
-    ^LinXFade2.multiNew(this.rate, this, inB, pan, level)
+    arg inB = 0.0, pan = 0.0;
+    ^LinXFade2.multiNew(this.rate, this, inB, pan)
   }
   localOut {
     ^LocalOut.multiNew(this.rate, this)
@@ -498,6 +502,10 @@
   runningMax {
     arg trig = 0.0;
     ^RunningMax.multiNew(this.rate, this, trig)
+  }
+  rotate2 {
+    arg y = 0.0, pos = 0.0;
+    ^Rotate2.multiNew(this.rate, this, y, pos)
   }
   rtScramble {
     arg inputs = 0.0;

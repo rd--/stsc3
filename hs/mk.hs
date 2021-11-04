@@ -54,7 +54,7 @@ ugen =
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
   ,"RHPF","RLPF","Rand","RecordBuf","Resonz","Ringz","RunningMax"
-  ,"RBezier","RDX7Env","RExpRandN","RRandN","RTScramble"
+  ,"RBezier","RDX7Env","RExpRandN","Rotate2","RRandN","RTScramble"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slope","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1"
   ,"VarSaw","Vibrato"
