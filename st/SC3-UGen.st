@@ -7036,7 +7036,7 @@ XLine comment: 'Exponential line generator.'!
   bitOr: b ^ BinaryOpUGen specialIndex: 15 a: self b: b!
   lcm: b ^ BinaryOpUGen specialIndex: 17 a: self b: b!
   gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b!
-  round: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
+  roundTo: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
   truncateTo: b ^ BinaryOpUGen specialIndex: 21 a: self b: b!
   raisedTo: b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
   bitShiftLeft: b ^ BinaryOpUGen specialIndex: 26 a: self b: b!

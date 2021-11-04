@@ -1,0 +1,2 @@
+// random sine waves (jmcc) #1 ; texture=spawn,0.75,inf
+Pan2(SinOsc(Rand(0, 2000), 0), Rand(-1, 1), EnvLinen(2, 5, 2, 0.1, #['lin']).envGen)

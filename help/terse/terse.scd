@@ -24,9 +24,9 @@
 5 ** 2 == 25                                                // power function with integer
 1.exp == 2.718281828459                                     // exponential
 -5.abs == 5                                                 // absolute value
-3.99.round == 4                                             // round
+3.99.round == 4                                             // round ; c.f. rounded
 3.99.trunc == 3                                             // truncate
-3.99.round(1) == 4.0                                        // round to specified decimal places
+3.99.round(1) == 4.0                                        // round to specified decimal places ; c.f. roundTo:
 3.99.trunc(1) == 3.0                                        // truncate to specified decimal places
 3.99.floor == 3                                             // round down
 3.99.ceil == 4                                              // round up

@@ -451,8 +451,8 @@ Mix comment: 'UGen Mixer'!
   mix
     ^Mix source: self
   !
-  round
-    ^self round: 1.0
+  rounded
+    ^self roundTo: 1.0
   !
 !
 

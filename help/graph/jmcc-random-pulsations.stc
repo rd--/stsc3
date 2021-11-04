@@ -1,0 +1,6 @@
+// random pulsations (jmcc) #1 ; texture=spawn,1.125,inf
+var env = EnvLinen(2, 5, 2, 0.02, #['lin']).envGen;
+var o1 = SinOsc(Rand(0, 2000), 0) * env;
+var o2 = SinOsc(8 + LinRand(0, 80, 0), 0);
+var o3 = SinOsc(0.3 + Rand(0, 0.5), Rand(0, 2 * pi)) * 0.7;
+Pan2(o1.amclip(o2), o3, 1)
