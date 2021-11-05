@@ -114,6 +114,9 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
     "% is the SC floating point modulo operator."
     ^arg adaptToCollection: self andSend: #%
   !
+  mix
+    ^self sum
+  !
 !
 
 !AbstractUGen methodsFor: 'collecting'!
