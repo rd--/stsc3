@@ -13,6 +13,14 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
+!BlockClosure methodsFor: 'evaluating'!
+  apply: arg
+    "For .stc notation.
+     Allow f(x,y) as notation to apply a block f to arguments x & y."
+    ^self valueWithArguments: arg
+  !
+!
+
 !AbstractUGen methodsFor: 'accessing'!
   paramNameFromIndex: i
     "Get parameter name given index.

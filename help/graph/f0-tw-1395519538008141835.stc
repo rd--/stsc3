@@ -1,4 +1,4 @@
-// f0 ; https://twitter.com/redFrik/status/1395519538008141835
+// f0 ; <https://twitter.com/redFrik/status/1395519538008141835>
 var c = Duty(0.004, 0, 0, Dseries(inf, 1, #[1, 2]) % Duty(8.192, 0, 0, Dseq(inf, 6.iota * 75)));
 var d = HPF(MantissaMask(c, 3),5);
 var f = {arg x; SinOscFB(x, 0).max(0)};
