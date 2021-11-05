@@ -129,6 +129,13 @@ $A asciiValue = 65                                          "convert character t
 3.99 storeString = '3.99'                                   "convert object to string via storeOn:"
 (15 radix: 16) = '16rF'                                     "convert to string in given base"
 
+'Dictionary ; Smalltalk'
+
+(Smalltalk at: #SinOsc) = SinOsc                            "lookup value in Smalltalk dictionary"
+(Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil       "lookup value with clause for absent values "
+(Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
+Smalltalk keys size                                         "get set of all known keys "
+
 'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"

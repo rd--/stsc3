@@ -13,6 +13,27 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
+!AbstractUGen methodsFor: 'filtering'!
+  doesNotUnderstand: aMessage
+    "Reflective form of filter variants for UGen constructors.
+     Examines only the first part of the message selector, and if that, when capitalised, names a class, applies it.
+
+     WhiteNoise new hPZ1 pan2: 0 level: 0.05
+     "
+    | messageName endIndex aClass arguments |
+    messageName := aMessage selector asString.
+    endIndex := messageName indexOf: $: ifAbsent: [ messageName size + 1 ].
+    messageName := messageName copyFrom: 1 to: endIndex - 1.
+    messageName at: 1 put: ((messageName at: 1) asUppercase).
+    aClass := Smalltalk at: messageName asSymbol ifAbsent: [ nil ].
+    aClass ifNil: [^super doesNotUnderstand: aMessage ].
+    arguments := Array new: (aMessage arguments size + 1).
+    arguments at: 1 put: self.
+    (2 to: arguments size) do: [ :index | arguments at: index put: (aMessage arguments at: index - 1) ].
+    ^aClass apply: arguments
+  !
+!
+
 !BlockClosure methodsFor: 'evaluating'!
   apply: arg
     "For .stc notation.

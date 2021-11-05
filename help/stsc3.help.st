@@ -19,6 +19,8 @@ PinkNoise primaryFactoryMethod = #new "the primary factory method may be new"
 PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc perform: #freq:phase: withArguments: #(220 1)
 SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
+WhiteNoise new hPZ1 pan2: 0 level: 0.05
+WhiteNoise new pan2: (SinOsc freq: 0.1 phase: 0) level: 0.05
 
 "File I/O - Text - Squeak, Gnu, Cuis"
 
@@ -389,13 +391,15 @@ FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Env.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Event.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
+
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
+
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st'.
 
 "Help Graphs"
 
