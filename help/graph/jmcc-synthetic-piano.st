@@ -1,7 +1,7 @@
 "synthetic piano (jmcc) #3"
 | p |
 p := [
- | n f ph s e c l c_ |
+ | n f ph s e c l |
  n := 36 rand: 90.
  f := 0.1 rand: 0.5.
  ph := 0.0 rand: 1.0.
@@ -14,6 +14,5 @@ p := [
   dt := (n + o) midicps reciprocal.
   CombL in: (n0 * e) maxdelaytime: dt delaytime: dt decaytime: 6].
  l := ((n - 36) / 27) - 1.
- c_ := 3 mixFill: c.
- Pan2 in: c_ pos: l level: 1].
+ Pan2 in: ((1 to: 3) mixFill: c) pos: l level: 1].
 6 mixFill: p

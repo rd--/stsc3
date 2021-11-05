@@ -515,8 +515,8 @@ BlockSize comment: '(Undocumented class)'!
 
 
 !BlockSize class methodsFor: 'instance creation'!
-  mul: mul ^(BlockSize) * mul!
-  mul: mul add: add ^(BlockSize) * mul + add!
+  mul: mul ^(BlockSize new) * mul!
+  mul: mul add: add ^(BlockSize new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -714,8 +714,8 @@ BrownNoise comment: 'Brown Noise.'!
 
 
 !BrownNoise class methodsFor: 'instance creation'!
-  mul: mul ^(BrownNoise) * mul!
-  mul: mul add: add ^(BrownNoise) * mul + add!
+  mul: mul ^(BrownNoise new) * mul!
+  mul: mul add: add ^(BrownNoise new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -1061,8 +1061,8 @@ ControlDur comment: 'Duration of one block'!
 
 
 !ControlDur class methodsFor: 'instance creation'!
-  mul: mul ^(ControlDur) * mul!
-  mul: mul add: add ^(ControlDur) * mul + add!
+  mul: mul ^(ControlDur new) * mul!
+  mul: mul add: add ^(ControlDur new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -4956,8 +4956,8 @@ PinkNoise comment: 'Pink Noise.'!
 
 
 !PinkNoise class methodsFor: 'instance creation'!
-  mul: mul ^(PinkNoise) * mul!
-  mul: mul add: add ^(PinkNoise) * mul + add!
+  mul: mul ^(PinkNoise new) * mul!
+  mul: mul add: add ^(PinkNoise new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -5933,8 +5933,8 @@ SampleDur comment: 'Duration of one sample.'!
 
 
 !SampleDur class methodsFor: 'instance creation'!
-  mul: mul ^(SampleDur) * mul!
-  mul: mul add: add ^(SampleDur) * mul + add!
+  mul: mul ^(SampleDur new) * mul!
+  mul: mul add: add ^(SampleDur new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -5962,8 +5962,8 @@ SampleRate comment: 'Server sample rate.'!
 
 
 !SampleRate class methodsFor: 'instance creation'!
-  mul: mul ^(SampleRate) * mul!
-  mul: mul add: add ^(SampleRate) * mul + add!
+  mul: mul ^(SampleRate new) * mul!
+  mul: mul add: add ^(SampleRate new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 
@@ -6789,6 +6789,94 @@ Trig1 comment: 'Timed trigger.'!
   primaryFactoryMethod ^#in:dur:!
 !
 
+UGen subclass: #TwoPole
+  instanceVariableNames: 'in freq radius'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+TwoPole comment: 'Two pole filter.'!
+
+!TwoPole methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  radius ^radius!
+  radius: x radius := x!
+!
+
+!TwoPole methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #TwoPole.
+    paramNames := #(#in #freq #radius).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. radius := 0.8!
+!
+
+
+!TwoPole class methodsFor: 'instance creation'!
+  in: in freq: freq radius: radius
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u radius: radius.
+    ^u!
+  in: in freq: freq radius: radius mul: mul ^(TwoPole in: in freq: freq radius: radius) * mul!
+  in: in freq: freq radius: radius mul: mul add: add ^(TwoPole in: in freq: freq radius: radius) * mul + add!
+  primaryFactoryMethod ^#in:freq:radius:!
+!
+
+UGen subclass: #TwoZero
+  instanceVariableNames: 'in freq radius'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+TwoZero comment: 'Two zero filter.'!
+
+!TwoZero methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  radius ^radius!
+  radius: x radius := x!
+!
+
+!TwoZero methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #TwoZero.
+    paramNames := #(#in #freq #radius).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. radius := 0.8!
+!
+
+
+!TwoZero class methodsFor: 'instance creation'!
+  in: in freq: freq radius: radius
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u radius: radius.
+    ^u!
+  in: in freq: freq radius: radius mul: mul ^(TwoZero in: in freq: freq radius: radius) * mul!
+  in: in freq: freq radius: radius mul: mul add: add ^(TwoZero in: in freq: freq radius: radius) * mul + add!
+  primaryFactoryMethod ^#in:freq:radius:!
+!
+
 UGen subclass: #VarSaw
   instanceVariableNames: 'freq iphase width'
   classVariableNames: ''
@@ -6919,8 +7007,8 @@ WhiteNoise comment: 'White noise.'!
 
 
 !WhiteNoise class methodsFor: 'instance creation'!
-  mul: mul ^(WhiteNoise) * mul!
-  mul: mul add: add ^(WhiteNoise) * mul + add!
+  mul: mul ^(WhiteNoise new) * mul!
+  mul: mul add: add ^(WhiteNoise new) * mul + add!
   primaryFactoryMethod ^#new!
 !
 

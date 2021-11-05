@@ -13,5 +13,5 @@ nd := [ :i |
   period2 := (pitch2 at: i) midicps reciprocal.
   string2 := CombL in: pluck2 maxdelaytime: period2 delaytime: period2 decaytime: -4.
   Pan2 in: (string1 + string2) pos: i * 0.2 - 0.5 level: 1].
-out := pitch1 size mixFill: nd.
+out := (1 to: pitch1 size) mixFill: nd.
 LeakDC in: (LPF in: out freq: 12000) coef: 0.995

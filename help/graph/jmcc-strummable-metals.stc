@@ -8,4 +8,4 @@ var strFunc = {
     var z = KlankSpec({ 300 * i + LinRand(0, 8000, 0) }.dup(n), nil, { Rand(1, 4) }.dup(n));
     Pan2(Klank(pluck, 1, 0, 1, z), i * 0.2 - 0.5, 1);
 };
-LeakDC(LPF(8.mixFill(strFunc), 12000), 0.995)
+LeakDC(LPF(1.to(8).mixFill(strFunc), 12000), 0.995)

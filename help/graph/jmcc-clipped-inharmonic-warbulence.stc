@@ -5,7 +5,7 @@ var z = OverlapTexture({
     var f = TRand(24, 96, tr).midicps;
     var a = (500 / f).min(1);
     var n = 12;
-    a * n.mixFill({
+    a * 1.to(n).mixFill({
         arg i;
         var g = TRand(0, n, tr) + 1;
         var o = (SinOsc(f * g, 0) * (SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.08 - 0.04).max(0)).max(0);

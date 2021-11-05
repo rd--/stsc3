@@ -116,9 +116,9 @@ MessageNames openMessageNames. "open Message Names tool"
 6 replicate: 1 "=> #(1 1 1 1 1 1)"
 #(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
 #(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
-5 mixFill: [:x | x * x] "=> 30 ; mixFill is one indexed (as in smalltalk)"
-5 arrayFill: [:x | x * x] "=> #(1 4 9 16 25)"
-5 arrayFillZeroIndexed: [:x | x * x] "=> #(0 1 4 9 16)"
+(0 to: 4) mixFill: [:x | x * x] "=> 30 ; Sc and St disagree about indexing, mixFill is implemented at Interval"
+(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
+(0 to: 4) collect: [:x | x * x] "=> #(0 1 4 9 16)"
 
 (Array with: 1) = #(1)
 (Array with: 1 with: 2) = #(1 2)

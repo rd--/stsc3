@@ -12,4 +12,4 @@ mk := [:k|
  force := (LFNoise2 freq: 0.25) kr inRangeFrom: 0.25 to: 0.75.
  freq := (force * 88 + 20) midicps.
  MoogLadder in: n ffreq: freq res: force].
-(6 mceFill: mk) splay
+((1 to: 6) mceFill: mk) splay

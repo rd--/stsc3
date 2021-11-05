@@ -14,4 +14,4 @@ var x = {
   var o = SinOsc(h, f * pi) * d + b;
   var z = LeakDC(VarSaw(o, t, 0.5), 0.995);
   Pan2(z, VarSaw(0.02, t, 0.5), 1 / n)};
-n.mixFill(x) * 0.25
+1.to(n).mixFill(x) * 0.25

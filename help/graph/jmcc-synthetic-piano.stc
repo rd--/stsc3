@@ -7,6 +7,6 @@ var p = {
         var dt = 1 / (n + #[-0.05, 0, 0.04].at(i)).midicps;
         CombL(LFNoise2(3000) * e, dt, dt, 6)
     };
-    Pan2(3.mixFill(c), n - 36 / 27 - 1, 1)
+    Pan2(1.to(3).mixFill(c), n - 36 / 27 - 1, 1)
 };
 2.mixFill(p)

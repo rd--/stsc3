@@ -1,7 +1,7 @@
 "strummable silk (jmcc) #11"
 | x o s |
 x := MouseX minval: 0.0 maxval: 1.0 warp: 0.0 lag: 0.2.
-o := 8 mixFill: [ :ix |
+o := (1 to: 8) mixFill: [ :ix |
   | n trigger env pluck freq z metal |
   n := 15.
   trigger := (HPZ1 in: (x > (0.25 + ((ix - 1) * 0.07)))) abs.

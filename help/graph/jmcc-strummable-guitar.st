@@ -10,5 +10,5 @@ str := [ :i |
  dt := (scale at: i) midicps reciprocal.
  s := CombL in: n maxdelaytime: dt delaytime: dt decaytime: 4.
  Pan2 in: s pos: (i - 1 * 0.2 - 0.5) level: 1].
-strs := (scale size) mixFill: str.
+strs := (1 to: scale size) mixFill: str.
 LeakDC in: (LPF in: strs freq: 12000) coef: 0.995

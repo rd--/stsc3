@@ -253,8 +253,8 @@ a value + b value + c value
 note2 := (sequR value: #(-12 -7 -5 0 2 5) value: clock_16) + note1
 freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midicps .
 (1 to: 6) do: [:i| s := u in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] .
-out := pitch size mixFill: [:i| |t| t := HPZ1 in: (mousex > (0.25 + ((i - 1) * spacing))) abs . x]
-out := pitch size mixFill: [:i| x]
+out := (1 to: pitch size) mixFill: [:i| |t| t := HPZ1 in: (mousex > (0.25 + ((i - 1) * spacing))) abs . x]
+out := pitch size mixFill: [ x ]
 pitch size mixFill: x
 [1] value
 o m: true

@@ -415,8 +415,11 @@ Mce comment: 'Multiple Channel Expansion'!
   mceFill: f
     ^(self arrayFill: f) asUGen
   !
-  mceFillZeroIndexed: f
-    ^(self arrayFillZeroIndexed: f) asUGen
+!
+
+!Interval methodsFor: 'enumerating'!
+  mceFill: aBlock
+    ^(self asArray collect: aBlock) asUGen
   !
 !
 
@@ -656,7 +659,7 @@ OverlapTexture comment: 'Texture Generator'!
 
 !OverlapTexture class methodsFor: 'texture generation'!
   graphFunc: graphFunc sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
-    ^overlap mixFill: [ :i |
+    ^(1 to: overlap) mixFill: [ :i |
       | t s e |
       t := Impulse freq: (1 / (sustainTime + (transitionTime * 2))) phase: (i / overlap).
       s := graphFunc value: t.

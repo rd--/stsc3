@@ -25,13 +25,6 @@
   !
 !
 
-!SequenceableCollection methodsFor: 'enumerating'!
-  withIndexCollectZeroIndexed: f
-    "Zero indexed variant of #withIndexCollect:"
-    ^self withIndexCollect: [ :e :i | f value: e value: i - 1 ]
-  !
-!
-
 !Array class methodsFor: 'enumerating'!
   series: size value: start value: step
     "SC idiom to make an arithmetic series (ramp)"
@@ -48,17 +41,16 @@
       entry ]
   !
   fill: size value: aBlock
-    "SC idiom to fill an array using a block"
-    ^(1 to: size) collect: [ :i | aBlock cull: i ]
+    "SC idiom to fill an array using a zero argument block.
+     The argument as index form is not implemented since St and Sc disagree about indexding."
+    ^(1 to: size) collect: [ :i | aBlock value: i ]
   !
 !
 
 !Integer methodsFor: 'enumerating'!
   arrayFill: aBlock
-    ^(1 to: self) collect: [ :i | aBlock cull: i ]
-  !
-  arrayFillZeroIndexed: f
-    ^(1 to: self) collect: [ :i | f cull: i - 1 ]
+    "c.f. Array class>>fill"
+    ^(1 to: self) collect: [ :i | aBlock value ]
   !
   replicate: item
     "Array of myself number of places, each being item"
@@ -67,8 +59,11 @@
   mixFill: f
     ^(self arrayFill: f) sum
   !
-  mixFillZeroIndexed: f
-    ^(self arrayFillZeroIndexed: f) sum
+!
+
+!Interval methodsFor: 'enumerating'!
+  mixFill: aBlock
+    ^(self asArray collect: aBlock) sum
   !
 !
 
@@ -85,17 +80,12 @@
 
 !BlockClosure methodsFor: 'enumerating'!
   dup: aNumber
-    "An array of aNumber places,
-     each filled by sending value to myself if I have no arguments,
-     or value: counter if I have one argument.
+    "An array of aNumber places, each filled by sending value to myself.
+     Sc allows an index argument, however Sc and St disagree about indexing.
 
     [ 10 rand ] dup: 10
-    [ :x | x / 2 ] dup: 10
     "
     ^aNumber arrayFill: self
-  !
-  dupZeroIndexed: aNumber
-    ^[ :x | self cull: x - 1 ] dup: aNumber
   !
   dup
     ^self dup: 2

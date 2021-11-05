@@ -1,0 +1,8 @@
+// BrownNoise
+{ BrownNoise() }.dup * 0.05
+
+// BrownNoise
+HPZ1({ BrownNoise() }.dup) * 0.05
+
+// BrownNoise
+{ BrownNoise() }.dup.hpz1 * 0.05
