@@ -203,7 +203,6 @@
 + SimpleNumber { pitch { arg initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0;  ^Pitch.multiNew('control', this, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + SimpleNumber { pulse { arg width = 0.5;  ^Pulse.multiNew('audio', this, width) } }
 + SimpleNumber { pv_RandComb { arg wipe = 0.0, trig = 0.0;  ^PV_RandComb.multiNew('control', this, wipe, trig) } }
-+ SimpleNumber { rand { arg hi = 1.0;  ^Rand.multiNew('scalar', this, hi) } }
 + SimpleNumber { recordBuf { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0;  ^RecordBuf.multiNew('audio', this, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + SimpleNumber { rBezier { arg dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0;  ^RBezier.multiNew('audio', this, dx, freq, phase, param) } }
 + SimpleNumber { rdx7Env { arg data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0;  ^RDX7Env.multiNew('audio', this, data, r1, r2, r3, r4, l1, l2, l3, l4, ol) } }
