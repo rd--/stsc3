@@ -308,7 +308,7 @@ d.values.sort({ arg i, j; i <= j })                         // list of values at
 this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
 this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
-this.s.class == Server                                      // by convention the Interpreter variable s has the default scsynth
+this.s == Server.default                                    // by convention the Interpreter variable s has the default scsynth
 this.executeFile("program.scd")                             // run program text
 
 'Interval'
