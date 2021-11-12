@@ -1,18 +1,61 @@
--- | An s-expression printer for the Ansi.Expr Ast type.
+-- | Printers (.stc and s-expression) for the Ansi.Expr Ast type.
 module Language.Smalltalk.Ansi.Expr.Print where
 
+import Data.List {- base -}
 import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
+
+-- * .stc
+
+-- > map stcIsBinaryMessage (words "* - + abs sin")
+stcIsBinaryMessage :: String -> Bool
+stcIsBinaryMessage x = all (\ e -> e `elem` "!@%&*-+=|<>?/") x
+
+-- | The apply message is elided in .stc, it's singular array argument is unpacked.
+messagePrintStc :: Message t -> String
+messagePrintStc (Message s e) =
+  let i = takeWhile (/= ':') (St.selectorIdentifier s)
+  in case (i,e) of
+       (_,[]) -> printf ".%s" i
+       ("apply",[Array p]) -> printf "(%s)" (intercalate ", " (map exprPrintStc p))
+       (_,[e1]) -> let p1 = exprPrintStc e1
+                   in if stcIsBinaryMessage i then printf " %s %s" i p1 else printf "%s(%s)" i p1
+       _ -> printf ".%s(%s)" i (intercalate ", " (map exprPrintStc e))
+
+exprPrintStc :: Expr t -> String
+exprPrintStc expr =
+  case expr of
+    Identifier i -> i
+    Literal l -> St.sc_literal_pp l
+    Assignment i e -> printf "%s = %s" i (exprPrintStc e)
+    Return e -> printf "^%s" (exprPrintStc e)
+    Send e m -> printf "%s%s" (exprPrintStc e) (messagePrintStc m)
+    Lambda _ a (St.Temporaries t) e ->
+      let x = intercalate "; " (map exprPrintStc e)
+      in case (a,t) of
+        ([],[]) -> printf "{ %s }" x
+        (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " a) x
+        _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " a) (intercalate ", " t) x
+    Array e -> printf "[%s]" (intercalate ", " (map exprPrintStc e))
+    Begin e -> intercalate "; "  (map exprPrintStc e)
+    Init (St.Temporaries t) e ->
+      let x = intercalate "; "  (map exprPrintStc e)
+      in case (t,e) of
+        ([],_) ->  x
+        _ -> printf "var %s; %s" (intercalate ", " t) x
+
+-- * S-Expression
 
 -- | Tidy printer for Message, avoids trailing whitespace.
-messagePrint :: Message t -> String
-messagePrint (Message s e) =
+messagePrintLisp :: Message t -> String
+messagePrintLisp (Message s e) =
   case e of
     [] -> printf "(~ %s)" (St.selectorIdentifier s)
-    _ -> printf "(~ %s %s)" (St.selectorIdentifier s) (unwords (map exprPrint e))
+    _ -> printf "(~ %s %s)" (St.selectorIdentifier s) (unwords (map exprPrintLisp e))
 
 {- | S-expression printer.
      The message constructor is '~'.
@@ -25,28 +68,28 @@ messagePrint (Message s e) =
      The array operator is '%'.
      The sequence operator is '>>'.
 -}
-exprPrint :: Expr t -> String
-exprPrint expr =
+exprPrintLisp :: Expr t -> String
+exprPrintLisp expr =
   case expr of
     Identifier i -> i
     Literal l -> St.literal_pp l
-    Assignment i e -> printf "(:= %s %s)" i (exprPrint e)
-    Return e -> printf "(^ %s)" (exprPrint e)
-    Send e m -> printf "(. %s %s)" (exprPrint e) (messagePrint m)
+    Assignment i e -> printf "(:= %s %s)" i (exprPrintLisp e)
+    Return e -> printf "(^ %s)" (exprPrintLisp e)
+    Send e m -> printf "(. %s %s)" (exprPrintLisp e) (messagePrintLisp m)
     Lambda _ a (St.Temporaries t) e ->
-      let x = unwords (map exprPrint e)
+      let x = unwords (map exprPrintLisp e)
       in case (a,t) of
         ([],[]) -> printf "(\\ %s)" x
         (_,[]) -> printf "(\\ (: %s) %s)" (unwords a) x
         _ -> printf "(\\ (: %s) (| %s) %s)" (unwords a) (unwords t) x
-    Array e -> printf "(%% %s)" (unwords (map exprPrint e))
+    Array e -> printf "(%% %s)" (unwords (map exprPrintLisp e))
     Begin e ->
       case e of
-        [x] -> exprPrint x
-        _ -> printf "(>> %s)" (unwords (map exprPrint e))
+        [x] -> exprPrintLisp x
+        _ -> printf "(>> %s)" (unwords (map exprPrintLisp e))
     Init (St.Temporaries t) e ->
-      let x = unwords (map exprPrint e)
+      let x = unwords (map exprPrintLisp e)
       in case (t,e) of
-        ([],[e0]) -> exprPrint e0
+        ([],[e0]) -> exprPrintLisp e0
         ([],_) -> printf "(>> %s)" x
         _ -> printf "(>> (| %s) %s)" (unwords t) x

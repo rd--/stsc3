@@ -1,6 +1,6 @@
 {- | Translate from the SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
      Requires that the Sc Ast has been rewritten to have only constructs that can be translated to St.
-     See Language.Smalltalk.SuperCollider.Rewrite
+     See "Language.Smalltalk.SuperCollider.Rewrite"
 -}
 module Language.Smalltalk.SuperCollider.Translate where
 

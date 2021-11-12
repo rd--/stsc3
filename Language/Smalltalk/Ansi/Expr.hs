@@ -14,10 +14,11 @@ data Message t =
   Message St.Selector [Expr t]
   deriving (Functor, Foldable, Traversable, Eq, Show)
 
--- | Lambda terms store their Smalltalk definitions (either blocks or methods)
+-- | Lambda terms may store their Smalltalk definitions (either blocks or methods)
 data LambdaDefinition =
     BlockLambda St.BlockBody
   | MethodLambda St.MethodDefinition
+  | NullLambda
   deriving (Eq, Show)
 
 -- | Shows the method name (or Workspace for non-method blocks) and lambda type.
@@ -26,6 +27,7 @@ lambdaDefinitionShow ld =
   case ld of
     BlockLambda b -> "Block from " ++ maybe "Workspace" St.methodNameIdentifier (St.blockMethodName b)
     MethodLambda m -> "Method " ++ St.methodNameIdentifier (St.methodName m)
+    NullLambda -> "Lambda"
 
 {- | A standard applicative Expression type.
      Send replaces Apply.
@@ -46,8 +48,18 @@ data Expr t =
   | Init St.Temporaries [Expr t]
   deriving (Functor, Foldable, Traversable, Eq, Show)
 
--- | Reification type.
-data Exp = Expr (Expr Exp)
+expr_map :: (Expr t -> Expr t) -> Expr t -> Expr t
+expr_map f e =
+  case e of
+    Identifier _ -> f e
+    Literal _ -> f e
+    Assignment p q -> f (Assignment p (expr_map f q))
+    Return p -> f (Return (expr_map f p))
+    Send p (Message q r) -> f (Send (expr_map f p) (Message q (map (expr_map f) r)))
+    Lambda p q r s -> f (Lambda p q r (map (expr_map f) s))
+    Array p -> f (Array (map (expr_map f) p))
+    Begin p -> f (Begin (map (expr_map f) p))
+    Init p q -> f (Init p (map (expr_map f) q))
 
 -- | Is expression the reservered word "super"?
 exprIsSuper :: Expr t -> Bool

@@ -36,7 +36,7 @@ This transformation at the Sc Ast.
 - var p, q = a;     => var p, q; q = a;
 - var p = a; var q; => var p, q; p = a;
 
-Method parameters are collated into an array of associations.
+Method parameters are collated into an array of either plain values or (keyword,value) associations.
 
 - p.q(a,b)          => p q: {a. b}
 - p.q(x: a, b)      => p q: {#x: -> a. b}
