@@ -129,3 +129,6 @@ data ScBinaryArgument =
 data ScKeywordArgument =
   ScKeywordArgument (Maybe St.Keyword) ScBasicExpression
   deriving (Eq, Show)
+
+scPseudoVariables :: [St.Identifier]
+scPseudoVariables = words "nil true false inf pi this super"

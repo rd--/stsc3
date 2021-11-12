@@ -23,7 +23,7 @@ messagePrintStc (Message s e) =
        (_,[]) -> printf ".%s" i
        ("apply",[Array p]) -> printf "(%s)" (intercalate ", " (map exprPrintStc p))
        (_,[e1]) -> let p1 = exprPrintStc e1
-                   in if stcIsBinaryMessage i then printf " %s %s" i p1 else printf "%s(%s)" i p1
+                   in if stcIsBinaryMessage i then printf " %s %s" i p1 else printf ".%s(%s)" i p1
        _ -> printf ".%s(%s)" i (intercalate ", " (map exprPrintStc e))
 
 exprPrintStc :: Expr t -> String
