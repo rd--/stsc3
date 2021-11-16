@@ -49,16 +49,16 @@ EventParam comment: 'Event Parameters'!
   !
 !
 
-AbstractUGen subclass: #EventControl
+AbstractUGen subclass: #Voicer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-EventControl comment: 'Event Control Input'!
+Voicer comment: 'Event Control Input'!
 
-!EventControl class methodsFor: 'instance creation'!
+!Voicer class methodsFor: 'instance creation'!
   k0: k0 stp: stp c: c
     ^EventParam voice: c fromUGen: (In numChan: 9 bus: (k0 + (c * stp))) kr asMce.
   !
@@ -69,9 +69,9 @@ EventControl comment: 'Event Control Input'!
   !
   numVoices: numVoices voiceFunc: voiceFunc
     | k0 stp c0 |
-    k0 := Control name: 'eventAddr' init: 13000.
-    stp := Control name: 'eventIncr' init: 10.
-    c0 := Control name: 'eventZero' init: 0.
+    k0 := 13000. "Control name: 'eventAddr' init: 13000."
+    stp := 10. "Control name: 'eventIncr' init: 10."
+    c0 := 0. "Control name: 'eventZero' init: 0."
     ^self k0: k0 stp: stp c0: c0 numVoices: numVoices voiceFunc: voiceFunc.
   !
   primaryFactoryMethod ^#numVoices:voiceFunc:!

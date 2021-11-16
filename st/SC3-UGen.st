@@ -23,7 +23,7 @@ AllpassC comment: 'Schroeder allpass delay line with cubic interpolation.'!
     ugenName := #AllpassC.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -70,7 +70,7 @@ AllpassL comment: 'Schroeder allpass delay line with linear interpolation.'!
     ugenName := #AllpassL.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -117,7 +117,7 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
     ugenName := #AllpassN.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -340,7 +340,7 @@ Balance2 comment: 'Stereo signal balancer'!
     ugenName := #Balance2.
     paramNames := #(#left #right #pos #level).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -385,7 +385,7 @@ BBandPass comment: 'Band Pass Filter'!
     ugenName := #BBandPass.
     paramNames := #(#in #freq #bw).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -429,7 +429,7 @@ BBandStop comment: 'Band reject filter'!
     ugenName := #BBandStop.
     paramNames := #(#in #freq #bw).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -543,7 +543,7 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
     ugenName := #BLowPass.
     paramNames := #(#in #freq #rq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -587,7 +587,7 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
     ugenName := #BPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -627,7 +627,7 @@ BPZ2 comment: 'Two zero fixed midpass.'!
     ugenName := #BPZ2.
     paramNames := #(#in).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -669,7 +669,7 @@ BRF comment: '2nd order Butterworth band reject filter.'!
     ugenName := #BRF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -792,7 +792,7 @@ BufWr comment: 'Buffer writing oscillator.'!
     ugenName := #BufWr.
     paramNames := #(#bufnum #phase #loop).
     mceNames := #(#inputArray).
-    ugenRate := #ar.
+    ugenRate := #(3).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -875,7 +875,7 @@ Clip comment: 'Clip a signal outside given thresholds.'!
     ugenName := #Clip.
     paramNames := #(#in #lo #hi).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -921,7 +921,7 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
     ugenName := #CombC.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -968,7 +968,7 @@ CombL comment: 'Comb delay line with linear interpolation.'!
     ugenName := #CombL.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1015,7 +1015,7 @@ CombN comment: 'Comb delay line with no interpolation.'!
     ugenName := #CombN.
     paramNames := #(#in #maxdelaytime #delaytime #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1127,7 +1127,7 @@ CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
     ugenName := #CrossoverDistortion.
     paramNames := #(#in #amp #smooth).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1307,7 +1307,7 @@ Decay comment: 'Exponential decay'!
     ugenName := #Decay.
     paramNames := #(#in #decayTime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1350,7 +1350,7 @@ Decay2 comment: 'Exponential decay'!
     ugenName := #Decay2.
     paramNames := #(#in #attackTime #decayTime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1394,7 +1394,7 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
     ugenName := #DegreeToKey.
     paramNames := #(#bufnum #in #octave).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(1).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1438,7 +1438,7 @@ DelayC comment: 'Simple delay line with cubic interpolation.'!
     ugenName := #DelayC.
     paramNames := #(#in #maxdelaytime #delaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1482,7 +1482,7 @@ DelayN comment: 'Simple delay line with no interpolation.'!
     ugenName := #DelayN.
     paramNames := #(#in #maxdelaytime #delaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -1526,7 +1526,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
     ugenName := #Demand.
     paramNames := #(#trig #reset).
     mceNames := #(#demandUGens).
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := #mceInput.
     specialIndex := 0.
     ugenId := nil.
@@ -1572,7 +1572,7 @@ DetectSilence comment: 'Detect when input falls below an amplitude threshold'!
     ugenName := #DetectSilence.
     paramNames := #(#in #amp #time #doneAction).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2098,7 +2098,7 @@ Fold comment: 'Fold a signal outside given thresholds.'!
     ugenName := #Fold.
     paramNames := #(#in #lo #hi).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2273,7 +2273,7 @@ FreeVerb comment: 'A reverb'!
     ugenName := #FreeVerb.
     paramNames := #(#in #mix #room #damp).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2322,7 +2322,7 @@ FreeVerb2 comment: 'A two-channel reverb'!
     ugenName := #FreeVerb2.
     paramNames := #(#in #in2 #mix #room #damp).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -2559,7 +2559,7 @@ GreyholeRaw comment: 'algorithmic delay'!
     ugenName := #GreyholeRaw.
     paramNames := #(#in1 #in2 #damping #delaytime #diffusion #feedback #moddepth #modfreq #size).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -2623,7 +2623,7 @@ GVerb comment: 'A two-channel reverb'!
     ugenName := #GVerb.
     paramNames := #(#in #roomsize #revtime #damping #inputbw #spread #drylevel #earlyreflevel #taillevel #maxroomsize).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -2670,7 +2670,7 @@ Hasher comment: 'Scrambled value with a hash function.'!
     ugenName := #Hasher.
     paramNames := #(#in).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2710,7 +2710,7 @@ HPF comment: '2nd order Butterworth highpass filter.'!
     ugenName := #HPF.
     paramNames := #(#in #freq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2749,7 +2749,7 @@ HPZ1 comment: 'Two point difference filter'!
     ugenName := #HPZ1.
     paramNames := #(#in).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -2954,7 +2954,7 @@ InRange comment: 'Tests if a signal is within a given range.'!
     ugenName := #InRange.
     paramNames := #(#in #lo #hi).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3125,7 +3125,7 @@ Klank comment: 'Bank of resonators'!
     ugenName := #Klank.
     paramNames := #(#input #freqscale #freqoffset #decayscale).
     mceNames := #(#specificationsArrayRef).
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3579,7 +3579,7 @@ LPF comment: '2nd order Butterworth lowpass filter'!
     ugenName := #LPF.
     paramNames := #(#in #freq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3620,7 +3620,7 @@ Lag comment: 'Exponential lag'!
     ugenName := #Lag.
     paramNames := #(#in #lagTime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3663,7 +3663,7 @@ LagUD comment: 'Exponential lag'!
     ugenName := #LagUD.
     paramNames := #(#in #lagTimeU #lagTimeD).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3705,7 +3705,7 @@ Lag2 comment: 'Exponential lag'!
     ugenName := #Lag2.
     paramNames := #(#in #lagTime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3746,7 +3746,7 @@ Lag3 comment: 'Exponential lag'!
     ugenName := #Lag3.
     paramNames := #(#in #lagTime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3789,7 +3789,7 @@ Lag3UD comment: 'Exponential lag'!
     ugenName := #Lag3UD.
     paramNames := #(#in #lagTimeU #lagTimeD).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3831,7 +3831,7 @@ Latch comment: 'Sample and hold'!
     ugenName := #Latch.
     paramNames := #(#in #trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3872,7 +3872,7 @@ LeakDC comment: 'Remove DC'!
     ugenName := #LeakDC.
     paramNames := #(#in #coef).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -3915,7 +3915,7 @@ Limiter comment: 'Peak limiter'!
     ugenName := #Limiter.
     paramNames := #(#in #level #dur).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4010,7 +4010,7 @@ LinExp comment: 'Map a linear range to an exponential range'!
     ugenName := #LinExp.
     paramNames := #(#in #srclo #srchi #dstlo #dsthi).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4056,7 +4056,7 @@ LinPan2 comment: 'Two channel linear pan.'!
     ugenName := #LinPan2.
     paramNames := #(#in #pos #level).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -4144,7 +4144,7 @@ LinXFade2 comment: 'Two channel linear crossfade.'!
     ugenName := #LinXFade2.
     paramNames := #(#inA #inB #pan).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4264,7 +4264,7 @@ LocalOut comment: 'Write to buses local to a synth.'!
     ugenName := #LocalOut.
     paramNames := #().
     mceNames := #(#channelsArray).
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 0.
     specialIndex := 0.
     ugenId := nil.
@@ -4304,7 +4304,7 @@ MantissaMask comment: 'Reduce precision.'!
     ugenName := #MantissaMask.
     paramNames := #(#in #bits).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4462,7 +4462,7 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
     ugenName := #ModDif.
     paramNames := #(#x #y #mod).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4508,7 +4508,7 @@ MoogFF comment: 'Moog VCF implementation, designed by Federico Fontana'!
     ugenName := #MoogFF.
     paramNames := #(#in #freq #gain #reset).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4553,7 +4553,7 @@ MoogLadder comment: 'Moog Filter Emulation'!
     ugenName := #MoogLadder.
     paramNames := #(#in #ffreq #res).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4735,7 +4735,7 @@ Normalizer comment: 'Flattens dynamics.'!
     ugenName := #Normalizer.
     paramNames := #(#in #level #dur).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4777,7 +4777,7 @@ OnePole comment: 'One pole filter.'!
     ugenName := #OnePole.
     paramNames := #(#in #coef).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -4818,7 +4818,7 @@ Out comment: 'Write a signal to a bus.'!
     ugenName := #Out.
     paramNames := #(#bus).
     mceNames := #(#channelsArray).
-    ugenRate := #ar.
+    ugenRate := #(1).
     numChan := 0.
     specialIndex := 0.
     ugenId := nil.
@@ -4861,7 +4861,7 @@ Pan2 comment: 'Two channel equal power pan.'!
     ugenName := #Pan2.
     paramNames := #(#in #pos #level).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -5056,7 +5056,7 @@ PitchShift comment: 'Time domain pitch shifter.'!
     ugenName := #PitchShift.
     paramNames := #(#in #windowSize #pitchRatio #pitchDispersion #timeDispersion).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5108,7 +5108,7 @@ Pluck comment: 'A Karplus-Strong UGen'!
     ugenName := #Pluck.
     paramNames := #(#in #trig #maxdelaytime #delaytime #decaytime #coef).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5194,7 +5194,7 @@ PulseCount comment: 'Pulse counter.'!
     ugenName := #PulseCount.
     paramNames := #(#trig #reset).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5237,7 +5237,7 @@ PulseDivider comment: 'Pulse divider.'!
     ugenName := #PulseDivider.
     paramNames := #(#trig #div #start).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5325,7 +5325,7 @@ RHPF comment: 'A resonant high pass filter.'!
     ugenName := #RHPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5369,7 +5369,7 @@ RLPF comment: 'A resonant low pass filter.'!
     ugenName := #RLPF.
     paramNames := #(#in #freq #rq).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5516,7 +5516,7 @@ Resonz comment: 'Resonant filter.'!
     ugenName := #Resonz.
     paramNames := #(#in #freq #bwr).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5560,7 +5560,7 @@ Ringz comment: 'Ringing filter.'!
     ugenName := #Ringz.
     paramNames := #(#in #freq #decaytime).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5602,7 +5602,7 @@ RunningMax comment: 'Track maximum level.'!
     ugenName := #RunningMax.
     paramNames := #(#in #trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -5805,7 +5805,7 @@ Rotate2 comment: 'Rotate a sound field.'!
     ugenName := #Rotate2.
     paramNames := #(#x #y #pos).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 2.
     specialIndex := 0.
     ugenId := nil.
@@ -5889,7 +5889,7 @@ RTScramble comment: '(Undocumented class)'!
     ugenName := #RTScramble.
     paramNames := #(#trigger).
     mceNames := #(#inputs).
-    ugenRate := #kr.
+    ugenRate := #(0).
     numChan := #mceInput.
     specialIndex := 0.
     ugenId := nil.
@@ -6026,7 +6026,7 @@ Select comment: 'Select output from an array of inputs.'!
     ugenName := #Select.
     paramNames := #(#which).
     mceNames := #(#array).
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6114,7 +6114,7 @@ SetResetFF comment: 'Set-reset flip flop.'!
     ugenName := #SetResetFF.
     paramNames := #(#trig #reset).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6235,7 +6235,7 @@ Slope comment: 'Slope of signal'!
     ugenName := #Slope.
     paramNames := #(#in).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6283,7 +6283,7 @@ Stepper comment: 'Pulse counter.'!
     ugenName := #Stepper.
     paramNames := #(#trig #reset #min #max #step #resetval).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6328,7 +6328,7 @@ Sweep comment: 'Triggered linear ramp'!
     ugenName := #Sweep.
     paramNames := #(#trig #rate).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6462,7 +6462,7 @@ TExpRand comment: 'Triggered exponential random number generator.'!
     ugenName := #TExpRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(2).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6562,7 +6562,7 @@ Timer comment: 'Returns time since last triggered.'!
     ugenName := #Timer.
     paramNames := #(#trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6604,7 +6604,7 @@ TIRand comment: 'Triggered integer random number generator.'!
     ugenName := #TIRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(2).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6644,7 +6644,7 @@ ToggleFF comment: 'Toggle flip flop.'!
     ugenName := #ToggleFF.
     paramNames := #(#trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6686,7 +6686,7 @@ TRand comment: 'Triggered random number generator.'!
     ugenName := #TRand.
     paramNames := #(#lo #hi #trig).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(2).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6728,7 +6728,7 @@ Trig comment: 'Timed trigger.'!
     ugenName := #Trig.
     paramNames := #(#in #dur).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6769,7 +6769,7 @@ Trig1 comment: 'Timed trigger.'!
     ugenName := #Trig1.
     paramNames := #(#in #dur).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6812,7 +6812,7 @@ TwoPole comment: 'Two pole filter.'!
     ugenName := #TwoPole.
     paramNames := #(#in #freq #radius).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -6856,7 +6856,7 @@ TwoZero comment: 'Two zero filter.'!
     ugenName := #TwoZero.
     paramNames := #(#in #freq #radius).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -7035,7 +7035,7 @@ Wrap comment: 'Wrap a signal outside given thresholds.'!
     ugenName := #Wrap.
     paramNames := #(#in #lo #hi).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.
@@ -7081,7 +7081,7 @@ XFade2 comment: 'Equal power two channel cross fade.'!
     ugenName := #XFade2.
     paramNames := #(#inA #inB #pan #level).
     mceNames := #().
-    ugenRate := #ar.
+    ugenRate := #(0 1).
     numChan := 1.
     specialIndex := 0.
     ugenId := nil.

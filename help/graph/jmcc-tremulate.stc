@@ -1,0 +1,16 @@
+// tremulate (jmcc) ;  graph rewrite
+var voiceFunc = {
+    arg tr;
+    var f = TRand(400, 900, tr);
+    var r = TRand(60, 90, tr);
+    var o = FSinOsc(f * [1.0, 1.2, 1.5, 1.8], 0); // just minor seventh chord
+    Mix(Pan2(o, { Rand(-1, 1) }.dup(4), LFNoise2([r, r, r, r]).mul(0.1).max(0))) };
+CombN(OverlapTexture(voiceFunc, 2, 0.5, 2), 0.1, 0.1, 1)
+
+// tremulate (jmcc) ;  event control
+var voiceFunc = {
+    arg e;
+    var s = FSinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); // just minor seventh chord
+    var a = LFNoise2({ Rand(30, 90) }.dup(4) * (0.75 + e.rx)).max(0) * e.z;
+    Mix(Pan2(s, { Rand(-1, 1) }.dup(4) + (e.o * 2 - 1), a * LagUD(e.w, 0, e.ry * 2))) };
+CombN(Mix(Voicer(16, voiceFunc) * 0.5), 0.1, 0.1, 1)

@@ -8,4 +8,4 @@ f := [ :e |
   env := (EnvPerc attackTime: 0.0001 releaseTime: (1 - e z) * 0.1 level: 1 curves: #(1)) envGen: e w.
   exc := PinkNoise mul: e y / 4 + e z * env kr.
   Pan2 in: (MembraneCircle excitation: exc tension: tension kr loss: loss kr) pos: e o * 2 - 1 level: 0.1 ].
-(EventControl numVoices: 6 voiceFunc: f) mix
+(Voicer numVoices: 6 voiceFunc: f) mix

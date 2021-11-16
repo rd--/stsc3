@@ -16,4 +16,4 @@ f := [ :e |
           easteregg: 0
           bypass: 0
           mul: e z ].
-(EventControl numVoices: 16 voiceFunc: f) mix * 4
+(Voicer numVoices: 16 voiceFunc: f) mix * 4

@@ -242,8 +242,8 @@
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
   !
-!
 
+!
 !Array methodsFor: 'filtering'!
   allpassC: maxdelaytime value: delaytime value: decaytime
     ^AllpassC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
@@ -488,8 +488,8 @@
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
   !
-!
 
+!
 !AbstractUGen methodsFor: 'filtering'!
   ampComp: root value: exp
     ^AmpComp freq: self root: root exp: exp
