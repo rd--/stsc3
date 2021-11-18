@@ -493,6 +493,7 @@ SequenceableCollection.allSubclasses.size == 180            // sequencable colle
 [1, 3, 5, 7, 9].clump(2).flatten == [1, 3, 5, 7, 9]         // concatentate
 [1, 3, 5, 7, 9].integrate == [1, 4, 9, 16, 25]              // incremental sum
 [1, 4, 9, 16, 25].differentiate == [1, 3, 5, 7, 9]          // pairwise difference
+[0, 2, 4, 5, 7, 9, 11].mode(5, 12) == [0, 2, 3, 5, 7, 8, 10]// rotate and transpose scale
 
 'Set'
 
