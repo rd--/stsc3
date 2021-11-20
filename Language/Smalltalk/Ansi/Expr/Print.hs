@@ -11,9 +11,12 @@ import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
 
 -- * .stc
 
--- > map stcIsBinaryMessage (words "* - + abs sin")
-stcIsBinaryMessage :: String -> Bool
-stcIsBinaryMessage x = all (\ e -> e `elem` "!@%&*-+=|<>?/") x
+-- | Is Expr a binary operator message send.
+stcIsBinaryMessageSend :: Expr t -> Bool
+stcIsBinaryMessageSend expr =
+  case expr of
+    Send _lhs (Message s [_rhs]) -> St.isBinarySelector s
+    _ -> False
 
 -- | The apply message is elided in .stc, it's singular array argument is unpacked.
 messagePrintStc :: Message t -> String
@@ -23,9 +26,12 @@ messagePrintStc (Message s e) =
        (_,[]) -> printf ".%s" i
        ("apply",[Array p]) -> printf "(%s)" (intercalate ", " (map exprPrintStc p))
        (_,[e1]) -> let p1 = exprPrintStc e1
-                   in if stcIsBinaryMessage i then printf " %s %s" i p1 else printf ".%s(%s)" i p1
+                   in if St.isBinarySelector s then printf " %s %s" i p1 else printf ".%s(%s)" i p1
        _ -> printf ".%s(%s)" i (intercalate ", " (map exprPrintStc e))
 
+{- | Parenthesise all binary operator sends.
+     A more elaborate rule could be written if required.
+-}
 exprPrintStc :: Expr t -> String
 exprPrintStc expr =
   case expr of
@@ -33,7 +39,9 @@ exprPrintStc expr =
     Literal l -> St.sc_literal_pp l
     Assignment i e -> printf "%s = %s" i (exprPrintStc e)
     Return e -> printf "^%s" (exprPrintStc e)
-    Send e m -> printf "%s%s" (exprPrintStc e) (messagePrintStc m)
+    Send e m ->
+      let template = if stcIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
+      in printf template (exprPrintStc e) (messagePrintStc m)
     Lambda _ a (St.Temporaries t) e ->
       let x = intercalate "; " (map exprPrintStc e)
       in case (a,t) of

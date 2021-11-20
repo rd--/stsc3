@@ -1295,6 +1295,13 @@ data Selector
   | KeywordSelector Identifier
   deriving (Eq, Show)
 
+-- | Is Selector an infix binary operator.
+isBinarySelector :: Selector -> Bool
+isBinarySelector s =
+  case s of
+    BinarySelector _ -> True
+    _ -> False
+
 -- | Identifier of Selector
 selectorIdentifier :: Selector -> Identifier
 selectorIdentifier s =

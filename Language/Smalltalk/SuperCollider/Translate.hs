@@ -7,6 +7,8 @@ module Language.Smalltalk.SuperCollider.Translate where
 import qualified Data.List.Split as Split {- split -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Expr.Print as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as Print {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Lexer {- stsc3 -}
@@ -189,9 +191,18 @@ stcParseInitializerDefinition s =
 stcToSt :: String -> String
 stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 
+-- > stcToExprToStc "(a - b).c"
+stcToExprToStc :: String -> [String]
+stcToExprToStc =
+  map Expr.exprPrintStc .
+  Expr.initStatements .
+  Expr.initializerDefinitionExpr .
+  stcParseInitializerDefinition
+
 {-
 
 rw = stcToSt
+rw "(p - q).m" == "(p - q) m .\n"
 rw "p(q.r(i).s).t(j) + k"
 rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5}) .\n"
 rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k}) .\n"
