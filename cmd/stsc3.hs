@@ -3,8 +3,9 @@ import System.Environment {- base -}
 import qualified Sound.SC3 as SC3 {- hsc3 -}
 import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
 
-
+{-
 import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
+-}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
@@ -15,6 +16,7 @@ import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
@@ -42,11 +44,13 @@ sc_cat fn = do
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
+{-
 stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_play evalFile fn = evalFile fn >>= SC3.audition
 
 stsc3_draw :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_draw evalFile fn = evalFile fn >>= Dot.draw . SC3.out 0
+-}
 
 help :: [String]
 help =
@@ -55,6 +59,7 @@ help =
     ," sc cat fragment supercollider-program-file..."
     ," st cat {parsec|happy} smalltalk-program-file..."
     ," repl {ansi|expr|som}"
+    ," rewrite ndef"
     ," run som class arguments..."
     ," translate {sc | stc} st [input-file output-file]"
     ]
@@ -77,6 +82,7 @@ main = do
     ["repl","expr"] -> Interpreter.Lisp.Expr.replMain
 -}
     ["repl","som"] -> Interpreter.Som.Repl.replMain somDirectory
+    ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
     "run":"som":cl:arg -> Interpreter.Som.Repl.loadAndRunClass somDirectory cl arg
 {-
     ["draw","ansi",fn] -> stsc3_draw Interpreter.Lisp.Ansi.evalSmalltalkFile fn

@@ -43,6 +43,7 @@ library
                         Language.Smalltalk.SuperCollider.Ast,
                         Language.Smalltalk.SuperCollider.Ast.Print,
                         Language.Smalltalk.SuperCollider.Lexer,
+                        Language.Smalltalk.SuperCollider.Ndef,
                         Language.Smalltalk.SuperCollider.Parser,
                         Language.Smalltalk.SuperCollider.Rewrite,
                         Language.Smalltalk.SuperCollider.Rewrite.Keyword,

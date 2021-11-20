@@ -12,3 +12,4 @@ install: $(cmd)
 clean:
 	rm -f *.hi *.o $(cmd)
 	rm -f */*/*.hi */*/*.o
+	rm -fR dist

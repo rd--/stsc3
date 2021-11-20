@@ -28,7 +28,7 @@ executable stsc3
                     text,
                     time,
                     vector
-  hs-source-dirs:   cmd
+  hs-source-dirs:   .
   main-is:          stsc3.hs
   other-modules:
                     Interpreter.Lisp.Common
