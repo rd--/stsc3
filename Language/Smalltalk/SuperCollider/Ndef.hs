@@ -58,7 +58,7 @@ with_assign_and_play :: [Expr t] -> [Expr t]
 with_assign_and_play l =
   case splitAt (length l - 1) l of
     (p,[q]) -> p ++ [Assignment uniq_sym q
-                    ,Send (ndef_ref uniq_sym) (Message (St.UnarySelector "play") [])]
+                    ,unary_send (ndef_ref uniq_sym) "play"]
     _ -> error "with_assign_and_play?"
 
 -- | x -> { x }
@@ -72,9 +72,7 @@ to_ndef expr =
     Identifier i ->
       if isLower (head i) && i `notElem` scPseudoVariables then ndef_ref_rt i else Identifier i
     Assignment p q ->
-      Send
-      (Identifier "Ndef")
-      (Message (St.KeywordSelector "apply:") [Array [Literal (St.SymbolLiteral p), to_thunk q]])
+      implicit_send (Identifier "Ndef") [sym_lit p, to_thunk q]
     _ -> expr
 
 -- | Rewrite simple .stc Ugen graph as Ndef graph.
