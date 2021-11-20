@@ -199,3 +199,39 @@ initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
   Init
   (maybe St.emptyTemporaries id tmp)
   (maybe [] (statementsExprList Return) stm)
+
+-- * Expr operators
+
+-- | Init statements, discarding temporaries.
+initStatements :: Expr t -> [Expr t]
+initStatements expr =
+  case expr of
+    Init _ x -> x
+    _ -> error "initStatements: not init?"
+
+-- | e.m
+unarySend :: Expr t -> St.Identifier -> Expr t
+unarySend e m = Send e (Message (St.UnarySelector m) [])
+
+-- | e.m1.m2 &etc. (left to right)
+unarySendSequence :: Expr t -> [St.Identifier] -> Expr t
+unarySendSequence e m =
+  case m of
+    [] -> e
+    m1 : m' -> unarySendSequence (unarySend e m1) m'
+
+-- | Symbol literal
+symbolLiteral :: St.Symbol -> Expr t
+symbolLiteral = Literal . St.SymbolLiteral
+
+-- | e.k(l)
+keywordSend :: Expr t -> St.Symbol -> [Expr t] -> Expr t
+keywordSend e k l = Send e (Message (St.KeywordSelector k) l)
+
+-- | e(l) -> e.apply([l])
+implicitSend :: Expr t -> [Expr t] -> Expr t
+implicitSend e l = keywordSend e "apply:" [Array l]
+
+-- | x -> { x }
+inLambda :: Expr t -> Expr t
+inLambda x = Lambda NullLambda [] St.emptyTemporaries [x]
