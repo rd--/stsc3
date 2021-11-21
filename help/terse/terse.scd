@@ -524,6 +524,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "3".asInteger == 3                                          // parse integer
 "string".asSymbol == 'string'                               // String -> Symbol
 "string".at(4) == $n                                        // indexing
+"string" @ 4 == $n                                          // indexing (@ notation)
 "".isEmpty == true                                          // empty string predicate
 "string".isEmpty == false                                   // is empty string
 "string".mutable == false                                   // string literals are immutable
