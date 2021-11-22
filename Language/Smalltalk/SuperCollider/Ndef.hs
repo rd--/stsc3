@@ -13,7 +13,7 @@ import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
 -- | x -> Ndef('x')
 ndef_ref :: St.Symbol -> Expr t
-ndef_ref x = implicitSend (Identifier "Ndef") [symbolLiteral x]
+ndef_ref x = implicitSend "Ndef" [symbolLiteral x]
 
 -- | x -> Ndef('x').perform(Ndef('x').bus.rate.rateToSelector)
 ndef_ref_rt :: St.Symbol -> Expr t
@@ -42,7 +42,7 @@ to_ndef expr =
     Identifier i ->
       if isLower (head i) && i `notElem` scPseudoVariables then ndef_ref_rt i else Identifier i
     Assignment p q ->
-      implicitSend (Identifier "Ndef") [symbolLiteral p, inLambda q]
+      implicitSend "Ndef" [symbolLiteral p, inLambda q]
     _ -> expr
 
 -- | Rewrite simple .stc Ugen graph as Ndef graph.

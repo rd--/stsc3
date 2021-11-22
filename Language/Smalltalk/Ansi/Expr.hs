@@ -229,8 +229,8 @@ keywordSend :: Expr t -> St.Symbol -> [Expr t] -> Expr t
 keywordSend e k l = Send e (Message (St.KeywordSelector k) l)
 
 -- | e(l) -> e.apply([l])
-implicitSend :: Expr t -> [Expr t] -> Expr t
-implicitSend e l = keywordSend e "apply:" [Array l]
+implicitSend :: St.Identifier -> [Expr t] -> Expr t
+implicitSend e l = keywordSend (Identifier e) "apply:" [Array l]
 
 -- | x -> { x }
 inLambda :: Expr t -> Expr t
