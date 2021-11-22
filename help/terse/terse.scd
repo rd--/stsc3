@@ -97,7 +97,8 @@ Array.rand(4, 1, 9)                                         // array of random n
 Array.linrand(4, 1, 9)                                      // array of random numbers (linear distribution)
 Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
-{var x = [1, 2, 3]; x.reverse; x == [1, 2, 3]}.value        // reverse array (in place)
+[1, 2, 3].reverse == [3, 2, 1]                              // reverse elements
+{var x = [1, 2], y = x.reverse; x + y}.value == [3, 3]      // reverse array (not in place)
 
 'Assignment'
 
