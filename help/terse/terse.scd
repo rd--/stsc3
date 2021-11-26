@@ -309,8 +309,10 @@ d.values.sort({ arg i, j; i <= j })                         // list of values at
 this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
 this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
-this.s == Server.default                                    // by convention the Interpreter variable s has the default scsynth
-this.executeFile("program.scd")                             // run program text
+this.a = nil                                                // there are single letter interpreter variables
+this.s == Server.default                                    // by convention s has the default scsynth
+this.executeFile("program.scd")                             // run program tex
+"['c' -> 60, 'b' -> 50, 'a' -> 100]".interpret              // interpret (read) data structure
 
 'Interval'
 
@@ -533,6 +535,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 'string'.asString.removeAt(5) == $g                         // mutate string removing char at slot
 "string".size == 6                                          // length
 "str ing".split($ ) == ["str", "ing"]                       // split at char
+"a=1 b=2 c=3".split($ ).collect({ arg e; e.split($=) })     // split as parser
 "a" < "b" == true                                           // string comparison
 "dcba".copy.sort == "abcd"                                  // inplace string sort
 "text".copyRange(1,2) == "ex"                               // substring
@@ -565,3 +568,9 @@ nil.shouldNotImplement                                      // flag message shou
 nil.subclassResponsibility                                  // flag message as abstract
 nil.primitiveFailed                                         // system primitive failed
 thisProcess.recompile                                       // recompile the class library
+Magnitude.dumpClassSubtree                                  // print class tree below
+Collection.dumpByteCodes('select')                          // print bytecodes for message
+UGen.dumpSubclassList                                       // print sub classes (as list)
+Number.dumpFullInterface                                    // print methods per class
+SinOsc.dumpMethodList                                       // print methods alphabetically
+Class.allClasses.printAll                                   // print all class names
