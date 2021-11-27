@@ -581,6 +581,9 @@
   impulse: phase
     ^Impulse freq: self phase: phase
   !
+  in'
+    ^In bus: self
+  !
   inFeedback
     ^InFeedback bus: self
   !
@@ -595,6 +598,9 @@
   !
   lfCub: iphase
     ^LFCub freq: self iphase: iphase
+  !
+  lfdNoise1
+    ^LFDNoise1 freq: self
   !
   lfdNoise3
     ^LFDNoise3 freq: self

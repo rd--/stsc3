@@ -31,7 +31,7 @@ binop =
   ,("lcm:",17),("gcd:",18),("roundTo:",19)
   ,("truncateTo:",21),("raisedTo:",25)
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
-  ,("amclip:",40),("clip2:",42)]
+  ,("amclip:",40),("clip2:",42),("fold2:",44)]
 
 -- > Data.List.sort ugen == ugen
 ugen :: [String]
@@ -46,7 +46,7 @@ ugen =
   ,"Hasher","HPF","HPZ1"
   ,"IFFT","Impulse","In","InFeedback","InRange","IRand"
   ,"K2A","Klang","Klank"
-  ,"LFCub","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
+  ,"LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut"
   ,"MantissaMask","MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY"
   ,"Normalizer"

@@ -3189,6 +3189,44 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
+UGen subclass: #LFDNoise1
+  instanceVariableNames: 'freq'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFDNoise1 comment: 'Dynamic ramp noise'!
+
+!LFDNoise1 methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+!
+
+!LFDNoise1 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFDNoise1.
+    paramNames := #(#freq).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 500.0!
+!
+
+
+!LFDNoise1 class methodsFor: 'instance creation'!
+  freq: freq
+    |u|
+    u := self new.
+    u freq: freq.
+    ^u!
+  freq: freq mul: mul ^(LFDNoise1 freq: freq) * mul!
+  freq: freq mul: mul add: add ^(LFDNoise1 freq: freq) * mul + add!
+  primaryFactoryMethod ^#freq:!
+!
+
 UGen subclass: #LFDNoise3
   instanceVariableNames: 'freq'
   classVariableNames: ''
@@ -7175,6 +7213,7 @@ XLine comment: 'Exponential line generator.'!
   bitShiftRight: b ^ BinaryOpUGen specialIndex: 27 a: self b: b!
   amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!
   clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b!
+  fold2: b ^ BinaryOpUGen specialIndex: 44 a: self b: b!
 !
 
 !AbstractUGen methodsFor: 'arithmetic'!

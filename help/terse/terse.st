@@ -137,6 +137,10 @@ $A asciiValue = 65                                          "convert character t
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
 
+'Strings'
+
+'string'                                                    "string literal"
+
 'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"

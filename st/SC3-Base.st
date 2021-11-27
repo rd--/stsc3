@@ -109,3 +109,13 @@
     ^self readTextFile evalString
   !
 !
+
+!Dictionary class methodsFor: 'instance creation'!
+  newFromAssociations: assocArray
+    "Dictionary from Array of associations"
+    | aDict |
+    aDict := Dictionary new.
+    assocArray do: [ :anAssoc | aDict add: anAssoc ].
+    ^aDict
+  !
+!
