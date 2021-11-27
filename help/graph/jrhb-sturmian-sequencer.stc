@@ -1,9 +1,9 @@
 // sturmian sequencer (jrhb)
-var rules = Dictionary.newFromAssociations([0 -> [0, 1], 1 -> [0]]);
+var rules = [[0, 1], [0]];
 var rewrite = {
     arg c, n;
     var r = c;
-    n.timesRepeat({ r = r.collect({ arg e; rules.at(e) }).concatenation });
+    n.timesRepeat({ r = r.collect({ arg e; rules.at(e + 1) }).concatenation });
     r
 };
 var strFunc = {
@@ -16,11 +16,11 @@ var strFunc = {
 0.to(6).collect(strFunc).splay * 0.3
 
 // sturmian sequencer (jrhb)
-var rules = Dictionary.newFromAssociations([0 -> [0, 1], 1 -> [0]]);
+var rules = [[0, 1], [0]];
 var rewrite = {
     arg c, n;
     var r = c;
-    n.timesRepeat({ r = r.collect({ arg e; rules.at(e) }).concatenation });
+    n.timesRepeat({ r = r.collect({ arg e; rules.at(e + 1) }).concatenation });
     r
 };
 var n = 7;
@@ -30,6 +30,6 @@ var strFunc = {
     var dt = 2 ** (n - i).negated * 20;
     var trig = TDuty(dt, 0, 0, Dseq(inf, str), 0);
     var freq = TExpRand(200, (n - i) / n * 10100, trig);
-    //var trigFlt = BPF(trig, LFNoise2(0.1) * 0.02 + 1 * freq, 0.2);
-    Ringz(trig, freq * [1, 1.1, 1.2], ExpRand(2 ** i.negated * 0.1, 0.5)).mix.distort };
-0.to(n).collect(strFunc).splay * 0.3
+    var trigFlt = BPF(trig, LFNoise2(0.1) * 0.02 + 1 * freq, 0.2);
+    Ringz(trigFlt, freq * [1, 1.1, 1.2], ExpRand(2 ** i.negated * 0.1, 0.5)).mix.distort };
+0.to(n - 1).collect(strFunc).splay * 0.3
