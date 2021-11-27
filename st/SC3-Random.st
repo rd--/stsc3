@@ -34,6 +34,10 @@
     "Random Float with exponential distribution between self and n (inclusive)"
     ^1.0 rand linExpFrom: self to: n.
   !
+  coin
+    "With probability self, return true. With probability 1 - self, return false."
+    ^1.0 rand < self
+  !
 !
 
 !Array methodsFor: 'randomness'!

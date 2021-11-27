@@ -119,3 +119,9 @@
     ^aDict
   !
 !
+
+!Boolean methodsFor: '.stc'!
+  if: trueBlock value: falseBlock
+    ^self ifTrue: trueBlock ifFalse: falseBlock
+  !
+!

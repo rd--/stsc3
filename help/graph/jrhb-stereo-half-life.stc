@@ -4,4 +4,3 @@ var nAtoms = 100000; // ca. 3.6e-14 mg
 var n = (nAtoms - PulseCount(LocalIn(2, 0), 0)).max(0);
 var activity = Dust(n * 2.log / tHalf);
 Mrg(activity * 0.1, LocalOut(activity))
-

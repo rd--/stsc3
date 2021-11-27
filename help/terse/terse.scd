@@ -304,6 +304,15 @@ d.occurrencesOf(3) == 1                                     // number of occuren
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
 
+'Floating point'
+
+1.0 * 3.0 > 3.0 == false                                    // integral floating point math
+0.1 * 3.0 > 0.3 == true                                     // general floating point math
+1.0 * 3.0 == 3.0 == true                                    // integral floating point math
+0.1 * 3.0 == 0.3 == false                                   // general floating point math
+1.0 + 1.0 + 1.0 == 3.0 == true                              // integral floating point math
+0.1 + 0.1 + 0.1 == 0.3 == false                             // general floating point math
+
 'Interpreter'
 
 this.class == Interpreter                                   // context in which expressions are evaluated

@@ -1,0 +1,15 @@
+// sturmian sequencer iii (jrhb)
+var rules = [[0, 1], [0]];
+var rewrite = {
+    arg c, n;
+    var r = c;
+    n.timesRepeat({ r = r.collect({ arg e; rules.at(e + 1) }).concatenation });
+    r
+};
+var n = 9;
+var strFunc = {
+    arg i;
+    var str = rewrite.value([0], i + 6);
+    var dt = SampleDur() / (n - i + 2) * MouseX(1, SampleRate(), 2, 0.2);
+    TDuty(dt, 0, 0, Dseq(inf, str - 0.5), 0) };
+0.to(n - 1).collect(strFunc).splay * 0.3
