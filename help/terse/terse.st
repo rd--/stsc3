@@ -140,6 +140,7 @@ Smalltalk keys size                                         "get set of all know
 'Strings'
 
 'string'                                                    "string literal"
+'  text  ' withBlanksTrimmed                                "remove leading and trailing space"
 
 'Symbols'
 
