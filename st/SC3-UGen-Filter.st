@@ -149,6 +149,9 @@
   moogLadder: ffreq value: res
     ^MoogLadder in: self ffreq: ffreq res: res
   !
+  mulAdd: mul value: add
+    ^MulAdd in: self mul: mul add: add
+  !
   normalizer: level value: dur
     ^Normalizer in: self level: level dur: dur
   !
@@ -394,6 +397,9 @@
   !
   moogLadder: ffreq value: res
     ^MoogLadder in: self ffreq: ffreq res: res
+  !
+  mulAdd: mul value: add
+    ^MulAdd in: self mul: mul add: add
   !
   normalizer: level value: dur
     ^Normalizer in: self level: level dur: dur

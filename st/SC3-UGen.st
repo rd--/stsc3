@@ -4750,6 +4750,48 @@ MouseY comment: 'Cursor tracking UGen.'!
   primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
+UGen subclass: #MulAdd
+  instanceVariableNames: 'in mul add'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MulAdd comment: 'Multiply add'!
+
+!MulAdd methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  mul ^mul!
+  mul: x mul := x!
+  add ^add!
+  add: x add := x!
+!
+
+!MulAdd methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MulAdd.
+    paramNames := #(#in #mul #add).
+    mceNames := #().
+    ugenRate := #(0 1 2).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. mul := 0.0. add := 0.0!
+!
+
+
+!MulAdd class methodsFor: 'instance creation'!
+  in: in mul: mul add: add
+    |u|
+    u := self new.
+    u in: in.
+    u mul: mul.
+    u add: add.
+    ^u!
+  primaryFactoryMethod ^#in:mul:add:!
+!
+
 UGen subclass: #Normalizer
   instanceVariableNames: 'in level dur'
   classVariableNames: ''

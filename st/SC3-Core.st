@@ -703,21 +703,3 @@ OverlapTexture comment: 'Texture Generator'!
   !
   primaryFactoryMethod ^#graphFunc:sustainTime:transitionTime:overlap:!
 !
-
-AbstractUGen subclass: #MulAdd
-  instanceVariableNames: ''
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'
-!
-
-MulAdd comment: 'Multiply add'!
-
-!MulAdd class methodsFor: 'instance creation'!
-  in: in mul: mul add: add
-    in mul: mul.
-    in add: add.
-    ^in
-  !
-  primaryFactoryMethod ^#in:mul:add:!
-!
