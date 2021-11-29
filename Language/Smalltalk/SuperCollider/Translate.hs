@@ -191,13 +191,15 @@ stcParseInitializerDefinition s =
 stcToSt :: String -> String
 stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 
--- > stcToExprToStc "(a - b).c"
-stcToExprToStc :: String -> [String]
-stcToExprToStc =
-  map Expr.exprPrintStc .
+stcToExpr :: String -> [Expr.Expr t]
+stcToExpr =
   Expr.initStatements .
   Expr.initializerDefinitionExpr .
   stcParseInitializerDefinition
+
+-- > stcToExprToStc "(a - b).c"
+stcToExprToStc :: String -> [String]
+stcToExprToStc = map Expr.exprPrintStc . stcToExpr
 
 {-
 
