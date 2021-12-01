@@ -2524,6 +2524,35 @@ GrainSin comment: 'Granular synthesis with sine tones'!
   primaryFactoryMethod ^#numChan:trigger:dur:freq:pan:envbufnum:maxGrains:!
 !
 
+UGen subclass: #GrayNoise
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+GrayNoise comment: 'Gray Noise.'!
+
+
+!GrayNoise methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #GrayNoise.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+
+!GrayNoise class methodsFor: 'instance creation'!
+  mul: mul ^(GrayNoise new) * mul!
+  mul: mul add: add ^(GrayNoise new) * mul + add!
+  primaryFactoryMethod ^#new!
+!
+
 UGen subclass: #GreyholeRaw
   instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
   classVariableNames: ''

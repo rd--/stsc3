@@ -42,7 +42,7 @@ ugen =
   ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayC","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"FFT","Fold","Formant","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
-  ,"Gendy1","GrainFM","GrainSin","GreyholeRaw","GVerb"
+  ,"Gendy1","GrainFM","GrainSin","GrayNoise","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IFFT","Impulse","In","InFeedback","InRange","IRand"
   ,"K2A","Klang","Klank"
