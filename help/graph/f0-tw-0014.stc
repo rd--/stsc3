@@ -8,4 +8,4 @@ var f = {
   var a4 = SinOscFB(a2, a3) * (i + 2 * 999);
   var a5 = SinOscFB(1 / 9, 1 / 9);
   SinOscFB(a4, a5) / 9};
-Pan2(1.to(9).mixFill(f), 0, 0.35)
+Pan2(1.to(9).collect(f).sum, 0, 0.35)

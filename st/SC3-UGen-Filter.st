@@ -518,6 +518,9 @@
   clearBuf
     ^ClearBuf buf: self
   !
+  convolution: kernel value: framesize
+    ^Convolution in: self kernel: kernel framesize: framesize
+  !
   crackle
     ^Crackle chaosParam: self
   !

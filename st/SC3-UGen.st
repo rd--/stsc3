@@ -1066,6 +1066,50 @@ ControlDur comment: 'Duration of one block'!
   primaryFactoryMethod ^#new!
 !
 
+UGen subclass: #Convolution
+  instanceVariableNames: 'in kernel framesize'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Convolution comment: 'Real-time convolver.'!
+
+!Convolution methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  kernel ^kernel!
+  kernel: x kernel := x!
+  framesize ^framesize!
+  framesize: x framesize := x!
+!
+
+!Convolution methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Convolution.
+    paramNames := #(#in #kernel #framesize).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. kernel := 0.0. framesize := 512.0!
+!
+
+
+!Convolution class methodsFor: 'instance creation'!
+  in: in kernel: kernel framesize: framesize
+    |u|
+    u := self new.
+    u in: in.
+    u kernel: kernel.
+    u framesize: framesize.
+    ^u!
+  in: in kernel: kernel framesize: framesize mul: mul ^(Convolution in: in kernel: kernel framesize: framesize) * mul!
+  in: in kernel: kernel framesize: framesize mul: mul add: add ^(Convolution in: in kernel: kernel framesize: framesize) * mul + add!
+  primaryFactoryMethod ^#in:kernel:framesize:!
+!
+
 UGen subclass: #Crackle
   instanceVariableNames: 'chaosParam'
   classVariableNames: ''
@@ -4813,6 +4857,7 @@ MulAdd comment: 'Multiply add'!
 !MulAdd class methodsFor: 'instance creation'!
   in: in mul: mul add: add
     |u|
+    (mul == 1) & (add == 0) ifTrue: [ ^in ].
     u := self new.
     u in: in.
     u mul: mul.

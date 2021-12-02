@@ -38,7 +38,7 @@ ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude","AnalogFoldOsc"
   ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
-  ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Crackle","CrossoverDistortion","CuspL"
+  ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","Convolution","Crackle","CrossoverDistortion","CuspL"
   ,"Dbufrd","Dbufwr","Decay","Decay2","DegreeToKey","DelayC","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
   ,"FFT","Fold","Formant","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
