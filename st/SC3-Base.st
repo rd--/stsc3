@@ -25,6 +25,13 @@
   !
 !
 
+!SequenceableCollection methodsFor: 'indexing'!
+  nth: index
+      "One indexing name. For .stc, since at: in Sc is zero-indexed."
+      ^self at: index
+  !
+!
+
 !Array class methodsFor: 'enumerating'!
   series: size value: start value: step
     "SC idiom to make an arithmetic series (ramp)"
