@@ -1,0 +1,7 @@
+// DynKlank
+var tr = Dust(25);
+var spec = KlankSpec(1.to(5) * 2700, { TRand(0.025, 0.04, tr) }.dup(5), [0.1]);
+var k = DynKlank(Trig(tr, SampleDur()), 1, 0, 1, spec);
+var n = k + (BrownNoise() * 0.075 * Trig(tr, TRand(0.01, 0.03, tr)));
+var f = LPF(HPF(n, TRand(6000, 7500, tr).lag(0.01)), TRand(4000, 5500, tr).lag(0.01));
+Pan2(f, TRand(-0.5, 0.5, tr).lag(0.01), 1)
