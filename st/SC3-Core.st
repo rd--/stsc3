@@ -703,3 +703,9 @@ OverlapTexture comment: 'Texture Generator'!
   !
   primaryFactoryMethod ^#graphFunc:sustainTime:transitionTime:overlap:!
 !
+
+!BlockClosure methodsFor: 'texture generation'!
+  overlapTexture: sustainTime value: transitionTime value: overlap
+    ^OverlapTexture graphFunc: self sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
+  !
+!
