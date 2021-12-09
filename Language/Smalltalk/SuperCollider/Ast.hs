@@ -33,10 +33,17 @@ type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
 -- | 3.4.2. Sequence of temporaries, single var statement.
 type ScTemporaries = [ScTemporary]
 
+-- | Comments are text strings.
+type ScComment = String
+
 -- | 3.4.3
 data ScInitializerDefinition =
-  ScInitializerDefinition (Maybe [ScTemporaries]) (Maybe ScStatements)
+  ScInitializerDefinition (Maybe ScComment) (Maybe [ScTemporaries]) (Maybe ScStatements)
   deriving (Eq,Show)
+
+-- | Set comment field
+scInitializerDefinitionSetComment :: ScComment -> ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionSetComment c (ScInitializerDefinition _ t s) = ScInitializerDefinition (Just c) t s
 
 -- | 3.4.4
 data ScBlockBody =

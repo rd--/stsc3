@@ -92,9 +92,9 @@ scExpressionRewriteTemporaries e =
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteTemporaries x)
 
 scInitializerDefinitionRewriteTemporaries :: ScInitializerDefinition -> ScInitializerDefinition
-scInitializerDefinitionRewriteTemporaries (ScInitializerDefinition tmpMaybe stmMaybe) =
+scInitializerDefinitionRewriteTemporaries (ScInitializerDefinition cmt tmpMaybe stmMaybe) =
   let (tmp,stm) = scTmpStmRwTmp tmpMaybe stmMaybe
-  in ScInitializerDefinition tmp stm
+  in ScInitializerDefinition cmt tmp stm
 
 scPrimaryRewriteTemporaries :: ScPrimary -> ScPrimary
 scPrimaryRewriteTemporaries p =

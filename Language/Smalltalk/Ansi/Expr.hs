@@ -45,7 +45,7 @@ data Expr t =
   | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr t] -- ^ Block or Method body.
   | Array [Expr t]
   | Begin [Expr t]
-  | Init St.Temporaries [Expr t]
+  | Init (Maybe St.Comment) St.Temporaries [Expr t]
   deriving (Functor, Foldable, Traversable, Eq, Show)
 
 expr_map :: (Expr t -> Expr t) -> Expr t -> Expr t
@@ -59,7 +59,7 @@ expr_map f e =
     Lambda p q r s -> f (Lambda p q r (map (expr_map f) s))
     Array p -> f (Array (map (expr_map f) p))
     Begin p -> f (Begin (map (expr_map f) p))
-    Init p q -> f (Init p (map (expr_map f) q))
+    Init c p q -> f (Init c p (map (expr_map f) q))
 
 -- | Is expression the reservered word "super"?
 exprIsSuper :: Expr t -> Bool
@@ -195,8 +195,9 @@ globalDefinitionExpr (St.GlobalDefinition k v) =
 
 -- | Ansi 3.4.3
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr t
-initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
+initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
   Init
+  cmt
   (maybe St.emptyTemporaries id tmp)
   (maybe [] (statementsExprList Return) stm)
 
@@ -206,7 +207,7 @@ initializerDefinitionExpr (St.InitializerDefinition tmp stm) =
 initStatements :: Expr t -> [Expr t]
 initStatements expr =
   case expr of
-    Init _ x -> x
+    Init _ _ x -> x
     _ -> error "initStatements: not init?"
 
 -- | e.m

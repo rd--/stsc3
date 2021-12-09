@@ -50,11 +50,12 @@ exprPrintStc expr =
         _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " a) (intercalate ", " t) x
     Array e -> printf "[%s]" (intercalate ", " (map exprPrintStc e))
     Begin e -> intercalate "; "  (map exprPrintStc e)
-    Init (St.Temporaries t) e ->
+    Init c (St.Temporaries t) e ->
       let x = intercalate "; "  (map exprPrintStc e)
-      in case (t,e) of
-        ([],_) ->  x
-        _ -> printf "var %s; %s" (intercalate ", " t) x
+          r = case (t,e) of
+                ([],_) ->  x
+                _ -> printf "var %s; %s" (intercalate ", " t) x
+      in maybe "" St.sc_comment_pp c ++ r
 
 -- * S-Expression
 
@@ -64,6 +65,9 @@ messagePrintLisp (Message s e) =
   case e of
     [] -> printf "(~ %s)" (St.selectorIdentifier s)
     _ -> printf "(~ %s %s)" (St.selectorIdentifier s) (unwords (map exprPrintLisp e))
+
+commentPrintLisp :: St.Comment -> String
+commentPrintLisp = unlines . map ("; " ++ ) . lines
 
 {- | S-expression printer.
      The message constructor is '~'.
@@ -95,9 +99,10 @@ exprPrintLisp expr =
       case e of
         [x] -> exprPrintLisp x
         _ -> printf "(>> %s)" (unwords (map exprPrintLisp e))
-    Init (St.Temporaries t) e ->
+    Init c (St.Temporaries t) e ->
       let x = unwords (map exprPrintLisp e)
-      in case (t,e) of
-        ([],[e0]) -> exprPrintLisp e0
-        ([],_) -> printf "(>> %s)" x
-        _ -> printf "(>> (| %s) %s)" (unwords t) x
+          r = case (t,e) of
+            ([],[e0]) -> exprPrintLisp e0
+            ([],_) -> printf "(>> %s)" x
+            _ -> printf "(>> (| %s) %s)" (unwords t) x
+      in maybe "" commentPrintLisp c ++ r

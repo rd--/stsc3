@@ -70,9 +70,16 @@ pattern_pp pat =
 temporaries_pp :: Temporaries -> String
 temporaries_pp (Temporaries t) = printf "| %s |\n" (strjn t)
 
+{- | If comment is non-empty, enclose in double quotes.
+
+> comment_pp "" == ""
+-}
+comment_pp :: Comment -> String
+comment_pp c = if null c then "" else '"' : c ++ ['"']
+
 initializerDefinition_pp :: InitializerDefinition -> String
-initializerDefinition_pp (InitializerDefinition t s) =
-  strjn [maybe "" temporaries_pp t,maybe "" statements_pp s]
+initializerDefinition_pp (InitializerDefinition c t s) =
+  strjn [maybe "" comment_pp c, maybe "" temporaries_pp t,maybe "" statements_pp s]
 
 blockBody_pp :: BlockBody -> String
 blockBody_pp (BlockBody _ a t s) =

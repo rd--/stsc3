@@ -4,6 +4,9 @@
 -}
 module Language.Smalltalk.SuperCollider.Translate where
 
+import Data.Bifunctor {- base -}
+import Data.List {- base -}
+
 import qualified Data.List.Split as Split {- split -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -164,8 +167,8 @@ scExpressionSt e =
     ScExprBasic e1 -> St.ExprBasic (scBasicExpressionSt e1)
 
 scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
-scInitializerDefinitionSt (ScInitializerDefinition tmp stm) =
-   St.InitializerDefinition (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
+   St.InitializerDefinition cmt (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
 -- * SuperCollider to Smalltalk translator
 
@@ -181,34 +184,50 @@ scToSt = Print.initializerDefinition_pp . scParseInitializerDefinition
 
 -- * C-Smalltalk translator
 
+{- | Separate out any leading // prefixed comment
+
+> stcLeadingComment "only\na\nprogram\n"
+> stcLeadingComment "// a\n// comment\nthen\na\nprogram\n"
+-}
+stcLeadingComment :: String -> (String, String)
+stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
+
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
-  let eSc = Parser.superColliderParser (Lexer.alexScanTokens s)
+  let (c, p) = stcLeadingComment s
+      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParser (Lexer.alexScanTokens p))
   in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite False eSc)
 
 -- | Translate C-Smalltalk program text to Smalltalk.
 stcToSt :: String -> String
 stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 
-stcToExpr :: String -> [Expr.Expr t]
+-- | Parse .stc and translate to Init Expr.
+stcToExpr :: String -> Expr.Expr t
 stcToExpr =
-  Expr.initStatements .
   Expr.initializerDefinitionExpr .
   stcParseInitializerDefinition
 
--- > stcToExprToStc "(a - b).c"
-stcToExprToStc :: String -> [String]
-stcToExprToStc = map Expr.exprPrintStc . stcToExpr
+-- | Statements list of .stc Init Expr.
+stcToExprStm :: String -> [Expr.Expr t]
+stcToExprStm = Expr.initStatements . stcToExpr
+
+{- | Parse and print .stc
+
+> stcToExprToStc "(a - b).c" == "(a - b).c"
+-}
+stcToExprToStc :: String -> String
+stcToExprToStc = Expr.exprPrintStc . stcToExpr
 
 {-
 
 rw = stcToSt
 rw "(p - q).m" == "(p - q) m .\n"
 rw "p(q.r(i).s).t(j) + k"
-rw "SinOsc(220,0.5)" == "(SinOsc apply: {220 . 0.5}) .\n"
-rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j . k}) .\n"
-rw "x(i, y(j, k))" == "(x apply: {i . (y apply: {j . k})}) .\n"
+rw "SinOsc(220,0.5)" == "(SinOsc apply: {220. 0.5}) .\n"
+rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j. k}) .\n"
+rw "x(i, y(j, k))" == "(x apply: {i. (y apply: {j. k})}) .\n"
 rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b) .\n"
 rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {}) .\n"
 rw "p.q:r(i,j)" == "p q: i r: j .\n"
@@ -218,7 +237,8 @@ rw "c.put(i, j)" == "c put: i value: j .\n"
 rw "p.q:r(i)" -- error ; arity mismatch
 rw "p.q:(i)" -- error ; message names may not have trailing colons
 rw "p.q(x: i)" -- error ; keywords are not allowed
-rw "p(q.r(i).s).t + k" -- "(p apply: {(q r: i) s}) t + k .\n"
+rw "p(q.r(i).s).t + k" == "(p apply: {(q r: i) s}) t + k .\n"
+rw "// commentary\nprogram" == "\"commentary\n\" program .\n"
 
 rw = scToSt
 scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"

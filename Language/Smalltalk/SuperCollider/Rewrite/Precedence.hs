@@ -109,8 +109,9 @@ scExpressionRewritePrecedence e =
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewritePrecedence True x)
 
 scInitializerDefinitionRewritePrecedence :: ScInitializerDefinition -> ScInitializerDefinition
-scInitializerDefinitionRewritePrecedence (ScInitializerDefinition tmp stm) =
+scInitializerDefinitionRewritePrecedence (ScInitializerDefinition cmt tmp stm) =
   ScInitializerDefinition
+  cmt
   (fmap (map scTemporariesRewritePrecedence) tmp)
   (fmap scStatementsRewritePrecedence stm)
 

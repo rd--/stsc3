@@ -338,7 +338,7 @@ evalExpr expr =
       return (Object ("Block" ++ show (length arg + 1)) (DataBlock pc ctx expr))
     Expr.Array exprList -> mapM evalExpr exprList >>= arrayFromList
     Expr.Begin exprList -> evalExprSequence exprList
-    Expr.Init (St.Temporaries tmp) exprList -> vmContextAssignAllToNil tmp >> evalExprSequence exprList
+    Expr.Init _ (St.Temporaries tmp) exprList -> vmContextAssignAllToNil tmp >> evalExprSequence exprList
 
 -- | Parse string as a Smalltalk program, convert to Expr form, run evalExpr and return an Object.
 evalString :: String -> VM Object

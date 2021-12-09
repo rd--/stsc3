@@ -126,9 +126,12 @@ sc_patternArgs_pp pat =
 sc_temporaries_pp :: Temporaries -> String
 sc_temporaries_pp (Temporaries t) = printf "var %s;" (strjnComma t)
 
+sc_comment_pp :: Comment -> String
+sc_comment_pp = unlines . map ("// " ++) . lines
+
 sc_initializerDefinition_pp :: InitializerDefinition -> String
-sc_initializerDefinition_pp (InitializerDefinition t s) =
-  strjnWith ';' [maybe "" sc_temporaries_pp t,maybe "" sc_statements_pp s]
+sc_initializerDefinition_pp (InitializerDefinition c t s) =
+  strjnWith ';' [maybe "" sc_comment_pp c, maybe "" sc_temporaries_pp t,maybe "" sc_statements_pp s]
 
 pp_inChars :: (Char,Char) -> String -> String
 pp_inChars (x,y) s = x : s ++ [y]

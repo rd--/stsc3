@@ -47,7 +47,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 
 initializerdefinition :: { ScInitializerDefinition }
         : maybe_temporaries_seq
-          maybe_statements                     { ScInitializerDefinition $1 $2 }
+          maybe_statements                     { ScInitializerDefinition Nothing $1 $2 }
 
 expression :: { ScExpression }
         : identifier '=' expression            { ScExprAssignment $1 $3 }

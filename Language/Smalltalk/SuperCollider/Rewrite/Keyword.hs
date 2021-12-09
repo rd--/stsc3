@@ -62,8 +62,9 @@ scDotMessageRewriteKeyword (ScDotMessage m a) =
   ScDotMessage m (scKeywordArgumentsRewriteKeyword a)
 
 scInitializerDefinitionRewriteKeyword :: ScInitializerDefinition -> ScInitializerDefinition
-scInitializerDefinitionRewriteKeyword (ScInitializerDefinition tmp stm) =
+scInitializerDefinitionRewriteKeyword (ScInitializerDefinition cmt tmp stm) =
   ScInitializerDefinition
+  cmt
   (fmap (map scTemporariesRewriteKeyword) tmp)
   (fmap scStatementsRewriteKeyword stm)
 

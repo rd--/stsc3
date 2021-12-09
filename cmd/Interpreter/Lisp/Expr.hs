@@ -34,7 +34,7 @@ evalExpr expr =
     Expr.Lambda _ arg tmp stm -> get >>= \e -> return (Common.BlockObject e (arg,tmp,stm))
     Expr.Array x -> Common.arrayToObject =<< (mapM evalExpr x)
     Expr.Begin x -> fmap last (mapM evalExpr x)
-    Expr.Init tmp stm -> evalTemporariesStatements tmp stm
+    Expr.Init _ tmp stm -> evalTemporariesStatements tmp stm
 
 evalAssignment :: St.Identifier -> Expr -> VMExpr ObjectExpr
 evalAssignment lhs rhs = do

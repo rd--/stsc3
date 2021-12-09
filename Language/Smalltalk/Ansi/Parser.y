@@ -77,7 +77,7 @@ smalltalkprogram :: { St.SmalltalkProgram }
         : initializerdefinition                { St.SmalltalkProgram [St.ProgramInitializer $1] }
 
 initializerdefinition :: { St.InitializerDefinition }
-        : maybe_temporaries maybe_statements   { St.InitializerDefinition $1 $2 }
+        : maybe_temporaries maybe_statements   { St.InitializerDefinition Nothing $1 $2 }
 
 expression :: { St.Expression }
         : assignment                           { St.ExprAssignment $1 }

@@ -413,12 +413,15 @@ temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 
 -- * 3.4.3
 
+-- | Comments are text strings
+type Comment = String
+
 {- | 3.4.3
 
 The value of an initializer with no <statements> is the binding of the reserved identifier 'nil'.
 -}
 data InitializerDefinition =
-  InitializerDefinition (Maybe Temporaries) (Maybe Statements)
+  InitializerDefinition (Maybe Comment) (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
@@ -436,15 +439,18 @@ initializerDefinition :: P InitializerDefinition
 initializerDefinition = do
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (InitializerDefinition t s)
+  return (InitializerDefinition Nothing t s)
 
 nonEmptyInitializerDefinition :: P InitializerDefinition
 nonEmptyInitializerDefinition = do
-  InitializerDefinition t s <- initializerDefinition
+  InitializerDefinition c t s <- initializerDefinition
   case (t,s) of
     (Nothing,Nothing) -> P.unexpected "nonEmptyInitializerDefinition: empty"
-    _ -> return (InitializerDefinition t s)
+    _ -> return (InitializerDefinition c t s)
 
+-- | Set comment field.
+initializerDefinitionSetComment :: Comment -> InitializerDefinition -> InitializerDefinition
+initializerDefinitionSetComment c (InitializerDefinition _ t s) = InitializerDefinition (Just c) t s
 
 -- * 3.4.4
 

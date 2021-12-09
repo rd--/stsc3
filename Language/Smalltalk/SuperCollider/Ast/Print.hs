@@ -112,6 +112,13 @@ scExpressionPrint e =
     ScExprAssignment i e1 -> scJoin [i," = ",scExpressionPrint e1]
     ScExprBasic e1 -> scBasicExpressionPrint e1
 
+{- | Prefix each line of comment with //.
+
+> scCommentPrint "" == ""
+-}
+scCommentPrint :: ScComment -> String
+scCommentPrint = unlines . map ("// " ++) . lines
+
 scInitializerDefinitionPrint :: ScInitializerDefinition -> String
-scInitializerDefinitionPrint (ScInitializerDefinition tmp stm) =
-  unlines (maybe [] (map scTemporariesPrint) tmp ++ [maybe "" scStatementsPrint stm])
+scInitializerDefinitionPrint (ScInitializerDefinition cmt tmp stm) =
+  maybe "" scCommentPrint cmt ++ unlines (maybe [] (map scTemporariesPrint) tmp ++ [maybe "" scStatementsPrint stm])

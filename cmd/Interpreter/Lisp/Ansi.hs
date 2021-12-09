@@ -170,7 +170,7 @@ evalProgramElement :: St.ProgramElement -> VMAnsi ObjectAnsi
 evalProgramElement el =
   case el of
     St.ProgramGlobal _ -> throwError "ProgramGlobal?"
-    St.ProgramInitializer (St.InitializerDefinition tm st) -> evalTemporariesStatements tm st
+    St.ProgramInitializer (St.InitializerDefinition _ tm st) -> evalTemporariesStatements tm st
 
 evalString :: String -> VMAnsi ObjectAnsi
 evalString txt = do
