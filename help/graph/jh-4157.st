@@ -25,5 +25,5 @@ b := TRand lo: 2 hi: 2.25 trig: t.
 n := TRand lo: 0.002 hi: 0.02 trig: t.
 f0 := TRand lo: 90 hi: 180 trig: t.
 fMul := b ** (k iota * n).
-e := (EnvPerc attackTime: 1 releaseTime: 10 level: 0.1 curves: #(-4 -4)) envGen: t doneAction: 0.
+e := (EnvPerc attackTime: 1 releaseTime: 10 level: 0.1 curves: #(-4 -4)) envGen: t.
 Splay input: (sinosc value: fMul * f0) level: e

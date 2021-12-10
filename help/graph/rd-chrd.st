@@ -8,7 +8,7 @@ gen := [ :tr |
     d := #(5 4 5 7 4 5) * ds.
     f := (TXLine start: m end: (TRand lo: 0.05 hi: 0.5 trig: tr) + m dur: d trig: tr) midicps.
     z := EnvSine dur: d max level: (TRand lo: 0.005 hi: 0.01 trig: tr).
-    e := z envGen: tr doneAction: 0.
+    e := z envGen: tr.
     p := TXLine start: (TRand lo: -1 hi: 1 trig: tr) end: (TRand lo: -1 hi: 1 trig: tr) dur: d trig: tr.
     o := SinOsc freq: f kr phase: 0.
     (Pan2 in: o pos: p level: e) mix ].
