@@ -12,5 +12,5 @@ var voiceFunc = {
     arg e;
     var s = FSinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); // just minor seventh chord
     var a = LFNoise2({ Rand(30, 90) }.dup(4) * (0.75 + e.rx)).max(0) * e.z;
-    Mix(Pan2(s, { Rand(-1, 1) }.dup(4) + (e.o * 2 - 1), a * LagUD(e.w, 0, e.ry * 2))) };
-CombN(Mix(Voicer(16, voiceFunc) * 0.5), 0.1, 0.1, 1)
+    Pan2(s, { Rand(-1, 1) }.dup(4) + (e.o * 2 - 1), a * LagUD(e.w, 0, e.ry * 2)).mix };
+CombN(Voicer(16, voiceFunc).mix * 0.5, 0.1, 0.1, 1)
