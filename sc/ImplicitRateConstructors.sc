@@ -7,24 +7,33 @@
 + BrownNoise { *new { ^BrownNoise.multiNew('audio') } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.multiNew('audio', numChannels, bufnum, phase, loop, interpolation) } }
 + ControlDur { *new { ^ControlDur.multiNew('scalar') } }
++ ControlRate { *new { ^ControlRate.multiNew('scalar') } }
++ Convolution { *new { arg in = 0.0, kernel = 0.0, framesize = 512.0; ^Convolution.multiNew('audio', in, kernel, framesize) } }
 + Crackle { *new { arg chaosParam = 1.5; ^Crackle.multiNew('audio', chaosParam) } }
 + CuspL { *new { arg freq = 22050.0, a = 1.0, b = 1.9, xi = 0.0; ^CuspL.multiNew('audio', freq, a, b, xi) } }
++ Diwhite { *new { arg lo = 0.0, hi = 1.0, length = 1.0e8; ^Diwhite.multiNew('demand', lo, hi, length) } }
++ Drand { *new { arg list = 0.0, repeats = 1.0; ^Drand.multiNew('demand', list, repeats) } }
++ Dseq { *new { arg list = 0.0, repeats = 1.0; ^Dseq.multiNew('demand', list, repeats) } }
++ Dshuf { *new { arg list = 0.0, repeats = 1.0; ^Dshuf.multiNew('demand', list, repeats) } }
 + Dust { *new { arg density = 0.0; ^Dust.multiNew('audio', density) } }
 + Dust2 { *new { arg density = 0.0; ^Dust2.multiNew('audio', density) } }
 + Duty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0; ^Duty.multiNew('audio', dur, reset, level, doneAction) } }
 + EnvGen { *new { arg envelope = 0.0, gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0; ^EnvGen.multiNew('audio', envelope, gate, levelScale, levelBias, timeScale, doneAction) } }
++ FBSineC { *new { arg freq = 22050.0, im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1; ^FBSineC.multiNew('audio', freq, im, fb, a, c, xi, yi) } }
 + Formant { *new { arg fundfreq = 440.0, formfreq = 1760.0, bwfreq = 880.0; ^Formant.multiNew('audio', fundfreq, formfreq, bwfreq) } }
 + FreqShift { *new { arg in = 0.0, freq = 0.0, phase = 0.0; ^FreqShift.multiNew('audio', in, freq, phase) } }
 + FSinOsc { *new { arg freq = 440.0, iphase = 0.0; ^FSinOsc.multiNew('audio', freq, iphase) } }
 + Gendy1 { *new { arg ampdist = 1.0, durdist = 1.0, adparam = 1.0, ddparam = 1.0, minfreq = 440.0, maxfreq = 660.0, ampscale = 0.5, durscale = 0.5, initCPs = 12.0, knum = 0.0; ^Gendy1.multiNew('audio', ampdist, durdist, adparam, ddparam, minfreq, maxfreq, ampscale, durscale, initCPs, knum) } }
 + GrainFM { *new { arg numChannels = 1.0, trigger = 0.0, dur = 1.0, carfreq = 440.0, modfreq = 200.0, index = 1.0, pan = 0.0, envbufnum = -1.0, maxGrains = 512.0; ^GrainFM.multiNew('audio', numChannels, trigger, dur, carfreq, modfreq, index, pan, envbufnum, maxGrains) } }
 + GrainSin { *new { arg numChannels = 1.0, trigger = 0.0, dur = 1.0, freq = 440.0, pan = 0.0, envbufnum = -1.0, maxGrains = 512.0; ^GrainSin.multiNew('audio', numChannels, trigger, dur, freq, pan, envbufnum, maxGrains) } }
++ GrayNoise { *new { ^GrayNoise.multiNew('audio') } }
 + Impulse { *new { arg freq = 440.0, phase = 0.0; ^Impulse.multiNew('audio', freq, phase) } }
 + In { *new { arg numChannels = 1.0, bus = 0.0; ^In.multiNew('audio', numChannels, bus) } }
 + InFeedback { *new { arg numChannels = 1.0, bus = 0.0; ^InFeedback.multiNew('audio', numChannels, bus) } }
 + K2A { *new { arg in = 0.0; ^K2A.multiNew('audio', in) } }
 + Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.multiNew('audio', specificationsArrayRef, freqscale, freqoffset) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.multiNew('audio', freq, iphase) } }
++ LFDNoise1 { *new { arg freq = 500.0; ^LFDNoise1.multiNew('audio', freq) } }
 + LFDNoise3 { *new { arg freq = 500.0; ^LFDNoise3.multiNew('audio', freq) } }
 + LFGauss { *new { arg duration = 1.0, width = 0.1, iphase = 0.0, loop = 1.0, doneAction = 0.0; ^LFGauss.multiNew('audio', duration, width, iphase, loop, doneAction) } }
 + LFNoise0 { *new { arg freq = 500.0; ^LFNoise0.multiNew('audio', freq) } }

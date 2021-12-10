@@ -74,5 +74,7 @@
 + TRand { *new { arg lo = 0.0, hi = 1.0, trig = 0.0;^TRand.multiNew(trig.rate, lo, hi, trig) } }
 + Trig { *new { arg in = 0.0, dur = 0.1;^Trig.multiNew(in.rate, in, dur) } }
 + Trig1 { *new { arg in = 0.0, dur = 0.1;^Trig1.multiNew(in.rate, in, dur) } }
++ TwoPole { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoPole.multiNew(in.rate, in, freq, radius) } }
++ TwoZero { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoZero.multiNew(in.rate, in, freq, radius) } }
 + Wrap { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Wrap.multiNew(in.rate, in, lo, hi) } }
 + XFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^XFade2.multiNew(inA.rate, inA, inB, pan, level) } }

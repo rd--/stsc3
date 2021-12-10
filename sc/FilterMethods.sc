@@ -171,6 +171,10 @@
     arg ffreq = 440.0, res = 0.0;
     ^MoogLadder.multiNew(this.rate, this, ffreq, res)
   }
+  mulAdd {
+    arg mul = 0.0, add = 0.0;
+    ^MulAdd.multiNew(this.rate, this, mul, add)
+  }
   normalizer {
     arg level = 1.0, dur = 1.0e-2;
     ^Normalizer.multiNew(this.rate, this, level, dur)
@@ -271,6 +275,14 @@
   trig1 {
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate, this, dur)
+  }
+  twoPole {
+    arg freq = 440.0, radius = 0.8;
+    ^TwoPole.multiNew(this.rate, this, freq, radius)
+  }
+  twoZero {
+    arg freq = 440.0, radius = 0.8;
+    ^TwoZero.multiNew(this.rate, this, freq, radius)
   }
   xFade2 {
     arg inB = 0.0, pan = 0.0, level = 1.0;
@@ -451,6 +463,10 @@
     arg ffreq = 440.0, res = 0.0;
     ^MoogLadder.multiNew(this.rate, this, ffreq, res)
   }
+  mulAdd {
+    arg mul = 0.0, add = 0.0;
+    ^MulAdd.multiNew(this.rate, this, mul, add)
+  }
   normalizer {
     arg level = 1.0, dur = 1.0e-2;
     ^Normalizer.multiNew(this.rate, this, level, dur)
@@ -551,6 +567,14 @@
   trig1 {
     arg dur = 0.1;
     ^Trig1.multiNew(this.rate, this, dur)
+  }
+  twoPole {
+    arg freq = 440.0, radius = 0.8;
+    ^TwoPole.multiNew(this.rate, this, freq, radius)
+  }
+  twoZero {
+    arg freq = 440.0, radius = 0.8;
+    ^TwoZero.multiNew(this.rate, this, freq, radius)
   }
   xFade2 {
     arg inB = 0.0, pan = 0.0, level = 1.0;

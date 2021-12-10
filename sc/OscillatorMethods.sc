@@ -5,6 +5,7 @@
 + UGen { blip { arg numharm = 200.0;  ^Blip.multiNew('audio', this, numharm) } }
 + UGen { bufRd { arg phase = 0.0, loop = 1.0, interpolation = 2.0;  ^BufRd.multiNew('audio', this, phase, loop, interpolation) } }
 + UGen { clearBuf {  ^ClearBuf.multiNew('scalar', this) } }
++ UGen { convolution { arg kernel = 0.0, framesize = 512.0;  ^Convolution.multiNew('audio', this, kernel, framesize) } }
 + UGen { crackle {  ^Crackle.multiNew('audio', this) } }
 + UGen { cuspL { arg a = 1.0, b = 1.9, xi = 0.0;  ^CuspL.multiNew('audio', this, a, b, xi) } }
 + UGen { dbufrd { arg phase = 0.0, loop = 1.0;  ^Dbufrd.multiNew('demand', this, phase, loop) } }
@@ -19,6 +20,7 @@
 + UGen { duty { arg reset = 0.0, level = 1.0, doneAction = 0.0;  ^Duty.multiNew('audio', this, reset, level, doneAction) } }
 + UGen { envGen { arg gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0;  ^EnvGen.multiNew('audio', this, gate, levelScale, levelBias, timeScale, doneAction) } }
 + UGen { expRand { arg hi = 1.0;  ^ExpRand.multiNew('scalar', this, hi) } }
++ UGen { fbSineC { arg im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1;  ^FBSineC.multiNew('audio', this, im, fb, a, c, xi, yi) } }
 + UGen { fft { arg in = 0.0, hop = 0.5, wintype = 0.0, active = 1.0, winsize = 0.0;  ^FFT.multiNew('control', this, in, hop, wintype, active, winsize) } }
 + UGen { formant { arg formfreq = 1760.0, bwfreq = 880.0;  ^Formant.multiNew('audio', this, formfreq, bwfreq) } }
 + UGen { freqShift { arg freq = 0.0, phase = 0.0;  ^FreqShift.multiNew('audio', this, freq, phase) } }
@@ -33,6 +35,7 @@
 + UGen { k2a {  ^K2A.multiNew('audio', this) } }
 + UGen { klang { arg freqscale = 1.0, freqoffset = 0.0;  ^Klang.multiNew('audio', this, freqscale, freqoffset) } }
 + UGen { lfCub { arg iphase = 0.0;  ^LFCub.multiNew('audio', this, iphase) } }
++ UGen { lfdNoise1 {  ^LFDNoise1.multiNew('audio', this) } }
 + UGen { lfdNoise3 {  ^LFDNoise3.multiNew('audio', this) } }
 + UGen { lfGauss { arg width = 0.1, iphase = 0.0, loop = 1.0, doneAction = 0.0;  ^LFGauss.multiNew('audio', this, width, iphase, loop, doneAction) } }
 + UGen { lfNoise0 {  ^LFNoise0.multiNew('audio', this) } }
@@ -79,6 +82,7 @@
 + Array { blip { arg numharm = 200.0;  ^Blip.multiNew('audio', this, numharm) } }
 + Array { bufRd { arg phase = 0.0, loop = 1.0, interpolation = 2.0;  ^BufRd.multiNew('audio', this, phase, loop, interpolation) } }
 + Array { clearBuf {  ^ClearBuf.multiNew('scalar', this) } }
++ Array { convolution { arg kernel = 0.0, framesize = 512.0;  ^Convolution.multiNew('audio', this, kernel, framesize) } }
 + Array { crackle {  ^Crackle.multiNew('audio', this) } }
 + Array { cuspL { arg a = 1.0, b = 1.9, xi = 0.0;  ^CuspL.multiNew('audio', this, a, b, xi) } }
 + Array { dbufrd { arg phase = 0.0, loop = 1.0;  ^Dbufrd.multiNew('demand', this, phase, loop) } }
@@ -93,6 +97,7 @@
 + Array { duty { arg reset = 0.0, level = 1.0, doneAction = 0.0;  ^Duty.multiNew('audio', this, reset, level, doneAction) } }
 + Array { envGen { arg gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0;  ^EnvGen.multiNew('audio', this, gate, levelScale, levelBias, timeScale, doneAction) } }
 + Array { expRand { arg hi = 1.0;  ^ExpRand.multiNew('scalar', this, hi) } }
++ Array { fbSineC { arg im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1;  ^FBSineC.multiNew('audio', this, im, fb, a, c, xi, yi) } }
 + Array { fft { arg in = 0.0, hop = 0.5, wintype = 0.0, active = 1.0, winsize = 0.0;  ^FFT.multiNew('control', this, in, hop, wintype, active, winsize) } }
 + Array { formant { arg formfreq = 1760.0, bwfreq = 880.0;  ^Formant.multiNew('audio', this, formfreq, bwfreq) } }
 + Array { freqShift { arg freq = 0.0, phase = 0.0;  ^FreqShift.multiNew('audio', this, freq, phase) } }
@@ -107,6 +112,7 @@
 + Array { k2a {  ^K2A.multiNew('audio', this) } }
 + Array { klang { arg freqscale = 1.0, freqoffset = 0.0;  ^Klang.multiNew('audio', this, freqscale, freqoffset) } }
 + Array { lfCub { arg iphase = 0.0;  ^LFCub.multiNew('audio', this, iphase) } }
++ Array { lfdNoise1 {  ^LFDNoise1.multiNew('audio', this) } }
 + Array { lfdNoise3 {  ^LFDNoise3.multiNew('audio', this) } }
 + Array { lfGauss { arg width = 0.1, iphase = 0.0, loop = 1.0, doneAction = 0.0;  ^LFGauss.multiNew('audio', this, width, iphase, loop, doneAction) } }
 + Array { lfNoise0 {  ^LFNoise0.multiNew('audio', this) } }
@@ -153,6 +159,7 @@
 + SimpleNumber { blip { arg numharm = 200.0;  ^Blip.multiNew('audio', this, numharm) } }
 + SimpleNumber { bufRd { arg phase = 0.0, loop = 1.0, interpolation = 2.0;  ^BufRd.multiNew('audio', this, phase, loop, interpolation) } }
 + SimpleNumber { clearBuf {  ^ClearBuf.multiNew('scalar', this) } }
++ SimpleNumber { convolution { arg kernel = 0.0, framesize = 512.0;  ^Convolution.multiNew('audio', this, kernel, framesize) } }
 + SimpleNumber { crackle {  ^Crackle.multiNew('audio', this) } }
 + SimpleNumber { cuspL { arg a = 1.0, b = 1.9, xi = 0.0;  ^CuspL.multiNew('audio', this, a, b, xi) } }
 + SimpleNumber { dbufrd { arg phase = 0.0, loop = 1.0;  ^Dbufrd.multiNew('demand', this, phase, loop) } }
@@ -167,6 +174,7 @@
 + SimpleNumber { duty { arg reset = 0.0, level = 1.0, doneAction = 0.0;  ^Duty.multiNew('audio', this, reset, level, doneAction) } }
 + SimpleNumber { envGen { arg gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0;  ^EnvGen.multiNew('audio', this, gate, levelScale, levelBias, timeScale, doneAction) } }
 + SimpleNumber { expRand { arg hi = 1.0;  ^ExpRand.multiNew('scalar', this, hi) } }
++ SimpleNumber { fbSineC { arg im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1;  ^FBSineC.multiNew('audio', this, im, fb, a, c, xi, yi) } }
 + SimpleNumber { fft { arg in = 0.0, hop = 0.5, wintype = 0.0, active = 1.0, winsize = 0.0;  ^FFT.multiNew('control', this, in, hop, wintype, active, winsize) } }
 + SimpleNumber { formant { arg formfreq = 1760.0, bwfreq = 880.0;  ^Formant.multiNew('audio', this, formfreq, bwfreq) } }
 + SimpleNumber { freqShift { arg freq = 0.0, phase = 0.0;  ^FreqShift.multiNew('audio', this, freq, phase) } }
@@ -181,6 +189,7 @@
 + SimpleNumber { k2a {  ^K2A.multiNew('audio', this) } }
 + SimpleNumber { klang { arg freqscale = 1.0, freqoffset = 0.0;  ^Klang.multiNew('audio', this, freqscale, freqoffset) } }
 + SimpleNumber { lfCub { arg iphase = 0.0;  ^LFCub.multiNew('audio', this, iphase) } }
++ SimpleNumber { lfdNoise1 {  ^LFDNoise1.multiNew('audio', this) } }
 + SimpleNumber { lfdNoise3 {  ^LFDNoise3.multiNew('audio', this) } }
 + SimpleNumber { lfGauss { arg width = 0.1, iphase = 0.0, loop = 1.0, doneAction = 0.0;  ^LFGauss.multiNew('audio', this, width, iphase, loop, doneAction) } }
 + SimpleNumber { lfNoise0 {  ^LFNoise0.multiNew('audio', this) } }
@@ -203,6 +212,7 @@
 + SimpleNumber { pitch { arg initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0;  ^Pitch.multiNew('control', this, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + SimpleNumber { pulse { arg width = 0.5;  ^Pulse.multiNew('audio', this, width) } }
 + SimpleNumber { pv_RandComb { arg wipe = 0.0, trig = 0.0;  ^PV_RandComb.multiNew('control', this, wipe, trig) } }
++ SimpleNumber { rand { arg hi = 1.0;  ^Rand.multiNew('scalar', this, hi) } }
 + SimpleNumber { recordBuf { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0;  ^RecordBuf.multiNew('audio', this, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + SimpleNumber { rBezier { arg dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0;  ^RBezier.multiNew('audio', this, dx, freq, phase, param) } }
 + SimpleNumber { rdx7Env { arg data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0;  ^RDX7Env.multiNew('audio', this, data, r1, r2, r3, r4, l1, l2, l3, l4, ol) } }
