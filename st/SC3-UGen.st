@@ -1066,6 +1066,35 @@ ControlDur comment: 'Duration of one block'!
   primaryFactoryMethod ^#new!
 !
 
+UGen subclass: #ControlRate
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ControlRate comment: 'Server control rate.'!
+
+
+!ControlRate methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ControlRate.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+
+!ControlRate class methodsFor: 'instance creation'!
+  mul: mul ^(ControlRate new) * mul!
+  mul: mul add: add ^(ControlRate new) * mul + add!
+  primaryFactoryMethod ^#new!
+!
+
 UGen subclass: #Convolution
   instanceVariableNames: 'in kernel framesize'
   classVariableNames: ''
@@ -2064,6 +2093,62 @@ ExpRand comment: 'Exponential single random number generator.'!
   lo: lo hi: hi mul: mul ^(ExpRand lo: lo hi: hi) * mul!
   lo: lo hi: hi mul: mul add: add ^(ExpRand lo: lo hi: hi) * mul + add!
   primaryFactoryMethod ^#lo:hi:!
+!
+
+UGen subclass: #FBSineC
+  instanceVariableNames: 'freq im fb a c xi yi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FBSineC comment: 'Feedback sine with chaotic phase indexing'!
+
+!FBSineC methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  im ^im!
+  im: x im := x!
+  fb ^fb!
+  fb: x fb := x!
+  a ^a!
+  a: x a := x!
+  c ^c!
+  c: x c := x!
+  xi ^xi!
+  xi: x xi := x!
+  yi ^yi!
+  yi: x yi := x!
+!
+
+!FBSineC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FBSineC.
+    paramNames := #(#freq #im #fb #a #c #xi #yi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. im := 1.0. fb := 0.1. a := 1.1. c := 0.5. xi := 0.1. yi := 0.1!
+!
+
+
+!FBSineC class methodsFor: 'instance creation'!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi
+    |u|
+    u := self new.
+    u freq: freq.
+    u im: im.
+    u fb: fb.
+    u a: a.
+    u c: c.
+    u xi: xi.
+    u yi: yi.
+    ^u!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul ^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add ^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add!
+  primaryFactoryMethod ^#freq:im:fb:a:c:xi:yi:!
 !
 
 UGen subclass: #FFT
@@ -4857,7 +4942,6 @@ MulAdd comment: 'Multiply add'!
 !MulAdd class methodsFor: 'instance creation'!
   in: in mul: mul add: add
     |u|
-    (mul == 1) & (add == 0) ifTrue: [ ^in ].
     u := self new.
     u in: in.
     u mul: mul.

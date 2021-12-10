@@ -563,6 +563,9 @@
   expRand: hi
     ^ExpRand lo: self hi: hi
   !
+  fbSineC: im value: fb value: a value: c value: xi value: yi
+    ^FBSineC freq: self im: im fb: fb a: a c: c xi: xi yi: yi
+  !
   fft: in value: hop value: wintype value: active value: winsize
     ^FFT buffer: self in: in hop: hop wintype: wintype active: active winsize: winsize
   !
