@@ -6,7 +6,7 @@ SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 
 "Envelope"
 
-Env new curveNameDictionary "curve name dictionary"
+EnvSpec new curveNameDictionary "curve name dictionary"
 
 "UGen"
 

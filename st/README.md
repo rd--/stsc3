@@ -14,7 +14,7 @@ General (neither music nor SC3 specific) classes and methods.
 UGen and math operator classes, related core classes (mce, mrg, &etc).
 
 [SC3-Env.st](?t=stsc3&e=st/SC3-Env.st):
-Envelope classes Env and EnvBuilder and related classes (EnvPerc, EnvLinen, EnvASR &etc.)
+Envelope classes EnvSpec and EnvBuilder and related classes (EnvPerc, EnvLinen, EnvASR &etc.)
 
 [SC3-Math.st](?t=stsc3&e=st/SC3-Math.st) &
 [SC3-Random.st](?t=stsc3&e=st/SC3-Random.st):

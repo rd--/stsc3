@@ -1,13 +1,13 @@
-Object subclass: #Env
+Object subclass: #EnvSpec
   instanceVariableNames: 'levels times curves releaseNode loopNode offset'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
 !
 
-Env comment: 'Specification for a segmented envelope'!
+EnvSpec comment: 'Specification for a segmented envelope'!
 
-!Env methodsFor: 'accessing'!
+!EnvSpec methodsFor: 'accessing'!
   curves ^curves !
   curves: x curves := x. !
   levels ^levels !
@@ -22,7 +22,7 @@ Env comment: 'Specification for a segmented envelope'!
   times: x times := x. !
 !
 
-!Env methodsFor: 'naming'!
+!EnvSpec methodsFor: 'naming'!
   curveNameDictionary
     ^Dictionary newFrom: {
       #step -> 0.
@@ -36,7 +36,7 @@ Env comment: 'Specification for a segmented envelope'!
   !
 !
 
-!Env class methodsFor: 'instance creation'!
+!EnvSpec class methodsFor: 'instance creation'!
   levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
     | u |
     u := self new.
@@ -49,10 +49,10 @@ Env comment: 'Specification for a segmented envelope'!
     ^u
   !
   levels: p1 times: p2 curves: p3
-    ^Env levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
+    ^EnvSpec levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
   !
   levels: p1 times: p2
-    ^Env levels: p1 times: p2 curves: #(1)
+    ^EnvSpec levels: p1 times: p2 curves: #(1)
   !
   primaryFactoryMethod ^#levels:times:curves:releaseNode:loopNode:offset:!
   apply: arg
@@ -60,7 +60,7 @@ Env comment: 'Specification for a segmented envelope'!
   !
 !
 
-!Env methodsFor: 'envelope coordinates'!
+!EnvSpec methodsFor: 'envelope coordinates'!
   coord
     | n r d |
     n := levels size - 1.
@@ -81,7 +81,7 @@ Env comment: 'Specification for a segmented envelope'!
   !
 !
 
-!Env methodsFor: 'envelope generator'!
+!EnvSpec methodsFor: 'envelope generator'!
   gen: g doneAction: d
     ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coord
   !
@@ -94,7 +94,7 @@ Env comment: 'Specification for a segmented envelope'!
 !
 
 Object subclass: #EnvBuilder
-  instanceVariableNames: ''
+  instanceVariableNames: 'gate doneAction'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -102,14 +102,20 @@ Object subclass: #EnvBuilder
 
 EnvBuilder comment: 'Envelope types'!
 
+!EnvBuilder class methodsFor: 'instance creation'!
+  apply: arg
+    ^self perform: (self primaryFactoryMethod) withArguments: arg
+  !
+!
+
 !EnvBuilder methodsFor: 'envelope coordinates'!
-  env
-    "Make Env instance"
+  envSpec
+    "Make EnvSpec instance"
     self subclassResponsibility
   !
   envGen: g doneAction: d
     "Make EnvGen instance with indicated gate and doneAction"
-    ^(self env) gen: g doneAction: d
+    ^(self envSpec) gen: g doneAction: d
   !
   envGen: g
     "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
@@ -121,10 +127,11 @@ EnvBuilder comment: 'Envelope types'!
   !
 !
 
-!EnvBuilder class methodsFor: 'instance creation'!
-  apply: arg
-    ^self perform: (self primaryFactoryMethod) withArguments: arg
-  !
+!EnvBuilder methodsFor: 'accessing'!
+  gate ^gate !
+  gate: x gate := x. !
+  doneAction ^doneAction !
+  doneAction: x doneAction := x. !
 !
 
 EnvBuilder subclass: #EnvPerc
@@ -134,7 +141,7 @@ EnvBuilder subclass: #EnvPerc
   category: 'Sound-SC3'
 !
 
-EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
+EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
 
 !EnvPerc methodsFor: 'accessing'!
   attackTime ^attackTime !
@@ -161,8 +168,8 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed Duration, No Gate)'!
 !
 
 !EnvPerc methodsFor: 'envelope coordinates'!
-  env
-    ^Env
+  envSpec
+    ^EnvSpec
       levels: (Array with: 0 with: level with: 0)
       times: (Array with: attackTime with: releaseTime)
       curves: curves
@@ -179,7 +186,7 @@ EnvBuilder subclass: #EnvLinen
   category: 'Sound-SC3'
 !
 
-EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
+EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
 
 !EnvLinen methodsFor: 'accessing'!
   attackTime ^attackTime !
@@ -209,8 +216,8 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed Duration, No Gate)'!
 !
 
 !EnvLinen methodsFor: 'envelope coordinates'!
-  env
-    ^Env
+  envSpec
+    ^EnvSpec
       levels: (Array with: 0 with: level with: level with: 0)
       times: (Array with: attackTime with: sustainTime with: releaseTime)
       curves: curves
@@ -253,8 +260,8 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
 !
 
 !EnvASR methodsFor: 'envelope coordinates'!
-  env
-    ^Env
+  envSpec
+    ^EnvSpec
       levels: (Array with: 0 with: sustainLevel with: 0)
       times: (Array with: attackTime with: releaseTime)
       curves: curves
@@ -304,8 +311,8 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 !
 
 !EnvADSR methodsFor: 'envelope coordinates'!
-  env
-    ^Env
+  envSpec
+    ^EnvSpec
       levels: (Array with: 0 with: peakLevel with: peakLevel * sustainLevel with: 0)
       times: (Array with: attackTime with: decayTime with: releaseTime)
       curves: curves
@@ -322,7 +329,7 @@ EnvBuilder subclass: #EnvSine
   category: 'Sound-SC3'
 !
 
-EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!
+EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed duration, no release node)'!
 
 !EnvSine methodsFor: 'accessing'!
   dur ^dur !
@@ -343,8 +350,8 @@ EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed Duration, No Gate)'!
 !
 
 !EnvSine methodsFor: 'envelope coordinates'!
-  env
-    ^Env
+  envSpec
+    ^EnvSpec
       levels: (Array with: 0 with: level with: 0)
       times: (Array with: dur / 2 with: dur / 2)
       curves: #(3 3)

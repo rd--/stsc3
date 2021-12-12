@@ -77,16 +77,16 @@ Mix(Resonz(src, XLine(10000, 10, 10, 0), Line(1, 0.05, 10, 0)) * amp)
 var spectrum = #[0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
 var amplitudes = #[0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1];
 var numpartials = spectrum.size;
-var modfreqs1 = {Rand(1, 5)}.dup(numpartials);
-var modfreqs2 = {Rand(0.1, 3)}.dup(numpartials);
-var decaytimes = {arg i; Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials))))}.dup(numpartials);
+var modfreqs1 = { Rand(1, 5) }.dup(numpartials);
+var modfreqs2 = { Rand(0.1, 3) }.dup(numpartials);
+var decaytimes = 1.to(numpartials).collect({ arg i; Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials)))) });
 var partial = {
     arg i;
 	var freq = spectrum.at(i) + (SinOsc(modfreqs1.at(i), 0) * 0.005) * 500;
 	var amp = 0.1 * Line(1, 0, decaytimes.at(i), 0) * (SinOsc(modfreqs2.at(i), 0) * 0.1 + 0.9 * amplitudes.at(i));
 	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
 };
-Mix(partial.dup(spectrum.size))
+Mix(1.to(numpartials).collect(partial))
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 SinOsc(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 100, 0) * 0.1
@@ -101,14 +101,14 @@ Saw(Select(Stepper(Impulse(MouseX(1, 40, 0, 0.2), 0.1),  0,  0,  7,  1,  0),  #[
 SinOsc(300 + (200 * Latch(SinOsc(13.3, 0), Impulse(10, 0))), 0) * 0.2
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-SinOsc(400 * (1 + EnvGen(Impulse(2.5, 0), 1, 0, 1, 0, Env(#[0, 1, 0, 0.5, -0.4], #[0.1], #[\step], nil, nil, 0).coord)), 0) * 0.1
+SinOsc(400 * (1 + EnvGen(Impulse(2.5, 0), 1, 0, 1, 0, EnvSpec(#[0, 1, 0, 0.5, -0.4], #[0.1], #[\step], nil, nil, 0).coord)), 0) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, Env(#[63, 63, 60, 55, 60], #[0.125], #[\step], nil, nil, 0).coord).midicps, 0) * 0.1
+SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, EnvSpec(#[63, 63, 60, 55, 60], #[0.125], #[\step], nil, nil, 0).coord).midicps, 0) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 var t = MouseY(0, 1, 0, 0.2) * #[0, 128, 256, 128] / SampleRate();
-var e = Env(#[0, 0, 1, -1, 0], t.asMce, #[\lin], nil, nil, 0);
+var e = EnvSpec(#[0, 0, 1, -1, 0], t.asMce, #[\lin], nil, nil, 0);
 EnvGen(Impulse(MouseX(10, 300, 1, 0.2), 0), 1, 0, 1, 0, e.coord) * 0.2
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; portamento/glide
@@ -116,6 +116,9 @@ Saw((Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 200).lag(MouseX(0.0, 0.2, 0, 0.2)
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 Ringz(Saw(LFNoise0(5).lag(0.1).exprange(100, 2000)) * 0.2, 1000, 0.01) * 0.1
+
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; Lag and LinExp
+Ringz(Saw(LinExp(Lag(LFNoise0(5), 0.1), -1, 1, 100, 2000)) * 0.2, 1000, 0.01) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 Ringz(Saw(LFNoise0(5).lag(MouseX(0.01, 0.3, 0, 0.2)).exprange(100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1
