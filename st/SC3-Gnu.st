@@ -106,6 +106,13 @@
   !
 !
 
+!Collection methodsFor: 'testing'!
+  isCollection
+    "Am I some kind of Collection?"
+    ^true
+  !
+!
+
 !SequenceableCollection methodsFor: 'joining'!
   concatenation
     "Flattens the collection by one level into an Array."
@@ -235,7 +242,15 @@
 
 !Object methodsFor: 'evaluating'!
   value
+    "Value protocol.  Value at Object is identity."
     ^self
+  !
+!
+
+!Object methodsFor: 'testing'!
+  isCollection
+    "Am I some kind of Collection?"
+    ^false
   !
 !
 

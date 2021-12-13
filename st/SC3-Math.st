@@ -3,6 +3,10 @@
     "Convert from fractional midi note number to frequency (in hertz)"
     ^440 * (2 raisedTo: ((self - 69) * (1 / 12)))
   !
+  cpsmidi
+    "Cycles per second to fractional midi note number."
+    ^(((self * (1 / 440)) log: 2) * 12) + 69
+  !
 !
 
 !Float methodsFor: 'arithmetic'!

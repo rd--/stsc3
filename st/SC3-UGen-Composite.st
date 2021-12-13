@@ -123,7 +123,7 @@ TLine comment: 'Triggered Line.'!
     env := EnvSpec
                levels: (Array with: start with: start with: end)
                times: (Array with: 0 with: dur)
-               curves: #(#lin #lin)
+               curves: (Array with: #lin with: #lin)
                releaseNode: -1 loopNode: -1 offset: 0.
     ^EnvGen gate: trig levelScale: 1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: env coord
   !

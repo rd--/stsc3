@@ -698,7 +698,7 @@ OverlapTexture comment: 'Texture Generator'!
       | t s e |
       t := Impulse freq: (1 / (sustainTime + (transitionTime * 2))) phase: (i / overlap).
       s := graphFunc value: t.
-      e := EnvLinen attackTime: transitionTime sustainTime: sustainTime releaseTime: transitionTime level: 1 curves: #(#sin #sin #sin).
+      e := EnvLinen attackTime: transitionTime sustainTime: sustainTime releaseTime: transitionTime level: 1 curve: #sin.
       s * (e asEnvGen: t withDoneAction: 0) ]
   !
   primaryFactoryMethod ^#graphFunc:sustainTime:transitionTime:overlap:!

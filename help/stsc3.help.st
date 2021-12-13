@@ -361,6 +361,8 @@ Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
 
+69 midicps = 440 "=> true"
+440 cpsmidi = 69 "=> true"
 0 raisedTo: 1 "=> 0"
 1 raisedTo: 0 "=> 1"
 0 raisedTo: 0 "=> 1 (gst = error)"

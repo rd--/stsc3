@@ -14,7 +14,7 @@ import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17)
+  ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17),("cpsmidi",18)
   ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42),("softclip",43)]
 
@@ -81,7 +81,7 @@ sc_wr = do
       u_ir = map u_lookup_cs_err (filter (`notElem` Sc.sc_implicit_rate_ignore_list) ugen)
       u_fi = map u_lookup_cs_err (filter (`notElem` Sc.sc_first_input_ignore_list) ugen)
   writeFile "/home/rohan/sw/stsc3/sc/FilterMethods.sc" (Sc.sc_filter_methods (filter Record.u_is_filter u_fm))
-  -writeFile "/home/rohan/sw/stsc3/sc/OscillatorMethods.sc" (Sc.sc_first_input_methods (filter is_osc u_fi))
+  writeFile "/home/rohan/sw/stsc3/sc/OscillatorMethods.sc" (Sc.sc_first_input_methods (filter is_osc u_fi))
   writeFile "/home/rohan/sw/stsc3/sc/FilterConstructors.sc" (Sc.sc_filter_constructors (filter Record.u_is_filter u_fc))
   writeFile "/home/rohan/sw/stsc3/sc/ImplicitRateConstructors.sc" (Sc.sc_implicit_rate_constructors (filter (isNothing . Record.ugen_filter) u_ir))
 

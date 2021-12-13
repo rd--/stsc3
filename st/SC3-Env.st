@@ -38,11 +38,12 @@ EnvSpec comment: 'Specification for a segmented envelope'!
 
 !EnvSpec class methodsFor: 'instance creation'!
   levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
+    "Allow curves to be a scalar"
     | u |
     u := self new.
     u levels: p1.
     u times: p2.
-    u curves: p3.
+    u curves: ((p3 isSymbol or: p3 isNumber) ifTrue: [ Array with: p3 ] ifFalse: [ p3 ]).
     u releaseNode: p4.
     u loopNode: p5.
     u offset: p6.
@@ -69,8 +70,8 @@ EnvSpec comment: 'Specification for a segmented envelope'!
     r := Array new: ((n + 1) * 4).
     r at: 1 put: (levels at: 1).
     r at: 2 put: n.
-    r at: 3 put: (releaseNode ifNil: [-99] ifNotNil: [releaseNode]).
-    r at: 4 put: (loopNode ifNil: [-99] ifNotNil: [loopNode]).
+    r at: 3 put: (releaseNode ifNil: [ -99 ] ifNotNil: [ releaseNode ]).
+    r at: 4 put: (loopNode ifNil: [ -99 ] ifNotNil: [ loopNode ]).
     d := self curveNameDictionary.
     (1 to: n) do: [ :i |
       | c |
@@ -134,7 +135,7 @@ EnvBuilder comment: 'Envelope types'!
 !
 
 EnvBuilder subclass: #EnvPerc
-  instanceVariableNames: 'attackTime releaseTime level curves'
+  instanceVariableNames: 'attackTime releaseTime level curve'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -145,8 +146,8 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
 !EnvPerc methodsFor: 'accessing'!
   attackTime ^attackTime !
   attackTime: x attackTime := x. !
-  curves ^curves !
-  curves: x curves := x. !
+  curve ^curve !
+  curve: x curve := x. !
   level ^level !
   level: x level := x. !
   releaseTime ^releaseTime !
@@ -154,16 +155,16 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
 !
 
 !EnvPerc class methodsFor: 'instance creation'!
-  attackTime: p1 releaseTime: p2 level: p3 curves: p4
+  attackTime: p1 releaseTime: p2 level: p3 curve: p4
     | u |
     u := self new.
     u attackTime: p1.
     u releaseTime: p2.
     u level: p3.
-    u curves: p4.
+    u curve: p4.
     ^u
   !
-  primaryFactoryMethod ^#attackTime:releaseTime:level:curves:!
+  primaryFactoryMethod ^#attackTime:releaseTime:level:curve:!
 !
 
 !EnvPerc methodsFor: 'envelope specification'!
@@ -171,7 +172,7 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
     ^EnvSpec
       levels: (Array with: 0 with: level with: 0)
       times: (Array with: attackTime with: releaseTime)
-      curves: curves
+      curves: curve
       releaseNode: nil
       loopNode: nil
       offset: 0
@@ -179,7 +180,7 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
 !
 
 EnvBuilder subclass: #EnvLinen
-  instanceVariableNames: 'attackTime sustainTime releaseTime level curves'
+  instanceVariableNames: 'attackTime sustainTime releaseTime level curve'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -190,8 +191,8 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
 !EnvLinen methodsFor: 'accessing'!
   attackTime ^attackTime !
   attackTime: x attackTime := x. !
-  curves ^curves !
-  curves: x curves := x. !
+  curve ^curve !
+  curve: x curve := x. !
   level ^level !
   level: x level := x. !
   releaseTime ^releaseTime !
@@ -201,17 +202,17 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
 !
 
 !EnvLinen class methodsFor: 'instance creation'!
-  attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curves: p5
+  attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
     | u |
     u := self new.
     u attackTime: p1.
     u sustainTime: p2.
     u releaseTime: p3.
     u level: p4.
-    u curves: p5.
+    u curve: p5.
     ^u
   !
-  primaryFactoryMethod ^#attackTime:sustainTime:releaseTime:level:curves:!
+  primaryFactoryMethod ^#attackTime:sustainTime:releaseTime:level:curve:!
 !
 
 !EnvLinen methodsFor: 'envelope specification'!
@@ -219,7 +220,7 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
     ^EnvSpec
       levels: (Array with: 0 with: level with: level with: 0)
       times: (Array with: attackTime with: sustainTime with: releaseTime)
-      curves: curves
+      curves: curve
       releaseNode: nil
       loopNode: nil
       offset: 0
@@ -227,7 +228,7 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
 !
 
 EnvBuilder subclass: #EnvASR
-  instanceVariableNames: 'attackTime sustainLevel releaseTime curves'
+  instanceVariableNames: 'attackTime sustainLevel releaseTime curve'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -238,8 +239,8 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
 !EnvASR methodsFor: 'accessing'!
   attackTime ^attackTime !
   attackTime: x attackTime := x. !
-  curves ^curves !
-  curves: x curves := x. !
+  curve ^curve !
+  curve: x curve := x. !
   releaseTime ^releaseTime !
   releaseTime: x releaseTime := x. !
   sustainLevel ^sustainLevel !
@@ -247,13 +248,13 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
 !
 
 !EnvASR class methodsFor: 'instance creation'!
-  attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4
+  attackTime: p1 sustainLevel: p2 releaseTime: p3 curve: p4
     | u |
     u := self new.
     u attackTime: p1.
     u sustainLevel: p2.
     u releaseTime: p3.
-    u curves: p4.
+    u curve: p4.
     ^u
   !
 !
@@ -263,7 +264,7 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
     ^EnvSpec
       levels: (Array with: 0 with: sustainLevel with: 0)
       times: (Array with: attackTime with: releaseTime)
-      curves: curves
+      curves: curve
       releaseNode: 1
       loopNode: nil
       offset: 0
@@ -271,7 +272,7 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
 !
 
 EnvBuilder subclass: #EnvADSR
-  instanceVariableNames: 'attackTime decayTime sustainLevel releaseTime peakLevel curves'
+  instanceVariableNames: 'attackTime decayTime sustainLevel releaseTime peakLevel curve'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -282,8 +283,8 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 !EnvADSR methodsFor: 'accessing'!
   attackTime ^attackTime !
   attackTime: x attackTime := x. !
-  curves ^curves !
-  curves: x curves := x. !
+  curve ^curve !
+  curve: x curve := x. !
   decayTime ^decayTime !
   decayTime: x decayTime := x. !
   peakLevel ^peakLevel !
@@ -295,7 +296,7 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 !
 
 !EnvADSR class methodsFor: 'instance creation'!
-  attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6
+  attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curve: p6
     | u |
     u := self new.
     u attackTime: p1.
@@ -303,10 +304,10 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
     u sustainLevel: p3.
     u releaseTime: p4.
     u peakLevel: p5.
-    u curves: p6.
+    u curve: p6.
     ^u
   !
-  primaryFactoryMethod ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:!
+  primaryFactoryMethod ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curve:!
 !
 
 !EnvADSR methodsFor: 'envelope specification'!
@@ -314,7 +315,7 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
     ^EnvSpec
       levels: (Array with: 0 with: peakLevel with: peakLevel * sustainLevel with: 0)
       times: (Array with: attackTime with: decayTime with: releaseTime)
-      curves: curves
+      curves: curve
       releaseNode: 2
       loopNode: nil
       offset: 0
@@ -362,33 +363,22 @@ EnvSine comment: 'Sine (Hanning Window) Envelope Builder (Fixed duration, no rel
 
 AbstractUGen subclass: #ADSR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 
-ADSR comment: 'EnvGen of EnvADSR'!
+ADSR comment: 'EnvGen of simplified EnvADSR'!
 
 !ADSR class methodsFor: 'instance creation'!
-  gate: g attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6 doneAction: d
-    ^(EnvADSR attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6) asEnvGen: g withDoneAction: d
+  gate: g attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 curve: p5
+    ^(EnvADSR attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: 1 curve: p5) asEnvGen: g
   !
-  primaryFactoryMethod ^#gate:attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:doneAction:!
+  primaryFactoryMethod ^#gate:attackTime:decayTime:sustainLevel:releaseTime:curve:!
 !
 
-AbstractUGen subclass: #ASR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUGen subclass: #AR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 
-ASR comment: 'EnvGen of EnvASR'!
+AR comment: 'EnvGen of simplified EnvASR'!
 
-!ASR class methodsFor: 'instance creation'!
-  gate: g attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4 doneAction: d
-    ^(EnvASR attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4) asEnvGen: g withDoneAction: d
+!AR class methodsFor: 'instance creation'!
+  gate: g attackTime: p1 releaseTime: p2 curve: p3
+    ^(EnvASR attackTime: p1 sustainLevel: 1 releaseTime: p2 curve: p3) asEnvGen: g
   !
-  primaryFactoryMethod ^#gate:attackTime:sustainLevel:releaseTime:curves:doneAction:!
-!
-
-AbstractUGen subclass: #Sine instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
-
-Sine comment: 'EnvGen of EnvSine'!
-
-!Sine class methodsFor: 'instance creation'!
-  gate: g dur: p1 level: p2 doneAction: d
-    ^(EnvSine dur: p1 level: p2) asEnvGen: g withDoneAction: d
-  !
-  primaryFactoryMethod ^#gate:dur:level:doneAction:!
+  primaryFactoryMethod ^#gate:attackTime:releaseTime:curve:!
 !
