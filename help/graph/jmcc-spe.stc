@@ -2,7 +2,7 @@
 var t = Impulse(9, 0);
 var s = #[00, 03, 02, 07, 08, 32, 16, 18, 00, 12, 24, 32];
 var f = (Demand(t, 0, Dseq(inf, s)) + 32).midicps;
-var e = EnvPerc(0.01, 1, 1, #[-4]).envGen(t) * 0.1;
+var e = Decay2(t, 0.05, 1) * 0.1;
 var z = RLPF(LFSaw(f, 0) * e, (LFNoise1(1) * 36 + 110).midicps, 0.1);
 4.timesRepeat({ z = AllpassN(z, 0.05, { 0.05.rand }.dup, 4) });
 z * 0.25

@@ -1,5 +1,5 @@
 "analogue daze (jmcc) #3"
-| pattern f a x g z e |
+| pattern f a x g |
 pattern := #(55 63 60 63 57 65 62 65).
 f := [ :octave :clockRate :pwmrate :fltrate |
   | sequ tr patternCps sq pwm cf |
@@ -13,6 +13,4 @@ f := [ :octave :clockRate :pwmrate :fltrate |
 a := [ LFNoise0 freq: (LFNoise1 freq: 0.3 mul: 6000 add: 8000) kr ] dup * 0.07.
 x := Decay in: (Impulse freq: 2 phase: 0) decayTime: 0.15 mul: a.
 g := x + {f valueWithArguments: #(1 8 0.31 0.2). f valueWithArguments: #(0 2 0.13 0.11)}.
-z := (CombN in: g maxdelaytime: 0.375 delaytime: 0.375 decaytime: 5) + g reverse * 0.4.
-e := EnvLinen attackTime: 2 sustainTime: 56 releaseTime: 2 level: 1 curves: #(#lin #lin #lin).
-z * (e envGen: 1 doneAction: 2)
+(CombN in: g maxdelaytime: 0.375 delaytime: 0.375 decaytime: 5) + g reverse * 0.4.

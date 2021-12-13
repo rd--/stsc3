@@ -54,7 +54,9 @@ EnvSpec comment: 'Specification for a segmented envelope'!
   levels: p1 times: p2
     ^EnvSpec levels: p1 times: p2 curves: #(1)
   !
-  primaryFactoryMethod ^#levels:times:curves:releaseNode:loopNode:offset:!
+  primaryFactoryMethod
+    ^#levels:times:curves:releaseNode:loopNode:offset:
+  !
   apply: arg
     ^self perform: (self primaryFactoryMethod) withArguments: arg
   !
@@ -75,26 +77,29 @@ EnvSpec comment: 'Specification for a segmented envelope'!
       c := curves atWrap: i.
       r at: (1 + (i * 4)) put: (levels at: (i + 1)).
       r at: (2 + (i * 4)) put: (times atWrap: i).
-      r at: (3 + (i * 4)) put: (d at: c ifAbsent: [5]).
-      r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [0] ifFalse: [c]) ].
+      r at: (3 + (i * 4)) put: (d at: c ifAbsent: [ 5 ]).
+      r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [ 0 ] ifFalse: [ c ]) ].
     ^r
   !
 !
 
 !EnvSpec methodsFor: 'envelope generator'!
-  gen: g doneAction: d
+  asEnvGen: g withDoneAction: d
+    "Make EnvGen instance with indicated gate and doneAction"
     ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coord
   !
-  gen: g
-    ^self gen: g doneAction: 0
+  asEnvGen: g
+    "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
+    ^self asEnvGen: g withDoneAction: 0
   !
-  gen
-    ^self gen: 1
+  asEnvGen
+    "Make EnvGen instance with default gate (1) and doneAction (0=doNothing)"
+    ^self asEnvGen: 1
   !
 !
 
 Object subclass: #EnvBuilder
-  instanceVariableNames: 'gate doneAction'
+  instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'
@@ -104,34 +109,28 @@ EnvBuilder comment: 'Envelope types'!
 
 !EnvBuilder class methodsFor: 'instance creation'!
   apply: arg
+    "EnvBuilder classes have a primaryFactoryMethod"
     ^self perform: (self primaryFactoryMethod) withArguments: arg
   !
 !
 
-!EnvBuilder methodsFor: 'envelope coordinates'!
-  envSpec
-    "Make EnvSpec instance"
+!EnvBuilder methodsFor: 'envelope specification'!
+  asEnvSpec
+    "EnvBuilder instances can generate EnvSpec instances"
     self subclassResponsibility
   !
-  envGen: g doneAction: d
+  asEnvGen: g withDoneAction: d
     "Make EnvGen instance with indicated gate and doneAction"
-    ^(self envSpec) gen: g doneAction: d
+    ^(self asEnvSpec) asEnvGen: g withDoneAction: d
   !
-  envGen: g
+  asEnvGen: g
     "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
-    ^self envGen: g doneAction: 0
+    ^self asEnvGen: g withDoneAction: 0
   !
-  envGen
+  asEnvGen
     "Make EnvGen instance with default gate (1) and doneAction (0=doNothing)"
-    ^self envGen: 1 doneAction: 0
+    ^self asEnvGen: 1 withDoneAction: 0
   !
-!
-
-!EnvBuilder methodsFor: 'accessing'!
-  gate ^gate !
-  gate: x gate := x. !
-  doneAction ^doneAction !
-  doneAction: x doneAction := x. !
 !
 
 EnvBuilder subclass: #EnvPerc
@@ -167,8 +166,8 @@ EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
   primaryFactoryMethod ^#attackTime:releaseTime:level:curves:!
 !
 
-!EnvPerc methodsFor: 'envelope coordinates'!
-  envSpec
+!EnvPerc methodsFor: 'envelope specification'!
+  asEnvSpec
     ^EnvSpec
       levels: (Array with: 0 with: level with: 0)
       times: (Array with: attackTime with: releaseTime)
@@ -215,8 +214,8 @@ EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
   primaryFactoryMethod ^#attackTime:sustainTime:releaseTime:level:curves:!
 !
 
-!EnvLinen methodsFor: 'envelope coordinates'!
-  envSpec
+!EnvLinen methodsFor: 'envelope specification'!
+  asEnvSpec
     ^EnvSpec
       levels: (Array with: 0 with: level with: level with: 0)
       times: (Array with: attackTime with: sustainTime with: releaseTime)
@@ -259,8 +258,8 @@ EnvASR comment: 'Attack-Sustain-Release Envelope'!
   !
 !
 
-!EnvASR methodsFor: 'envelope coordinates'!
-  envSpec
+!EnvASR methodsFor: 'envelope specification'!
+  asEnvSpec
     ^EnvSpec
       levels: (Array with: 0 with: sustainLevel with: 0)
       times: (Array with: attackTime with: releaseTime)
@@ -310,8 +309,8 @@ EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
   primaryFactoryMethod ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:!
 !
 
-!EnvADSR methodsFor: 'envelope coordinates'!
-  envSpec
+!EnvADSR methodsFor: 'envelope specification'!
+  asEnvSpec
     ^EnvSpec
       levels: (Array with: 0 with: peakLevel with: peakLevel * sustainLevel with: 0)
       times: (Array with: attackTime with: decayTime with: releaseTime)
@@ -329,7 +328,7 @@ EnvBuilder subclass: #EnvSine
   category: 'Sound-SC3'
 !
 
-EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed duration, no release node)'!
+EnvSine comment: 'Sine (Hanning Window) Envelope Builder (Fixed duration, no release node)'!
 
 !EnvSine methodsFor: 'accessing'!
   dur ^dur !
@@ -349,14 +348,47 @@ EnvSine comment: 'Sine (Hanning Window) Envelope (Fixed duration, no release nod
   primaryFactoryMethod ^#dur:level:!
 !
 
-!EnvSine methodsFor: 'envelope coordinates'!
-  envSpec
+!EnvSine methodsFor: 'envelope specification'!
+  asEnvSpec
     ^EnvSpec
       levels: (Array with: 0 with: level with: 0)
       times: (Array with: dur / 2 with: dur / 2)
       curves: #(3 3)
       releaseNode: nil
-      loopNode: nil
+      loopNode: 0
       offset: 0
   !
+!
+
+AbstractUGen subclass: #ADSR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+ADSR comment: 'EnvGen of EnvADSR'!
+
+!ADSR class methodsFor: 'instance creation'!
+  gate: g attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6 doneAction: d
+    ^(EnvADSR attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6) asEnvGen: g withDoneAction: d
+  !
+  primaryFactoryMethod ^#gate:attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:doneAction:!
+!
+
+AbstractUGen subclass: #ASR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+ASR comment: 'EnvGen of EnvASR'!
+
+!ASR class methodsFor: 'instance creation'!
+  gate: g attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4 doneAction: d
+    ^(EnvASR attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4) asEnvGen: g withDoneAction: d
+  !
+  primaryFactoryMethod ^#gate:attackTime:sustainLevel:releaseTime:curves:doneAction:!
+!
+
+AbstractUGen subclass: #Sine instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+Sine comment: 'EnvGen of EnvSine'!
+
+!Sine class methodsFor: 'instance creation'!
+  gate: g dur: p1 level: p2 doneAction: d
+    ^(EnvSine dur: p1 level: p2) asEnvGen: g withDoneAction: d
+  !
+  primaryFactoryMethod ^#gate:dur:level:doneAction:!
 !

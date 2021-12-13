@@ -1,10 +1,9 @@
-// resonant dust (jmcc) #2 ; texture=spawn,2,inf
-var e = EnvLinen(2, 5, 2, 1, #[1, 1, 1]);
-var rf1 = Rand(0, 2000) + 80;
-var rf2 = rf1 + (Rand(-0.5, 0.5) * rf1);
-var d = Dust(50 + Rand(0, 800)) * 0.3;
-var s = Resonz(d, XLine(rf1, rf2, 9, 0), 0.1);
-Pan2(s, Rand(-1, 1), e.envGen.doneAction(2))
-
-//----
-EnvGen(1, 1, 0, 1, 2, e.env.coord)
+// resonant dust (jmcc) #2 ; graph rewrite
+OverlapTexture({
+    arg tr;
+    var rf1 = TRand(0, 2000, tr) + 80;
+    var rf2 = rf1 + (TRand(-0.5, 0.5, tr) * rf1);
+    var d = Dust(50 + TRand(0, 800, tr));
+    var s = Resonz(d, TXLine(rf1, rf2, 9, tr), 0.1);
+    Pan2(s, Rand(-1, 1), 0.3)
+}, 5, 2, 4)

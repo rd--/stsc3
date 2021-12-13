@@ -109,14 +109,14 @@ binaryargument :: { ScBinaryArgument }
 
 primary :: { ScPrimary }
         : identifier                           { ScPrimaryIdentifier $1 }
-        | reserveridentifier                   { ScPrimaryIdentifier $1 }
+        | reservedidentifier                   { ScPrimaryIdentifier $1 }
         | literal                              { ScPrimaryLiteral $1 }
         | '{' blockbody '}'                    { ScPrimaryBlock $2 }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
         | identifier '(' arrayexpression ')'   { ScPrimaryImplictMessageSend $1 $3 }
 
-reserveridentifier :: { St.Identifier }
+reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }
         | true                                 { "true" }
         | false                                { "false" }
@@ -189,7 +189,7 @@ arrayliteral :: { [Either St.Literal St.Identifier] }
 
 arrayliteral_elem :: { Either St.Literal St.Identifier }
         : literal                               { Left $1 }
-        | reserveridentifier                    { Right $1 }
+        | reservedidentifier                    { Right $1 }
 
 optsemicolon :: { () }
         : {- empty -}                           { () }

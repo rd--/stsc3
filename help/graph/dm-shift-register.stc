@@ -16,6 +16,6 @@ var chord = shift_register.value(5, trig, note);
 var chord_cps = chord.midicps;
 var cf = Vibrato(chord_cps, 6, 0.02, 0, 0, 0.04, 0.1, 0, 0);
 var mf = chord_cps * LFPulse(1 / 8, 0, 0.5).range(1.01, 2.01);
-var sig = PMOsc(cf, mf, EnvSpec(#[3, 3, 0], #[0, 0.2], #[-4], nil, nil, 0).gen(trig), 0);
+var sig = PMOsc(cf, mf, EnvSpec(#[3, 3, 0], #[0, 0.2], #[-4], nil, nil, 0).asEnvGen(trig), 0);
 var cmp = (sig * AmpCompA(chord_cps, 0, 0.32, 1) * amp).mix;
 XFade2(cmp.dup, GVerb(BPF(cmp, 90.midicps, 1), 50, 8, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)
