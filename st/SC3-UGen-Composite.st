@@ -49,8 +49,11 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
     u levelComp: levelComp.
     ^u
   !
+  primaryFactoryMethod
+    ^#input:spread:level:center:levelComp:
+  !
   input: input spread: spread level: level center: center
-    ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
+    ^Splay input: input spread: spread level: level center: center levelComp: true
   !
   input: input level: level
     ^Splay input: input spread: 1 level: level center: 0 levelComp: true
