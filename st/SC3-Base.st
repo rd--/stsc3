@@ -23,6 +23,9 @@
     n := (self collect: [ :e | e size ]) max.
     ^self collect: [ :e | e extendCyclically: n ]
   !
+  ++ otherCollection
+    ^self , otherCollection
+  !
 !
 
 !SequenceableCollection methodsFor: 'indexing'!
