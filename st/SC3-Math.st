@@ -7,6 +7,13 @@
     "Cycles per second to fractional midi note number."
     ^(((self * (1 / 440)) log: 2) * 12) + 69
   !
+  dbamp
+    "Decibels to linear amplitude"
+     ^10 raisedTo: (self * 0.05)
+  !
+  ampdb
+    "Linear amplitude to decibels"
+    ^(self log: 10) * 20
 !
 
 !Float methodsFor: 'arithmetic'!

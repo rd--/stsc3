@@ -7470,6 +7470,8 @@ XLine comment: 'Exponential line generator.'!
   reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
   midicps ^ UnaryOpUGen specialIndex: 17 a: self!
   cpsmidi ^ UnaryOpUGen specialIndex: 18 a: self!
+  dbamp ^ UnaryOpUGen specialIndex: 21 a: self!
+  ampdb ^ UnaryOpUGen specialIndex: 22 a: self!
   ln ^ UnaryOpUGen specialIndex: 25 a: self!
   log2 ^ UnaryOpUGen specialIndex: 26 a: self!
   log ^ UnaryOpUGen specialIndex: 27 a: self!

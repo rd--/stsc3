@@ -15,7 +15,7 @@ uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
   ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17),("cpsmidi",18)
-  ,("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
+  ,("dbamp", 21), ("ampdb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42),("softclip",43)]
 
 {- | Binary operators.
