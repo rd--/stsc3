@@ -44,7 +44,7 @@ ugen =
   ,"FBSineC", "FFT","Fold","Formant","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GrayNoise","GreyholeRaw","GVerb"
   ,"Hasher","HPF","HPZ1"
-  ,"IFFT","Impulse","In","InFeedback","InRange","IRand"
+  ,"IFFT","Impulse","In","InFeedback","InRange","IRand","Integrator"
   ,"K2A","Klang","Klank"
   ,"LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut"

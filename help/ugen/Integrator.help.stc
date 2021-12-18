@@ -1,0 +1,9 @@
+// Integrator ; out(0) = in(0) + (coef * out(-1))
+Integrator(LFPulse(300, 0.2, 0.1), MouseX(0.001, 0.999, 1, 0.2)) * 0.1
+
+// Integrator ; as envelope
+Integrator(LFPulse(3, 0.2, 0.0004), MouseX(0.996, 0.999, 1, 0.2)) * FSinOsc(700, 0) * 0.1
+
+// Integrator ; as envelope
+var tr = LFPulse(MouseX(3, 21, 1, 0.2), 0.2, 0.0004);
+Integrator(tr, TRand(0.996, 0.999, tr)) * FSinOsc(700, 0) * 0.1

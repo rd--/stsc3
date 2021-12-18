@@ -3174,6 +3174,47 @@ IRand comment: 'Single integer random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
+UGen subclass: #Integrator
+  instanceVariableNames: 'in coef'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Integrator comment: 'A leaky integrator.'!
+
+!Integrator methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  coef ^coef!
+  coef: x coef := x!
+!
+
+!Integrator methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Integrator.
+    paramNames := #(#in #coef).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. coef := 1.0!
+!
+
+
+!Integrator class methodsFor: 'instance creation'!
+  in: in coef: coef
+    |u|
+    u := self new.
+    u in: in.
+    u coef: coef.
+    ^u!
+  in: in coef: coef mul: mul ^(Integrator in: in coef: coef) * mul!
+  in: in coef: coef mul: mul add: add ^(Integrator in: in coef: coef) * mul + add!
+  primaryFactoryMethod ^#in:coef:!
+!
+
 UGen subclass: #K2A
   instanceVariableNames: 'in'
   classVariableNames: ''

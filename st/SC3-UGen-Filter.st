@@ -95,6 +95,9 @@
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
   !
+  integrator: coef
+    ^Integrator in: self coef: coef
+  !
   klank: freqscale value: freqoffset value: decayscale value: specificationsArrayRef
     ^Klank input: self freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
   !
@@ -343,6 +346,9 @@
   !
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
+  !
+  integrator: coef
+    ^Integrator in: self coef: coef
   !
   klank: freqscale value: freqoffset value: decayscale value: specificationsArrayRef
     ^Klank input: self freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
