@@ -489,6 +489,9 @@ Mix comment: 'UGen Mixer'!
   mix
     ^Mix source: self
   !
+  sum
+    ^Mix source: self
+  !
   rounded
     ^self roundTo: 1.0
   !
