@@ -52,6 +52,11 @@ Float pi = 3.141592653589793                                "pi"
 Float e = 2.718281828459045                                 "exp constant"
 100 atRandom                                                "random number in (1,self)"
 
+'Array'
+
+3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times"
+#(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
+
 'Assignment'
 
 x := 5                                                      "assignment"

@@ -61,7 +61,7 @@ Browser newOnClass: UGen selector: #kr. "open Browser on Method of Class"
 "Transcript"
 
 Transcript open. "=> opens Transcript ; MVC"
-1 to: 5 do: [:x | Transcript cr ; show: x]. "=> prints to Transcript"
+1 to: 5 do: [ :x | Transcript cr ; show: x ]. "=> prints to Transcript"
 
 "Method Finder"
 
