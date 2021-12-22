@@ -325,3 +325,14 @@ RingzBank comment: 'Parallel bank of Ringz'!
   !
   primaryFactoryMethod ^#input:freq:amp:time:!
 !
+
+AbstractUGen subclass: #Changed instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+Changed comment: 'Triggers when a value changes'!
+
+!Changed class methodsFor: 'instance creation'!
+  input: input threshold: threshold
+      ^(HPZ1 in: input) abs > threshold
+  !
+  primaryFactoryMethod ^#input:threshold:!
+!

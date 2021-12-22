@@ -5,15 +5,15 @@ shift_register := [ :length :tr :in |
   buf := LocalBuf numChannels: 1 numFrames: length.
   count := PulseCount trig: tr reset: 0.
   Mrg
-    lhs: (Demand trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse)
-    rhs: (Demand trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1)) ].
+    lhs: (DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse)
+    rhs: (DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1)) ].
 amp := 0.1.
 pulse := Impulse freq: 1 / 16 phase: 0.
 rate := TChoose trig: pulse array: #(3 5 10).
 trans := TChoose trig: pulse array: #(0 2 -2 7 -5).
 trig := Trig1 in: (CuspL freq: rate kr * 3 a: 1 b: 1.9 xi: 0) dur: 0.001.
-octave := Demand trig: (PulseDivider trig: trig div: 4 start: 0) reset: 0 demandUGens: (Drand repeats: Float infinity list: #(12 -12)).
-note := Demand trig: trig reset: 0 demandUGens: (Dseq repeats: Float infinity list: #(42 46 51 54 59 63 66) shuffled + trans kr + octave).
+octave := DmdOn trig: (PulseDivider trig: trig div: 4 start: 0) reset: 0 demandUGens: (Choose repeats: Float infinity list: #(12 -12)).
+note := DmdOn trig: trig reset: 0 demandUGens: (Seq repeats: Float infinity list: #(42 46 51 54 59 63 66) shuffled + trans kr + octave).
 chord := shift_register value: 5 value: trig value: note midicps.
 cf := Vibrato freq: chord rate: 6 depth: 0.02 delay: 0 onset: 0 rateVariation: 0.04 depthVariation: 0.1 iphase: 0 trig: 0.
 mf := chord * ((LFPulse freq: 1 / 8 iphase: 0 width: 0.5) range: 1.01 -> 2.01).

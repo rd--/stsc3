@@ -1,0 +1,28 @@
+// Seq ; at audio rate
+var n = Seq(inf, #[1, 3, 2, 7, 8, 32, 16, 18, 12, 24]);
+x = MouseX(1, 10000, 1, 0.1);
+t = Impulse(x, 0);
+f = DmdOn(t, 0, n) * 30 + 340;
+SinOsc(f, 0) * 0.1
+
+// Seq ; at control rate
+var n = Seq(3, #[1, 3, 2, 7, 8]);
+x = MouseX(1, 40, 1, 0.1);
+t = Impulse(x, 0);
+f = DmdOn(t, 0, n) * 30 + 340;
+SinOsc(f.kr, 0) * 0.1
+
+// Seq ; the SC2 Sequencer UGen is somewhat like the DmdOn & Seq idiom below
+var tr = Impulse(6, 0);
+var n0 = DmdOn(tr, 0, Seq(inf, #[60, 62, 63, 58, 48, 55]));
+var n1 = DmdOn(tr, 0, Seq(inf, #[63, 60, 48, 62, 55, 58]));
+LFSaw([n0, n1].midicps, 0,) * 0.05
+
+// Seq ; rather than Mce expansion at tr, it can be clearer to view tr as a functor
+var m = {
+    arg f;
+    var tr = Impulse(f, 0);
+    sq = Seq(inf, #[60, 63, 67, 69]);
+    DmdOn(tr, 0, sq).midicps
+};
+SinOsc(#[2, 3, 5].collect(m), 0).splay * 0.1

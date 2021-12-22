@@ -1,6 +1,6 @@
 // berlin 1977 (jmcc) #4
-var sequ = { arg s, tr; Demand(tr, 0, Dseq(inf, s)) };
-var sequR = { arg s, tr; Demand(tr, 0, Dshuf(inf, s)) };
+var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };
+var sequR = { arg s, tr; DmdOn(tr, 0, Shuf(inf, s)) };
 var clockRate = MouseX(5, 20, 1, 0.2);
 var clockTime = 1 / clockRate;
 var clock = Impulse(clockRate, 0);
@@ -14,4 +14,4 @@ var amp = env * 0.1 + 0.02;
 var filt = env * (FSinOsc(0.17, 0) * 800) + 1400;
 var pw = SinOsc(0.08, [0, 0.5 * pi]) * 0.45 + 0.5;
 var s = Pulse(freq, pw) * amp;
-CombN(RLPF(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5)
+CombC(RLPF(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5)

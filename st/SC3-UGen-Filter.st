@@ -539,6 +539,9 @@
   dbufwr: phase value: input value: loop
     ^Dbufwr bufnum: self phase: phase input: input loop: loop
   !
+  dc
+    ^DC in: self
+  !
   diwhite: lo value: hi
     ^Diwhite length: self lo: lo hi: hi
   !

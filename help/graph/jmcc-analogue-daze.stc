@@ -2,7 +2,7 @@
 var pattern = #[55, 63, 60, 63, 57, 65, 62, 65];
 var f = {
     arg octave, clockRate, pwmrate, fltrate;
-    var sequ = { arg s, tr; Demand(tr, 0, Seq(inf, s)) };
+    var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };
     var tr = Impulse(clockRate, 0);
     var patternCps = (pattern + (12 * octave)).midicps;
     var sq = sequ.value(patternCps, tr);

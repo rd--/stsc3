@@ -1359,6 +1359,44 @@ Dbufwr comment: 'Buffer write demand ugen'!
   primaryFactoryMethod ^#bufnum:phase:input:loop:!
 !
 
+UGen subclass: #DC
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DC comment: 'Create a constant amplitude signal'!
+
+!DC methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!DC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DC.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!DC class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(DC in: in) * mul!
+  in: in mul: mul add: add ^(DC in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #Decay
   instanceVariableNames: 'in decayTime'
   classVariableNames: ''
