@@ -6185,25 +6185,25 @@ RRandN comment: '(Undocumented class)'!
   primaryFactoryMethod ^#numChan:lo:hi:!
 !
 
-UGen subclass: #RTScramble
+UGen subclass: #TScramble
   instanceVariableNames: 'trigger inputs'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'!
 
-RTScramble comment: '(Undocumented class)'!
+TScramble comment: '(Undocumented class)'!
 
-!RTScramble methodsFor: 'accessing'!
+!TScramble methodsFor: 'accessing'!
   trigger ^trigger!
   trigger: x trigger := x!
   inputs ^inputs!
   inputs: x inputs := x!
 !
 
-!RTScramble methodsFor: 'initialization'!
+!TScramble methodsFor: 'initialization'!
   initialize
     super initialize.
-    ugenName := #RTScramble.
+    ugenName := #TScramble.
     paramNames := #(#trigger).
     mceNames := #(#inputs).
     ugenRate := #(0).
@@ -6214,15 +6214,15 @@ RTScramble comment: '(Undocumented class)'!
 !
 
 
-!RTScramble class methodsFor: 'instance creation'!
+!TScramble class methodsFor: 'instance creation'!
   trigger: trigger inputs: inputs
     |u|
     u := self new.
     u trigger: trigger.
     u inputs: inputs.
     ^u!
-  trigger: trigger inputs: inputs mul: mul ^(RTScramble trigger: trigger inputs: inputs) * mul!
-  trigger: trigger inputs: inputs mul: mul add: add ^(RTScramble trigger: trigger inputs: inputs) * mul + add!
+  trigger: trigger inputs: inputs mul: mul ^(TScramble trigger: trigger inputs: inputs) * mul!
+  trigger: trigger inputs: inputs mul: mul add: add ^(TScramble trigger: trigger inputs: inputs) * mul + add!
   primaryFactoryMethod ^#trigger:inputs:!
 !
 

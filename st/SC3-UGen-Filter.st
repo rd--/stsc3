@@ -197,8 +197,8 @@
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
   !
-  rtScramble: inputs
-    ^RTScramble trigger: self inputs: inputs
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
   !
   select: array
     ^Select which: self array: array
@@ -449,8 +449,8 @@
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
   !
-  rtScramble: inputs
-    ^RTScramble trigger: self inputs: inputs
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
   !
   select: array
     ^Select which: self array: array

@@ -231,9 +231,9 @@
     arg y = 0.0, pos = 0.0;
     ^Rotate2.multiNew(this.rate, this, y, pos)
   }
-  rtScramble {
+  tScramble {
     arg inputs = 0.0;
-    ^RTScramble.multiNew(this.rate, this, inputs)
+    ^TScramble.multiNew(this.rate, this, inputs)
   }
   setResetFF {
     arg reset = 0.0;
@@ -523,9 +523,9 @@
     arg y = 0.0, pos = 0.0;
     ^Rotate2.multiNew(this.rate, this, y, pos)
   }
-  rtScramble {
+  tScramble {
     arg inputs = 0.0;
-    ^RTScramble.multiNew(this.rate, this, inputs)
+    ^TScramble.multiNew(this.rate, this, inputs)
   }
   setResetFF {
     arg reset = 0.0;

@@ -62,7 +62,7 @@
 + Ringz { *new { arg in = 0.0, freq = 440.0, decaytime = 1.0;^Ringz.multiNew(in.rate, in, freq, decaytime) } }
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.multiNew(in.rate, in, trig) } }
 + Rotate2 { *new { arg x = 0.0, y = 0.0, pos = 0.0;^Rotate2.multiNew(x.rate, x, y, pos) } }
-+ RTScramble { *new { arg trigger = 0.0, inputs = 0.0;^RTScramble.multiNew(trigger.rate, trigger, inputs) } }
++ TScramble { *new { arg trigger = 0.0, inputs = 0.0;^TScramble.multiNew(trigger.rate, trigger, inputs) } }
 + SetResetFF { *new { arg trig = 0.0, reset = 0.0;^SetResetFF.multiNew(trig.rate, trig, reset) } }
 + Slope { *new { arg in = 0.0;^Slope.multiNew(in.rate, in) } }
 + Stepper { *new { arg trig = 0.0, reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;^Stepper.multiNew(trig.rate, trig, reset, min, max, step, resetval) } }
