@@ -347,3 +347,25 @@ BufRec comment: 'Record signal into a Buffer'!
   !
   primaryFactoryMethod ^#bufnum:reset:inputArray:!
 !
+
+AbstractUGen subclass: #Ln instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+Ln comment: 'Line generator'!
+
+!Ln class methodsFor: 'instance creation'!
+  start: start end: end dur: dur
+      ^Line start: start end: end dur: dur doneAction: 0
+  !
+  primaryFactoryMethod ^#start:end:dur:!
+!
+
+AbstractUGen subclass: #XLn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+XLn comment: 'Line generator'!
+
+!XLn class methodsFor: 'instance creation'!
+  start: start end: end dur: dur
+      ^Line start: start end: end dur: dur doneAction: 0
+  !
+  primaryFactoryMethod ^#start:end:dur:!
+!
