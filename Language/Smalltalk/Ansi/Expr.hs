@@ -48,6 +48,18 @@ data Expr t =
   | Init (Maybe St.Comment) St.Temporaries [Expr t]
   deriving (Functor, Foldable, Traversable, Eq, Show)
 
+exprIsAssignment :: Expr t -> Bool
+exprIsAssignment e =
+  case e of
+    Assignment _ _ -> True
+    _ -> False
+
+assignmentIdentifier :: Expr t -> Maybe St.Identifier
+assignmentIdentifier e =
+  case e of
+    Assignment x _ -> Just x
+    _ -> Nothing
+
 expr_map :: (Expr t -> Expr t) -> Expr t -> Expr t
 expr_map f e =
   case e of
