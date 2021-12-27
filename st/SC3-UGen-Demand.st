@@ -11,6 +11,19 @@ DmdFor comment: 'Demand with duration input (Duty).'!
   !
 !
 
+UGen subclass: #TDmdFor instanceVariableNames: 'dur reset level' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+TDmdFor comment: 'Demand with duration input (Duty).'!
+
+!TDmdFor class methodsFor: 'instance creation'!
+  dur: dur reset: reset level: level
+    ^TDuty dur: dur reset: reset doneAction: 0 level: level gapFirst: 0
+  !
+  primaryFactoryMethod
+    ^#dur:reset:level:
+  !
+!
+
 UGen subclass: #DmdOn instanceVariableNames: 'trig reset demandUGens' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 
 DmdOn comment: 'Demand with trigger input (Demand).'!
