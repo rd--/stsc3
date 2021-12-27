@@ -14,5 +14,6 @@ n.timesRepeat({
   p.add(freq + d.rand2);
   q.add(freq + d.rand2);
   q.add(freq + d.rand2);
-  q.add(freq + d.rand2)});
+  q.add(freq + d.rand2)
+});
 [p, q].collect(f) * 0.1 / n
