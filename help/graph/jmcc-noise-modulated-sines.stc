@@ -4,4 +4,4 @@ var z = OverlapTexture({
     var f = TRand(60, 100, tr).midicps;
     SinOsc([f, f + 0.2], 0) * LFNoise2(f * [0.15, 0.16]) * 0.05
 }, 4, 4, 4);
-CombN(z, 0.3, 0.3, 4) + z.reverse
+CombC(z, 0.3, 0.3, 4) + z.reverse

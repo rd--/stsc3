@@ -6,6 +6,7 @@ var vc = {
     var modulators = { SinOsc(TRand(0.0322, 1.0, e.w) * 0.0647, 0) }.dup(carriers.size);
     var mix = Mix(carriers * modulators);
     var filterEnv = EnvSpec(#[3600, 220, 3600], [e.y * 2, 16], [\exp], 1, nil, 0).asEnvGen(e.w);
-    Mix(Pan2(LPF(mix, filterEnv), e.o * 2 - 1, LagUD(e.w * e.z, 0, 0.25))) };
+    Mix(Pan2(LPF(mix, filterEnv), e.o * 2 - 1, LagUD(e.w * e.z, 0, 0.25)))
+};
 var pre = Mix(Voicer(16, vc));
 FreeVerb2(pre.first, pre.second, 0.33, 0.5, 0.5)
