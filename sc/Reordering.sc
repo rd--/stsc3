@@ -1,4 +1,5 @@
 Seq { *new { arg repeats, list; ^Dseq.multiNewList(['demand', repeats] ++ list) } }
+Ser { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
 Shuf { *new { arg repeats, list; ^Dshuf.multiNewList(['demand', repeats] ++ list) } }
 Choose { *new { arg repeats, list; ^Drand.multiNewList(['demand', repeats] ++ list) } }
 DmdOn { *new { arg trig, reset, demandUGens; ^Demand.multiNewList([trig.rate, trig, reset] ++ demandUGens.asArray) } }

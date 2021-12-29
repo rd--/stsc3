@@ -72,8 +72,6 @@ Choose comment: 'Random sequence generator.'!
     u repeats: repeats.
     u list: list.
     ^u!
-  repeats: repeats list: list mul: mul ^(Choose repeats: repeats list: list) * mul!
-  repeats: repeats list: list mul: mul add: add ^(Choose repeats: repeats list: list) * mul + add!
   primaryFactoryMethod ^#repeats:list:!
 !
 
@@ -112,9 +110,48 @@ Seq comment: 'Sequence generator.'!
     u repeats: repeats.
     u list: list.
     ^u!
-  repeats: repeats list: list mul: mul ^(Seq repeats: repeats list: list) * mul!
-  repeats: repeats list: list mul: mul add: add ^(Seq repeats: repeats list: list) * mul + add!
   primaryFactoryMethod ^#repeats:list:!
+!
+
+UGen subclass: #Ser
+  instanceVariableNames: 'length start step'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Ser comment: 'Demand rate arithmetic series UGen.'!
+
+!Ser methodsFor: 'accessing'!
+  length ^length!
+  length: x length := x!
+  start ^start!
+  start: x start := x!
+  step ^step!
+  step: x step := x!
+!
+
+!Ser methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Dseries.
+    paramNames := #(#length #start #step).
+    mceNames := #().
+    ugenRate := #dr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    length := 100000000.0. start := 1.0. step := 1.0!
+!
+
+!Ser class methodsFor: 'instance creation'!
+  length: length start: start step: step
+    |u|
+    u := self new.
+    u length: length.
+    u start: start.
+    u step: step.
+    ^u!
+  primaryFactoryMethod ^#length:start:step:!
 !
 
 UGen subclass: #Shuf
@@ -152,7 +189,5 @@ Shuf comment: 'Demand rate random sequence generator'!
     u repeats: repeats.
     u list: list.
     ^u!
-  repeats: repeats list: list mul: mul ^(Shuf repeats: repeats list: list) * mul!
-  repeats: repeats list: list mul: mul add: add ^(Shuf repeats: repeats list: list) * mul + add!
   primaryFactoryMethod ^#repeats:list:!
 !
