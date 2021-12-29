@@ -1,4 +1,4 @@
-// chrd (rd) ; graph rewrite
+// chrd (rd) ; graph rewrite ; requires .kr
 OverlapTexture({
     arg tr;
     var chrd = {

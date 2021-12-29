@@ -1,4 +1,4 @@
-// eggcrate ; rd
+// eggcrate ; rd ; requires .kr
 var eggcrate = { arg e; (e.x * pi).cos * (e.y * pi).sin };
 var p = #[64, 72, 96, 128, 256, 6400, 7200, 8400, 9600];
 var x = BrownNoise();
