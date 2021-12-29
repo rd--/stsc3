@@ -600,6 +600,10 @@ Mrg comment: 'Multiple Root Graph'!
   mrg: rhs ^Mrg lhs: self rhs: rhs!
 !
 
+!SequenceableCollection methodsFor: 'multiple root graphs'!
+  mrg: rhs ^Mrg lhs: self rhs: rhs!
+!
+
 AbstractUGen subclass: #Control
   instanceVariableNames: 'name init'
   classVariableNames: ''

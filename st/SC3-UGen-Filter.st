@@ -140,6 +140,9 @@
   localOut
     ^LocalOut channelsArray: self
   !
+  lpz1
+    ^LPZ1 in: self
+  !
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
   !
@@ -185,6 +188,9 @@
   rlpf: freq value: rq
     ^RLPF in: self freq: freq rq: rq
   !
+  replaceOut: bus
+    ^ReplaceOut bus: bus channelsArray: self
+  !
   resonz: freq value: bwr
     ^Resonz in: self freq: freq bwr: bwr
   !
@@ -196,9 +202,6 @@
   !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
-  !
-  tScramble: inputs
-    ^TScramble trigger: self inputs: inputs
   !
   select: array
     ^Select which: self array: array
@@ -235,6 +238,9 @@
   !
   trig1: dur
     ^Trig1 in: self dur: dur
+  !
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
   !
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius
@@ -392,6 +398,9 @@
   localOut
     ^LocalOut channelsArray: self
   !
+  lpz1
+    ^LPZ1 in: self
+  !
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
   !
@@ -437,6 +446,9 @@
   rlpf: freq value: rq
     ^RLPF in: self freq: freq rq: rq
   !
+  replaceOut: bus
+    ^ReplaceOut bus: bus channelsArray: self
+  !
   resonz: freq value: bwr
     ^Resonz in: self freq: freq bwr: bwr
   !
@@ -448,9 +460,6 @@
   !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
-  !
-  tScramble: inputs
-    ^TScramble trigger: self inputs: inputs
   !
   select: array
     ^Select which: self array: array
@@ -487,6 +496,9 @@
   !
   trig1: dur
     ^Trig1 in: self dur: dur
+  !
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
   !
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius

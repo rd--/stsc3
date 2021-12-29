@@ -4558,6 +4558,44 @@ LocalOut comment: 'Write to buses local to a synth.'!
   primaryFactoryMethod ^#channelsArray:!
 !
 
+UGen subclass: #LPZ1
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LPZ1 comment: 'Two point average filter'!
+
+!LPZ1 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!LPZ1 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LPZ1.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!LPZ1 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(LPZ1 in: in) * mul!
+  in: in mul: mul add: add ^(LPZ1 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #MantissaMask
   instanceVariableNames: 'in bits'
   classVariableNames: ''
@@ -5811,6 +5849,47 @@ RecordBuf comment: 'Record or overdub into a Buffer.'!
   primaryFactoryMethod ^#bufnum:offset:recLevel:preLevel:run:loop:trigger:doneAction:inputArray:!
 !
 
+UGen subclass: #ReplaceOut
+  instanceVariableNames: 'bus channelsArray'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ReplaceOut comment: 'Send signal to a bus, overwriting previous contents.'!
+
+!ReplaceOut methodsFor: 'accessing'!
+  bus ^bus!
+  bus: x bus := x!
+  channelsArray ^channelsArray!
+  channelsArray: x channelsArray := x!
+!
+
+!ReplaceOut methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ReplaceOut.
+    paramNames := #(#bus).
+    mceNames := #(#channelsArray).
+    ugenRate := #(1).
+    numChan := 0.
+    specialIndex := 0.
+    ugenId := nil.
+    bus := 0.0!
+!
+
+
+!ReplaceOut class methodsFor: 'instance creation'!
+  bus: bus channelsArray: channelsArray
+    |u|
+    u := self new.
+    u bus: bus.
+    u channelsArray: channelsArray.
+    ^u!
+  bus: bus channelsArray: channelsArray mul: mul ^(ReplaceOut bus: bus channelsArray: channelsArray) * mul!
+  bus: bus channelsArray: channelsArray mul: mul add: add ^(ReplaceOut bus: bus channelsArray: channelsArray) * mul + add!
+  primaryFactoryMethod ^#bus:channelsArray:!
+!
+
 UGen subclass: #Resonz
   instanceVariableNames: 'in freq bwr'
   classVariableNames: ''
@@ -6184,47 +6263,6 @@ RRandN comment: '(Undocumented class)'!
   numChan: numChan lo: lo hi: hi mul: mul ^(RRandN numChan: numChan lo: lo hi: hi) * mul!
   numChan: numChan lo: lo hi: hi mul: mul add: add ^(RRandN numChan: numChan lo: lo hi: hi) * mul + add!
   primaryFactoryMethod ^#numChan:lo:hi:!
-!
-
-UGen subclass: #TScramble
-  instanceVariableNames: 'trigger inputs'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-TScramble comment: '(Undocumented class)'!
-
-!TScramble methodsFor: 'accessing'!
-  trigger ^trigger!
-  trigger: x trigger := x!
-  inputs ^inputs!
-  inputs: x inputs := x!
-!
-
-!TScramble methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #TScramble.
-    paramNames := #(#trigger).
-    mceNames := #(#inputs).
-    ugenRate := #(0).
-    numChan := #mceInput.
-    specialIndex := 0.
-    ugenId := nil.
-    trigger := 0.0!
-!
-
-
-!TScramble class methodsFor: 'instance creation'!
-  trigger: trigger inputs: inputs
-    |u|
-    u := self new.
-    u trigger: trigger.
-    u inputs: inputs.
-    ^u!
-  trigger: trigger inputs: inputs mul: mul ^(TScramble trigger: trigger inputs: inputs) * mul!
-  trigger: trigger inputs: inputs mul: mul add: add ^(TScramble trigger: trigger inputs: inputs) * mul + add!
-  primaryFactoryMethod ^#trigger:inputs:!
 !
 
 UGen subclass: #SampleDur
@@ -7105,6 +7143,47 @@ Trig1 comment: 'Timed trigger.'!
   in: in dur: dur mul: mul ^(Trig1 in: in dur: dur) * mul!
   in: in dur: dur mul: mul add: add ^(Trig1 in: in dur: dur) * mul + add!
   primaryFactoryMethod ^#in:dur:!
+!
+
+UGen subclass: #TScramble
+  instanceVariableNames: 'trigger inputs'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+TScramble comment: '(Undocumented class)'!
+
+!TScramble methodsFor: 'accessing'!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  inputs ^inputs!
+  inputs: x inputs := x!
+!
+
+!TScramble methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #TScramble.
+    paramNames := #(#trigger).
+    mceNames := #(#inputs).
+    ugenRate := #(0).
+    numChan := #mceInput.
+    specialIndex := 0.
+    ugenId := nil.
+    trigger := 0.0!
+!
+
+
+!TScramble class methodsFor: 'instance creation'!
+  trigger: trigger inputs: inputs
+    |u|
+    u := self new.
+    u trigger: trigger.
+    u inputs: inputs.
+    ^u!
+  trigger: trigger inputs: inputs mul: mul ^(TScramble trigger: trigger inputs: inputs) * mul!
+  trigger: trigger inputs: inputs mul: mul add: add ^(TScramble trigger: trigger inputs: inputs) * mul + add!
+  primaryFactoryMethod ^#trigger:inputs:!
 !
 
 UGen subclass: #TwoPole
