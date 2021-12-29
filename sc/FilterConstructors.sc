@@ -45,6 +45,7 @@
 + LinPan2 { *new { arg in = 0.0, pos = 0.0, level = 1.0;^LinPan2.performList(in.rate.rateToSelector, [in, pos, level]) } }
 + LinXFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0;^LinXFade2.performList(inA.rate.rateToSelector, [inA, inB, pan]) } }
 + LocalOut { *new { arg channelsArray = 0.0;^LocalOut.performList(channelsArray.rate.rateToSelector, [channelsArray]) } }
++ LPZ1 { *new { arg in = 0.0;^LPZ1.performList(in.rate.rateToSelector, [in]) } }
 + MantissaMask { *new { arg in = 0.0, bits = 3.0;^MantissaMask.performList(in.rate.rateToSelector, [in, bits]) } }
 + ModDif { *new { arg x = 0.0, y = 0.0, mod = 1.0;^ModDif.performList(x.rate.rateToSelector, [x, y, mod]) } }
 + MoogFF { *new { arg in = 0.0, freq = 100.0, gain = 2.0, reset = 0.0;^MoogFF.performList(in.rate.rateToSelector, [in, freq, gain, reset]) } }
@@ -59,6 +60,7 @@
 + PulseDivider { *new { arg trig = 0.0, div = 2.0, start = 0.0;^PulseDivider.performList(trig.rate.rateToSelector, [trig, div, start]) } }
 + RHPF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^RHPF.performList(in.rate.rateToSelector, [in, freq, rq]) } }
 + RLPF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^RLPF.performList(in.rate.rateToSelector, [in, freq, rq]) } }
++ ReplaceOut { *new { arg bus = 0.0, channelsArray = 0.0;^ReplaceOut.performList(channelsArray.rate.rateToSelector, [bus, channelsArray]) } }
 + Resonz { *new { arg in = 0.0, freq = 440.0, bwr = 1.0;^Resonz.performList(in.rate.rateToSelector, [in, freq, bwr]) } }
 + Ringz { *new { arg in = 0.0, freq = 440.0, decaytime = 1.0;^Ringz.performList(in.rate.rateToSelector, [in, freq, decaytime]) } }
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.performList(in.rate.rateToSelector, [in, trig]) } }

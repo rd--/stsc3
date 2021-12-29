@@ -159,6 +159,9 @@
   localOut {
     ^LocalOut.performList(this.rate.rateToSelector, [this])
   }
+  lpz1 {
+    ^LPZ1.performList(this.rate.rateToSelector, [this])
+  }
   mantissaMask {
     arg bits = 3.0;
     ^MantissaMask.performList(this.rate.rateToSelector, [this, bits])
@@ -174,6 +177,10 @@
   moogLadder {
     arg ffreq = 440.0, res = 0.0;
     ^MoogLadder.performList(this.rate.rateToSelector, [this, ffreq, res])
+  }
+  mulAdd {
+    arg mul = 0.0, add = 0.0;
+    ^MulAdd.performList(this.rate.rateToSelector, [this, mul, add])
   }
   normalizer {
     arg level = 1.0, dur = 1.0e-2;
@@ -214,6 +221,10 @@
   rlpf {
     arg freq = 440.0, rq = 1.0;
     ^RLPF.performList(this.rate.rateToSelector, [this, freq, rq])
+  }
+  replaceOut {
+    arg bus = 0.0;
+    ^ReplaceOut.performList(this.rate.rateToSelector, [bus, this])
   }
   resonz {
     arg freq = 440.0, bwr = 1.0;
@@ -451,6 +462,9 @@
   localOut {
     ^LocalOut.performList(this.rate.rateToSelector, [this])
   }
+  lpz1 {
+    ^LPZ1.performList(this.rate.rateToSelector, [this])
+  }
   mantissaMask {
     arg bits = 3.0;
     ^MantissaMask.performList(this.rate.rateToSelector, [this, bits])
@@ -466,6 +480,10 @@
   moogLadder {
     arg ffreq = 440.0, res = 0.0;
     ^MoogLadder.performList(this.rate.rateToSelector, [this, ffreq, res])
+  }
+  mulAdd {
+    arg mul = 0.0, add = 0.0;
+    ^MulAdd.performList(this.rate.rateToSelector, [this, mul, add])
   }
   normalizer {
     arg level = 1.0, dur = 1.0e-2;
@@ -506,6 +524,10 @@
   rlpf {
     arg freq = 440.0, rq = 1.0;
     ^RLPF.performList(this.rate.rateToSelector, [this, freq, rq])
+  }
+  replaceOut {
+    arg bus = 0.0;
+    ^ReplaceOut.performList(this.rate.rateToSelector, [bus, this])
   }
   resonz {
     arg freq = 440.0, bwr = 1.0;
