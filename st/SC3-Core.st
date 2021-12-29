@@ -712,3 +712,12 @@ OverlapTexture comment: 'Texture Generator'!
     ^OverlapTexture graphFunc: self sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
   !
 !
+
+!BlockClosure methodsFor: 'scsynth'!
+  play
+    self value play
+  !
+  draw
+    self value draw
+  !
+!

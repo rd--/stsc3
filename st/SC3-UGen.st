@@ -5021,6 +5021,7 @@ MulAdd comment: 'Multiply add'!
 !MulAdd class methodsFor: 'instance creation'!
   in: in mul: mul add: add
     |u|
+    ((mul = 1) and: (add = 0)) ifTrue: [ ^in ].
     u := self new.
     u in: in.
     u mul: mul.

@@ -400,6 +400,7 @@ FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Demand.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
 
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.

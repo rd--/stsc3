@@ -22,6 +22,7 @@ executable stsc3
                     hsc3-dot == 0.20.*,
                     hsc3-lang == 0.20.*,
                     hsc3-lisp == 0.20.*,
+                    monad-loops,
                     mtl,
                     random,
                     stsc3,
@@ -45,5 +46,5 @@ executable stsc3
                     Interpreter.Som.Types
                     Interpreter.Som.Vec
   default-language: Haskell2010
-  ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs
+  ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded
 

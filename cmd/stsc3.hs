@@ -1,4 +1,8 @@
+import Control.Monad {- base -}
 import System.Environment {- base -}
+import System.IO {- base -}
+
+import qualified Control.Monad.Loops as Loop {- monad-loops -}
 
 import qualified Sound.SC3 as SC3 {- hsc3 -}
 import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
@@ -61,7 +65,7 @@ help =
     ," repl {ansi|expr|som}"
     ," rewrite ndef"
     ," run som class arguments..."
-    ," translate {sc | stc} st [input-file output-file]"
+    ," translate [stream] {sc | stc} st [input-file output-file]"
     ]
 
 -- | Like interact but with named files.
@@ -69,6 +73,19 @@ procFile :: FilePath -> FilePath -> (String -> String) -> IO ()
 procFile inFile outFile strFunc = do
   txt <- readFile inFile
   writeFile outFile (strFunc txt)
+
+getLineIfReady :: IO (Maybe String)
+getLineIfReady = do
+  r <- hReady stdin
+  if r then fmap Just (hGetLine stdin) else return Nothing
+
+getAvailable :: IO [String]
+getAvailable = do
+  _ <- hWaitForInput stdin (-1)
+  Loop.unfoldM getLineIfReady
+
+procStdio :: (String -> String) -> IO ()
+procStdio strFunc = forever (getAvailable >>= \ln -> hPutStrLn stdout (strFunc (unlines ln)) >> hFlush stdout)
 
 main :: IO ()
 main = do
@@ -93,4 +110,5 @@ main = do
     ["stop"] -> SC3.withSC3 SC3.reset
     ["translate",ty,"st"] -> interact (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
     ["translate",ty,"st",inFile,outFile] -> procFile inFile outFile (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
+    ["translate","stream",ty,"st"] -> procStdio (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
     _ -> putStrLn (unlines help)
