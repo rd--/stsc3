@@ -82,6 +82,10 @@
     arg amp = 1.0e-4, time = 0.1, doneAction = 0.0;
     ^DetectSilence.performList(this.rate.rateToSelector, [this, amp, time, doneAction])
   }
+  formlet {
+    arg freq = 440.0, attacktime = 1.0, decaytime = 1.0;
+    ^Formlet.performList(this.rate.rateToSelector, [this, freq, attacktime, decaytime])
+  }
   freeVerb {
     arg mix = 0.33, room = 0.5, damp = 0.5;
     ^FreeVerb.performList(this.rate.rateToSelector, [this, mix, room, damp])
@@ -384,6 +388,10 @@
   detectSilence {
     arg amp = 1.0e-4, time = 0.1, doneAction = 0.0;
     ^DetectSilence.performList(this.rate.rateToSelector, [this, amp, time, doneAction])
+  }
+  formlet {
+    arg freq = 440.0, attacktime = 1.0, decaytime = 1.0;
+    ^Formlet.performList(this.rate.rateToSelector, [this, freq, attacktime, decaytime])
   }
   freeVerb {
     arg mix = 0.33, room = 0.5, damp = 0.5;

@@ -2330,6 +2330,53 @@ Formant comment: 'Formant oscillator'!
   primaryFactoryMethod ^#fundfreq:formfreq:bwfreq:!
 !
 
+UGen subclass: #Formlet
+  instanceVariableNames: 'in freq attacktime decaytime'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Formlet comment: 'FOF-like filter.'!
+
+!Formlet methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  attacktime ^attacktime!
+  attacktime: x attacktime := x!
+  decaytime ^decaytime!
+  decaytime: x decaytime := x!
+!
+
+!Formlet methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Formlet.
+    paramNames := #(#in #freq #attacktime #decaytime).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. attacktime := 1.0. decaytime := 1.0!
+!
+
+
+!Formlet class methodsFor: 'instance creation'!
+  in: in freq: freq attacktime: attacktime decaytime: decaytime
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u attacktime: attacktime.
+    u decaytime: decaytime.
+    ^u!
+  in: in freq: freq attacktime: attacktime decaytime: decaytime mul: mul ^(Formlet in: in freq: freq attacktime: attacktime decaytime: decaytime) * mul!
+  in: in freq: freq attacktime: attacktime decaytime: decaytime mul: mul add: add ^(Formlet in: in freq: freq attacktime: attacktime decaytime: decaytime) * mul + add!
+  primaryFactoryMethod ^#in:freq:attacktime:decaytime:!
+!
+
 UGen subclass: #FreqShift
   instanceVariableNames: 'in freq phase'
   classVariableNames: ''

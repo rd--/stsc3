@@ -22,6 +22,7 @@
 + Demand { *new { arg trig = 0.0, reset = 0.0, demandUGens = 0.0;^Demand.performList(trig.rate.rateToSelector, [trig, reset, demandUGens]) } }
 + DetectSilence { *new { arg in = 0.0, amp = 1.0e-4, time = 0.1, doneAction = 0.0;^DetectSilence.performList(in.rate.rateToSelector, [in, amp, time, doneAction]) } }
 + Fold { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Fold.performList(in.rate.rateToSelector, [in, lo, hi]) } }
++ Formlet { *new { arg in = 0.0, freq = 440.0, attacktime = 1.0, decaytime = 1.0;^Formlet.performList(in.rate.rateToSelector, [in, freq, attacktime, decaytime]) } }
 + FreeVerb { *new { arg in = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb.performList(in.rate.rateToSelector, [in, mix, room, damp]) } }
 + FreeVerb2 { *new { arg in = 0.0, in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb2.performList(in.rate.rateToSelector, [in, in2, mix, room, damp]) } }
 + GreyholeRaw { *new { arg in1 = 0.0, in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;^GreyholeRaw.performList(in1.rate.rateToSelector, [in1, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size]) } }

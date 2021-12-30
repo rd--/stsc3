@@ -71,6 +71,9 @@
   fold: lo value: hi
     ^Fold in: self lo: lo hi: hi
   !
+  formlet: freq value: attacktime value: decaytime
+    ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
+  !
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
   !
@@ -328,6 +331,9 @@
   !
   fold: lo value: hi
     ^Fold in: self lo: lo hi: hi
+  !
+  formlet: freq value: attacktime value: decaytime
+    ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
   !
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
