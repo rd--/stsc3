@@ -12,10 +12,6 @@
 + Crackle { *new { arg chaosParam = 1.5; ^Crackle.performList('audio'.rateToSelector, [chaosParam]) } }
 + CuspL { *new { arg freq = 22050.0, a = 1.0, b = 1.9, xi = 0.0; ^CuspL.performList('audio'.rateToSelector, [freq, a, b, xi]) } }
 + DC { *new { arg in = 0.0; ^DC.performList('audio'.rateToSelector, [in]) } }
-+ Diwhite { *new { arg lo = 0.0, hi = 1.0, length = 1.0e8; ^Diwhite.performList('demand'.rateToSelector, [lo, hi, length]) } }
-+ Drand { *new { arg list = 0.0, repeats = 1.0; ^Drand.performList('demand'.rateToSelector, [list, repeats]) } }
-+ Dseq { *new { arg list = 0.0, repeats = 1.0; ^Dseq.performList('demand'.rateToSelector, [list, repeats]) } }
-+ Dshuf { *new { arg list = 0.0, repeats = 1.0; ^Dshuf.performList('demand'.rateToSelector, [list, repeats]) } }
 + Dust { *new { arg density = 0.0; ^Dust.performList('audio'.rateToSelector, [density]) } }
 + Dust2 { *new { arg density = 0.0; ^Dust2.performList('audio'.rateToSelector, [density]) } }
 + Duty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0; ^Duty.performList('audio'.rateToSelector, [dur, reset, level, doneAction]) } }
