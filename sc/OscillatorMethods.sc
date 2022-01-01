@@ -1,3 +1,4 @@
+/*
 + UGen { ampComp { arg root = 0.0, exp = 0.3333;  ^AmpComp.multiNew('audio', this, root, exp) } }
 + UGen { ampCompA { arg root = 0.0, minAmp = 0.32, rootAmp = 1.0;  ^AmpCompA.multiNew('audio', this, root, minAmp, rootAmp) } }
 + UGen { amplitude { arg attackTime = 1.0e-2, releaseTime = 1.0e-2;  ^Amplitude.multiNew('audio', this, attackTime, releaseTime) } }
@@ -231,4 +232,4 @@
 + SimpleNumber { varSaw { arg iphase = 0.0, width = 0.5;  ^VarSaw.multiNew('audio', this, iphase, width) } }
 + SimpleNumber { vibrato { arg rate = 6.0, depth = 2.0e-2, delay = 0.0, onset = 0.0, rateVariation = 4.0e-2, depthVariation = 0.1, iphase = 0.0, trig = 0.0;  ^Vibrato.multiNew('audio', this, rate, depth, delay, onset, rateVariation, depthVariation, iphase, trig) } }
 + SimpleNumber { xLine { arg end = 2.0, dur = 1.0, doneAction = 0.0;  ^XLine.multiNew('audio', this, end, dur, doneAction) } }
-
+*/

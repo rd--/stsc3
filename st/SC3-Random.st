@@ -46,3 +46,10 @@
     ^self atRandom
   !
 !
+
+!Interval methodsFor: 'randomness'!
+  choose
+    "Random element of Interval, alias for atRandom"
+    ^self atRandom
+  !
+!
