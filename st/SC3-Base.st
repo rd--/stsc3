@@ -26,6 +26,20 @@
   ++ otherCollection
     ^self , otherCollection
   !
+  clump: groupSize
+    "Array of myself partitioned into adjacent sequences of groupSize elements.  It is an error if I cannot be equally partitioned."
+    | answerSize answer start |
+    answerSize := (self size / groupSize) ceiling.
+    answer := Array new: answerSize.
+    start := 1.
+    (1 to: answerSize) do: [ :i |
+      | end |
+      end := start + groupSize - 1.
+      answer at: i put: (self copyFrom: start to: end).
+      start := end + 1
+    ].
+    ^answer
+  !
 !
 
 !SequenceableCollection methodsFor: 'indexing'!
