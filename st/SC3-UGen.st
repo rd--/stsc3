@@ -5159,6 +5159,35 @@ Normalizer comment: 'Flattens dynamics.'!
   primaryFactoryMethod ^#in:level:dur:!
 !
 
+UGen subclass: #NumOutputBuses
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+NumOutputBuses comment: 'Number of output busses.'!
+
+
+!NumOutputBuses methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #NumOutputBuses.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+
+!NumOutputBuses class methodsFor: 'instance creation'!
+  mul: mul ^(NumOutputBuses new) * mul!
+  mul: mul add: add ^(NumOutputBuses new) * mul + add!
+  primaryFactoryMethod ^#new!
+!
+
 UGen subclass: #OnePole
   instanceVariableNames: 'in coef'
   classVariableNames: ''

@@ -369,3 +369,14 @@ XLn comment: 'Line generator'!
   !
   primaryFactoryMethod ^#start:end:dur:!
 !
+
+AbstractUGen subclass: #AudioIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+AudioIn comment: 'Audio input'!
+
+!AudioIn class methodsFor: 'instance creation'!
+  channels: channels
+      ^In numChan: 1 bus: NumOutputBuses new + channels - 1
+  !
+  primaryFactoryMethod ^#channels:!
+!
