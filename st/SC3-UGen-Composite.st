@@ -380,3 +380,14 @@ AudioIn comment: 'Audio input'!
   !
   primaryFactoryMethod ^#channels:!
 !
+
+AbstractUGen subclass: #Cc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+Cc comment: 'Continuous controller input'!
+
+!Cc class methodsFor: 'instance creation'!
+  index: index
+      ^(In numChan: 1 bus: 11000 + index) kr
+  !
+  primaryFactoryMethod ^#index:!
+!

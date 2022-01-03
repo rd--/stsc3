@@ -26,4 +26,4 @@ tested with:
  [cuis](http://cuis-smalltalk.org/) 5.0 ;
  [gnu smalltalk](http://www.gnu.org/software/smalltalk/) 3.2.92
 
-© [rohan drape](http://rohandrape.net/), 2019-2021, [gpl](http://gnu.org/copyleft/)
+© [rohan drape](http://rohandrape.net/), 2019-2022, [gpl](http://gnu.org/copyleft/)
