@@ -393,12 +393,19 @@ Cc comment: 'Continuous controller input'!
 !
 
 AbstractUGen subclass: #Sw instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
-
 Sw comment: 'Switch (maintained or momentary) controller input'!
-
 !Sw class methodsFor: 'instance creation'!
   index: index
       ^(In numChan: 1 bus: 12000 + index) kr
   !
   primaryFactoryMethod ^#index:!
+!
+
+UGen subclass: #InFb instanceVariableNames: 'bus' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+InFb comment: 'Read signal from a bus with a current or one cycle old timestamp.'!
+!InFb class methodsFor: 'instance creation'!
+  numChan: numChan bus: bus
+    ^InFeedback numChan: numChan bus: bus
+  !
+  primaryFactoryMethod ^#numChan:bus:!
 !
