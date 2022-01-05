@@ -26,7 +26,6 @@
 + GrayNoise { *new { ^GrayNoise.performList('audio'.rateToSelector, []) } }
 + Impulse { *new { arg freq = 440.0, phase = 0.0; ^Impulse.performList('audio'.rateToSelector, [freq, phase]) } }
 + In { *new { arg numChannels = 1.0, bus = 0.0; ^In.performList('audio'.rateToSelector, [numChannels, bus]) } }
-//+ InFeedback { *new { arg numChannels = 1.0, bus = 0.0; ^InFeedback.performList('audio'.rateToSelector, [numChannels, bus]) } }
 + K2A { *new { arg in = 0.0; ^K2A.performList('audio'.rateToSelector, [in]) } }
 + Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.performList('audio'.rateToSelector, [specificationsArrayRef, freqscale, freqoffset]) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.performList('audio'.rateToSelector, [freq, iphase]) } }
@@ -47,6 +46,7 @@
 + MouseButton { *new { arg minval = 0.0, maxval = 1.0, lag = 0.2; ^MouseButton.performList('control'.rateToSelector, [minval, maxval, lag]) } }
 + MouseX { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseX.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
 + MouseY { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseY.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
++ NumOutputBuses { *new { ^NumOutputBuses.performList('scalar'.rateToSelector, []) } }
 + Phasor { *new { arg trig = 0.0, rate = 1.0, start = 0.0, end = 1.0, resetPos = 0.0; ^Phasor.performList('audio'.rateToSelector, [trig, rate, start, end, resetPos]) } }
 + PinkNoise { *new { ^PinkNoise.performList('audio'.rateToSelector, []) } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }
