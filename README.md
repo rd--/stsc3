@@ -14,6 +14,7 @@ cli:
 
 requires:
 
+- [SuperCollider]
 - [hsc3](http://rohandrape.net/?t=hsc3)
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)
 - squeak/cuis:[OSProcess](http://wiki.squeak.org/squeak/708)
