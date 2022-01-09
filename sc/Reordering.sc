@@ -3,8 +3,8 @@ Ser { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
 Shuf { *new { arg repeats, list; ^Dshuf.dr(list, repeats) } }
 Choose { *new { arg repeats, list; ^Drand.dr(list, repeats) } }
 DmdOn { *new { arg trig, reset, demandUGens; ^Demand.multiNewList([trig.rate, trig, reset] ++ demandUGens.asArray) } }
-DmdFor { *new { arg dur, reset, level; ^Duty.ar(dur, reset, 0, level) } }
-TDmdFor { *new { arg dur, reset, level; ^TDuty.ar(dur, reset, 0, level, 0) } }
+DmdFor { *new { arg dur, reset, level; ^Duty.ar(dur, reset, level, 0) } }
+TDmdFor { *new { arg dur, reset, level; ^TDuty.ar(dur, reset, level, 0, 0) } }
 BufRec { *new { arg bufnum, reset, inputArray; ^RecordBuf.ar(inputArray, bufnum, 0, 1, 0, 1, 1, reset, 0) } }
 Ln { *new { arg start = 0.0, end = 1.0, dur = 1.0; ^Line.ar(start, end, dur) } }
 XLn { *new { arg start = 0.0, end = 1.0, dur = 1.0; ^XLine.ar(start, end, dur) } }
