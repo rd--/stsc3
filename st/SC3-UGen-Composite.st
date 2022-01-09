@@ -401,11 +401,20 @@ Sw comment: 'Switch (maintained or momentary) controller input'!
   primaryFactoryMethod ^#index:!
 !
 
-UGen subclass: #InFb instanceVariableNames: 'bus' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+UGen subclass: #InFb instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 InFb comment: 'Read signal from a bus with a current or one cycle old timestamp.'!
 !InFb class methodsFor: 'instance creation'!
   numChan: numChan bus: bus
     ^InFeedback numChan: numChan bus: bus
   !
   primaryFactoryMethod ^#numChan:bus:!
+!
+
+UGen subclass: #BufAlloc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+BufAlloc comment: 'Allocate a buffer local to the synth.'!
+!BufAlloc class methodsFor: 'instance creation'!
+  numChannels: numChannels numFrames: numFrames
+    ^LocalBuf numChannels: numChannels numFrames: numFrames
+  !
+  primaryFactoryMethod ^#numChannels:numFrames:!
 !

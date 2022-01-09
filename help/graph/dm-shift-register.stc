@@ -1,7 +1,7 @@
 // shift register (dm) - https://sccode.org/1-590
 var shift_register = {
     arg length, trig, in;
-    var buf = LocalBuf(1, length);
+    var buf = BufAlloc(1, length);
     var count = PulseCount(trig, 0);
     DmdOn(trig, 0, Dbufrd(buf, count + length.iota, 1)).reverse.mrg(DmdOn(trig, 0, Dbufwr(buf, count, in, 1)))
 };

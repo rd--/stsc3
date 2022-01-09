@@ -2,7 +2,7 @@
 | shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
 shift_register := [ :length :tr :in |
   | buf count |
-  buf := LocalBuf numChannels: 1 numFrames: length.
+  buf := BufAlloc numChannels: 1 numFrames: length.
   count := PulseCount trig: tr reset: 0.
   Mrg
     lhs: (DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse)
