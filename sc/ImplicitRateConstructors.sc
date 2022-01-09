@@ -51,6 +51,7 @@
 + PinkNoise { *new { ^PinkNoise.performList('audio'.rateToSelector, []) } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }
 + Pulse { *new { arg freq = 440.0, width = 0.5; ^Pulse.performList('audio'.rateToSelector, [freq, width]) } }
++ QuadC { *new { arg freq = 22050.0, a = 1.0, b = -1.0, c = -0.75, xi = 0.0; ^QuadC.performList('audio'.rateToSelector, [freq, a, b, c, xi]) } }
 + RecordBuf { *new { arg inputArray = 0.0, bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0; ^RecordBuf.performList('audio'.rateToSelector, [inputArray, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction]) } }
 + RBezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^RBezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }
 + RDX7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^RDX7Env.performList('audio'.rateToSelector, [gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol]) } }

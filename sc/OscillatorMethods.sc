@@ -60,6 +60,7 @@
 + UGen { pitch { arg initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0;  ^Pitch.multiNew('control', this, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + UGen { pulse { arg width = 0.5;  ^Pulse.multiNew('audio', this, width) } }
 + UGen { pv_RandComb { arg wipe = 0.0, trig = 0.0;  ^PV_RandComb.multiNew('control', this, wipe, trig) } }
++ UGen { quadC { arg a = 1.0, b = -1.0, c = -0.75, xi = 0.0;  ^QuadC.multiNew('audio', this, a, b, c, xi) } }
 + UGen { rand { arg hi = 1.0;  ^Rand.multiNew('scalar', this, hi) } }
 + UGen { recordBuf { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0;  ^RecordBuf.multiNew('audio', this, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + UGen { rBezier { arg dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0;  ^RBezier.multiNew('audio', this, dx, freq, phase, param) } }
@@ -138,6 +139,7 @@
 + Array { pitch { arg initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0;  ^Pitch.multiNew('control', this, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + Array { pulse { arg width = 0.5;  ^Pulse.multiNew('audio', this, width) } }
 + Array { pv_RandComb { arg wipe = 0.0, trig = 0.0;  ^PV_RandComb.multiNew('control', this, wipe, trig) } }
++ Array { quadC { arg a = 1.0, b = -1.0, c = -0.75, xi = 0.0;  ^QuadC.multiNew('audio', this, a, b, c, xi) } }
 + Array { rand { arg hi = 1.0;  ^Rand.multiNew('scalar', this, hi) } }
 + Array { recordBuf { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0;  ^RecordBuf.multiNew('audio', this, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + Array { rBezier { arg dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0;  ^RBezier.multiNew('audio', this, dx, freq, phase, param) } }
@@ -216,6 +218,7 @@
 + SimpleNumber { pitch { arg initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0;  ^Pitch.multiNew('control', this, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar) } }
 + SimpleNumber { pulse { arg width = 0.5;  ^Pulse.multiNew('audio', this, width) } }
 + SimpleNumber { pv_RandComb { arg wipe = 0.0, trig = 0.0;  ^PV_RandComb.multiNew('control', this, wipe, trig) } }
++ SimpleNumber { quadC { arg a = 1.0, b = -1.0, c = -0.75, xi = 0.0;  ^QuadC.multiNew('audio', this, a, b, c, xi) } }
 + SimpleNumber { rand { arg hi = 1.0;  ^Rand.multiNew('scalar', this, hi) } }
 + SimpleNumber { recordBuf { arg bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0;  ^RecordBuf.multiNew('audio', this, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction) } }
 + SimpleNumber { rBezier { arg dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0;  ^RBezier.multiNew('audio', this, dx, freq, phase, param) } }
@@ -232,5 +235,5 @@
 + SimpleNumber { varSaw { arg iphase = 0.0, width = 0.5;  ^VarSaw.multiNew('audio', this, iphase, width) } }
 + SimpleNumber { vibrato { arg rate = 6.0, depth = 2.0e-2, delay = 0.0, onset = 0.0, rateVariation = 4.0e-2, depthVariation = 0.1, iphase = 0.0, trig = 0.0;  ^Vibrato.multiNew('audio', this, rate, depth, delay, onset, rateVariation, depthVariation, iphase, trig) } }
 + SimpleNumber { xLine { arg end = 2.0, dur = 1.0, doneAction = 0.0;  ^XLine.multiNew('audio', this, end, dur, doneAction) } }
-*/
 
+*/

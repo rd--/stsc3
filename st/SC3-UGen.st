@@ -5734,6 +5734,56 @@ PV_RandComb comment: 'Pass random bins.'!
   primaryFactoryMethod ^#buffer:wipe:trig:!
 !
 
+UGen subclass: #QuadC
+  instanceVariableNames: 'freq a b c xi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+QuadC comment: 'General quadratic map chaotic generator'!
+
+!QuadC methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  c ^c!
+  c: x c := x!
+  xi ^xi!
+  xi: x xi := x!
+!
+
+!QuadC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #QuadC.
+    paramNames := #(#freq #a #b #c #xi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.0. b := -1.0. c := -0.75. xi := 0.0!
+!
+
+
+!QuadC class methodsFor: 'instance creation'!
+  freq: freq a: a b: b c: c xi: xi
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u c: c.
+    u xi: xi.
+    ^u!
+  freq: freq a: a b: b c: c xi: xi mul: mul ^(QuadC freq: freq a: a b: b c: c xi: xi) * mul!
+  freq: freq a: a b: b c: c xi: xi mul: mul add: add ^(QuadC freq: freq a: a b: b c: c xi: xi) * mul + add!
+  primaryFactoryMethod ^#freq:a:b:c:xi:!
+!
+
 UGen subclass: #RHPF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''

@@ -707,6 +707,9 @@
   pv_RandComb: wipe value: trig
     ^PV_RandComb buffer: self wipe: wipe trig: trig
   !
+  quadC: a value: b value: c value: xi
+    ^QuadC freq: self a: a b: b c: c xi: xi
+  !
   rand: hi
     ^Rand lo: self hi: hi
   !
