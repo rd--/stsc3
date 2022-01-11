@@ -632,6 +632,9 @@
   k2a
     ^K2A in: self
   !
+  keyState: minval value: maxval value: lag
+    ^KeyState keycode: self minval: minval maxval: maxval lag: lag
+  !
   klang: freqoffset value: specificationsArrayRef
     ^Klang freqscale: self freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef
   !

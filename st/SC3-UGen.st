@@ -3338,6 +3338,53 @@ K2A comment: 'Control to audio rate converter.'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #KeyState
+  instanceVariableNames: 'keycode minval maxval lag'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+KeyState comment: 'Respond to the state of a key'!
+
+!KeyState methodsFor: 'accessing'!
+  keycode ^keycode!
+  keycode: x keycode := x!
+  minval ^minval!
+  minval: x minval := x!
+  maxval ^maxval!
+  maxval: x maxval := x!
+  lag ^lag!
+  lag: x lag := x!
+!
+
+!KeyState methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #KeyState.
+    paramNames := #(#keycode #minval #maxval #lag).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    keycode := 0.0. minval := 0.0. maxval := 1.0. lag := 0.2!
+!
+
+
+!KeyState class methodsFor: 'instance creation'!
+  keycode: keycode minval: minval maxval: maxval lag: lag
+    |u|
+    u := self new.
+    u keycode: keycode.
+    u minval: minval.
+    u maxval: maxval.
+    u lag: lag.
+    ^u!
+  keycode: keycode minval: minval maxval: maxval lag: lag mul: mul ^(KeyState keycode: keycode minval: minval maxval: maxval lag: lag) * mul!
+  keycode: keycode minval: minval maxval: maxval lag: lag mul: mul add: add ^(KeyState keycode: keycode minval: minval maxval: maxval lag: lag) * mul + add!
+  primaryFactoryMethod ^#keycode:minval:maxval:lag:!
+!
+
 UGen subclass: #Klang
   instanceVariableNames: 'freqscale freqoffset specificationsArrayRef'
   classVariableNames: ''
