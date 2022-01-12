@@ -12,6 +12,11 @@ It supports:
 - implicit grouping of message argument expressions
 - a notation for binding variables when they are declared
 
+C-Smalltalk files have the extension `.stc`.
+
+The `stc` Emacs mode includes keybindings to translate C-Smalltalk expressions to Smalltalk,
+and then forward the translation to a Smalltalk interpreter.
+
 ## Relation to SuperCollider Syntax
 
 C-Smalltalk utilises a subset of the SuperCollider syntax as an alternate notation for writing Smalltalk programs.
@@ -22,9 +27,9 @@ In addition C-Smalltalk has one syntactic extension (colons within message names
 
 ## Implicit primary message notation
 
-The notation `SinOsc(440, 0)` is allowed in SuperCollider but has a different meaning in C-Smalltalk.
+The notation `SinOsc(440, 0)` is allowed in SuperCollider, where it has the meaning `SinOsc.new(440, 0)`.
 
-It is syntax for `SinOsc.apply([440, 0])`.
+In C-Smalltalk it has a related but distinct meaning, `SinOsc.apply([440, 0])`.
 
 `apply:` is ordinarily defined as `perform:withArguments:` at the `primaryFactoryMethod` of the receiver. [2]
 (This terminology is from [Newspeak](https://newspeaklanguage.org/).)
@@ -52,13 +57,22 @@ It is therefore possible to provide aliases for commonly used messages, i.e. `pu
 
 It is an error for the message name to have more parts than there are arguments, i.e. `r.p:q(i)` is an error. [4]
 
+## Interspersed Unary and Keyword message sequences
+
+C-Smalltalk requires parentheses for all n-ary messages, and unary and n-ary messages have equal precedence.
+
+This can result in a perspicuous notation for chains of message sends.
+
+`c.reverse.at(n).sorted.collect(f).display` translates to
+`((c reverse at: n) sorted collect: f) display`.
+
 ## Keywords
 
 Keyword parameters are disallowed.
 
 They could be allowed for implicit message sends and checked against the primaryFactoryMethod.
 
-In cases where keyword arguments are appropriate, ordinary Smalltalk syntax is preferred.
+However in cases where keyword arguments are appropriate, ordinary Smalltalk syntax is preferred.
 
 * * *
 
@@ -83,7 +97,8 @@ Rand(0,9) // a Rand
 {var r = Rand; r(0,9)}.value // error: r not understood by 0
 ````
 
-It is not as common for non `Class` objects to understand `primaryFactoryMethod`, however `arg c; c(...);` is a standard idiom.
+It is not as common for non `Class` objects to understand `primaryFactoryMethod`,
+however `arg c; c(...);` is a common idiom where c is a class object.
 
-4: Implicit keyword message names is not a form of variable arity messages.
+4: Implicit keyword message names are not a form of variable arity messages.
 `r.m(i)` and `r.m(i, j)` are distinct messages, `m:` and `m:value:`.
