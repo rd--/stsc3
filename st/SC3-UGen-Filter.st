@@ -257,6 +257,9 @@
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
   !
+  zeroCrossing
+    ^ZeroCrossing in: self
+  !
 
 !
 !Array methodsFor: 'filtering'!
@@ -518,6 +521,9 @@
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
   !
+  zeroCrossing
+    ^ZeroCrossing in: self
+  !
 
 !
 !AbstractUGen methodsFor: 'filtering'!
@@ -535,6 +541,9 @@
   !
   blip: numharm
     ^Blip freq: self numharm: numharm
+  !
+  bufRateScale
+    ^BufRateScale bufnum: self
   !
   bufRd: phase value: loop value: interpolation
     ^BufRd bufnum: self phase: phase loop: loop interpolation: interpolation
@@ -703,6 +712,9 @@
   !
   pitch: initFreq value: minFreq value: maxFreq value: execFreq value: maxBinsPerOctave value: median value: ampThreshold value: peakThreshold value: downSample value: clar
     ^Pitch in: self initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq maxBinsPerOctave: maxBinsPerOctave median: median ampThreshold: ampThreshold peakThreshold: peakThreshold downSample: downSample clar: clar
+  !
+  playBuf: rate value: trigger value: startPos value: loop value: doneAction
+    ^PlayBuf bufnum: self rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction
   !
   pulse: width
     ^Pulse freq: self width: width

@@ -8,3 +8,24 @@ var voiceFunc = {
     osc * env * 0.4
 };
 voiceFunc.dup(12).splay
+
+// SinOsc ; two oscillators ; frequencies approach 500 from opposite directions
+var lfo = MouseX(1, 0, 0, 0.2);
+var sig = SinOsc(LinExp(lfo, 0, 1, 100, 500), 0) + SinOsc(LinExp(lfo, 0, 1, 1000, 500), 0);
+sig * 0.1
+
+// SinOsc ; https://scsynth.org/t/5169/5 (dietcv)
+OverlapTexture({
+    arg tr;
+    var syncEgTop = TRand(8, 20, tr);
+    var syncRatio = 2;
+    var syncDcy = TRand(0.5, 2, tr);
+    var syncEnv = TXLine(syncEgTop / syncRatio, 1, syncDcy, tr);
+    var gainEnv = ADSR(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
+    var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).midicps }.dup(5);
+    var in = LFTri(freq, 0);
+    var phase = Sweep(in, freq * syncRatio * syncEnv);
+    var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
+    var sig = synced * in * gainEnv;
+    sig.splay * 0.2
+}, 2, 0, 2)

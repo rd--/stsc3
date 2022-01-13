@@ -5,6 +5,7 @@
 + Blip { *new { arg freq = 440.0, numharm = 200.0; ^Blip.performList('audio'.rateToSelector, [freq, numharm]) } }
 + BlockSize { *new { ^BlockSize.performList('scalar'.rateToSelector, []) } }
 + BrownNoise { *new { ^BrownNoise.performList('audio'.rateToSelector, []) } }
++ BufRateScale { *new { arg bufnum = 0.0; ^BufRateScale.performList('control'.rateToSelector, [bufnum]) } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.performList('audio'.rateToSelector, [numChannels, bufnum, phase, loop, interpolation]) } }
 + ControlDur { *new { ^ControlDur.performList('scalar'.rateToSelector, []) } }
 + ControlRate { *new { ^ControlRate.performList('scalar'.rateToSelector, []) } }
@@ -27,6 +28,7 @@
 + Impulse { *new { arg freq = 440.0, phase = 0.0; ^Impulse.performList('audio'.rateToSelector, [freq, phase]) } }
 + In { *new { arg numChannels = 1.0, bus = 0.0; ^In.performList('audio'.rateToSelector, [numChannels, bus]) } }
 + K2A { *new { arg in = 0.0; ^K2A.performList('audio'.rateToSelector, [in]) } }
++ KeyState { *new { arg keycode = 0.0, minval = 0.0, maxval = 1.0, lag = 0.2; ^KeyState.performList('control'.rateToSelector, [keycode, minval, maxval, lag]) } }
 + Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.performList('audio'.rateToSelector, [specificationsArrayRef, freqscale, freqoffset]) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.performList('audio'.rateToSelector, [freq, iphase]) } }
 + LFDNoise1 { *new { arg freq = 500.0; ^LFDNoise1.performList('audio'.rateToSelector, [freq]) } }
@@ -50,6 +52,7 @@
 + Phasor { *new { arg trig = 0.0, rate = 1.0, start = 0.0, end = 1.0, resetPos = 0.0; ^Phasor.performList('audio'.rateToSelector, [trig, rate, start, end, resetPos]) } }
 + PinkNoise { *new { ^PinkNoise.performList('audio'.rateToSelector, []) } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }
++ PlayBuf { *new { arg numChannels = 1.0, bufnum = 0.0, rate = 1.0, trigger = 1.0, startPos = 0.0, loop = 0.0, doneAction = 0.0; ^PlayBuf.performList('audio'.rateToSelector, [numChannels, bufnum, rate, trigger, startPos, loop, doneAction]) } }
 + Pulse { *new { arg freq = 440.0, width = 0.5; ^Pulse.performList('audio'.rateToSelector, [freq, width]) } }
 + QuadC { *new { arg freq = 22050.0, a = 1.0, b = -1.0, c = -0.75, xi = 0.0; ^QuadC.performList('audio'.rateToSelector, [freq, a, b, c, xi]) } }
 + RecordBuf { *new { arg inputArray = 0.0, bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0; ^RecordBuf.performList('audio'.rateToSelector, [inputArray, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction]) } }

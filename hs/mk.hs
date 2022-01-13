@@ -37,7 +37,7 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude","AnalogFoldOsc"
-  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRd","BufWr"
+  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufRateScale","BufRd","BufWr"
   ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CrossoverDistortion","CuspL"
   ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","DelayC","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
@@ -51,7 +51,7 @@ ugen =
   ,"MantissaMask","MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer", "NumOutputBuses"
   ,"OnePole","Out"
-  ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","Pluck","Pulse","PulseCount","PulseDivider"
+  ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
   ,"QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax"
@@ -60,7 +60,8 @@ ugen =
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TScramble","TwoPole","TwoZero"
   ,"VarSaw","Vibrato"
   ,"WhiteNoise","Wrap"
-  ,"XFade2","XLine"]
+  ,"XFade2","XLine"
+  ,"ZeroCrossing"]
 
 is_osc :: Record.U -> Bool
 is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)

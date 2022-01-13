@@ -719,6 +719,44 @@ BrownNoise comment: 'Brown Noise.'!
   primaryFactoryMethod ^#new!
 !
 
+UGen subclass: #BufRateScale
+  instanceVariableNames: 'bufnum'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BufRateScale comment: 'Buffer rate scaling in respect to server samplerate.'!
+
+!BufRateScale methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+!
+
+!BufRateScale methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BufRateScale.
+    paramNames := #(#bufnum).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0!
+!
+
+
+!BufRateScale class methodsFor: 'instance creation'!
+  bufnum: bufnum
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    ^u!
+  bufnum: bufnum mul: mul ^(BufRateScale bufnum: bufnum) * mul!
+  bufnum: bufnum mul: mul add: add ^(BufRateScale bufnum: bufnum) * mul + add!
+  primaryFactoryMethod ^#bufnum:!
+!
+
 UGen subclass: #BufRd
   instanceVariableNames: 'bufnum phase loop interpolation'
   classVariableNames: ''
@@ -5558,6 +5596,60 @@ PitchShift comment: 'Time domain pitch shifter.'!
   primaryFactoryMethod ^#in:windowSize:pitchRatio:pitchDispersion:timeDispersion:!
 !
 
+UGen subclass: #PlayBuf
+  instanceVariableNames: 'bufnum rate trigger startPos loop doneAction'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+PlayBuf comment: 'Sample playback oscillator.'!
+
+!PlayBuf methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  rate ^rate!
+  rate: x rate := x!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  startPos ^startPos!
+  startPos: x startPos := x!
+  loop ^loop!
+  loop: x loop := x!
+  doneAction ^doneAction!
+  doneAction: x doneAction := x!
+!
+
+!PlayBuf methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #PlayBuf.
+    paramNames := #(#bufnum #rate #trigger #startPos #loop #doneAction).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. rate := 1.0. trigger := 1.0. startPos := 0.0. loop := 0.0. doneAction := 0.0!
+!
+
+
+!PlayBuf class methodsFor: 'instance creation'!
+  numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u bufnum: bufnum.
+    u rate: rate.
+    u trigger: trigger.
+    u startPos: startPos.
+    u loop: loop.
+    u doneAction: doneAction.
+    ^u!
+  numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul ^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul!
+  numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul add: add ^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul + add!
+  primaryFactoryMethod ^#numChan:bufnum:rate:trigger:startPos:loop:doneAction:!
+!
+
 UGen subclass: #Pluck
   instanceVariableNames: 'in trig maxdelaytime delaytime decaytime coef'
   classVariableNames: ''
@@ -7718,6 +7810,44 @@ XLine comment: 'Exponential line generator.'!
   start: start end: end dur: dur doneAction: doneAction mul: mul ^(XLine start: start end: end dur: dur doneAction: doneAction) * mul!
   start: start end: end dur: dur doneAction: doneAction mul: mul add: add ^(XLine start: start end: end dur: dur doneAction: doneAction) * mul + add!
   primaryFactoryMethod ^#start:end:dur:doneAction:!
+!
+
+UGen subclass: #ZeroCrossing
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ZeroCrossing comment: 'Zero crossing frequency follower'!
+
+!ZeroCrossing methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!ZeroCrossing methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ZeroCrossing.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!ZeroCrossing class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(ZeroCrossing in: in) * mul!
+  in: in mul: mul add: add ^(ZeroCrossing in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
 !
 
 

@@ -1,0 +1,4 @@
+// PlayBuf
+var buf = 0;
+PlayBuf(1, buf, BufRateScale(buf), 1, 0, 1, 0) * 0.1
+

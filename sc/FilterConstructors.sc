@@ -82,3 +82,4 @@
 + TwoZero { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoZero.performList(in.rate.rateToSelector, [in, freq, radius]) } }
 + Wrap { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Wrap.performList(in.rate.rateToSelector, [in, lo, hi]) } }
 + XFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^XFade2.performList(inA.rate.rateToSelector, [inA, inB, pan, level]) } }
++ ZeroCrossing { *new { arg in = 0.0;^ZeroCrossing.performList(in.rate.rateToSelector, [in]) } }
