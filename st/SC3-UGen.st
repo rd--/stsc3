@@ -6861,7 +6861,7 @@ Slew comment: 'Slew rate limiter.'!
     paramNames := #(#in #up #dn).
     mceNames := #().
     ugenRate := #(0).
-    numChan := 1.
+    numChan := 0.
     specialIndex := 0.
     ugenId := nil.
     in := 0.0. up := 1.0. dn := 1.0!
@@ -7914,7 +7914,7 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b!
   roundTo: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
   truncateTo: b ^ BinaryOpUGen specialIndex: 21 a: self b: b!
-  raisedTo: b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
+  ** b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
   bitShiftLeft: b ^ BinaryOpUGen specialIndex: 26 a: self b: b!
   bitShiftRight: b ^ BinaryOpUGen specialIndex: 27 a: self b: b!
   amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!

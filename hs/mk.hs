@@ -20,7 +20,7 @@ uop =
 
 {- | Binary operators.
 
-     Sc>>** is St>>raisedTo:
+     Sc>>** is not St>>raisedTo: since in Sc (0 ** 0) is 1 and in St (0 raisedTo: 0) is an error
      Smalltalk modulo is rem: but use % here.
 -}
 binop :: [(String, Int)]

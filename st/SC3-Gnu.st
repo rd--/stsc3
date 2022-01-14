@@ -177,6 +177,7 @@
   ** aNumber
     "Gnu Smalltalk doesn't implement **.
      Special cases for UGens and Collections."
+    (aNumber = 0) ifTrue: [^1].
     (aNumber isKindOf: AbstractUGen) ifTrue: [^self asUGen raisedTo: aNumber].
     (aNumber isKindOf: Collection) ifTrue: [^aNumber collect: [ :x | self ** x]].
     ^self raisedTo: aNumber
