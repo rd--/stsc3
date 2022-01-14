@@ -1,3 +1,17 @@
+// PMOsc ; random parameters, linear modulation
+var dur = 6;
+OverlapTexture({
+    arg tr;
+    var cf = TRand(0, 2000, tr);
+    var mf = TRand(0, 800, tr);
+    var pme = TRand(0, 12, tr);
+    var l1 = TRand(-1, 1, tr);
+    var l2 = TRand(-1, 1, tr);
+    var l = TLine(l1, l2, dur, tr);
+    var pm = TLine(0, pme, dur, tr);
+    Pan2 (PMOsc(cf, mf, pm, 0), l, 0.05)
+}, 2, 2, 4)
+
 // PMOsc ; event control
 var s = Voicer(16, {
     arg e;
