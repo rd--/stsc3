@@ -6837,6 +6837,50 @@ SinOscFB comment: 'Feedback FM oscillator'!
   primaryFactoryMethod ^#freq:feedback:!
 !
 
+UGen subclass: #Slew
+  instanceVariableNames: 'in up dn'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Slew comment: 'Slew rate limiter.'!
+
+!Slew methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  up ^up!
+  up: x up := x!
+  dn ^dn!
+  dn: x dn := x!
+!
+
+!Slew methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Slew.
+    paramNames := #(#in #up #dn).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. up := 1.0. dn := 1.0!
+!
+
+
+!Slew class methodsFor: 'instance creation'!
+  in: in up: up dn: dn
+    |u|
+    u := self new.
+    u in: in.
+    u up: up.
+    u dn: dn.
+    ^u!
+  in: in up: up dn: dn mul: mul ^(Slew in: in up: up dn: dn) * mul!
+  in: in up: up dn: dn mul: mul add: add ^(Slew in: in up: up dn: dn) * mul + add!
+  primaryFactoryMethod ^#in:up:dn:!
+!
+
 UGen subclass: #Slope
   instanceVariableNames: 'in'
   classVariableNames: ''

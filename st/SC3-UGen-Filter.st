@@ -212,6 +212,9 @@
   setResetFF: reset
     ^SetResetFF trig: self reset: reset
   !
+  slew: up value: dn
+    ^Slew in: self up: up dn: dn
+  !
   slope
     ^Slope in: self
   !
@@ -475,6 +478,9 @@
   !
   setResetFF: reset
     ^SetResetFF trig: self reset: reset
+  !
+  slew: up value: dn
+    ^Slew in: self up: up dn: dn
   !
   slope
     ^Slope in: self

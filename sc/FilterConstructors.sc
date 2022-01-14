@@ -67,6 +67,7 @@
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.performList(in.rate.rateToSelector, [in, trig]) } }
 + Rotate2 { *new { arg x = 0.0, y = 0.0, pos = 0.0;^Rotate2.performList(x.rate.rateToSelector, [x, y, pos]) } }
 + SetResetFF { *new { arg trig = 0.0, reset = 0.0;^SetResetFF.performList(trig.rate.rateToSelector, [trig, reset]) } }
++ Slew { *new { arg in = 0.0, up = 1.0, dn = 1.0;^Slew.performList(in.rate.rateToSelector, [in, up, dn]) } }
 + Slope { *new { arg in = 0.0;^Slope.performList(in.rate.rateToSelector, [in]) } }
 + Stepper { *new { arg trig = 0.0, reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;^Stepper.performList(trig.rate.rateToSelector, [trig, reset, min, max, step, resetval]) } }
 + Sweep { *new { arg trig = 0.0, rate = 1.0;^Sweep.performList(trig.rate.rateToSelector, [trig, rate]) } }
