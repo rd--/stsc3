@@ -10,4 +10,3 @@ Ln { *new { arg start = 0.0, end = 1.0, dur = 1.0; ^Line.ar(start, end, dur) } }
 XLn { *new { arg start = 0.0, end = 1.0, dur = 1.0; ^XLine.ar(start, end, dur) } }
 InFb { *new { arg numChannels = 1.0, bus = 0.0; ^InFeedback.ar(bus, numChannels) } }
 BufAlloc { *new { arg numChannels, numFrames; ^LocalBuf.ir(numFrames, numChannels) } }
-Splay2 { *new { arg inArray; ^Splay.ar(inArray, 1, 1, 0, true) } }
