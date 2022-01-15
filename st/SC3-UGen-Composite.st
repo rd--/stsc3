@@ -63,15 +63,24 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   !
 !
 
+UGen subclass: #Splay2 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Splay2 comment: 'Pan an array of channels across the stereo field.'!
+!Splay2 class methodsFor: 'instance creation'!
+  inArray: inArray
+    ^Splay input: inArray spread: 1 level: 1 center: 0 levelComp: true
+  !
+  primaryFactoryMethod ^#inArray:!
+!
+
 !AbstractUGen methodsFor: 'panning'!
   splay
-    ^Splay input: self
+    ^Splay2 inArray: self
   !
 !
 
 !Array methodsFor: 'panning'!
   splay
-    ^Splay input: self
+    ^Splay2 inArray: self
   !
 !
 
