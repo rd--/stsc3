@@ -7,7 +7,7 @@ var voiceFunc = {
     var env = Decay2(tr, 0.01, 1);
     osc * env * 0.4
 };
-voiceFunc.dup(12).splay
+voiceFunc.dup(12).splay2
 
 // SinOsc ; two oscillators ; frequencies approach 500 from opposite directions
 var lfo = MouseX(1, 0, 0, 0.2);

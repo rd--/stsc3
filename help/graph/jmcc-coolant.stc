@@ -16,5 +16,5 @@ var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), nil, nil);
 // coolant (jmcc) ; Ringz
 var o = OnePole(BrownNoise() * 0.002, 0.95);
 var f = { Ringz(o, Rand(40, 2040), 1) * 0.2 };
-f.dup(10).splay
+f.dup(10).splay2
 

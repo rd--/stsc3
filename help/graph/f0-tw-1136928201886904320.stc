@@ -9,5 +9,5 @@ var f = {
   var s = o * (osc(1 / b * osc(b / 99, i), 0)).max(0) * osc(0.01, i);
   var x = AllpassC(s, 1, Wrap(c, 0.5, 1), 2);
   var y = BPF(x, i * 99 + 400, 0.001) * (osc(0.04, i) + 1 * 9);
-  (x + y).splay / 3};
+  (x + y).splay2 / 3};
 [0 -> LFTri, 1 -> LFSaw, 2 -> LFPar].collect(f).sum

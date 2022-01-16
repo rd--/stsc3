@@ -1,5 +1,5 @@
 // ascension ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #1
-Pan2(RLPF(PinkNoise(), Ln(20, 20000, 1 / (1.to(8) / 200)), 0.05).sum, 0, 0.1)
+Pan2(RLPF(PinkNoise(), Phasor(1, 1.to(8) / 200, 20, 20000, 0), 0.05).sum, 0, 0.1)
 
 // nostalgic sci-fi music ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #2
 CombC(SinOsc(LFNoise2(#[1, 1, 1, 1] * 0.1) * 440 + (#[1, 2] * 440), 0).sum * 0.01, 0.2, #[0.13, 0.2], 15)

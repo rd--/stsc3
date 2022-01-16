@@ -6,4 +6,4 @@ var n = {
   var b = 4 ** LFNoise2(1.2 ** i / 16);
   BPF(p, b * 300, 0.15) * (5 ** LFNoise2(f) / (i + 8) * 20)
 };
-1.to(15).collect(n).splay
+1.to(15).collect(n).splay2

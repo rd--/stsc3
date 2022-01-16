@@ -73,13 +73,13 @@ Splay2 comment: 'Pan an array of channels across the stereo field.'!
 !
 
 !AbstractUGen methodsFor: 'panning'!
-  splay
+  splay2
     ^Splay2 inArray: self
   !
 !
 
 !Array methodsFor: 'panning'!
-  splay
+  splay2
     ^Splay2 inArray: self
   !
 !

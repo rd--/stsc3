@@ -5,11 +5,11 @@ Pan2(o, 0, 1) + d
 
 // random sine waves ; https://github.com/cianoc/supercollider_fragments
 var f = { Pan2(SinOsc(SinOsc(1 / 10, 0.0.rand(6.0)) * 200 + 600, 0), 1.0.rand, 0.05) };
-f.dup(15).splay
+f.dup(15).splay2
 
 // random sine waves ; https://github.com/cianoc/supercollider_fragments ; Rand
 var f = { Pan2(SinOsc(SinOsc(1 / 10, Rand(0, 6)) * 200 + 600, 0), Rand(0, 1), 0.05) };
-f.dup(15).splay
+f.dup(15).splay2
 
 // nice use of blip ; https://github.com/cianoc/supercollider_fragments
 var t = Impulse(6, 0);
@@ -95,14 +95,14 @@ var sync = 5;
 // synched impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
 var f = { arg frq, num; SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1) };
-[f.value(100, 3), f.value(300, 7), f.value(500, 5), f.value(700, 2), f.value(900, 9), f.value(1100, 6), f.value(1300, 1)].splay * 0.1
+[f.value(100, 3), f.value(300, 7), f.value(500, 5), f.value(700, 2), f.value(900, 9), f.value(1100, 6), f.value(1300, 1)].splay2 * 0.1
 
 // synchronised impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
 var freq = [1, 3, 5, 7, 9, 11, 13];
 var numer = [3, 7, 5, 2, 9, 6, 1];
 var f = { arg i; SinOsc(freq.nth(i) * 100, 0) * Decay2(Impulse(numer.nth(i) / sync, 0), 0.01, 1) };
-1.to(freq.size).collect(f).splay * 0.1
+1.to(freq.size).collect(f).splay2 * 0.1
 
 // nice buzzing effect
 var speed = 14;
@@ -132,7 +132,7 @@ Pan2(SinOsc(freq, 0), { Rand(-1, 1) }.dup(8), amp).mix * 0.1
 // great inharmonic spectrum ; https://github.com/cianoc/supercollider_fragments
 var freq = #[72, 135, 173, 239, 267, 306, 355, 473, 512, 572, 626];
 var amp = #[0.25, 0.11, 0.12, 0.04, 0.1, 0.15, 0.05, 0.01, 0.03, 0.02, 0.12];
-(SinOsc(freq, 0) * amp).splay * 0.1
+(SinOsc(freq, 0) * amp).splay2 * 0.1
 
 // random bells, let it run for a while ; https://github.com/cianoc/supercollider_fragments
 var k = 12;
@@ -140,7 +140,7 @@ var tr = Dust(3 / 7);
 var f = {
     SinOsc(Rand(50, 4000), 0) * Decay2(tr, 0.01, Rand(0.2, 3)) * Rand(0, 1)
 };
-f.dup(k).splay / k
+f.dup(k).splay2 / k
 
 // shimmering harmonics ; https://github.com/cianoc/supercollider_fragments
 var harmonics = 16;

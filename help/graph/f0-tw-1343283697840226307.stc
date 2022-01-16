@@ -6,4 +6,4 @@ var t = LFTri(121 ** LFTri(2 / 121 * b, 0), 0);
 var d = (LFTri(1 / 212.1, 0) <= (1 / 212)).lag2(2 / b) / 12 * 1.2 + 1.2 / f;
 var c = LFTri(b / 12, 0) + 1 / 2;
 var p = Pluck(z, t, 2 / 121, d, 1 / 2 * 12 / 1.2, c);
-HPF(p, 12).splay / 2.1 / 2
+HPF(p, 12).splay2 / 2.1 / 2

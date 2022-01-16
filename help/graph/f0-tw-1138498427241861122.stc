@@ -9,4 +9,4 @@ var s1 = SinOscFB(f1, d) * SinOscFB(b / 9, 0) * d;
 var c = PitchShift(s1, 9 / b, 9 / b.sqrt, b / 999, b / 99);
 var s2 = GVerb(c * d * d * d, 99, 9, 9 / 999, 0.5, 15, 1, 0.7, 0.5, 300);
 var s3 = s2 / 9 + PitchShift(c, f / 9, f / 9, 0, 0);
-HPF(s3.splay, 9) * 0.5
+HPF(s3.splay2, 9) * 0.5
