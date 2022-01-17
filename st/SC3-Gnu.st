@@ -121,6 +121,9 @@
     index := 0.
     self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
     ^result !
+  append: operand
+    ^self , operand
+  !
   atWrap: index
     "Answer the index'th element of the receiver.  If index is out of bounds,
      let it wrap around from the end to the beginning until it is in bounds."
