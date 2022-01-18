@@ -372,11 +372,11 @@ ADSR comment: 'EnvGen of simplified EnvADSR'!
   primaryFactoryMethod ^#gate:attackTime:decayTime:sustainLevel:releaseTime:curve:!
 !
 
-AbstractUGen subclass: #AR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUGen subclass: #ASR instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 
-AR comment: 'EnvGen of simplified EnvASR'!
+ASR comment: 'EnvGen of simplified EnvASR'!
 
-!AR class methodsFor: 'instance creation'!
+!ASR class methodsFor: 'instance creation'!
   gate: g attackTime: p1 releaseTime: p2 curve: p3
     ^(EnvASR attackTime: p1 sustainLevel: 1 releaseTime: p2 curve: p3) asEnvGen: g
   !

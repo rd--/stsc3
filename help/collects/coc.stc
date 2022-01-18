@@ -155,7 +155,7 @@ var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
 var f = {
     arg partial;
-    var env = AR(tr, 0, 5, #[0]) / partial;
+    var env = ASR(tr, 0, 5, #[0]) / partial;
     var amp = LFNoise1(Rand(5, 12)).max(0);
     Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), env * amp)
 };
