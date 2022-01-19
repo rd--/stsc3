@@ -1,0 +1,5 @@
+// Select ; array expansion at first input
+var m = #[60, 62, 63, 65, 67];
+var x = MouseX(0, 4, 0, 0.2);
+var y = MouseX(0, 4, 0, 0.2);
+SinOsc(Select([x, y], m).midicps, 0) * 0.1
