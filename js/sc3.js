@@ -240,43 +240,65 @@ function inputAsArray(i) {
     return Array.isArray(i) ? i : [i];
 }
 
-// Bindings
-
-function SinOsc(freq, phase) {
-    return makeUgen('SinOsc', 1, Rate.ar, 0, [freq, phase]);
-}
+// Operators
 
 function UnaryOp(ix, a) {
     return makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
-}
-
-function Tanh(a) {
-    return UnaryOp(36, a);
 }
 
 function BinaryOp(ix, a, b) {
     return makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
 }
 
+// Operator bindings
+
+function MidiCps(a) { return UnaryOp(17, a); }
+function Tanh(a) { return UnaryOp(36, a); }
+
 function Add(a, b) { return BinaryOp(0, a, b); }
 function Sub(a, b) { return BinaryOp(1, a, b); }
 function Mul(a, b) { return BinaryOp(2, a, b); }
 
+// Ugen bindings
+
+// Interpolating sine wavetable oscillator.
+function SinOsc(freq, phase) {
+    return makeUgen('SinOsc', 1, Rate.ar, 0, [freq, phase]);
+}
+
+// 2nd order Butterworth highpass filter.
 function HPF(input, freq) {
     return makeUgen('HPF', 1, inputRate([input]), 0, [input, freq]);
 }
 
+// Two channel equal power pan.
 function Pan2(input, pos, level) {
     return makeUgen('Pan2', 2, inputRate([input]), 0, [input, pos, level]);
 }
 
+// Pink Noise.
 function PinkNoise() {
     return makeUgen('PinkNoise', 1, Rate.ar, 0, []);
 }
 
+// Write a signal to a bus.
 function Out(bus, channelsArray) {
-    var inputArray = [bus].concat(inputAsArray(channelsArray));
-    return makeUgen('Out', 0, inputRate(inputArray), 0, inputArray);
+    return makeUgen('Out', 0, inputRate([channelsArray]), 0, [bus].concat(inputAsArray(channelsArray)));
+}
+
+// Sawtooth oscillator
+function LFSaw(freq, iphase) {
+    return makeUgen('LFSaw', 1, Rate.ar, 0, [freq, iphase]);
+}
+
+// Comb delay line with no interpolation.
+function CombN(input, maxdelaytime, delaytime, decaytime) {
+    return makeUgen('CombN', 1, inputRate([input]), 0, [input, maxdelaytime, delaytime, decaytime]);
+}
+
+// Multiply add
+function MulAdd(input, mul, add) {
+    return makeUgen('MulAdd', 1, inputRate([input, mul, add]), 0, [input, mul, add]);
 }
 
 // Pseudo
@@ -390,6 +412,8 @@ u = Sum(Pan2(HPF(PinkNoise(), [3000, 11000]), SinOsc([1 / 7, 1 / 13], [0, pi]), 
 o = SinOsc(440, 0);
 u = Out(0, Mul([o, o], 0.1));
 graphSyndef(new Graph('g', u))
+
+u = Mul(CombN(Mul(SinOsc(MidiCps(MulAdd(LFSaw(0.4, 0), 24, MulAdd(LFSaw([8, 7.23], 0), 3, 80))), 0), 0.04), 0.2, 0.2, 4), 0.1)
 
 */
 
