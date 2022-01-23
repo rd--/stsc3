@@ -110,11 +110,15 @@ exprPrintLisp expr =
 
 -- * Js
 
--- | Js operators are not extensible, therefore .stc operators, which are, must be re-written as functions.
+{- | Js operators are not extensible, therefore .stc operators, which are, must be re-written as functions.
+     Logical operators however cannot be written as functions.
+-}
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
-  [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod")
-  ,(">", "gt"), ("<", "lt"), (">=", "gte"), ("<=", "lte"), ("==", "eq"), ("!=", "neq")]
+  [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod"), ("**", "pow")
+  ,(">", "gt"), ("<", "lt"), (">=", "gte"), ("<=", "lte"), ("==", "eq"), ("!=", "neq")
+  ,("&", "bitAnd"), ("|", "bitOr")
+  ,("++", "append")]
 
 jsRenamerFromTable :: [(String, String)] -> String -> String
 jsRenamerFromTable tbl x = fromMaybe x (lookup x tbl)

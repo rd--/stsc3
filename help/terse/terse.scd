@@ -318,7 +318,7 @@ d.values.sort({ arg i, j; i <= j })                         // list of values at
 this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
 this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
-this.a = nil                                                // there are single letter interpreter variables
+this.a == nil                                               // there are single letter interpreter variables
 this.s == Server.default                                    // by convention s has the default scsynth
 this.executeFile("program.scd")                             // run program tex
 "['c' -> 60, 'b' -> 50, 'a' -> 100]".interpret              // interpret (read) data structure
