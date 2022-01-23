@@ -719,108 +719,108 @@ function ZeroCrossing(input) {
     return makeUgen('ZeroCrossing', 1, inputRate([input]), 0, [input]);
 }
 
-function Add(a, b) { return BinaryOp(0, a, b); }
-function Sub(a, b) { return BinaryOp(1, a, b); }
-function Mul(a, b) { return BinaryOp(2, a, b); }
-function Idiv(a, b) { return BinaryOp(3, a, b); }
-function Fdiv(a, b) { return BinaryOp(4, a, b); }
-function Mod(a, b) { return BinaryOp(5, a, b); }
-function Eq(a, b) { return BinaryOp(6, a, b); }
-function Ne(a, b) { return BinaryOp(7, a, b); }
-function Lt(a, b) { return BinaryOp(8, a, b); }
-function Gt(a, b) { return BinaryOp(9, a, b); }
-function Le(a, b) { return BinaryOp(10, a, b); }
-function Ge(a, b) { return BinaryOp(11, a, b); }
-function Min(a, b) { return BinaryOp(12, a, b); }
-function Max(a, b) { return BinaryOp(13, a, b); }
-function BitAnd(a, b) { return BinaryOp(14, a, b); }
-function BitOr(a, b) { return BinaryOp(15, a, b); }
-function BitXor(a, b) { return BinaryOp(16, a, b); }
-function Lcm(a, b) { return BinaryOp(17, a, b); }
-function Gcd(a, b) { return BinaryOp(18, a, b); }
-function Round(a, b) { return BinaryOp(19, a, b); }
-function RoundUp(a, b) { return BinaryOp(20, a, b); }
-function Trunc(a, b) { return BinaryOp(21, a, b); }
-function Atan2(a, b) { return BinaryOp(22, a, b); }
-function Hypot(a, b) { return BinaryOp(23, a, b); }
-function Hypotx(a, b) { return BinaryOp(24, a, b); }
-function Pow(a, b) { return BinaryOp(25, a, b); }
-function ShiftLeft(a, b) { return BinaryOp(26, a, b); }
-function ShiftRight(a, b) { return BinaryOp(27, a, b); }
-function UnsignedShift(a, b) { return BinaryOp(28, a, b); }
-function Fill(a, b) { return BinaryOp(29, a, b); }
-function Ring1(a, b) { return BinaryOp(30, a, b); }
-function Ring2(a, b) { return BinaryOp(31, a, b); }
-function Ring3(a, b) { return BinaryOp(32, a, b); }
-function Ring4(a, b) { return BinaryOp(33, a, b); }
-function DifSqr(a, b) { return BinaryOp(34, a, b); }
-function SumSqr(a, b) { return BinaryOp(35, a, b); }
-function SqrSum(a, b) { return BinaryOp(36, a, b); }
-function SqrDif(a, b) { return BinaryOp(37, a, b); }
-function AbsDif(a, b) { return BinaryOp(38, a, b); }
-function Thresh(a, b) { return BinaryOp(39, a, b); }
-function AmClip(a, b) { return BinaryOp(40, a, b); }
-function ScaleNeg(a, b) { return BinaryOp(41, a, b); }
-function Clip2(a, b) { return BinaryOp(42, a, b); }
-function Excess(a, b) { return BinaryOp(43, a, b); }
-function Fold2(a, b) { return BinaryOp(44, a, b); }
-function Wrap2(a, b) { return BinaryOp(45, a, b); }
-function FirstArg(a, b) { return BinaryOp(46, a, b); }
-function RandRange(a, b) { return BinaryOp(47, a, b); }
-function ExpRandRange(a, b) { return BinaryOp(48, a, b); }
+function add(a, b) { return BinaryOp(0, a, b); }
+function sub(a, b) { return BinaryOp(1, a, b); }
+function mul(a, b) { return BinaryOp(2, a, b); }
+function idiv(a, b) { return BinaryOp(3, a, b); }
+function fdiv(a, b) { return BinaryOp(4, a, b); }
+function mod(a, b) { return BinaryOp(5, a, b); }
+function eq(a, b) { return BinaryOp(6, a, b); }
+function ne(a, b) { return BinaryOp(7, a, b); }
+function lt(a, b) { return BinaryOp(8, a, b); }
+function gt(a, b) { return BinaryOp(9, a, b); }
+function le(a, b) { return BinaryOp(10, a, b); }
+function ge(a, b) { return BinaryOp(11, a, b); }
+function min(a, b) { return BinaryOp(12, a, b); }
+function max(a, b) { return BinaryOp(13, a, b); }
+function bitAnd(a, b) { return BinaryOp(14, a, b); }
+function bitOr(a, b) { return BinaryOp(15, a, b); }
+function bitXor(a, b) { return BinaryOp(16, a, b); }
+function lcm(a, b) { return BinaryOp(17, a, b); }
+function gcd(a, b) { return BinaryOp(18, a, b); }
+function round(a, b) { return BinaryOp(19, a, b); }
+function roundUp(a, b) { return BinaryOp(20, a, b); }
+function trunc(a, b) { return BinaryOp(21, a, b); }
+function atan2(a, b) { return BinaryOp(22, a, b); }
+function hypot(a, b) { return BinaryOp(23, a, b); }
+function hypotx(a, b) { return BinaryOp(24, a, b); }
+function pow(a, b) { return BinaryOp(25, a, b); }
+function shiftLeft(a, b) { return BinaryOp(26, a, b); }
+function shiftRight(a, b) { return BinaryOp(27, a, b); }
+function unsignedShift(a, b) { return BinaryOp(28, a, b); }
+function fill(a, b) { return BinaryOp(29, a, b); }
+function ring1(a, b) { return BinaryOp(30, a, b); }
+function ring2(a, b) { return BinaryOp(31, a, b); }
+function ring3(a, b) { return BinaryOp(32, a, b); }
+function ring4(a, b) { return BinaryOp(33, a, b); }
+function difSqr(a, b) { return BinaryOp(34, a, b); }
+function sumSqr(a, b) { return BinaryOp(35, a, b); }
+function sqrSum(a, b) { return BinaryOp(36, a, b); }
+function sqrDif(a, b) { return BinaryOp(37, a, b); }
+function absDif(a, b) { return BinaryOp(38, a, b); }
+function thresh(a, b) { return BinaryOp(39, a, b); }
+function amClip(a, b) { return BinaryOp(40, a, b); }
+function scaleNeg(a, b) { return BinaryOp(41, a, b); }
+function clip2(a, b) { return BinaryOp(42, a, b); }
+function excess(a, b) { return BinaryOp(43, a, b); }
+function fold2(a, b) { return BinaryOp(44, a, b); }
+function wrap2(a, b) { return BinaryOp(45, a, b); }
+function firstArg(a, b) { return BinaryOp(46, a, b); }
+function randRange(a, b) { return BinaryOp(47, a, b); }
+function expRandRange(a, b) { return BinaryOp(48, a, b); }
 
-function Neg(a) { return UnaryOp(0, a); }
-function Not(a) { return UnaryOp(1, a); }
-function IsNil(a) { return UnaryOp(2, a); }
-function NotNil(a) { return UnaryOp(3, a); }
-function BitNot(a) { return UnaryOp(4, a); }
-function Abs(a) { return UnaryOp(5, a); }
-function AsFloat(a) { return UnaryOp(6, a); }
-function AsInt(a) { return UnaryOp(7, a); }
-function Ceil(a) { return UnaryOp(8, a); }
-function Floor(a) { return UnaryOp(9, a); }
-function Frac(a) { return UnaryOp(10, a); }
-function Sign(a) { return UnaryOp(11, a); }
-function Squared(a) { return UnaryOp(12, a); }
-function Cubed(a) { return UnaryOp(13, a); }
-function Sqrt(a) { return UnaryOp(14, a); }
-function Exp(a) { return UnaryOp(15, a); }
-function Recip(a) { return UnaryOp(16, a); }
-function MidiCps(a) { return UnaryOp(17, a); }
-function CpsMidi(a) { return UnaryOp(18, a); }
-function MidiRatio(a) { return UnaryOp(19, a); }
-function RatioMidi(a) { return UnaryOp(20, a); }
-function DbAmp(a) { return UnaryOp(21, a); }
-function AmpDb(a) { return UnaryOp(22, a); }
-function OctCps(a) { return UnaryOp(23, a); }
-function CpsOct(a) { return UnaryOp(24, a); }
-function Log(a) { return UnaryOp(25, a); }
-function Log2(a) { return UnaryOp(26, a); }
-function Log10(a) { return UnaryOp(27, a); }
-function Sin(a) { return UnaryOp(28, a); }
-function Cos(a) { return UnaryOp(29, a); }
-function Tan(a) { return UnaryOp(30, a); }
-function ArcSin(a) { return UnaryOp(31, a); }
-function ArcCos(a) { return UnaryOp(32, a); }
-function ArcTan(a) { return UnaryOp(33, a); }
-function Sinh(a) { return UnaryOp(34, a); }
-function Cosh(a) { return UnaryOp(35, a); }
-function Tanh(a) { return UnaryOp(36, a); }
-function Rand_(a) { return UnaryOp(37, a); }
-function Rand2(a) { return UnaryOp(38, a); }
-function LinRand_(a) { return UnaryOp(39, a); }
-function BiLinRand(a) { return UnaryOp(40, a); }
-function Sum3Rand(a) { return UnaryOp(41, a); }
-function Distort(a) { return UnaryOp(42, a); }
-function SoftClip(a) { return UnaryOp(43, a); }
-function Coin(a) { return UnaryOp(44, a); }
-function DigitValue(a) { return UnaryOp(45, a); }
-function Silence(a) { return UnaryOp(46, a); }
-function Thru(a) { return UnaryOp(47, a); }
-function RectWindow(a) { return UnaryOp(48, a); }
-function HanWindow(a) { return UnaryOp(49, a); }
-function WelchWindow(a) { return UnaryOp(50, a); }
-function TriWindow(a) { return UnaryOp(51, a); }
-function Ramp_(a) { return UnaryOp(52, a); }
-function Scurve(a) { return UnaryOp(53, a); }
+function neg(a) { return UnaryOp(0, a); }
+function not(a) { return UnaryOp(1, a); }
+function isNil(a) { return UnaryOp(2, a); }
+function notNil(a) { return UnaryOp(3, a); }
+function bitNot(a) { return UnaryOp(4, a); }
+function abs(a) { return UnaryOp(5, a); }
+function asFloat(a) { return UnaryOp(6, a); }
+function asInt(a) { return UnaryOp(7, a); }
+function ceil(a) { return UnaryOp(8, a); }
+function floor(a) { return UnaryOp(9, a); }
+function frac(a) { return UnaryOp(10, a); }
+function sign(a) { return UnaryOp(11, a); }
+function squared(a) { return UnaryOp(12, a); }
+function cubed(a) { return UnaryOp(13, a); }
+function sqrt(a) { return UnaryOp(14, a); }
+function exp(a) { return UnaryOp(15, a); }
+function recip(a) { return UnaryOp(16, a); }
+function midiCps(a) { return UnaryOp(17, a); }
+function cpsMidi(a) { return UnaryOp(18, a); }
+function midiRatio(a) { return UnaryOp(19, a); }
+function ratioMidi(a) { return UnaryOp(20, a); }
+function dbAmp(a) { return UnaryOp(21, a); }
+function ampDb(a) { return UnaryOp(22, a); }
+function octCps(a) { return UnaryOp(23, a); }
+function cpsOct(a) { return UnaryOp(24, a); }
+function log(a) { return UnaryOp(25, a); }
+function log2(a) { return UnaryOp(26, a); }
+function log10(a) { return UnaryOp(27, a); }
+function sin(a) { return UnaryOp(28, a); }
+function cos(a) { return UnaryOp(29, a); }
+function tan(a) { return UnaryOp(30, a); }
+function arcSin(a) { return UnaryOp(31, a); }
+function arcCos(a) { return UnaryOp(32, a); }
+function arcTan(a) { return UnaryOp(33, a); }
+function sinh(a) { return UnaryOp(34, a); }
+function cosh(a) { return UnaryOp(35, a); }
+function tanh(a) { return UnaryOp(36, a); }
+function rand_(a) { return UnaryOp(37, a); }
+function rand2(a) { return UnaryOp(38, a); }
+function linRand_(a) { return UnaryOp(39, a); }
+function biLinRand(a) { return UnaryOp(40, a); }
+function sum3Rand(a) { return UnaryOp(41, a); }
+function distort(a) { return UnaryOp(42, a); }
+function softClip(a) { return UnaryOp(43, a); }
+function coin(a) { return UnaryOp(44, a); }
+function digitValue(a) { return UnaryOp(45, a); }
+function silence(a) { return UnaryOp(46, a); }
+function thru(a) { return UnaryOp(47, a); }
+function rectWindow(a) { return UnaryOp(48, a); }
+function hanWindow(a) { return UnaryOp(49, a); }
+function welchWindow(a) { return UnaryOp(50, a); }
+function triWindow(a) { return UnaryOp(51, a); }
+function ramp_(a) { return UnaryOp(52, a); }
+function scurve(a) { return UnaryOp(53, a); }
 

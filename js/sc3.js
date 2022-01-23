@@ -151,8 +151,8 @@ function BinaryOp(ix, a, b) {
 
 // Pseudo
 
-function Sum(a) {
-    return a.reduce(Add);
+function sum(a) {
+    return a.reduce(add);
 }
 
 // Graph
