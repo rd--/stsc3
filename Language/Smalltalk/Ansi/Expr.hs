@@ -1,6 +1,6 @@
-{-# LANGUAGE DeriveFunctor, DeriveFoldable, DeriveTraversable #-}
-
--- | A tree Expr type for Smalltalk expressions.
+{- | A tree Expr type for Smalltalk expressions.
+     There is an unused type parameter that should probably be deleted.
+-}
 module Language.Smalltalk.Ansi.Expr where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -12,7 +12,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 -}
 data Message t =
   Message St.Selector [Expr t]
-  deriving (Functor, Foldable, Traversable, Eq, Show)
+  deriving (Eq, Show)
 
 -- | Lambda terms may store their Smalltalk definitions (either blocks or methods)
 data LambdaDefinition =
@@ -46,7 +46,7 @@ data Expr t =
   | Array [Expr t]
   | Begin [Expr t]
   | Init (Maybe St.Comment) St.Temporaries [Expr t]
-  deriving (Functor, Foldable, Traversable, Eq, Show)
+  deriving (Eq, Show)
 
 exprIsAssignment :: Expr t -> Bool
 exprIsAssignment e =

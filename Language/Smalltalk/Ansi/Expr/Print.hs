@@ -2,6 +2,7 @@
 module Language.Smalltalk.Ansi.Expr.Print where
 
 import Data.List {- base -}
+import Data.Maybe {- base -}
 import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -106,3 +107,61 @@ exprPrintLisp expr =
             ([],_) -> printf "(>> %s)" x
             _ -> printf "(>> (| %s) %s)" (unwords t) x
       in maybe "" commentPrintLisp c ++ r
+
+-- * Js
+
+-- | Js operators are not extensible, therefore .stc operators, which are, must be re-written as functions.
+jsDefaultRenamingTable :: [(String, String)]
+jsDefaultRenamingTable =
+  [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod")
+  ,(">", "gt"), ("<", "lt"), (">=", "gte"), ("<=", "lte"), ("==", "eq"), ("!=", "neq")]
+
+jsRenamerFromTable :: [(String, String)] -> String -> String
+jsRenamerFromTable tbl x = fromMaybe x (lookup x tbl)
+
+literalPrintJs :: St.Literal -> String
+literalPrintJs l =
+  case l of
+    St.CharacterLiteral c -> printf "'%c'" c
+    St.SymbolLiteral s -> printf "'%s'" s
+    St.SelectorLiteral _ -> error "literalPrintJs: selector"
+    St.ArrayLiteral a -> printf "[%s]" (intercalate ", " (map (either St.literal_pp id) a))
+    _ -> St.literal_pp l
+
+{- | Print Js notation of Expr.
+
+import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
+rw = exprPrintJs (jsRenamerFromTable jsDefaultRenamingTable) . stcToExpr
+map rw (words "q.p q.p(r) q.p(r,s) p(q)")
+map rw ["p + q * r", "p % q >= r"]
+map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
+map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) }.value(3, 5)"]
+map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
+rw "// c\nx = 6; x.postln"
+-}
+exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
+exprPrintJs rw expr =
+  case expr of
+    Identifier x -> rw x
+    Literal x -> literalPrintJs x
+    Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
+    Return e -> printf "return %s;" (exprPrintJs rw e)
+    Send rcv (Message sel arg) ->
+      case (takeWhile (/= ':') (rw (St.selectorIdentifier sel)), arg) of
+        ("apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
+        ("value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
+        (msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
+    Lambda _ arg (St.Temporaries tmp) stm ->
+      printf
+      "function(%s) { %s %s }"
+      (intercalate ", " arg)
+      (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
+      (if null stm then "return null;" else (intercalate "; " (map (exprPrintJs rw) (init stm ++ [Return (last stm)]))))
+    Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
+    Begin e -> intercalate "; "  (map (exprPrintJs rw) e)
+    Init c (St.Temporaries t) e ->
+      let x = intercalate "; "  (map (exprPrintJs rw) e)
+          r = case (t,e) of
+                ([],_) ->  x
+                _ -> printf "var %s; %s" (intercalate ", " t) x
+      in maybe "" St.sc_comment_pp c ++ r
