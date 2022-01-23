@@ -5,7 +5,7 @@ f := [ :octave :clockRate :pwmrate :fltrate |
   | sequ tr patternCps sq pwm cf |
   tr := Impulse freq: clockRate phase: 0.
   sequ := [ :s | DmdOn trig: tr kr reset: 0 demandUGens: (Seq repeats: Float infinity list: s) ].
-  patternCps := (pattern + (12 * octave)) midicps.
+  patternCps := (pattern + (12 * octave)) midiCps.
   sq := sequ value: patternCps.
   pwm := SinOsc freq: pwmrate phase: (2 * Float pi) rand mul: 0.4 add: 0.5.
   cf := SinOsc freq: fltrate phase: (2 * Float pi) rand mul: 1400 add: 2000.

@@ -11,7 +11,7 @@ p := [
   | n0 o dt |
   n0 := LFNoise2 freq: 3000.
   o := #(-0.05 0.0 0.04) at: ix.
-  dt := (n + o) midicps reciprocal.
+  dt := (n + o) midiCps reciprocal.
   CombL in: (n0 * e) maxdelaytime: dt delaytime: dt decaytime: 6].
  l := ((n - 36) / 27) - 1.
  Pan2 in: ((1 to: 3) mixFill: c) pos: l level: 1].

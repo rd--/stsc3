@@ -2,7 +2,7 @@
 var voiceFunc = {
     arg e;
     var numPartials = 40;
-    var baseFreq = (e.x * 25 + 48).midicps;
+    var baseFreq = (e.x * 25 + 48).midiCps;
     var sig = Decay(K2A(e.w) * 0.1, 0.001) * PinkNoise();
     var rat =
         [1, 1.125, 1.25, 1.333, 1.5, 1.666, 1.875,

@@ -7,7 +7,7 @@ str := [ :i |
  t := (HPZ1 in: (x > (0.25 + (i - 1 * 0.1)))) abs.
  e := (Decay in: t decayTime: 0.05) kr.
  n := PinkNoise mul: e.
- dt := (scale at: i) midicps reciprocal.
+ dt := (scale at: i) midiCps reciprocal.
  s := CombL in: n maxdelaytime: dt delaytime: dt decaytime: 4.
  Pan2 in: s pos: (i - 1 * 0.2 - 0.5) level: 1].
 strs := (1 to: scale size) mixFill: str.

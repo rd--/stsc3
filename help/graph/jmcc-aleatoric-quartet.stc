@@ -6,7 +6,7 @@ var dadd = amp - dmul;
 var rapf = { arg in; AllpassN(in, 0.05, { Rand(0, 0.05) }.dup, 1) };
 var mkFreq = {
   var n0 = LFNoise0(Select(IRand(0, 2), #[1, 0.5, 0.25]));
-  Lag((n0 * 7 + 66 + Rand(-30, 30)).rounded, 0.2).midicps
+  Lag((n0 * 7 + 66 + Rand(-30, 30)).rounded, 0.2).midiCps
 };
 var mkSig = {
   arg ix;

@@ -6,7 +6,7 @@ var stringFunc = {
   arg i;
   var trigger = HPZ1(MouseX(0, 1, 0, 0.2) > (0.25 + i * triggerSpacing)).abs;
   var pluck = PinkNoise() * Decay(trigger, 0.05).kr;
-  var period = pitch.at(i).midicps.reciprocal;
+  var period = pitch.at(i).midiCps.reciprocal;
   var string = CombL(pluck, period, period, 8);
   Pan2(string, i - 1 * panSpacing - 0.75, 1)};
 LeakDC(LPF(1.to(pitch.size).mixFill(stringFunc), 12000), 0.995)

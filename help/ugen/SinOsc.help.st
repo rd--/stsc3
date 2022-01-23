@@ -1,5 +1,5 @@
 "SinOsc ; fixed frequency (hz) and initial-phase (radians)"
-SinOsc freq: (69 midicps) phase: 0 mul: 0.1
+SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
 
 "SinOsc ; modulate freq"
 SinOsc freq: (XLine start: 2000 end: 200 dur: 1 doneAction: 2) phase: 0 mul: 0.1
@@ -63,7 +63,7 @@ Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75
 "sinOsc ; event control"
 | f |
 f := [ :e |
- Pan2 in: (SinOsc freq: (e x * 24 + 48) midicps phase: 0) pos: e o * 2 - 1 level: e z * e w * 0.5 ].
+ Pan2 in: (SinOsc freq: (e x * 24 + 48) midiCps phase: 0) pos: e o * 2 - 1 level: e z * e w * 0.5 ].
 (Voicer numVoices: 16 voiceFunc: f) mix
 
 "sinOsc ; gliss"

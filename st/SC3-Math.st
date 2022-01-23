@@ -1,17 +1,17 @@
 !Number methodsFor: 'arithmetic'!
-  midicps
+  midiCps
     "Convert from fractional midi note number to frequency (in hertz)"
     ^440 * (2 raisedTo: ((self - 69) * (1 / 12)))
   !
-  cpsmidi
+  cpsMidi
     "Cycles per second to fractional midi note number."
     ^(((self * (1 / 440)) log: 2) * 12) + 69
   !
-  dbamp
+  dbAmp
     "Decibels to linear amplitude"
      ^10 raisedTo: (self * 0.05)
   !
-  ampdb
+  ampDb
     "Linear amplitude to decibels"
     ^(self log: 10) * 20
 !

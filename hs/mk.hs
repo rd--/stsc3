@@ -14,9 +14,9 @@ import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midicps",17),("cpsmidi",18)
-  ,("dbamp", 21), ("ampdb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
-  ,("distort",42),("softclip",43)]
+  ,("frac",10),("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midiCps",17),("cpsMidi",18)
+  ,("dbAmp", 21), ("ampDb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
+  ,("distort",42),("softClip",43)]
 
 {- | Binary operators.
 
@@ -31,7 +31,7 @@ binop =
   ,("lcm:",17),("gcd:",18),("roundTo:",19)
   ,("truncateTo:",21),("raisedTo:",25)
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
-  ,("amclip:",40),("clip2:",42),("fold2:",44)]
+  ,("amClip:",40),("clip2:",42),("fold2:",44)]
 
 -- > Data.List.sort ugen == ugen
 ugen :: [String]

@@ -2,7 +2,7 @@
 | gen z |
 gen := [ :tr |
   | f a r n |
-  f := (TRand lo: 24 hi: 96 trig: tr) midicps.
+  f := (TRand lo: 24 hi: 96 trig: tr) midiCps.
   a := (500 / f) min: 1.
   r := TXLine start: (TExpRand lo: 0.1 hi: 20 trig: tr) end: (TExpRand lo: 0.1 hi: 20 trig: tr) dur: 25.6 trig: tr.
   n := 12.

@@ -30,7 +30,7 @@ SinOsc.ar(phase: 0)
 SinOsc.ar(freq: 440, phase: 0)
 SinOsc.ar(440, phase: 0)
 SinOsc.ar((60 + 9),0)
-SinOsc.ar((60.midicps),0)
+SinOsc.ar((60.midiCps),0)
 x.y(a).z(b)
 p.q(r).s
 Signal.hanningWindow(1024)
@@ -52,12 +52,12 @@ w * (x + y) - z
 1 + -2.abs.min(3).squared
 2.max(3) == 3                           // true
 1 + 2 . max(3) == 4                     // true
-SinOsc.ar(60.midicps)
-SinOsc.ar(60.midicps,0)
-SinOsc.ar(60.midicps,pi)
-SinOsc.ar(60.midicps,pi / 4)
+SinOsc.ar(60.midiCps)
+SinOsc.ar(60.midiCps,0)
+SinOsc.ar(60.midiCps,pi)
+SinOsc.ar(60.midiCps,pi / 4)
 SinOsc.ar(60 + 9,0)
-SinOsc.ar(60.midicps,0)
+SinOsc.ar(60.midiCps,0)
 
 'Parenthesised Expressions'
 x.y + z

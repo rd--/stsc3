@@ -8,7 +8,7 @@ var f = {
     SinOscBank(freq, [1], { 0.0.rand(2 * pi) }.dup(3 * n))
 };
 n.timesRepeat({
-  var freq = 24.0.rand(84.0).midicps;
+  var freq = 24.0.rand(84.0).midiCps;
   p.add(freq);
   p.add(freq + d.rand2);
   p.add(freq + d.rand2);

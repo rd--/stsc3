@@ -4,7 +4,7 @@ var f = {
     arg octave, clockRate, pwmrate, fltrate;
     var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };
     var tr = Impulse(clockRate, 0);
-    var patternCps = (pattern + (12 * octave)).midicps;
+    var patternCps = (pattern + (12 * octave)).midiCps;
     var sq = sequ.value(patternCps, tr);
     var pwm = SinOsc(pwmrate, Rand(0, 2 * pi)) * 0.4 + 0.5;
     var cf = SinOsc(fltrate, Rand(0, 2 * pi)) * 1400 + 2000;

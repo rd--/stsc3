@@ -92,10 +92,10 @@ Mix(1.to(numpartials).collect(partial))
 SinOsc(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 100, 0) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Saw(Select(Stepper(Impulse(4, 0.1),  0,  0,  7,  1,  0),  #[72, 63, 67, 72, 55, 62, 63, 60].midicps)) *  0.1
+Saw(Select(Stepper(Impulse(4, 0.1),  0,  0,  7,  1,  0),  #[72, 63, 67, 72, 55, 62, 63, 60].midiCps)) *  0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Saw(Select(Stepper(Impulse(MouseX(1, 40, 0, 0.2), 0.1),  0,  0,  7,  1,  0),  #[72, 63, 67, 72, 55, 62, 63, 60].midicps)) *  0.1
+Saw(Select(Stepper(Impulse(MouseX(1, 40, 0, 0.2), 0.1),  0,  0,  7,  1,  0),  #[72, 63, 67, 72, 55, 62, 63, 60].midiCps)) *  0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 SinOsc(300 + (200 * Latch(SinOsc(13.3, 0), Impulse(10, 0))), 0) * 0.2
@@ -104,7 +104,7 @@ SinOsc(300 + (200 * Latch(SinOsc(13.3, 0), Impulse(10, 0))), 0) * 0.2
 SinOsc(400 * (1 + EnvGen(Impulse(2.5, 0), 1, 0, 1, 0, EnvSpec(#[0, 1, 0, 0.5, -0.4], #[0.1], #[\step], nil, nil, 0).coord)), 0) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, EnvSpec(#[63, 63, 60, 55, 60], #[0.125], #[\step], nil, nil, 0).coord).midicps, 0) * 0.1
+SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, EnvSpec(#[63, 63, 60, 55, 60], #[0.125], #[\step], nil, nil, 0).coord).midiCps, 0) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 var t = MouseY(0, 1, 0, 0.2) * #[0, 128, 256, 128] / SampleRate();

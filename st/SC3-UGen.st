@@ -6861,7 +6861,7 @@ Slew comment: 'Slew rate limiter.'!
     paramNames := #(#in #up #dn).
     mceNames := #().
     ugenRate := #(0).
-    numChan := 0.
+    numChan := 1.
     specialIndex := 0.
     ugenId := nil.
     in := 0.0. up := 1.0. dn := 1.0!
@@ -7914,10 +7914,10 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   gcd: b ^ BinaryOpUGen specialIndex: 18 a: self b: b!
   roundTo: b ^ BinaryOpUGen specialIndex: 19 a: self b: b!
   truncateTo: b ^ BinaryOpUGen specialIndex: 21 a: self b: b!
-  ** b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
+  raisedTo: b ^ BinaryOpUGen specialIndex: 25 a: self b: b!
   bitShiftLeft: b ^ BinaryOpUGen specialIndex: 26 a: self b: b!
   bitShiftRight: b ^ BinaryOpUGen specialIndex: 27 a: self b: b!
-  amclip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!
+  amClip: b ^ BinaryOpUGen specialIndex: 40 a: self b: b!
   clip2: b ^ BinaryOpUGen specialIndex: 42 a: self b: b!
   fold2: b ^ BinaryOpUGen specialIndex: 44 a: self b: b!
 !
@@ -7933,10 +7933,10 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   sqrt ^ UnaryOpUGen specialIndex: 14 a: self!
   exp ^ UnaryOpUGen specialIndex: 15 a: self!
   reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
-  midicps ^ UnaryOpUGen specialIndex: 17 a: self!
-  cpsmidi ^ UnaryOpUGen specialIndex: 18 a: self!
-  dbamp ^ UnaryOpUGen specialIndex: 21 a: self!
-  ampdb ^ UnaryOpUGen specialIndex: 22 a: self!
+  midiCps ^ UnaryOpUGen specialIndex: 17 a: self!
+  cpsMidi ^ UnaryOpUGen specialIndex: 18 a: self!
+  dbAmp ^ UnaryOpUGen specialIndex: 21 a: self!
+  ampDb ^ UnaryOpUGen specialIndex: 22 a: self!
   ln ^ UnaryOpUGen specialIndex: 25 a: self!
   log2 ^ UnaryOpUGen specialIndex: 26 a: self!
   log ^ UnaryOpUGen specialIndex: 27 a: self!
@@ -7944,6 +7944,6 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   cos ^ UnaryOpUGen specialIndex: 29 a: self!
   tanh ^ UnaryOpUGen specialIndex: 36 a: self!
   distort ^ UnaryOpUGen specialIndex: 42 a: self!
-  softclip ^ UnaryOpUGen specialIndex: 43 a: self!
+  softClip ^ UnaryOpUGen specialIndex: 43 a: self!
 !
 

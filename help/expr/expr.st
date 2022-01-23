@@ -203,8 +203,8 @@ four := [:x| x + 1] value: 3
 'Initializer Definition'
 
 |a b| a := 1 . ^ a + b .
-SinOsc freq: (69 midicps) phase: 0 mul: 0.1
-SinOsc freq: (69 midicps) phase: 0 mul: 0.1
+SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
+SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
 |a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c .
 |a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value .
 [:x | x * x] value: Float pi * 2
@@ -251,7 +251,7 @@ p := (1 + 2)
 p := (1 + 2) negate
 a value + b value + c value
 note2 := (sequR value: #(-12 -7 -5 0 2 5) value: clock_16) + note1
-freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midicps .
+freq := ((#(-2 0 3 5 7 10 12 15) at: i) + 60) midiCps .
 (1 to: 6) do: [:i| s := u in: s maxdelaytime: 0.1 delaytime: {0.05 rand . 0.05 rand} decaytime: 4] .
 out := (1 to: pitch size) mixFill: [:i| |t| t := HPZ1 in: (mousex > (0.25 + ((i - 1) * spacing))) abs . x]
 out := pitch size mixFill: [ x ]
