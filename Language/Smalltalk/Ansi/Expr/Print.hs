@@ -121,7 +121,7 @@ jsDefaultRenamingTable =
   ,("++", "append")]
 
 jsRenamerFromTable :: [(String, String)] -> String -> String
-jsRenamerFromTable tbl x = fromMaybe x (lookup x tbl)
+jsRenamerFromTable tbl nm = fromMaybe nm (lookup nm tbl)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =
@@ -146,7 +146,7 @@ rw "// c\nx = 6; x.postln"
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
 exprPrintJs rw expr =
   case expr of
-    Identifier x -> rw x
+    Identifier x -> x
     Literal x -> literalPrintJs x
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Return e -> printf "return %s;" (exprPrintJs rw e)

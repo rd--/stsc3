@@ -12,6 +12,7 @@ import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
 -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Expr.Print as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
@@ -48,6 +49,12 @@ sc_cat fn = do
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
+stc_to_js :: FilePath -> IO ()
+stc_to_js fn = do
+  txt_fragments <- Help.read_file_fragments fn
+  let expr_fragments = map Sc.stcToExpr txt_fragments
+  mapM_ (putStrLn . St.exprPrintJs (St.jsRenamerFromTable St.jsDefaultRenamingTable)) expr_fragments
+
 {-
 stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_play evalFile fn = evalFile fn >>= SC3.audition
@@ -65,7 +72,7 @@ help =
     ," repl {ansi|expr|som}"
     ," rewrite ndef"
     ," run som class arguments..."
-    ," translate [stream] {sc | stc} st [input-file output-file]"
+    ," translate [stream] {sc | stc} { st | js } [input-file output-file]"
     ]
 
 -- | Like interact but with named files.
@@ -91,6 +98,7 @@ main :: IO ()
 main = do
   somDirectory <- Som.somSystemClassPath
   a <- getArgs
+  let trs in_ty out_ty = if in_ty == "stc" then (if out_ty == "st" then Sc.stcToSt else Sc.stcToJs) else Sc.scToSt
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
@@ -108,7 +116,7 @@ main = do
     ["play","expr",fn] -> stsc3_play Interpreter.Lisp.Expr.evalSmalltalkFile fn
 -}
     ["stop"] -> SC3.withSC3 SC3.reset
-    ["translate",ty,"st"] -> interact (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
-    ["translate",ty,"st",inFile,outFile] -> procFile inFile outFile (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
-    ["translate","stream",ty,"st"] -> procStdio (if ty == "stc" then Sc.stcToSt else Sc.scToSt)
+    ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
+    ["translate",in_ty,out_ty,inFile,outFile] -> procFile inFile outFile (trs in_ty out_ty)
+    ["translate","stream",in_ty,out_ty] -> procStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

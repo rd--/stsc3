@@ -1,6 +1,7 @@
 import Data.Maybe {- base -}
 
 import Sound.SC3.UGen.DB as Db {- hsc3-db -}
+import qualified Sound.SC3.UGen.DB.Bindings.Js as Js {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Bindings.SuperCollider as Sc {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Bindings.Smalltalk as St {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
@@ -69,6 +70,7 @@ is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)
 main :: IO ()
 main = do
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
+  Js.js_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/js/sc3-bindings.js" Js.js_sc3_uop Js.js_sc3_binop ugen
   let col = map u_lookup_cs_err ugen
       flt = filter Record.u_is_filter col
       osc = filter is_osc col
