@@ -1,0 +1,2 @@
+// Voicer
+mul(sum(Voicer(16, function(e) { var freq; freq = midiCps(add(mul(x(e), [25, add(mul(LFNoise2(0.25), 0.25), 25)]), 48)); return Pan2(sum(RLPF(Saw(freq), mul(add(y(e), 0.75), freq), mul(y(e), 0.5))), sub(mul(o(e), 2), 1), mul(w(e), z(e))); })), 0.25)

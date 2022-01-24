@@ -66,7 +66,7 @@
   !
   fill: size value: aBlock
     "SC idiom to fill an array using a zero argument block.
-     The argument as index form is not implemented since St and Sc disagree about indexding."
+     The argument as index form is not implemented since St and Sc disagree about indexing."
     ^(1 to: size) collect: [ :i | aBlock value: i ]
   !
 !

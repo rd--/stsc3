@@ -93,8 +93,13 @@ function arrayFromTo(from, to) { return arrayFromToBy(from, to, 1); }
 // arrayIota(5).shallowEq([0, 1, 2, 3, 4])
 function arrayIota(k) { return arrayFromTo(0, k - 1); }
 
-// arrayFill(5, i => i * i).shallowEq([0, 1, 4, 9, 16])
+// arrayFill(5, () => Math.random())
 function arrayFill(k, f) {
+    return arrayIota(k).map(f);
+}
+
+// arrayFillWithIndex(5, i => i * i).shallowEq([0, 1, 4, 9, 16])
+function arrayFillWithIndex(k, f) {
     return arrayIota(k).map(f);
 }
 

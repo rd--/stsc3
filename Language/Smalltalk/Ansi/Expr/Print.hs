@@ -117,7 +117,7 @@ jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
   [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod"), ("**", "pow")
   ,(">", "gt"), ("<", "lt"), (">=", "gte"), ("<=", "lte"), ("==", "eq"), ("!=", "neq")
-  ,("&", "bitAnd"), ("|", "bitOr")
+  ,("&", "bitAnd"), ("|", "bitOr"), ("<<", "shiftLeft"), (">>", "shiftLeft")
   ,("++", "append")]
 
 jsRenamerFromTable :: [(String, String)] -> String -> String

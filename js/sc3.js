@@ -18,6 +18,12 @@ function isNumber(x) {
 
 var pi = Math.PI;
 
+function randomInteger(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // the maximum is exclusive and the minimum is inclusive
+}
+
 // Uint8Array
 
 function isUint8Array(x) {
@@ -149,10 +155,118 @@ function BinaryOp(ix, a, b) {
     return makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
 }
 
-// Pseudo
+// Pseudo Ugens
 
 function sum(a) {
     return a.reduce(add);
+}
+
+function Splay(inArray, spread, level, center, levelComp) {
+    var n = Math.max(2, inArray.length);
+    var positions = arrayFromTo(0, n - 1).map(item => MulAdd(sub(mul(item, fdiv(2, sub(n, 1))), 1), spread, center));
+    return sum(Pan2(inArray, positions, mul(level, levelComp ? Math.sqrt(1 / n) : 1)));
+}
+
+function Splay2(inArray) {
+    var n = Math.max(2, inArray.length);
+    var positions = arrayFromTo(0, n - 1).map(item => item * (2 / (n - 1)) - 1);
+    return sum(Pan2(inArray, positions, Math.sqrt(1 / n)));
+}
+
+function LinLin(input, srclo, srchi, dstlo, dsthi) {
+    var scale  = (dsthi - dstlo) / (srchi - srclo);
+    var offset = dstlo - (scale * srclo);
+    return MulAdd(input, scale, offset);
+}
+
+function InFb(numChannels, bus) {
+    return InFeedback(numChannels, bus);
+}
+
+function Select2(predicate, ifTrue, ifFalse) {
+    return (predicate * (ifTrue - ifFalse)) + ifFalse;
+}
+
+function TChoose(trig, array) {
+    return Select(TIRand(0, array.length - 1, trig), array);
+}
+
+function PMOsc(carfreq, modfreq, pmindex, modphase) {
+    return SinOsc(carfreq, SinOsc(modfreq, modphase, pmindex));
+}
+
+function XLn(start, end, dur) {
+    return XLine(start, end, dur, 0);
+}
+
+// Smalltalk
+
+function collect(array, proc) { return array.map(proc); }
+function dup(proc, count) { return arrayFill(count, proc); }
+function append(lhs, rhs) { return lhs.concat(rhs); }
+function transpose(array) { return array.transpose(); }
+function reverse(array) { return array.reverse(); }
+function mean(array) { return fdiv(sum(array), array.length); }
+function choose(array) { return array[randomInteger(0, array.length)]; }
+function to(from, to) { return arrayFromTo(from, to); }
+function first(array) { return array[0]; }
+function second(array) { return array[1]; }
+function third(array) { return array[2]; }
+function roundTo(a, b) { return round(a, b); }
+function rounded(a) { return round(a, 1); }
+
+// Env
+
+function isString(x) { return typeof x == 'string'; }
+
+var EnvDict = {
+    step: 0,
+    lin: 1, linear: 1,
+    exp: 2, exponential: 2,
+    sin: 3, sine: 3,
+    wel: 4, welch: 4,
+    sqr: 6, squared: 6,
+    cub: 7, cubed: 7,
+    hold: 8
+};
+
+class EnvSpec {
+    constructor(levels, times, curves, releaseNode, loopNode, offset) {
+        this.levels = levels;
+        this.times = times;
+        this.curves = Array.isArray(curves) ? curves : [curves];
+        this.releaseNode = releaseNode;
+        this.loopNode = loopNode;
+        this.offset = offset;
+    }
+}
+
+EnvSpec.prototype.coord = function() {
+    var n = this.levels.length - 1;
+    var r = [];
+    r.push(this.levels[0]);
+    r.push(n);
+    r.push(this.releaseNode || -99);
+    r.push(this.loopNode || -99);
+    for(i = 0; i < n; i++) {
+        var c = this.curves.atWrap(i);
+        r.push(this.levels[i + 1]);
+        r.push(this.times.atWrap(i));
+        r.push(EnvDict[c] || 5);
+        r.push(isSymbol(c) ? 0 : c);
+    }
+    return r;
+}
+
+// Texture
+
+function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
+        return to(0, overlap).map(function(i) {
+            var trg = Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap);
+            var snd = graphFunc(trg);
+            var env = new EnvSpec([0,1,1,0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
+            return mul(snd, EnvGen(env, trg, 1, 0, 1, 0));
+        });
 }
 
 // Graph
