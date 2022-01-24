@@ -10,6 +10,10 @@ function makeCounter() {
     return f;
 }
 
+// String
+
+function isString(x) { return typeof x == 'string'; }
+
 // Number
 
 function isNumber(x) {
@@ -115,10 +119,11 @@ class Port {
 }
 
 function isPort(obj) {
-    return obj.constructor === Port;
+    return obj instanceof Port;
 }
 
 function makeUgen(name, nc, rt, op, inputs) {
+    //console.log('makeUgen', name, nc, rt, op, inputs);
     if(inputs.containsArray()) {
         return inputs.extendToBeOfEqualSize().transpose().map(item => makeUgen(name, nc, rt, op, item));
     } else {
@@ -138,6 +143,7 @@ const Rate = {ir: 0, kr: 1, ar: 2, dr: 4}
 // Input = Port | Num | [Input]
 
 function inputRate(i) {
+    //console.log('inputRate', i);
     return Array.isArray(i) ? i.map(inputRate).maxItem() : (isPort(i) ? i.ugen.ugenRate : Rate.ir);
 }
 
@@ -217,8 +223,6 @@ function rounded(a) { return round(a, 1); }
 
 // Env
 
-function isString(x) { return typeof x == 'string'; }
-
 var EnvDict = {
     step: 0,
     lin: 1, linear: 1,
@@ -238,6 +242,7 @@ class EnvSpec {
         this.releaseNode = releaseNode;
         this.loopNode = loopNode;
         this.offset = offset;
+        //console.log('EnvSpec', curves, this);
     }
 }
 
@@ -263,17 +268,47 @@ EnvSpec.prototype.coord = function() {
     return r;
 }
 
+function EnvADSR(attackTime, decayTime, sustainLevel, releaseTime, peakLevel, curve) {
+    return Env(
+        [0, peakLevel, mul(peakLevel, sustainLevel), 0],
+        [attackTime, decayTime, releaseTime],
+        curve,
+        2,
+        null,
+        0);
+}
+
+function ADSR(gate, attackTime, decayTime, sustainLevel, releaseTime, curve) {
+    var env = EnvADSR(attackTime, decayTime, sustainLevel, releaseTime, 1, curve);
+    return EnvGen(gate, 1, 0, 1, 0, env.coord());
+}
+
+function EnvASR(attackTime, sustainLevel, releaseTime, curve) {
+    return Env(
+        [0, sustainLevel, 0],
+        [attackTime, releaseTime],
+        curve,
+        1,
+        null,
+        0);
+}
+
+function ASR(gate, attackTime, releaseTime, curve) {
+    var env = EnvASR(attackTime, 1, releaseTime, curve);
+    return EnvGen(gate, 1, 0, 1, 0, env.coord());
+}
+
 // Texture
 
 function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
-        return to(0, overlap - 1).map(function(i) {
+        return sum(to(0, overlap - 1).map(function(i) {
             var trg = Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap);
             var snd = graphFunc(trg);
-            var env = Env([0,1,1,0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
+            var env = Env([0, 1, 1, 0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
             var sig = mul(snd, EnvGen(trg, 1, 0, 1, 0, env.coord()));
-            console.log(trg, snd, env, sig);
+            //console.log('OverlapTexture', trg, snd, env, sig);
             return sig;
-        }).sum;
+        }));
 }
 
 // Graph
@@ -281,10 +316,14 @@ function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
 // p : port | [port], array : [number | ugen] ; traverse graph from p adding leaf nodes to a
 function ugenTraverseCollecting(p, array) {
     if(Array.isArray(p)) {
+        //console.log('ugenTraverseCollecting: array', p);
         p.forEach(item => ugenTraverseCollecting(item, array));
-    } else {
+    } else if(isPort(p)) {
+        //console.log('ugenTraverseCollecting: port', p, p.ugen.inputValues);
         array.push(p.ugen);
         p.ugen.inputValues.forEach(item => isNumber(item) ? array.push(item)  : ugenTraverseCollecting(item, array));
+    } else {
+        console.error('ugenTraverseCollecting', p, array);
     }
 }
 

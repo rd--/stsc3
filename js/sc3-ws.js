@@ -12,6 +12,7 @@ sc3.open();
 function play(u) {
     var g = new Graph('sc3.js', Out(0, u));
     var d = g.encodeSyndef();
+    console.log('play', d.length);
     sc3.send(d_recv_then(d, osc.writePacket(s_new0('sc3.js', -1, 1, 1))));
 }
 

@@ -1,5 +1,6 @@
 // [1, 2, 3].atWrap(5) === 3
 Array.prototype.atWrap = function(index) {
+    //console.log('atWrap', this, index);
     return this[index % this.length];
 }
 
