@@ -241,6 +241,11 @@ class EnvSpec {
     }
 }
 
+// Env([0, 1, 0], [0.1, 0.9], 'lin', null, null, 0).coord().shallowEq([0, 2, -99, -99, 1, 0.1, 1, 0, 0, 0.9, 1, 0])
+function Env(levels, times, curves, releaseNode, loopNode, offset) {
+    return new EnvSpec(levels, times, curves, releaseNode, loopNode, offset);
+}
+
 EnvSpec.prototype.coord = function() {
     var n = this.levels.length - 1;
     var r = [];
@@ -253,7 +258,7 @@ EnvSpec.prototype.coord = function() {
         r.push(this.levels[i + 1]);
         r.push(this.times.atWrap(i));
         r.push(EnvDict[c] || 5);
-        r.push(isSymbol(c) ? 0 : c);
+        r.push(isString(c) ? 0 : c);
     }
     return r;
 }
@@ -261,12 +266,14 @@ EnvSpec.prototype.coord = function() {
 // Texture
 
 function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
-        return to(0, overlap).map(function(i) {
+        return to(0, overlap - 1).map(function(i) {
             var trg = Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap);
             var snd = graphFunc(trg);
-            var env = new EnvSpec([0,1,1,0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
-            return mul(snd, EnvGen(env, trg, 1, 0, 1, 0));
-        });
+            var env = Env([0,1,1,0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
+            var sig = mul(snd, EnvGen(trg, 1, 0, 1, 0, env.coord()));
+            console.log(trg, snd, env, sig);
+            return sig;
+        }).sum;
 }
 
 // Graph

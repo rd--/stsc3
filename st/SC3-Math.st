@@ -27,8 +27,8 @@
   abs
     ^self collect: [:x| x abs]
   !
-  midicps
-    ^self collect: [:x| x midicps]
+  midiCps
+    ^self collect: [:x| x midiCps]
   !
 !
 

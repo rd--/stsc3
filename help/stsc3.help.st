@@ -7,6 +7,7 @@ SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 "Envelope"
 
 EnvSpec new curveNameDictionary "curve name dictionary"
+(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) coord = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
 
 "UGen"
 

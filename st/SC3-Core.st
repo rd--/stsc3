@@ -98,7 +98,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
     ^Point x: self y: aUGen
   !
   unitCps
-    ^(self * 127) midicps
+    ^(self * 127) midiCps
   !
 !
 
