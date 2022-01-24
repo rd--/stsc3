@@ -22,6 +22,8 @@ function isNumber(x) {
 
 var pi = Math.PI;
 
+var inf = Infinity;
+
 function randomInteger(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -104,6 +106,7 @@ class Ugen {
         this.specialIndex = op; // maybe int
         this.ugenId = ugenCounter(); // int
         this.inputValues = inputs; // [input | [input]] where input : number | port
+        this.mrg = [];
     }
 }
 
@@ -149,6 +152,42 @@ function inputRate(i) {
 
 function inputAsArray(i) {
     return Array.isArray(i) ? i : [i];
+}
+
+// Mrg
+
+// inputFirstUgen([SinOsc([440, 441], 0), SinOsc(442, 0)])
+function inputFirstUgen(i) {
+    if(Array.isArray(i)) {
+        //console.log('inputFirstUgen: array', i)
+        return i.find(inputFirstUgen).ugen || null;
+    } else if(isPort(i)) {
+        //console.log('inputFirstUgen: port', i)
+        return i.ugen;
+    } else {
+        //console.log('inputFirstUgen: number?', i)
+        return null;
+    }
+}
+
+function mrg(lhs,rhs) {
+    var u = inputFirstUgen(lhs);
+    //console.log('mrg', lhs, rhs, u);
+    u ? u.mrg.push(rhs) : console.error("mrg?");
+    return lhs;
+}
+
+// Kr
+
+function kr(i) {
+    if(isPort(i)) {
+        return kr(i.ugen);
+    } else if(isUgen(i)) {
+        i.rate = i.rate === 2 ? 1 : i.rate;
+        return i;
+    } else {
+        console.error('kr', i);
+    }
 }
 
 // Operators
@@ -205,21 +244,57 @@ function XLn(start, end, dur) {
     return XLine(start, end, dur, 0);
 }
 
+function DmdFor(dur, reset, level) {
+    return Duty(dur, reset, 0, level);
+}
+
+function DmdOn(trig, reset, demandUGens) {
+    return Demand(trig, reset, demandUGens);
+}
+
+function Seq(repeats, list) {
+    return Dseq(repeats, list);
+}
+
+function Ln(start, end, dur) {
+        return Line(start, end, dur, 0);
+}
+
+function TLine(start, end, dur, trig) {
+    var env = Env([start, start, end], [0, dur], 'lin', null, null, 0);
+    return EnvGen(trig, 1, 0, 1, 0, env.coord());
+}
+
+function TXLine(start, end, dur, trig) {
+    var env = Env([start, start, end], [0, dur], 'exp', null, null, 0);
+    return EnvGen(trig, 1, 0, 1, 0, env.coord());
+}
+
+function bitShiftRight(a, b) {
+    return shiftRight(a, b);
+}
+
 // Smalltalk
 
 function collect(array, proc) { return array.map(proc); }
 function dup(proc, count) { return arrayFill(count, proc); }
+function timesRepeat(count, proc) { for(i = 0; i < count; i++) { proc(); }; }
 function append(lhs, rhs) { return lhs.concat(rhs); }
 function transpose(array) { return array.transpose(); }
 function reverse(array) { return array.reverse(); }
+function concatenation(array) { return [].concat(array); }
 function mean(array) { return fdiv(sum(array), array.length); }
 function choose(array) { return array[randomInteger(0, array.length)]; }
+function nth(array, index) { return array[index - 1]; }
+function size(array) { return array.length; }
 function to(from, to) { return arrayFromTo(from, to); }
 function first(array) { return array[0]; }
 function second(array) { return array[1]; }
 function third(array) { return array[2]; }
 function roundTo(a, b) { return round(a, b); }
 function rounded(a) { return round(a, 1); }
+function reciprocal(a) { return recip(a); }
+function negated(a) { return neg(a); }
 
 // Env
 
@@ -313,6 +388,10 @@ function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
 
 // Graph
 
+function ugenChildren(u) {
+    return u.inputValues.concat(u.mrg);
+}
+
 // p : port | [port], array : [number | ugen] ; traverse graph from p adding leaf nodes to a
 function ugenTraverseCollecting(p, array) {
     if(Array.isArray(p)) {
@@ -321,7 +400,7 @@ function ugenTraverseCollecting(p, array) {
     } else if(isPort(p)) {
         //console.log('ugenTraverseCollecting: port', p, p.ugen.inputValues);
         array.push(p.ugen);
-        p.ugen.inputValues.forEach(item => isNumber(item) ? array.push(item)  : ugenTraverseCollecting(item, array));
+        ugenChildren(p.ugen).forEach(item => isNumber(item) ? array.push(item)  : ugenTraverseCollecting(item, array));
     } else {
         console.error('ugenTraverseCollecting', p, array);
     }

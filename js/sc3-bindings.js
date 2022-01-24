@@ -156,7 +156,7 @@ function DelayN(input, maxdelaytime, delaytime) {
 }
 // Demand results from demand rate UGens.
 function Demand(trig, reset, demandUGens) {
-    return makeUgen('Demand', mceInput, inputRate([trig]), 0, [trig, reset].concat(inputAsArray(demandUGens)));
+    return makeUgen('Demand', Array.isArray(demandUGens) ? demandUGens.length : 1, inputRate([trig]), 0, [trig, reset].concat(inputAsArray(demandUGens)));
 }
 // Detect when input falls below an amplitude threshold
 function DetectSilence(input, amp, time, doneAction) {
