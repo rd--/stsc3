@@ -1,4 +1,4 @@
-// https://twitter.com/alln4tural/status/99846300173991936 ; graph rewrite
+// https://twitter.com/alln4tural/status/99846300173991936 ; graph rewrite ; size=156,028
 OverlapTexture(function(tr) {
     var h;
     h = mul(midiCps(TChoose(tr, [33, 38, 40])), pow(2, TChoose(tr, to(0, 4))));

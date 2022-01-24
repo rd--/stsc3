@@ -49,7 +49,7 @@ ugen =
   ,"K2A","KeyState", "Klang","Klank"
   ,"LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1"
-  ,"MantissaMask","MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY","MulAdd"
+  ,"MantissaMask","MaxLocalBufs", "MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer", "NumOutputBuses"
   ,"OnePole","Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"

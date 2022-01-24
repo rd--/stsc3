@@ -196,15 +196,23 @@ function UnaryOp(ix, a) {
     return makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
 }
 
+function ConstantBinaryOp(ix, a, b) {
+    if(isNumber(a) && isNumber(b)) {
+        switch(ix) {
+        case 0: return a + b;
+        case 1: return a - b;
+        case 2: return a * b;
+        case 4: return a / b;
+        }
+    }
+    return null;
+}
+
 function BinaryOp(ix, a, b) {
-    return makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
+    return ConstantBinaryOp(ix, a, b) || makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
 }
 
 // Pseudo Ugens
-
-function sum(a) {
-    return a.reduce(add);
-}
 
 function Splay(inArray, spread, level, center, levelComp) {
     var n = Math.max(2, inArray.length);
@@ -274,8 +282,29 @@ function bitShiftRight(a, b) {
     return shiftRight(a, b);
 }
 
+function AudioIn(channels) {
+    return In(1, sub(add(NumOutputBuses(), channels), 1));
+}
+
+/*
+- the current mrg model places q in p, however here q has a reference to p, so the traversal cycles
+- in hsc3 etc there is a distinct mrg type
+
+b = asLocalBuf([0, 2, 4, 5, 7, 9, 11]);
+c = [];
+ugenTraverseCollecting(b, c, []) // stack overflow
+*/
+function asLocalBuf(array) {
+    var k = array.length;
+    var p = LocalBuf(1, k);
+    var q = SetBuf(p, 0, k, array);
+    return mrg(p, q);
+}
+
 // Smalltalk
 
+function sum(a) { return a.reduce(add); }
+function product(a) { return a.reduce(mul); }
 function collect(array, proc) { return array.map(proc); }
 function dup(proc, count) { return arrayFill(count, proc); }
 function timesRepeat(count, proc) { for(i = 0; i < count; i++) { proc(); }; }
@@ -295,6 +324,7 @@ function roundTo(a, b) { return round(a, b); }
 function rounded(a) { return round(a, 1); }
 function reciprocal(a) { return recip(a); }
 function negated(a) { return neg(a); }
+function truncateTo(a, b) { return trunc(a, b); }
 
 // Env
 
@@ -388,39 +418,49 @@ function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
 
 // Graph
 
-function ugenChildren(u) {
-    return u.inputValues.concat(u.mrg);
-}
-
-// p : port | [port], array : [number | ugen] ; traverse graph from p adding leaf nodes to a
-function ugenTraverseCollecting(p, array) {
+// p : port | [port], c : [number | ugen] ; traverse graph from p adding leaf nodes to the c
+function ugenTraverseCollecting(p, c, w) {
     if(Array.isArray(p)) {
         //console.log('ugenTraverseCollecting: array', p);
-        p.forEach(item => ugenTraverseCollecting(item, array));
+        p.forEach(item => ugenTraverseCollecting(item, c, w));
     } else if(isPort(p)) {
-        //console.log('ugenTraverseCollecting: port', p, p.ugen.inputValues);
-        array.push(p.ugen);
-        ugenChildren(p.ugen).forEach(item => isNumber(item) ? array.push(item)  : ugenTraverseCollecting(item, array));
+        //console.log('ugenTraverseCollecting: port', p);
+        if(!w.includes(p.ugen)) {
+            c.push(p.ugen);
+            p.ugen.inputValues.forEach(item => isNumber(item) ? c.push(item)  : ugenTraverseCollecting(item, c, w));
+            p.ugen.mrg.forEach(item => isNumber(item) ? c.push(item) : ugenTraverseCollecting(item, c, c));
+        }
     } else {
-        console.error('ugenTraverseCollecting', p, array);
+        console.error('ugenTraverseCollecting', p, c, w);
     }
 }
 
-// all leaf nodes, in sequence, may contain duplicate entries
+function addImplicitUgens(r) {
+    var k = r.filter(item => isUgen(item) && item.ugenName == 'LocalBuf').length;
+    // console.log('addImplicitUgens: numLocalBuf', k);
+    if(k > 0) {
+        r.unshift(MaxLocalBufs(k).ugen); // not port
+        if(!r.includes(k)) {
+            r.unshift(k);
+        }
+    }
+    return r;
+}
+
+// all leaf nodes, in reverse sequence of, duplicate are removed after reversal, this provides a (non-optimal) correct graph sort
 function ugenGraphLeafNodes(p) {
-    var array = [];
-    ugenTraverseCollecting(p, array);
-    return array.reverse();
+    var c = [], r, k;
+    ugenTraverseCollecting(p, c, []);
+    return addImplicitUgens(c.reverse().nub());
 }
 
 class Graph {
     constructor(name, graph) {
         var leafNodes = ugenGraphLeafNodes(graph);
-        var ugenSeq = leafNodes.filter(item => isUgen(item));
         this.graphName = name;
-        this.ugenSet = new Set(ugenSeq);
-        this.ugenIdSeq = ugenSeq.map(item => item.ugenId).nub();
-        this.constantSeq = leafNodes.filter(item => isNumber(item)).nub();
+        this.ugenSeq = leafNodes.filter(item => isUgen(item));
+        this.ugenIdSeq = this.ugenSeq.map(item => item.ugenId);
+        this.constantSeq = leafNodes.filter(item => isNumber(item));
     }
 }
 
@@ -457,8 +497,8 @@ Graph.prototype.printUgenSpec = function(u) {
 const SCgf = Number(1396926310);
 
 Graph.prototype.printSyndef = function() {
-    console.log(SCgf, 2, 1, this.graphName, this.constantSeq.length, this.constantSeq, 0, [], 0, [], this.ugenSet.size);
-    this.ugenSet.forEach(item => this.printUgenSpec(item));
+    console.log(SCgf, 2, 1, this.graphName, this.constantSeq.length, this.constantSeq, 0, [], 0, [], this.ugenSeq.length);
+    this.ugenSeq.forEach(item => this.printUgenSpec(item));
     console.log(0, []);
 }
 
@@ -484,8 +524,8 @@ Graph.prototype.encodeSyndef = function() {
         this.constantSeq.map(item => Number(item).encodeFloat32()),
         Number(0).encodeInt32(), // # param
         Number(0).encodeInt32(), // # param names
-        Number(this.ugenSet.size).encodeInt32(),
-        Array.from(this.ugenSet).map(item => this.encodeUgenSpec(item)),
+        Number(this.ugenSeq.length).encodeInt32(),
+        this.ugenSeq.map(item => this.encodeUgenSpec(item)),
         Number(0).encodeInt16() // # variants
     ]);
 }

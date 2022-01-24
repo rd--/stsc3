@@ -156,7 +156,8 @@ function DelayN(input, maxdelaytime, delaytime) {
 }
 // Demand results from demand rate UGens.
 function Demand(trig, reset, demandUGens) {
-    return makeUgen('Demand', Array.isArray(demandUGens) ? demandUGens.length : 1, inputRate([trig]), 0, [trig, reset].concat(inputAsArray(demandUGens)));
+    var nc = inputAsArray(demandUGens).length;
+    return makeUgen('Demand', nc, inputRate([trig]), 0, [trig, reset].concat(inputAsArray(demandUGens)));
 }
 // Detect when input falls below an amplitude threshold
 function DetectSilence(input, amp, time, doneAction) {
@@ -437,6 +438,10 @@ function LPZ1(input) {
 // Reduce precision.
 function MantissaMask(input, bits) {
     return makeUgen('MantissaMask', 1, inputRate([input]), 0, [input, bits]);
+}
+// LocalBuf count
+function MaxLocalBufs(count) {
+    return makeUgen('MaxLocalBufs', 1, Rate.ir, 0, [count]);
 }
 // Waveguide mesh physical models of drum membranes
 function MembraneCircle(excitation, tension, loss) {

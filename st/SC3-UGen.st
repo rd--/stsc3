@@ -4769,6 +4769,44 @@ MantissaMask comment: 'Reduce precision.'!
   primaryFactoryMethod ^#in:bits:!
 !
 
+UGen subclass: #MaxLocalBufs
+  instanceVariableNames: 'count'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MaxLocalBufs comment: 'LocalBuf count'!
+
+!MaxLocalBufs methodsFor: 'accessing'!
+  count ^count!
+  count: x count := x!
+!
+
+!MaxLocalBufs methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MaxLocalBufs.
+    paramNames := #(#count).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    count := 0.0!
+!
+
+
+!MaxLocalBufs class methodsFor: 'instance creation'!
+  count: count
+    |u|
+    u := self new.
+    u count: count.
+    ^u!
+  count: count mul: mul ^(MaxLocalBufs count: count) * mul!
+  count: count mul: mul add: add ^(MaxLocalBufs count: count) * mul + add!
+  primaryFactoryMethod ^#count:!
+!
+
 UGen subclass: #MembraneCircle
   instanceVariableNames: 'excitation tension loss'
   classVariableNames: ''

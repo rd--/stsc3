@@ -698,6 +698,9 @@
   localIn
     ^LocalIn default: self
   !
+  maxLocalBufs
+    ^MaxLocalBufs count: self
+  !
   membraneCircle: tension value: loss
     ^MembraneCircle excitation: self tension: tension loss: loss
   !
