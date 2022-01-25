@@ -116,7 +116,7 @@ exprPrintLisp expr =
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
   [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod"), ("**", "pow")
-  ,(">", "gt"), ("<", "lt"), (">=", "gte"), ("<=", "lte"), ("==", "eq"), ("!=", "neq")
+  ,(">", "gt"), ("<", "lt"), (">=", "ge"), ("<=", "le"), ("==", "eq"), ("!=", "neq")
   ,("&", "bitAnd"), ("|", "bitOr"), ("<<", "shiftLeft"), (">>", "shiftLeft")
   ,("++", "append")]
 

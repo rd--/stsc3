@@ -192,8 +192,27 @@ function kr(i) {
 
 // Operators
 
+function ConstantUnaryOp(ix, a) {
+    if(isNumber(a)) {
+        switch(ix) {
+        case 0: return 0 - a;
+        case 5: return Math.abs(a);
+        case 8: return Math.ceil(a);
+        case 9: return Math.floor(a);
+        case 12: return a * a;
+        case 13: return a * a * a;
+        case 14: return Math.sqrt(a);
+        case 16: return 1 / a;
+        case 28: return Math.sin(a);
+        case 29: return Math.cos(a);
+        case 30: return Math.tan(a);
+        }
+    }
+    return null;
+}
+
 function UnaryOp(ix, a) {
-    return makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
+    return ConstantUnaryOp(ix, a) || makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
 }
 
 function ConstantBinaryOp(ix, a, b) {
@@ -210,95 +229,6 @@ function ConstantBinaryOp(ix, a, b) {
 
 function BinaryOp(ix, a, b) {
     return ConstantBinaryOp(ix, a, b) || makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
-}
-
-// Pseudo Ugens
-
-function Splay(inArray, spread, level, center, levelComp) {
-    var n = Math.max(2, inArray.length);
-    var positions = arrayFromTo(0, n - 1).map(item => MulAdd(sub(mul(item, fdiv(2, sub(n, 1))), 1), spread, center));
-    return sum(Pan2(inArray, positions, mul(level, levelComp ? Math.sqrt(1 / n) : 1)));
-}
-
-function Splay2(inArray) {
-    var n = Math.max(2, inArray.length);
-    var positions = arrayFromTo(0, n - 1).map(item => item * (2 / (n - 1)) - 1);
-    return sum(Pan2(inArray, positions, Math.sqrt(1 / n)));
-}
-
-function LinLin(input, srclo, srchi, dstlo, dsthi) {
-    var scale  = (dsthi - dstlo) / (srchi - srclo);
-    var offset = dstlo - (scale * srclo);
-    return MulAdd(input, scale, offset);
-}
-
-function InFb(numChannels, bus) {
-    return InFeedback(numChannels, bus);
-}
-
-function Select2(predicate, ifTrue, ifFalse) {
-    return (predicate * (ifTrue - ifFalse)) + ifFalse;
-}
-
-function TChoose(trig, array) {
-    return Select(TIRand(0, array.length - 1, trig), array);
-}
-
-function PMOsc(carfreq, modfreq, pmindex, modphase) {
-    return SinOsc(carfreq, SinOsc(modfreq, modphase, pmindex));
-}
-
-function XLn(start, end, dur) {
-    return XLine(start, end, dur, 0);
-}
-
-function DmdFor(dur, reset, level) {
-    return Duty(dur, reset, 0, level);
-}
-
-function DmdOn(trig, reset, demandUGens) {
-    return Demand(trig, reset, demandUGens);
-}
-
-function Seq(repeats, list) {
-    return Dseq(repeats, list);
-}
-
-function Ln(start, end, dur) {
-        return Line(start, end, dur, 0);
-}
-
-function TLine(start, end, dur, trig) {
-    var env = Env([start, start, end], [0, dur], 'lin', null, null, 0);
-    return EnvGen(trig, 1, 0, 1, 0, env.coord());
-}
-
-function TXLine(start, end, dur, trig) {
-    var env = Env([start, start, end], [0, dur], 'exp', null, null, 0);
-    return EnvGen(trig, 1, 0, 1, 0, env.coord());
-}
-
-function bitShiftRight(a, b) {
-    return shiftRight(a, b);
-}
-
-function AudioIn(channels) {
-    return In(1, sub(add(NumOutputBuses(), channels), 1));
-}
-
-/*
-- the current mrg model places q in p, however here q has a reference to p, so the traversal cycles
-- in hsc3 etc there is a distinct mrg type
-
-b = asLocalBuf([0, 2, 4, 5, 7, 9, 11]);
-c = [];
-ugenTraverseCollecting(b, c, []) // stack overflow
-*/
-function asLocalBuf(array) {
-    var k = array.length;
-    var p = LocalBuf(1, k);
-    var q = SetBuf(p, 0, k, array);
-    return mrg(p, q);
 }
 
 // Smalltalk
