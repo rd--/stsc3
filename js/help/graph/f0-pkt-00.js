@@ -1,4 +1,4 @@
-// pkt 00 (f0) ; error
+// pkt 00 (f0) ; error?
 var f0, ph0, a0, i, w, s;
 f0 = add([100, 200, 300], SinOsc([0.11, 0.22, 0.33], 0));
 ph0 = mul(mul(SinOsc([0.1, 0.2, 0.3], 0), 2), pi);

@@ -1,4 +1,4 @@
-// https://twitter.com/redFrik/status/1138498427241861122 (f0)
+// https://twitter.com/redFrik/status/1138498427241861122 (f0) ; NaN?
 var f, b, d, t1, t2, f1, s1, c, s2, s3;
 f = sqrt(9);
 b = [f, 9.999];

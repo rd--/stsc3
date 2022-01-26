@@ -141,7 +141,7 @@ function makeUgen(name, nc, rt, op, inputs) {
 
 // Rate
 
-const Rate = {ir: 0, kr: 1, ar: 2, dr: 4}
+const Rate = {ir: 0, kr: 1, ar: 2, dr: 3}
 
 // Input = Port | Num | [Input]
 
@@ -179,16 +179,23 @@ function mrg(lhs,rhs) {
 
 // Kr
 
-function kr(i) {
+function krMutateInPlace(i) {
     if(isPort(i)) {
-        return kr(i.ugen);
+        krMutateInPlace(i.ugen);
     } else if(isUgen(i)) {
         i.rate = i.rate === 2 ? 1 : i.rate;
-        return i;
+        i.inputValues.forEach(item => krMutateInPlace(item))
+    } else if(Array.isArray(i)) {
+        i.forEach(item => krMutateInPlace(item))
     } else {
-        console.error('kr', i);
+        if(!isNumber(i)) {
+            console.error('krMutateInPlace', i);
+        }
     }
+    return i;
 }
+
+function kr(i) { krMutateInPlace(i); return i; }
 
 // Operators
 
@@ -231,17 +238,36 @@ function BinaryOp(ix, a, b) {
     return ConstantBinaryOp(ix, a, b) || makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
 }
 
+// Null
+
+function isNull(x) { return x === null; }
+
+function isUndefined(x) { return x === undefined; }
+
+function nullFix(message, inputValue, defaultValue) {
+    if(isNull(inputValue) || isUndefined(inputValue)) {
+        console.warn('nullFix', message, inputValue, defaultValue);
+        return defaultValue;
+    } else {
+        return inputValue;
+    }
+}
+
 // Smalltalk
 
+/*
+append([1, 2, 3], [4, 5]) //=> [1, 2, 3, 4, 5]
+*/
 function sum(a) { return a.reduce(add); }
 function product(a) { return a.reduce(mul); }
 function collect(array, proc) { return array.map(proc); }
-function dup(proc, count) { return arrayFill(count, proc); }
+function dup(proc, count) { return arrayFill(nullFix('dup: count?', count, 2), proc); }
 function timesRepeat(count, proc) { for(i = 0; i < count; i++) { proc(); }; }
 function append(lhs, rhs) { return lhs.concat(rhs); }
 function transpose(array) { return array.transpose(); }
 function reverse(array) { return array.reverse(); }
-function concatenation(array) { return [].concat(array); }
+function concatenation(array) { return array.concatenation(); }
+function clump(array, n) { return array.clump(n); }
 function mean(array) { return fdiv(sum(array), array.length); }
 function choose(array) { return array[randomInteger(0, array.length)]; }
 function nth(array, index) { return array[index - 1]; }
@@ -337,7 +363,7 @@ function ASR(gate, attackTime, releaseTime, curve) {
 
 function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
         return sum(to(0, overlap - 1).map(function(i) {
-            var trg = Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap);
+            var trg = kr(Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap));
             var snd = graphFunc(trg);
             var env = Env([0, 1, 1, 0], [transitionTime,sustainTime,transitionTime], 'sin', null, null, 0);
             var sig = mul(snd, EnvGen(trg, 1, 0, 1, 0, env.coord()));
@@ -358,7 +384,7 @@ function ugenTraverseCollecting(p, c, w) {
         if(!w.includes(p.ugen)) {
             c.push(p.ugen);
             p.ugen.inputValues.forEach(item => isNumber(item) ? c.push(item)  : ugenTraverseCollecting(item, c, w));
-            p.ugen.mrg.forEach(item => isNumber(item) ? c.push(item) : ugenTraverseCollecting(item, c, c));
+            p.ugen.mrg.forEach(item => isNumber(item) ? c.push(item) : ugenTraverseCollecting(item, c, c)); // after inputs?
         }
     } else {
         console.error('ugenTraverseCollecting', p, c, w);
@@ -459,6 +485,16 @@ Graph.prototype.encodeSyndef = function() {
         Number(0).encodeInt16() // # variants
     ]);
 }
+
+// Print
+
+function printSyndefOf(u) {
+    var g = new Graph('sc3.js', Out(0, u));
+    var d = g.encodeSyndef();
+    console.log('printSyndef: scsyndef #', d.length);
+    g.printSyndef(g);
+}
+
 
 // Server commands (Open Sound Control)
 

@@ -79,6 +79,17 @@ Array.prototype.nub = function() {
     return this.filter((item, index) => this.indexOf(item) === index);
 }
 
+// [[1, 2, 3], [4, 5]].concatenation() //=> [1, 2, 3, 4, 5]
+Array.prototype.concatenation = function() {
+    return this.flat(1);  /* [].concat.apply([], array) */
+}
+
+// arrayIota(20).clump(5)
+Array.prototype.clump = function(n) {
+    var k = Math.ceil(this.length / n);
+    return arrayIota(k).map(i => this.slice(i * n, i * n + n));
+}
+
 // arrayFromToBy(1, 9, 2).shallowEq([1, 3, 5, 7, 9])
 function arrayFromToBy(from, to, by) {
     var r = [];

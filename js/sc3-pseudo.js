@@ -44,9 +44,10 @@ function DmdOn(trig, reset, demandUGens) {
     return Demand(trig, reset, demandUGens);
 }
 
-function Seq(repeats, list) {
-    return Dseq(repeats, list);
-}
+var Seq = Dseq;
+var Ser = Dseries;
+var Shuf = Dshuf;
+var Choose = Drand;
 
 function Ln(start, end, dur) {
         return Line(start, end, dur, 0);
@@ -93,3 +94,27 @@ function BufRec(bufnum, reset, inputArray) {
 }
 
 var BufAlloc = LocalBuf;
+
+// Reshape input arrays, and allow amp and time to be null (defaulting to 1)
+function asKlankSpec(freq, amp, time) {
+    var n = freq.length;
+    var a = [freq, amp || arrayReplicate(n, 1), time || arrayReplicate(n, 1)];
+    // console.log('asKlankSpec', a);
+    return a.extendToBeOfEqualSize().transpose().concatenation();
+}
+
+function RingzBank(input, freq, amp, time) {
+    return Klank(input, 1, 0, 1, asKlankSpec(freq, amp, time));
+}
+
+function SinOscBank(freq, amp, time) {
+    return Klang(1, 0, asKlankSpec(freq, amp, time));
+}
+
+function LinSeg(gate, coordArray) {
+    var coord = coordArray.clump(2).transpose();
+    var levels = first(coord);
+    var times = second(coord);
+    var env = Env(levels, times.slice(0, times.length - 1), 'lin', null, null, 0);
+    return EnvGen(gate, 1, 0, 1, 0, env.coord());
+}

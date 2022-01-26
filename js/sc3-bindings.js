@@ -685,7 +685,8 @@ function Trig1(input, dur) {
 }
 // (Undocumented class)
 function TScramble(trigger, inputs) {
-    return makeUgen('TScramble', mceInput, inputRate([trigger]), 0, [trigger].concat(inputAsArray(inputs)));
+    var nc = inputAsArray(inputs).length;
+    return makeUgen('TScramble', nc, inputRate([trigger]), 0, [trigger].concat(inputAsArray(inputs)));
 }
 // Two pole filter.
 function TwoPole(input, freq, radius) {
