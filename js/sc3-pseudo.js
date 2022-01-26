@@ -40,6 +40,10 @@ function DmdFor(dur, reset, level) {
     return Duty(dur, reset, 0, level);
 }
 
+function TDmdFor(dur, reset, level) {
+    return TDuty(dur, reset, 0, level, 0);
+}
+
 function DmdOn(trig, reset, demandUGens) {
     return Demand(trig, reset, demandUGens);
 }
@@ -75,8 +79,7 @@ function AudioIn(channels) {
 note that mrg places q in p, and here q has a reference to p, so the traversal of the mrg node must not recurse
 
 b = asLocalBuf([0, 2, 4, 5, 7, 9, 11]);
-c = [];
-ugenTraverseCollecting(b, c, [])
+ugenTraverseCollecting(b, ...)
 */
 function asLocalBuf(array) {
     var k = array.length;
@@ -117,4 +120,13 @@ function LinSeg(gate, coordArray) {
     var times = second(coord);
     var env = Env(levels, times.slice(0, times.length - 1), 'lin', null, null, 0);
     return EnvGen(gate, 1, 0, 1, 0, env.coord());
+}
+
+function SelectX(which, array) {
+    return XFade2(
+        Select(roundTo(which, 2), array),
+	Select(add(truncateTo(which, 2), 1), array),
+	fold2(sub(mul(which, 2), 1), 1),
+        1
+    );
 }
