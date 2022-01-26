@@ -11,4 +11,4 @@ carrier = SelectX(isVoiced, [voicedCarrier, PinkNoise()]);
 filterQ = TRand(10, 100, Dust(0.5));
 srcAmp = Amplitude(BPF(src, bandFreqs, fdiv(1, filterQ)), 0.01, 0.05);
 snd = mul(BPF(carrier, bandFreqs, 0.05), srcAmp);
-Pan2(sum(snd), 0, fdiv(numBands, 4))
+Pan2(sum(snd), 0, fdiv(numBands, 8))

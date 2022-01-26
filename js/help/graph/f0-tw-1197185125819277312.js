@@ -1,4 +1,4 @@
-// https://twitter.com/redFrik/status/1197185125819277312 ; buffer coloring error: output: 71 UnaryOpUGen 0 input: LocalOut 0
+// https://twitter.com/redFrik/status/1197185125819277312
 var f, e, g, c, o, d;
 f = [2, 2.2];
 e = fdiv(f, 22);

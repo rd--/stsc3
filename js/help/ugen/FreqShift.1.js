@@ -1,4 +1,4 @@
-// FreqShift ; buffer coloring error: tried to release output with zero count ; output: 15 FreqShift 0 ; input: DelayC 0
+// FreqShift
 var a, b, c;
 a = mul(Blip(60, 4), LFGauss(4, fdiv(1, 8), 0, 1, 0));
 b = add(fdiv(a, 4), LocalIn(2, 0));
