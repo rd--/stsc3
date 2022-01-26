@@ -2,8 +2,14 @@
 <html>
   <head>
     <link rel="icon" type="image/png" href="https://rohandrape.net/data/png/rd.512.png" />
+    <style>
+      body, textarea, select, button {
+          font-size: 11pt;
+      }
+    </style>
     <script src='https://unpkg.com/osc@2.4.2/dist/osc-browser.js'></script>
     <script src='sc3-array.js'></script>
+    <script src='sc3-topological-sort.js'></script>
     <script src='sc3.js'></script>
     <script src='sc3-bindings.js'></script>
     <script src='sc3-pseudo.js'></script>
@@ -15,7 +21,7 @@
   </head>
   <body>
     <div>
-      <textarea id="jsProgram" rows="60" cols="150">
+      <textarea id="jsProgram" rows="50" cols="150">
       </textarea>
     </div>
     <div>
@@ -264,6 +270,7 @@
 <option value='Ln.1'>Ln.1</option>
 <option value='LocalIn.1'>LocalIn.1</option>
 <option value='LocalOut.1'>LocalOut.1</option>
+<option value='LocalOut.2'>LocalOut.2</option>
 <option value='MouseX.1'>MouseX.1</option>
 <option value='OverlapTexture.1'>OverlapTexture.1</option>
 <option value='Pan2.1'>Pan2.1</option>

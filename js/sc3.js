@@ -105,7 +105,7 @@ class Ugen {
         this.ugenRate = rt; // str
         this.specialIndex = op; // maybe int
         this.ugenId = ugenCounter(); // int
-        this.inputValues = inputs; // [input | [input]] where input : number | port
+        this.inputValues = inputs; // [number | port]
         this.mrg = [];
     }
 }
@@ -173,7 +173,7 @@ function inputFirstUgen(i) {
 function mrg(lhs,rhs) {
     var u = inputFirstUgen(lhs);
     //console.log('mrg', lhs, rhs, u);
-    u ? u.mrg.push(rhs) : console.error("mrg?");
+    u ? (Array.isArray(rhs) ? rhs.forEach(item => u.mrg.push(item)) : u.mrg.push(rhs)) : console.error("mrg?");
     return lhs;
 }
 
@@ -199,7 +199,7 @@ function kr(i) { krMutateInPlace(i); return i; }
 
 // Operators
 
-function ConstantUnaryOp(ix, a) {
+function UnaryOpWithConstantOptimiser(ix, a) {
     if(isNumber(a)) {
         switch(ix) {
         case 0: return 0 - a;
@@ -215,14 +215,23 @@ function ConstantUnaryOp(ix, a) {
         case 30: return Math.tan(a);
         }
     }
-    return null;
+    return makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
+}
+
+// [1, [], [1], [1, 2], [1, null], SinOsc(440, 0), [SinOsc(440, 0)]].map(isArrayConstant)
+function isArrayConstant(a) {
+    return Array.isArray(a) && a.every(isNumber);
 }
 
 function UnaryOp(ix, a) {
-    return ConstantUnaryOp(ix, a) || makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
+    if(isArrayConstant(a)) {
+        return a.map(item => UnaryOpWithConstantOptimiser(ix, item));
+    } else {
+        return UnaryOpWithConstantOptimiser(ix, a);
+    }
 }
 
-function ConstantBinaryOp(ix, a, b) {
+function BinaryOpWithConstantOptimiser(ix, a, b) {
     if(isNumber(a) && isNumber(b)) {
         switch(ix) {
         case 0: return a + b;
@@ -231,11 +240,17 @@ function ConstantBinaryOp(ix, a, b) {
         case 4: return a / b;
         }
     }
-    return null;
+    return  makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
 }
 
 function BinaryOp(ix, a, b) {
-    return ConstantBinaryOp(ix, a, b) || makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
+    if(Array.isArray(a) || Array.isArray(b)) {
+        var expanded = [inputAsArray(a), inputAsArray(b)].extendToBeOfEqualSize().transpose();
+        // console.log('BinaryOp: array constant', expanded);
+        return expanded.map(item => BinaryOpWithConstantOptimiser(ix, item[0], item[1]));
+    } else {
+        return BinaryOpWithConstantOptimiser(ix, a, b);
+    }
 }
 
 // Null
@@ -374,49 +389,40 @@ function OverlapTexture(graphFunc, sustainTime, transitionTime, overlap) {
 
 // Graph
 
-// p : port | [port], c : [number | ugen] ; traverse graph from p adding leaf nodes to the c
+// p : port | [port], c & w : {number | ugen} ; traverse graph from p adding leaf nodes to the set c ; w protects from loops in mrg
 function ugenTraverseCollecting(p, c, w) {
     if(Array.isArray(p)) {
         //console.log('ugenTraverseCollecting: array', p);
         p.forEach(item => ugenTraverseCollecting(item, c, w));
     } else if(isPort(p)) {
         //console.log('ugenTraverseCollecting: port', p);
-        if(!w.includes(p.ugen)) {
-            c.push(p.ugen);
-            p.ugen.inputValues.forEach(item => isNumber(item) ? c.push(item)  : ugenTraverseCollecting(item, c, w));
-            p.ugen.mrg.forEach(item => isNumber(item) ? c.push(item) : ugenTraverseCollecting(item, c, c)); // after inputs?
+        if(!w.has(p.ugen)) {
+            c.add(p.ugen);
+            p.ugen.inputValues.forEach(item => isNumber(item) ? c.add(item)  : ugenTraverseCollecting(item, c, w));
+            p.ugen.mrg.forEach(item => isNumber(item) ? c.add(item) : ugenTraverseCollecting(item, c, c));
         }
     } else {
         console.error('ugenTraverseCollecting', p, c, w);
     }
 }
 
-function addImplicitUgens(r) {
-    var k = r.filter(item => isUgen(item) && item.ugenName == 'LocalBuf').length;
-    // console.log('addImplicitUgens: numLocalBuf', k);
-    if(k > 0) {
-        r.unshift(MaxLocalBufs(k).ugen); // not port
-        if(!r.includes(k)) {
-            r.unshift(k);
-        }
-    }
-    return r;
-}
-
-// all leaf nodes, in reverse sequence of, duplicate are removed after reversal, this provides a (non-optimal) correct graph sort
+// all leaf nodes of p
 function ugenGraphLeafNodes(p) {
-    var c = [], r, k;
-    ugenTraverseCollecting(p, c, []);
-    return addImplicitUgens(c.reverse().nub());
+    var c = new Set();
+    ugenTraverseCollecting(p, c, new Set());
+    return Array.from(c);
 }
 
+// ugens are sorted by id, which is in applicative order. a maxlocalbufs ugen is always present.
 class Graph {
     constructor(name, graph) {
         var leafNodes = ugenGraphLeafNodes(graph);
+        var ugens = leafNodes.filter(item => isUgen(item)).sort((i, j) => i.ugenId - j.ugenId);
+        var constants = leafNodes.filter(item => isNumber(item));
+        var numLocalBufs = ugens.filter(item => isUgen(item) && item.ugenName == 'LocalBuf').length;
         this.graphName = name;
-        this.ugenSeq = leafNodes.filter(item => isUgen(item));
-        this.ugenIdSeq = this.ugenSeq.map(item => item.ugenId);
-        this.constantSeq = leafNodes.filter(item => isNumber(item));
+        this.ugenSeq = [MaxLocalBufs(numLocalBufs).ugen].concat(ugens);
+        this.constantSeq = [numLocalBufs].concat(constants).nub().sort((i, j) => i - j);
     }
 }
 
@@ -428,13 +434,14 @@ Graph.prototype.constantIndex = function(k) {
     return this.constantSeq.indexOf(k);
 }
 
-Graph.prototype.ugenIndex = function(u) {
-    return this.ugenIdSeq.findIndex(item => item === u.ugenId);
+// lookup ugen index at graph given ugenId
+Graph.prototype.ugenIndex = function(k) {
+    return this.ugenSeq.findIndex(u => u.ugenId === k);
 }
 
 // port|num -> [int, int]
 Graph.prototype.inputSpec = function(i) {
-    return isPort(i) ? [this.ugenIndex(i.ugen), i.index] : [-1, this.constantIndex(i)];
+    return isPort(i) ? [this.ugenIndex(i.ugen.ugenId), i.index] : [-1, this.constantIndex(i)];
 }
 
 Graph.prototype.printUgenSpec = function(u) {
@@ -494,7 +501,6 @@ function printSyndefOf(u) {
     console.log('printSyndef: scsyndef #', d.length);
     g.printSyndef(g);
 }
-
 
 // Server commands (Open Sound Control)
 

@@ -1,4 +1,4 @@
-// bowed string (jmcc) ; hangs interpreter?
+// bowed string (jmcc)
 OverlapTexture(function(tr) {
     var root, scale, oct, f0, freq, a0, amp, x, k;
     root = 5;
