@@ -181,11 +181,14 @@ function mrg(lhs,rhs) {
 
 function krMutateInPlace(i) {
     if(isPort(i)) {
+        // console.log('kr: port', i);
         krMutateInPlace(i.ugen);
     } else if(isUgen(i)) {
-        i.rate = i.rate === 2 ? 1 : i.rate;
+        // console.log('kr: ugen', i);
+        i.ugenRate = i.ugenRate === 2 ? 1 : i.ugenRate;
         i.inputValues.forEach(item => krMutateInPlace(item))
     } else if(Array.isArray(i)) {
+        // console.log('kr: array', i);
         i.forEach(item => krMutateInPlace(item))
     } else {
         if(!isNumber(i)) {

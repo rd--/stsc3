@@ -1,4 +1,4 @@
-// https://soundcloud.com/soundaspureform/harmonic-cloud-1 jmcc ; roughguess ; error?
+// https://soundcloud.com/soundaspureform/harmonic-cloud-1 jmcc ; roughguess ; size=75,584
 OverlapTexture(function(tr) {
     var vc;
     vc = function() {

@@ -1,4 +1,4 @@
-// oscillator cluster (rd)
+// oscillator cluster (rd) ; size=70,234
 sum(dup(function() {
     var np, tr, prt, fp;
     np = 12;

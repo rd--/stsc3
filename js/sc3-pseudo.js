@@ -1,7 +1,9 @@
 function Splay(inArray, spread, level, center, levelComp) {
     var n = Math.max(2, inArray.length);
-    var positions = arrayFromTo(0, n - 1).map(item => MulAdd(sub(mul(item, fdiv(2, sub(n, 1))), 1), spread, center));
-    return sum(Pan2(inArray, positions, mul(level, levelComp ? Math.sqrt(1 / n) : 1)));
+    var pos = arrayFromTo(0, n - 1).map(item => add(mul(sub(mul(item, fdiv(2, sub(n, 1))), 1), spread), center));
+    var lvl = mul(level, levelComp ? Math.sqrt(1 / n) : 1);
+    // console.log('Splay', n, pos, lvl);
+    return sum(Pan2(inArray, pos, lvl));
 }
 
 function Splay2(inArray) {
@@ -11,9 +13,9 @@ function Splay2(inArray) {
 }
 
 function LinLin(input, srclo, srchi, dstlo, dsthi) {
-    var scale  = (dsthi - dstlo) / (srchi - srclo);
-    var offset = dstlo - (scale * srclo);
-    return MulAdd(input, scale, offset);
+    var scale  = fdiv(sub(dsthi, dstlo), sub(srchi, srclo));
+    var offset = sub(dstlo, mul(scale, srclo));
+    return add(mul(input, scale), offset);
 }
 
 function InFb(numChannels, bus) {
@@ -21,7 +23,7 @@ function InFb(numChannels, bus) {
 }
 
 function Select2(predicate, ifTrue, ifFalse) {
-    return (predicate * (ifTrue - ifFalse)) + ifFalse;
+    return add(mul(predicate, sub(ifTrue, ifFalse)), ifFalse);
 }
 
 function TChoose(trig, array) {
@@ -129,4 +131,8 @@ function SelectX(which, array) {
 	fold2(sub(mul(which, 2), 1), 1),
         1
     );
+}
+
+function unitCps(a) {
+    return midiCps(mul(a, 127));
 }
