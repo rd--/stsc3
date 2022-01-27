@@ -10,6 +10,7 @@
     <script src='https://unpkg.com/osc@2.4.2/dist/osc-browser.js'></script>
     <script src='sc3-array.js'></script>
     <script src='sc3-topological-sort.js'></script>
+    <script src='sc3-operators.js'></script>
     <script src='sc3.js'></script>
     <script src='sc3-bindings.js'></script>
     <script src='sc3-pseudo.js'></script>
@@ -307,7 +308,7 @@
       </select>
       <button title="Play (,)" accesskey="," onclick="play(eval(document.getElementById('jsProgram').value))">Play</button>
       <button title="Reset (.)" accesskey="." onclick="reset()">Reset</button>
-      <button title="Print" onclick="printSyndefOf(eval(document.getElementById('jsProgram').value))">Print</button>
+      <button title="Print" onclick="prettyPrintSyndefOf(eval(document.getElementById('jsProgram').value))">Print</button>
     </div>
   </body>
 </html>

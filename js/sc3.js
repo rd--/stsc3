@@ -30,6 +30,12 @@ function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min) + min); // the maximum is exclusive and the minimum is inclusive
 }
 
+// Object
+
+function objectKeyFromValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
 // Uint8Array
 
 function isUint8Array(x) {
@@ -139,9 +145,21 @@ function makeUgen(name, nc, rt, op, inputs) {
     }
 }
 
+Ugen.prototype.displayName = function() {
+    switch(this.ugenName) {
+    case 'UnaryOpUGen': return objectKeyFromValue(unaryOperators, this.specialIndex);
+    case 'BinaryOpUGen': return objectKeyFromValue(binaryOperators, this.specialIndex);
+    default: return this.ugenName;
+    }
+}
+
 // Rate
 
-const Rate = {ir: 0, kr: 1, ar: 2, dr: 3}
+var Rate = {ir: 0, kr: 1, ar: 2, dr: 3}
+
+function rateSelector(r) {
+    return objectKeyFromValue(Rate, r);
+}
 
 // Input = Port | Num | [Input]
 
@@ -459,8 +477,7 @@ Graph.prototype.printUgenSpec = function(u) {
     );
 }
 
-// 'SCgf'
-const SCgf = Number(1396926310);
+var SCgf = Number(1396926310);
 
 Graph.prototype.printSyndef = function() {
     console.log(SCgf, 2, 1, this.graphName, this.constantSeq.length, this.constantSeq, 0, [], 0, [], this.ugenSeq.length);
@@ -500,9 +517,39 @@ Graph.prototype.encodeSyndef = function() {
 
 function printSyndefOf(u) {
     var g = new Graph('sc3.js', Out(0, u));
-    var d = g.encodeSyndef();
-    console.log('printSyndef: scsyndef #', d.length);
     g.printSyndef(g);
+}
+
+// Pretty print
+
+Graph.prototype.inputDisplayName = function(i) {
+    if(isPort(i)) {
+        var id = String(this.ugenIndex(i.ugen.ugenId));
+        var nm = i.ugen.displayName();
+        var ix = i.ugen.numChan > 1 ? ('[' + String(i.index) + ']') : '';
+        return id + '_' + nm + ix;
+    } else if(isNumber(i)) {
+        return String(i);
+    } else {
+        console.error('inputDisplayName', i);
+    }
+}
+
+Graph.prototype.prettyPrintUgen = function(u) {
+    console.log(
+        this.ugenIndex(u.ugenId) + '_' + u.displayName(),
+        rateSelector(u.ugenRate),
+        '[' + String(u.inputValues.map(i => this.inputDisplayName(i))) + ']'
+    );
+}
+
+Graph.prototype.prettyPrintSyndef = function() {
+    this.ugenSeq.forEach(item => this.prettyPrintUgen(item));
+}
+
+function prettyPrintSyndefOf(u) {
+    var g = new Graph('sc3.js', Out(0, u));
+    g.prettyPrintSyndef(g);
 }
 
 // Server commands (Open Sound Control)
