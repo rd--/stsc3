@@ -18,6 +18,8 @@ function eventX(e) { return e.x; }
 function eventY(e) { return e.y; }
 function eventZ(e) { return e.z; }
 function eventO(e) { return e.o; }
+function eventRx(e) { return e.rx; }
+function eventRy(e) { return e.ry; }
 function eventP(e) { return e.p; }
 
 function Voicer(numVoices, voiceFunc) {
