@@ -4,6 +4,11 @@ Array.prototype.atWrap = function(index) {
     return this[index % this.length];
 }
 
+// [1, 2, 3].atIndices([0, 2]) //=> [1, 3]
+Array.prototype.atIndices = function(indices) {
+    return indices.map(index => this[index]);
+}
+
 // [1, 2, 3].shallowEq([1, 2, 3]) === true
 Array.prototype.shallowEq = function(anArray) {
     if (this === anArray) {
@@ -118,4 +123,8 @@ function arrayFillWithIndex(k, f) {
 // arrayReplicate(5, 1).shallowEq([1, 1, 1, 1, 1])
 function arrayReplicate(k, v) {
     return arrayIota(k).map(unused => v);
+}
+
+function unitArrayIfScalar(i) {
+    return Array.isArray(i) ? i : [i];
 }

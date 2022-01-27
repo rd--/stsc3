@@ -26,5 +26,5 @@ function Voicer(numVoices, voiceFunc) {
     var k0 = 13000;
     var stp = 10;
     var c0 = 0;
-    return to(0, numVoices - 1).map(c => voiceFunc(new EventParam(c + c0, kr(In(9, k0 + ((c + c0) * stp))))));
+    return to(0, numVoices - 1).map(c => voiceFunc(new EventParam(c + c0, ControlIn(9, k0 + ((c + c0) * stp)))));
 }

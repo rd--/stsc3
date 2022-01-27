@@ -131,12 +131,17 @@ function isPort(obj) {
     return obj instanceof Port;
 }
 
+function deriveRate(rt, inputs) {
+    return isNumber(rt) ? rt : inputs.atIndices(rt).map(inputRate).maxItem();
+}
+
+// If rt is a scalar it is the operating rate, if it is an array it is indices into the inputs telling how to derive the rate.
 function makeUgen(name, nc, rt, op, inputs) {
     //console.log('makeUgen', name, nc, rt, op, inputs);
     if(inputs.containsArray()) {
         return inputs.extendToBeOfEqualSize().transpose().map(item => makeUgen(name, nc, rt, op, item));
     } else {
-        var u = new Ugen(name, nc, rt, op, inputs);
+        var u = new Ugen(name, nc, deriveRate(rt, inputs), op, inputs);
         switch(nc) {
             case 0: return (new Port(u, null));
             case 1: return (new Port(u, 0));
@@ -161,15 +166,11 @@ function rateSelector(r) {
     return objectKeyFromValue(Rate, r);
 }
 
-// Input = Port | Num | [Input]
+// Input = Port | Number
 
 function inputRate(i) {
     //console.log('inputRate', i);
-    return Array.isArray(i) ? i.map(inputRate).maxItem() : (isPort(i) ? i.ugen.ugenRate : Rate.ir);
-}
-
-function inputAsArray(i) {
-    return Array.isArray(i) ? i : [i];
+    return isPort(i) ? i.ugen.ugenRate : (isNumber(i) ? Rate.ir : console.error('inputRate', i));
 }
 
 // Mrg
@@ -213,7 +214,6 @@ function krMutateInPlace(i) {
             console.error('krMutateInPlace', i);
         }
     }
-    return i;
 }
 
 function kr(i) { krMutateInPlace(i); return i; }
@@ -236,7 +236,7 @@ function UnaryOpWithConstantOptimiser(ix, a) {
         case 30: return Math.tan(a);
         }
     }
-    return makeUgen('UnaryOpUGen', 1, inputRate([a]), ix, [a]);
+    return makeUgen('UnaryOpUGen', 1, [0], ix, [a]);
 }
 
 // [1, [], [1], [1, 2], [1, null], SinOsc(440, 0), [SinOsc(440, 0)]].map(isArrayConstant)
@@ -261,12 +261,12 @@ function BinaryOpWithConstantOptimiser(ix, a, b) {
         case 4: return a / b;
         }
     }
-    return  makeUgen('BinaryOpUGen', 1, inputRate([a, b]), ix, [a, b]);
+    return  makeUgen('BinaryOpUGen', 1, [0, 1], ix, [a, b]);
 }
 
 function BinaryOp(ix, a, b) {
     if(Array.isArray(a) || Array.isArray(b)) {
-        var expanded = [inputAsArray(a), inputAsArray(b)].extendToBeOfEqualSize().transpose();
+        var expanded = [unitArrayIfScalar(a), unitArrayIfScalar(b)].extendToBeOfEqualSize().transpose();
         // console.log('BinaryOp: array constant', expanded);
         return expanded.map(item => BinaryOpWithConstantOptimiser(ix, item[0], item[1]));
     } else {

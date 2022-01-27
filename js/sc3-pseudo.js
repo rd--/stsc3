@@ -136,3 +136,8 @@ function SelectX(which, array) {
 function unitCps(a) {
     return midiCps(mul(a, 127));
 }
+
+// Read a signal from a control bus.
+function ControlIn(numChan, bus) {
+    return kr(In(numChan, bus));
+}
