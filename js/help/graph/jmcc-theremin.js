@@ -1,4 +1,4 @@
-// theremin (jmcc)
+// theremin (jmcc) ; mouse control
 var mod, detune, x, y, f;
 mod = 7;
 detune = 0;

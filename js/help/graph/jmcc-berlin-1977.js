@@ -1,4 +1,4 @@
-// berlin 1977 (jmcc) #4
+// berlin 1977 (jmcc) #4 ; mouse control
 var clockRate, clockTime, clock, patternList, note, clock16, noteTrs, freq, env, amp, filt, pw, s;
 clockRate = MouseX(5, 20, 1, 0.2);
 clockTime = fdiv(1, clockRate);

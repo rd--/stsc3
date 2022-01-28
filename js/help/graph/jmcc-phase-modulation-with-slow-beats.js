@@ -1,4 +1,4 @@
-// phase modulation with slow beats ; jmcc #6 ; graph rewrite
+// phase modulation with slow beats ; jmcc #6 ; graph rewrite ; mouse control
 var n, x, y;
 n = 4;
 x = MouseX(100, 6000, 1, 0.2);

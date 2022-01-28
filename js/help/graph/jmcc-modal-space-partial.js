@@ -1,4 +1,4 @@
-// modal space (jmcc) #8
+// modal space (jmcc) #8 ; mouse control
 var b, k, n, r, o, t, f, d, m;
 b = asLocalBuf([0, 2, 3.2, 5, 7, 9, 10]);
 k = DegreeToKey(b, MouseX(0, 15, 0, 0.1), 12);

@@ -1,4 +1,4 @@
-// phase vocoder (nh) ; https://scsynth.org/t/old-school-vocoders/5198/6 ; warning: AudioIn
+// phase vocoder (nh) ; https://scsynth.org/t/old-school-vocoders/5198/6 ; warning: AudioIn ; mouse control
 var src, userTr, freq, numBands, bandFreqs, voicedCarrier, isVoiced, carrier, filterQ, srcAmp, snd;
 src = AudioIn([1]);
 userTr = MouseButton(0, 1, 0.2);

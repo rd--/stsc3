@@ -1,4 +1,4 @@
-// sample and hold liquidities (jmcc) #4
+// sample and hold liquidities (jmcc) #4 ; mouse control
 var r, t, c, cf, f, p, i;
 r = MouseX(1, 200, 1, 0.1);
 t = reciprocal(r);

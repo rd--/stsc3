@@ -1,4 +1,4 @@
-// sweepy noise (jmcc) #6
+// sweepy noise (jmcc) #6 ; mouse control
 var lfoDepth, lfoRate, freq, filtered;
 lfoDepth = MouseY(200, 8000, 1, 0.1);
 lfoRate = MouseX(4, 60, 1, 0.1);

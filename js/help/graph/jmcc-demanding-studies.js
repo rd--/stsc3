@@ -1,4 +1,4 @@
-// demanding studies (jmcc)
+// demanding studies (jmcc) ; mouse control
 var s1, s2, s3, x, tr, f, o1, o2, o3;
 s1 = Choose(1000, [72, 75, 79, 82]);
 s2 = Choose(1, [82, 84, 86]);

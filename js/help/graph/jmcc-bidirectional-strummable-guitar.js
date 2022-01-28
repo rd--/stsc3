@@ -1,4 +1,4 @@
-// bidirectional strummable guitar (jmcc) #11
+// bidirectional strummable guitar (jmcc) #11 ; mouse control
 var pitch1, pitch2, mousex, strFunc, out;
 pitch1 = [52, 57, 62, 67, 71, 76];
 pitch2 = add(pitch1, 7);

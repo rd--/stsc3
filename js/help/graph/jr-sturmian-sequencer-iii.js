@@ -1,4 +1,4 @@
-// sturmian sequencer iii (jrhb)
+// sturmian sequencer iii (jrhb) ; mouse control
 var rules, rewrite, n, strFunc;
 rules = [[0, 1], [0]];
 rewrite = function(n) {

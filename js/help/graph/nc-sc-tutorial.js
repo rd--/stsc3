@@ -1,4 +1,4 @@
-// https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1
+// https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1 ; mouse control
 var n, mk, x, y;
 n = 11;
 mk = function() {

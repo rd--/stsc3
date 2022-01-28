@@ -1,4 +1,4 @@
-// a bath (jr)
+// a bath (jr) ; mouse control
 var above, aside, sources, u1, u2, u3, u4;
 above = roundTo(MouseY(0, 2, 0, 0.2), 1);
 aside = MouseX(1, 1.6, 0, 0.2);

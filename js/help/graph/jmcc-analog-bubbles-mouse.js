@@ -1,4 +1,4 @@
-// analog bubbles with mouse control (jmcc) #3
+// analog bubbles (jmcc) #3 ; mouse control
 var o1, o2, o3;
 o1 = add(mul(LFSaw(MouseX(2, 40, 1, 0.2), 0), -3), 80);
 o2 = add(mul(LFSaw(MouseY(0.1, 10, 1, 0.2), 0), 24), o1);

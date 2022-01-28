@@ -1,4 +1,4 @@
-// aleatoric quartet (jmcc) #7
+// aleatoric quartet (jmcc) #7 ; mouse control
 var amp, density, dmul, dadd, mkSig, g;
 amp = 0.07;
 density = MouseX(0.01, 1, 0, 0.1);

@@ -3,8 +3,10 @@
   <head>
     <link rel="icon" type="image/png" href="https://rohandrape.net/data/png/rd.512.png" />
     <style>
-      body, textarea, select, button {
-          font-size: 11pt;
+      body, div, span, textarea, select, button { font-size: 11pt; }
+      #jsProgram { height: 90vh; width: 85vw; }
+      #statusArea { display: none; 2border: 1px dotted black; margin: 5px 0px; max-width: 25em; }
+      #statusText { height: 1.5em }
       }
     </style>
     <script src='https://unpkg.com/osc@2.4.2/dist/osc-browser.js'></script>
@@ -22,7 +24,7 @@
   </head>
   <body>
     <div>
-      <textarea id="jsProgram" rows="50" cols="150">
+      <textarea id="jsProgram">
       </textarea>
     </div>
     <div>
@@ -311,6 +313,7 @@
       <button title="Print" onclick="prettyPrintSyndefOf(eval(document.getElementById('jsProgram').value))">Print</button>
       <button title="Boot" accesskey="b" onclick="bootScsynth(0, 2)">Boot</button>
     </div>
+    <div id="statusArea">Status: <span id="statusText">Server offline</span></div>
     <script src="sc3-module.js"></script>
     <script async src="lib/scsynth.js"></script>
   </body>

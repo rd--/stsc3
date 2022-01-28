@@ -1,4 +1,4 @@
-// strummable silk (jmcc) #11
+// strummable silk (jmcc) #11 ; mouse control
 var x, str, s;
 x = MouseX(0, 1, 0, 0.2);
 str = function(ix) {

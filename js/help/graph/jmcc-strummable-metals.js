@@ -1,4 +1,4 @@
-// strummable metals ; use mouse to strum strings ; jmcc
+// strummable metals ; use mouse to strum strings ; jmcc ; mouse control
 var x, strFunc;
 x = MouseX(0, 1, 0, 0.2);
 strFunc = function(i) {

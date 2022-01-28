@@ -1,4 +1,4 @@
-// klnk (rd)
+// klnk (rd) ; mouse control
 var o, t, x, y;
 o = SinOsc(LFNoise0([0.5, 1.5]), 0);
 t = Impulse(mul(abs(Slope(o)), [2, 3]), 0);

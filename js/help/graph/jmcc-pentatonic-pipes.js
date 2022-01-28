@@ -1,4 +1,4 @@
-// pentatonic pipes (jmcc) ; mousex on right half of screen causes pulsation
+// pentatonic pipes (jmcc)  ; mouse control, mousex on right half of screen causes pulsation
 var n, mode, root, z;
 n = 5;
 mode = asLocalBuf([0, 3, 5, 7, 10]);

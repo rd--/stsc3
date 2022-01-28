@@ -1,4 +1,4 @@
-// rukano; apr 22, 2012; re: epic pads
+// rukano; apr 22, 2012; re: epic pads ; mouse control
 var freq, gen, fmod, rqmod, snd;
 freq = dup(function() {  return mul(midiCps(choose([60, 64, 65, 67])), add(mul(LFNoise2(1), 0.01), 1)); }, 24);
 gen = mul(LFSaw(freq, 0), 0.1);
