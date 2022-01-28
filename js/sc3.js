@@ -552,7 +552,7 @@ function prettyPrintSyndefOf(u) {
     g.prettyPrintSyndef(g);
 }
 
-// Server commands (Open Sound Control)
+// Server commands (Open Sound Control) ; prefixes are d = definition, s = synth, g = group, m = meta
 
 function d_recv(syndefArray) {
     return {address: '/d_recv', args: [{type: 'b', value: syndefArray}]};
@@ -569,3 +569,5 @@ function s_new0(name, id, addAction, target) {
 function g_freeAll1(id) {
     return {address: '/g_freeAll', args: [{type: 'i', value: id}]};
 }
+
+var m_status = {address: '/status', args: []};
