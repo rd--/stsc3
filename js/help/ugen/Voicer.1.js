@@ -1,11 +1,17 @@
-// Voicer ; error!
+// Voicer ; error if LFNoise2 is audio rate
+mul(sum(Voicer(16, function(e) {
+    var freq;
+    freq = midiCps(add(mul(eventX(e), [25, add(mul(kr(LFNoise2(0.25)), 0.25), 25)]), 48));
+    return Pan2(sum(RLPF(Saw(freq), mul(add(eventY(e), 0.75), freq), mul(eventY(e), 0.5))), sub(mul(eventO(e), 2), 1), mul(eventW(e), eventZ(e)));
+})), 0.25)
+
+/*
 mul(sum(Voicer(1, function(e) {
     var freq;
     freq = midiCps(MulAdd(eventX(e), [25, MulAdd(LFNoise2(0.25), 0.25, 25)], 48));
     return Pan2(sum(RLPF(Saw(freq), mul(add(eventY(e), 0.75), freq), mul(eventY(e), 0.5))), sub(mul(eventO(e), 2), 1), mul(eventW(e), eventZ(e)));
 })), 0.25)
 
-/*
 0_MaxLocalBufs ir [0]
 1_In kr [13000]
 2_LFNoise2 ar [0.25]

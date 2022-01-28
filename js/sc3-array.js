@@ -125,6 +125,7 @@ function arrayReplicate(k, v) {
     return arrayIota(k).map(unused => v);
 }
 
+// [1, [1, 2]].map(unitArrayIfScalar) //=> [[1], [1, 2]]
 function unitArrayIfScalar(i) {
     return Array.isArray(i) ? i : [i];
 }

@@ -156,8 +156,7 @@ function DelayN(input, maxdelaytime, delaytime) {
 }
 // Demand results from demand rate UGens.
 function Demand(trig, reset, demandUGens) {
-    var nc = unitArrayIfScalar(demandUGens).length;
-    return makeUgen('Demand', nc, [0], 0, [trig, reset].concat(unitArrayIfScalar(demandUGens)));
+    return makeUgen('Demand', unitArrayIfScalar(demandUGens).length, [0], 0, [trig, reset].concat(unitArrayIfScalar(demandUGens)));
 }
 // Detect when input falls below an amplitude threshold
 function DetectSilence(input, amp, time, doneAction) {
@@ -685,8 +684,7 @@ function Trig1(input, dur) {
 }
 // (Undocumented class)
 function TScramble(trigger, inputs) {
-    var nc = unitArrayIfScalar(inputs).length;
-    return makeUgen('TScramble', nc, [0], 0, [trigger].concat(unitArrayIfScalar(inputs)));
+    return makeUgen('TScramble', unitArrayIfScalar(inputs).length, [0], 0, [trigger].concat(unitArrayIfScalar(inputs)));
 }
 // Two pole filter.
 function TwoPole(input, freq, radius) {
