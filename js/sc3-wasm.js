@@ -6,6 +6,8 @@ function bootScsynth(numInputs, numOutputs) {
     var args = Module['arguments'];
     args[args.indexOf('-i') + 1] = String(numInputs);
     args[args.indexOf('-o') + 1] = String(numOutputs);
+    args.push('-w', '512');
+    //args.push('-m', '131072'); // fixed at scsynth/wasm compile time, see README
     Module.callMain(args);
 }
 
