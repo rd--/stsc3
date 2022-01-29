@@ -571,3 +571,11 @@ function g_freeAll1(id) {
 }
 
 var m_status = {address: '/status', args: []};
+
+function m_dumpOsc(code) {
+    return {address: '/dumpOSC', args: [{type: 'i', value: code}]};
+}
+
+function m_notify(status, clientId) {
+    return {address: '/notify', args: [{type: 'i', value: status}, {type: 'i', value: clientId}]};
+}

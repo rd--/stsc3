@@ -21,3 +21,24 @@ function play(u) {
 function reset() {
     sendOsc(g_freeAll1(0));
 }
+
+function monitorOsc() {
+    Module.oscDriver[57120] = {
+        receive: function(addr, data) {
+            var msg = osc.readPacket(data, {});
+            console.log('monitorOsc', addr, JSON.stringify(msg, null, 4));
+        }
+    }
+}
+
+function requestStatus() {
+    sendOsc(m_status);
+}
+
+function requestNotifications() {
+    sendOsc(m_notify(1, 1));
+}
+
+function requestPrintingOsc() {
+    sendOsc(m_dumpOsc(1));
+}
