@@ -317,6 +317,7 @@ function rounded(a) { return round(a, 1); }
 function reciprocal(a) { return recip(a); }
 function negated(a) { return neg(a); }
 function truncateTo(a, b) { return trunc(a, b); }
+function value(proc, maybeArg) { return maybeArg ? proc(maybeArg) : proc(); }
 
 // Env
 
@@ -578,4 +579,10 @@ function m_dumpOsc(code) {
 
 function m_notify(status, clientId) {
     return {address: '/notify', args: [{type: 'i', value: status}, {type: 'i', value: clientId}]};
+}
+
+function playJsProgram() {
+    var programText = document.getElementById('jsProgram').value;
+    var program = eval(programText);
+    play(program);
 }

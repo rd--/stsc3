@@ -18,7 +18,7 @@ function load_graph(graphDir, graphName, fileType) {
 }
 
 function menu_init(menuId, graphDir, fileType) {
-    document.getElementById(menuId).addEventListener('change', (e) => load_graph(graphDir, e.target.value, fileType));
+    document.getElementById(menuId).addEventListener('change', e => e.target.value ? load_graph(graphDir, e.target.value, fileType) : null);
 }
 
 // Function to return a function to set the innerHTML of elemId
@@ -53,8 +53,8 @@ function load_and_process_utf8(fileName, processFunc) {
 }
 
 function sc3_init() {
-    menu_init('graphMenu', 'graph', '.js');
+    menu_init('programsMenu', 'graph', '.js');
     menu_init('helpMenu', 'ugen', '.js');
-    load_and_process_utf8('graph-menu.html', set_inner_html_of('graphMenu'));
+    load_and_process_utf8('graph-menu.html', set_inner_html_of('programsMenu'));
     load_and_process_utf8('help-menu.html', set_inner_html_of('helpMenu'));
 }

@@ -23,11 +23,13 @@
       </textarea>
     </div>
     <div>
-      <select id="graphMenu" title="Graph programs (p)" accesskey="p"></select>
-      <select id="helpMenu" title="Help programs (h)" accesskey="h"></select>
-      <button title="Play (,)" accesskey="," onclick="play(eval(document.getElementById('jsProgram').value))">Play</button>
+      <select id="programsMenu" title="Programs (p)" accesskey="p"></select>
+      <select id="helpMenu" title="Help (h)" accesskey="h"></select>
+      <select id="userMenu" title="User (u)" accesskey="u"><option value=''>--User--</option></select>
+      <button title="Play (,)" accesskey="," onclick="playJsProgram()">Play</button>
       <button title="Reset (.)" accesskey="." onclick="reset()">Reset</button>
       <button title="Print" onclick="prettyPrintSyndefOf(eval(document.getElementById('jsProgram').value))">Print</button>
+      <button title="Save document to local storage (s)" accesskey="s" onclick="local_storage_save_to()">Save</button>
     </div>
   </body>
 </html>
