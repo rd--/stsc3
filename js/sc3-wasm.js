@@ -1,3 +1,5 @@
+'use strict';
+
 function sendOsc(oscMessage) {
     Module.oscDriver.send(57120, 57110, osc.writePacket(oscMessage));
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 function defaultSc3Ws() {
     return new osc.WebSocketPort({
         url: "ws://localhost:9160",

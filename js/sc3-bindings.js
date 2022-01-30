@@ -1,3 +1,5 @@
+'use strict';
+
 // Schroeder allpass delay line with cubic interpolation.
 function AllpassC(input, maxdelaytime, delaytime, decaytime) {
     return makeUgen('AllpassC', 1, [0], 0, [input, maxdelaytime, delaytime, decaytime]);

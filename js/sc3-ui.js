@@ -1,3 +1,5 @@
+'use strict';
+
 function fetch_text_file(url) {
     var request = new XMLHttpRequest();
     request.addEventListener('load', () => document.getElementById('jsProgram').value = request.response);

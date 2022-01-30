@@ -1,3 +1,5 @@
+'use strict';
+
 function setStatus(from, text) {
     var statusText = document.getElementById('statusText');
     if(statusText) {

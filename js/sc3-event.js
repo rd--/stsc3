@@ -1,3 +1,5 @@
+'use strict';
+
 class EventParam {
     constructor(v, u) {
         this.v = v;

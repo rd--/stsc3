@@ -1,3 +1,5 @@
+'use strict';
+
 function Splay(inArray, spread, level, center, levelComp) {
     var n = Math.max(2, inArray.length);
     var pos = arrayFromTo(0, n - 1).map(item => add(mul(sub(mul(item, fdiv(2, sub(n, 1))), 1), spread), center));

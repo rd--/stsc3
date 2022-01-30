@@ -1,3 +1,5 @@
+'use strict';
+
 var unaryOperators = {
   neg: 0,
   not: 1,

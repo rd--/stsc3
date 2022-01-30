@@ -1,3 +1,5 @@
+'use strict';
+
 // [1, 2, 3].atWrap(5) === 3
 Array.prototype.atWrap = function(index) {
     //console.log('atWrap', this, index);
@@ -112,11 +114,17 @@ function arrayIota(k) { return arrayFromTo(0, k - 1); }
 
 // arrayFill(5, () => Math.random())
 function arrayFill(k, f) {
+    if(f.length != 0) {
+        console.error('arrayFill: arity error');
+    }
     return arrayIota(k).map(f);
 }
 
 // arrayFillWithIndex(5, i => i * i).shallowEq([0, 1, 4, 9, 16])
 function arrayFillWithIndex(k, f) {
+    if(f.length != 1) {
+        console.error('arrayFillWithIndex: arity error');
+    }
     return arrayIota(k).map(f);
 }
 

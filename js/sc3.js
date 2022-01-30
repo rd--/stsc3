@@ -1,3 +1,5 @@
+'use strict';
+
 // Counter
 
 // () -> (() -> int)
@@ -145,7 +147,7 @@ function makeUgen(name, nc, rt, op, inputs) {
         switch(nc) {
             case 0: return (new Port(u, null));
             case 1: return (new Port(u, 0));
-            default: return arrayFill(nc, i => new Port(u, i));
+            default: return arrayFillWithIndex(nc, i => new Port(u, i));
         }
     }
 }
@@ -356,7 +358,7 @@ EnvSpec.prototype.coord = function() {
     r.push(n);
     r.push(this.releaseNode || -99);
     r.push(this.loopNode || -99);
-    for(i = 0; i < n; i++) {
+    for(let i = 0; i < n; i++) {
         var c = this.curves.atWrap(i);
         r.push(this.levels[i + 1]);
         r.push(this.times.atWrap(i));
