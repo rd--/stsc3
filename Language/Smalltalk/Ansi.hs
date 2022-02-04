@@ -19,7 +19,7 @@ module Language.Smalltalk.Ansi where
 import Data.Char {- base -}
 import Data.Functor.Identity {- base -}
 
-import Data.List.Split {- split -}
+import qualified Data.List.Split as Split {- split -}
 
 import qualified Text.Parsec as P {- parsec -}
 import qualified Text.Parsec.Language as Language {- parsec -}
@@ -1323,7 +1323,7 @@ selectorIdentifier s =
 > keywordSelectorElements "" == []
 -}
 keywordSelectorElements :: Identifier -> [Identifier]
-keywordSelectorElements = takeWhile (not . null) . (split . keepDelimsR . onSublist) ":"
+keywordSelectorElements = takeWhile (not . null) . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
 
 {- | Determine arity of selector
 
