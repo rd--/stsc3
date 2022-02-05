@@ -141,13 +141,16 @@ map rw ["p + q * r", "p % q >= r"]
 map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
 map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) }.value(3, 5)"]
 map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
-map rw (words "inf pi twoPi")
+map rw (words "inf pi nil twoPi")
 rw "// c\nx = 6; x.postln"
 -}
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
 exprPrintJs rw expr =
   case expr of
-    Identifier x -> x
+    Identifier x ->
+      case x of
+        "nil" -> "null"
+        _ -> x
     Literal x -> literalPrintJs x
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Return e -> printf "return %s;" (exprPrintJs rw e)
