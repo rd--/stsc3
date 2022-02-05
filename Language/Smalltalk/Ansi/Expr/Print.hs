@@ -141,6 +141,7 @@ map rw ["p + q * r", "p % q >= r"]
 map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
 map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) }.value(3, 5)"]
 map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
+map rw (words "inf pi twoPi")
 rw "// c\nx = 6; x.postln"
 -}
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
@@ -151,10 +152,12 @@ exprPrintJs rw expr =
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Return e -> printf "return %s;" (exprPrintJs rw e)
     Send rcv (Message sel arg) ->
-      case (takeWhile (/= ':') (rw (St.selectorIdentifier sel)), arg) of
-        ("apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
-        ("value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
-        (msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
+      case (rcv, takeWhile (/= ':') (rw (St.selectorIdentifier sel)), arg) of
+        (_, "apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
+        (_, "value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
+        (Identifier "Float", "pi", _) -> "pi"
+        (Identifier "Float", "infinity", _) -> "inf"
+        (_, msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
     Lambda _ arg (St.Temporaries tmp) stm ->
       printf
       "function(%s) { %s %s }"
