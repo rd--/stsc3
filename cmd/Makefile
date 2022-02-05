@@ -10,6 +10,6 @@ install: $(cmd)
 	cp $(cmd) $(prefix)/bin
 
 clean:
+	rm -fR dist
 	rm -f *.hi *.o $(cmd)
 	rm -f */*/*.hi */*/*.o
-	rm -fR dist
