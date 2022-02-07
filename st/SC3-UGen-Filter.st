@@ -716,6 +716,9 @@
   mouseY: maxval value: warp value: lag
     ^MouseY minval: self maxval: maxval warp: warp lag: lag
   !
+  nRand: hi value: n
+    ^NRand lo: self hi: hi n: n
+  !
   phasor: rate value: start value: end value: resetPos
     ^Phasor trig: self rate: rate start: start end: end resetPos: resetPos
   !

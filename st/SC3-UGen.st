@@ -5282,6 +5282,50 @@ Normalizer comment: 'Flattens dynamics.'!
   primaryFactoryMethod ^#in:level:dur:!
 !
 
+UGen subclass: #NRand
+  instanceVariableNames: 'lo hi n'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+NRand comment: 'Sum of uniform distributions.'!
+
+!NRand methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+  n ^n!
+  n: x n := x!
+!
+
+!NRand methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #NRand.
+    paramNames := #(#lo #hi #n).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0. n := 0.0!
+!
+
+
+!NRand class methodsFor: 'instance creation'!
+  lo: lo hi: hi n: n
+    |u|
+    u := self new.
+    u lo: lo.
+    u hi: hi.
+    u n: n.
+    ^u!
+  lo: lo hi: hi n: n mul: mul ^(NRand lo: lo hi: hi n: n) * mul!
+  lo: lo hi: hi n: n mul: mul add: add ^(NRand lo: lo hi: hi n: n) * mul + add!
+  primaryFactoryMethod ^#lo:hi:n:!
+!
+
 UGen subclass: #NumOutputBuses
   instanceVariableNames: ''
   classVariableNames: ''
