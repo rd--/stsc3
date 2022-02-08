@@ -15,7 +15,7 @@ OverlapTexture({
     s + c.dup.sum
 }, 12, 4, 4)
 
-// deep trip (jmcc) #9 ; graph rewrite ; filtermethods
+//---- deep trip (jmcc) #9 ; graph rewrite ; filtermethods
 OverlapTexture({
     arg tr;
     var f = LFNoise1(tr.tRand(0, 0.3)).mulAdd(60, 70).midiCps;

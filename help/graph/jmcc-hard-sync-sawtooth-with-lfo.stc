@@ -6,7 +6,7 @@ var txt = OverlapTexture({
 }, 4, 4, 4);
 CombN(txt, 0.3, 0.3, 4) + txt.reverse
 
-// hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; filtermethods
+//---- hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; filtermethods
 var txt = OverlapTexture({
     arg tr;
     var f = tr.tRand(0, 50).mulAdd(1, 30).midiCps;

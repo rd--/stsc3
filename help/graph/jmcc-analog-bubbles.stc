@@ -3,15 +3,7 @@ var o = LFSaw(#[8, 7.23], 0) * 3 + 80;
 var f = LFSaw(0.4, 0) * 24 + o;
 CombN(SinOsc(f.midiCps, 0) * 0.04, 0.2, 0.2, 4) * 0.1
 
-// analog bubbles (jmcc) #1 ; filtermethods
-var o = LFSaw(#[8, 7.23], 0).mulAdd(3, 80);
-var f = LFSaw(0.4, 0).mulAdd(24, o);
-SinOsc(f.midiCps, 0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
-
-// analog bubbles (jmcc) #1 ; left to right
-0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
-
-// analog bubbles (jmcc) ; the .stc "initializer definition form" does not require var syntax qualifiers
+// analog bubbles (jmcc) ; the .stc initializer definition form does not require var syntax qualifiers
 o = LFSaw([8, 7.23], 0) * 3 + 80;
 m = LFSaw(0.4, 0) * 24 + o;
 s = SinOsc(m.midiCps, 0) * 0.04;
@@ -19,3 +11,11 @@ CombN(s, 0.2, 0.2, 4) * 0.1
 
 // analog bubbles (jmcc)
 MulAdd(CombN(MulAdd(SinOsc(MulAdd(LFSaw(0.4, 0), 24, MulAdd(LFSaw([8, 7.23], 0), 3, 80)).midiCps, 0), 0.04, 0), 0.2, 0.2, 4), 0.1, 0)
+
+//---- analog bubbles (jmcc) #1 ; filtermethods
+var o = LFSaw(#[8, 7.23], 0).mulAdd(3, 80);
+var f = LFSaw(0.4, 0).mulAdd(24, o);
+SinOsc(f.midiCps, 0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
+
+//---- analog bubbles (jmcc) #1 ; left to right
+0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)

@@ -9,7 +9,7 @@ OverlapTexture({
     Pan2(SinOsc(freq, 0), TRand(-1, 1, tr), amp)
 }, 7, 4, 4)
 
-// birdies (jmcc) #6 ; filtermethods
+//---- birdies (jmcc) #6 ; filtermethods
 OverlapTexture({
     arg tr;
     var p1 = { LFPulse(tr.tRand(0.4, 1.4), 0, tr.tRand(0.1, 0.9)).mul(tr.tRand(4, 7)) } ;

@@ -13,7 +13,7 @@ var c = {
 var n = LFNoise1([3, 3]);
 (c.value(n, 48) + c.value(n, 72)) * 0.25
 
-// modal space (jmcc) #8 ; filtermethods
+//---- modal space (jmcc) #8 ; filtermethods
 var b = #[0, 2, 3.2, 5, 7, 9, 10].asLocalBuf;
 var k = MouseX(0, 15, 0, 0.1).degreeToKey(b, 12);
 var c = {

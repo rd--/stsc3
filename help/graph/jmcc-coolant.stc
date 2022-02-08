@@ -9,12 +9,12 @@ var r = KlankSpec({ Rand(40, 2040) }.dup(10), [0.1], [1]);
 var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), [1], [1]);
 { Klank(OnePole(BrownNoise() * 0.002, 0.95), 1, 0, 1, r) }.dup
 
-// coolant (jmcc) ; filtermethods
-var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), nil, nil);
-{ BrownNoise().mul(0.002).onePole(0.95).klank(1, 0, 1, r) }.dup
-
 // coolant (jmcc) ; Ringz
 var o = OnePole(BrownNoise() * 0.002, 0.95);
 var f = { Ringz(o, Rand(40, 2040), 1) * 0.2 };
 f.dup(10).splay2
+
+//---- coolant (jmcc) ; filtermethods
+var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), nil, nil);
+{ BrownNoise().mul(0.002).onePole(0.95).klank(1, 0, 1, r) }.dup
 

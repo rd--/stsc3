@@ -7,7 +7,7 @@ OverlapTexture({
     Pan2(SinOsc(f, 0), TRand(-1, 1, tr), a)
 }, 6, 2, 6)
 
-// alien meadow (jmcc) #6 ; filtermethods
+//---- alien meadow (jmcc) #6 ; filtermethods
 OverlapTexture({
     arg tr;
     var z = tr.tRand(0, 5000);

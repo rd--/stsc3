@@ -14,4 +14,7 @@ InFb { *new { arg numChannels, bus; ^InFeedback.ar(bus, numChannels) } }
 Ln { *new { arg start, end, dur; ^Line.ar(start, end, dur, 1, 0, 0) } }
 XLn { *new { arg start = 0.0, end = 1.0, dur = 1.0; ^XLine.ar(start, end, dur, 1, 0, 0) } }
 
-Splay2 { *new { arg inArray; ^Splay.ar(inArray, 1, 1, 0, true) } }
+Splay2 {
+    *ar { arg inArray; ^Splay.ar(inArray, 1, 1, 0, true) }
+    *new { arg inArray; ^Splay2.ar(inArray) }
+}
