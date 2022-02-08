@@ -51,7 +51,7 @@ ugen =
   ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1"
   ,"MantissaMask","MaxLocalBufs", "MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer", "NRand","NumOutputBuses"
-  ,"OnePole","Out"
+  ,"OnePole","Osc", "Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
   ,"QuadC"

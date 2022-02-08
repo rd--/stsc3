@@ -5449,6 +5449,50 @@ OnePole comment: 'One pole filter.'!
   primaryFactoryMethod ^#in:coef:!
 !
 
+UGen subclass: #Osc
+  instanceVariableNames: 'bufnum freq phase'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Osc comment: 'Interpolating wavetable oscillator.'!
+
+!Osc methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  freq ^freq!
+  freq: x freq := x!
+  phase ^phase!
+  phase: x phase := x!
+!
+
+!Osc methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Osc.
+    paramNames := #(#bufnum #freq #phase).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. freq := 440.0. phase := 0.0!
+!
+
+
+!Osc class methodsFor: 'instance creation'!
+  bufnum: bufnum freq: freq phase: phase
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u freq: freq.
+    u phase: phase.
+    ^u!
+  bufnum: bufnum freq: freq phase: phase mul: mul ^(Osc bufnum: bufnum freq: freq phase: phase) * mul!
+  bufnum: bufnum freq: freq phase: phase mul: mul add: add ^(Osc bufnum: bufnum freq: freq phase: phase) * mul + add!
+  primaryFactoryMethod ^#bufnum:freq:phase:!
+!
+
 UGen subclass: #Out
   instanceVariableNames: 'bus channelsArray'
   classVariableNames: ''

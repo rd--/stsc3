@@ -722,6 +722,9 @@
   nRand: hi value: n
     ^NRand lo: self hi: hi n: n
   !
+  osc: freq value: phase
+    ^Osc bufnum: self freq: freq phase: phase
+  !
   phasor: rate value: start value: end value: resetPos
     ^Phasor trig: self rate: rate start: start end: end resetPos: resetPos
   !
