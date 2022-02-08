@@ -5,6 +5,7 @@
 + Blip { *new { arg freq = 440.0, numharm = 200.0; ^Blip.performList('audio'.rateToSelector, [freq, numharm]) } }
 + BlockSize { *new { ^BlockSize.performList('scalar'.rateToSelector, []) } }
 + BrownNoise { *new { ^BrownNoise.performList('audio'.rateToSelector, []) } }
++ BufFrames { *new { arg bufnum = 0.0; ^BufFrames.performList('control'.rateToSelector, [bufnum]) } }
 + BufRateScale { *new { arg bufnum = 0.0; ^BufRateScale.performList('control'.rateToSelector, [bufnum]) } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.performList('audio'.rateToSelector, [numChannels, bufnum, phase, loop, interpolation]) } }
 + ControlDur { *new { ^ControlDur.performList('scalar'.rateToSelector, []) } }
