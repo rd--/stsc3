@@ -549,6 +549,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "dcba".copy.sort == "abcd"                                  // inplace string sort
 "text".copyRange(1,2) == "ex"                               // substring
 "text".copyRange(2,2) == "x"                                // substring (single character)
+"% string % interpolation".format('format', 'with')         // format string with interpolation
 
 'Symbol'
 
