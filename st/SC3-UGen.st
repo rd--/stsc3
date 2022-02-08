@@ -2459,6 +2459,59 @@ FreqShift comment: 'Frequency Shifter.'!
   primaryFactoryMethod ^#in:freq:phase:!
 !
 
+UGen subclass: #Friction
+  instanceVariableNames: 'in friction spring damp mass beltmass'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Friction comment: 'A physical model of a system with dry-friction. A chaotic filter.'!
+
+!Friction methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  friction ^friction!
+  friction: x friction := x!
+  spring ^spring!
+  spring: x spring := x!
+  damp ^damp!
+  damp: x damp := x!
+  mass ^mass!
+  mass: x mass := x!
+  beltmass ^beltmass!
+  beltmass: x beltmass := x!
+!
+
+!Friction methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Friction.
+    paramNames := #(#in #friction #spring #damp #mass #beltmass).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. friction := 0.5. spring := 0.414. damp := 0.313. mass := 0.1. beltmass := 1.0!
+!
+
+
+!Friction class methodsFor: 'instance creation'!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
+    |u|
+    u := self new.
+    u in: in.
+    u friction: friction.
+    u spring: spring.
+    u damp: damp.
+    u mass: mass.
+    u beltmass: beltmass.
+    ^u!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul add: add ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add!
+  primaryFactoryMethod ^#in:friction:spring:damp:mass:beltmass:!
+!
+
 UGen subclass: #FSinOsc
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''

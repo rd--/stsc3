@@ -617,6 +617,9 @@
   freqShift: freq value: phase
     ^FreqShift in: self freq: freq phase: phase
   !
+  friction: friction value: spring value: damp value: mass value: beltmass
+    ^Friction in: self friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
+  !
   fSinOsc: iphase
     ^FSinOsc freq: self iphase: iphase
   !
