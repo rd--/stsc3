@@ -719,6 +719,44 @@ BrownNoise comment: 'Brown Noise.'!
   primaryFactoryMethod ^#new!
 !
 
+UGen subclass: #BufFrames
+  instanceVariableNames: 'bufnum'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BufFrames comment: 'Current number of frames allocated in the buffer.'!
+
+!BufFrames methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+!
+
+!BufFrames methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BufFrames.
+    paramNames := #(#bufnum).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0!
+!
+
+
+!BufFrames class methodsFor: 'instance creation'!
+  bufnum: bufnum
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    ^u!
+  bufnum: bufnum mul: mul ^(BufFrames bufnum: bufnum) * mul!
+  bufnum: bufnum mul: mul add: add ^(BufFrames bufnum: bufnum) * mul + add!
+  primaryFactoryMethod ^#bufnum:!
+!
+
 UGen subclass: #BufRateScale
   instanceVariableNames: 'bufnum'
   classVariableNames: ''

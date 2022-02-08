@@ -548,6 +548,9 @@
   blip: numharm
     ^Blip freq: self numharm: numharm
   !
+  bufFrames
+    ^BufFrames bufnum: self
+  !
   bufRateScale
     ^BufRateScale bufnum: self
   !
