@@ -10,10 +10,10 @@
 + BRF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^BRF.performList(in.rate.rateToSelector, [in, freq, rq]) } }
 + BufWr { *new { arg inputArray = 0.0, bufnum = 0.0, phase = 0.0, loop = 1.0;^BufWr.performList(inputArray.rate.rateToSelector, [inputArray, bufnum, phase, loop]) } }
 + Clip { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Clip.performList(in.rate.rateToSelector, [in, lo, hi]) } }
++ CoinGate { *new { arg prob = 0.0, in = 0.0;^CoinGate.performList(in.rate.rateToSelector, [prob, in]) } }
 + CombC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombC.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime, decaytime]) } }
 + CombL { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombL.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime, decaytime]) } }
 + CombN { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0;^CombN.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime, decaytime]) } }
-+ CrossoverDistortion { *new { arg in = 0.0, amp = 0.5, smooth = 0.5;^CrossoverDistortion.performList(in.rate.rateToSelector, [in, amp, smooth]) } }
 + Decay { *new { arg in = 0.0, decayTime = 1.0;^Decay.performList(in.rate.rateToSelector, [in, decayTime]) } }
 + Decay2 { *new { arg in = 0.0, attackTime = 1.0e-2, decayTime = 1.0;^Decay2.performList(in.rate.rateToSelector, [in, attackTime, decayTime]) } }
 + DegreeToKey { *new { arg bufnum = 0.0, in = 0.0, octave = 12.0;^DegreeToKey.performList(in.rate.rateToSelector, [bufnum, in, octave]) } }
@@ -25,7 +25,6 @@
 + Formlet { *new { arg in = 0.0, freq = 440.0, attacktime = 1.0, decaytime = 1.0;^Formlet.performList(in.rate.rateToSelector, [in, freq, attacktime, decaytime]) } }
 + FreeVerb { *new { arg in = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb.performList(in.rate.rateToSelector, [in, mix, room, damp]) } }
 + FreeVerb2 { *new { arg in = 0.0, in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb2.performList(in.rate.rateToSelector, [in, in2, mix, room, damp]) } }
-+ GreyholeRaw { *new { arg in1 = 0.0, in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;^GreyholeRaw.performList(in1.rate.rateToSelector, [in1, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size]) } }
 + GVerb { *new { arg in = 0.0, roomsize = 10.0, revtime = 3.0, damping = 0.5, inputbw = 0.5, spread = 15.0, drylevel = 1.0, earlyreflevel = 0.7, taillevel = 0.5, maxroomsize = 300.0;^GVerb.performList(in.rate.rateToSelector, [in, roomsize, revtime, damping, inputbw, spread, drylevel, earlyreflevel, taillevel, maxroomsize]) } }
 + Hasher { *new { arg in = 0.0;^Hasher.performList(in.rate.rateToSelector, [in]) } }
 + HPF { *new { arg in = 0.0, freq = 440.0;^HPF.performList(in.rate.rateToSelector, [in, freq]) } }
@@ -50,7 +49,6 @@
 + MantissaMask { *new { arg in = 0.0, bits = 3.0;^MantissaMask.performList(in.rate.rateToSelector, [in, bits]) } }
 + ModDif { *new { arg x = 0.0, y = 0.0, mod = 1.0;^ModDif.performList(x.rate.rateToSelector, [x, y, mod]) } }
 + MoogFF { *new { arg in = 0.0, freq = 100.0, gain = 2.0, reset = 0.0;^MoogFF.performList(in.rate.rateToSelector, [in, freq, gain, reset]) } }
-+ MoogLadder { *new { arg in = 0.0, ffreq = 440.0, res = 0.0;^MoogLadder.performList(in.rate.rateToSelector, [in, ffreq, res]) } }
 + Normalizer { *new { arg in = 0.0, level = 1.0, dur = 1.0e-2;^Normalizer.performList(in.rate.rateToSelector, [in, level, dur]) } }
 + OnePole { *new { arg in = 0.0, coef = 0.5;^OnePole.performList(in.rate.rateToSelector, [in, coef]) } }
 + Out { *new { arg bus = 0.0, channelsArray = 0.0;^Out.performList(channelsArray.rate.rateToSelector, [bus, channelsArray]) } }
@@ -78,9 +76,13 @@
 + TRand { *new { arg lo = 0.0, hi = 1.0, trig = 0.0;^TRand.performList(trig.rate.rateToSelector, [lo, hi, trig]) } }
 + Trig { *new { arg in = 0.0, dur = 0.1;^Trig.performList(in.rate.rateToSelector, [in, dur]) } }
 + Trig1 { *new { arg in = 0.0, dur = 0.1;^Trig1.performList(in.rate.rateToSelector, [in, dur]) } }
-+ TScramble { *new { arg trigger = 0.0, inputs = 0.0;^TScramble.performList(trigger.rate.rateToSelector, [trigger, inputs]) } }
 + TwoPole { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoPole.performList(in.rate.rateToSelector, [in, freq, radius]) } }
 + TwoZero { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoZero.performList(in.rate.rateToSelector, [in, freq, radius]) } }
 + Wrap { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Wrap.performList(in.rate.rateToSelector, [in, lo, hi]) } }
 + XFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^XFade2.performList(inA.rate.rateToSelector, [inA, inB, pan, level]) } }
 + ZeroCrossing { *new { arg in = 0.0;^ZeroCrossing.performList(in.rate.rateToSelector, [in]) } }
++ MoogLadder { *new { arg in = 0.0, ffreq = 440.0, res = 0.0;^MoogLadder.performList(in.rate.rateToSelector, [in, ffreq, res]) } }
++ GreyholeRaw { *new { arg in1 = 0.0, in2 = 0.0, damping = 0.0, delaytime = 2.0, diffusion = 0.5, feedback = 0.9, moddepth = 0.1, modfreq = 2.0, size = 1.0;^GreyholeRaw.performList(in1.rate.rateToSelector, [in1, in2, damping, delaytime, diffusion, feedback, moddepth, modfreq, size]) } }
++ CrossoverDistortion { *new { arg in = 0.0, amp = 0.5, smooth = 0.5;^CrossoverDistortion.performList(in.rate.rateToSelector, [in, amp, smooth]) } }
++ RCD { *new { arg clock = 0.0, rotate = 0.0, reset = 0.0, div = 0.0, spread = 0.0, auto = 0.0, len = 0.0, down = 0.0, gates = 0.0;^RCD.performList(clock.rate.rateToSelector, [clock, rotate, reset, div, spread, auto, len, down, gates]) } }
++ TScramble { *new { arg trigger = 0.0, inputs = 0.0;^TScramble.performList(trigger.rate.rateToSelector, [trigger, inputs]) } }

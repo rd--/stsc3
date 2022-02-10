@@ -34,35 +34,50 @@ binop =
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
   ,("amClip:",40),("clip2:",42),("fold2:",44)]
 
--- > Data.List.sort ugen == ugen
+{-
+> Data.List.sort ugen == ugen
+> filter (not . Db.ugen_is_core) ugen
+-}
 ugen :: [String]
 ugen =
-  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude","AnalogFoldOsc"
+  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BrownNoise","BufFrames","BufRateScale","BufRd","BufWr"
-  ,"ClearBuf","Clip","CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CrossoverDistortion","CuspL"
+  ,"ClearBuf","Clip","CoinGate", "CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","DelayC","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty"
   ,"EnvGen","ExpRand"
-  ,"FBSineC", "FFT","Fold","Formant","Formlet","FreqShift","Friction", "FSinOsc","FreeVerb","FreeVerb2"
-  ,"Gendy1","GrainFM","GrainSin","GrayNoise","GreyholeRaw","GVerb"
+  ,"FBSineC", "FFT","Fold","Formant","Formlet","FreqShift", "FSinOsc","FreeVerb","FreeVerb2"
+  ,"Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"
   ,"Hasher","HPF","HPZ1"
   ,"IFFT","Impulse","In","InFeedback","InRange","IRand","Integrator"
   ,"K2A","KeyState", "Klang","Klank"
   ,"LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1"
-  ,"MantissaMask","MaxLocalBufs", "MembraneCircle","MiRings","ModDif","MoogFF","MoogLadder","MouseButton","MouseX","MouseY","MulAdd"
+  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LeakDC","Limiter","Line","LinExp","LinPan2","LinRand", "LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1"
+  ,"MantissaMask","MaxLocalBufs", "ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer", "NRand","NumOutputBuses"
   ,"OnePole","Osc", "Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
   ,"QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax"
-  ,"RBezier","RDX7Env","RExpRandN","Rotate2","RRandN"
+  ,"Rotate2"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","Stepper","Sweep","SyncSaw"
-  ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TScramble","TwoPole","TwoZero"
+  ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","Vibrato"
   ,"WhiteNoise","Wrap"
   ,"XFade2","XLine"
-  ,"ZeroCrossing"]
+  ,"ZeroCrossing"
+  ,"MoogLadder" -- sc3-plugins/Bhob
+   ,"GreyholeRaw" -- sc3-plugins/DEIND
+  ,"CrossoverDistortion" -- sc3-plugins/Distortion
+  ,"Friction" -- sc3-plugins/MCLD
+  ,"MembraneCircle" -- sc3-plugins/Membrane
+  ,"MiRings" -- mi-UGens
+  ,"AnalogFoldOsc" -- portedplugins
+  ,"RCD", "SCM" -- vb_UGens
+  ,"ExpRandN","LinRandN", "RandN" -- sc3-rdu
+  ,"TScramble" -- sc3-rdu
+  ,"RBezier","RDX7", "RDX7Env" -- sc3-rdu
+  ]
 
 is_osc :: Record.U -> Bool
 is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)

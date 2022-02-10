@@ -274,47 +274,6 @@ Amplitude comment: 'Amplitude follower'!
   primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
-UGen subclass: #AnalogFoldOsc
-  instanceVariableNames: 'freq amp'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-AnalogFoldOsc comment: '(Undocumented class)'!
-
-!AnalogFoldOsc methodsFor: 'accessing'!
-  freq ^freq!
-  freq: x freq := x!
-  amp ^amp!
-  amp: x amp := x!
-!
-
-!AnalogFoldOsc methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #AnalogFoldOsc.
-    paramNames := #(#freq #amp).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    freq := 100.0. amp := 1.0!
-!
-
-
-!AnalogFoldOsc class methodsFor: 'instance creation'!
-  freq: freq amp: amp
-    |u|
-    u := self new.
-    u freq: freq.
-    u amp: amp.
-    ^u!
-  freq: freq amp: amp mul: mul ^(AnalogFoldOsc freq: freq amp: amp) * mul!
-  freq: freq amp: amp mul: mul add: add ^(AnalogFoldOsc freq: freq amp: amp) * mul + add!
-  primaryFactoryMethod ^#freq:amp:!
-!
-
 UGen subclass: #Balance2
   instanceVariableNames: 'left right pos level'
   classVariableNames: ''
@@ -972,6 +931,47 @@ Clip comment: 'Clip a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
+UGen subclass: #CoinGate
+  instanceVariableNames: 'prob in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+CoinGate comment: 'Statistical gate.'!
+
+!CoinGate methodsFor: 'accessing'!
+  prob ^prob!
+  prob: x prob := x!
+  in ^in!
+  in: x in := x!
+!
+
+!CoinGate methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #CoinGate.
+    paramNames := #(#prob #in).
+    mceNames := #().
+    ugenRate := #(1).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    prob := 0.0. in := 0.0!
+!
+
+
+!CoinGate class methodsFor: 'instance creation'!
+  prob: prob in: in
+    |u|
+    u := self new.
+    u prob: prob.
+    u in: in.
+    ^u!
+  prob: prob in: in mul: mul ^(CoinGate prob: prob in: in) * mul!
+  prob: prob in: in mul: mul add: add ^(CoinGate prob: prob in: in) * mul + add!
+  primaryFactoryMethod ^#prob:in:!
+!
+
 UGen subclass: #CombC
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
@@ -1251,50 +1251,6 @@ Crackle comment: 'Chaotic noise function.'!
   chaosParam: chaosParam mul: mul ^(Crackle chaosParam: chaosParam) * mul!
   chaosParam: chaosParam mul: mul add: add ^(Crackle chaosParam: chaosParam) * mul + add!
   primaryFactoryMethod ^#chaosParam:!
-!
-
-UGen subclass: #CrossoverDistortion
-  instanceVariableNames: 'in amp smooth'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
-
-!CrossoverDistortion methodsFor: 'accessing'!
-  in ^in!
-  in: x in := x!
-  amp ^amp!
-  amp: x amp := x!
-  smooth ^smooth!
-  smooth: x smooth := x!
-!
-
-!CrossoverDistortion methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #CrossoverDistortion.
-    paramNames := #(#in #amp #smooth).
-    mceNames := #().
-    ugenRate := #(0).
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    in := 0.0. amp := 0.5. smooth := 0.5!
-!
-
-
-!CrossoverDistortion class methodsFor: 'instance creation'!
-  in: in amp: amp smooth: smooth
-    |u|
-    u := self new.
-    u in: in.
-    u amp: amp.
-    u smooth: smooth.
-    ^u!
-  in: in amp: amp smooth: smooth mul: mul ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul!
-  in: in amp: amp smooth: smooth mul: mul add: add ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul + add!
-  primaryFactoryMethod ^#in:amp:smooth:!
 !
 
 UGen subclass: #CuspL
@@ -2497,59 +2453,6 @@ FreqShift comment: 'Frequency Shifter.'!
   primaryFactoryMethod ^#in:freq:phase:!
 !
 
-UGen subclass: #Friction
-  instanceVariableNames: 'in friction spring damp mass beltmass'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-Friction comment: 'A physical model of a system with dry-friction. A chaotic filter.'!
-
-!Friction methodsFor: 'accessing'!
-  in ^in!
-  in: x in := x!
-  friction ^friction!
-  friction: x friction := x!
-  spring ^spring!
-  spring: x spring := x!
-  damp ^damp!
-  damp: x damp := x!
-  mass ^mass!
-  mass: x mass := x!
-  beltmass ^beltmass!
-  beltmass: x beltmass := x!
-!
-
-!Friction methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #Friction.
-    paramNames := #(#in #friction #spring #damp #mass #beltmass).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    in := 0.0. friction := 0.5. spring := 0.414. damp := 0.313. mass := 0.1. beltmass := 1.0!
-!
-
-
-!Friction class methodsFor: 'instance creation'!
-  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
-    |u|
-    u := self new.
-    u in: in.
-    u friction: friction.
-    u spring: spring.
-    u damp: damp.
-    u mass: mass.
-    u beltmass: beltmass.
-    ^u!
-  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul!
-  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul add: add ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add!
-  primaryFactoryMethod ^#in:friction:spring:damp:mass:beltmass:!
-!
-
 UGen subclass: #FSinOsc
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
@@ -2894,68 +2797,6 @@ GrayNoise comment: 'Gray Noise.'!
   mul: mul ^(GrayNoise new) * mul!
   mul: mul add: add ^(GrayNoise new) * mul + add!
   primaryFactoryMethod ^#new!
-!
-
-UGen subclass: #GreyholeRaw
-  instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-GreyholeRaw comment: 'algorithmic delay'!
-
-!GreyholeRaw methodsFor: 'accessing'!
-  in1 ^in1!
-  in1: x in1 := x!
-  in2 ^in2!
-  in2: x in2 := x!
-  damping ^damping!
-  damping: x damping := x!
-  delaytime ^delaytime!
-  delaytime: x delaytime := x!
-  diffusion ^diffusion!
-  diffusion: x diffusion := x!
-  feedback ^feedback!
-  feedback: x feedback := x!
-  moddepth ^moddepth!
-  moddepth: x moddepth := x!
-  modfreq ^modfreq!
-  modfreq: x modfreq := x!
-  size ^size!
-  size: x size := x!
-!
-
-!GreyholeRaw methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #GreyholeRaw.
-    paramNames := #(#in1 #in2 #damping #delaytime #diffusion #feedback #moddepth #modfreq #size).
-    mceNames := #().
-    ugenRate := #(0 1).
-    numChan := 2.
-    specialIndex := 0.
-    ugenId := nil.
-    in1 := 0.0. in2 := 0.0. damping := 0.0. delaytime := 2.0. diffusion := 0.5. feedback := 0.9. moddepth := 0.1. modfreq := 2.0. size := 1.0!
-!
-
-
-!GreyholeRaw class methodsFor: 'instance creation'!
-  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
-    |u|
-    u := self new.
-    u in1: in1.
-    u in2: in2.
-    u damping: damping.
-    u delaytime: delaytime.
-    u diffusion: diffusion.
-    u feedback: feedback.
-    u moddepth: moddepth.
-    u modfreq: modfreq.
-    u size: size.
-    ^u!
-  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul!
-  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul + add!
-  primaryFactoryMethod ^#in1:in2:damping:delaytime:diffusion:feedback:moddepth:modfreq:size:!
 !
 
 UGen subclass: #GVerb
@@ -4898,121 +4739,6 @@ MaxLocalBufs comment: 'LocalBuf count'!
   primaryFactoryMethod ^#count:!
 !
 
-UGen subclass: #MembraneCircle
-  instanceVariableNames: 'excitation tension loss'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
-
-!MembraneCircle methodsFor: 'accessing'!
-  excitation ^excitation!
-  excitation: x excitation := x!
-  tension ^tension!
-  tension: x tension := x!
-  loss ^loss!
-  loss: x loss := x!
-!
-
-!MembraneCircle methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #MembraneCircle.
-    paramNames := #(#excitation #tension #loss).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    excitation := 0.0. tension := 0.05. loss := 0.99999!
-!
-
-
-!MembraneCircle class methodsFor: 'instance creation'!
-  excitation: excitation tension: tension loss: loss
-    |u|
-    u := self new.
-    u excitation: excitation.
-    u tension: tension.
-    u loss: loss.
-    ^u!
-  excitation: excitation tension: tension loss: loss mul: mul ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul!
-  excitation: excitation tension: tension loss: loss mul: mul add: add ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul + add!
-  primaryFactoryMethod ^#excitation:tension:loss:!
-!
-
-UGen subclass: #MiRings
-  instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-MiRings comment: 'a resonator'!
-
-!MiRings methodsFor: 'accessing'!
-  in ^in!
-  in: x in := x!
-  trig ^trig!
-  trig: x trig := x!
-  pit ^pit!
-  pit: x pit := x!
-  struct ^struct!
-  struct: x struct := x!
-  bright ^bright!
-  bright: x bright := x!
-  damp ^damp!
-  damp: x damp := x!
-  pos ^pos!
-  pos: x pos := x!
-  model ^model!
-  model: x model := x!
-  poly ^poly!
-  poly: x poly := x!
-  intern_exciter ^intern_exciter!
-  intern_exciter: x intern_exciter := x!
-  easteregg ^easteregg!
-  easteregg: x easteregg := x!
-  bypass ^bypass!
-  bypass: x bypass := x!
-!
-
-!MiRings methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #MiRings.
-    paramNames := #(#in #trig #pit #struct #bright #damp #pos #model #poly #intern_exciter #easteregg #bypass).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 2.
-    specialIndex := 0.
-    ugenId := nil.
-    in := 0.0. trig := 0.0. pit := 60.0. struct := 0.25. bright := 0.5. damp := 0.7. pos := 0.25. model := 0.0. poly := 1.0. intern_exciter := 0.0. easteregg := 0.0. bypass := 0.0!
-!
-
-
-!MiRings class methodsFor: 'instance creation'!
-  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
-    |u|
-    u := self new.
-    u in: in.
-    u trig: trig.
-    u pit: pit.
-    u struct: struct.
-    u bright: bright.
-    u damp: damp.
-    u pos: pos.
-    u model: model.
-    u poly: poly.
-    u intern_exciter: intern_exciter.
-    u easteregg: easteregg.
-    u bypass: bypass.
-    ^u!
-  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul!
-  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul + add!
-  primaryFactoryMethod ^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:!
-!
-
 UGen subclass: #ModDif
   instanceVariableNames: 'x y mod'
   classVariableNames: ''
@@ -5102,50 +4828,6 @@ MoogFF comment: 'Moog VCF implementation, designed by Federico Fontana'!
   in: in freq: freq gain: gain reset: reset mul: mul ^(MoogFF in: in freq: freq gain: gain reset: reset) * mul!
   in: in freq: freq gain: gain reset: reset mul: mul add: add ^(MoogFF in: in freq: freq gain: gain reset: reset) * mul + add!
   primaryFactoryMethod ^#in:freq:gain:reset:!
-!
-
-UGen subclass: #MoogLadder
-  instanceVariableNames: 'in ffreq res'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-MoogLadder comment: 'Moog Filter Emulation'!
-
-!MoogLadder methodsFor: 'accessing'!
-  in ^in!
-  in: x in := x!
-  ffreq ^ffreq!
-  ffreq: x ffreq := x!
-  res ^res!
-  res: x res := x!
-!
-
-!MoogLadder methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #MoogLadder.
-    paramNames := #(#in #ffreq #res).
-    mceNames := #().
-    ugenRate := #(0).
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    in := 0.0. ffreq := 440.0. res := 0.0!
-!
-
-
-!MoogLadder class methodsFor: 'instance creation'!
-  in: in ffreq: ffreq res: res
-    |u|
-    u := self new.
-    u in: in.
-    u ffreq: ffreq.
-    u res: res.
-    ^u!
-  in: in ffreq: ffreq res: res mul: mul ^(MoogLadder in: in ffreq: ffreq res: res) * mul!
-  in: in ffreq: ffreq res: res mul: mul add: add ^(MoogLadder in: in ffreq: ffreq res: res) * mul + add!
-  primaryFactoryMethod ^#in:ffreq:res:!
 !
 
 UGen subclass: #MouseButton
@@ -6501,166 +6183,6 @@ RunningMax comment: 'Track maximum level.'!
   primaryFactoryMethod ^#in:trig:!
 !
 
-UGen subclass: #RBezier
-  instanceVariableNames: 'haltAfter dx freq phase param'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-RBezier comment: '(Undocumented class)'!
-
-!RBezier methodsFor: 'accessing'!
-  haltAfter ^haltAfter!
-  haltAfter: x haltAfter := x!
-  dx ^dx!
-  dx: x dx := x!
-  freq ^freq!
-  freq: x freq := x!
-  phase ^phase!
-  phase: x phase := x!
-  param ^param!
-  param: x param := x!
-!
-
-!RBezier methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #RBezier.
-    paramNames := #(#haltAfter #dx #freq #phase).
-    mceNames := #(#param).
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    haltAfter := 100.0. dx := 0.0001. freq := 440.0. phase := 0.0!
-!
-
-
-!RBezier class methodsFor: 'instance creation'!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
-    |u|
-    u := self new.
-    u haltAfter: haltAfter.
-    u dx: dx.
-    u freq: freq.
-    u phase: phase.
-    u param: param.
-    ^u!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
-  primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
-!
-
-UGen subclass: #RDX7Env
-  instanceVariableNames: 'gate data r1 r2 r3 r4 l1 l2 l3 l4 ol'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-RDX7Env comment: '(Undocumented class)'!
-
-!RDX7Env methodsFor: 'accessing'!
-  gate ^gate!
-  gate: x gate := x!
-  data ^data!
-  data: x data := x!
-  r1 ^r1!
-  r1: x r1 := x!
-  r2 ^r2!
-  r2: x r2 := x!
-  r3 ^r3!
-  r3: x r3 := x!
-  r4 ^r4!
-  r4: x r4 := x!
-  l1 ^l1!
-  l1: x l1 := x!
-  l2 ^l2!
-  l2: x l2 := x!
-  l3 ^l3!
-  l3: x l3 := x!
-  l4 ^l4!
-  l4: x l4 := x!
-  ol ^ol!
-  ol: x ol := x!
-!
-
-!RDX7Env methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #RDX7Env.
-    paramNames := #(#gate #data #r1 #r2 #r3 #r4 #l1 #l2 #l3 #l4 #ol).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    gate := 0.0. data := 0.0. r1 := 0.0. r2 := 0.0. r3 := 0.0. r4 := 0.0. l1 := 0.0. l2 := 0.0. l3 := 0.0. l4 := 0.0. ol := 0.0!
-!
-
-
-!RDX7Env class methodsFor: 'instance creation'!
-  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
-    |u|
-    u := self new.
-    u gate: gate.
-    u data: data.
-    u r1: r1.
-    u r2: r2.
-    u r3: r3.
-    u r4: r4.
-    u l1: l1.
-    u l2: l2.
-    u l3: l3.
-    u l4: l4.
-    u ol: ol.
-    ^u!
-  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul!
-  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul add: add ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul + add!
-  primaryFactoryMethod ^#gate:data:r1:r2:r3:r4:l1:l2:l3:l4:ol:!
-!
-
-UGen subclass: #RExpRandN
-  instanceVariableNames: 'lo hi'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-RExpRandN comment: '(Undocumented class)'!
-
-!RExpRandN methodsFor: 'accessing'!
-  lo ^lo!
-  lo: x lo := x!
-  hi ^hi!
-  hi: x hi := x!
-!
-
-!RExpRandN methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #RExpRandN.
-    paramNames := #(#lo #hi).
-    mceNames := #().
-    ugenRate := #ir.
-    numChan := nil.
-    specialIndex := 0.
-    ugenId := nil.
-    lo := 0.0. hi := 1.0!
-!
-
-
-!RExpRandN class methodsFor: 'instance creation'!
-  numChan: numChan lo: lo hi: hi
-    |u|
-    u := self new.
-    u numChan: numChan.
-    u lo: lo.
-    u hi: hi.
-    ^u!
-  numChan: numChan lo: lo hi: hi mul: mul ^(RExpRandN numChan: numChan lo: lo hi: hi) * mul!
-  numChan: numChan lo: lo hi: hi mul: mul add: add ^(RExpRandN numChan: numChan lo: lo hi: hi) * mul + add!
-  primaryFactoryMethod ^#numChan:lo:hi:!
-!
-
 UGen subclass: #Rotate2
   instanceVariableNames: 'x y pos'
   classVariableNames: ''
@@ -6703,48 +6225,6 @@ Rotate2 comment: 'Rotate a sound field.'!
   x: x y: y pos: pos mul: mul ^(Rotate2 x: x y: y pos: pos) * mul!
   x: x y: y pos: pos mul: mul add: add ^(Rotate2 x: x y: y pos: pos) * mul + add!
   primaryFactoryMethod ^#x:y:pos:!
-!
-
-UGen subclass: #RRandN
-  instanceVariableNames: 'lo hi'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-RRandN comment: '(Undocumented class)'!
-
-!RRandN methodsFor: 'accessing'!
-  lo ^lo!
-  lo: x lo := x!
-  hi ^hi!
-  hi: x hi := x!
-!
-
-!RRandN methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #RRandN.
-    paramNames := #(#lo #hi).
-    mceNames := #().
-    ugenRate := #ir.
-    numChan := nil.
-    specialIndex := 0.
-    ugenId := nil.
-    lo := 0.0. hi := 1.0!
-!
-
-
-!RRandN class methodsFor: 'instance creation'!
-  numChan: numChan lo: lo hi: hi
-    |u|
-    u := self new.
-    u numChan: numChan.
-    u lo: lo.
-    u hi: hi.
-    ^u!
-  numChan: numChan lo: lo hi: hi mul: mul ^(RRandN numChan: numChan lo: lo hi: hi) * mul!
-  numChan: numChan lo: lo hi: hi mul: mul add: add ^(RRandN numChan: numChan lo: lo hi: hi) * mul + add!
-  primaryFactoryMethod ^#numChan:lo:hi:!
 !
 
 UGen subclass: #SampleDur
@@ -7671,47 +7151,6 @@ Trig1 comment: 'Timed trigger.'!
   primaryFactoryMethod ^#in:dur:!
 !
 
-UGen subclass: #TScramble
-  instanceVariableNames: 'trigger inputs'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-TScramble comment: '(Undocumented class)'!
-
-!TScramble methodsFor: 'accessing'!
-  trigger ^trigger!
-  trigger: x trigger := x!
-  inputs ^inputs!
-  inputs: x inputs := x!
-!
-
-!TScramble methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #TScramble.
-    paramNames := #(#trigger).
-    mceNames := #(#inputs).
-    ugenRate := #(0).
-    numChan := #mceInput.
-    specialIndex := 0.
-    ugenId := nil.
-    trigger := 0.0!
-!
-
-
-!TScramble class methodsFor: 'instance creation'!
-  trigger: trigger inputs: inputs
-    |u|
-    u := self new.
-    u trigger: trigger.
-    u inputs: inputs.
-    ^u!
-  trigger: trigger inputs: inputs mul: mul ^(TScramble trigger: trigger inputs: inputs) * mul!
-  trigger: trigger inputs: inputs mul: mul add: add ^(TScramble trigger: trigger inputs: inputs) * mul + add!
-  primaryFactoryMethod ^#trigger:inputs:!
-!
-
 UGen subclass: #TwoPole
   instanceVariableNames: 'in freq radius'
   classVariableNames: ''
@@ -8109,6 +7548,839 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   in: in mul: mul ^(ZeroCrossing in: in) * mul!
   in: in mul: mul add: add ^(ZeroCrossing in: in) * mul + add!
   primaryFactoryMethod ^#in:!
+!
+
+UGen subclass: #MoogLadder
+  instanceVariableNames: 'in ffreq res'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MoogLadder comment: 'Moog Filter Emulation'!
+
+!MoogLadder methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  ffreq ^ffreq!
+  ffreq: x ffreq := x!
+  res ^res!
+  res: x res := x!
+!
+
+!MoogLadder methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MoogLadder.
+    paramNames := #(#in #ffreq #res).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. ffreq := 440.0. res := 0.0!
+!
+
+
+!MoogLadder class methodsFor: 'instance creation'!
+  in: in ffreq: ffreq res: res
+    |u|
+    u := self new.
+    u in: in.
+    u ffreq: ffreq.
+    u res: res.
+    ^u!
+  in: in ffreq: ffreq res: res mul: mul ^(MoogLadder in: in ffreq: ffreq res: res) * mul!
+  in: in ffreq: ffreq res: res mul: mul add: add ^(MoogLadder in: in ffreq: ffreq res: res) * mul + add!
+  primaryFactoryMethod ^#in:ffreq:res:!
+!
+
+UGen subclass: #GreyholeRaw
+  instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+GreyholeRaw comment: 'algorithmic delay'!
+
+!GreyholeRaw methodsFor: 'accessing'!
+  in1 ^in1!
+  in1: x in1 := x!
+  in2 ^in2!
+  in2: x in2 := x!
+  damping ^damping!
+  damping: x damping := x!
+  delaytime ^delaytime!
+  delaytime: x delaytime := x!
+  diffusion ^diffusion!
+  diffusion: x diffusion := x!
+  feedback ^feedback!
+  feedback: x feedback := x!
+  moddepth ^moddepth!
+  moddepth: x moddepth := x!
+  modfreq ^modfreq!
+  modfreq: x modfreq := x!
+  size ^size!
+  size: x size := x!
+!
+
+!GreyholeRaw methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #GreyholeRaw.
+    paramNames := #(#in1 #in2 #damping #delaytime #diffusion #feedback #moddepth #modfreq #size).
+    mceNames := #().
+    ugenRate := #(0 1).
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in1 := 0.0. in2 := 0.0. damping := 0.0. delaytime := 2.0. diffusion := 0.5. feedback := 0.9. moddepth := 0.1. modfreq := 2.0. size := 1.0!
+!
+
+
+!GreyholeRaw class methodsFor: 'instance creation'!
+  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
+    |u|
+    u := self new.
+    u in1: in1.
+    u in2: in2.
+    u damping: damping.
+    u delaytime: delaytime.
+    u diffusion: diffusion.
+    u feedback: feedback.
+    u moddepth: moddepth.
+    u modfreq: modfreq.
+    u size: size.
+    ^u!
+  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul!
+  in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul + add!
+  primaryFactoryMethod ^#in1:in2:damping:delaytime:diffusion:feedback:moddepth:modfreq:size:!
+!
+
+UGen subclass: #CrossoverDistortion
+  instanceVariableNames: 'in amp smooth'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
+
+!CrossoverDistortion methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  amp ^amp!
+  amp: x amp := x!
+  smooth ^smooth!
+  smooth: x smooth := x!
+!
+
+!CrossoverDistortion methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #CrossoverDistortion.
+    paramNames := #(#in #amp #smooth).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. amp := 0.5. smooth := 0.5!
+!
+
+
+!CrossoverDistortion class methodsFor: 'instance creation'!
+  in: in amp: amp smooth: smooth
+    |u|
+    u := self new.
+    u in: in.
+    u amp: amp.
+    u smooth: smooth.
+    ^u!
+  in: in amp: amp smooth: smooth mul: mul ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul!
+  in: in amp: amp smooth: smooth mul: mul add: add ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul + add!
+  primaryFactoryMethod ^#in:amp:smooth:!
+!
+
+UGen subclass: #Friction
+  instanceVariableNames: 'in friction spring damp mass beltmass'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Friction comment: 'A physical model of a system with dry-friction. A chaotic filter.'!
+
+!Friction methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  friction ^friction!
+  friction: x friction := x!
+  spring ^spring!
+  spring: x spring := x!
+  damp ^damp!
+  damp: x damp := x!
+  mass ^mass!
+  mass: x mass := x!
+  beltmass ^beltmass!
+  beltmass: x beltmass := x!
+!
+
+!Friction methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Friction.
+    paramNames := #(#in #friction #spring #damp #mass #beltmass).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. friction := 0.5. spring := 0.414. damp := 0.313. mass := 0.1. beltmass := 1.0!
+!
+
+
+!Friction class methodsFor: 'instance creation'!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
+    |u|
+    u := self new.
+    u in: in.
+    u friction: friction.
+    u spring: spring.
+    u damp: damp.
+    u mass: mass.
+    u beltmass: beltmass.
+    ^u!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul!
+  in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul add: add ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add!
+  primaryFactoryMethod ^#in:friction:spring:damp:mass:beltmass:!
+!
+
+UGen subclass: #MembraneCircle
+  instanceVariableNames: 'excitation tension loss'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
+
+!MembraneCircle methodsFor: 'accessing'!
+  excitation ^excitation!
+  excitation: x excitation := x!
+  tension ^tension!
+  tension: x tension := x!
+  loss ^loss!
+  loss: x loss := x!
+!
+
+!MembraneCircle methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MembraneCircle.
+    paramNames := #(#excitation #tension #loss).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    excitation := 0.0. tension := 0.05. loss := 0.99999!
+!
+
+
+!MembraneCircle class methodsFor: 'instance creation'!
+  excitation: excitation tension: tension loss: loss
+    |u|
+    u := self new.
+    u excitation: excitation.
+    u tension: tension.
+    u loss: loss.
+    ^u!
+  excitation: excitation tension: tension loss: loss mul: mul ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul!
+  excitation: excitation tension: tension loss: loss mul: mul add: add ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul + add!
+  primaryFactoryMethod ^#excitation:tension:loss:!
+!
+
+UGen subclass: #MiRings
+  instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+MiRings comment: 'a resonator'!
+
+!MiRings methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  trig ^trig!
+  trig: x trig := x!
+  pit ^pit!
+  pit: x pit := x!
+  struct ^struct!
+  struct: x struct := x!
+  bright ^bright!
+  bright: x bright := x!
+  damp ^damp!
+  damp: x damp := x!
+  pos ^pos!
+  pos: x pos := x!
+  model ^model!
+  model: x model := x!
+  poly ^poly!
+  poly: x poly := x!
+  intern_exciter ^intern_exciter!
+  intern_exciter: x intern_exciter := x!
+  easteregg ^easteregg!
+  easteregg: x easteregg := x!
+  bypass ^bypass!
+  bypass: x bypass := x!
+!
+
+!MiRings methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #MiRings.
+    paramNames := #(#in #trig #pit #struct #bright #damp #pos #model #poly #intern_exciter #easteregg #bypass).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. trig := 0.0. pit := 60.0. struct := 0.25. bright := 0.5. damp := 0.7. pos := 0.25. model := 0.0. poly := 1.0. intern_exciter := 0.0. easteregg := 0.0. bypass := 0.0!
+!
+
+
+!MiRings class methodsFor: 'instance creation'!
+  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
+    |u|
+    u := self new.
+    u in: in.
+    u trig: trig.
+    u pit: pit.
+    u struct: struct.
+    u bright: bright.
+    u damp: damp.
+    u pos: pos.
+    u model: model.
+    u poly: poly.
+    u intern_exciter: intern_exciter.
+    u easteregg: easteregg.
+    u bypass: bypass.
+    ^u!
+  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul!
+  in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul + add!
+  primaryFactoryMethod ^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:!
+!
+
+UGen subclass: #AnalogFoldOsc
+  instanceVariableNames: 'freq amp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+AnalogFoldOsc comment: '(Undocumented class)'!
+
+!AnalogFoldOsc methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  amp ^amp!
+  amp: x amp := x!
+!
+
+!AnalogFoldOsc methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #AnalogFoldOsc.
+    paramNames := #(#freq #amp).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 100.0. amp := 1.0!
+!
+
+
+!AnalogFoldOsc class methodsFor: 'instance creation'!
+  freq: freq amp: amp
+    |u|
+    u := self new.
+    u freq: freq.
+    u amp: amp.
+    ^u!
+  freq: freq amp: amp mul: mul ^(AnalogFoldOsc freq: freq amp: amp) * mul!
+  freq: freq amp: amp mul: mul add: add ^(AnalogFoldOsc freq: freq amp: amp) * mul + add!
+  primaryFactoryMethod ^#freq:amp:!
+!
+
+UGen subclass: #RCD
+  instanceVariableNames: 'clock rotate reset div spread auto len down gates'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RCD comment: 'rotating clock divider'!
+
+!RCD methodsFor: 'accessing'!
+  clock ^clock!
+  clock: x clock := x!
+  rotate ^rotate!
+  rotate: x rotate := x!
+  reset ^reset!
+  reset: x reset := x!
+  div ^div!
+  div: x div := x!
+  spread ^spread!
+  spread: x spread := x!
+  auto ^auto!
+  auto: x auto := x!
+  len ^len!
+  len: x len := x!
+  down ^down!
+  down: x down := x!
+  gates ^gates!
+  gates: x gates := x!
+!
+
+!RCD methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RCD.
+    paramNames := #(#clock #rotate #reset #div #spread #auto #len #down #gates).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 8.
+    specialIndex := 0.
+    ugenId := nil.
+    clock := 0.0. rotate := 0.0. reset := 0.0. div := 0.0. spread := 0.0. auto := 0.0. len := 0.0. down := 0.0. gates := 0.0!
+!
+
+
+!RCD class methodsFor: 'instance creation'!
+  clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates
+    |u|
+    u := self new.
+    u clock: clock.
+    u rotate: rotate.
+    u reset: reset.
+    u div: div.
+    u spread: spread.
+    u auto: auto.
+    u len: len.
+    u down: down.
+    u gates: gates.
+    ^u!
+  clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates mul: mul ^(RCD clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates) * mul!
+  clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates mul: mul add: add ^(RCD clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates) * mul + add!
+  primaryFactoryMethod ^#clock:rotate:reset:div:spread:auto:len:down:gates:!
+!
+
+UGen subclass: #SCM
+  instanceVariableNames: 'clock bpm rotate slip shuffle skip pw'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SCM comment: 'shuffling clock multiplier'!
+
+!SCM methodsFor: 'accessing'!
+  clock ^clock!
+  clock: x clock := x!
+  bpm ^bpm!
+  bpm: x bpm := x!
+  rotate ^rotate!
+  rotate: x rotate := x!
+  slip ^slip!
+  slip: x slip := x!
+  shuffle ^shuffle!
+  shuffle: x shuffle := x!
+  skip ^skip!
+  skip: x skip := x!
+  pw ^pw!
+  pw: x pw := x!
+!
+
+!SCM methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SCM.
+    paramNames := #(#clock #bpm #rotate #slip #shuffle #skip #pw).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 8.
+    specialIndex := 0.
+    ugenId := nil.
+    clock := 0.0. bpm := 120.0. rotate := 0.0. slip := 0.0. shuffle := 0.0. skip := 0.0. pw := 0.0!
+!
+
+
+!SCM class methodsFor: 'instance creation'!
+  clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw
+    |u|
+    u := self new.
+    u clock: clock.
+    u bpm: bpm.
+    u rotate: rotate.
+    u slip: slip.
+    u shuffle: shuffle.
+    u skip: skip.
+    u pw: pw.
+    ^u!
+  clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw mul: mul ^(SCM clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw) * mul!
+  clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw mul: mul add: add ^(SCM clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw) * mul + add!
+  primaryFactoryMethod ^#clock:bpm:rotate:slip:shuffle:skip:pw:!
+!
+
+UGen subclass: #ExpRandN
+  instanceVariableNames: 'lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ExpRandN comment: '(Undocumented class)'!
+
+!ExpRandN methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!ExpRandN methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ExpRandN.
+    paramNames := #(#lo #hi).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0!
+!
+
+
+!ExpRandN class methodsFor: 'instance creation'!
+  numChan: numChan lo: lo hi: hi
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul ^(ExpRandN numChan: numChan lo: lo hi: hi) * mul!
+  numChan: numChan lo: lo hi: hi mul: mul add: add ^(ExpRandN numChan: numChan lo: lo hi: hi) * mul + add!
+  primaryFactoryMethod ^#numChan:lo:hi:!
+!
+
+UGen subclass: #LinRandN
+  instanceVariableNames: 'lo hi minmax'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinRandN comment: '(Undocumented class)'!
+
+!LinRandN methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+  minmax ^minmax!
+  minmax: x minmax := x!
+!
+
+!LinRandN methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LinRandN.
+    paramNames := #(#lo #hi #minmax).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0. minmax := 0.0!
+!
+
+
+!LinRandN class methodsFor: 'instance creation'!
+  numChan: numChan lo: lo hi: hi minmax: minmax
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    u minmax: minmax.
+    ^u!
+  numChan: numChan lo: lo hi: hi minmax: minmax mul: mul ^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul!
+  numChan: numChan lo: lo hi: hi minmax: minmax mul: mul add: add ^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul + add!
+  primaryFactoryMethod ^#numChan:lo:hi:minmax:!
+!
+
+UGen subclass: #RandN
+  instanceVariableNames: 'lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RandN comment: '(Undocumented class)'!
+
+!RandN methodsFor: 'accessing'!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!RandN methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RandN.
+    paramNames := #(#lo #hi).
+    mceNames := #().
+    ugenRate := #ir.
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    lo := 0.0. hi := 1.0!
+!
+
+
+!RandN class methodsFor: 'instance creation'!
+  numChan: numChan lo: lo hi: hi
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  numChan: numChan lo: lo hi: hi mul: mul ^(RandN numChan: numChan lo: lo hi: hi) * mul!
+  numChan: numChan lo: lo hi: hi mul: mul add: add ^(RandN numChan: numChan lo: lo hi: hi) * mul + add!
+  primaryFactoryMethod ^#numChan:lo:hi:!
+!
+
+UGen subclass: #TScramble
+  instanceVariableNames: 'trigger inputs'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+TScramble comment: '(Undocumented class)'!
+
+!TScramble methodsFor: 'accessing'!
+  trigger ^trigger!
+  trigger: x trigger := x!
+  inputs ^inputs!
+  inputs: x inputs := x!
+!
+
+!TScramble methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #TScramble.
+    paramNames := #(#trigger).
+    mceNames := #(#inputs).
+    ugenRate := #(0).
+    numChan := #mceInput.
+    specialIndex := 0.
+    ugenId := nil.
+    trigger := 0.0!
+!
+
+
+!TScramble class methodsFor: 'instance creation'!
+  trigger: trigger inputs: inputs
+    |u|
+    u := self new.
+    u trigger: trigger.
+    u inputs: inputs.
+    ^u!
+  trigger: trigger inputs: inputs mul: mul ^(TScramble trigger: trigger inputs: inputs) * mul!
+  trigger: trigger inputs: inputs mul: mul add: add ^(TScramble trigger: trigger inputs: inputs) * mul + add!
+  primaryFactoryMethod ^#trigger:inputs:!
+!
+
+UGen subclass: #RBezier
+  instanceVariableNames: 'haltAfter dx freq phase param'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RBezier comment: '(Undocumented class)'!
+
+!RBezier methodsFor: 'accessing'!
+  haltAfter ^haltAfter!
+  haltAfter: x haltAfter := x!
+  dx ^dx!
+  dx: x dx := x!
+  freq ^freq!
+  freq: x freq := x!
+  phase ^phase!
+  phase: x phase := x!
+  param ^param!
+  param: x param := x!
+!
+
+!RBezier methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RBezier.
+    paramNames := #(#haltAfter #dx #freq #phase).
+    mceNames := #(#param).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    haltAfter := 100.0. dx := 0.0001. freq := 440.0. phase := 0.0!
+!
+
+
+!RBezier class methodsFor: 'instance creation'!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
+    |u|
+    u := self new.
+    u haltAfter: haltAfter.
+    u dx: dx.
+    u freq: freq.
+    u phase: phase.
+    u param: param.
+    ^u!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
+  primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
+!
+
+UGen subclass: #RDX7
+  instanceVariableNames: 'bufnum on off data vc mnn vel pw mw bc fc'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RDX7 comment: '(Undocumented class)'!
+
+!RDX7 methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  on ^on!
+  on: x on := x!
+  off ^off!
+  off: x off := x!
+  data ^data!
+  data: x data := x!
+  vc ^vc!
+  vc: x vc := x!
+  mnn ^mnn!
+  mnn: x mnn := x!
+  vel ^vel!
+  vel: x vel := x!
+  pw ^pw!
+  pw: x pw := x!
+  mw ^mw!
+  mw: x mw := x!
+  bc ^bc!
+  bc: x bc := x!
+  fc ^fc!
+  fc: x fc := x!
+!
+
+!RDX7 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RDX7.
+    paramNames := #(#bufnum #on #off #data #vc #mnn #vel #pw #mw #bc #fc).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. on := 0.0. off := 0.0. data := 0.0. vc := 0.0. mnn := 60.0. vel := 99.0. pw := 0.0. mw := 0.0. bc := 0.0. fc := 0.0!
+!
+
+
+!RDX7 class methodsFor: 'instance creation'!
+  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u on: on.
+    u off: off.
+    u data: data.
+    u vc: vc.
+    u mnn: mnn.
+    u vel: vel.
+    u pw: pw.
+    u mw: mw.
+    u bc: bc.
+    u fc: fc.
+    ^u!
+  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul ^(RDX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul!
+  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul add: add ^(RDX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add!
+  primaryFactoryMethod ^#bufnum:on:off:data:vc:mnn:vel:pw:mw:bc:fc:!
+!
+
+UGen subclass: #RDX7Env
+  instanceVariableNames: 'gate data r1 r2 r3 r4 l1 l2 l3 l4 ol'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RDX7Env comment: '(Undocumented class)'!
+
+!RDX7Env methodsFor: 'accessing'!
+  gate ^gate!
+  gate: x gate := x!
+  data ^data!
+  data: x data := x!
+  r1 ^r1!
+  r1: x r1 := x!
+  r2 ^r2!
+  r2: x r2 := x!
+  r3 ^r3!
+  r3: x r3 := x!
+  r4 ^r4!
+  r4: x r4 := x!
+  l1 ^l1!
+  l1: x l1 := x!
+  l2 ^l2!
+  l2: x l2 := x!
+  l3 ^l3!
+  l3: x l3 := x!
+  l4 ^l4!
+  l4: x l4 := x!
+  ol ^ol!
+  ol: x ol := x!
+!
+
+!RDX7Env methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RDX7Env.
+    paramNames := #(#gate #data #r1 #r2 #r3 #r4 #l1 #l2 #l3 #l4 #ol).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    gate := 0.0. data := 0.0. r1 := 0.0. r2 := 0.0. r3 := 0.0. r4 := 0.0. l1 := 0.0. l2 := 0.0. l3 := 0.0. l4 := 0.0. ol := 0.0!
+!
+
+
+!RDX7Env class methodsFor: 'instance creation'!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
+    |u|
+    u := self new.
+    u gate: gate.
+    u data: data.
+    u r1: r1.
+    u r2: r2.
+    u r3: r3.
+    u r4: r4.
+    u l1: l1.
+    u l2: l2.
+    u l3: l3.
+    u l4: l4.
+    u ol: ol.
+    ^u!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul!
+  gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul add: add ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul + add!
+  primaryFactoryMethod ^#gate:data:r1:r2:r3:r4:l1:l2:l3:l4:ol:!
 !
 
 

@@ -35,6 +35,9 @@
   clip: lo value: hi
     ^Clip in: self lo: lo hi: hi
   !
+  coinGate: prob
+    ^CoinGate prob: prob in: self
+  !
   combC: maxdelaytime value: delaytime value: decaytime
     ^CombC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
   !
@@ -43,9 +46,6 @@
   !
   combN: maxdelaytime value: delaytime value: decaytime
     ^CombN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
-  crossoverDistortion: amp value: smooth
-    ^CrossoverDistortion in: self amp: amp smooth: smooth
   !
   decay: decayTime
     ^Decay in: self decayTime: decayTime
@@ -79,9 +79,6 @@
   !
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
-  !
-  greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
-    ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
   !
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
@@ -154,9 +151,6 @@
   !
   moogFF: freq value: gain value: reset
     ^MoogFF in: self freq: freq gain: gain reset: reset
-  !
-  moogLadder: ffreq value: res
-    ^MoogLadder in: self ffreq: ffreq res: res
   !
   mulAdd: mul value: add
     ^MulAdd in: self mul: mul add: add
@@ -245,9 +239,6 @@
   trig1: dur
     ^Trig1 in: self dur: dur
   !
-  tScramble: inputs
-    ^TScramble trigger: self inputs: inputs
-  !
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius
   !
@@ -262,6 +253,21 @@
   !
   zeroCrossing
     ^ZeroCrossing in: self
+  !
+  moogLadder: ffreq value: res
+    ^MoogLadder in: self ffreq: ffreq res: res
+  !
+  greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
+    ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
+  !
+  crossoverDistortion: amp value: smooth
+    ^CrossoverDistortion in: self amp: amp smooth: smooth
+  !
+  rcd: rotate value: reset value: div value: spread value: auto value: len value: down value: gates
+    ^RCD clock: self rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates
+  !
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
   !
 
 !
@@ -302,6 +308,9 @@
   clip: lo value: hi
     ^Clip in: self lo: lo hi: hi
   !
+  coinGate: prob
+    ^CoinGate prob: prob in: self
+  !
   combC: maxdelaytime value: delaytime value: decaytime
     ^CombC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
   !
@@ -310,9 +319,6 @@
   !
   combN: maxdelaytime value: delaytime value: decaytime
     ^CombN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
-  crossoverDistortion: amp value: smooth
-    ^CrossoverDistortion in: self amp: amp smooth: smooth
   !
   decay: decayTime
     ^Decay in: self decayTime: decayTime
@@ -346,9 +352,6 @@
   !
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
-  !
-  greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
-    ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
   !
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
@@ -421,9 +424,6 @@
   !
   moogFF: freq value: gain value: reset
     ^MoogFF in: self freq: freq gain: gain reset: reset
-  !
-  moogLadder: ffreq value: res
-    ^MoogLadder in: self ffreq: ffreq res: res
   !
   mulAdd: mul value: add
     ^MulAdd in: self mul: mul add: add
@@ -512,9 +512,6 @@
   trig1: dur
     ^Trig1 in: self dur: dur
   !
-  tScramble: inputs
-    ^TScramble trigger: self inputs: inputs
-  !
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius
   !
@@ -530,6 +527,21 @@
   zeroCrossing
     ^ZeroCrossing in: self
   !
+  moogLadder: ffreq value: res
+    ^MoogLadder in: self ffreq: ffreq res: res
+  !
+  greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
+    ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
+  !
+  crossoverDistortion: amp value: smooth
+    ^CrossoverDistortion in: self amp: amp smooth: smooth
+  !
+  rcd: rotate value: reset value: div value: spread value: auto value: len value: down value: gates
+    ^RCD clock: self rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates
+  !
+  tScramble: inputs
+    ^TScramble trigger: self inputs: inputs
+  !
 
 !
 !AbstractUGen methodsFor: 'filtering'!
@@ -541,9 +553,6 @@
   !
   amplitude: attackTime value: releaseTime
     ^Amplitude in: self attackTime: attackTime releaseTime: releaseTime
-  !
-  analogFoldOsc: amp
-    ^AnalogFoldOsc freq: self amp: amp
   !
   blip: numharm
     ^Blip freq: self numharm: numharm
@@ -619,9 +628,6 @@
   !
   freqShift: freq value: phase
     ^FreqShift in: self freq: freq phase: phase
-  !
-  friction: friction value: spring value: damp value: mass value: beltmass
-    ^Friction in: self friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
   !
   fSinOsc: iphase
     ^FSinOsc freq: self iphase: iphase
@@ -707,12 +713,6 @@
   maxLocalBufs
     ^MaxLocalBufs count: self
   !
-  membraneCircle: tension value: loss
-    ^MembraneCircle excitation: self tension: tension loss: loss
-  !
-  miRings: trig value: pit value: struct value: bright value: damp value: pos value: model value: poly value: intern_exciter value: easteregg value: bypass
-    ^MiRings in: self trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
-  !
   mouseButton: maxval value: lag
     ^MouseButton minval: self maxval: maxval lag: lag
   !
@@ -752,18 +752,6 @@
   recordBuf: offset value: recLevel value: preLevel value: run value: loop value: trigger value: doneAction value: inputArray
     ^RecordBuf bufnum: self offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray
   !
-  rBezier: dx value: freq value: phase value: param
-    ^RBezier haltAfter: self dx: dx freq: freq phase: phase param: param
-  !
-  rdx7Env: data value: r1 value: r2 value: r3 value: r4 value: l1 value: l2 value: l3 value: l4 value: ol
-    ^RDX7Env gate: self data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
-  !
-  rExpRandN: hi
-    ^RExpRandN lo: self hi: hi
-  !
-  rRandN: hi
-    ^RRandN lo: self hi: hi
-  !
   saw
     ^Saw freq: self
   !
@@ -793,6 +781,39 @@
   !
   xLine: end value: dur value: doneAction
     ^XLine start: self end: end dur: dur doneAction: doneAction
+  !
+  friction: friction value: spring value: damp value: mass value: beltmass
+    ^Friction in: self friction: friction spring: spring damp: damp mass: mass beltmass: beltmass
+  !
+  membraneCircle: tension value: loss
+    ^MembraneCircle excitation: self tension: tension loss: loss
+  !
+  miRings: trig value: pit value: struct value: bright value: damp value: pos value: model value: poly value: intern_exciter value: easteregg value: bypass
+    ^MiRings in: self trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
+  !
+  analogFoldOsc: amp
+    ^AnalogFoldOsc freq: self amp: amp
+  !
+  scm: bpm value: rotate value: slip value: shuffle value: skip value: pw
+    ^SCM clock: self bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw
+  !
+  expRandN: hi
+    ^ExpRandN lo: self hi: hi
+  !
+  linRandN: hi value: minmax
+    ^LinRandN lo: self hi: hi minmax: minmax
+  !
+  randN: hi
+    ^RandN lo: self hi: hi
+  !
+  rBezier: dx value: freq value: phase value: param
+    ^RBezier haltAfter: self dx: dx freq: freq phase: phase param: param
+  !
+  rdx7: on value: off value: data value: vc value: mnn value: vel value: pw value: mw value: bc value: fc
+    ^RDX7 bufnum: self on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
+  !
+  rdx7Env: data value: r1 value: r2 value: r3 value: r4 value: l1 value: l2 value: l3 value: l4 value: ol
+    ^RDX7Env gate: self data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
   !
 
 !
