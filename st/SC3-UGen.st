@@ -8027,6 +8027,47 @@ SCM comment: 'shuffling clock multiplier'!
   primaryFactoryMethod ^#clock:bpm:rotate:slip:shuffle:skip:pw:!
 !
 
+UGen subclass: #DustRange
+  instanceVariableNames: 'iotMin iotMax'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DustRange comment: '(Undocumented class)'!
+
+!DustRange methodsFor: 'accessing'!
+  iotMin ^iotMin!
+  iotMin: x iotMin := x!
+  iotMax ^iotMax!
+  iotMax: x iotMax := x!
+!
+
+!DustRange methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DustRange.
+    paramNames := #(#iotMin #iotMax).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    iotMin := 0.1. iotMax := 1.0!
+!
+
+
+!DustRange class methodsFor: 'instance creation'!
+  iotMin: iotMin iotMax: iotMax
+    |u|
+    u := self new.
+    u iotMin: iotMin.
+    u iotMax: iotMax.
+    ^u!
+  iotMin: iotMin iotMax: iotMax mul: mul ^(DustRange iotMin: iotMin iotMax: iotMax) * mul!
+  iotMin: iotMin iotMax: iotMax mul: mul add: add ^(DustRange iotMin: iotMin iotMax: iotMax) * mul + add!
+  primaryFactoryMethod ^#iotMin:iotMax:!
+!
+
 UGen subclass: #ExpRandN
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
@@ -8417,6 +8458,7 @@ RDX7Env comment: '(Undocumented class)'!
   ceil ^ UnaryOpUGen specialIndex: 8 a: self!
   floor ^ UnaryOpUGen specialIndex: 9 a: self!
   frac ^ UnaryOpUGen specialIndex: 10 a: self!
+  sign ^ UnaryOpUGen specialIndex: 11 a: self!
   squared ^ UnaryOpUGen specialIndex: 12 a: self!
   cubed ^ UnaryOpUGen specialIndex: 13 a: self!
   sqrt ^ UnaryOpUGen specialIndex: 14 a: self!

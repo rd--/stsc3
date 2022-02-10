@@ -73,6 +73,7 @@
 + MiRings { *new { arg in = 0.0, trig = 0.0, pit = 60.0, struct = 0.25, bright = 0.5, damp = 0.7, pos = 0.25, model = 0.0, poly = 1.0, intern_exciter = 0.0, easteregg = 0.0, bypass = 0.0; ^MiRings.performList('audio'.rateToSelector, [in, trig, pit, struct, bright, damp, pos, model, poly, intern_exciter, easteregg, bypass]) } }
 + AnalogFoldOsc { *new { arg freq = 100.0, amp = 1.0; ^AnalogFoldOsc.performList('audio'.rateToSelector, [freq, amp]) } }
 + SCM { *new { arg clock = 0.0, bpm = 120.0, rotate = 0.0, slip = 0.0, shuffle = 0.0, skip = 0.0, pw = 0.0; ^SCM.performList('audio'.rateToSelector, [clock, bpm, rotate, slip, shuffle, skip, pw]) } }
++ DustRange { *new { arg iotMin = 0.1, iotMax = 1.0; ^DustRange.performList('audio'.rateToSelector, [iotMin, iotMax]) } }
 + ExpRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^ExpRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
 + LinRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0, minmax = 0.0; ^LinRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi, minmax]) } }
 + RandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^RandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }

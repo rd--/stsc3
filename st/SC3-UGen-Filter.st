@@ -797,6 +797,9 @@
   scm: bpm value: rotate value: slip value: shuffle value: skip value: pw
     ^SCM clock: self bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw
   !
+  dustRange: iotMax
+    ^DustRange iotMin: self iotMax: iotMax
+  !
   expRandN: hi
     ^ExpRandN lo: self hi: hi
   !
