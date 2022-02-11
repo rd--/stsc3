@@ -18,6 +18,7 @@
 + Decay2 { *new { arg in = 0.0, attackTime = 1.0e-2, decayTime = 1.0;^Decay2.performList(in.rate.rateToSelector, [in, attackTime, decayTime]) } }
 + DegreeToKey { *new { arg bufnum = 0.0, in = 0.0, octave = 12.0;^DegreeToKey.performList(in.rate.rateToSelector, [bufnum, in, octave]) } }
 + DelayC { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2;^DelayC.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime]) } }
++ DelayL { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2;^DelayL.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime]) } }
 + DelayN { *new { arg in = 0.0, maxdelaytime = 0.2, delaytime = 0.2;^DelayN.performList(in.rate.rateToSelector, [in, maxdelaytime, delaytime]) } }
 + Demand { *new { arg trig = 0.0, reset = 0.0, demandUGens = 0.0;^Demand.performList(trig.rate.rateToSelector, [trig, reset, demandUGens]) } }
 + DetectSilence { *new { arg in = 0.0, amp = 1.0e-4, time = 0.1, doneAction = 0.0;^DetectSilence.performList(in.rate.rateToSelector, [in, amp, time, doneAction]) } }

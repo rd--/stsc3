@@ -59,6 +59,9 @@
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
+  delayL: maxdelaytime value: delaytime
+    ^DelayL in: self maxdelaytime: maxdelaytime delaytime: delaytime
+  !
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
@@ -331,6 +334,9 @@
   !
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
+  !
+  delayL: maxdelaytime value: delaytime
+    ^DelayL in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime

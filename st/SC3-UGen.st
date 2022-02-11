@@ -1602,6 +1602,50 @@ DelayC comment: 'Simple delay line with cubic interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
+UGen subclass: #DelayL
+  instanceVariableNames: 'in maxdelaytime delaytime'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DelayL comment: 'Simple delay line with linear interpolation.'!
+
+!DelayL methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  maxdelaytime ^maxdelaytime!
+  maxdelaytime: x maxdelaytime := x!
+  delaytime ^delaytime!
+  delaytime: x delaytime := x!
+!
+
+!DelayL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DelayL.
+    paramNames := #(#in #maxdelaytime #delaytime).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. maxdelaytime := 0.2. delaytime := 0.2!
+!
+
+
+!DelayL class methodsFor: 'instance creation'!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime
+    |u|
+    u := self new.
+    u in: in.
+    u maxdelaytime: maxdelaytime.
+    u delaytime: delaytime.
+    ^u!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul ^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul!
+  in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add ^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add!
+  primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
+!
+
 UGen subclass: #DelayN
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
