@@ -16,6 +16,7 @@
 + Dust { *new { arg density = 0.0; ^Dust.performList('audio'.rateToSelector, [density]) } }
 + Dust2 { *new { arg density = 0.0; ^Dust2.performList('audio'.rateToSelector, [density]) } }
 + Duty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0; ^Duty.performList('audio'.rateToSelector, [dur, reset, level, doneAction]) } }
++ DWGPluckedStiff { *new { arg freq = 440.0, amp = 0.5, gate = 1.0, pos = 0.14, c1 = 1.0, c3 = 30.0, inp = 0.0, release = 0.1, fB = 2.0; ^DWGPluckedStiff.performList('audio'.rateToSelector, [freq, amp, gate, pos, c1, c3, inp, release, fB]) } }
 + EnvGen { *new { arg envelope = 0.0, gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0; ^EnvGen.performList('audio'.rateToSelector, [envelope, gate, levelScale, levelBias, timeScale, doneAction]) } }
 + FBSineC { *new { arg freq = 22050.0, im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1; ^FBSineC.performList('audio'.rateToSelector, [freq, im, fb, a, c, xi, yi]) } }
 + Formant { *new { arg fundfreq = 440.0, formfreq = 1760.0, bwfreq = 880.0; ^Formant.performList('audio'.rateToSelector, [fundfreq, formfreq, bwfreq]) } }
@@ -30,6 +31,7 @@
 + K2A { *new { arg in = 0.0; ^K2A.performList('audio'.rateToSelector, [in]) } }
 + KeyState { *new { arg keycode = 0.0, minval = 0.0, maxval = 1.0, lag = 0.2; ^KeyState.performList('control'.rateToSelector, [keycode, minval, maxval, lag]) } }
 + Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.performList('audio'.rateToSelector, [specificationsArrayRef, freqscale, freqoffset]) } }
++ LFClipNoise { *new { arg freq = 500.0; ^LFClipNoise.performList('audio'.rateToSelector, [freq]) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.performList('audio'.rateToSelector, [freq, iphase]) } }
 + LFDNoise1 { *new { arg freq = 500.0; ^LFDNoise1.performList('audio'.rateToSelector, [freq]) } }
 + LFDNoise3 { *new { arg freq = 500.0; ^LFDNoise3.performList('audio'.rateToSelector, [freq]) } }
@@ -77,6 +79,6 @@
 + ExpRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^ExpRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
 + LinRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0, minmax = 0.0; ^LinRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi, minmax]) } }
 + RandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^RandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
-+ RBezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^RBezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }
-+ RDX7 { *new { arg bufnum = 0.0, on = 0.0, off = 0.0, data = 0.0, vc = 0.0, mnn = 60.0, vel = 99.0, pw = 0.0, mw = 0.0, bc = 0.0, fc = 0.0; ^RDX7.performList('audio'.rateToSelector, [bufnum, on, off, data, vc, mnn, vel, pw, mw, bc, fc]) } }
++ Bezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^Bezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }
++ DX7 { *new { arg bufnum = 0.0, on = 0.0, off = 0.0, data = 0.0, vc = 0.0, mnn = 60.0, vel = 99.0, pw = 0.0, mw = 0.0, bc = 0.0, fc = 0.0; ^DX7.performList('audio'.rateToSelector, [bufnum, on, off, data, vc, mnn, vel, pw, mw, bc, fc]) } }
 + RDX7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^RDX7Env.performList('audio'.rateToSelector, [gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol]) } }

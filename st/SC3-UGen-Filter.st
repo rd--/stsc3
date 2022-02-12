@@ -617,6 +617,9 @@
   duty: reset value: doneAction value: level
     ^Duty dur: self reset: reset doneAction: doneAction level: level
   !
+  dwgPluckedStiff: amp value: gate value: pos value: c1 value: c3 value: inp value: release value: fB
+    ^DWGPluckedStiff freq: self amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB
+  !
   envGen: levelScale value: levelBias value: timeScale value: doneAction value: envelope
     ^EnvGen gate: self levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope
   !
@@ -670,6 +673,9 @@
   !
   klang: freqoffset value: specificationsArrayRef
     ^Klang freqscale: self freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef
+  !
+  lfClipNoise
+    ^LFClipNoise freq: self
   !
   lfCub: iphase
     ^LFCub freq: self iphase: iphase

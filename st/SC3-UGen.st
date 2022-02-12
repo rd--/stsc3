@@ -2115,6 +2115,68 @@ Duty comment: 'Demand results from demand rate UGens.'!
   primaryFactoryMethod ^#dur:reset:doneAction:level:!
 !
 
+UGen subclass: #DWGPluckedStiff
+  instanceVariableNames: 'freq amp gate pos c1 c3 inp release fB'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+DWGPluckedStiff comment: 'Plucked physical model.'!
+
+!DWGPluckedStiff methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  amp ^amp!
+  amp: x amp := x!
+  gate ^gate!
+  gate: x gate := x!
+  pos ^pos!
+  pos: x pos := x!
+  c1 ^c1!
+  c1: x c1 := x!
+  c3 ^c3!
+  c3: x c3 := x!
+  inp ^inp!
+  inp: x inp := x!
+  release ^release!
+  release: x release := x!
+  fB ^fB!
+  fB: x fB := x!
+!
+
+!DWGPluckedStiff methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #DWGPluckedStiff.
+    paramNames := #(#freq #amp #gate #pos #c1 #c3 #inp #release #fB).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 440.0. amp := 0.5. gate := 1.0. pos := 0.14. c1 := 1.0. c3 := 30.0. inp := 0.0. release := 0.1. fB := 2.0!
+!
+
+
+!DWGPluckedStiff class methodsFor: 'instance creation'!
+  freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB
+    |u|
+    u := self new.
+    u freq: freq.
+    u amp: amp.
+    u gate: gate.
+    u pos: pos.
+    u c1: c1.
+    u c3: c3.
+    u inp: inp.
+    u release: release.
+    u fB: fB.
+    ^u!
+  freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB mul: mul ^(DWGPluckedStiff freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB) * mul!
+  freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB mul: mul add: add ^(DWGPluckedStiff freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB) * mul + add!
+  primaryFactoryMethod ^#freq:amp:gate:pos:c1:c3:inp:release:fB:!
+!
+
 UGen subclass: #EnvGen
   instanceVariableNames: 'gate levelScale levelBias timeScale doneAction envelope'
   classVariableNames: ''
@@ -3491,6 +3553,44 @@ Klank comment: 'Bank of resonators'!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul + add!
   primaryFactoryMethod ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:!
+!
+
+UGen subclass: #LFClipNoise
+  instanceVariableNames: 'freq'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFClipNoise comment: 'Clipped noise'!
+
+!LFClipNoise methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+!
+
+!LFClipNoise methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFClipNoise.
+    paramNames := #(#freq).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 500.0!
+!
+
+
+!LFClipNoise class methodsFor: 'instance creation'!
+  freq: freq
+    |u|
+    u := self new.
+    u freq: freq.
+    ^u!
+  freq: freq mul: mul ^(LFClipNoise freq: freq) * mul!
+  freq: freq mul: mul add: add ^(LFClipNoise freq: freq) * mul + add!
+  primaryFactoryMethod ^#freq:!
 !
 
 UGen subclass: #LFCub
