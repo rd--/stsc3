@@ -76,7 +76,7 @@ ugen =
   ,"RCD", "SCM" -- vb_UGens
   ,"DustRange", "ExpRandN","LinRandN", "RandN" -- sc3-rdu
   ,"TScramble" -- sc3-rdu
-  ,"RBezier","RDX7", "RDX7Env" -- sc3-rdu
+  ,"Bezier","DX7", "RDX7Env" -- sc3-rdu
   ]
 
 is_osc :: Record.U -> Bool

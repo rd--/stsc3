@@ -815,11 +815,11 @@
   randN: hi
     ^RandN lo: self hi: hi
   !
-  rBezier: dx value: freq value: phase value: param
-    ^RBezier haltAfter: self dx: dx freq: freq phase: phase param: param
+  bezier: dx value: freq value: phase value: param
+    ^Bezier haltAfter: self dx: dx freq: freq phase: phase param: param
   !
-  rdx7: on value: off value: data value: vc value: mnn value: vel value: pw value: mw value: bc value: fc
-    ^RDX7 bufnum: self on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
+  dx7: on value: off value: data value: vc value: mnn value: vel value: pw value: mw value: bc value: fc
+    ^DX7 bufnum: self on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
   !
   rdx7Env: data value: r1 value: r2 value: r3 value: r4 value: l1 value: l2 value: l3 value: l4 value: ol
     ^RDX7Env gate: self data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol

@@ -502,6 +502,7 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 [ :x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
 ([ 1 ] cull: 2) == 1 "=> true"
 ([ :x | x ] cull: 2) == 2 "=> true"
+([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12 "=> true"
 
 "Delay"
 (Delay forMilliseconds: 500) wait

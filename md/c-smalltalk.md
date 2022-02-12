@@ -44,6 +44,10 @@ This translation is uniform for all primary identifiers. [3]
 The rationale for this notation is that certain identifiers (class names in particular) often imply a primaryFactoryMethod,
 and that in such cases it can be appropriate to elide the message name.
 
+If _BlockClosure_ has an instance definition of _apply:_ defined as _valueWithArguments:_
+then the notation _f(p, q)_ where _f_ is a block has the meaning _f value: p value: q_.
+This is not, however, compatible with SuperCollider notation, where _f(p, q)_ has the meaning _p.f(q)_.
+
 ## N-ary methods and implicit keyword message names
 
 The C-Smalltalk syntax allows message names to have interior colon (_:_) characters.

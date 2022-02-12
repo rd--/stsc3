@@ -8282,15 +8282,15 @@ TScramble comment: '(Undocumented class)'!
   primaryFactoryMethod ^#trigger:inputs:!
 !
 
-UGen subclass: #RBezier
+UGen subclass: #Bezier
   instanceVariableNames: 'haltAfter dx freq phase param'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'!
 
-RBezier comment: '(Undocumented class)'!
+Bezier comment: '(Undocumented class)'!
 
-!RBezier methodsFor: 'accessing'!
+!Bezier methodsFor: 'accessing'!
   haltAfter ^haltAfter!
   haltAfter: x haltAfter := x!
   dx ^dx!
@@ -8303,10 +8303,10 @@ RBezier comment: '(Undocumented class)'!
   param: x param := x!
 !
 
-!RBezier methodsFor: 'initialization'!
+!Bezier methodsFor: 'initialization'!
   initialize
     super initialize.
-    ugenName := #RBezier.
+    ugenName := #Bezier.
     paramNames := #(#haltAfter #dx #freq #phase).
     mceNames := #(#param).
     ugenRate := #ar.
@@ -8317,7 +8317,7 @@ RBezier comment: '(Undocumented class)'!
 !
 
 
-!RBezier class methodsFor: 'instance creation'!
+!Bezier class methodsFor: 'instance creation'!
   haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
     |u|
     u := self new.
@@ -8327,20 +8327,20 @@ RBezier comment: '(Undocumented class)'!
     u phase: phase.
     u param: param.
     ^u!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(RBezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
   primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
 !
 
-UGen subclass: #RDX7
+UGen subclass: #DX7
   instanceVariableNames: 'bufnum on off data vc mnn vel pw mw bc fc'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'!
 
-RDX7 comment: '(Undocumented class)'!
+DX7 comment: '(Undocumented class)'!
 
-!RDX7 methodsFor: 'accessing'!
+!DX7 methodsFor: 'accessing'!
   bufnum ^bufnum!
   bufnum: x bufnum := x!
   on ^on!
@@ -8365,10 +8365,10 @@ RDX7 comment: '(Undocumented class)'!
   fc: x fc := x!
 !
 
-!RDX7 methodsFor: 'initialization'!
+!DX7 methodsFor: 'initialization'!
   initialize
     super initialize.
-    ugenName := #RDX7.
+    ugenName := #DX7.
     paramNames := #(#bufnum #on #off #data #vc #mnn #vel #pw #mw #bc #fc).
     mceNames := #().
     ugenRate := #ar.
@@ -8379,7 +8379,7 @@ RDX7 comment: '(Undocumented class)'!
 !
 
 
-!RDX7 class methodsFor: 'instance creation'!
+!DX7 class methodsFor: 'instance creation'!
   bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
     |u|
     u := self new.
@@ -8395,8 +8395,8 @@ RDX7 comment: '(Undocumented class)'!
     u bc: bc.
     u fc: fc.
     ^u!
-  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul ^(RDX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul!
-  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul add: add ^(RDX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add!
+  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul ^(DX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul!
+  bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul add: add ^(DX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add!
   primaryFactoryMethod ^#bufnum:on:off:data:vc:mnn:vel:pw:mw:bc:fc:!
 !
 

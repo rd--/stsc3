@@ -116,6 +116,13 @@
   !
 !
 
+!BlockClosure methodsFor: 'application'!
+  apply: anArray
+    "Alias for valueWithArguments:, for .stc notation"
+    ^self valueWithArguments: anArray
+  !
+!
+
 !Collection methodsFor: 'maths'!
   mean
     "Sum of myself divided by my size"
