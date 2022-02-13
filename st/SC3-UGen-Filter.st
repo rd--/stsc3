@@ -95,6 +95,12 @@
   hpz1
     ^HPZ1 in: self
   !
+  index: bufnum
+    ^Index bufnum: bufnum in: self
+  !
+  indexInBetween: bufnum
+    ^IndexInBetween bufnum: bufnum in: self
+  !
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
   !
@@ -370,6 +376,12 @@
   !
   hpz1
     ^HPZ1 in: self
+  !
+  index: bufnum
+    ^Index bufnum: bufnum in: self
+  !
+  indexInBetween: bufnum
+    ^IndexInBetween bufnum: bufnum in: self
   !
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
@@ -673,6 +685,9 @@
   !
   klang: freqoffset value: specificationsArrayRef
     ^Klang freqscale: self freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef
+  !
+  lfBrownNoise1: dev value: dist
+    ^LFBrownNoise1 freq: self dev: dev dist: dist
   !
   lfClipNoise
     ^LFClipNoise freq: self

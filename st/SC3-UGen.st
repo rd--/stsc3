@@ -3211,6 +3211,88 @@ In comment: 'Read a signal from a bus.'!
   primaryFactoryMethod ^#numChan:bus:!
 !
 
+UGen subclass: #Index
+  instanceVariableNames: 'bufnum in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Index comment: 'Index into a table with a signal'!
+
+!Index methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  in ^in!
+  in: x in := x!
+!
+
+!Index methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Index.
+    paramNames := #(#bufnum #in).
+    mceNames := #().
+    ugenRate := #(1).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. in := 0.0!
+!
+
+
+!Index class methodsFor: 'instance creation'!
+  bufnum: bufnum in: in
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u in: in.
+    ^u!
+  bufnum: bufnum in: in mul: mul ^(Index bufnum: bufnum in: in) * mul!
+  bufnum: bufnum in: in mul: mul add: add ^(Index bufnum: bufnum in: in) * mul + add!
+  primaryFactoryMethod ^#bufnum:in:!
+!
+
+UGen subclass: #IndexInBetween
+  instanceVariableNames: 'bufnum in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+IndexInBetween comment: 'Finds the (lowest) point in the Buffer at which the input signal lies in-between the two values'!
+
+!IndexInBetween methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  in ^in!
+  in: x in := x!
+!
+
+!IndexInBetween methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #IndexInBetween.
+    paramNames := #(#bufnum #in).
+    mceNames := #().
+    ugenRate := #(1).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. in := 0.0!
+!
+
+
+!IndexInBetween class methodsFor: 'instance creation'!
+  bufnum: bufnum in: in
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u in: in.
+    ^u!
+  bufnum: bufnum in: in mul: mul ^(IndexInBetween bufnum: bufnum in: in) * mul!
+  bufnum: bufnum in: in mul: mul add: add ^(IndexInBetween bufnum: bufnum in: in) * mul + add!
+  primaryFactoryMethod ^#bufnum:in:!
+!
+
 UGen subclass: #InFeedback
   instanceVariableNames: 'bus'
   classVariableNames: ''
@@ -3553,6 +3635,50 @@ Klank comment: 'Bank of resonators'!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul!
   input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul + add!
   primaryFactoryMethod ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:!
+!
+
+UGen subclass: #LFBrownNoise1
+  instanceVariableNames: 'freq dev dist'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LFBrownNoise1 comment: 'random walk linear interp'!
+
+!LFBrownNoise1 methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  dev ^dev!
+  dev: x dev := x!
+  dist ^dist!
+  dist: x dist := x!
+!
+
+!LFBrownNoise1 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LFBrownNoise1.
+    paramNames := #(#freq #dev #dist).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 20.0. dev := 1.0. dist := 0.0!
+!
+
+
+!LFBrownNoise1 class methodsFor: 'instance creation'!
+  freq: freq dev: dev dist: dist
+    |u|
+    u := self new.
+    u freq: freq.
+    u dev: dev.
+    u dist: dist.
+    ^u!
+  freq: freq dev: dev dist: dist mul: mul ^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul!
+  freq: freq dev: dev dist: dist mul: mul add: add ^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul + add!
+  primaryFactoryMethod ^#freq:dev:dist:!
 !
 
 UGen subclass: #LFClipNoise
