@@ -8,4 +8,4 @@ var z1 = i.gcd(x) + d;
 var z2 = i.lcm(x) + d;
 var freq = [z1, z2].asUGen.transpose.abs + 1 * 120;
 var c = AmpComp(freq, 261.625, 1/3) * a;
-(SinOsc(freq, 0) * c).mix * 0.01
+(SinOsc(freq, 0) * c).sum * 0.01

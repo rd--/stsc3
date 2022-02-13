@@ -15,5 +15,5 @@ var g = {
 	r
 };
 var freq = g.value(f, 4).value(LFSaw(0.2 * [1, 1.1], 0)).exprange(6, 11000);
-var osc = BPF(Saw(freq).product, [70, 800, 9000, 5242], 0.2).mix;
+var osc = BPF(Saw(freq).product, [70, 800, 9000, 5242], 0.2).sum;
 [osc, osc] * 0.3

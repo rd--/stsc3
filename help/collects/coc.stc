@@ -122,12 +122,12 @@ var v = { arg n; SinOsc(f * n, 0) * Decay2(t, 0.01, dt.at(n)) / n };
 var t = Impulse(1 / 3, 0);
 var m = Rand(1, 3).dup;
 var env = Decay2(t, 0.01 * m, 1 * m) / 1.to(6);
-SinOsc(#[60, 64, 67, 71, 74, 78].midiCps, 0).mix * env * 0.1
+SinOsc(#[60, 64, 67, 71, 74, 78].midiCps, 0).sum * env * 0.1
 
 // interesting drone ; https://github.com/cianoc/supercollider_fragments
 var freq = #[40, 42, 43, 45, 47, 48, 41, 42].midiCps;
 var amp = LFNoise1({ Rand(0.1, 0.5) }.dup(8)) * 0.5 + 0.5;
-Pan2(SinOsc(freq, 0), { Rand(-1, 1) }.dup(8), amp).mix * 0.1
+Pan2(SinOsc(freq, 0), { Rand(-1, 1) }.dup(8), amp).sum * 0.1
 
 // great inharmonic spectrum ; https://github.com/cianoc/supercollider_fragments
 var freq = #[72, 135, 173, 239, 267, 306, 355, 473, 512, 572, 626];
@@ -148,7 +148,7 @@ var f = {
     var amp = SinOsc(1 / Rand(3, 6), 0) * Rand(0.1, 0.9);
     Pan2(SinOsc(ExpRand(100, 2000), 0), Rand(-1, 1), amp)
 };
-f.dup(harmonics).mix / (2 * harmonics)
+f.dup(harmonics).sum / (2 * harmonics)
 
 // worth experimenting with ; https://github.com/cianoc/supercollider_fragments
 var tr = Dust(3 / 7);
@@ -174,7 +174,7 @@ var harmonics = 16;
 // more bells ; https://github.com/cianoc/supercollider_fragments
 var env = Decay2(Dust(1 / 3), 0.01, 2) * 0.1;
 var osc = SinOsc({ Rand(300, 1200) }.dup(12), 0);
-Pan2(osc, { Rand(-1, 1) }.dup(12), env).mix
+Pan2(osc, { Rand(-1, 1) }.dup(12), env).sum
 
 // pink noise, frequencies emerge ; https://github.com/cianoc/supercollider_fragments
 RLPF(PinkNoise() * 0.3, { LFNoise0(12) }.dup * 500 + 500, 0.2)
@@ -214,7 +214,7 @@ var i = Latch(LFSaw(MouseX(1.1, 30, 0, 0.2), 0) * 5 + 5, Impulse(10, 0));
 PMOsc(300, 356, i, 0) * 0.1
 
 // envelope used also for the index ; https://github.com/cianoc/supercollider_fragments
-var f = Latch(Mix(SinOsc(#[100, 200, 300, 550], 0) * 100 + 110), Impulse(7, 0));
+var f = Latch((SinOsc(#[100, 200, 300, 550], 0) * 100 + 110).sum, Impulse(7, 0));
 var e = Decay2(Impulse(7, 0), 0.02, 0.2);
 PMOsc(f, f * [1.25, MouseX(1, 3, 0, 0.2)], e * [5, MouseY(3, 9, 0, 0.2)], 0) * e * 0.1
 
@@ -235,4 +235,4 @@ var vc = {
     var ampEnv = ADSR(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
     Pan2(RLPF(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.o * 2 - 1, ampEnv)
 };
-Voicer(16, vc).mix
+Voicer(16, vc).sum

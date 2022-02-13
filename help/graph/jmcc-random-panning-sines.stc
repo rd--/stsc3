@@ -2,21 +2,10 @@
 OverlapTexture({
     arg tr;
     var n = 8;
-    n.mixFill({
+    {
         var osc = SinOsc(80 + TRand(0, 2000, tr), 0);
         var pos = LFNoise1(0.4 + TRand(0, 0.8, tr));
         var amp = LFNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5;
         Pan2(osc, pos, amp)
-    }) * 0.1 / n
+    }.dup(n).sum * 0.1 / n
 }, 8, 8, 2)
-
-//---- random panning sines (jmcc) #4
-{
-    arg tr;
-    var n = 8;
-    {
-        Pan2(SinOsc(80 + TRand(0, 2000, tr), 0),
-            LFNoise1(0.4 + TRand(0, 0.8, tr)),
-            LFNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5)
-    }.dup(n).mix * 0.1 / n
-}.overlapTexture(8, 8, 2)

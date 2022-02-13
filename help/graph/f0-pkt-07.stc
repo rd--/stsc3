@@ -1,4 +1,4 @@
-// pkt 07 (f0) - https://fredrikolofsson.com/f0blog/pact-februari/
+// pkt 07 (f0) ; https://fredrikolofsson.com/f0blog/pact-februari/
 GVerb(
  LeakDC(
   SinOsc(
@@ -30,7 +30,7 @@ GVerb(
  16, 8, 0.75, 0.5, 15, 1, 0.7, 0.5, 300)
 * 0.25
 
-//---- pkt 07 (f0) - https://fredrikolofsson.com/f0blog/pact-februari/
+//---- pkt 07 (f0) ; https://fredrikolofsson.com/f0blog/pact-februari/
 GVerb(
  LeakDC(
   SinOsc(

@@ -19,4 +19,4 @@ var voiceFunc = {
     var dcy = { 0.5.rand(9.0) }.dup(numPartials);
     var osc = DynKlank(sig, 1, 0, 1, KlankSpec(freq, amp, dcy));
     Pan2(osc, e.o * 2 - 1, LagUD(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal)}; // note .kr!
-Voicer(16, voiceFunc).mix
+Voicer(16, voiceFunc).sum

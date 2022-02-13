@@ -1,4 +1,4 @@
-"pkt 00 (f0) - http://www.fredrikolofsson.com/f0blog/?q=node/490"
+"pkt 00 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490"
 | f0 ph0 a0 i w s |
 f0 := SinOsc freq: #(0.11 0.22 0.33) phase: 0 mul: 1 add: #(100 200 300).
 ph0 := SinOsc freq: #(0.1 0.2 0.3) phase: 0 mul: 2 * Float pi.

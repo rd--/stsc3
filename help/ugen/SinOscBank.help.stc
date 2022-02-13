@@ -5,4 +5,4 @@ var f2 = [977, 1003, 1390, 1414, 1432, 1465, 1748, 1834, 1919, 1933, 1987, 2096,
     arg f;
     var o = SinOscBank(f, 1 / f * { Rand(0, 0.1) }.dup(f.size) * f.size * f.size, [0]);
     Pan2(o, LFNoise2(0.25), LFNoise2(0.5) / 4 + 0.25)
-}).mix
+}).sum

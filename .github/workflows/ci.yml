@@ -28,7 +28,7 @@ jobs:
         run: |
           cabal update
           cabal install --installdir public --install-method copy
-          zip -r public/stsc3-${{ runner.os }}.zip public/stsc3-to-js
+          zip -r public/stsc3-${{ runner.os }}.zip public/stc-to-js
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

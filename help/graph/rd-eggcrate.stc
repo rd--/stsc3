@@ -6,4 +6,4 @@ var y = BrownNoise();
 var t = Dust(2.4);
 var f = eggcrate.value(x @ y).range(TChoose(t, p), TChoose(t, p));
 var a = x.range(0, 0.1);
-Pan2(SinOsc(f.kr, 0).mix, y.kr, a.kr)
+Pan2(SinOsc(f.kr, 0).sum, y.kr, a.kr)
