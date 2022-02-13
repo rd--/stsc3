@@ -12,7 +12,6 @@ import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
 -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Expr.Print as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
@@ -49,13 +48,13 @@ sc_cat fn = do
   let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
+{-
+-- | Fragment input file and run stcToJs at each fragment.
 stc_to_js :: FilePath -> IO ()
 stc_to_js fn = do
   txt_fragments <- Help.read_file_fragments fn
-  let expr_fragments = map Sc.stcToExpr txt_fragments
-  mapM_ (putStrLn . St.exprPrintJs (St.jsRenamerFromTable St.jsDefaultRenamingTable)) expr_fragments
+  mapM_ (putStrLn . Sc.stcToJs) txt_fragments
 
-{-
 stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
 stsc3_play evalFile fn = evalFile fn >>= SC3.audition
 

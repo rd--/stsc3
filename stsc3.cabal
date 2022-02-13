@@ -52,6 +52,14 @@ library
                         Language.Smalltalk.SuperCollider.Token,
                         Language.Smalltalk.SuperCollider.Translate
 
+executable stc-to-js
+  build-depends:    base >= 4.8 && < 5,
+                    stsc3
+  hs-source-dirs:   cmd
+  main-is:          stc-to-js.hs
+  default-language: Haskell2010
+  ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded
+
 Source-Repository   head
   Type:             git
   Location:         https://gitlab.com/rd--/stsc3/

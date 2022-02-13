@@ -209,6 +209,7 @@ stcToExpr =
   Expr.initializerDefinitionExpr .
   stcParseInitializerDefinition
 
+-- | exprPrintJs of stcToExpr
 stcToJs :: String -> String
 stcToJs =  Expr.exprPrintJs (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
 
