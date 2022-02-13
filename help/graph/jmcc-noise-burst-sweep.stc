@@ -1,5 +1,5 @@
 // noise burst sweep (jmcc) #6 ; mouse control
-var n = { WhiteNoise() }.dup;
+var n = { WhiteNoise() }.dup(2);
 var lfoRate = MouseX(10, 60, 1, 0.2);
 var amp = LFSaw(lfoRate, -1).max(0);
 var cfreq = MouseY(400, 8000, 1, 0.2);
