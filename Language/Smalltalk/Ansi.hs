@@ -1169,14 +1169,25 @@ keyword = lexeme keywordNotLexeme
 
 -- * 3.5.5
 
+-- | The list of characters that form operator names.
+binaryCharacterSet :: [Char]
+binaryCharacterSet = "!%&*+,/<=>?@\\~|-"
+
 {- | binaryCharacter ::= '!' | '%' | '&' | '*' | '+' | ',' | '/'
                        | '<' | '=' | '>' | '?' | '@' | '\' | '~' | '|' | '-'
 -}
 binaryCharacter :: P Char
-binaryCharacter = P.oneOf "!%&*+,/<=>?@\\~|-"
+binaryCharacter = P.oneOf binaryCharacterSet
 
 -- | Identifier for binary operations.
 type BinaryIdentifier = Identifier
+
+{- | Is an identifier a binary operator?
+
+> map isBinaryIdentifier (words "+ - * / % @ **")
+-}
+isBinaryIdentifier :: Identifier -> Bool
+isBinaryIdentifier = all (`elem` binaryCharacterSet)
 
 -- | binarySelector ::= binaryCharacter+
 --

@@ -5,6 +5,8 @@ import Data.List {- base -}
 import Data.Maybe {- base -}
 import Text.Printf {- base -}
 
+import qualified Data.List.Split as Split {- split -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
@@ -132,6 +134,25 @@ literalPrintJs l =
     St.ArrayLiteral a -> printf "[%s]" (intercalate ", " (map (either St.literal_pp id) a))
     _ -> St.literal_pp l
 
+
+{- | Checks that all the arity agrees (which should be correct by construction)
+     and that all subsequeny keyword parts are "value".
+
+> zipWith stcSelectorJsForm (words "* + pi apply: value:value:") [1, 1, 0, 1, 2]
+-}
+stcSelectorJsForm :: String -> Bool -> Int -> String
+stcSelectorJsForm sel isBinOp arity =
+  let parts = if isBinOp then [sel] else Split.splitOn ":" sel
+      degree = if isBinOp then 1 else length parts - 1
+      msg = head parts
+  in if arity /= degree
+     then error (show ("stcSelectorJsForm: illegal arity", sel, arity))
+     else if degree == 0
+          then msg
+          else if isBinOp || (all (== "value") (init (tail parts)) && last parts == "")
+               then msg
+               else error ("stcSelectorJsForm: " ++ sel)
+
 {- | Print Js notation of Expr.
 
 import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
@@ -143,6 +164,7 @@ map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) 
 map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
 map rw (words "inf pi nil twoPi")
 rw "// c\nx = 6; x.postln"
+rw "p:q:r(1, 2, 3)" -- interior colons not allowed
 -}
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
 exprPrintJs rw expr =
@@ -155,10 +177,10 @@ exprPrintJs rw expr =
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Return e -> printf "return %s;" (exprPrintJs rw e)
     Send rcv (Message sel arg) ->
-      case (rcv, takeWhile (/= ':') (rw (St.selectorIdentifier sel)), arg) of
+      case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
         (_, "apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
         (_, "value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
-        (Identifier "Float", "pi", _) -> "pi"
+        (Identifier "Float", "pi", []) -> "pi"
         (Identifier "Float", "infinity", _) -> "inf"
         (_, msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
     Lambda _ arg (St.Temporaries tmp) stm ->
