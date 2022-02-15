@@ -1,0 +1,6 @@
+// bufRd ; phasor as phase input ; requires=buf
+var buf = 0;
+var nc = 2;
+var tr = Impulse(1 / BufDur(buf), 0);
+var ph = Phasor(tr, BufRateScale(buf), 0, BufFrames(buf), 0);
+BufRd(nc, buf, ph, 0, 2)
