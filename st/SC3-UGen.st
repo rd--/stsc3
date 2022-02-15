@@ -8774,6 +8774,8 @@ RDX7Env comment: '(Undocumented class)'!
   reciprocal ^ UnaryOpUGen specialIndex: 16 a: self!
   midiCps ^ UnaryOpUGen specialIndex: 17 a: self!
   cpsMidi ^ UnaryOpUGen specialIndex: 18 a: self!
+  midiRatio ^ UnaryOpUGen specialIndex: 19 a: self!
+  ratioMidi ^ UnaryOpUGen specialIndex: 20 a: self!
   dbAmp ^ UnaryOpUGen specialIndex: 21 a: self!
   ampDb ^ UnaryOpUGen specialIndex: 22 a: self!
   ln ^ UnaryOpUGen specialIndex: 25 a: self!

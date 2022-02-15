@@ -15,7 +15,8 @@ import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
 uop :: [(String, Int)]
 uop =
   [("negated",0),("abs",5),("ceil",8),("floor",9)
-  ,("frac",10), ("sign", 11), ("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16),("midiCps",17),("cpsMidi",18)
+  ,("frac",10), ("sign", 11), ("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16)
+  ,("midiCps",17),("cpsMidi",18), ("midiRatio", 19), ("ratioMidi", 20)
   ,("dbAmp", 21), ("ampDb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
   ,("distort",42),("softClip",43)]
 
