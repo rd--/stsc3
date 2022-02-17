@@ -4,6 +4,7 @@
 + Blip { *new { arg freq = 440.0, numharm = 200.0; ^Blip.performList('audio'.rateToSelector, [freq, numharm]) } }
 + BlockSize { *new { ^BlockSize.performList('scalar'.rateToSelector, []) } }
 + BrownNoise { *new { ^BrownNoise.performList('audio'.rateToSelector, []) } }
++ BufDur { *new { arg bufnum = 0.0; ^BufDur.performList('control'.rateToSelector, [bufnum]) } }
 + BufFrames { *new { arg bufnum = 0.0; ^BufFrames.performList('control'.rateToSelector, [bufnum]) } }
 + BufRateScale { *new { arg bufnum = 0.0; ^BufRateScale.performList('control'.rateToSelector, [bufnum]) } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.performList('audio'.rateToSelector, [numChannels, bufnum, phase, loop, interpolation]) } }
@@ -31,6 +32,7 @@
 + K2A { *new { arg in = 0.0; ^K2A.performList('audio'.rateToSelector, [in]) } }
 + KeyState { *new { arg keycode = 0.0, minval = 0.0, maxval = 1.0, lag = 0.2; ^KeyState.performList('control'.rateToSelector, [keycode, minval, maxval, lag]) } }
 + Klang { *new { arg specificationsArrayRef = 0.0, freqscale = 1.0, freqoffset = 0.0; ^Klang.performList('audio'.rateToSelector, [specificationsArrayRef, freqscale, freqoffset]) } }
++ LFBrownNoise1 { *new { arg freq = 20.0, dev = 1.0, dist = 0.0; ^LFBrownNoise1.performList('audio'.rateToSelector, [freq, dev, dist]) } }
 + LFClipNoise { *new { arg freq = 500.0; ^LFClipNoise.performList('audio'.rateToSelector, [freq]) } }
 + LFCub { *new { arg freq = 440.0, iphase = 0.0; ^LFCub.performList('audio'.rateToSelector, [freq, iphase]) } }
 + LFDNoise1 { *new { arg freq = 500.0; ^LFDNoise1.performList('audio'.rateToSelector, [freq]) } }
@@ -79,6 +81,10 @@
 + ExpRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^ExpRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
 + LinRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0, minmax = 0.0; ^LinRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi, minmax]) } }
 + RandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^RandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
-+ Bezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^Bezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }
 + DX7 { *new { arg bufnum = 0.0, on = 0.0, off = 0.0, data = 0.0, vc = 0.0, mnn = 60.0, vel = 99.0, pw = 0.0, mw = 0.0, bc = 0.0, fc = 0.0; ^DX7.performList('audio'.rateToSelector, [bufnum, on, off, data, vc, mnn, vel, pw, mw, bc, fc]) } }
 + RDX7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^RDX7Env.performList('audio'.rateToSelector, [gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol]) } }
++ SvfBp { *new { arg in = 0.0, freq = 440.0, q = 0.0; ^SvfBp.performList('audio'.rateToSelector, [in, freq, q]) } }
++ SvfLp { *new { arg in = 0.0, freq = 440.0, q = 0.0; ^SvfLp.performList('audio'.rateToSelector, [in, freq, q]) } }
++ Bezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^Bezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }
++ Freezer { *new { arg bufnum = 0.0, left = 0.0, right = 1.0, gain = 1.0, increment = 1.0, incrementOffset = 0.0, incrementRandom = 0.0, rightRandom = 0.0, syncPhaseTrigger = 0.0, randomizePhaseTrigger = 0.0, numberOfLoops = 4.0; ^Freezer.performList('audio'.rateToSelector, [bufnum, left, right, gain, increment, incrementOffset, incrementRandom, rightRandom, syncPhaseTrigger, randomizePhaseTrigger, numberOfLoops]) } }
++ ShufflerB { *new { arg bufnum = 0.0, readLocationMinima = 1.0e-2, readLocationMaxima = 2.0e-2, readIncrementMinima = 1.0, readIncrementMaxima = 1.0, durationMinima = 0.2, durationMaxima = 0.2, envelopeAmplitudeMinima = 0.5, envelopeAmplitudeMaxima = 0.5, envelopeShapeMinima = 0.5, envelopeShapeMaxima = 0.5, envelopeSkewMinima = 0.5, envelopeSkewMaxima = 0.5, stereoLocationMinima = 0.5, stereoLocationMaxima = 0.5, interOffsetTimeMinima = 5.0e-2, interOffsetTimeMaxima = 1.0e-2, ftableReadLocationIncrement = 1.0, readIncrementQuanta = 0.0, interOffsetTimeQuanta = 0.0; ^ShufflerB.performList('audio'.rateToSelector, [bufnum, readLocationMinima, readLocationMaxima, readIncrementMinima, readIncrementMaxima, durationMinima, durationMaxima, envelopeAmplitudeMinima, envelopeAmplitudeMaxima, envelopeShapeMinima, envelopeShapeMaxima, envelopeSkewMinima, envelopeSkewMaxima, stereoLocationMinima, stereoLocationMaxima, interOffsetTimeMinima, interOffsetTimeMaxima, ftableReadLocationIncrement, readIncrementQuanta, interOffsetTimeQuanta]) } }

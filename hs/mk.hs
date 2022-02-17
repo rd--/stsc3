@@ -46,9 +46,9 @@ ugen =
   ,"ClearBuf","Clip","CoinGate", "CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","DelayC","DelayL", "DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty", "DWGPluckedStiff"
   ,"EnvGen","ExpRand"
-  ,"FBSineC", "FFT","Fold","Formant","Formlet","FreqShift", "FSinOsc","FreeVerb","FreeVerb2"
+  ,"FBSineL", "FBSineC", "FFT","Fold","Formant","Formlet","FreqShift", "FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"
-  ,"Hasher","HPF","HPZ1"
+  ,"Hasher","HenonL", "HenonC", "HPF","HPZ1"
   ,"IFFT","Impulse","In","Index", "IndexInBetween", "InFeedback","InRange","IRand","Integrator"
   ,"K2A","KeyState", "Klang","Klank"
   ,"LFBrownNoise1", "LFClipNoise", "LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
@@ -58,7 +58,7 @@ ugen =
   ,"OnePole","Osc", "Out"
   ,"Pan2","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
-  ,"QuadC"
+  ,"QuadL", "QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax"
   ,"Rotate2"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","Stepper","Sweep","SyncSaw"
@@ -77,7 +77,8 @@ ugen =
   ,"RCD", "SCM" -- vb_UGens
   ,"DustRange", "ExpRandN","LinRandN", "RandN" -- sc3-rdu
   ,"TScramble" -- sc3-rdu
-  ,"Bezier","DX7", "RDX7Env" -- sc3-rdu
+  ,"DX7", "RDX7Env", "ObxdFilter", "SvfBp", "SvfHp", "SvfLp" -- sc3-rdu
+  ,"Bezier", "Freezer", "ShufflerB"
   ]
 
 is_osc :: Record.U -> Bool

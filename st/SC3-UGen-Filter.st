@@ -278,6 +278,12 @@
   tScramble: inputs
     ^TScramble trigger: self inputs: inputs
   !
+  obxdFilter: cutoff value: resonance value: multimode value: bandpass value: fourpole
+    ^ObxdFilter in: self cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole
+  !
+  svfHp: freq value: q
+    ^SvfHp in: self freq: freq q: q
+  !
 
 !
 !Array methodsFor: 'filtering'!
@@ -560,6 +566,12 @@
   tScramble: inputs
     ^TScramble trigger: self inputs: inputs
   !
+  obxdFilter: cutoff value: resonance value: multimode value: bandpass value: fourpole
+    ^ObxdFilter in: self cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole
+  !
+  svfHp: freq value: q
+    ^SvfHp in: self freq: freq q: q
+  !
 
 !
 !AbstractUGen methodsFor: 'filtering'!
@@ -641,6 +653,9 @@
   expRand: hi
     ^ExpRand lo: self hi: hi
   !
+  fbSineL: im value: fb value: a value: c value: xi value: yi
+    ^FBSineL freq: self im: im fb: fb a: a c: c xi: xi yi: yi
+  !
   fbSineC: im value: fb value: a value: c value: xi value: yi
     ^FBSineC freq: self im: im fb: fb a: a c: c xi: xi yi: yi
   !
@@ -664,6 +679,12 @@
   !
   grainSin: dur value: freq value: pan value: envbufnum value: maxGrains
     ^GrainSin trigger: self dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains
+  !
+  henonL: a value: b value: x0 value: x1
+    ^HenonL freq: self a: a b: b x0: x0 x1: x1
+  !
+  henonC: a value: b value: x0 value: x1
+    ^HenonC freq: self a: a b: b x0: x0 x1: x1
   !
   ifft: wintype value: winsize
     ^IFFT buffer: self wintype: wintype winsize: winsize
@@ -773,6 +794,9 @@
   pv_RandComb: wipe value: trig
     ^PV_RandComb buffer: self wipe: wipe trig: trig
   !
+  quadL: a value: b value: c value: xi
+    ^QuadL freq: self a: a b: b c: c xi: xi
+  !
   quadC: a value: b value: c value: xi
     ^QuadC freq: self a: a b: b c: c xi: xi
   !
@@ -839,14 +863,26 @@
   randN: hi
     ^RandN lo: self hi: hi
   !
-  bezier: dx value: freq value: phase value: param
-    ^Bezier haltAfter: self dx: dx freq: freq phase: phase param: param
-  !
   dx7: on value: off value: data value: vc value: mnn value: vel value: pw value: mw value: bc value: fc
     ^DX7 bufnum: self on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc
   !
   rdx7Env: data value: r1 value: r2 value: r3 value: r4 value: l1 value: l2 value: l3 value: l4 value: ol
     ^RDX7Env gate: self data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol
+  !
+  svfBp: freq value: q
+    ^SvfBp in: self freq: freq q: q
+  !
+  svfLp: freq value: q
+    ^SvfLp in: self freq: freq q: q
+  !
+  bezier: dx value: freq value: phase value: param
+    ^Bezier haltAfter: self dx: dx freq: freq phase: phase param: param
+  !
+  freezer: left value: right value: gain value: increment value: incrementOffset value: incrementRandom value: rightRandom value: syncPhaseTrigger value: randomizePhaseTrigger value: numberOfLoops
+    ^Freezer bufnum: self left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops
+  !
+  shufflerB: readLocationMinima value: readLocationMaxima value: readIncrementMinima value: readIncrementMaxima value: durationMinima value: durationMaxima value: envelopeAmplitudeMinima value: envelopeAmplitudeMaxima value: envelopeShapeMinima value: envelopeShapeMaxima value: envelopeSkewMinima value: envelopeSkewMaxima value: stereoLocationMinima value: stereoLocationMaxima value: interOffsetTimeMinima value: interOffsetTimeMaxima value: ftableReadLocationIncrement value: readIncrementQuanta value: interOffsetTimeQuanta
+    ^ShufflerB bufnum: self readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta
   !
 
 !

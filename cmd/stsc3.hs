@@ -4,19 +4,12 @@ import System.IO {- base -}
 
 import qualified Control.Monad.Loops as Loop {- monad-loops -}
 
-import qualified Sound.SC3 as SC3 {- hsc3 -}
 import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
-
-{-
-import qualified Sound.SC3.UGen.Dot as Dot {- hsc3-dot -}
--}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-
-import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
@@ -24,11 +17,6 @@ import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
-{-
-import qualified Interpreter.Lisp.Ansi {- stsc3 -}
-import qualified Interpreter.Lisp.Expr {- stsc3 -}
--}
-import qualified Interpreter.Som.Repl {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program.
 st_cat_parsec :: String -> String
@@ -54,25 +42,7 @@ stc_to_js :: FilePath -> IO ()
 stc_to_js fn = do
   txt_fragments <- Help.read_file_fragments fn
   mapM_ (putStrLn . Sc.stcToJs) txt_fragments
-
-stsc3_play :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
-stsc3_play evalFile fn = evalFile fn >>= SC3.audition
-
-stsc3_draw :: (FilePath -> IO SC3.UGen) -> FilePath -> IO ()
-stsc3_draw evalFile fn = evalFile fn >>= Dot.draw . SC3.out 0
 -}
-
-help :: [String]
-help =
-    ["stsc3 command [arguments]"
-    ," {draw|play} {ansi|expr} file"
-    ," sc cat fragment supercollider-program-file..."
-    ," st cat {parsec|happy} smalltalk-program-file..."
-    ," repl {ansi|expr|som}"
-    ," rewrite ndef"
-    ," run som class arguments..."
-    ," translate [stream] {sc | stc} { st | js } [input-file output-file]"
-    ]
 
 -- | Like interact but with named files.
 procFile :: FilePath -> FilePath -> (String -> String) -> IO ()
@@ -93,28 +63,23 @@ getAvailable = do
 procStdio :: (String -> String) -> IO ()
 procStdio strFunc = forever (getAvailable >>= \ln -> hPutStrLn stdout (strFunc (unlines ln)) >> hFlush stdout)
 
+help :: [String]
+help =
+    ["stsc3 command [arguments]"
+    ," sc cat fragment supercollider-program-file..."
+    ," st cat {parsec|happy} smalltalk-program-file..."
+    ," rewrite ndef"
+    ," translate [stream] {sc | stc} { st | js } [input-file output-file]"
+    ]
+
 main :: IO ()
 main = do
-  somDirectory <- Som.somSystemClassPath
   a <- getArgs
   let trs in_ty out_ty = if in_ty == "stc" then (if out_ty == "st" then Sc.stcToSt else Sc.stcToJs) else Sc.scToSt
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
-{-
-    ["repl","ansi"] -> Interpreter.Lisp.Ansi.replMain
-    ["repl","expr"] -> Interpreter.Lisp.Expr.replMain
--}
-    ["repl","som"] -> Interpreter.Som.Repl.replMain somDirectory
     ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
-    "run":"som":cl:arg -> Interpreter.Som.Repl.loadAndRunClass somDirectory cl arg
-{-
-    ["draw","ansi",fn] -> stsc3_draw Interpreter.Lisp.Ansi.evalSmalltalkFile fn
-    ["draw","expr",fn] -> stsc3_draw Interpreter.Lisp.Expr.evalSmalltalkFile fn
-    ["play","ansi",fn] -> stsc3_play Interpreter.Lisp.Ansi.evalSmalltalkFile fn
-    ["play","expr",fn] -> stsc3_play Interpreter.Lisp.Expr.evalSmalltalkFile fn
--}
-    ["stop"] -> SC3.withSC3 SC3.reset
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> procFile inFile outFile (trs in_ty out_ty)
     ["translate","stream",in_ty,out_ty] -> procStdio (trs in_ty out_ty)

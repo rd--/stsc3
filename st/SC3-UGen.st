@@ -2309,6 +2309,62 @@ ExpRand comment: 'Exponential single random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
+UGen subclass: #FBSineL
+  instanceVariableNames: 'freq im fb a c xi yi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FBSineL comment: 'Feedback sine with chaotic phase indexing'!
+
+!FBSineL methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  im ^im!
+  im: x im := x!
+  fb ^fb!
+  fb: x fb := x!
+  a ^a!
+  a: x a := x!
+  c ^c!
+  c: x c := x!
+  xi ^xi!
+  xi: x xi := x!
+  yi ^yi!
+  yi: x yi := x!
+!
+
+!FBSineL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FBSineL.
+    paramNames := #(#freq #im #fb #a #c #xi #yi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. im := 1.0. fb := 0.1. a := 1.1. c := 0.5. xi := 0.1. yi := 0.1!
+!
+
+
+!FBSineL class methodsFor: 'instance creation'!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi
+    |u|
+    u := self new.
+    u freq: freq.
+    u im: im.
+    u fb: fb.
+    u a: a.
+    u c: c.
+    u xi: xi.
+    u yi: yi.
+    ^u!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul ^(FBSineL freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul!
+  freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add ^(FBSineL freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add!
+  primaryFactoryMethod ^#freq:im:fb:a:c:xi:yi:!
+!
+
 UGen subclass: #FBSineC
   instanceVariableNames: 'freq im fb a c xi yi'
   classVariableNames: ''
@@ -3044,6 +3100,106 @@ Hasher comment: 'Scrambled value with a hash function.'!
   in: in mul: mul ^(Hasher in: in) * mul!
   in: in mul: mul add: add ^(Hasher in: in) * mul + add!
   primaryFactoryMethod ^#in:!
+!
+
+UGen subclass: #HenonL
+  instanceVariableNames: 'freq a b x0 x1'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+HenonL comment: 'Henon map chaotic generator'!
+
+!HenonL methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  x0 ^x0!
+  x0: x x0 := x!
+  x1 ^x1!
+  x1: x x1 := x!
+!
+
+!HenonL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #HenonL.
+    paramNames := #(#freq #a #b #x0 #x1).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.4. b := 0.3. x0 := 0.0. x1 := 0.0!
+!
+
+
+!HenonL class methodsFor: 'instance creation'!
+  freq: freq a: a b: b x0: x0 x1: x1
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u x0: x0.
+    u x1: x1.
+    ^u!
+  freq: freq a: a b: b x0: x0 x1: x1 mul: mul ^(HenonL freq: freq a: a b: b x0: x0 x1: x1) * mul!
+  freq: freq a: a b: b x0: x0 x1: x1 mul: mul add: add ^(HenonL freq: freq a: a b: b x0: x0 x1: x1) * mul + add!
+  primaryFactoryMethod ^#freq:a:b:x0:x1:!
+!
+
+UGen subclass: #HenonC
+  instanceVariableNames: 'freq a b x0 x1'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+HenonC comment: 'Henon map chaotic generator'!
+
+!HenonC methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  x0 ^x0!
+  x0: x x0 := x!
+  x1 ^x1!
+  x1: x x1 := x!
+!
+
+!HenonC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #HenonC.
+    paramNames := #(#freq #a #b #x0 #x1).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.4. b := 0.3. x0 := 0.0. x1 := 0.0!
+!
+
+
+!HenonC class methodsFor: 'instance creation'!
+  freq: freq a: a b: b x0: x0 x1: x1
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u x0: x0.
+    u x1: x1.
+    ^u!
+  freq: freq a: a b: b x0: x0 x1: x1 mul: mul ^(HenonC freq: freq a: a b: b x0: x0 x1: x1) * mul!
+  freq: freq a: a b: b x0: x0 x1: x1 mul: mul add: add ^(HenonC freq: freq a: a b: b x0: x0 x1: x1) * mul + add!
+  primaryFactoryMethod ^#freq:a:b:x0:x1:!
 !
 
 UGen subclass: #HPF
@@ -6080,6 +6236,56 @@ PV_RandComb comment: 'Pass random bins.'!
   primaryFactoryMethod ^#buffer:wipe:trig:!
 !
 
+UGen subclass: #QuadL
+  instanceVariableNames: 'freq a b c xi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+QuadL comment: 'General quadratic map chaotic generator'!
+
+!QuadL methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  c ^c!
+  c: x c := x!
+  xi ^xi!
+  xi: x xi := x!
+!
+
+!QuadL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #QuadL.
+    paramNames := #(#freq #a #b #c #xi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.0. b := -1.0. c := -0.75. xi := 0.0!
+!
+
+
+!QuadL class methodsFor: 'instance creation'!
+  freq: freq a: a b: b c: c xi: xi
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u c: c.
+    u xi: xi.
+    ^u!
+  freq: freq a: a b: b c: c xi: xi mul: mul ^(QuadL freq: freq a: a b: b c: c xi: xi) * mul!
+  freq: freq a: a b: b c: c xi: xi mul: mul add: add ^(QuadL freq: freq a: a b: b c: c xi: xi) * mul + add!
+  primaryFactoryMethod ^#freq:a:b:c:xi:!
+!
+
 UGen subclass: #QuadC
   instanceVariableNames: 'freq a b c xi'
   classVariableNames: ''
@@ -8546,56 +8752,6 @@ TScramble comment: '(Undocumented class)'!
   primaryFactoryMethod ^#trigger:inputs:!
 !
 
-UGen subclass: #Bezier
-  instanceVariableNames: 'haltAfter dx freq phase param'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-Bezier comment: '(Undocumented class)'!
-
-!Bezier methodsFor: 'accessing'!
-  haltAfter ^haltAfter!
-  haltAfter: x haltAfter := x!
-  dx ^dx!
-  dx: x dx := x!
-  freq ^freq!
-  freq: x freq := x!
-  phase ^phase!
-  phase: x phase := x!
-  param ^param!
-  param: x param := x!
-!
-
-!Bezier methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #Bezier.
-    paramNames := #(#haltAfter #dx #freq #phase).
-    mceNames := #(#param).
-    ugenRate := #ar.
-    numChan := 1.
-    specialIndex := 0.
-    ugenId := nil.
-    haltAfter := 100.0. dx := 0.0001. freq := 440.0. phase := 0.0!
-!
-
-
-!Bezier class methodsFor: 'instance creation'!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
-    |u|
-    u := self new.
-    u haltAfter: haltAfter.
-    u dx: dx.
-    u freq: freq.
-    u phase: phase.
-    u param: param.
-    ^u!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
-  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
-  primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
-!
-
 UGen subclass: #DX7
   instanceVariableNames: 'bufnum on off data vc mnn vel pw mw bc fc'
   classVariableNames: ''
@@ -8730,6 +8886,404 @@ RDX7Env comment: '(Undocumented class)'!
   gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul!
   gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol mul: mul add: add ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul + add!
   primaryFactoryMethod ^#gate:data:r1:r2:r3:r4:l1:l2:l3:l4:ol:!
+!
+
+UGen subclass: #ObxdFilter
+  instanceVariableNames: 'in cutoff resonance multimode bandpass fourpole'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ObxdFilter comment: '(Undocumented class)'!
+
+!ObxdFilter methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  cutoff ^cutoff!
+  cutoff: x cutoff := x!
+  resonance ^resonance!
+  resonance: x resonance := x!
+  multimode ^multimode!
+  multimode: x multimode := x!
+  bandpass ^bandpass!
+  bandpass: x bandpass := x!
+  fourpole ^fourpole!
+  fourpole: x fourpole := x!
+!
+
+!ObxdFilter methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ObxdFilter.
+    paramNames := #(#in #cutoff #resonance #multimode #bandpass #fourpole).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. cutoff := 440.0. resonance := 0.0. multimode := 0.5. bandpass := 0.0. fourpole := 0.0!
+!
+
+
+!ObxdFilter class methodsFor: 'instance creation'!
+  in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole
+    |u|
+    u := self new.
+    u in: in.
+    u cutoff: cutoff.
+    u resonance: resonance.
+    u multimode: multimode.
+    u bandpass: bandpass.
+    u fourpole: fourpole.
+    ^u!
+  in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul ^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul!
+  in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul add: add ^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul + add!
+  primaryFactoryMethod ^#in:cutoff:resonance:multimode:bandpass:fourpole:!
+!
+
+UGen subclass: #SvfBp
+  instanceVariableNames: 'in freq q'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SvfBp comment: '(Undocumented class)'!
+
+!SvfBp methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  q ^q!
+  q: x q := x!
+!
+
+!SvfBp methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SvfBp.
+    paramNames := #(#in #freq #q).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. q := 0.0!
+!
+
+
+!SvfBp class methodsFor: 'instance creation'!
+  in: in freq: freq q: q
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u q: q.
+    ^u!
+  in: in freq: freq q: q mul: mul ^(SvfBp in: in freq: freq q: q) * mul!
+  in: in freq: freq q: q mul: mul add: add ^(SvfBp in: in freq: freq q: q) * mul + add!
+  primaryFactoryMethod ^#in:freq:q:!
+!
+
+UGen subclass: #SvfHp
+  instanceVariableNames: 'in freq q'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SvfHp comment: '(Undocumented class)'!
+
+!SvfHp methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  q ^q!
+  q: x q := x!
+!
+
+!SvfHp methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SvfHp.
+    paramNames := #(#in #freq #q).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. q := 0.0!
+!
+
+
+!SvfHp class methodsFor: 'instance creation'!
+  in: in freq: freq q: q
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u q: q.
+    ^u!
+  in: in freq: freq q: q mul: mul ^(SvfHp in: in freq: freq q: q) * mul!
+  in: in freq: freq q: q mul: mul add: add ^(SvfHp in: in freq: freq q: q) * mul + add!
+  primaryFactoryMethod ^#in:freq:q:!
+!
+
+UGen subclass: #SvfLp
+  instanceVariableNames: 'in freq q'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SvfLp comment: '(Undocumented class)'!
+
+!SvfLp methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  q ^q!
+  q: x q := x!
+!
+
+!SvfLp methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SvfLp.
+    paramNames := #(#in #freq #q).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 440.0. q := 0.0!
+!
+
+
+!SvfLp class methodsFor: 'instance creation'!
+  in: in freq: freq q: q
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u q: q.
+    ^u!
+  in: in freq: freq q: q mul: mul ^(SvfLp in: in freq: freq q: q) * mul!
+  in: in freq: freq q: q mul: mul add: add ^(SvfLp in: in freq: freq q: q) * mul + add!
+  primaryFactoryMethod ^#in:freq:q:!
+!
+
+UGen subclass: #Bezier
+  instanceVariableNames: 'haltAfter dx freq phase param'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Bezier comment: '(Undocumented class)'!
+
+!Bezier methodsFor: 'accessing'!
+  haltAfter ^haltAfter!
+  haltAfter: x haltAfter := x!
+  dx ^dx!
+  dx: x dx := x!
+  freq ^freq!
+  freq: x freq := x!
+  phase ^phase!
+  phase: x phase := x!
+  param ^param!
+  param: x param := x!
+!
+
+!Bezier methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Bezier.
+    paramNames := #(#haltAfter #dx #freq #phase).
+    mceNames := #(#param).
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    haltAfter := 100.0. dx := 0.0001. freq := 440.0. phase := 0.0!
+!
+
+
+!Bezier class methodsFor: 'instance creation'!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param
+    |u|
+    u := self new.
+    u haltAfter: haltAfter.
+    u dx: dx.
+    u freq: freq.
+    u phase: phase.
+    u param: param.
+    ^u!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul!
+  haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
+  primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
+!
+
+UGen subclass: #Freezer
+  instanceVariableNames: 'bufnum left right gain increment incrementOffset incrementRandom rightRandom syncPhaseTrigger randomizePhaseTrigger numberOfLoops'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Freezer comment: '(Undocumented class)'!
+
+!Freezer methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  left ^left!
+  left: x left := x!
+  right ^right!
+  right: x right := x!
+  gain ^gain!
+  gain: x gain := x!
+  increment ^increment!
+  increment: x increment := x!
+  incrementOffset ^incrementOffset!
+  incrementOffset: x incrementOffset := x!
+  incrementRandom ^incrementRandom!
+  incrementRandom: x incrementRandom := x!
+  rightRandom ^rightRandom!
+  rightRandom: x rightRandom := x!
+  syncPhaseTrigger ^syncPhaseTrigger!
+  syncPhaseTrigger: x syncPhaseTrigger := x!
+  randomizePhaseTrigger ^randomizePhaseTrigger!
+  randomizePhaseTrigger: x randomizePhaseTrigger := x!
+  numberOfLoops ^numberOfLoops!
+  numberOfLoops: x numberOfLoops := x!
+!
+
+!Freezer methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Freezer.
+    paramNames := #(#bufnum #left #right #gain #increment #incrementOffset #incrementRandom #rightRandom #syncPhaseTrigger #randomizePhaseTrigger #numberOfLoops).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. left := 0.0. right := 1.0. gain := 1.0. increment := 1.0. incrementOffset := 0.0. incrementRandom := 0.0. rightRandom := 0.0. syncPhaseTrigger := 0.0. randomizePhaseTrigger := 0.0. numberOfLoops := 4.0!
+!
+
+
+!Freezer class methodsFor: 'instance creation'!
+  bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u left: left.
+    u right: right.
+    u gain: gain.
+    u increment: increment.
+    u incrementOffset: incrementOffset.
+    u incrementRandom: incrementRandom.
+    u rightRandom: rightRandom.
+    u syncPhaseTrigger: syncPhaseTrigger.
+    u randomizePhaseTrigger: randomizePhaseTrigger.
+    u numberOfLoops: numberOfLoops.
+    ^u!
+  bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops mul: mul ^(Freezer bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops) * mul!
+  bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops mul: mul add: add ^(Freezer bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops) * mul + add!
+  primaryFactoryMethod ^#bufnum:left:right:gain:increment:incrementOffset:incrementRandom:rightRandom:syncPhaseTrigger:randomizePhaseTrigger:numberOfLoops:!
+!
+
+UGen subclass: #ShufflerB
+  instanceVariableNames: 'bufnum readLocationMinima readLocationMaxima readIncrementMinima readIncrementMaxima durationMinima durationMaxima envelopeAmplitudeMinima envelopeAmplitudeMaxima envelopeShapeMinima envelopeShapeMaxima envelopeSkewMinima envelopeSkewMaxima stereoLocationMinima stereoLocationMaxima interOffsetTimeMinima interOffsetTimeMaxima ftableReadLocationIncrement readIncrementQuanta interOffsetTimeQuanta'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ShufflerB comment: '(Undocumented class)'!
+
+!ShufflerB methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  readLocationMinima ^readLocationMinima!
+  readLocationMinima: x readLocationMinima := x!
+  readLocationMaxima ^readLocationMaxima!
+  readLocationMaxima: x readLocationMaxima := x!
+  readIncrementMinima ^readIncrementMinima!
+  readIncrementMinima: x readIncrementMinima := x!
+  readIncrementMaxima ^readIncrementMaxima!
+  readIncrementMaxima: x readIncrementMaxima := x!
+  durationMinima ^durationMinima!
+  durationMinima: x durationMinima := x!
+  durationMaxima ^durationMaxima!
+  durationMaxima: x durationMaxima := x!
+  envelopeAmplitudeMinima ^envelopeAmplitudeMinima!
+  envelopeAmplitudeMinima: x envelopeAmplitudeMinima := x!
+  envelopeAmplitudeMaxima ^envelopeAmplitudeMaxima!
+  envelopeAmplitudeMaxima: x envelopeAmplitudeMaxima := x!
+  envelopeShapeMinima ^envelopeShapeMinima!
+  envelopeShapeMinima: x envelopeShapeMinima := x!
+  envelopeShapeMaxima ^envelopeShapeMaxima!
+  envelopeShapeMaxima: x envelopeShapeMaxima := x!
+  envelopeSkewMinima ^envelopeSkewMinima!
+  envelopeSkewMinima: x envelopeSkewMinima := x!
+  envelopeSkewMaxima ^envelopeSkewMaxima!
+  envelopeSkewMaxima: x envelopeSkewMaxima := x!
+  stereoLocationMinima ^stereoLocationMinima!
+  stereoLocationMinima: x stereoLocationMinima := x!
+  stereoLocationMaxima ^stereoLocationMaxima!
+  stereoLocationMaxima: x stereoLocationMaxima := x!
+  interOffsetTimeMinima ^interOffsetTimeMinima!
+  interOffsetTimeMinima: x interOffsetTimeMinima := x!
+  interOffsetTimeMaxima ^interOffsetTimeMaxima!
+  interOffsetTimeMaxima: x interOffsetTimeMaxima := x!
+  ftableReadLocationIncrement ^ftableReadLocationIncrement!
+  ftableReadLocationIncrement: x ftableReadLocationIncrement := x!
+  readIncrementQuanta ^readIncrementQuanta!
+  readIncrementQuanta: x readIncrementQuanta := x!
+  interOffsetTimeQuanta ^interOffsetTimeQuanta!
+  interOffsetTimeQuanta: x interOffsetTimeQuanta := x!
+!
+
+!ShufflerB methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ShufflerB.
+    paramNames := #(#bufnum #readLocationMinima #readLocationMaxima #readIncrementMinima #readIncrementMaxima #durationMinima #durationMaxima #envelopeAmplitudeMinima #envelopeAmplitudeMaxima #envelopeShapeMinima #envelopeShapeMaxima #envelopeSkewMinima #envelopeSkewMaxima #stereoLocationMinima #stereoLocationMaxima #interOffsetTimeMinima #interOffsetTimeMaxima #ftableReadLocationIncrement #readIncrementQuanta #interOffsetTimeQuanta).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. readLocationMinima := 0.01. readLocationMaxima := 0.02. readIncrementMinima := 1.0. readIncrementMaxima := 1.0. durationMinima := 0.2. durationMaxima := 0.2. envelopeAmplitudeMinima := 0.5. envelopeAmplitudeMaxima := 0.5. envelopeShapeMinima := 0.5. envelopeShapeMaxima := 0.5. envelopeSkewMinima := 0.5. envelopeSkewMaxima := 0.5. stereoLocationMinima := 0.5. stereoLocationMaxima := 0.5. interOffsetTimeMinima := 0.05. interOffsetTimeMaxima := 0.01. ftableReadLocationIncrement := 1.0. readIncrementQuanta := 0.0. interOffsetTimeQuanta := 0.0!
+!
+
+
+!ShufflerB class methodsFor: 'instance creation'!
+  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u readLocationMinima: readLocationMinima.
+    u readLocationMaxima: readLocationMaxima.
+    u readIncrementMinima: readIncrementMinima.
+    u readIncrementMaxima: readIncrementMaxima.
+    u durationMinima: durationMinima.
+    u durationMaxima: durationMaxima.
+    u envelopeAmplitudeMinima: envelopeAmplitudeMinima.
+    u envelopeAmplitudeMaxima: envelopeAmplitudeMaxima.
+    u envelopeShapeMinima: envelopeShapeMinima.
+    u envelopeShapeMaxima: envelopeShapeMaxima.
+    u envelopeSkewMinima: envelopeSkewMinima.
+    u envelopeSkewMaxima: envelopeSkewMaxima.
+    u stereoLocationMinima: stereoLocationMinima.
+    u stereoLocationMaxima: stereoLocationMaxima.
+    u interOffsetTimeMinima: interOffsetTimeMinima.
+    u interOffsetTimeMaxima: interOffsetTimeMaxima.
+    u ftableReadLocationIncrement: ftableReadLocationIncrement.
+    u readIncrementQuanta: readIncrementQuanta.
+    u interOffsetTimeQuanta: interOffsetTimeQuanta.
+    ^u!
+  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta mul: mul ^(ShufflerB bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta) * mul!
+  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta mul: mul add: add ^(ShufflerB bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta) * mul + add!
+  primaryFactoryMethod ^#bufnum:readLocationMinima:readLocationMaxima:readIncrementMinima:readIncrementMaxima:durationMinima:durationMaxima:envelopeAmplitudeMinima:envelopeAmplitudeMaxima:envelopeShapeMinima:envelopeShapeMaxima:envelopeSkewMinima:envelopeSkewMaxima:stereoLocationMinima:stereoLocationMaxima:interOffsetTimeMinima:interOffsetTimeMaxima:ftableReadLocationIncrement:readIncrementQuanta:interOffsetTimeQuanta:!
 !
 
 

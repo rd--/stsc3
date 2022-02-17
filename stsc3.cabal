@@ -52,10 +52,20 @@ library
                         Language.Smalltalk.SuperCollider.Token,
                         Language.Smalltalk.SuperCollider.Translate
 
+executable stcsc3
+  build-depends:    base >= 4.8 && < 5,
+                    hsc3 == 0.20.*,
+                    monad-loops,
+                    stsc3
+  hs-source-dirs:   cmd
+  main-is:          stsc3.hs
+  default-language: Haskell2010
+  ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded
+
 executable stc-to-js
   build-depends:    base >= 4.8 && < 5,
                     stsc3
-  hs-source-dirs:   cmd
+  hs-source-dirs:   cgi-bin
   main-is:          stc-to-js.hs
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded

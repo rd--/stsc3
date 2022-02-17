@@ -30,6 +30,8 @@
 + Hasher { *new { arg in = 0.0;^Hasher.performList(in.rate.rateToSelector, [in]) } }
 + HPF { *new { arg in = 0.0, freq = 440.0;^HPF.performList(in.rate.rateToSelector, [in, freq]) } }
 + HPZ1 { *new { arg in = 0.0;^HPZ1.performList(in.rate.rateToSelector, [in]) } }
++ Index { *new { arg bufnum = 0.0, in = 0.0;^Index.performList(in.rate.rateToSelector, [bufnum, in]) } }
++ IndexInBetween { *new { arg bufnum = 0.0, in = 0.0;^IndexInBetween.performList(in.rate.rateToSelector, [bufnum, in]) } }
 + InRange { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^InRange.performList(in.rate.rateToSelector, [in, lo, hi]) } }
 + Integrator { *new { arg in = 0.0, coef = 1.0;^Integrator.performList(in.rate.rateToSelector, [in, coef]) } }
 + Klank { *new { arg specificationsArrayRef = 0.0, input = 0.0, freqscale = 1.0, freqoffset = 0.0, decayscale = 1.0;^Klank.performList(input.rate.rateToSelector, [specificationsArrayRef, input, freqscale, freqoffset, decayscale]) } }
@@ -87,3 +89,5 @@
 + CrossoverDistortion { *new { arg in = 0.0, amp = 0.5, smooth = 0.5;^CrossoverDistortion.performList(in.rate.rateToSelector, [in, amp, smooth]) } }
 + RCD { *new { arg clock = 0.0, rotate = 0.0, reset = 0.0, div = 0.0, spread = 0.0, auto = 0.0, len = 0.0, down = 0.0, gates = 0.0;^RCD.performList(clock.rate.rateToSelector, [clock, rotate, reset, div, spread, auto, len, down, gates]) } }
 + TScramble { *new { arg trigger = 0.0, inputs = 0.0;^TScramble.performList(trigger.rate.rateToSelector, [trigger, inputs]) } }
++ ObxdFilter { *new { arg in = 0.0, cutoff = 440.0, resonance = 0.0, multimode = 0.5, bandpass = 0.0, fourpole = 0.0;^ObxdFilter.performList(in.rate.rateToSelector, [in, cutoff, resonance, multimode, bandpass, fourpole]) } }
++ SvfHp { *new { arg in = 0.0, freq = 440.0, q = 0.0;^SvfHp.performList(in.rate.rateToSelector, [in, freq, q]) } }
