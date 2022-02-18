@@ -322,6 +322,7 @@ this.a == nil                                               // there are single 
 this.s == Server.default                                    // by convention s has the default scsynth
 this.executeFile("program.scd")                             // run program tex
 "['c' -> 60, 'b' -> 50, 'a' -> 100]".interpret              // interpret (read) data structure
+context.class == Frame                                      // context
 
 'Interval'
 

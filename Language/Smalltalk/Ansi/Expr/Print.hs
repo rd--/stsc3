@@ -21,40 +21,47 @@ stcIsBinaryMessageSend expr =
     Send _lhs (Message s [_rhs]) -> St.isBinarySelector s
     _ -> False
 
--- | The apply message is elided in .stc, it's singular array argument is unpacked.
-messagePrintStc :: Message t -> String
-messagePrintStc (Message s e) =
+{- | The apply message is elided in .stc, it's singular array argument is unpacked.
+     It is an option here so the .stc printer can also print .sc code.
+-}
+messagePrintStc :: Bool -> Message t -> String
+messagePrintStc elideApply (Message s e) =
   let i = takeWhile (/= ':') (St.selectorIdentifier s)
   in case (i,e) of
        (_,[]) -> printf ".%s" i
-       ("apply",[Array p]) -> printf "(%s)" (intercalate ", " (map exprPrintStc p))
-       (_,[e1]) -> let p1 = exprPrintStc e1
-                   in if St.isBinarySelector s then printf " %s %s" i p1 else printf ".%s(%s)" i p1
-       _ -> printf ".%s(%s)" i (intercalate ", " (map exprPrintStc e))
+       ("apply",[Array p]) ->
+         if elideApply
+         then printf "(%s)" (intercalate ", " (map (exprPrintStc elideApply) p))
+         else printf ".apply([%s])" (intercalate ", " (map (exprPrintStc elideApply) p))
+       (_,[e1]) ->
+         let p1 = exprPrintStc elideApply e1
+         in if St.isBinarySelector s then printf " %s %s" i p1 else printf ".%s(%s)" i p1
+       _ ->
+         printf ".%s(%s)" i (intercalate ", " (map (exprPrintStc elideApply) e))
 
 {- | Parenthesise all binary operator sends.
      A more elaborate rule could be written if required.
 -}
-exprPrintStc :: Expr t -> String
-exprPrintStc expr =
+exprPrintStc :: Bool -> Expr t -> String
+exprPrintStc elideApply expr =
   case expr of
     Identifier i -> i
     Literal l -> St.sc_literal_pp l
-    Assignment i e -> printf "%s = %s" i (exprPrintStc e)
-    Return e -> printf "^%s" (exprPrintStc e)
+    Assignment i e -> printf "%s = %s" i (exprPrintStc elideApply e)
+    Return e -> printf "^%s" (exprPrintStc elideApply e)
     Send e m ->
       let template = if stcIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
-      in printf template (exprPrintStc e) (messagePrintStc m)
+      in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
     Lambda _ a (St.Temporaries t) e ->
-      let x = intercalate "; " (map exprPrintStc e)
+      let x = intercalate "; " (map (exprPrintStc elideApply) e)
       in case (a,t) of
         ([],[]) -> printf "{ %s }" x
         (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " a) x
         _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " a) (intercalate ", " t) x
-    Array e -> printf "[%s]" (intercalate ", " (map exprPrintStc e))
-    Begin e -> intercalate "; "  (map exprPrintStc e)
+    Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
+    Begin e -> intercalate "; "  (map (exprPrintStc elideApply) e)
     Init c (St.Temporaries t) e ->
-      let x = intercalate "; "  (map exprPrintStc e)
+      let x = intercalate "; "  (map (exprPrintStc elideApply) e)
           r = case (t,e) of
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x

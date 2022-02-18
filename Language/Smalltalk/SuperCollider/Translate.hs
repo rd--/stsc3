@@ -222,7 +222,15 @@ stcToExprStm = Expr.initStatements . stcToExpr
 > stcToExprToStc "(a - b).c" == "(a - b).c"
 -}
 stcToExprToStc :: String -> String
-stcToExprToStc = Expr.exprPrintStc . stcToExpr
+stcToExprToStc = Expr.exprPrintStc True . stcToExpr
+
+{- | Print .stc as .sc.  Apply is not implicit in .sc.
+
+> stcToSc "SinOsc(440, 0)" == "SinOsc.apply([440, 0])"
+> stcToSc "f(x, y)" == "f.apply([x, y])"
+-}
+stcToSc :: String -> String
+stcToSc = Expr.exprPrintStc False . stcToExpr
 
 {-
 

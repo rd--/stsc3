@@ -50,7 +50,7 @@ stcUgenToNdef :: String -> String
 stcUgenToNdef =
   (++ "\n") .
   intercalate ";\n" .
-  map St.exprPrintStc .
+  map (St.exprPrintStc True) .
   map (expr_map to_ndef) .
   with_assign_and_play .
   initStatements .
