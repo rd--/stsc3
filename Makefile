@@ -12,3 +12,6 @@ clean:
 push-all:
 	r.gitlab-push.sh stsc3
 	r.github-push.sh stsc3
+
+remote-update:
+	ssh rd@rohandrape.net "(cd rohandrape.net/pub/stsc3 ; git pull)"
