@@ -2,8 +2,10 @@ stsc3 is initially stored here.
 
 To use, [filein](http://wiki.squeak.org/squeak/1105) the below files to a Smalltalk image.
 
-The largest file, [SC3-UGen.st](?t=stsc3&e=st/SC3-UGen.st), is auto-generated
-using [mk.hs](?t=stsc3&e=hs/mk.hs)
+The largest files,
+[SC3-UGen.st](?t=stsc3&e=st/SC3-UGen.st) and
+[SC3-UGen-Filter.st](?t=stsc3&e=st/SC3-UGen-Filter.st),
+are auto-generated using [mk.hs](?t=stsc3&e=hs/mk.hs)
 
 Other files are:
 
@@ -16,12 +18,21 @@ UGen and math operator classes, related core classes (mce, mrg, &etc).
 [SC3-Env.st](?t=stsc3&e=st/SC3-Env.st):
 Envelope classes EnvSpec and EnvBuilder and related classes (EnvPerc, EnvLinen, EnvASR &etc.)
 
+[SC3-Event.st](?t=stsc3&e=st/SC3-Event.st):
+A simple event model with a Voicer class.
+
 [SC3-Math.st](?t=stsc3&e=st/SC3-Math.st) &
 [SC3-Random.st](?t=stsc3&e=st/SC3-Random.st):
 Methods that extend numerical classes and sequence classes.
 
+[SC3-OpenSoundControl.st](?t=stsc3&e=st/SC3-OpenSoundControl.st):
+Open Sound Control protocol.
+
 [SC3-UGen-Composite.st](?t=stsc3&e=st/SC3-UGen-Composite.st):
-UGens (ie. `LocalBuf` and `Splay`) that are not at `SC3-UGen.st`.
+UGens (ie. _LocalBuf_ and _Splay2_) that are not at `SC3-UGen.st`.
+
+[SC3-UGen-Demand.st](?t=stsc3&e=st/SC3-UGen-Demand.st):
+Demand UGens constructors with parameter ordering consistent with hsc3.
 
 [SC3-UI.st](?t=stsc3&e=st/SC3-UI.st):
 User-interface classes and methods.
@@ -34,18 +45,17 @@ multiple-channel-expansion, and without applying rate-control editing.
 The writer generates let bindings for all UGens.
 
 [SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
-[SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st) &
-[SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
-[SC3-Gnu.st](?t=stsc3&e=st/SC3-Gnu.st) :
-Methods that cannot be written to work under all of Squeak, Pharo, Cuis and GNU-Smalltalk
-have separate definitions.
+[SC3-Gnu.st](?t=stsc3&e=st/SC3-Gnu.st) &
+[SC3-Cuis.st](?t=stsc3&e=st/SC3-Cuis.st) &
+[SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st):
+Methods that cannot be written to work under all of Squeak, Pharo, Cuis and GNU-Smalltalk have separate definitions.
 
 The program `hsc3-graphs` is required to communicate with `scsynth`.
 It is a part of the `hsc3-graphs` archive at <https://gitlab.com/rd--/hsc3-graphs>.
 It depends upon [hsc3](https://hackage.haskell.org/package/hsc3),
 [hsc3-dot](https://gitlab.com/rd--/hsc3-dot),
 [hsc3-lisp](https://gitlab.com/rd--/hsc3-lisp) and
-[hmt](https://gitlab.com/rd--/hmt).
+[hmt-base](https://gitlab.com/rd--/hmt-base).
 
 ![](sw/stsc3/lib/png/squeak-mouse.png)
 

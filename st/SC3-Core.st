@@ -8,8 +8,8 @@ Object subclass: #AbstractUGen
 AbstractUGen comment: 'Unit Generator (Abstract)'!
 
 !AbstractUGen class methodsFor: 'instance creation'!
-  apply: arg
-    ^self perform: (self primaryFactoryMethod) withArguments: arg
+  apply: argumentsArray
+    ^self perform: (self primaryFactoryMethod) withArguments: argumentsArray
   !
 !
 
@@ -35,10 +35,10 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !
 
 !BlockClosure methodsFor: 'evaluating'!
-  apply: arg
+  apply: argumentsArray
     "For .stc notation.
      Allow f(x,y) as notation to apply a block f to arguments x & y."
-    ^self valueWithArguments: arg
+    ^self valueWithArguments: argumentsArray
   !
 !
 

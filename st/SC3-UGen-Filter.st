@@ -692,7 +692,7 @@
   impulse: phase
     ^Impulse freq: self phase: phase
   !
-  in'
+  in
     ^In bus: self
   !
   inFeedback
