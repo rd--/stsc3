@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style>body { margin: 2em; width: 50em; }</style>
+    <title>stsc3</title>
+  </head>
+  <body>
+    <h1>Stc to {Js, St}</h1>
+    <p>Translator from .stc notation to .{js, st} notation.</p>
+    <form action="../cgi-bin/stsc3-cgi.py" method="get">
+      <div><textarea name="stc" cols="120" rows="40" required>SinOsc(440, 0) * 0.1</textarea></div>
+      <select name="cmd" title="Language (l)" accesskey="l">
+        <option value="stc-to-js">js</option>
+        <option value="stc-to-st">st</option>
+      </select>
+      <input type="submit" title="Translate (t)" accesskey="t" value="Translate">
+    </form>
+    <p>
+      Note: the program text must pass the security policy of the server on which it executes, which can in some cases be a little eccentric.
+      For instance the text must not include the word "ping", nor the phrases "select input" or "select from".
+    </p>
+  </body>
+</html>
