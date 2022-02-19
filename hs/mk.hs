@@ -72,6 +72,7 @@ ugen =
   ,"CrossoverDistortion" -- sc3-plugins/Distortion
   ,"Friction" -- sc3-plugins/MCLD
   ,"MembraneCircle" -- sc3-plugins/Membrane
+  ,"VOSIM" -- sc3-plugins/VOSIM
   ,"MiRings" -- mi-UGens
   ,"AnalogFoldOsc" -- portedplugins
   ,"RCD", "SCM" -- vb_UGens

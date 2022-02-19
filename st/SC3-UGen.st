@@ -8311,6 +8311,53 @@ MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
   primaryFactoryMethod ^#excitation:tension:loss:!
 !
 
+UGen subclass: #VOSIM
+  instanceVariableNames: 'trig freq nCycles decay'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+VOSIM comment: 'vosim pulse generator'!
+
+!VOSIM methodsFor: 'accessing'!
+  trig ^trig!
+  trig: x trig := x!
+  freq ^freq!
+  freq: x freq := x!
+  nCycles ^nCycles!
+  nCycles: x nCycles := x!
+  decay ^decay!
+  decay: x decay := x!
+!
+
+!VOSIM methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #VOSIM.
+    paramNames := #(#trig #freq #nCycles #decay).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    trig := 0.1. freq := 400.0. nCycles := 1.0. decay := 0.9!
+!
+
+
+!VOSIM class methodsFor: 'instance creation'!
+  trig: trig freq: freq nCycles: nCycles decay: decay
+    |u|
+    u := self new.
+    u trig: trig.
+    u freq: freq.
+    u nCycles: nCycles.
+    u decay: decay.
+    ^u!
+  trig: trig freq: freq nCycles: nCycles decay: decay mul: mul ^(VOSIM trig: trig freq: freq nCycles: nCycles decay: decay) * mul!
+  trig: trig freq: freq nCycles: nCycles decay: decay mul: mul add: add ^(VOSIM trig: trig freq: freq nCycles: nCycles decay: decay) * mul + add!
+  primaryFactoryMethod ^#trig:freq:nCycles:decay:!
+!
+
 UGen subclass: #MiRings
   instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
   classVariableNames: ''

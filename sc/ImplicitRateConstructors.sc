@@ -19,6 +19,7 @@
 + Duty { *new { arg dur = 1.0, reset = 0.0, level = 1.0, doneAction = 0.0; ^Duty.performList('audio'.rateToSelector, [dur, reset, level, doneAction]) } }
 + DWGPluckedStiff { *new { arg freq = 440.0, amp = 0.5, gate = 1.0, pos = 0.14, c1 = 1.0, c3 = 30.0, inp = 0.0, release = 0.1, fB = 2.0; ^DWGPluckedStiff.performList('audio'.rateToSelector, [freq, amp, gate, pos, c1, c3, inp, release, fB]) } }
 + EnvGen { *new { arg envelope = 0.0, gate = 1.0, levelScale = 1.0, levelBias = 0.0, timeScale = 1.0, doneAction = 0.0; ^EnvGen.performList('audio'.rateToSelector, [envelope, gate, levelScale, levelBias, timeScale, doneAction]) } }
++ FBSineL { *new { arg freq = 22050.0, im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1; ^FBSineL.performList('audio'.rateToSelector, [freq, im, fb, a, c, xi, yi]) } }
 + FBSineC { *new { arg freq = 22050.0, im = 1.0, fb = 0.1, a = 1.1, c = 0.5, xi = 0.1, yi = 0.1; ^FBSineC.performList('audio'.rateToSelector, [freq, im, fb, a, c, xi, yi]) } }
 + Formant { *new { arg fundfreq = 440.0, formfreq = 1760.0, bwfreq = 880.0; ^Formant.performList('audio'.rateToSelector, [fundfreq, formfreq, bwfreq]) } }
 + FreqShift { *new { arg in = 0.0, freq = 0.0, phase = 0.0; ^FreqShift.performList('audio'.rateToSelector, [in, freq, phase]) } }
@@ -27,6 +28,8 @@
 + GrainFM { *new { arg numChannels = 1.0, trigger = 0.0, dur = 1.0, carfreq = 440.0, modfreq = 200.0, index = 1.0, pan = 0.0, envbufnum = -1.0, maxGrains = 512.0; ^GrainFM.performList('audio'.rateToSelector, [numChannels, trigger, dur, carfreq, modfreq, index, pan, envbufnum, maxGrains]) } }
 + GrainSin { *new { arg numChannels = 1.0, trigger = 0.0, dur = 1.0, freq = 440.0, pan = 0.0, envbufnum = -1.0, maxGrains = 512.0; ^GrainSin.performList('audio'.rateToSelector, [numChannels, trigger, dur, freq, pan, envbufnum, maxGrains]) } }
 + GrayNoise { *new { ^GrayNoise.performList('audio'.rateToSelector, []) } }
++ HenonL { *new { arg freq = 22050.0, a = 1.4, b = 0.3, x0 = 0.0, x1 = 0.0; ^HenonL.performList('audio'.rateToSelector, [freq, a, b, x0, x1]) } }
++ HenonC { *new { arg freq = 22050.0, a = 1.4, b = 0.3, x0 = 0.0, x1 = 0.0; ^HenonC.performList('audio'.rateToSelector, [freq, a, b, x0, x1]) } }
 + Impulse { *new { arg freq = 440.0, phase = 0.0; ^Impulse.performList('audio'.rateToSelector, [freq, phase]) } }
 + In { *new { arg numChannels = 1.0, bus = 0.0; ^In.performList('audio'.rateToSelector, [numChannels, bus]) } }
 + K2A { *new { arg in = 0.0; ^K2A.performList('audio'.rateToSelector, [in]) } }
@@ -58,6 +61,7 @@
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }
 + PlayBuf { *new { arg numChannels = 1.0, bufnum = 0.0, rate = 1.0, trigger = 1.0, startPos = 0.0, loop = 0.0, doneAction = 0.0; ^PlayBuf.performList('audio'.rateToSelector, [numChannels, bufnum, rate, trigger, startPos, loop, doneAction]) } }
 + Pulse { *new { arg freq = 440.0, width = 0.5; ^Pulse.performList('audio'.rateToSelector, [freq, width]) } }
++ QuadL { *new { arg freq = 22050.0, a = 1.0, b = -1.0, c = -0.75, xi = 0.0; ^QuadL.performList('audio'.rateToSelector, [freq, a, b, c, xi]) } }
 + QuadC { *new { arg freq = 22050.0, a = 1.0, b = -1.0, c = -0.75, xi = 0.0; ^QuadC.performList('audio'.rateToSelector, [freq, a, b, c, xi]) } }
 + RecordBuf { *new { arg inputArray = 0.0, bufnum = 0.0, offset = 0.0, recLevel = 1.0, preLevel = 0.0, run = 1.0, loop = 1.0, trigger = 1.0, doneAction = 0.0; ^RecordBuf.performList('audio'.rateToSelector, [inputArray, bufnum, offset, recLevel, preLevel, run, loop, trigger, doneAction]) } }
 + SampleDur { *new { ^SampleDur.performList('scalar'.rateToSelector, []) } }
@@ -74,6 +78,7 @@
 + XLine { *new { arg start = 1.0, end = 2.0, dur = 1.0, doneAction = 0.0; ^XLine.performList('audio'.rateToSelector, [start, end, dur, doneAction]) } }
 + Friction { *new { arg in = 0.0, friction = 0.5, spring = 0.414, damp = 0.313, mass = 0.1, beltmass = 1.0; ^Friction.performList('audio'.rateToSelector, [in, friction, spring, damp, mass, beltmass]) } }
 + MembraneCircle { *new { arg excitation = 0.0, tension = 5.0e-2, loss = 0.99999; ^MembraneCircle.performList('audio'.rateToSelector, [excitation, tension, loss]) } }
++ VOSIM { *new { arg trig = 0.1, freq = 400.0, nCycles = 1.0, decay = 0.9; ^VOSIM.performList('audio'.rateToSelector, [trig, freq, nCycles, decay]) } }
 + MiRings { *new { arg in = 0.0, trig = 0.0, pit = 60.0, struct = 0.25, bright = 0.5, damp = 0.7, pos = 0.25, model = 0.0, poly = 1.0, intern_exciter = 0.0, easteregg = 0.0, bypass = 0.0; ^MiRings.performList('audio'.rateToSelector, [in, trig, pit, struct, bright, damp, pos, model, poly, intern_exciter, easteregg, bypass]) } }
 + AnalogFoldOsc { *new { arg freq = 100.0, amp = 1.0; ^AnalogFoldOsc.performList('audio'.rateToSelector, [freq, amp]) } }
 + SCM { *new { arg clock = 0.0, bpm = 120.0, rotate = 0.0, slip = 0.0, shuffle = 0.0, skip = 0.0, pw = 0.0; ^SCM.performList('audio'.rateToSelector, [clock, bpm, rotate, slip, shuffle, skip, pw]) } }

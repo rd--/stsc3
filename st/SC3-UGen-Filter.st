@@ -692,7 +692,7 @@
   impulse: phase
     ^Impulse freq: self phase: phase
   !
-  in
+  in'
     ^In bus: self
   !
   inFeedback
@@ -841,6 +841,9 @@
   !
   membraneCircle: tension value: loss
     ^MembraneCircle excitation: self tension: tension loss: loss
+  !
+  vosim: freq value: nCycles value: decay
+    ^VOSIM trig: self freq: freq nCycles: nCycles decay: decay
   !
   miRings: trig value: pit value: struct value: bright value: damp value: pos value: model value: poly value: intern_exciter value: easteregg value: bypass
     ^MiRings in: self trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
