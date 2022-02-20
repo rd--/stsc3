@@ -56,6 +56,9 @@
   degreeToKey: bufnum value: octave
     ^DegreeToKey bufnum: bufnum in: self octave: octave
   !
+  delay1
+    ^Delay1 in: self
+  !
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
@@ -343,6 +346,9 @@
   !
   degreeToKey: bufnum value: octave
     ^DegreeToKey bufnum: bufnum in: self octave: octave
+  !
+  delay1
+    ^Delay1 in: self
   !
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime

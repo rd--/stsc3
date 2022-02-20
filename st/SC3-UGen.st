@@ -1596,6 +1596,44 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
   primaryFactoryMethod ^#bufnum:in:octave:!
 !
 
+UGen subclass: #Delay1
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Delay1 comment: 'Single sample delay.'!
+
+!Delay1 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!Delay1 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Delay1.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!Delay1 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(Delay1 in: in) * mul!
+  in: in mul: mul add: add ^(Delay1 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #DelayC
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
