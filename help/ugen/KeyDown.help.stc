@@ -1,0 +1,13 @@
+// Event control ; Kyma keyboard names
+Splay2(1.to(16).collect({
+    arg vc;
+    SinOsc(KeyPitch(vc).unitCps, 0) * KeyDown(vc) * KeyVelocity(vc)
+}))
+
+// Event control ; Kyma keyboard names
+Splay2(1.to(16).collect({
+    arg vc;
+    var freq = KeyPitch(vc).unitCps + LFNoise2(0.25);
+    var amp = ASR(KeyDown(vc), 0.1, 2, -4) * KeyVelocity(vc);
+    LPF(Saw(freq), freq * KeyTimbre(vc) * 8) * amp
+}))

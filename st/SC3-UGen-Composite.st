@@ -390,6 +390,19 @@ AudioIn comment: 'Audio input'!
   primaryFactoryMethod ^#channels:!
 !
 
+AbstractUGen subclass: #ControlIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+
+ControlIn comment: 'Control input'!
+
+!ControlIn class methodsFor: 'instance creation'!
+  numChan: numChan bus: bus
+      ^(In numChan: numChan bus: bus) kr
+  !
+  channels: channels
+      ^In numChan: 1 bus: channels - 1
+  !
+  primaryFactoryMethod ^#channels:!
+!
 AbstractUGen subclass: #Cc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
 
 Cc comment: 'Continuous controller input'!
@@ -427,3 +440,5 @@ BufAlloc comment: 'Allocate a buffer local to the synth.'!
   !
   primaryFactoryMethod ^#numChannels:numFrames:!
 !
+
+
