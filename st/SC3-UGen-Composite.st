@@ -441,4 +441,20 @@ BufAlloc comment: 'Allocate a buffer local to the synth.'!
   primaryFactoryMethod ^#numChannels:numFrames:!
 !
 
+UGen subclass: #Tr instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Tr comment: 'Trig with duration of one sample.'!
+!Tr class methodsFor: 'instance creation'!
+  in: in
+    ^Trig in: in dur: SampleDur new "Should be SampleDur if audio rate and ControlDur if control rate, requires QuantaDur or some such."
+  !
+  primaryFactoryMethod ^#in:!
+!
 
+UGen subclass: #Tr1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Tr1 comment: 'Trig1 with duration of one sample.'!
+!Tr1 class methodsFor: 'instance creation'!
+  in: in
+    ^Trig1 in: in dur: SampleDur new
+  !
+  primaryFactoryMethod ^#in:!
+!

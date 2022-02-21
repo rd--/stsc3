@@ -53,7 +53,6 @@
 + MouseButton { *new { arg minval = 0.0, maxval = 1.0, lag = 0.2; ^MouseButton.performList('control'.rateToSelector, [minval, maxval, lag]) } }
 + MouseX { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseX.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
 + MouseY { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseY.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
-+ NRand { *new { arg lo = 0.0, hi = 1.0, n = 0.0; ^NRand.performList('scalar'.rateToSelector, [lo, hi, n]) } }
 + NumOutputBuses { *new { ^NumOutputBuses.performList('scalar'.rateToSelector, []) } }
 + Osc { *new { arg bufnum = 0.0, freq = 440.0, phase = 0.0; ^Osc.performList('audio'.rateToSelector, [bufnum, freq, phase]) } }
 + Phasor { *new { arg trig = 0.0, rate = 1.0, start = 0.0, end = 1.0, resetPos = 0.0; ^Phasor.performList('audio'.rateToSelector, [trig, rate, start, end, resetPos]) } }
