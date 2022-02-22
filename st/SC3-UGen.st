@@ -4824,6 +4824,56 @@ Line comment: 'Line generator.'!
   primaryFactoryMethod ^#start:end:dur:doneAction:!
 !
 
+UGen subclass: #Linen
+  instanceVariableNames: 'gate attackTime susLevel releaseTime doneAction'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Linen comment: 'Simple linear envelope generator.'!
+
+!Linen methodsFor: 'accessing'!
+  gate ^gate!
+  gate: x gate := x!
+  attackTime ^attackTime!
+  attackTime: x attackTime := x!
+  susLevel ^susLevel!
+  susLevel: x susLevel := x!
+  releaseTime ^releaseTime!
+  releaseTime: x releaseTime := x!
+  doneAction ^doneAction!
+  doneAction: x doneAction := x!
+!
+
+!Linen methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Linen.
+    paramNames := #(#gate #attackTime #susLevel #releaseTime #doneAction).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    gate := 1.0. attackTime := 0.01. susLevel := 1.0. releaseTime := 1.0. doneAction := 0.0!
+!
+
+
+!Linen class methodsFor: 'instance creation'!
+  gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction
+    |u|
+    u := self new.
+    u gate: gate.
+    u attackTime: attackTime.
+    u susLevel: susLevel.
+    u releaseTime: releaseTime.
+    u doneAction: doneAction.
+    ^u!
+  gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction mul: mul ^(Linen gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction) * mul!
+  gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction mul: mul add: add ^(Linen gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction) * mul + add!
+  primaryFactoryMethod ^#gate:attackTime:susLevel:releaseTime:doneAction:!
+!
+
 UGen subclass: #LinExp
   instanceVariableNames: 'in srclo srchi dstlo dsthi'
   classVariableNames: ''
@@ -5798,6 +5848,57 @@ Pan2 comment: 'Two channel equal power pan.'!
   in: in pos: pos level: level mul: mul ^(Pan2 in: in pos: pos level: level) * mul!
   in: in pos: pos level: level mul: mul add: add ^(Pan2 in: in pos: pos level: level) * mul + add!
   primaryFactoryMethod ^#in:pos:level:!
+!
+
+UGen subclass: #PanAz
+  instanceVariableNames: 'in pos level width orientation'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+PanAz comment: 'Azimuth panner'!
+
+!PanAz methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  pos ^pos!
+  pos: x pos := x!
+  level ^level!
+  level: x level := x!
+  width ^width!
+  width: x width := x!
+  orientation ^orientation!
+  orientation: x orientation := x!
+!
+
+!PanAz methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #PanAz.
+    paramNames := #(#in #pos #level #width #orientation).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := nil.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. pos := 0.0. level := 1.0. width := 2.0. orientation := 0.5!
+!
+
+
+!PanAz class methodsFor: 'instance creation'!
+  numChan: numChan in: in pos: pos level: level width: width orientation: orientation
+    |u|
+    u := self new.
+    u numChan: numChan.
+    u in: in.
+    u pos: pos.
+    u level: level.
+    u width: width.
+    u orientation: orientation.
+    ^u!
+  numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul ^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul!
+  numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul add: add ^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul + add!
+  primaryFactoryMethod ^#numChan:in:pos:level:width:orientation:!
 !
 
 UGen subclass: #Phasor

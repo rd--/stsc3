@@ -179,6 +179,9 @@
   pan2: pos value: level
     ^Pan2 in: self pos: pos level: level
   !
+  panAz: pos value: level value: width value: orientation
+    ^PanAz in: self pos: pos level: level width: width orientation: orientation
+  !
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
   !
@@ -470,6 +473,9 @@
   pan2: pos value: level
     ^Pan2 in: self pos: pos level: level
   !
+  panAz: pos value: level value: width value: orientation
+    ^PanAz in: self pos: pos level: level width: width orientation: orientation
+  !
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
   !
@@ -757,6 +763,9 @@
   !
   line: end value: dur value: doneAction
     ^Line start: self end: end dur: dur doneAction: doneAction
+  !
+  linen: attackTime value: susLevel value: releaseTime value: doneAction
+    ^Linen gate: self attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction
   !
   linRand: hi value: minmax
     ^LinRand lo: self hi: hi minmax: minmax
