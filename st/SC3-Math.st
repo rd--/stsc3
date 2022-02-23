@@ -30,6 +30,9 @@
   midiCps
     ^self collect: [:x| x midiCps]
   !
+  dbAmp
+    ^self collect: [ :x| x dbAmp ]
+  !
 !
 
 !SequenceableCollection methodsFor: 'arithmetic'!
