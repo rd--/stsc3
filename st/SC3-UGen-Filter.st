@@ -62,6 +62,9 @@
   delay1
     ^Delay1 in: self
   !
+  delay2
+    ^Delay2 in: self
+  !
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
@@ -379,6 +382,9 @@
   !
   delay1
     ^Delay1 in: self
+  !
+  delay2
+    ^Delay2 in: self
   !
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime

@@ -44,7 +44,7 @@ ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur", "BufFrames","BufRateScale","BufRd","BufWr"
   ,"ClearBuf","Clip","ClipNoise","CoinGate", "CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","Delay1", "DelayC","DelayL", "DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty", "DWGPluckedStiff"
+  ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","Delay1", "Delay2","DelayC","DelayL", "DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty", "DWGPluckedStiff"
   ,"EnvGen","ExpRand"
   ,"FBSineL", "FBSineC", "FFT","Fold","Formant","Formlet","FOS","FreqShift", "FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"

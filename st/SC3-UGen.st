@@ -1701,6 +1701,44 @@ Delay1 comment: 'Single sample delay.'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #Delay2
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Delay2 comment: 'Two sample delay.'!
+
+!Delay2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!Delay2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Delay2.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!Delay2 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(Delay2 in: in) * mul!
+  in: in mul: mul add: add ^(Delay2 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #DelayC
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
