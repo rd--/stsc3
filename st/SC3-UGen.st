@@ -649,6 +649,44 @@ BRF comment: '2nd order Butterworth band reject filter.'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
+UGen subclass: #BRZ2
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BRZ2 comment: 'Two zero fixed midcut.'!
+
+!BRZ2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!BRZ2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BRZ2.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!BRZ2 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(BRZ2 in: in) * mul!
+  in: in mul: mul add: add ^(BRZ2 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #BrownNoise
   instanceVariableNames: ''
   classVariableNames: ''
@@ -2647,6 +2685,53 @@ Formlet comment: 'FOF-like filter.'!
   primaryFactoryMethod ^#in:freq:attacktime:decaytime:!
 !
 
+UGen subclass: #FOS
+  instanceVariableNames: 'in a0 a1 b1'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+FOS comment: 'First order filter section.'!
+
+!FOS methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  a0 ^a0!
+  a0: x a0 := x!
+  a1 ^a1!
+  a1: x a1 := x!
+  b1 ^b1!
+  b1: x b1 := x!
+!
+
+!FOS methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #FOS.
+    paramNames := #(#in #a0 #a1 #b1).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. a0 := 0.0. a1 := 0.0. b1 := 0.0!
+!
+
+
+!FOS class methodsFor: 'instance creation'!
+  in: in a0: a0 a1: a1 b1: b1
+    |u|
+    u := self new.
+    u in: in.
+    u a0: a0.
+    u a1: a1.
+    u b1: b1.
+    ^u!
+  in: in a0: a0 a1: a1 b1: b1 mul: mul ^(FOS in: in a0: a0 a1: a1 b1: b1) * mul!
+  in: in a0: a0 a1: a1 b1: b1 mul: mul add: add ^(FOS in: in a0: a0 a1: a1 b1: b1) * mul + add!
+  primaryFactoryMethod ^#in:a0:a1:b1:!
+!
+
 UGen subclass: #FreqShift
   instanceVariableNames: 'in freq phase'
   classVariableNames: ''
@@ -3316,6 +3401,44 @@ HPZ1 comment: 'Two point difference filter'!
     ^u!
   in: in mul: mul ^(HPZ1 in: in) * mul!
   in: in mul: mul add: add ^(HPZ1 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
+UGen subclass: #HPZ2
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+HPZ2 comment: 'Two zero fixed midcut.'!
+
+!HPZ2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!HPZ2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #HPZ2.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!HPZ2 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(HPZ2 in: in) * mul!
+  in: in mul: mul add: add ^(HPZ2 in: in) * mul + add!
   primaryFactoryMethod ^#in:!
 !
 
@@ -7267,6 +7390,59 @@ Slope comment: 'Slope of signal'!
   in: in mul: mul ^(Slope in: in) * mul!
   in: in mul: mul add: add ^(Slope in: in) * mul + add!
   primaryFactoryMethod ^#in:!
+!
+
+UGen subclass: #SOS
+  instanceVariableNames: 'in a0 a1 a2 b1 b2'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+SOS comment: 'Second order filter section (biquad).'!
+
+!SOS methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  a0 ^a0!
+  a0: x a0 := x!
+  a1 ^a1!
+  a1: x a1 := x!
+  a2 ^a2!
+  a2: x a2 := x!
+  b1 ^b1!
+  b1: x b1 := x!
+  b2 ^b2!
+  b2: x b2 := x!
+!
+
+!SOS methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #SOS.
+    paramNames := #(#in #a0 #a1 #a2 #b1 #b2).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. a0 := 0.0. a1 := 0.0. a2 := 0.0. b1 := 0.0. b2 := 0.0!
+!
+
+
+!SOS class methodsFor: 'instance creation'!
+  in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2
+    |u|
+    u := self new.
+    u in: in.
+    u a0: a0.
+    u a1: a1.
+    u a2: a2.
+    u b1: b1.
+    u b2: b2.
+    ^u!
+  in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 mul: mul ^(SOS in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2) * mul!
+  in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 mul: mul add: add ^(SOS in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2) * mul + add!
+  primaryFactoryMethod ^#in:a0:a1:a2:b1:b2:!
 !
 
 UGen subclass: #Stepper

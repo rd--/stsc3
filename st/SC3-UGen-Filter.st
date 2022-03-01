@@ -29,6 +29,9 @@
   brf: freq value: rq
     ^BRF in: self freq: freq rq: rq
   !
+  brz2
+    ^BRZ2 in: self
+  !
   bufWr: bufnum value: phase value: loop
     ^BufWr bufnum: bufnum phase: phase loop: loop inputArray: self
   !
@@ -80,6 +83,9 @@
   formlet: freq value: attacktime value: decaytime
     ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
   !
+  fos: a0 value: a1 value: b1
+    ^FOS in: self a0: a0 a1: a1 b1: b1
+  !
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
   !
@@ -97,6 +103,9 @@
   !
   hpz1
     ^HPZ1 in: self
+  !
+  hpz2
+    ^HPZ2 in: self
   !
   index: bufnum
     ^Index bufnum: bufnum in: self
@@ -226,6 +235,9 @@
   !
   slope
     ^Slope in: self
+  !
+  sos: a0 value: a1 value: a2 value: b1 value: b2
+    ^SOS in: self a0: a0 a1: a1 a2: a2 b1: b1 b2: b2
   !
   stepper: reset value: min value: max value: step value: resetval
     ^Stepper trig: self reset: reset min: min max: max step: step resetval: resetval
@@ -326,6 +338,9 @@
   brf: freq value: rq
     ^BRF in: self freq: freq rq: rq
   !
+  brz2
+    ^BRZ2 in: self
+  !
   bufWr: bufnum value: phase value: loop
     ^BufWr bufnum: bufnum phase: phase loop: loop inputArray: self
   !
@@ -377,6 +392,9 @@
   formlet: freq value: attacktime value: decaytime
     ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
   !
+  fos: a0 value: a1 value: b1
+    ^FOS in: self a0: a0 a1: a1 b1: b1
+  !
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
   !
@@ -394,6 +412,9 @@
   !
   hpz1
     ^HPZ1 in: self
+  !
+  hpz2
+    ^HPZ2 in: self
   !
   index: bufnum
     ^Index bufnum: bufnum in: self
@@ -523,6 +544,9 @@
   !
   slope
     ^Slope in: self
+  !
+  sos: a0 value: a1 value: a2 value: b1 value: b2
+    ^SOS in: self a0: a0 a1: a1 a2: a2 b1: b1 b2: b2
   !
   stepper: reset value: min value: max value: step value: resetval
     ^Stepper trig: self reset: reset min: min max: max step: step resetval: resetval
