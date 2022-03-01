@@ -263,6 +263,9 @@
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
   !
+  wrapIndex: bufnum
+    ^WrapIndex bufnum: bufnum in: self
+  !
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
   !
@@ -556,6 +559,9 @@
   !
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
+  !
+  wrapIndex: bufnum
+    ^WrapIndex bufnum: bufnum in: self
   !
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level

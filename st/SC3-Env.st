@@ -99,6 +99,15 @@ EnvSpec comment: 'Specification for a segmented envelope'!
   !
 !
 
+EnvSpec subclass: #Env
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'
+!
+
+Env comment: 'Alias for EnvSpec'!
+
 Object subclass: #EnvBuilder
   instanceVariableNames: ''
   classVariableNames: ''

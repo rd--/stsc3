@@ -374,7 +374,7 @@ XLn comment: 'Line generator'!
 
 !XLn class methodsFor: 'instance creation'!
   start: start end: end dur: dur
-      ^Line start: start end: end dur: dur doneAction: 0
+      ^XLine start: start end: end dur: dur doneAction: 0
   !
   primaryFactoryMethod ^#start:end:dur:!
 !
@@ -457,4 +457,15 @@ Tr1 comment: 'Trig1 with duration of one sample.'!
     ^Trig1 in: in dur: SampleDur new
   !
   primaryFactoryMethod ^#in:!
+!
+
+UGen subclass: #Osc1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Osc1 comment: 'An oscillator that reads through a table once.'!
+!Osc1 class methodsFor: 'instance creation'!
+  bufnum: bufnum dur: dur
+    | phase |
+    phase := Ln start: 0 end: (BufFrames bufnum: bufnum) - 1 dur: dur.
+    ^BufRd numChan: 1 bufnum: bufnum phase: phase loop: 0 interpolation: 2
+  !
+  primaryFactoryMethod ^#bufnum:dur:!
 !

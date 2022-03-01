@@ -8071,6 +8071,47 @@ Wrap comment: 'Wrap a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
+UGen subclass: #WrapIndex
+  instanceVariableNames: 'bufnum in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+WrapIndex comment: 'Index into a table with a signal.'!
+
+!WrapIndex methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+  in ^in!
+  in: x in := x!
+!
+
+!WrapIndex methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #WrapIndex.
+    paramNames := #(#bufnum #in).
+    mceNames := #().
+    ugenRate := #(1).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0. in := 0.0!
+!
+
+
+!WrapIndex class methodsFor: 'instance creation'!
+  bufnum: bufnum in: in
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    u in: in.
+    ^u!
+  bufnum: bufnum in: in mul: mul ^(WrapIndex bufnum: bufnum in: in) * mul!
+  bufnum: bufnum in: in mul: mul add: add ^(WrapIndex bufnum: bufnum in: in) * mul + add!
+  primaryFactoryMethod ^#bufnum:in:!
+!
+
 UGen subclass: #XFade2
   instanceVariableNames: 'inA inB pan level'
   classVariableNames: ''
