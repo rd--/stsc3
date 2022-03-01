@@ -1007,6 +1007,35 @@ Clip comment: 'Clip a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
+UGen subclass: #ClipNoise
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+ClipNoise comment: 'Clip Noise.'!
+
+
+!ClipNoise methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #ClipNoise.
+    paramNames := #().
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    !
+!
+
+
+!ClipNoise class methodsFor: 'instance creation'!
+  mul: mul ^(ClipNoise new) * mul!
+  mul: mul add: add ^(ClipNoise new) * mul + add!
+  primaryFactoryMethod ^#new!
+!
+
 UGen subclass: #CoinGate
   instanceVariableNames: 'prob in'
   classVariableNames: ''
@@ -5335,6 +5364,44 @@ LPZ1 comment: 'Two point average filter'!
   primaryFactoryMethod ^#in:!
 !
 
+UGen subclass: #LPZ2
+  instanceVariableNames: 'in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LPZ2 comment: 'Two zero fixed lowpass'!
+
+!LPZ2 methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+!
+
+!LPZ2 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LPZ2.
+    paramNames := #(#in).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0!
+!
+
+
+!LPZ2 class methodsFor: 'instance creation'!
+  in: in
+    |u|
+    u := self new.
+    u in: in.
+    ^u!
+  in: in mul: mul ^(LPZ2 in: in) * mul!
+  in: in mul: mul add: add ^(LPZ2 in: in) * mul + add!
+  primaryFactoryMethod ^#in:!
+!
+
 UGen subclass: #MantissaMask
   instanceVariableNames: 'in bits'
   classVariableNames: ''
@@ -5412,6 +5479,47 @@ MaxLocalBufs comment: 'LocalBuf count'!
   count: count mul: mul ^(MaxLocalBufs count: count) * mul!
   count: count mul: mul add: add ^(MaxLocalBufs count: count) * mul + add!
   primaryFactoryMethod ^#count:!
+!
+
+UGen subclass: #Median
+  instanceVariableNames: 'length in'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Median comment: 'Median filter.'!
+
+!Median methodsFor: 'accessing'!
+  length ^length!
+  length: x length := x!
+  in ^in!
+  in: x in := x!
+!
+
+!Median methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Median.
+    paramNames := #(#length #in).
+    mceNames := #().
+    ugenRate := #(1).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    length := 3.0. in := 0.0!
+!
+
+
+!Median class methodsFor: 'instance creation'!
+  length: length in: in
+    |u|
+    u := self new.
+    u length: length.
+    u in: in.
+    ^u!
+  length: length in: in mul: mul ^(Median length: length in: in) * mul!
+  length: length in: in mul: mul add: add ^(Median length: length in: in) * mul + add!
+  primaryFactoryMethod ^#length:in:!
 !
 
 UGen subclass: #ModDif
@@ -5841,6 +5949,47 @@ OnePole comment: 'One pole filter.'!
     ^u!
   in: in coef: coef mul: mul ^(OnePole in: in coef: coef) * mul!
   in: in coef: coef mul: mul add: add ^(OnePole in: in coef: coef) * mul + add!
+  primaryFactoryMethod ^#in:coef:!
+!
+
+UGen subclass: #OneZero
+  instanceVariableNames: 'in coef'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+OneZero comment: 'One zero filter.'!
+
+!OneZero methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  coef ^coef!
+  coef: x coef := x!
+!
+
+!OneZero methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #OneZero.
+    paramNames := #(#in #coef).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. coef := 0.5!
+!
+
+
+!OneZero class methodsFor: 'instance creation'!
+  in: in coef: coef
+    |u|
+    u := self new.
+    u in: in.
+    u coef: coef.
+    ^u!
+  in: in coef: coef mul: mul ^(OneZero in: in coef: coef) * mul!
+  in: in coef: coef mul: mul add: add ^(OneZero in: in coef: coef) * mul + add!
   primaryFactoryMethod ^#in:coef:!
 !
 

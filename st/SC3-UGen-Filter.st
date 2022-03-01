@@ -164,8 +164,14 @@
   lpz1
     ^LPZ1 in: self
   !
+  lpz2
+    ^LPZ2 in: self
+  !
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
+  !
+  median: length
+    ^Median length: length in: self
   !
   modDif: y value: mod
     ^ModDif x: self y: y mod: mod
@@ -181,6 +187,9 @@
   !
   onePole: coef
     ^OnePole in: self coef: coef
+  !
+  oneZero: coef
+    ^OneZero in: self coef: coef
   !
   out: bus
     ^Out bus: bus channelsArray: self
@@ -473,8 +482,14 @@
   lpz1
     ^LPZ1 in: self
   !
+  lpz2
+    ^LPZ2 in: self
+  !
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
+  !
+  median: length
+    ^Median length: length in: self
   !
   modDif: y value: mod
     ^ModDif x: self y: y mod: mod
@@ -490,6 +505,9 @@
   !
   onePole: coef
     ^OnePole in: self coef: coef
+  !
+  oneZero: coef
+    ^OneZero in: self coef: coef
   !
   out: bus
     ^Out bus: bus channelsArray: self
