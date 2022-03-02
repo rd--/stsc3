@@ -7,10 +7,10 @@ DmdFor { *new { arg dur, reset, level; ^Duty.ar(dur, reset, level, 0) } }
 TDmdFor { *new { arg dur, reset, level; ^TDuty.ar(dur, reset, level, 0, 0) } }
 
 BufRec { *new { arg bufnum, reset, inputArray; ^RecordBuf.ar(inputArray, bufnum, 0, 1, 0, 1, 1, reset, 0) } }
-BufAlloc { *new { arg numChannels, numFrames; ^LocalBuf.ir(numFrames, numChannels) } }
+BufAlloc { *new { arg numChannels, numFrames; ^LocalBuf.ir(numFrames, numChannels) } } // .clearBuf?
 
 DelayWrite { *new { arg bufnum, in; ^RecordBuf.ar([in], bufnum, 0, 1, 0, 1, 1, 1, 0) } }
-DelayTap { *new { arg bufnum, delayTime; ^PlayBuf.ar(1, bufnum, 1, 1, delayTime * BufSampleRate.kr(bufnum) * -1, 1, 0) } }
+DelayTap { *new { arg bufnum, delayTime; ^PlayBuf.ar(1, bufnum, 1, 1, BufDur.kr(bufnum) - delayTime * SampleRate.ir, 1, 0) } }
 
 InFb { *new { arg numChannels, bus; ^InFeedback.ar(bus, numChannels) } }
 
