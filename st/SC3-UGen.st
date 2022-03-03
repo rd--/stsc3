@@ -4882,6 +4882,62 @@ Latch comment: 'Sample and hold'!
   primaryFactoryMethod ^#in:trig:!
 !
 
+UGen subclass: #LatoocarfianC
+  instanceVariableNames: 'freq a b c d xi yi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LatoocarfianC comment: 'Latoocarfian chaotic generator'!
+
+!LatoocarfianC methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  b ^b!
+  b: x b := x!
+  c ^c!
+  c: x c := x!
+  d ^d!
+  d: x d := x!
+  xi ^xi!
+  xi: x xi := x!
+  yi ^yi!
+  yi: x yi := x!
+!
+
+!LatoocarfianC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LatoocarfianC.
+    paramNames := #(#freq #a #b #c #d #xi #yi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.0. b := 3.0. c := 0.5. d := 0.5. xi := 0.5. yi := 0.5!
+!
+
+
+!LatoocarfianC class methodsFor: 'instance creation'!
+  freq: freq a: a b: b c: c d: d xi: xi yi: yi
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u b: b.
+    u c: c.
+    u d: d.
+    u xi: xi.
+    u yi: yi.
+    ^u!
+  freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul ^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul!
+  freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul add: add ^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul + add!
+  primaryFactoryMethod ^#freq:a:b:c:d:xi:yi:!
+!
+
 UGen subclass: #LeakDC
   instanceVariableNames: 'in coef'
   classVariableNames: ''
@@ -4965,6 +5021,56 @@ Limiter comment: 'Peak limiter'!
   in: in level: level dur: dur mul: mul ^(Limiter in: in level: level dur: dur) * mul!
   in: in level: level dur: dur mul: mul add: add ^(Limiter in: in level: level dur: dur) * mul + add!
   primaryFactoryMethod ^#in:level:dur:!
+!
+
+UGen subclass: #LinCongC
+  instanceVariableNames: 'freq a c m xi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LinCongC comment: 'Linear congruential chaotic generator'!
+
+!LinCongC methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  a ^a!
+  a: x a := x!
+  c ^c!
+  c: x c := x!
+  m ^m!
+  m: x m := x!
+  xi ^xi!
+  xi: x xi := x!
+!
+
+!LinCongC methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LinCongC.
+    paramNames := #(#freq #a #c #m #xi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. a := 1.1. c := 0.13. m := 1.0. xi := 0.0!
+!
+
+
+!LinCongC class methodsFor: 'instance creation'!
+  freq: freq a: a c: c m: m xi: xi
+    |u|
+    u := self new.
+    u freq: freq.
+    u a: a.
+    u c: c.
+    u m: m.
+    u xi: xi.
+    ^u!
+  freq: freq a: a c: c m: m xi: xi mul: mul ^(LinCongC freq: freq a: a c: c m: m xi: xi) * mul!
+  freq: freq a: a c: c m: m xi: xi mul: mul add: add ^(LinCongC freq: freq a: a c: c m: m xi: xi) * mul + add!
+  primaryFactoryMethod ^#freq:a:c:m:xi:!
 !
 
 UGen subclass: #Line

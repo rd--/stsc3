@@ -815,6 +815,12 @@
   lfTri: iphase
     ^LFTri freq: self iphase: iphase
   !
+  latoocarfianC: a value: b value: c value: d value: xi value: yi
+    ^LatoocarfianC freq: self a: a b: b c: c d: d xi: xi yi: yi
+  !
+  linCongC: a value: c value: m value: xi
+    ^LinCongC freq: self a: a c: c m: m xi: xi
+  !
   line: end value: dur value: doneAction
     ^Line start: self end: end dur: dur doneAction: doneAction
   !
