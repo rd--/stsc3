@@ -42,23 +42,23 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur", "BufFrames","BufRateScale","BufRd","BufWr"
-  ,"ClearBuf","Clip","ClipNoise","CoinGate", "CombC","CombL","CombN","ControlDur","ControlRate", "Convolution","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","DC", "Decay","Decay2","DegreeToKey","Delay1", "Delay2","DelayC","DelayL", "DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty", "DWGPluckedStiff"
+  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufWr"
+  ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","ControlDur","ControlRate","Convolution","Crackle","CuspL"
+  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff"
   ,"EnvGen","ExpRand"
-  ,"FBSineL", "FBSineC", "FFT","Fold","Formant","Formlet","FOS","FreqShift", "FSinOsc","FreeVerb","FreeVerb2"
+  ,"FBSineL","FBSineC","FFT","Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"
-  ,"Hasher","HenonL", "HenonC", "HPF","HPZ1","HPZ2"
-  ,"IFFT","Impulse","In","Index", "IndexInBetween", "InFeedback","InRange","IRand","Integrator"
-  ,"K2A","KeyState", "Klang","Klank"
-  ,"LFBrownNoise1", "LFClipNoise", "LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LatoocarfianC","LeakDC","Limiter","LinCongC","Line","Linen","LinExp","LinPan2","LinRand", "LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1","LPZ2"
-  ,"MantissaMask","MaxLocalBufs", "Median","ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
-  ,"Normalizer", "NRand","NumOutputBuses"
-  ,"OnePole","OneZero","Osc", "Out"
-  ,"Pan2","PanAz", "Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
+  ,"Hasher","HenonL","HenonC","HPF","HPZ1","HPZ2"
+  ,"IFFT","Impulse","In","Index","IndexInBetween","InFeedback","InRange","IRand","Integrator"
+  ,"K2A","KeyState","Klang","Klank"
+  ,"LFBrownNoise1","LFClipNoise","LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
+  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LatoocarfianC","LeakDC","Limiter","LinCongC","Line","Linen","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1","LPZ2"
+  ,"MantissaMask","MaxLocalBufs","Median","ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
+  ,"Normalizer","NRand","NumOutputBuses"
+  ,"OnePole","OneZero","Osc","Out"
+  ,"Pan2","PanAz","PanB","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
-  ,"QuadL", "QuadC"
+  ,"QuadL","QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax"
   ,"Rotate2"
   ,"SampleDur","SampleRate","Saw","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Stepper","Sweep","SyncSaw"
@@ -75,11 +75,11 @@ ugen =
   ,"VOSIM" -- sc3-plugins/VOSIM
   ,"MiRings" -- mi-UGens
   ,"AnalogFoldOsc" -- portedplugins
-  ,"RCD", "SCM" -- vb_UGens
-  ,"DustRange", "ExpRandN","LinRandN", "RandN" -- sc3-rdu
+  ,"RCD","SCM" -- vb_UGens
+  ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
   ,"TScramble" -- sc3-rdu
-  ,"DX7", "RDX7Env", "ObxdFilter", "SvfBp", "SvfHp", "SvfLp" -- sc3-rdu
-  ,"Bezier", "Freezer", "ShufflerB"
+  ,"DX7","RDX7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
+  ,"Bezier","Freezer","ShufflerB"
   ]
 
 is_osc :: Record.U -> Bool

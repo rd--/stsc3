@@ -854,6 +854,9 @@
   osc: freq value: phase
     ^Osc bufnum: self freq: freq phase: phase
   !
+  panB: azimuth value: elevation value: gain
+    ^PanB in: self azimuth: azimuth elevation: elevation gain: gain
+  !
   phasor: rate value: start value: end value: resetPos
     ^Phasor trig: self rate: rate start: start end: end resetPos: resetPos
   !

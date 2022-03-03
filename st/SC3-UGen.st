@@ -6317,6 +6317,53 @@ PanAz comment: 'Azimuth panner'!
   primaryFactoryMethod ^#numChan:in:pos:level:width:orientation:!
 !
 
+UGen subclass: #PanB
+  instanceVariableNames: 'in azimuth elevation gain'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+PanB comment: 'Ambisonic B-format panner.'!
+
+!PanB methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  azimuth ^azimuth!
+  azimuth: x azimuth := x!
+  elevation ^elevation!
+  elevation: x elevation := x!
+  gain ^gain!
+  gain: x gain := x!
+!
+
+!PanB methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #PanB.
+    paramNames := #(#in #azimuth #elevation #gain).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 4.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. azimuth := 0.0. elevation := 0.0. gain := 1.0!
+!
+
+
+!PanB class methodsFor: 'instance creation'!
+  in: in azimuth: azimuth elevation: elevation gain: gain
+    |u|
+    u := self new.
+    u in: in.
+    u azimuth: azimuth.
+    u elevation: elevation.
+    u gain: gain.
+    ^u!
+  in: in azimuth: azimuth elevation: elevation gain: gain mul: mul ^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul!
+  in: in azimuth: azimuth elevation: elevation gain: gain mul: mul add: add ^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul + add!
+  primaryFactoryMethod ^#in:azimuth:elevation:gain:!
+!
+
 UGen subclass: #Phasor
   instanceVariableNames: 'trig rate start end resetPos'
   classVariableNames: ''
