@@ -7299,6 +7299,47 @@ RunningMax comment: 'Track maximum level.'!
   primaryFactoryMethod ^#in:trig:!
 !
 
+UGen subclass: #RunningSum
+  instanceVariableNames: 'in numsamp'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+RunningSum comment: 'Running sum over n frames'!
+
+!RunningSum methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  numsamp ^numsamp!
+  numsamp: x numsamp := x!
+!
+
+!RunningSum methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #RunningSum.
+    paramNames := #(#in #numsamp).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. numsamp := 40.0!
+!
+
+
+!RunningSum class methodsFor: 'instance creation'!
+  in: in numsamp: numsamp
+    |u|
+    u := self new.
+    u in: in.
+    u numsamp: numsamp.
+    ^u!
+  in: in numsamp: numsamp mul: mul ^(RunningSum in: in numsamp: numsamp) * mul!
+  in: in numsamp: numsamp mul: mul add: add ^(RunningSum in: in numsamp: numsamp) * mul + add!
+  primaryFactoryMethod ^#in:numsamp:!
+!
+
 UGen subclass: #Rotate2
   instanceVariableNames: 'x y pos'
   classVariableNames: ''

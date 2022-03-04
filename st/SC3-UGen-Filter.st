@@ -233,6 +233,9 @@
   runningMax: trig
     ^RunningMax in: self trig: trig
   !
+  runningSum: numsamp
+    ^RunningSum in: self numsamp: numsamp
+  !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
   !
@@ -553,6 +556,9 @@
   !
   runningMax: trig
     ^RunningMax in: self trig: trig
+  !
+  runningSum: numsamp
+    ^RunningSum in: self numsamp: numsamp
   !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos

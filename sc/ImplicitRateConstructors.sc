@@ -8,6 +8,7 @@
 + BufFrames { *new { arg bufnum = 0.0; ^BufFrames.performList('control'.rateToSelector, [bufnum]) } }
 + BufRateScale { *new { arg bufnum = 0.0; ^BufRateScale.performList('control'.rateToSelector, [bufnum]) } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.performList('audio'.rateToSelector, [numChannels, bufnum, phase, loop, interpolation]) } }
++ ClipNoise { *new { ^ClipNoise.performList('audio'.rateToSelector, []) } }
 + ControlDur { *new { ^ControlDur.performList('scalar'.rateToSelector, []) } }
 + ControlRate { *new { ^ControlRate.performList('scalar'.rateToSelector, []) } }
 + Convolution { *new { arg in = 0.0, kernel = 0.0, framesize = 512.0; ^Convolution.performList('audio'.rateToSelector, [in, kernel, framesize]) } }
@@ -48,13 +49,17 @@
 + LFPulse { *new { arg freq = 440.0, iphase = 0.0, width = 0.5; ^LFPulse.performList('audio'.rateToSelector, [freq, iphase, width]) } }
 + LFSaw { *new { arg freq = 440.0, iphase = 0.0; ^LFSaw.performList('audio'.rateToSelector, [freq, iphase]) } }
 + LFTri { *new { arg freq = 440.0, iphase = 0.0; ^LFTri.performList('audio'.rateToSelector, [freq, iphase]) } }
++ LatoocarfianC { *new { arg freq = 22050.0, a = 1.0, b = 3.0, c = 0.5, d = 0.5, xi = 0.5, yi = 0.5; ^LatoocarfianC.performList('audio'.rateToSelector, [freq, a, b, c, d, xi, yi]) } }
++ LinCongC { *new { arg freq = 22050.0, a = 1.1, c = 0.13, m = 1.0, xi = 0.0; ^LinCongC.performList('audio'.rateToSelector, [freq, a, c, m, xi]) } }
 + Line { *new { arg start = 0.0, end = 1.0, dur = 1.0, doneAction = 0.0; ^Line.performList('audio'.rateToSelector, [start, end, dur, doneAction]) } }
++ Linen { *new { arg gate = 1.0, attackTime = 1.0e-2, susLevel = 1.0, releaseTime = 1.0, doneAction = 0.0; ^Linen.performList('control'.rateToSelector, [gate, attackTime, susLevel, releaseTime, doneAction]) } }
 + LocalIn { *new { arg numChannels = 1.0, default = 0.0; ^LocalIn.performList('audio'.rateToSelector, [numChannels, default]) } }
 + MouseButton { *new { arg minval = 0.0, maxval = 1.0, lag = 0.2; ^MouseButton.performList('control'.rateToSelector, [minval, maxval, lag]) } }
 + MouseX { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseX.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
 + MouseY { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseY.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
 + NumOutputBuses { *new { ^NumOutputBuses.performList('scalar'.rateToSelector, []) } }
 + Osc { *new { arg bufnum = 0.0, freq = 440.0, phase = 0.0; ^Osc.performList('audio'.rateToSelector, [bufnum, freq, phase]) } }
++ PanB { *new { arg in = 0.0, azimuth = 0.0, elevation = 0.0, gain = 1.0; ^PanB.performList('audio'.rateToSelector, [in, azimuth, elevation, gain]) } }
 + Phasor { *new { arg trig = 0.0, rate = 1.0, start = 0.0, end = 1.0, resetPos = 0.0; ^Phasor.performList('audio'.rateToSelector, [trig, rate, start, end, resetPos]) } }
 + PinkNoise { *new { ^PinkNoise.performList('audio'.rateToSelector, []) } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }
