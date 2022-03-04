@@ -287,6 +287,7 @@ Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString         // Mon Apr 12 14:57:
 
 'Dictionary'
 
+Dictionary.superclass == Set                                // dictionaries are sets
 d = Dictionary.new(4)                                       // new empty dictionary
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence
@@ -306,6 +307,7 @@ d.values.sort({ arg i, j; i <= j })                         // list of values at
 
 'Environment'
 
+Environment.superclass == IdentityDictionary                // environments are dictionaries
 Object.classVarNames.includes('currentEnvironment') == true // currentEnvironment is a class variable of Object
 'key'.envirPut('value') == 'value'                          // put 'key' -> 'value' into currentEnvironment
 'key'.envirGet == 'value'                                   // lookup 'key' in currentEnvironment
@@ -334,6 +336,23 @@ h.value == 9                                                // => 3 * 3 = 9
 0.1 * 3.0 == 0.3 == false                                   // general floating point math
 1.0 + 1.0 + 1.0 == 3.0 == true                              // integral floating point math
 0.1 + 0.1 + 0.1 == 0.3 == false                             // general floating point math
+
+'IdentityDictionary'
+
+IdentityDictionary.superclass == Dictionary                 // identity dictionaries are dictionaries
+d = IdentityDictionary.newFrom(['i', 1, 'j', 2])            // new dictionary from array
+d.size == 2                                                 // number of entries
+c = IdentityDictionary.new                                  // new empty dictionary
+c.proto = d                                                 // there is a proto variable
+c.at('i') == 1                                              // lookup searches proto
+c.size == 0                                                 // size does not include proto
+c.parent = IdentityDictionary.newFrom(['j', -2, 'k', -3])   // there is a parent variable
+c.at('j') == 2                                              // lookup is in proto before parent
+c.at('k') == -3                                             // lookup is in parent after proto
+c.put('i', 'I')                                             // at & put protocol
+c.at('i') == 'I'                                            // lookup is at self before proto
+c.keys == Set.newFrom(['i'])                                // only "local" elements are considered
+c.collect({ arg item; item.postln; nil }).at('j') == 2      // only "local" elements, parent and proto are copied
 
 'Interpreter'
 
