@@ -304,6 +304,28 @@ d.occurrencesOf(3) == 1                                     // number of occuren
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
 
+'Environment'
+
+Object.classVarNames.includes('currentEnvironment') == true // currentEnvironment is a class variable of Object
+'key'.envirPut('value') == 'value'                          // put 'key' -> 'value' into currentEnvironment
+'key'.envirGet == 'value'                                   // lookup 'key' in currentEnvironment
+f = { 'i'.envirGet + 'j'.envirGet }                         // function to lookup and sum i and j
+g = { arg result; result.errorString }                      // function to retrieve error message
+{ f.value }.try(g)                                          // are i and j in currentEnvironment and non nil?
+e = Environment.newFrom(['i', 4, 'j', 5] )                  // new environment with 'i' -> 4 and 'j'-> 5
+e.use(f) == 9                                               // evaluate f with currentEnvironment of e => 4 + 5 = 9
+c = Environment.new()                                       // new empty environment
+{ c.use(f) }.try(g)                                         // i and j aren't in c, => nil + nil = error
+c.parent = e                                                // set e as parent of c, c is child of e
+c.use(f) == 9                                               // c is empty, look through c into e => 4 + 5 = 9
+c.put('j', 7)                                               // set j in c
+c.use(f) == 11                                              // i from e and j from c => 4 + 7 = 11
+h = { ~i * ~j }                                             // ~i is syntax for 'i'.envirGet, multiply i and j
+e.use(h) == 20                                              // => 4 * 5 = 20
+c.use(h) == 28                                              // => 4 * 7 = 28
+~i = ~j = 3                                                 // ~i = ... is syntax for 'i'.envirPut(...)
+h.value == 9                                                // => 3 * 3 = 9
+
 'Floating point'
 
 1.0 * 3.0 > 3.0 == false                                    // integral floating point math

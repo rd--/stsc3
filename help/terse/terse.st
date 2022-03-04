@@ -162,3 +162,19 @@ nil error: 'Reason'                                         "error with indicate
 nil shouldNotImplement                                      "flag message should not be implemented"
 nil subclassResponsibility                                  "flag message as abstract"
 nil primitiveFailed                                         "system primitive failed"
+
+'Methods'
+
+(String respondsTo: #size) = true                           "does an object implement a selector"
+(Set allSelectors) size                                     "get all selectors an object responds to"
+Array lookupSelector: #at:                                  "get method implementing selector, may be in superclass"
+(Float compiledMethodAt: #sqrt)                             "get method implementing selector, must be in class"
+(Array lookupSelector: #at:put:) class = CompiledMethod     "the object retrieved is a compiled method"
+Number sourceCodeAt: #+                                     "get the source code for the selector"
+
+'Class hierachy'
+
+Integer superclass                                          "discover the superclass of a class"
+Object allInstances                                         "get an array of all instances of a class"
+Array allSuperclasses                                       "get sequence of all superclasses of a class"
+(Set withAllSuperclasses) size                              "an ordered collection of a class and it's parents"
