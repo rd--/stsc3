@@ -8,6 +8,7 @@
 + BufFrames { *new { arg bufnum = 0.0; ^BufFrames.performList('control'.rateToSelector, [bufnum]) } }
 + BufRateScale { *new { arg bufnum = 0.0; ^BufRateScale.performList('control'.rateToSelector, [bufnum]) } }
 + BufRd { *new { arg numChannels = 1.0, bufnum = 0.0, phase = 0.0, loop = 1.0, interpolation = 2.0; ^BufRd.performList('audio'.rateToSelector, [numChannels, bufnum, phase, loop, interpolation]) } }
++ BufSampleRate { *new { arg bufnum = 0.0; ^BufSampleRate.performList('control'.rateToSelector, [bufnum]) } }
 + ClipNoise { *new { ^ClipNoise.performList('audio'.rateToSelector, []) } }
 + ControlDur { *new { ^ControlDur.performList('scalar'.rateToSelector, []) } }
 + ControlRate { *new { ^ControlRate.performList('scalar'.rateToSelector, []) } }

@@ -95,6 +95,9 @@
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
   !
+  gate: trig
+    ^Gate in: self trig: trig
+  !
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
   !
@@ -203,6 +206,9 @@
   panAz: pos value: level value: width value: orientation
     ^PanAz in: self pos: pos level: level width: width orientation: orientation
   !
+  peakFollower: decay
+    ^PeakFollower in: self decay: decay
+  !
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
   !
@@ -238,6 +244,9 @@
   !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
+  !
+  schmidt: lo value: hi
+    ^Schmidt in: self lo: lo hi: hi
   !
   select: array
     ^Select which: self array: array
@@ -419,6 +428,9 @@
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
   !
+  gate: trig
+    ^Gate in: self trig: trig
+  !
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
   !
@@ -527,6 +539,9 @@
   panAz: pos value: level value: width value: orientation
     ^PanAz in: self pos: pos level: level width: width orientation: orientation
   !
+  peakFollower: decay
+    ^PeakFollower in: self decay: decay
+  !
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
   !
@@ -562,6 +577,9 @@
   !
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
+  !
+  schmidt: lo value: hi
+    ^Schmidt in: self lo: lo hi: hi
   !
   select: array
     ^Select which: self array: array
@@ -670,6 +688,9 @@
   !
   bufRd: phase value: loop value: interpolation
     ^BufRd bufnum: self phase: phase loop: loop interpolation: interpolation
+  !
+  bufSampleRate
+    ^BufSampleRate bufnum: self
   !
   clearBuf
     ^ClearBuf buf: self

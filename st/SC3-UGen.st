@@ -878,6 +878,44 @@ BufRd comment: 'Buffer reading oscillator.'!
   primaryFactoryMethod ^#numChan:bufnum:phase:loop:interpolation:!
 !
 
+UGen subclass: #BufSampleRate
+  instanceVariableNames: 'bufnum'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BufSampleRate comment: 'Buffer sample rate.'!
+
+!BufSampleRate methodsFor: 'accessing'!
+  bufnum ^bufnum!
+  bufnum: x bufnum := x!
+!
+
+!BufSampleRate methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BufSampleRate.
+    paramNames := #(#bufnum).
+    mceNames := #().
+    ugenRate := #kr.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    bufnum := 0.0!
+!
+
+
+!BufSampleRate class methodsFor: 'instance creation'!
+  bufnum: bufnum
+    |u|
+    u := self new.
+    u bufnum: bufnum.
+    ^u!
+  bufnum: bufnum mul: mul ^(BufSampleRate bufnum: bufnum) * mul!
+  bufnum: bufnum mul: mul add: add ^(BufSampleRate bufnum: bufnum) * mul + add!
+  primaryFactoryMethod ^#bufnum:!
+!
+
 UGen subclass: #BufWr
   instanceVariableNames: 'bufnum phase loop inputArray'
   classVariableNames: ''
@@ -2979,6 +3017,47 @@ FreeVerb2 comment: 'A two-channel reverb'!
   in: in in2: in2 mix: mix room: room damp: damp mul: mul ^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul!
   in: in in2: in2 mix: mix room: room damp: damp mul: mul add: add ^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul + add!
   primaryFactoryMethod ^#in:in2:mix:room:damp:!
+!
+
+UGen subclass: #Gate
+  instanceVariableNames: 'in trig'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Gate comment: 'Gate or hold.'!
+
+!Gate methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  trig ^trig!
+  trig: x trig := x!
+!
+
+!Gate methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Gate.
+    paramNames := #(#in #trig).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. trig := 0.0!
+!
+
+
+!Gate class methodsFor: 'instance creation'!
+  in: in trig: trig
+    |u|
+    u := self new.
+    u in: in.
+    u trig: trig.
+    ^u!
+  in: in trig: trig mul: mul ^(Gate in: in trig: trig) * mul!
+  in: in trig: trig mul: mul add: add ^(Gate in: in trig: trig) * mul + add!
+  primaryFactoryMethod ^#in:trig:!
 !
 
 UGen subclass: #Gendy1
@@ -6364,6 +6443,47 @@ PanB comment: 'Ambisonic B-format panner.'!
   primaryFactoryMethod ^#in:azimuth:elevation:gain:!
 !
 
+UGen subclass: #PeakFollower
+  instanceVariableNames: 'in decay'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+PeakFollower comment: 'Track peak signal amplitude.'!
+
+!PeakFollower methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  decay ^decay!
+  decay: x decay := x!
+!
+
+!PeakFollower methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #PeakFollower.
+    paramNames := #(#in #decay).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. decay := 0.999!
+!
+
+
+!PeakFollower class methodsFor: 'instance creation'!
+  in: in decay: decay
+    |u|
+    u := self new.
+    u in: in.
+    u decay: decay.
+    ^u!
+  in: in decay: decay mul: mul ^(PeakFollower in: in decay: decay) * mul!
+  in: in decay: decay mul: mul add: add ^(PeakFollower in: in decay: decay) * mul + add!
+  primaryFactoryMethod ^#in:decay:!
+!
+
 UGen subclass: #Phasor
   instanceVariableNames: 'trig rate start end resetPos'
   classVariableNames: ''
@@ -7478,6 +7598,50 @@ Saw comment: 'Band limited sawtooth.'!
   freq: freq mul: mul ^(Saw freq: freq) * mul!
   freq: freq mul: mul add: add ^(Saw freq: freq) * mul + add!
   primaryFactoryMethod ^#freq:!
+!
+
+UGen subclass: #Schmidt
+  instanceVariableNames: 'in lo hi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Schmidt comment: 'Schmidt trigger.'!
+
+!Schmidt methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  lo ^lo!
+  lo: x lo := x!
+  hi ^hi!
+  hi: x hi := x!
+!
+
+!Schmidt methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Schmidt.
+    paramNames := #(#in #lo #hi).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. lo := 0.0. hi := 1.0!
+!
+
+
+!Schmidt class methodsFor: 'instance creation'!
+  in: in lo: lo hi: hi
+    |u|
+    u := self new.
+    u in: in.
+    u lo: lo.
+    u hi: hi.
+    ^u!
+  in: in lo: lo hi: hi mul: mul ^(Schmidt in: in lo: lo hi: hi) * mul!
+  in: in lo: lo hi: hi mul: mul add: add ^(Schmidt in: in lo: lo hi: hi) * mul + add!
+  primaryFactoryMethod ^#in:lo:hi:!
 !
 
 UGen subclass: #Select

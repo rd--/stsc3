@@ -30,6 +30,7 @@
 + FOS { *new { arg in = 0.0, a0 = 0.0, a1 = 0.0, b1 = 0.0;^FOS.performList(in.rate.rateToSelector, [in, a0, a1, b1]) } }
 + FreeVerb { *new { arg in = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb.performList(in.rate.rateToSelector, [in, mix, room, damp]) } }
 + FreeVerb2 { *new { arg in = 0.0, in2 = 0.0, mix = 0.33, room = 0.5, damp = 0.5;^FreeVerb2.performList(in.rate.rateToSelector, [in, in2, mix, room, damp]) } }
++ Gate { *new { arg in = 0.0, trig = 0.0;^Gate.performList(in.rate.rateToSelector, [in, trig]) } }
 + GVerb { *new { arg in = 0.0, roomsize = 10.0, revtime = 3.0, damping = 0.5, inputbw = 0.5, spread = 15.0, drylevel = 1.0, earlyreflevel = 0.7, taillevel = 0.5, maxroomsize = 300.0;^GVerb.performList(in.rate.rateToSelector, [in, roomsize, revtime, damping, inputbw, spread, drylevel, earlyreflevel, taillevel, maxroomsize]) } }
 + Hasher { *new { arg in = 0.0;^Hasher.performList(in.rate.rateToSelector, [in]) } }
 + HPF { *new { arg in = 0.0, freq = 440.0;^HPF.performList(in.rate.rateToSelector, [in, freq]) } }
@@ -65,6 +66,7 @@
 + Out { *new { arg bus = 0.0, channelsArray = 0.0;^Out.performList(channelsArray.rate.rateToSelector, [bus, channelsArray]) } }
 + Pan2 { *new { arg in = 0.0, pos = 0.0, level = 1.0;^Pan2.performList(in.rate.rateToSelector, [in, pos, level]) } }
 + PanAz { *new { arg in = 0.0, pos = 0.0, level = 1.0, width = 2.0, orientation = 0.5;^PanAz.performList(in.rate.rateToSelector, [in, pos, level, width, orientation]) } }
++ PeakFollower { *new { arg in = 0.0, decay = 0.999;^PeakFollower.performList(in.rate.rateToSelector, [in, decay]) } }
 + PitchShift { *new { arg in = 0.0, windowSize = 0.2, pitchRatio = 1.0, pitchDispersion = 0.0, timeDispersion = 0.0;^PitchShift.performList(in.rate.rateToSelector, [in, windowSize, pitchRatio, pitchDispersion, timeDispersion]) } }
 + Pluck { *new { arg in = 0.0, trig = 1.0, maxdelaytime = 0.2, delaytime = 0.2, decaytime = 1.0, coef = 0.5;^Pluck.performList(in.rate.rateToSelector, [in, trig, maxdelaytime, delaytime, decaytime, coef]) } }
 + PulseCount { *new { arg trig = 0.0, reset = 0.0;^PulseCount.performList(trig.rate.rateToSelector, [trig, reset]) } }
@@ -77,6 +79,7 @@
 + RunningMax { *new { arg in = 0.0, trig = 0.0;^RunningMax.performList(in.rate.rateToSelector, [in, trig]) } }
 + RunningSum { *new { arg in = 0.0, numsamp = 40.0;^RunningSum.performList(in.rate.rateToSelector, [in, numsamp]) } }
 + Rotate2 { *new { arg x = 0.0, y = 0.0, pos = 0.0;^Rotate2.performList(x.rate.rateToSelector, [x, y, pos]) } }
++ Schmidt { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Schmidt.performList(in.rate.rateToSelector, [in, lo, hi]) } }
 + SetResetFF { *new { arg trig = 0.0, reset = 0.0;^SetResetFF.performList(trig.rate.rateToSelector, [trig, reset]) } }
 + Slew { *new { arg in = 0.0, up = 1.0, dn = 1.0;^Slew.performList(in.rate.rateToSelector, [in, up, dn]) } }
 + Slope { *new { arg in = 0.0;^Slope.performList(in.rate.rateToSelector, [in]) } }
