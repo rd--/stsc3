@@ -1,5 +1,5 @@
 // BufRd ; phasor as phase input ; mono sound file ; multiple voices
-var buf = SfAcquire("crotale-d6", 1, [1]).first;
+var buf = SfAcquire("crotale-d6", 1, 1);
 {
     var tr = Impulse(2 ** Rand(1, 3) / BufDur(buf), 0).kr;
     var mnn = TIRand(-3, 0, tr) * 12 + TChoose(tr, [0, 2.1, 4.9, 7, 9.2]);

@@ -14,6 +14,7 @@
   ampDb
     "Linear amplitude to decibels"
     ^(self log: 10) * 20
+  !
 !
 
 !Float methodsFor: 'arithmetic'!

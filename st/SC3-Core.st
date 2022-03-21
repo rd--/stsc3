@@ -510,8 +510,8 @@ SC3 comment: 'SuperCollider3'!
   reset
     'hsc3-scsynth reset' systemCommand
   !
-  playNamedGraph: graphFileName
-    SC3 playFile: (SC3 stsc3HelpGraphFile: graphFileName).
+  playNamedGraph: graphName
+    SC3 playFile: (SC3 stsc3HelpGraphFile: (graphName , '.st'))
   !
 !
 

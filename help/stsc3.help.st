@@ -23,6 +23,11 @@ SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
 WhiteNoise new hPZ1 pan2: 0 level: 0.05
 WhiteNoise new pan2: (SinOsc freq: 0.1 phase: 0) level: 0.05
 
+"Klank"
+
+(KlankSpec freq: #(220 330 440) amp: nil time: nil) = #(220 1 1 330 1 1 440 1 1)
+#((220 330 440) nil nil) asKlangSpec = #(220 1 1 330 1 1 440 1 1)
+
 "File I/O - Text - Squeak, Gnu, Cuis"
 
 '/tmp/str.text' writeTextFile: [:fd | 5.0 asString putOn: fd].
