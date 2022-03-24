@@ -523,6 +523,53 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
+UGen subclass: #BPeakEQ
+  instanceVariableNames: 'in freq rq db'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+BPeakEQ comment: 'Parametric equalizer'!
+
+!BPeakEQ methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  freq ^freq!
+  freq: x freq := x!
+  rq ^rq!
+  rq: x rq := x!
+  db ^db!
+  db: x db := x!
+!
+
+!BPeakEQ methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #BPeakEQ.
+    paramNames := #(#in #freq #rq #db).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. freq := 1200.0. rq := 1.0. db := 0.0!
+!
+
+
+!BPeakEQ class methodsFor: 'instance creation'!
+  in: in freq: freq rq: rq db: db
+    |u|
+    u := self new.
+    u in: in.
+    u freq: freq.
+    u rq: rq.
+    u db: db.
+    ^u!
+  in: in freq: freq rq: rq db: db mul: mul ^(BPeakEQ in: in freq: freq rq: rq db: db) * mul!
+  in: in freq: freq rq: rq db: db mul: mul add: add ^(BPeakEQ in: in freq: freq rq: rq db: db) * mul + add!
+  primaryFactoryMethod ^#in:freq:rq:db:!
+!
+
 UGen subclass: #BPF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
@@ -8717,6 +8764,53 @@ Vibrato comment: 'The Vibrato oscillator models a slow frequency modulation.'!
   freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul ^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul!
   freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul add: add ^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul + add!
   primaryFactoryMethod ^#freq:rate:depth:delay:onset:rateVariation:depthVariation:iphase:trig:!
+!
+
+UGen subclass: #WaveLoss
+  instanceVariableNames: 'in drop outof mode'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+WaveLoss comment: 'Lose bits of your waves'!
+
+!WaveLoss methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  drop ^drop!
+  drop: x drop := x!
+  outof ^outof!
+  outof: x outof := x!
+  mode ^mode!
+  mode: x mode := x!
+!
+
+!WaveLoss methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #WaveLoss.
+    paramNames := #(#in #drop #outof #mode).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. drop := 20.0. outof := 40.0. mode := 1.0!
+!
+
+
+!WaveLoss class methodsFor: 'instance creation'!
+  in: in drop: drop outof: outof mode: mode
+    |u|
+    u := self new.
+    u in: in.
+    u drop: drop.
+    u outof: outof.
+    u mode: mode.
+    ^u!
+  in: in drop: drop outof: outof mode: mode mul: mul ^(WaveLoss in: in drop: drop outof: outof mode: mode) * mul!
+  in: in drop: drop outof: outof mode: mode mul: mul add: add ^(WaveLoss in: in drop: drop outof: outof mode: mode) * mul + add!
+  primaryFactoryMethod ^#in:drop:outof:mode:!
 !
 
 UGen subclass: #WhiteNoise

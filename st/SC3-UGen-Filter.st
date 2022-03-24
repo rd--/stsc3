@@ -20,6 +20,9 @@
   bLowPass: freq value: rq
     ^BLowPass in: self freq: freq rq: rq
   !
+  bPeakEQ: freq value: rq value: db
+    ^BPeakEQ in: self freq: freq rq: rq db: db
+  !
   bpf: freq value: rq
     ^BPF in: self freq: freq rq: rq
   !
@@ -352,6 +355,9 @@
   !
   bLowPass: freq value: rq
     ^BLowPass in: self freq: freq rq: rq
+  !
+  bPeakEQ: freq value: rq value: db
+    ^BPeakEQ in: self freq: freq rq: rq db: db
   !
   bpf: freq value: rq
     ^BPF in: self freq: freq rq: rq
@@ -937,6 +943,9 @@
   !
   vibrato: rate value: depth value: delay value: onset value: rateVariation value: depthVariation value: iphase value: trig
     ^Vibrato freq: self rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig
+  !
+  waveLoss: drop value: outof value: mode
+    ^WaveLoss in: self drop: drop outof: outof mode: mode
   !
   xLine: end value: dur value: doneAction
     ^XLine start: self end: end dur: dur doneAction: doneAction

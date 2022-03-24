@@ -42,7 +42,7 @@ binop =
 ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
+  ,"Balance2","BBandPass","BBandStop","Blip","BlockSize","BLowPass","BPeakEQ","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
   ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","ControlDur","ControlRate","Convolution","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff"
   ,"EnvGen","ExpRand"
@@ -64,7 +64,7 @@ ugen =
   ,"SampleDur","SampleRate","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","Vibrato"
-  ,"WhiteNoise","Wrap","WrapIndex"
+  ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"
   ,"XFade2","XLine"
   ,"ZeroCrossing"
   ,"MoogLadder" -- sc3-plugins/Bhob
