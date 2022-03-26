@@ -108,7 +108,7 @@ scPrimaryRewriteKeyword p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteKeyword x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteKeyword x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteKeyword x)
-    ScPrimaryImplictMessageSend x a -> ScPrimaryImplictMessageSend x (map scBasicExpressionRewriteKeyword a)
+    ScPrimaryImplicitMessageSend x a -> ScPrimaryImplicitMessageSend x (map scBasicExpressionRewriteKeyword a)
 
 scBinaryArgumentRewriteKeyword :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewriteKeyword (ScBinaryArgument p m) =

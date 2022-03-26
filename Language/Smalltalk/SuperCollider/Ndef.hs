@@ -12,11 +12,11 @@ import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
 -- | x -> Ndef('x')
-ndef_ref :: St.Symbol -> Expr t
+ndef_ref :: St.Symbol -> Expr
 ndef_ref x = implicitSend "Ndef" [symbolLiteral x]
 
 -- | x -> Ndef('x').perform(Ndef('x').bus.rate.rateToSelector)
-ndef_ref_rt :: St.Symbol -> Expr t
+ndef_ref_rt :: St.Symbol -> Expr
 ndef_ref_rt x =
   keywordSend
   (ndef_ref x)
@@ -28,7 +28,7 @@ uniq_sym :: String
 uniq_sym = "z__"
 
 -- | Assign last statement to uniq_sym and add play instruction.
-with_assign_and_play :: [Expr t] -> [Expr t]
+with_assign_and_play :: [Expr] -> [Expr]
 with_assign_and_play l =
   case splitAt (length l - 1) l of
     (p,[q]) -> p ++ [Assignment uniq_sym q
@@ -36,7 +36,7 @@ with_assign_and_play l =
     _ -> error "with_assign_and_play?"
 
 -- | x = y -> Ndef('x', { y }) & x -> Ndef('x').
-to_ndef ::  Expr t -> Expr t
+to_ndef ::  Expr -> Expr
 to_ndef expr =
   case expr of
     Identifier i ->

@@ -114,7 +114,7 @@ primary :: { ScPrimary }
         | '{' blockbody '}'                    { ScPrimaryBlock $2 }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
-        | identifier '(' arrayexpression ')'   { ScPrimaryImplictMessageSend $1 $3 }
+        | identifier '(' arrayexpression ')'   { ScPrimaryImplicitMessageSend $1 $3 }
 
 reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }

@@ -29,7 +29,7 @@ scPrimaryPrint p =
     ScPrimaryBlock x -> inBraces (scBlockBodyPrint x)
     ScPrimaryExpression x -> inParen (scExpressionPrint x)
     ScPrimaryArrayExpression x -> inBrackets (intercalate "," (map scBasicExpressionPrint x))
-    ScPrimaryImplictMessageSend x a -> x ++ inParen (intercalate "," (map scBasicExpressionPrint a))
+    ScPrimaryImplicitMessageSend x a -> x ++ inParen (intercalate "," (map scBasicExpressionPrint a))
 
 scJoin :: [String] -> String
 scJoin = concat

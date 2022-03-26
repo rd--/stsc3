@@ -1,6 +1,4 @@
-{- | A tree Expr type for Smalltalk expressions.
-     There is an unused type parameter that should probably be deleted.
--}
+-- | A tree Expr type for Smalltalk expressions.
 module Language.Smalltalk.Ansi.Expr where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -10,8 +8,8 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
      If the selector is Binary there must be one parameter.
      If the selector is Keyword there must be as many parameters as the selector indicates.
 -}
-data Message t =
-  Message St.Selector [Expr t]
+data Message =
+  Message St.Selector [Expr]
   deriving (Eq, Show)
 
 -- | Lambda terms may store their Smalltalk definitions (either blocks or methods)
@@ -36,31 +34,31 @@ lambdaDefinitionShow ld =
      There are both literal and expression arrays.
      Sequences (including cascades) are written as Begin.
 -}
-data Expr t =
+data Expr =
     Identifier St.Identifier
   | Literal St.Literal
-  | Assignment St.Identifier (Expr t)
-  | Return (Expr t) -- ^ Block (non local) or Method (local) return.
-  | Send (Expr t) (Message t)
-  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr t] -- ^ Block or Method body.
-  | Array [Expr t]
-  | Begin [Expr t]
-  | Init (Maybe St.Comment) St.Temporaries [Expr t]
+  | Assignment St.Identifier Expr
+  | Return Expr -- ^ Block (non local) or Method (local) return.
+  | Send Expr Message
+  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body.
+  | Array [Expr]
+  | Begin [Expr]
+  | Init (Maybe St.Comment) St.Temporaries [Expr]
   deriving (Eq, Show)
 
-exprIsAssignment :: Expr t -> Bool
+exprIsAssignment :: Expr -> Bool
 exprIsAssignment e =
   case e of
     Assignment _ _ -> True
     _ -> False
 
-assignmentIdentifier :: Expr t -> Maybe St.Identifier
+assignmentIdentifier :: Expr -> Maybe St.Identifier
 assignmentIdentifier e =
   case e of
     Assignment x _ -> Just x
     _ -> Nothing
 
-expr_map :: (Expr t -> Expr t) -> Expr t -> Expr t
+expr_map :: (Expr -> Expr) -> Expr -> Expr
 expr_map f e =
   case e of
     Identifier _ -> f e
@@ -74,10 +72,31 @@ expr_map f e =
     Init c p q -> f (Init c p (map (expr_map f) q))
 
 -- | Is expression the reservered word "super"?
-exprIsSuper :: Expr t -> Bool
+exprIsSuper :: Expr -> Bool
 exprIsSuper = (==) (Identifier "super")
 
-primaryExpr :: St.Primary -> Expr t
+-- | Is Expr a binary operator message send.
+exprIsBinaryMessageSend :: Expr -> Bool
+exprIsBinaryMessageSend expr =
+  case expr of
+    Send _lhs (Message (St.BinarySelector _) [_rhs]) -> True
+    _ -> False
+
+-- | Is Expr a keyword message send.
+exprIsKeywordMessageSend :: Expr -> Bool
+exprIsKeywordMessageSend expr =
+  case expr of
+    Send _lhs (Message (St.KeywordSelector _) (_:_)) -> True
+    _ -> False
+
+-- | Is Expr a unary message send.
+exprIsUnaryMessageSend :: Expr -> Bool
+exprIsUnaryMessageSend expr =
+  case expr of
+    Send _lhs (Message (St.UnarySelector _) []) -> True
+    _ -> False
+
+primaryExpr :: St.Primary -> Expr
 primaryExpr p =
   case p of
     St.PrimaryIdentifier x -> Identifier x
@@ -86,7 +105,7 @@ primaryExpr p =
     St.PrimaryExpression x -> expressionExpr x
     St.PrimaryArrayExpression x -> Array (map basicExpressionExpr x)
 
-blockBodyExpr :: St.BlockBody -> Expr t
+blockBodyExpr :: St.BlockBody -> Expr
 blockBodyExpr blockBody =
   let St.BlockBody _ arg tmp stm = blockBody
   in Lambda
@@ -95,7 +114,7 @@ blockBodyExpr blockBody =
      (maybe St.emptyTemporaries id tmp)
      (maybe [] (statementsExprList Return) stm)
 
-methodDefinitionExpr :: St.MethodDefinition -> Expr t
+methodDefinitionExpr :: St.MethodDefinition -> Expr
 methodDefinitionExpr methodDefinition =
   let (St.MethodDefinition _ _ pat tmp stm _) = methodDefinition
   in Lambda
@@ -104,29 +123,29 @@ methodDefinitionExpr methodDefinition =
      (maybe St.emptyTemporaries id tmp)
      (maybe [] (statementsExprList Return) stm)
 
-unaryMessagesExpr :: Expr t -> [St.UnaryMessage] -> Expr t
+unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
 unaryMessagesExpr e u =
   case u of
     [] -> e
     St.UnaryMessage s : u' -> unaryMessagesExpr (Send e (Message (St.UnarySelector s) [])) u'
 
-binaryArgumentExpr :: St.BinaryArgument -> Expr t
+binaryArgumentExpr :: St.BinaryArgument -> Expr
 binaryArgumentExpr (St.BinaryArgument p m) = unaryMessagesExpr (primaryExpr p) (maybe [] id m)
 
-binaryMessagesExpr :: Expr t -> [St.BinaryMessage] -> Expr t
+binaryMessagesExpr :: Expr -> [St.BinaryMessage] -> Expr
 binaryMessagesExpr e b =
   case b of
     [] -> e
     St.BinaryMessage s a : b' ->
       binaryMessagesExpr (Send e (Message (St.BinarySelector s) [binaryArgumentExpr a])) b'
 
-unaryBinaryMessagesExpr :: Expr t -> [St.UnaryMessage] -> [St.BinaryMessage] -> Expr t
+unaryBinaryMessagesExpr :: Expr -> [St.UnaryMessage] -> [St.BinaryMessage] -> Expr
 unaryBinaryMessagesExpr e u = binaryMessagesExpr (unaryMessagesExpr e u)
 
-unaryKeywordMessagesExpr :: Expr t -> [St.UnaryMessage] -> St.KeywordMessage -> Expr t
+unaryKeywordMessagesExpr :: Expr -> [St.UnaryMessage] -> St.KeywordMessage -> Expr
 unaryKeywordMessagesExpr e u = keywordMessageExpr (unaryMessagesExpr e u)
 
-keywordArgumentExpr :: St.KeywordArgument -> Expr t
+keywordArgumentExpr :: St.KeywordArgument -> Expr
 keywordArgumentExpr (St.KeywordArgument p mu mb) =
   case (mu,mb) of
     (Nothing,Nothing) -> primaryExpr p
@@ -134,16 +153,16 @@ keywordArgumentExpr (St.KeywordArgument p mu mb) =
     (Just u,Nothing) -> unaryMessagesExpr (primaryExpr p) u
     (Nothing,Just b) -> binaryMessagesExpr (primaryExpr p) b
 
-keywordMessageExpr :: Expr t -> St.KeywordMessage -> Expr t
+keywordMessageExpr :: Expr -> St.KeywordMessage -> Expr
 keywordMessageExpr e (St.KeywordMessage k) =
   let s = St.KeywordSelector (concatMap fst k)
       p = map (keywordArgumentExpr . snd) k
   in Send e (Message s p)
 
-unaryBinaryKeywordMessagesExpr :: Expr t -> [St.UnaryMessage] -> [St.BinaryMessage] -> St.KeywordMessage -> Expr t
+unaryBinaryKeywordMessagesExpr :: Expr -> [St.UnaryMessage] -> [St.BinaryMessage] -> St.KeywordMessage -> Expr
 unaryBinaryKeywordMessagesExpr e u b = keywordMessageExpr (unaryBinaryMessagesExpr e u b)
 
-messagesExpr :: Expr t -> St.Messages -> Expr t
+messagesExpr :: Expr -> St.Messages -> Expr
 messagesExpr e m =
   case m of
     St.MessagesUnary u Nothing Nothing -> unaryMessagesExpr e u
@@ -154,14 +173,14 @@ messagesExpr e m =
     St.MessagesBinary b (Just k) -> keywordMessageExpr (binaryMessagesExpr e b) k
     St.MessagesKeyword k -> keywordMessageExpr e k
 
-exprSequence :: [Expr t] -> Expr t
+exprSequence :: [Expr] -> Expr
 exprSequence l =
   case l of
     [] -> error "exprSequence: empty"
     [e] -> e
     _ -> Begin l
 
-basicExpressionExpr :: St.BasicExpression -> Expr t
+basicExpressionExpr :: St.BasicExpression -> Expr
 basicExpressionExpr (St.BasicExpression p m c) =
   let q = case m of
             Nothing -> primaryExpr p
@@ -173,40 +192,40 @@ basicExpressionExpr (St.BasicExpression p m c) =
        Nothing -> q
        Just mList -> exprSequence (q : map (messagesExpr t) mList)
 
-expressionExpr :: St.Expression -> Expr t
+expressionExpr :: St.Expression -> Expr
 expressionExpr e =
   case e of
      St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
      St.ExprBasic e' -> basicExpressionExpr e'
 
 -- | The returnForm is to allow for distinct MethodReturn and BlockReturn nodes (unused).
-statementsExprList :: (Expr t -> Expr t) -> St.Statements -> [Expr t]
+statementsExprList :: (Expr -> Expr) -> St.Statements -> [Expr]
 statementsExprList returnForm s =
   case s of
     St.StatementsReturn (St.ReturnStatement e) -> [returnForm (expressionExpr e)]
     St.StatementsExpression e Nothing -> [expressionExpr e]
     St.StatementsExpression e (Just s') -> expressionExpr e : statementsExprList returnForm s'
 
-statementsExpr :: (Expr t -> Expr t) -> St.Statements -> Expr t
+statementsExpr :: (Expr -> Expr) -> St.Statements -> Expr
 statementsExpr returnForm = exprSequence . statementsExprList returnForm
 
-smalltalkProgramExpr :: St.SmalltalkProgram -> Expr t
+smalltalkProgramExpr :: St.SmalltalkProgram -> Expr
 smalltalkProgramExpr x =
   case x of
     St.SmalltalkProgram e -> exprSequence (map programElementExpr e)
 
-programElementExpr :: St.ProgramElement -> Expr t
+programElementExpr :: St.ProgramElement -> Expr
 programElementExpr e =
   case e of
     St.ProgramGlobal x -> globalDefinitionExpr x
     St.ProgramInitializer x -> initializerDefinitionExpr x
 
-globalDefinitionExpr :: St.GlobalDefinition -> Expr t
+globalDefinitionExpr :: St.GlobalDefinition -> Expr
 globalDefinitionExpr (St.GlobalDefinition k v) =
   Assignment k (maybe (Identifier "nil") initializerDefinitionExpr v)
 
 -- | Ansi 3.4.3
-initializerDefinitionExpr :: St.InitializerDefinition -> Expr t
+initializerDefinitionExpr :: St.InitializerDefinition -> Expr
 initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
   Init
   cmt
@@ -216,35 +235,58 @@ initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
 -- * Expr operators
 
 -- | Init statements, discarding temporaries.
-initStatements :: Expr t -> [Expr t]
+initStatements :: Expr -> [Expr]
 initStatements expr =
   case expr of
     Init _ _ x -> x
     _ -> error "initStatements: not init?"
 
 -- | e.m
-unarySend :: Expr t -> St.Identifier -> Expr t
+unarySend :: Expr -> St.Identifier -> Expr
 unarySend e m = Send e (Message (St.UnarySelector m) [])
 
 -- | e.m1.m2 &etc. (left to right)
-unarySendSequence :: Expr t -> [St.Identifier] -> Expr t
+unarySendSequence :: Expr -> [St.Identifier] -> Expr
 unarySendSequence e m =
   case m of
     [] -> e
     m1 : m' -> unarySendSequence (unarySend e m1) m'
 
 -- | Symbol literal
-symbolLiteral :: St.Symbol -> Expr t
+symbolLiteral :: St.Symbol -> Expr
 symbolLiteral = Literal . St.SymbolLiteral
 
 -- | e.k(l)
-keywordSend :: Expr t -> St.Symbol -> [Expr t] -> Expr t
+keywordSend :: Expr -> St.Symbol -> [Expr] -> Expr
 keywordSend e k l = Send e (Message (St.KeywordSelector k) l)
 
 -- | e(l) -> e.apply([l])
-implicitSend :: St.Identifier -> [Expr t] -> Expr t
+implicitSend :: St.Identifier -> [Expr] -> Expr
 implicitSend e l = keywordSend (Identifier e) "apply:" [Array l]
 
 -- | x -> { x }
-inLambda :: Expr t -> Expr t
+inLambda :: Expr -> Expr
 inLambda x = Lambda NullLambda [] St.emptyTemporaries [x]
+
+-- * Apply
+
+-- | If Expr is an implicit send (i.e. apply: with an Array argument at an Identifier), get the receiver and arguments.
+expr_get_if_implicit :: Expr -> Maybe (St.Identifier, [Expr])
+expr_get_if_implicit e =
+  case e of
+    Send (Identifier rcv) (Message (St.KeywordSelector "apply:") [Array arg]) -> Just (rcv, arg)
+    _ -> Nothing
+
+-- | If Expr is an implicit send and if the receiver has a selector in the rewriting table, rewrite as keyword send.
+expr_rewrite_if_implicit :: [(String, String)] -> Expr -> Expr
+expr_rewrite_if_implicit tbl e =
+  case expr_get_if_implicit e of
+    Just (rcv, arg) ->
+      case lookup rcv tbl of
+        Just sel -> keywordSend (Identifier rcv) sel arg
+        _ -> e
+    _ -> e
+
+-- | Rewrite all implicit sends within an Expr.
+exprRewriteImplicit :: [(String, String)] -> Expr -> Expr
+exprRewriteImplicit tbl = expr_map (expr_rewrite_if_implicit tbl)

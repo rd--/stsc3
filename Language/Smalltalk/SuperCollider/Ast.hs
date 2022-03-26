@@ -100,7 +100,7 @@ data ScPrimary
   | ScPrimaryBlock ScBlockBody
   | ScPrimaryExpression ScExpression
   | ScPrimaryArrayExpression [ScBasicExpression]
-  | ScPrimaryImplictMessageSend St.Identifier [ScBasicExpression]
+  | ScPrimaryImplicitMessageSend St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
 
 -- | 3.4.5.3
@@ -137,5 +137,6 @@ data ScKeywordArgument =
   ScKeywordArgument (Maybe St.Keyword) ScBasicExpression
   deriving (Eq, Show)
 
+-- | List of Sc pseudo variables.  In addition to the St set it has pi and inf.
 scPseudoVariables :: [St.Identifier]
 scPseudoVariables = words "nil true false inf pi this super"

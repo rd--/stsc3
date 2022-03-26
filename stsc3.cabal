@@ -46,6 +46,7 @@ library
                         Language.Smalltalk.SuperCollider.Ndef,
                         Language.Smalltalk.SuperCollider.Parser,
                         Language.Smalltalk.SuperCollider.Rewrite,
+                        Language.Smalltalk.SuperCollider.Rewrite.Implicit,
                         Language.Smalltalk.SuperCollider.Rewrite.Keyword,
                         Language.Smalltalk.SuperCollider.Rewrite.Precedence,
                         Language.Smalltalk.SuperCollider.Rewrite.Temporaries,

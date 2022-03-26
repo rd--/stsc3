@@ -48,17 +48,21 @@ variableInitializer_pp = initializerDefinition_pp
 programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 programInitializerDefinition_pp = initializerDefinition_pp
 
-{-
-> methodDefinition_pp $ stParse (methodDefinition "") "midicps ^ 440 * (2 ** ((self - 69) * (1 / 12)))"
+{- | Print method definition.
+
+> let rw = methodDefinition_pp . stParse (methodDefinition "")
+> let src = "midicps ^440 * (2 ** ((self - 69) * (1 / 12)))"
+> rw src == src
 -}
 methodDefinition_pp :: MethodDefinition -> String
 methodDefinition_pp (MethodDefinition _ _ p t s _) =
   strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
 
-{-
-> pattern_pp (stParse messagePattern "midicps")
-> pattern_pp (stParse messagePattern "+ aNumber")
-> pattern_pp (stParse messagePattern "freq: f phase: p")
+{- | Print pattern.
+
+> let rw = pattern_pp . stParse messagePattern
+> let src = ["midicps", "+ aNumber", "freq: f phase: p"]
+> map rw src == src
 -}
 pattern_pp :: Pattern -> String
 pattern_pp pat =

@@ -293,13 +293,15 @@ UIManager default chooseFullFileNameMatching: nil
 
 "Ui ; Mvc"
 
-(PopUpMenu labelArray: #('Yes' 'No')) startUp.
+(PopUpMenu labelArray: #('Yes' 'No') lines: #()) startUp.
 (PopUpMenu labels: 'Yes\No' withCRs) startUp.
-(PopUpMenu labelArray: #('Yes' 'No')) startUpWithCaption: 'Are you hungry?'.
+(PopUpMenu labelArray: #('Yes' 'No') lines: #()) startUpWithCaption: 'Are you hungry?'.
 (PopUpMenu labelArray: ((1 to: 100) asArray collect: [ :item | item asString ]) lines: (5 to: 95 by: 5)) startUpWithCaption: 'A menu with 100 items'.
 
 (SelectionMenu labelList: #('Yes' 'No') selections: #(#yes #no)) startUp
 (SelectionMenu labelList: #('sin' 'cos' 'neg') lines: #(2) selections: #(#sin #cos #negated)) invokeOn: 0.7
+
+FillInTheBlank request: 'Frequency' initialAnswer: '440'.
 
 StandardFileMenu oldFileFrom: (FileDirectory forFileName: '/home/rohan/sw/stsc3/help/').
 
@@ -307,7 +309,7 @@ Transcript open. "=> opens Transcript"
 SelectorBrowser new open.
 ProcessBrowser open.
 Workspace open.
-2
+
 "FileList"
 
 FileList open. "opens FileList ; default directory"
@@ -351,6 +353,11 @@ OSProcess waitForCommand: 'echo sleeping...; sleep 3; echo I just slept for thre
 
 OSProcess outputOf: 'ls | cat | wc'
 OSProcess editOutputOf: 'ps -axjf'
+
+"Command Shell"
+
+CrLfFileEditor openForFileNamed: '/home/rohan/sw/stsc3/README.md'.
+CrLfFileEditor openOn: 'string to edit' withLabel: 'window label' inDirectory: FileDirectory default defaultFileName: 'default.txt'.
 
 "Squeak"
 

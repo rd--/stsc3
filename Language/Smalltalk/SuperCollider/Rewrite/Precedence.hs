@@ -162,7 +162,7 @@ scPrimaryRewritePrecedence p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewritePrecedence x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewritePrecedence x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map (scBasicExpressionRewritePrecedence True) x)
-    ScPrimaryImplictMessageSend x a -> ScPrimaryImplictMessageSend x (map (scBasicExpressionRewritePrecedence True) a)
+    ScPrimaryImplicitMessageSend x a -> ScPrimaryImplicitMessageSend x (map (scBasicExpressionRewritePrecedence True) a)
 
 -- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
 scRewritePrecedenceViewer :: String -> String

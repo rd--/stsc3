@@ -1,4 +1,4 @@
--- | Printers (.stc and s-expression) for the Ansi.Expr Ast type.
+-- | Printers (.st, .stc, .js and s-expression) for the Ansi.Expr Ast type.
 module Language.Smalltalk.Ansi.Expr.Print where
 
 import Data.List {- base -}
@@ -14,35 +14,43 @@ import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
 
 -- * .stc
 
--- | Is Expr a binary operator message send.
-stcIsBinaryMessageSend :: Expr t -> Bool
-stcIsBinaryMessageSend expr =
-  case expr of
-    Send _lhs (Message s [_rhs]) -> St.isBinarySelector s
-    _ -> False
+{- | Check that selector has correct arity, and split into parts.
+
+> zipWith3 stcSelectorParts (words "* + pi apply: at:put:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+-}
+stcSelectorParts :: String -> Bool -> Int -> [String]
+stcSelectorParts sel isBinOp arity =
+  let parts = if isBinOp then [sel] else Split.splitOn ":" sel
+      degree = if isBinOp then 1 else length parts - 1
+  in if arity /= degree
+     then error (show ("stcSelectorParts: illegal arity", sel, arity))
+     else if isBinOp || arity == 0 then parts else init parts
 
 {- | The apply message is elided in .stc, it's singular array argument is unpacked.
      It is an option here so the .stc printer can also print .sc code.
 -}
-messagePrintStc :: Bool -> Message t -> String
-messagePrintStc elideApply (Message s e) =
-  let i = takeWhile (/= ':') (St.selectorIdentifier s)
-  in case (i,e) of
-       (_,[]) -> printf ".%s" i
+messagePrintStc :: Bool -> Message -> String
+messagePrintStc elideApply (Message sel arg) =
+  let isBinOp = St.isBinarySelector sel
+      selId = St.selectorIdentifier sel
+      selParts = stcSelectorParts selId isBinOp (length arg)
+      selStc = intercalate ":" (head selParts : takeWhile (/= "value") (tail selParts))
+  in case (selStc, arg) of
+       (_,[]) -> printf ".%s" selStc
        ("apply",[Array p]) ->
          if elideApply
          then printf "(%s)" (intercalate ", " (map (exprPrintStc elideApply) p))
          else printf ".apply([%s])" (intercalate ", " (map (exprPrintStc elideApply) p))
-       (_,[e1]) ->
-         let p1 = exprPrintStc elideApply e1
-         in if St.isBinarySelector s then printf " %s %s" i p1 else printf ".%s(%s)" i p1
+       (_,[arg1]) ->
+         let p1 = exprPrintStc elideApply arg1
+         in if isBinOp then printf " %s %s" selId p1 else printf ".%s(%s)" selStc p1
        _ ->
-         printf ".%s(%s)" i (intercalate ", " (map (exprPrintStc elideApply) e))
+         printf ".%s(%s)" selStc (intercalate ", " (map (exprPrintStc elideApply) arg))
 
 {- | Parenthesise all binary operator sends.
      A more elaborate rule could be written if required.
 -}
-exprPrintStc :: Bool -> Expr t -> String
+exprPrintStc :: Bool -> Expr -> String
 exprPrintStc elideApply expr =
   case expr of
     Identifier i -> i
@@ -50,7 +58,7 @@ exprPrintStc elideApply expr =
     Assignment i e -> printf "%s = %s" i (exprPrintStc elideApply e)
     Return e -> printf "^%s" (exprPrintStc elideApply e)
     Send e m ->
-      let template = if stcIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
+      let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
       in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
     Lambda _ a (St.Temporaries t) e ->
       let x = intercalate "; " (map (exprPrintStc elideApply) e)
@@ -67,10 +75,53 @@ exprPrintStc elideApply expr =
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
 
+-- * St
+
+messagePrintSt :: Message -> String
+messagePrintSt (Message sel arg) =
+  let selId = St.selectorIdentifier sel
+  in if null arg
+     then " " ++ selId
+     else let isBinOp = St.isBinarySelector sel
+              selParts = map (\x -> x ++ ":") (stcSelectorParts selId isBinOp (length arg))
+              interleave p = concat . zipWith (\i j -> [i, j]) p
+          in if isBinOp
+             then printf " %s %s" selId (exprPrintSt (arg !! 0))
+             else " " ++ unwords (interleave selParts (map exprPrintSt arg))
+
+{- | In St precedence is unary then binary then keyword, in Stc it is unary & keyword then binary.
+     Parenthesise all keyword and binary sends.
+     A more elaborate rule could be written if required.
+-}
+exprPrintSt :: Expr -> String
+exprPrintSt expr =
+  case expr of
+    Identifier i -> i
+    Literal l -> St.sc_literal_pp l
+    Assignment i e -> printf "%s := %s" i (exprPrintSt e)
+    Return e -> printf "^%s" (exprPrintSt e)
+    Send e m ->
+      let template = if exprIsUnaryMessageSend expr then "%s%s" else "(%s%s)"
+      in printf template (exprPrintSt e) (messagePrintSt m)
+    Lambda _ a (St.Temporaries t) e ->
+      let x = intercalate ". " (map (exprPrintSt) e)
+      in case (map (':' : ) a,t) of
+        ([],[]) -> printf "[ %s ]" x
+        (a',[]) -> printf "[ %s | %s ]" (unwords a') x
+        (a',_) -> printf "[ %s | | %s | %s }" (unwords a') (unwords t) x
+    Array e -> printf "{ %s }" (intercalate ". " (map (exprPrintSt) e))
+    Begin e -> intercalate ". "  (map (exprPrintSt) e)
+    Init c (St.Temporaries t) e ->
+      let x = intercalate ". "  (map (exprPrintSt) e)
+          r = case (t,e) of
+                ([],_) ->  x
+                _ -> printf "| %s | %s" (unwords t) x
+      in maybe "" St.comment_pp c ++ r
+
 -- * S-Expression
 
 -- | Tidy printer for Message, avoids trailing whitespace.
-messagePrintLisp :: Message t -> String
+messagePrintLisp :: Message -> String
 messagePrintLisp (Message s e) =
   case e of
     [] -> printf "(~ %s)" (St.selectorIdentifier s)
@@ -90,7 +141,7 @@ commentPrintLisp = unlines . map ("; " ++ ) . lines
      The array operator is '%'.
      The sequence operator is '>>'.
 -}
-exprPrintLisp :: Expr t -> String
+exprPrintLisp :: Expr -> String
 exprPrintLisp expr =
   case expr of
     Identifier i -> i
@@ -141,24 +192,17 @@ literalPrintJs l =
     St.ArrayLiteral a -> printf "[%s]" (intercalate ", " (map (either St.literal_pp id) a))
     _ -> St.literal_pp l
 
+{- | Checks that the arity agrees (which should be correct by construction)
+     and that all subsequent keyword parts are "value".
 
-{- | Checks that all the arity agrees (which should be correct by construction)
-     and that all subsequeny keyword parts are "value".
-
-> zipWith stcSelectorJsForm (words "* + pi apply: value:value:") [1, 1, 0, 1, 2]
+> zipWith3 stcSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
 -}
 stcSelectorJsForm :: String -> Bool -> Int -> String
 stcSelectorJsForm sel isBinOp arity =
-  let parts = if isBinOp then [sel] else Split.splitOn ":" sel
-      degree = if isBinOp then 1 else length parts - 1
-      msg = head parts
-  in if arity /= degree
-     then error (show ("stcSelectorJsForm: illegal arity", sel, arity))
-     else if degree == 0
-          then msg
-          else if isBinOp || (all (== "value") (init (tail parts)) && last parts == "")
-               then msg
-               else error ("stcSelectorJsForm: " ++ sel)
+  let parts = stcSelectorParts sel isBinOp arity
+  in if isBinOp || all (== "value") (tail parts)
+     then head parts
+     else error ("stcSelectorJsForm: " ++ sel)
 
 {- | Print Js notation of Expr.
 
@@ -173,7 +217,7 @@ map rw (words "inf pi nil twoPi")
 rw "// c\nx = 6; x.postln"
 rw "p:q:r(1, 2, 3)" -- interior colons not allowed
 -}
-exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr t -> String
+exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr -> String
 exprPrintJs rw expr =
   case expr of
     Identifier x ->

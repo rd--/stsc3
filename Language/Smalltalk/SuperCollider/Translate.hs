@@ -41,8 +41,8 @@ scFloatConstant x =
       Nothing))
 
 -- | The Sc implicit message send x(...) is translated as (x apply: {...})
-scImplictMessageSendSt :: St.Identifier -> [ScBasicExpression] -> St.Primary
-scImplictMessageSendSt x a =
+scImplicitMessageSendSt :: St.Identifier -> [ScBasicExpression] -> St.Primary
+scImplicitMessageSendSt x a =
   St.PrimaryExpression
   (St.ExprBasic
     (St.BasicExpression
@@ -66,7 +66,7 @@ scPrimarySt p =
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
     ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
     ScPrimaryArrayExpression x -> St.PrimaryArrayExpression (map scBasicExpressionSt x)
-    ScPrimaryImplictMessageSend x a -> scImplictMessageSendSt x a
+    ScPrimaryImplicitMessageSend x a -> scImplicitMessageSendSt x a
 
 scBlockBodySt :: ScBlockBody -> St.BlockBody
 scBlockBodySt (ScBlockBody arg tmp stm) =
@@ -204,7 +204,7 @@ stcToSt :: String -> String
 stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 
 -- | Parse .stc and translate to Init Expr.
-stcToExpr :: String -> Expr.Expr t
+stcToExpr :: String -> Expr.Expr
 stcToExpr =
   Expr.initializerDefinitionExpr .
   stcParseInitializerDefinition
@@ -214,7 +214,7 @@ stcToJs :: String -> String
 stcToJs =  Expr.exprPrintJs (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
 
 -- | Statements list of .stc Init Expr.
-stcToExprStm :: String -> [Expr.Expr t]
+stcToExprStm :: String -> [Expr.Expr]
 stcToExprStm = Expr.initStatements . stcToExpr
 
 {- | Parse and print .stc
