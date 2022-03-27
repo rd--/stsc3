@@ -76,7 +76,7 @@ Choose comment: 'Random sequence generator.'!
 !
 
 UGen subclass: #Seq
-  instanceVariableNames: 'repeats list'
+  instanceVariableNames: 'repeats array'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-SC3'!
@@ -86,8 +86,8 @@ Seq comment: 'Sequence generator.'!
 !Seq methodsFor: 'accessing'!
   repeats ^repeats!
   repeats: x repeats := x!
-  list ^list!
-  list: x list := x!
+  array ^array!
+  array: x array := x!
 !
 
 !Seq methodsFor: 'initialization'!
@@ -95,7 +95,7 @@ Seq comment: 'Sequence generator.'!
     super initialize.
     ugenName := #Dseq.
     paramNames := #(#repeats).
-    mceNames := #(#list).
+    mceNames := #(#array).
     ugenRate := #dr.
     numChan := 1.
     specialIndex := 0.
@@ -104,13 +104,13 @@ Seq comment: 'Sequence generator.'!
 !
 
 !Seq class methodsFor: 'instance creation'!
-  repeats: repeats list: list
+  repeats: repeats array: array
     |u|
     u := self new.
     u repeats: repeats.
-    u list: list.
+    u array: array.
     ^u!
-  primaryFactoryMethod ^#repeats:list:!
+  primaryFactoryMethod ^#repeats:array:!
 !
 
 UGen subclass: #Ser

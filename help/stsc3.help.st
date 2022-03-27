@@ -4,6 +4,15 @@
 SC3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
 SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on the hsc3-graphs database"
 
+"Help Graphs"
+
+Browser newOnClass: Sc3HelpGraph class.
+Sc3HelpGraph f0Tw1395878538297892865 play.
+SC3 reset.
+
+  "Ctl-m to select and see implemetors of it"
+  f0Tw1395878538297892865
+
 "Envelope"
 
 EnvSpec new curveNameDictionary "curve name dictionary"
@@ -59,10 +68,10 @@ World activeHand position. "get mouse position"
 "Browser"
 
 Browser openBrowser. "open Browser"
-Browser newOnCategory: 'SC3'. "open Browser on Category"
+Browser newOnCategory: 'Sound-SC3'. "open Browser on Category"
 Browser newOnClass: UGen. "open Browser on Class"
-Browser newOnClass: UGen messageCategory: 'rate control'. "open Browser on Protocol of Class"
-Browser newOnClass: UGen selector: #kr. "open Browser on Method of Class"
+Browser newOnClass: UGen messageCategory: 'arithmetic'. "open Browser on Protocol of Class"
+Browser newOnClass: AbstractUGen selector: #kr. "open Browser on Method of Class"
 
 "Transcript"
 

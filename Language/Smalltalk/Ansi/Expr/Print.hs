@@ -97,7 +97,7 @@ exprPrintSt :: Expr -> String
 exprPrintSt expr =
   case expr of
     Identifier i -> i
-    Literal l -> St.sc_literal_pp l
+    Literal l -> St.literal_pp l
     Assignment i e -> printf "%s := %s" i (exprPrintSt e)
     Return e -> printf "^%s" (exprPrintSt e)
     Send e m ->

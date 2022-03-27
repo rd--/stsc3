@@ -49,3 +49,8 @@ Smalltalk SuperCollider - C-Smalltalk to Smalltalk Translator - 2021-09-27
 
 <iframe src="https://player.vimeo.com/video/640256669" frameborder="0" allowfullscreen="true" width="640" height="360" >
 </iframe>
+
+Smalltalk SuperCollider - C-Smalltalk to Smalltalk Translator - Mvc - Help Graph - f0 - 2022-03-28
+
+<iframe src="https://player.vimeo.com/video/692824092" frameborder="0" allowfullscreen="true" width="640" height="360" >
+</iframe>

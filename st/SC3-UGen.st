@@ -10328,7 +10328,6 @@ ShufflerB comment: '(Undocumented class)'!
   primaryFactoryMethod ^#bufnum:readLocationMinima:readLocationMaxima:readIncrementMinima:readIncrementMaxima:durationMinima:durationMaxima:envelopeAmplitudeMinima:envelopeAmplitudeMaxima:envelopeShapeMinima:envelopeShapeMaxima:envelopeSkewMinima:envelopeSkewMaxima:stereoLocationMinima:stereoLocationMaxima:interOffsetTimeMinima:interOffsetTimeMaxima:ftableReadLocationIncrement:readIncrementQuanta:interOffsetTimeQuanta:!
 !
 
-
 !AbstractUGen methodsFor: 'arithmetic'!
   + b ^ BinaryOpUGen specialIndex: 0 a: self b: b!
   - b ^ BinaryOpUGen specialIndex: 1 a: self b: b!
