@@ -108,7 +108,7 @@ exprPrintSt expr =
       in case (map (':' : ) a,t) of
         ([],[]) -> printf "[ %s ]" x
         (a',[]) -> printf "[ %s | %s ]" (unwords a') x
-        (a',_) -> printf "[ %s | | %s | %s }" (unwords a') (unwords t) x
+        (a',_) -> printf "[ %s | | %s | %s ]" (unwords a') (unwords t) x
     Array e -> printf "{ %s }" (intercalate ". " (map (exprPrintSt) e))
     Begin e -> intercalate ". "  (map (exprPrintSt) e)
     Init c (St.Temporaries t) e ->
