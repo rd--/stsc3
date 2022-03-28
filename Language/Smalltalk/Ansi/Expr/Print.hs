@@ -183,15 +183,6 @@ jsDefaultRenamingTable =
 jsRenamerFromTable :: [(String, String)] -> String -> String
 jsRenamerFromTable tbl nm = fromMaybe nm (lookup nm tbl)
 
-literalPrintJs :: St.Literal -> String
-literalPrintJs l =
-  case l of
-    St.CharacterLiteral c -> printf "'%c'" c
-    St.SymbolLiteral s -> printf "'%s'" s
-    St.SelectorLiteral _ -> error "literalPrintJs: selector"
-    St.ArrayLiteral a -> printf "[%s]" (intercalate ", " (map (either St.literal_pp id) a))
-    _ -> St.literal_pp l
-
 {- | Checks that the arity agrees (which should be correct by construction)
      and that all subsequent keyword parts are "value".
 
@@ -203,6 +194,15 @@ stcSelectorJsForm sel isBinOp arity =
   in if isBinOp || all (== "value") (tail parts)
      then head parts
      else error ("stcSelectorJsForm: " ++ sel)
+
+literalPrintJs :: St.Literal -> String
+literalPrintJs l =
+  case l of
+    St.CharacterLiteral c -> printf "'%c'" c
+    St.SymbolLiteral s -> printf "'%s'" s
+    St.SelectorLiteral _ -> error "literalPrintJs: selector"
+    St.ArrayLiteral a -> printf "[%s]" (intercalate ", " (map (either literalPrintJs id) a))
+    _ -> St.literal_pp l
 
 {- | Print Js notation of Expr.
 
@@ -239,7 +239,7 @@ exprPrintJs rw expr =
       "function(%s) { %s %s }"
       (intercalate ", " arg)
       (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
-      (if null stm then "return null;" else (intercalate "; " (map (exprPrintJs rw) (init stm ++ [Return (last stm)]))))
+      (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) (init stm ++ [Return (last stm)])))
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
     Begin e -> intercalate "; "  (map (exprPrintJs rw) e)
     Init c (St.Temporaries t) e ->
@@ -248,3 +248,66 @@ exprPrintJs rw expr =
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
+
+-- * Scheme
+
+literalPrintScheme :: St.Literal -> String
+literalPrintScheme l =
+  case l of
+    St.CharacterLiteral c -> printf "#\\%c" c
+    St.StringLiteral s -> printf "\"%s\"" s
+    St.SymbolLiteral s -> printf "'%s" s
+    St.SelectorLiteral _ -> error "literalPrintScheme: selector"
+    St.ArrayLiteral a -> printf "'(%s)" (unwords (map (either literalPrintScheme id) a))
+    _ -> St.literal_pp l
+
+exprTmpStmScheme :: (St.Identifier -> St.Identifier) -> [St.Identifier] -> [Expr] -> String
+exprTmpStmScheme rw tmp stm =
+  printf
+  "(let (%s) %s))"
+  (if null tmp then "" else unwords (map (\nm -> printf "(%s 'undefined)" nm) tmp))
+  (if null stm then "'()" else unwords (map (exprPrintScheme rw) stm))
+
+{- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
+
+import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
+rw = exprPrintScheme (jsRenamerFromTable jsDefaultRenamingTable) . stcToExpr
+map rw (words "q.p q.p(r) q.p(r,s) p(q)")
+map rw ["p + q * r", "p % q >= r"]
+map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
+map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; var z = (x * x) + (y * y); z }.value(3, 5)"]
+map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
+map rw (words "inf pi nil twoPi")
+rw "// c\nvar x = 6; x.postln"
+rw "p:q:r(1, 2, 3)" -- interior colons not allowed
+-}
+exprPrintScheme :: (St.Identifier -> St.Identifier) -> Expr -> String
+exprPrintScheme rw expr =
+  case expr of
+    Identifier x ->
+      case x of
+        "nil" -> "'()"
+        _ -> x
+    Literal x -> literalPrintScheme x
+    Assignment lhs rhs -> printf "(set! %s %s)" lhs (exprPrintScheme rw rhs)
+    Return e -> exprPrintScheme rw e
+    Send rcv (Message sel arg) ->
+      case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
+        (_, "apply", [Array p]) -> printf "(%s %s)" (exprPrintScheme rw rcv) (unwords (map (exprPrintScheme rw) p))
+        (_, "value", _) -> printf "(%s %s)" (exprPrintScheme rw rcv) (unwords (map (exprPrintScheme rw) arg))
+        (Identifier "Float", "pi", []) -> "pi"
+        (Identifier "Float", "infinity", _) -> "inf"
+        (_, msg, _) -> printf "(%s %s)" msg (unwords (map (exprPrintScheme rw) (rcv : arg)))
+    Lambda _ arg (St.Temporaries tmp) stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
+    Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
+    Begin e -> unwords  (map (exprPrintScheme rw) e)
+    Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c, exprTmpStmScheme rw tmp stm]
+
+{-
+let x = unwords  (map (exprPrintScheme rw) stm)
+          r = case (tmp, stm) of
+                ([],_) ->  x
+                _ -> printf "; var %s\n%s" (unwords tmp) x -- temporaries don't need to be forward declared
+      in maybe "" (unlines . map ("; " ++) . lines) c ++ r
+-}
+

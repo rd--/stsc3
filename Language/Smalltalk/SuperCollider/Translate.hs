@@ -213,6 +213,10 @@ stcToExpr =
 stcToJs :: String -> String
 stcToJs =  Expr.exprPrintJs (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
 
+-- | exprPrintScheme of stcToExpr
+stcToScheme :: String -> String
+stcToScheme =  Expr.exprPrintScheme (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
+
 -- | Statements list of .stc Init Expr.
 stcToExprStm :: String -> [Expr.Expr]
 stcToExprStm = Expr.initStatements . stcToExpr

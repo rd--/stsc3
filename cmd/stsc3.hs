@@ -50,7 +50,7 @@ help =
     ," sc cat fragment supercollider-program-file..."
     ," st cat { parsec | happy } smalltalk-program-file..."
     ," rewrite ndef"
-    ," translate [ stream ] { sc | stc } { js | sc | st } [ input-file output-file ]"
+    ," translate [ stream ] { sc | stc } { js | sc | scm | st } [ input-file output-file ]"
     ]
 
 main :: IO ()
@@ -61,6 +61,7 @@ main = do
           ("stc", "st") -> Sc.stcToSt
           ("stc", "js") -> Sc.stcToJs
           ("stc", "sc") -> Sc.stcToSc
+          ("stc", "scm") -> Sc.stcToScheme
           ("sc", "st") -> Sc.scToSt
           _ -> error "stsc3: unknown translation"
   case a of
