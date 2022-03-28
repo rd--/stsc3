@@ -301,13 +301,6 @@ exprPrintScheme rw expr =
     Lambda _ arg (St.Temporaries tmp) stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
     Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
     Begin e -> unwords  (map (exprPrintScheme rw) e)
-    Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c, exprTmpStmScheme rw tmp stm]
-
-{-
-let x = unwords  (map (exprPrintScheme rw) stm)
-          r = case (tmp, stm) of
-                ([],_) ->  x
-                _ -> printf "; var %s\n%s" (unwords tmp) x -- temporaries don't need to be forward declared
-      in maybe "" (unlines . map ("; " ++) . lines) c ++ r
--}
+    Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c
+                                              ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp stm]
 
