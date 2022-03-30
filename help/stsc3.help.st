@@ -439,6 +439,8 @@ ObjectMemory scavenge. "garbage collection (minor)"
 ObjectMemory current inspect. "vm memory statistics"
 File image asString. "location of image file"
 
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Filein-For-Gnu.st'.
+
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Env.st'.

@@ -28,11 +28,11 @@ Methods that extend numerical classes and sequence classes.
 [SC3-OpenSoundControl.st](?t=stsc3&e=st/SC3-OpenSoundControl.st):
 Open Sound Control protocol.
 
-[SC3-UGen-Composite.st](?t=stsc3&e=st/SC3-UGen-Composite.st):
-UGens (ie. _LocalBuf_ and _Splay2_) that are not at `SC3-UGen.st`.
+[SC3-UGen-Pseudo.st](?t=stsc3&e=st/SC3-UGen-Pseudo.st):
+Psuedo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `SC3-UGen.st`.
 
 [SC3-UGen-Demand.st](?t=stsc3&e=st/SC3-UGen-Demand.st):
-Demand UGens constructors with parameter ordering consistent with hsc3.
+Demand UGens constructors with parameter ordering consistent with _hsc3_.
 
 [SC3-UI.st](?t=stsc3&e=st/SC3-UI.st):
 User-interface classes and methods.
@@ -48,7 +48,7 @@ The writer generates let bindings for all UGens.
 [SC3-Gnu.st](?t=stsc3&e=st/SC3-Gnu.st) &
 [SC3-Cuis.st](?t=stsc3&e=st/SC3-Cuis.st) &
 [SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st):
-Methods that cannot be written to work under all of Squeak, Pharo, Cuis and GNU-Smalltalk have separate definitions.
+Methods that cannot be written to work under all of Squeak, Gnu-Smalltalk, Cuis and Pharo have separate definitions.
 
 The program `hsc3-graphs` is required to communicate with `scsynth`.
 It is a part of the `hsc3-graphs` archive at <https://gitlab.com/rd--/hsc3-graphs>.

@@ -11,8 +11,19 @@
 # Form
 
 The current bindings delay _shape_ operations.
+
 _SinOsc([440, 441], 0)_ makes a _SinOsc_ object, not an _Array_ object.
+
 Shape operations, such as _reverse_, must be part of the same family as _Resonz_, that is they must be named.
-Operations that need to traverse the shape such as _inject_,say to find the per-frame maximum of an array of signals, need to specify their operator as a name also.
-The rationale for this model was that the object structure reflects the written structure, and that the object structure could be edited.
-_blksc3_ is a simpler mechansim for implementing this idea.
+
+Operations that need to traverse the shape such as _inject_, say to find the per-frame maximum of an array of signals, need to be named and also specify their operator as a name.
+
+There are nice aspects to this model:
+
+1. the object structure reflects the written structure, the _SinOsc_ constructor method actually makes a _SinOsc_ object
+2. the object structure can be edited
+3. the object struture can be printed to an alternate notation that already implement a scsyndef writer (stsc3 prints to _hsc3_ notation)
+
+However:
+
+1. _blksc3_ is a simpler mechansim for implementing a _notation_ editor
