@@ -3,7 +3,10 @@
 - build graphs in smalltalk
 - .stc to .st translator writing SinOsc(f, p) as (SinOsc freq: f phase: p)
 - .stc to .sc translator writing f(x) as f.apply(x)
-- program to collate help graphs into methods, ie. ScHelpGraph class>>jmccAlienMeadow
+- program to collate help graphs into methods, ie. ScHelpGraph class>>jmccAlienMeadow  (see SC3-Help.st)
+  + requires re-write as final statement must be returned
+  + list of help graphs in list view with menu to play, draw, visit entries
+- add 'play it!' and 'reset supercollider' menu items to workspace menu
 
 # Form
 

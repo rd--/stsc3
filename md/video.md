@@ -54,3 +54,8 @@ Smalltalk SuperCollider - C-Smalltalk to Smalltalk Translator - Mvc - Help Graph
 
 <iframe src="https://player.vimeo.com/video/692824092" frameborder="0" allowfullscreen="true" width="640" height="360" >
 </iframe>
+
+Smalltalk SuperCollider - Mvc - Sc Help Graph (Autogen Methods) - f0 - 2022-03-30
+
+<iframe src="https://player.vimeo.com/video/693800218" frameborder="0" allowfullscreen="true" width="640" height="360" >
+</iframe>

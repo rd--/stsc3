@@ -153,6 +153,7 @@
 
 !Boolean methodsFor: '.stc'!
   if: trueBlock value: falseBlock
+    "This is the SuperCollider if method, for .stc notation."
     ^self ifTrue: trueBlock ifFalse: falseBlock
   !
 !

@@ -3,7 +3,7 @@ SystemOrganization addCategory: #'Sound-SC3'!
 
 !String methodsFor: 'file i/o'!
   readTextFile
-    "Read my contents (I am the name of a name of an existing text file)"
+    "Read my contents (I am the name of an existing text file)"
     ^FileStream oldFileNamed: self do: [ :in | in contentsOfEntireFile ]
   !
   writeTextFile: aBlock
@@ -22,7 +22,7 @@ SystemOrganization addCategory: #'Sound-SC3'!
     ^Compiler evaluate: self
   !
   systemCommand
-    "Run myself as a synchronous OSProcess (I am an OS command)."
+    "Run myself as a synchronous OSProcess (I am an operating system command)."
     ^OSProcess command: self "<- waitForCommand: hangs Squeak 5.3?"
   !
   fileListOn

@@ -510,8 +510,8 @@ SC3 comment: 'SuperCollider3'!
   reset
     'hsc3-scsynth reset' systemCommand
   !
-  playNamedGraph: graphName
-    SC3 playFile: (SC3 stsc3HelpGraphFile: (graphName , '.st'))
+  playHelpGraphFile: graphFile
+    SC3 playFile: (SC3 stsc3HelpGraphFile: graphFile).
   !
 !
 
@@ -529,7 +529,7 @@ SC3 comment: 'SuperCollider3'!
 
 !SC3 class methodsFor: 'c smalltalk'!
   stcFileToSt: fileName
-    "Translate .stc file to Smalltalk."
+    "Translate named C-Smalltalk (.stc) file to Smalltalk (.st), returning translated text."
     | tmp cmd |
     tmp := '/tmp/stcFileToSt.st'.
     cmd := 'stsc3 translate stc st ' , fileName , ' ' , tmp.
@@ -538,6 +538,7 @@ SC3 comment: 'SuperCollider3'!
     ^tmp readTextFile.
   !
   stcToSt: stcText
+    "Translate .stc text to .st text."
     | tmp |
     tmp := '/tmp/stcToSt.st'.
     tmp writeTextFile: [ :fd | stcText putOn: fd ].
