@@ -5,6 +5,7 @@
 + BBandPass { *new { arg in = 0.0, freq = 1200.0, bw = 1.0;^BBandPass.performList(in.rate.rateToSelector, [in, freq, bw]) } }
 + BBandStop { *new { arg in = 0.0, freq = 1200.0, bw = 1.0;^BBandStop.performList(in.rate.rateToSelector, [in, freq, bw]) } }
 + BLowPass { *new { arg in = 0.0, freq = 1200.0, rq = 1.0;^BLowPass.performList(in.rate.rateToSelector, [in, freq, rq]) } }
++ BPeakEQ { *new { arg in = 0.0, freq = 1200.0, rq = 1.0, db = 0.0;^BPeakEQ.performList(in.rate.rateToSelector, [in, freq, rq, db]) } }
 + BPF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^BPF.performList(in.rate.rateToSelector, [in, freq, rq]) } }
 + BPZ2 { *new { arg in = 0.0;^BPZ2.performList(in.rate.rateToSelector, [in]) } }
 + BRF { *new { arg in = 0.0, freq = 440.0, rq = 1.0;^BRF.performList(in.rate.rateToSelector, [in, freq, rq]) } }

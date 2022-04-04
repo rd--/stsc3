@@ -55,6 +55,7 @@
 + Line { *new { arg start = 0.0, end = 1.0, dur = 1.0, doneAction = 0.0; ^Line.performList('audio'.rateToSelector, [start, end, dur, doneAction]) } }
 + Linen { *new { arg gate = 1.0, attackTime = 1.0e-2, susLevel = 1.0, releaseTime = 1.0, doneAction = 0.0; ^Linen.performList('control'.rateToSelector, [gate, attackTime, susLevel, releaseTime, doneAction]) } }
 + LocalIn { *new { arg numChannels = 1.0, default = 0.0; ^LocalIn.performList('audio'.rateToSelector, [numChannels, default]) } }
++ LorenzL { *new { arg freq = 22050.0, s = 10.0, r = 28.0, b = 2.667, h = 5.0e-2, xi = 0.1, yi = 0.0, zi = 0.0; ^LorenzL.performList('audio'.rateToSelector, [freq, s, r, b, h, xi, yi, zi]) } }
 + MouseButton { *new { arg minval = 0.0, maxval = 1.0, lag = 0.2; ^MouseButton.performList('control'.rateToSelector, [minval, maxval, lag]) } }
 + MouseX { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseX.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
 + MouseY { *new { arg minval = 0.0, maxval = 1.0, warp = 0.0, lag = 0.2; ^MouseY.performList('control'.rateToSelector, [minval, maxval, warp, lag]) } }
@@ -79,6 +80,7 @@
 + TGrains { *new { arg numChannels = 1.0, trigger = 0.0, bufnum = 0.0, rate = 1.0, centerPos = 0.0, dur = 0.1, pan = 0.0, amp = 0.1, interp = 4.0; ^TGrains.performList('audio'.rateToSelector, [numChannels, trigger, bufnum, rate, centerPos, dur, pan, amp, interp]) } }
 + VarSaw { *new { arg freq = 440.0, iphase = 0.0, width = 0.5; ^VarSaw.performList('audio'.rateToSelector, [freq, iphase, width]) } }
 + Vibrato { *new { arg freq = 440.0, rate = 6.0, depth = 2.0e-2, delay = 0.0, onset = 0.0, rateVariation = 4.0e-2, depthVariation = 0.1, iphase = 0.0, trig = 0.0; ^Vibrato.performList('audio'.rateToSelector, [freq, rate, depth, delay, onset, rateVariation, depthVariation, iphase, trig]) } }
++ WaveLoss { *new { arg in = 0.0, drop = 20.0, outof = 40.0, mode = 1.0; ^WaveLoss.performList('audio'.rateToSelector, [in, drop, outof, mode]) } }
 + WhiteNoise { *new { ^WhiteNoise.performList('audio'.rateToSelector, []) } }
 + XLine { *new { arg start = 1.0, end = 2.0, dur = 1.0, doneAction = 0.0; ^XLine.performList('audio'.rateToSelector, [start, end, dur, doneAction]) } }
 + Friction { *new { arg in = 0.0, friction = 0.5, spring = 0.414, damp = 0.313, mass = 0.1, beltmass = 1.0; ^Friction.performList('audio'.rateToSelector, [in, friction, spring, damp, mass, beltmass]) } }
