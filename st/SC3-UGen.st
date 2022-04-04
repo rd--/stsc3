@@ -5596,6 +5596,65 @@ LocalOut comment: 'Write to buses local to a synth.'!
   primaryFactoryMethod ^#channelsArray:!
 !
 
+UGen subclass: #LorenzL
+  instanceVariableNames: 'freq s r b h xi yi zi'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+LorenzL comment: 'Lorenz chaotic generator'!
+
+!LorenzL methodsFor: 'accessing'!
+  freq ^freq!
+  freq: x freq := x!
+  s ^s!
+  s: x s := x!
+  r ^r!
+  r: x r := x!
+  b ^b!
+  b: x b := x!
+  h ^h!
+  h: x h := x!
+  xi ^xi!
+  xi: x xi := x!
+  yi ^yi!
+  yi: x yi := x!
+  zi ^zi!
+  zi: x zi := x!
+!
+
+!LorenzL methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #LorenzL.
+    paramNames := #(#freq #s #r #b #h #xi #yi #zi).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    freq := 22050.0. s := 10.0. r := 28.0. b := 2.667. h := 0.05. xi := 0.1. yi := 0.0. zi := 0.0!
+!
+
+
+!LorenzL class methodsFor: 'instance creation'!
+  freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi
+    |u|
+    u := self new.
+    u freq: freq.
+    u s: s.
+    u r: r.
+    u b: b.
+    u h: h.
+    u xi: xi.
+    u yi: yi.
+    u zi: zi.
+    ^u!
+  freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi mul: mul ^(LorenzL freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi) * mul!
+  freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi mul: mul add: add ^(LorenzL freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi) * mul + add!
+  primaryFactoryMethod ^#freq:s:r:b:h:xi:yi:zi:!
+!
+
 UGen subclass: #LPZ1
   instanceVariableNames: 'in'
   classVariableNames: ''
@@ -10327,6 +10386,7 @@ ShufflerB comment: '(Undocumented class)'!
   bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta mul: mul add: add ^(ShufflerB bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta) * mul + add!
   primaryFactoryMethod ^#bufnum:readLocationMinima:readLocationMaxima:readIncrementMinima:readIncrementMaxima:durationMinima:durationMaxima:envelopeAmplitudeMinima:envelopeAmplitudeMaxima:envelopeShapeMinima:envelopeShapeMaxima:envelopeSkewMinima:envelopeSkewMaxima:stereoLocationMinima:stereoLocationMaxima:interOffsetTimeMinima:interOffsetTimeMaxima:ftableReadLocationIncrement:readIncrementQuanta:interOffsetTimeQuanta:!
 !
+
 
 !AbstractUGen methodsFor: 'arithmetic'!
   + b ^ BinaryOpUGen specialIndex: 0 a: self b: b!

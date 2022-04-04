@@ -869,6 +869,9 @@
   localIn
     ^LocalIn default: self
   !
+  lorenzL: s value: r value: b value: h value: xi value: yi value: zi
+    ^LorenzL freq: self s: s r: r b: b h: h xi: xi yi: yi zi: zi
+  !
   maxLocalBufs
     ^MaxLocalBufs count: self
   !

@@ -159,7 +159,7 @@
     the results of each element combined with the scalar in that expression."
     rcvr isSequenceable & self isSequenceable ifFalse:
       [self error: 'Only sequenceable collections may be combined arithmetically'].
-    ^rcvr with: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
+    ^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
   !
 !
 

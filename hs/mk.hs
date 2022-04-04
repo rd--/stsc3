@@ -52,7 +52,7 @@ ugen =
   ,"IFFT","Impulse","In","Index","IndexInBetween","InFeedback","InRange","IRand","Integrator"
   ,"K2A","KeyState","Klang","Klank"
   ,"LFBrownNoise1","LFClipNoise","LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LatoocarfianC","LeakDC","Limiter","LinCongC","Line","Linen","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LPZ1","LPZ2"
+  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LatoocarfianC","LeakDC","Limiter","LinCongC","Line","Linen","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","LorenzL","LPZ1","LPZ2"
   ,"MantissaMask","MaxLocalBufs","Median","ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer","NRand","NumOutputBuses"
   ,"OnePole","OneZero","Osc","Out"
