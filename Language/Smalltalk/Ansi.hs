@@ -1255,6 +1255,7 @@ unquoteQuotedString x = take (length x - 2) (drop 1 x)
 > p "'\n'" == "\n"
 > p "'x\n'" == "x\n"
 > p "'\0x\n'" == "\0x\n"
+> p "'\\n'" == "\\n"
 -}
 quotedString :: P QuotedString
 quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- lexeme
@@ -1263,7 +1264,7 @@ quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- 
 
 > p = stParse stringBody
 > p "" == ""
-> p "x  y"
+> p "x  y" == "x y"
 > p "x" == "x"
 > p "x''" == "x'"
 > p "x'" == "x"

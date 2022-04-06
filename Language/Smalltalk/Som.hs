@@ -17,14 +17,34 @@ import qualified Language.Smalltalk.Ansi.Annotate as St {- stsc3 -}
 
 -- * Parser
 
+{- | String parsing in SOM has alternate rules, see also somEscapedString.
+     The ANSI parser could be modified to have a selectable rule for this.
+
+> rewriteSomQuotingToSmalltalk "\\'" == "''" -- quoted '
+> rewriteSomQuotingToSmalltalk "'\\''" == "''''" -- quoted ' in string
+> rewriteSomQuotingToSmalltalk "'\\\\\''" == "'\\\\\''" -- quoted \ and quoted ' in string
+> rewriteSomQuotingToSmalltalk "Lexing = ( f = ( ^['\\'', '\\\\'] ) )"
+> rewriteSomQuotingToSmalltalk "''" == "''" -- empty string
+-}
+rewriteSomQuotingToSmalltalk :: String -> String
+rewriteSomQuotingToSmalltalk =
+  let f s =
+        case s of
+          [] -> []
+          '\\' : '\\' : s' -> '\\' : '\\' : f s'
+          '\\' : '\'' : s' -> '\'' : '\'' : f s'
+          c : s' -> c : f s'
+  in f
+
 {- | Run parser for Som class definition.
 
 > parseSomClassDefinition "\"Set class definition\" Set = Object (|items|)"
 > parseSomClassDefinition "\"Object class definition\" Object = nil ()"
-> parseSomClassDefinition "\"Object class definition\" Class = ()"
+> parseSomClassDefinition "Class = ()"
+> parseSomClassDefinition "Lexing = ( f = ( ^['\\'', '\\\\'] ) )"
 -}
 parseSomClassDefinition :: String -> St.ClassDefinition
-parseSomClassDefinition = St.stParse classDefinition
+parseSomClassDefinition = St.stParse classDefinition . rewriteSomQuotingToSmalltalk
 
 {- | Class definition.
      In Som if the superclassName is not specified it is "Object".
@@ -160,11 +180,14 @@ equalSign = St.lexeme (P.char '=')
      The Som rule for \' is not compatible with the Smalltalk rules.
      In Smalltalk '''' is a string with a single quote character.
      In Som it is two empty strings alongside one another.
+     In Som '\'' is a string with a single quote character.
+     In Smalltalk it is an unterminated string.
 
 > p = St.stParse escapedChar
 > p "\\n" == '\n'
 > p "\\0" == '\0'
 > p "\\'" == '\''
+> p "\\\\" == '\\'
 -}
 escapedChar :: St.P Char
 escapedChar = do
@@ -199,7 +222,13 @@ stringCharacter = nonEscapedChar P.<|> escapedChar
 escapedStringBody :: St.P String
 escapedStringBody = P.many stringCharacter
 
--- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
+{- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
+
+> somEscapedString "\\t" == "\t"
+> somEscapedString "\'" == "'" -- single quote character in SOM
+> somEscapedString "''" == "''" -- single quote character in Smalltalk
+> somEscapedString "\\\\"
+-}
 somEscapedString :: String -> String
 somEscapedString = St.stParse escapedStringBody
 
