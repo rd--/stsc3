@@ -133,17 +133,18 @@ noInstanceState = InstanceState NonIndexable []
 
 -- | A class definition defines the behavior and encapsulated state of objects.
 data ClassDefinition =
-  ClassDefinition {className :: Identifier
-                  ,superclassName :: Maybe Identifier
-                  ,instanceState :: InstanceState
-                  ,classInstanceVariableNames :: [Identifier]
-                  ,classVariableNames :: [Identifier]
-                  ,importedPoolNames :: [Identifier]
-                  ,instanceMethods :: [MethodDefinition]
-                  ,classMethods :: [MethodDefinition]
-                  ,classInitializer :: Maybe InitializerDefinition
-                  ,classCategory :: Maybe String -- non-Ansi
-                  ,classComment :: Maybe String} -- non-Ansi
+  ClassDefinition
+  {className :: Identifier
+  ,superclassName :: Maybe Identifier
+  ,instanceState :: InstanceState
+  ,classInstanceVariableNames :: [Identifier]
+  ,classVariableNames :: [Identifier]
+  ,importedPoolNames :: [Identifier]
+  ,instanceMethods :: [MethodDefinition]
+  ,classMethods :: [MethodDefinition]
+  ,classInitializer :: Maybe InitializerDefinition
+  ,classCategory :: Maybe String -- non-Ansi
+  ,classComment :: Maybe String} -- non-Ansi
   deriving (Eq,Show)
 
 -- | A Metaclass name is the class name with ' class' appended.
@@ -229,12 +230,13 @@ type MethodCategory = String
        - methodPattern should be such a lexeme
 -}
 data MethodDefinition =
-  MethodDefinition {methodClass :: Identifier
-                   ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
-                   ,methodPattern :: Pattern
-                   ,methodTemporaries :: Maybe Temporaries
-                   ,methodStatements :: Maybe Statements
-                   ,methodComment :: Maybe String}
+  MethodDefinition
+  {methodClass :: Identifier
+  ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
+  ,methodPattern :: Pattern
+  ,methodTemporaries :: Maybe Temporaries
+  ,methodStatements :: Maybe Statements
+  ,methodComment :: Maybe String}
   deriving (Eq,Show)
 
 {- | Does MethodDefinition end with a Return (local).
@@ -470,10 +472,11 @@ blockConstructor = inBrackets blockBody
      The method name field is not assigned by the parser, see methodDefinitionAnnotateBlocks.
 -}
 data BlockBody =
-  BlockBody {blockMethodName :: Maybe MethodName -- ^ Meta data
-            ,blockArguments :: Maybe [BlockArgument]
-            ,blockTemporaries :: Maybe Temporaries
-            ,blockStatements :: Maybe Statements}
+  BlockBody
+  {blockMethodName :: Maybe MethodName -- ^ Meta data
+  ,blockArguments :: Maybe [BlockArgument]
+  ,blockTemporaries :: Maybe Temporaries
+  ,blockStatements :: Maybe Statements}
   deriving (Eq,Show)
 
 {- | Does BlockBody end with a Return (non-local).

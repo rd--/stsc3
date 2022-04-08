@@ -370,7 +370,7 @@ evalFileOutOrError = map (fromMaybe (error "evalFileOut: parse failed")) . evalF
 {-
 
 load fn = loadFileOut ("/home/rohan/sw/stsc3/st/" ++ fn)
-nms = words "Base Core Env Event Haskell Math Random UGen-Composite UI"
+nms = words "Base Core Env Event Haskell Math Random UGen-Pseudo UI"
 x <- mapM (\nm -> load ("SC3-" ++ nm ++ ".st")) nms
 e = concatMap evalFileOutOrError x
 length e

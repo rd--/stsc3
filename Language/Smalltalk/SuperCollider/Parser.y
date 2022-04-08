@@ -49,6 +49,38 @@ initializerdefinition :: { ScInitializerDefinition }
         : maybe_temporaries_seq
           maybe_statements                     { ScInitializerDefinition Nothing $1 $2 }
 
+classdefinition :: { ScClassDefinition }
+        : identifier maybe_identifier '{'
+          variables
+          methoddefinition_seq
+          '}'                                  { ScClassDefinition $1 $2 $4 [] $5 [] }
+
+methoddefinition_seq :: { [ScMethodDefinition] }
+        : {- empty -}                           { [] }
+        | methoddefinition methoddefinition_seq { $1 : $2 }
+
+methoddefinition :: { ScMethodDefinition }
+        : identifier '{'
+          maybe_arguments
+          maybe_temporaries_seq
+          maybe_statements
+          '}'                                  { ScMethodDefinition $1 $3 $4 $5 }
+
+maybe_variables :: { Maybe [St.Identifier] }
+        : {- empty -}                          { Nothing }
+        | variables                            { Just $1 }
+
+variables :: { [St.Identifier] }
+        : var identifier_seq ';'               { $2 }
+
+identifier_seq :: { [St.Identifier] }
+        : identifier                           { [$1] }
+        | identifier ',' identifier_seq        { $1 : $3 }
+
+maybe_identifier :: { Maybe St.Identifier }
+        : {- empty -}                          { Nothing }
+        | identifier                           { Just $1 }
+
 expression :: { ScExpression }
         : identifier '=' expression            { ScExprAssignment $1 $3 }
         | basicexpression                      { ScExprBasic $1 }
@@ -128,20 +160,17 @@ arrayexpression :: { [ScBasicExpression] }
         | basicexpression ',' arrayexpression  { $1 : $3 }
 
 blockbody :: { ScBlockBody }
-        : maybe_blockarguments
+        : maybe_arguments
           maybe_temporaries_seq
           maybe_statements                     { ScBlockBody $1 $2 $3 }
 
-maybe_blockarguments :: { Maybe [St.BlockArgument] }
+
+maybe_arguments :: { Maybe [St.Identifier] }
         : {- empty -}                          { Nothing }
-        | arg blockargument_seq ';'            { Just $2 }
+        | arguments                            { Just $1 }
 
-blockargument_seq :: { [St.BlockArgument] }
-        : blockargument                        { [$1] }
-        | blockargument ',' blockargument_seq  { $1 : $3 }
-
-blockargument :: { St.BlockArgument }
-        : identifier                           { $1 }
+arguments :: { [St.Identifier] }
+        : arg identifier_seq ';'               { $2 }
 
 maybe_temporaries_seq :: { Maybe [ScTemporaries] }
         : {- empty -}                          { Nothing }
