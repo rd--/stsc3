@@ -43,6 +43,7 @@ tokens :-
   "this"                                 { \_ -> ThisIdentifier }
   "arg"                                  { \_ -> Arg }
   "var"                                  { \_ -> Var }
+  "classvar"                             { \_ -> ClassVar }
 
   "^"                                    { \_ -> ReturnOperator }
   "="                                    { \_ -> AssignmentOperator }
@@ -51,6 +52,7 @@ tokens :-
   $letter $letterordigit* ":"            { \s -> Keyword s }
   $letter $letterordigitorcolon*         { \s -> NaryMessageName s }
   $binaryChar+                           { \s -> BinarySelector s }
+  "*" $letter $letterordigit*            { \s -> ClassMethodName (tail s) }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
   "$" [$graphic \ ]                      { \s -> QuotedChar (s !! 1) }

@@ -7,7 +7,8 @@ import           Language.Smalltalk.SuperCollider.Lexer {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 }
 
-%name superColliderParser
+%name superColliderParserInitializerDefinition initializerdefinition
+%name superColliderParserClassDefinitionSeq classdefinition_seq
 %tokentype { Token }
 %error { parseError }
 
@@ -29,6 +30,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       this            { ThisIdentifier }
       arg             { Arg }
       var             { Var }
+      classvar        { ClassVar }
 
       '='             { AssignmentOperator }
       '^'             { ReturnOperator }
@@ -37,6 +39,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       narymessagename { NaryMessageName $$ }
       keyword         { Keyword $$ }
       binaryselector  { BinarySelector $$ }
+      classmethodname { ClassMethodName $$ }
       float           { Float $$ }
       integer         { Integer $$ }
       quotedchar      { QuotedChar $$ }
@@ -49,22 +52,38 @@ initializerdefinition :: { ScInitializerDefinition }
         : maybe_temporaries_seq
           maybe_statements                     { ScInitializerDefinition Nothing $1 $2 }
 
+classdefinition_seq :: { [ScClassDefinition] }
+        : {- empty -}                          { [] }
+        | classdefinition classdefinition_seq  { $1 : $2 }
+
 classdefinition :: { ScClassDefinition }
         : identifier maybe_identifier '{'
-          variables
+          maybe_classvariables
+          maybe_variables
+          classmethoddefinition_seq
           methoddefinition_seq
-          '}'                                  { ScClassDefinition $1 $2 $4 [] $5 [] }
+          '}'                                   { ScClassDefinition $1 $2 $5 $4 $7 $6 }
+
+classmethoddefinition_seq :: { [ScMethodDefinition] }
+        : {- empty -}                           { [] }
+        | classmethoddefinition classmethoddefinition_seq { $1 : $2 }
+
+classmethoddefinition :: { ScMethodDefinition }
+        : classmethodname '{' blockbody '}'     { ScMethodDefinition $1 $3 }
 
 methoddefinition_seq :: { [ScMethodDefinition] }
         : {- empty -}                           { [] }
         | methoddefinition methoddefinition_seq { $1 : $2 }
 
 methoddefinition :: { ScMethodDefinition }
-        : identifier '{'
-          maybe_arguments
-          maybe_temporaries_seq
-          maybe_statements
-          '}'                                  { ScMethodDefinition $1 $3 $4 $5 }
+        : identifier '{' blockbody '}'         { ScMethodDefinition $1 $3 }
+
+maybe_classvariables :: { Maybe [St.Identifier] }
+        : {- empty -}                          { Nothing }
+        | classvariables                       { Just $1 }
+
+classvariables :: { [St.Identifier] }
+        : classvar identifier_seq ';'          { $2 }
 
 maybe_variables :: { Maybe [St.Identifier] }
         : {- empty -}                          { Nothing }

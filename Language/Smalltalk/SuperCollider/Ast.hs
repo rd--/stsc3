@@ -35,8 +35,8 @@ type ScComment = String
 
 {- | 3.3.2
 
-The parser here is very partial.
-It does not recognises class variables or class methods, and instance variables must be written in one sequence without qualifiers.
+The parser for class definitions is partial.
+Class and instance variables must be written in one sequence, without qualifiers.
 
 In Sc class and instance variables may indicate that getter and setter methods are to be automatically generated.
 These instructions would be given in the Ast as booleans attached to the variable name (implicitGetter, implicitSetter, variableName).
@@ -45,8 +45,8 @@ data ScClassDefinition =
   ScClassDefinition
   {className :: St.Identifier
   ,superclassName :: Maybe St.Identifier
-  ,classInstanceVariableNames :: [St.Identifier] -- (Bool, Bool, St.Identifier)
-  ,classVariableNames :: [St.Identifier] -- (Bool, Bool, St.Identifier)
+  ,classInstanceVariableNames :: Maybe [St.Identifier] -- (Bool, Bool, St.Identifier)
+  ,classVariableNames :: Maybe [St.Identifier] -- (Bool, Bool, St.Identifier)
   ,instanceMethods :: [ScMethodDefinition]
   ,classMethods :: [ScMethodDefinition]}
   deriving (Eq,Show)
@@ -55,9 +55,7 @@ data ScClassDefinition =
 data ScMethodDefinition =
   ScMethodDefinition
   {methodName :: St.Identifier
-  ,methodArguments :: Maybe [St.Identifier]
-  ,methodTemporaries :: Maybe [ScTemporaries]
-  ,methodStatements :: Maybe ScStatements}
+  ,methodBody :: ScBlockBody}
   deriving (Eq,Show)
 
 -- | 3.4.2. Sequence of temporaries, single var statement.

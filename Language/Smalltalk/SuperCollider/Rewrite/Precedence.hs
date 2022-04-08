@@ -169,7 +169,7 @@ scRewritePrecedenceViewer :: String -> String
 scRewritePrecedenceViewer =
   Sc.scInitializerDefinitionPrint .
   scInitializerDefinitionRewritePrecedence .
-  Sc.superColliderParser .
+  Sc.superColliderParserInitializerDefinition .
   Sc.alexScanTokens
 
 {-
@@ -190,6 +190,6 @@ rw "p.q(r + s.t(i))" == "p.q(r + (s.t(i)))\n" -- Binary within Dot/Keyword
 rw "p.q(r.s(i).t).u(j)" == "(p.q((r.s(i)).t)).u(j)\n"
 rw "p.q(r.s(i).t).u(j) + k" == "((p.q((r.s(i)).t)).u(j)) + k\n"
 
-rd = Sc.superColliderParser . Sc.alexScanTokens
+rd = Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens
 
 -}

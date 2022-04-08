@@ -22,6 +22,7 @@ data Token =
   | NaryMessageName String -- .stc
   | Keyword String
   | BinarySelector String
+  | ClassMethodName String
   | ReturnOperator
   | AssignmentOperator
   | Float Double
@@ -32,5 +33,6 @@ data Token =
 
   | Arg
   | Var
+  | ClassVar
 
   deriving (Eq, Show)

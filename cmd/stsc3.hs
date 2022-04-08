@@ -9,6 +9,7 @@ import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
+import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
@@ -33,8 +34,22 @@ st_cat which fn = do
 sc_cat_fragments :: FilePath -> IO ()
 sc_cat_fragments fn = do
   txt_fragments <- Help.read_file_fragments fn
-  let expr_fragments = map (Sc.superColliderParser . Sc.alexScanTokens) txt_fragments
+  let expr_fragments = map (Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
+
+-- | Parse class library file, a sequence of class definitions.
+sc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
+sc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
+
+{- | Read and print library.
+
+sc_cat_library "/home/rohan/sw/stsc3/help/expr/library.sc"
+sc_cat_library "/home/rohan/rd/j/2022-04-08/before-pim.sc"
+-}
+sc_cat_library :: FilePath -> IO ()
+sc_cat_library fn =
+  let rw = putStrLn . unlines . map Sc.scClassDefinitionPrint . sc_parse_class_definition_seq
+  in rw =<< readFile fn
 
 {-
 -- | Fragment input file and run stcToJs at each fragment.
@@ -47,8 +62,8 @@ stc_to_js fn = do
 help :: [String]
 help =
     ["stsc3 command [arguments]"
-    ," sc cat fragment supercollider-program-file..."
-    ," st cat { parsec | happy } smalltalk-program-file..."
+    ," sc cat { fragment | library } supercollider-file..."
+    ," st cat { parsec | happy } smalltalk-file..."
     ," rewrite ndef"
     ," translate [ stream ] { sc | stc } { js | sc | scm | st } [ input-file output-file ]"
     ]
@@ -66,6 +81,7 @@ main = do
           _ -> error "stsc3: unknown translation"
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_fragments fn) fn_seq
+    "sc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_library fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)

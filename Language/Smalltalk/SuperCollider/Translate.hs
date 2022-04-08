@@ -175,7 +175,7 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 -- | Parse and translate SuperCollider InitializerDefinition.
 scParseInitializerDefinition :: String -> St.InitializerDefinition
 scParseInitializerDefinition s =
-  let eSc = Parser.superColliderParser (Lexer.alexScanTokens s)
+  let eSc = Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens s)
   in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite True eSc)
 
 -- | Translate SuperCollider program text to Smalltalk.
@@ -196,7 +196,7 @@ stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf "
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
   let (c, p) = stcLeadingComment s
-      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParser (Lexer.alexScanTokens p))
+      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p))
   in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite False eSc)
 
 -- | Translate C-Smalltalk program text to Smalltalk.

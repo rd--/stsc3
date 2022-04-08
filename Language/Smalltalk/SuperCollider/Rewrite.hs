@@ -78,7 +78,7 @@ scRewriteViewer :: Bool -> String -> String
 scRewriteViewer rewriteNary =
   Sc.scInitializerDefinitionPrint .
   scInitializerDefinitionRewrite rewriteNary .
-  Sc.superColliderParser .
+  Sc.superColliderParserInitializerDefinition .
   Sc.alexScanTokens
 
 {-

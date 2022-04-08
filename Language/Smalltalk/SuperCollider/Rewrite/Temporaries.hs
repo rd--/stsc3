@@ -111,7 +111,7 @@ scRewriteTemporariesViewer :: String -> String
 scRewriteTemporariesViewer =
   Sc.scInitializerDefinitionPrint .
   scInitializerDefinitionRewriteTemporaries .
-  Sc.superColliderParser .
+  Sc.superColliderParserInitializerDefinition .
   Sc.alexScanTokens
 
 {-

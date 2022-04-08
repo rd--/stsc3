@@ -1,3 +1,5 @@
 Files used when testing the Haskell St and Sc parsers.
 
 Expressions here should be moved into the terse files where appropriate.
+
+The _library.sc_ file contains class definitions.

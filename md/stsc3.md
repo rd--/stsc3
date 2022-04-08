@@ -2,7 +2,7 @@
 
 Command line stsc3.
 
-## sc cat
+## sc cat fragment
 
 Parse and pretty print SuperCollider program files.
 
@@ -20,6 +20,18 @@ p.q(*r)   => p.performList(\q,r)
 p.q {}    => p.q({})
 (p..q)    => p.series(nil,q)
 (p,q..r)  => p.series(q,r)
+~~~~
+
+## sc cat library
+
+~~~~
+$ stsc3 sc cat library ~/sw/stsc3/help/expr/library.sc
+/home/rohan/sw/stsc3/help/expr/library.sc
+...
+H A { classvar y, z; var x, w;  m { arg n; ^x * n } }
+I A { classvar y, z; var x, w; *c { arg d; ^z + d } m { arg n; ^x * n } }
+...
+$
 ~~~~
 
 ## st cat

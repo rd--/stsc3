@@ -131,7 +131,7 @@ scRewriteKeywordViewer :: String -> String
 scRewriteKeywordViewer =
   Sc.scInitializerDefinitionPrint .
   scInitializerDefinitionRewriteKeyword .
-  Sc.superColliderParser .
+  Sc.superColliderParserInitializerDefinition .
   Sc.alexScanTokens
 
 {-
