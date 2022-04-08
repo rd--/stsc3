@@ -25,6 +25,8 @@ The Sc expression "x.y(a).z.y(b) + c" would be written "(((x y: a) z) y: b) + c"
 -}
 module Language.Smalltalk.SuperCollider.Ast where
 
+import Data.List {- base -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | Identifier with perhaps an initializer expression.
@@ -51,6 +53,9 @@ data ScClassDefinition =
   ,classMethods :: [ScMethodDefinition]}
   deriving (Eq,Show)
 
+scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.Identifier -> Maybe ScMethodDefinition
+scClassDefinitionLookupInstanceMethod c m = find ((== m) . methodName) (instanceMethods c)
+
 -- | 3.4.2
 data ScMethodDefinition =
   ScMethodDefinition
@@ -72,7 +77,10 @@ scInitializerDefinitionSetComment c (ScInitializerDefinition _ t s) = ScInitiali
 
 -- | 3.4.4
 data ScBlockBody =
-  ScBlockBody (Maybe [St.BlockArgument]) (Maybe [ScTemporaries]) (Maybe ScStatements)
+  ScBlockBody
+  {blockArguments :: Maybe [St.BlockArgument]
+  ,blockTemporaries :: Maybe [ScTemporaries]
+  ,blockStatements :: Maybe ScStatements}
   deriving (Eq,Show)
 
 -- | 3.4.5

@@ -1,8 +1,8 @@
 -- | Printer for abstract syntax tree (Ast) for SuperCollider (Sc).
 module Language.Smalltalk.SuperCollider.Ast.Print where
 
-import Data.List {- maybe -}
-import Text.Printf {- maybe -}
+import Data.List {- base -}
+import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}

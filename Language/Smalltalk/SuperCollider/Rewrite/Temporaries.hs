@@ -6,7 +6,7 @@ Initialisation expressions are prepended as Assignments to the list of Statement
 -}
 module Language.Smalltalk.SuperCollider.Rewrite.Temporaries where
 
-import Data.Maybe {- maybe -}
+import Data.Maybe {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
