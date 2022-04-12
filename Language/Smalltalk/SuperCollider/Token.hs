@@ -23,6 +23,7 @@ data Token =
   | Keyword String
   | BinarySelector String
   | ClassMethodName String
+  | ClassExtensionName String
   | ReturnOperator
   | AssignmentOperator
   | Float Double
@@ -30,6 +31,7 @@ data Token =
   | QuotedChar Char
   | QuotedString String
   | HashedString String
+  | Comment String
 
   | Arg
   | Var

@@ -9,6 +9,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 
 %name superColliderParserInitializerDefinition initializerdefinition
 %name superColliderParserClassDefinitionSeq classdefinition_seq
+%name superColliderParserClassExtensionSeq classextension_seq
 %tokentype { Token }
 %error { parseError }
 
@@ -40,6 +41,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       keyword         { Keyword $$ }
       binaryselector  { BinarySelector $$ }
       classmethodname { ClassMethodName $$ }
+      classextensionname { ClassExtensionName $$ }
       float           { Float $$ }
       integer         { Integer $$ }
       quotedchar      { QuotedChar $$ }
@@ -51,6 +53,16 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 initializerdefinition :: { ScInitializerDefinition }
         : maybe_temporaries_seq
           maybe_statements                     { ScInitializerDefinition Nothing $1 $2 }
+
+classextension_seq :: { [ScClassExtension] }
+        : {- empty -}                          { [] }
+        | classextension classextension_seq  { $1 : $2 }
+
+classextension :: { ScClassExtension }
+        : classextensionname '{'
+          classmethoddefinition_seq
+          methoddefinition_seq
+          '}'                                   { ScClassExtension $1 $4 $3 }
 
 classdefinition_seq :: { [ScClassDefinition] }
         : {- empty -}                          { [] }
@@ -76,7 +88,13 @@ methoddefinition_seq :: { [ScMethodDefinition] }
         | methoddefinition methoddefinition_seq { $1 : $2 }
 
 methoddefinition :: { ScMethodDefinition }
-        : identifier '{' blockbody '}'         { ScMethodDefinition $1 $3 }
+        : identifier_or_binaryselector_or_narymessagename
+          '{' blockbody '}'                    { ScMethodDefinition $1 $3 }
+
+identifier_or_binaryselector_or_narymessagename :: { String }
+        : identifier                           { $1 }
+        | binaryselector                       { $1 }
+        | narymessagename                      { $1 }
 
 maybe_classvariables :: { Maybe [St.Identifier] }
         : {- empty -}                          { Nothing }

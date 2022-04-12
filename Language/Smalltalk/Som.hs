@@ -13,7 +13,7 @@ import qualified Text.Parsec as P {- parsec -}
 import qualified Music.Theory.Directory as Directory {- hmt-base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Annotate as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Annotate as Annotate {- stsc3 -}
 
 -- * Parser
 
@@ -70,8 +70,8 @@ classDefinition = do
           instanceVariableNames
           classVariableNames
           []
-          (map St.methodDefinitionAnnotateBlocks instanceMethods)
-          (map St.methodDefinitionAnnotateBlocks classMethods)
+          (map Annotate.methodDefinitionAnnotateBlocks instanceMethods)
+          (map Annotate.methodDefinitionAnnotateBlocks classMethods)
           Nothing
           Nothing
           Nothing)

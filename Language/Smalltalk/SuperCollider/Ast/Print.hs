@@ -141,3 +141,14 @@ scClassDefinitionPrint (ScClassDefinition nm sc iv cv im cm) =
      ,unwords (map (scMethodDefinitionPrint True) cm)
      ," "
      ,unwords (map (scMethodDefinitionPrint False) im)])]
+
+scClassExtensionPrint :: ScClassExtension -> String
+scClassExtensionPrint (ScClassExtension nm im cm) =
+  scJoin
+  ['+' : nm
+  ," "
+  ,inBraces
+    (scJoin
+     [unwords (map (scMethodDefinitionPrint True) cm)
+     ," "
+     ,unwords (map (scMethodDefinitionPrint False) im)])]

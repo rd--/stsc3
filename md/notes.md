@@ -27,3 +27,23 @@ There are nice aspects to this model:
 However:
 
 1. _blksc3_ is a simpler mechansim for implementing a _notation_ editor
+
+# Comments
+
+It would be nice to allow stored class and method comments written at the obvious locations.
+
+~~~
+  | OpenComment
+  | CloseComment
+...
+  "/*"                                   { \_ -> OpenComment }
+  "*/"                                   { \_ -> CloseComment }
+...
+      '/*'            { OpenComment }
+      '*/'            { CloseComment }
+~~~
+
+# Categories
+
+Categories can be stored in a map keyed by method name.
+This approach require all methods with the same name to be in the same category for each object they are implemented in.

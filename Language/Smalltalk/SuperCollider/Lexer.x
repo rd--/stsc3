@@ -52,7 +52,8 @@ tokens :-
   $letter $letterordigit* ":"            { \s -> Keyword s }
   $letter $letterordigitorcolon*         { \s -> NaryMessageName s }
   $binaryChar+                           { \s -> BinarySelector s }
-  "*" $letter $letterordigit*            { \s -> ClassMethodName (tail s) }
+  "*" $letter $letterordigitorcolon*     { \s -> ClassMethodName (tail s) }
+  "+" $letter $letterordigit*            { \s -> ClassExtensionName (tail s) }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
   "$" [$graphic \ ]                      { \s -> QuotedChar (s !! 1) }

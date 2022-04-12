@@ -1,6 +1,7 @@
 !SequenceableCollection methodsFor: 'rearranging'!
   transpose
-    "Transpose rows and columns of two-dimensional array"
+    "Transpose rows and columns of two-dimensional array.
+     The number of columns is inferred from the size of the first element of the collection."
     ^(1 to: self first size) collect: [:c | self collect: [:r | r at: c]]
   !
   groupsOf: n

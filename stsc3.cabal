@@ -33,6 +33,7 @@ library
                         Language.Smalltalk.Ansi.Fold,
                         Language.Smalltalk.Ansi.Parser,
                         Language.Smalltalk.Ansi.Print,
+                        Language.Smalltalk.Ansi.Print.Som,
                         Language.Smalltalk.Ansi.Print.SuperCollider,
                         Language.Smalltalk.Ansi.Lexer,
                         Language.Smalltalk.Ansi.Query,

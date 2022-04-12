@@ -34,6 +34,17 @@ I A { classvar y, z; var x, w; *c { arg d; ^z + d } m { arg n; ^x * n } }
 $
 ~~~~
 
+## sc cat extensions
+
+~~~~
+$ stsc3 sc cat extensions ~/sw/stsc3/help/expr/extensions.sc
+/home/rohan/sw/stsc3/help/expr/extensions.sc
++A {  f { arg a; ^a * v } }
++B {  * { arg aNumber; ^this.mul(aNumber) } }
+...
+$
+~~~~
+
 ## st cat
 
 Parse and pretty print Smalltalk program files.

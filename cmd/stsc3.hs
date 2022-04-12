@@ -9,6 +9,9 @@ import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
+import qualified Language.Smalltalk.Som as Som {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
+
 import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
@@ -51,6 +54,25 @@ sc_cat_library fn =
   let rw = putStrLn . unlines . map Sc.scClassDefinitionPrint . sc_parse_class_definition_seq
   in rw =<< readFile fn
 
+-- | Parse class extensions file, a sequence of class extensions.
+sc_parse_class_extension_seq :: String -> [Sc.ScClassExtension]
+sc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.alexScanTokens
+
+{- | Read and print extensions.
+
+sc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
+sc_cat_extensions "/home/rohan/rd/j/2022-04-08/before-pim.sc"
+-}
+sc_cat_extensions :: FilePath -> IO ()
+sc_cat_extensions fn =
+  let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . sc_parse_class_extension_seq
+  in rw =<< readFile fn
+
+som_cat :: FilePath -> IO ()
+som_cat fn =
+  let rw = putStrLn . Som.classDefinitionPrintSom . Som.parseSomClassDefinition
+  in rw =<< readFile fn
+
 {-
 -- | Fragment input file and run stcToJs at each fragment.
 stc_to_js :: FilePath -> IO ()
@@ -62,7 +84,8 @@ stc_to_js fn = do
 help :: [String]
 help =
     ["stsc3 command [arguments]"
-    ," sc cat { fragment | library } supercollider-file..."
+    ," sc cat { fragment | library | extensions } supercollider-file..."
+    ," som cat som-file"
     ," st cat { parsec | happy } smalltalk-file..."
     ," rewrite ndef"
     ," translate [ stream ] { sc | stc } { js | sc | scm | st } [ input-file output-file ]"
@@ -82,6 +105,8 @@ main = do
   case a of
     "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_fragments fn) fn_seq
     "sc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_library fn) fn_seq
+    "sc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_extensions fn) fn_seq
+    "som":"cat":fn_seq -> mapM_ (\fn -> putStrLn fn >> som_cat fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)

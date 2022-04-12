@@ -56,6 +56,13 @@ data ScClassDefinition =
 scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.Identifier -> Maybe ScMethodDefinition
 scClassDefinitionLookupInstanceMethod c m = find ((== m) . methodName) (instanceMethods c)
 
+data ScClassExtension =
+  ScClassExtension
+  {extendClass :: St.Identifier
+  ,withInstanceMethods :: [ScMethodDefinition]
+  ,withClassMethods :: [ScMethodDefinition]}
+  deriving (Eq,Show)
+
 -- | 3.4.2
 data ScMethodDefinition =
   ScMethodDefinition
