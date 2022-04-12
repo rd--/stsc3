@@ -28,6 +28,11 @@ However:
 
 1. _blksc3_ is a simpler mechansim for implementing a _notation_ editor
 
+# Notation
+
+The _stsc3_ implementation is currently written in Smalltalk _FileOut_ notation.
+Other possibilities are _.som_ and _.stc_ notations.
+
 # Comments
 
 It would be nice to allow stored class and method comments written at the obvious locations.
