@@ -316,16 +316,14 @@ g = { arg result; result.errorString }                      // function to retri
 { f.value }.try(g)                                          // are i and j in currentEnvironment and non nil?
 e = Environment.newFrom(['i', 4, 'j', 5] )                  // new environment with 'i' -> 4 and 'j'-> 5
 e.use(f) == 9                                               // evaluate f with currentEnvironment of e => 4 + 5 = 9
-c = Environment.new()                                       // new empty environment
+c = Environment.new                                         // new empty environment
 { c.use(f) }.try(g)                                         // i and j aren't in c, => nil + nil = error
-c.parent = e                                                // set e as parent of c, c is child of e
+c.parent_(e)                                                // set e as parent of c, c is child of e
 c.use(f) == 9                                               // c is empty, look through c into e => 4 + 5 = 9
 c.put('j', 7)                                               // set j in c
 c.use(f) == 11                                              // i from e and j from c => 4 + 7 = 11
-h = { ~i * ~j }                                             // ~i is syntax for 'i'.envirGet, multiply i and j
 e.use(h) == 20                                              // => 4 * 5 = 20
 c.use(h) == 28                                              // => 4 * 7 = 28
-~i = ~j = 3                                                 // ~i = ... is syntax for 'i'.envirPut(...)
 h.value == 9                                                // => 3 * 3 = 9
 
 'Floating point'
@@ -343,10 +341,10 @@ IdentityDictionary.superclass == Dictionary                 // identity dictiona
 d = IdentityDictionary.newFrom(['i', 1, 'j', 2])            // new dictionary from array
 d.size == 2                                                 // number of entries
 c = IdentityDictionary.new                                  // new empty dictionary
-c.proto = d                                                 // there is a proto variable
+c.proto_(d)                                                 // there is a proto variable
 c.at('i') == 1                                              // lookup searches proto
 c.size == 0                                                 // size does not include proto
-c.parent = IdentityDictionary.newFrom(['j', -2, 'k', -3])   // there is a parent variable
+c.parent_(IdentityDictionary.newFrom(['j', -2, 'k', -3]))   // there is a parent variable
 c.at('j') == 2                                              // lookup is in proto before parent
 c.at('k') == -3                                             // lookup is in parent after proto
 c.put('i', 'I')                                             // at & put protocol
@@ -626,3 +624,25 @@ UGen.dumpSubclassList                                       // print sub classes
 Number.dumpFullInterface                                    // print methods per class
 SinOsc.dumpMethodList                                       // print methods alphabetically
 Class.allClasses.printAll                                   // print all class names
+
+'Collection access and mutation syntax'
+
+collection[key]                                             // c.k is syntax for c.at(k)
+collection[key] = value                                     // c.k = v is syntax for c.put(k, v)
+"text".copy[2].toUpper == $X                                // lookup char in string
+x = "text".copy; x[2] = $s; x == "test"                     // set char in mutable string
+x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutable array
+
+'Event (Dictionary) syntax'
+
+(a: 1, b: 2) == Event.newFrom(['a', 1, 'b', 2])             // (a: 1, ...) is syntax for Event.newFrom(['a', 1, ...])
+() == Event.new                                             // empty dictionary
+
+'Tilde Syntax'
+
+h = { ~i * ~j }                                             // ~i is syntax for 'i'.envirGet, multiply i and j
+~i = ~j = 3                                                 // ~i = ... is syntax for 'i'.envirPut(...)
+
+'Setter Syntax'
+
+Point.new.x = 9                                             // p.x = y is syntax for p.x_(y)

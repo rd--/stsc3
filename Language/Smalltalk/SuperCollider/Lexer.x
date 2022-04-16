@@ -29,6 +29,7 @@ tokens :-
   "["                                    { \_ -> LeftBracket }
   "]"                                    { \_ -> RightBracket }
   "."                                    { \_ -> Dot }
+  ":"                                    { \_ -> Colon }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }
   "{"                                    { \_ -> LeftBrace }
@@ -47,13 +48,13 @@ tokens :-
 
   "^"                                    { \_ -> ReturnOperator }
   "="                                    { \_ -> AssignmentOperator }
+  "*"                                    { \_ -> ClassMethodOperator }
+  "+"                                    { \_ -> ClassExtensionOperator }
 
   $letter $letterordigit*                { \s -> Identifier s }
-  $letter $letterordigit* ":"            { \s -> Keyword s }
+  $letter $letterordigit* ":"            { \s -> Keyword (init s) }
   $letter $letterordigitorcolon*         { \s -> NaryMessageName s }
   $binaryChar+                           { \s -> BinarySelector s }
-  "*" $letter $letterordigitorcolon*     { \s -> ClassMethodName (tail s) }
-  "+" $letter $letterordigit*            { \s -> ClassExtensionName (tail s) }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
   "$" [$graphic \ ]                      { \s -> QuotedChar (s !! 1) }

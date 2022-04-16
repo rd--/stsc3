@@ -19,13 +19,13 @@ import qualified Language.Smalltalk.SuperCollider.Parser as Parser {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Rewrite as Rewrite {- stsc3 -}
 
 {- | This is for translating, it allows either
-     a Unary sequence with an optional ending Keyword,
-     or a single trailing Keyword.
+     a Unary sequence with an optional ending n-ary message,
+     or a single trailing n-ary.
 -}
 scDotMessagesForSmalltalk :: [ScDotMessage] -> ([ScDotMessage], Maybe ScDotMessage)
 scDotMessagesForSmalltalk m =
-  if scDotMessagesHaveKeyword m
-  then case break scDotMessageIsKeyword m of
+  if scDotMessagesHaveNary m
+  then case break scDotMessageIsNary m of
          (lhs,[]) -> (lhs,Nothing)
          (lhs,[k]) -> (lhs,Just k)
          r -> error ("scDotMessagesForSmalltalk: " ++ show (m, r))
@@ -70,7 +70,7 @@ scPrimarySt p =
 
 scBlockBodySt :: ScBlockBody -> St.BlockBody
 scBlockBodySt (ScBlockBody arg tmp stm) =
-  St.BlockBody Nothing arg (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+  St.BlockBody Nothing (fmap (map fst) arg) (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
 scBinaryArgumentSt :: ScBinaryArgument -> St.BinaryArgument
 scBinaryArgumentSt (ScBinaryArgument p m) =
@@ -84,14 +84,12 @@ scBinaryArgumentSt (ScBinaryArgument p m) =
 scBinaryMessageSt :: ScBinaryMessage -> St.BinaryMessage
 scBinaryMessageSt (ScBinaryMessage i a) = St.BinaryMessage i (scBinaryArgumentSt a)
 
-scKeywordArgumentSt :: ScKeywordArgument -> St.KeywordArgument
-scKeywordArgumentSt (ScKeywordArgument k e) =
-  case k of
-    Just _ -> error "scKeywordArgumentSt"
-    Nothing -> St.KeywordArgument
-               (St.basicExpressionToPrimary (scBasicExpressionSt e))
-               Nothing
-               Nothing
+scArgumentSt :: ScBasicExpression -> St.KeywordArgument
+scArgumentSt e =
+  St.KeywordArgument
+  (St.basicExpressionToPrimary (scBasicExpressionSt e))
+  Nothing
+  Nothing
 
 {- | For .stc to .st translation message names are allowed to have interior colons.
      This means "c at: i put: i" can be written as "c.at:put(i, j)".
@@ -110,7 +108,7 @@ scDotMessageKeywordSt (ScDotMessage nm arg) =
   in if null arg
      then error "scDotMessageKeywordSt: Unary"
      else if length messageParts == argSize
-          then St.KeywordMessage (zipWith (\i j -> (i ++ ":",scKeywordArgumentSt j)) messageParts arg)
+          then St.KeywordMessage (zipWith (\i j -> (i ++ ":",scArgumentSt j)) messageParts arg)
           else error "scDotMessageKeywordSt: N-ary messages name degree mismatch"
 
 scDotMessageUnarySt :: ScDotMessage -> St.UnaryMessage
@@ -170,18 +168,6 @@ scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
 scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
    St.InitializerDefinition cmt (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
--- * SuperCollider to Smalltalk translator
-
--- | Parse and translate SuperCollider InitializerDefinition.
-scParseInitializerDefinition :: String -> St.InitializerDefinition
-scParseInitializerDefinition s =
-  let eSc = Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens s)
-  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite True eSc)
-
--- | Translate SuperCollider program text to Smalltalk.
-scToSt :: String -> String
-scToSt = Print.initializerDefinition_pp . scParseInitializerDefinition
-
 -- * C-Smalltalk translator
 
 {- | Separate out any leading // prefixed comment
@@ -197,7 +183,7 @@ stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
   let (c, p) = stcLeadingComment s
       eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p))
-  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite False eSc)
+  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite eSc)
 
 -- | Translate C-Smalltalk program text to Smalltalk.
 stcToSt :: String -> String

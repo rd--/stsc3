@@ -2,9 +2,9 @@
 
 Command line stsc3.
 
-## sc cat fragment
+## stc cat fragment
 
-Parse and pretty print SuperCollider program files.
+Parse and pretty print _.stc_ program files.
 
 The parser is for a minimal subset of SuperCollider
 and does not recognise the following constructs:
@@ -22,11 +22,10 @@ p.q {}    => p.q({})
 (p,q..r)  => p.series(q,r)
 ~~~~
 
-## sc cat library
+## stc cat library
 
 ~~~~
-$ stsc3 sc cat library ~/sw/stsc3/help/expr/library.sc
-/home/rohan/sw/stsc3/help/expr/library.sc
+$ stsc3 stc cat library ~/sw/stsc3/help/expr/library.sc
 ...
 H A { classvar y, z; var x, w;  m { arg n; ^x * n } }
 I A { classvar y, z; var x, w; *c { arg d; ^z + d } m { arg n; ^x * n } }

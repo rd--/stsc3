@@ -33,39 +33,39 @@ st_cat which fn = do
   st <- readFile fn
   putStrLn ((if which == "parsec" then st_cat_parsec else st_cat_happy) st)
 
--- | Parse and then pretty print SuperCollider program.
-sc_cat_fragments :: FilePath -> IO ()
-sc_cat_fragments fn = do
+-- | Parse and then pretty print .stc program.
+stc_cat_fragments :: FilePath -> IO ()
+stc_cat_fragments fn = do
   txt_fragments <- Help.read_file_fragments fn
   let expr_fragments = map (Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens) txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
 -- | Parse class library file, a sequence of class definitions.
-sc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
-sc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
+stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
+stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
 
 {- | Read and print library.
 
-sc_cat_library "/home/rohan/sw/stsc3/help/expr/library.sc"
-sc_cat_library "/home/rohan/rd/j/2022-04-08/before-pim.sc"
+stc_cat_library "/home/rohan/sw/stsc3/help/expr/library.sc"
+stc_cat_library "/home/rohan/rd/j/2022-04-08/before-pim.sc"
 -}
-sc_cat_library :: FilePath -> IO ()
-sc_cat_library fn =
-  let rw = putStrLn . unlines . map Sc.scClassDefinitionPrint . sc_parse_class_definition_seq
+stc_cat_library :: FilePath -> IO ()
+stc_cat_library fn =
+  let rw = putStrLn . unlines . map Sc.scClassDefinitionPrint . stc_parse_class_definition_seq
   in rw =<< readFile fn
 
 -- | Parse class extensions file, a sequence of class extensions.
-sc_parse_class_extension_seq :: String -> [Sc.ScClassExtension]
-sc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.alexScanTokens
+stc_parse_class_extension_seq :: String -> [Sc.ScClassExtension]
+stc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.alexScanTokens
 
 {- | Read and print extensions.
 
-sc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
-sc_cat_extensions "/home/rohan/rd/j/2022-04-08/before-pim.sc"
+stc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
+stc_cat_extensions "/home/rohan/sw/sc3-rdl/sc/RExtensions.sc"
 -}
-sc_cat_extensions :: FilePath -> IO ()
-sc_cat_extensions fn =
-  let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . sc_parse_class_extension_seq
+stc_cat_extensions :: FilePath -> IO ()
+stc_cat_extensions fn =
+  let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . stc_parse_class_extension_seq
   in rw =<< readFile fn
 
 som_cat :: FilePath -> IO ()
@@ -84,11 +84,11 @@ stc_to_js fn = do
 help :: [String]
 help =
     ["stsc3 command [arguments]"
-    ," sc cat { fragment | library | extensions } supercollider-file..."
-    ," som cat som-file"
-    ," st cat { parsec | happy } smalltalk-file..."
     ," rewrite ndef"
-    ," translate [ stream ] { sc | stc } { js | sc | scm | st } [ input-file output-file ]"
+    ," som cat som-file"
+    ," stc cat { fragment | library | extensions } supercollider-file..."
+    ," st cat { parsec | happy } smalltalk-file..."
+    ," translate [ stream ] stc { js | sc | scm | st } [ input-file output-file ]"
     ]
 
 main :: IO ()
@@ -100,15 +100,14 @@ main = do
           ("stc", "js") -> Sc.stcToJs
           ("stc", "sc") -> Sc.stcToSc
           ("stc", "scm") -> Sc.stcToScheme
-          ("sc", "st") -> Sc.scToSt
           _ -> error "stsc3: unknown translation"
   case a of
-    "sc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_fragments fn) fn_seq
-    "sc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_library fn) fn_seq
-    "sc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> sc_cat_extensions fn) fn_seq
-    "som":"cat":fn_seq -> mapM_ (\fn -> putStrLn fn >> som_cat fn) fn_seq
-    "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
+    "som":"cat":fn_seq -> mapM_ (\fn -> putStrLn fn >> som_cat fn) fn_seq
+    "stc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_fragments fn) fn_seq
+    "stc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_library fn) fn_seq
+    "stc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_extensions fn) fn_seq
+    "stc":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)

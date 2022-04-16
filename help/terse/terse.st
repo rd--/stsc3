@@ -54,9 +54,10 @@ Float e = 2.718281828459045                                 "exp constant"
 
 'Array'
 
-3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times"
+3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
+x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
 
 'Assignment'
 
@@ -135,6 +136,13 @@ $A asciiValue = 65                                          "convert character t
 3.99 printString = '3.99'                                   "convert object to string via printOn:"
 3.99 storeString = '3.99'                                   "convert object to string via storeOn:"
 (15 radix: 16) = '16rF'                                     "convert to string in given base"
+
+'Dictionary'
+
+Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself       "add: inserts associations"
+Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
+Dictionary newFromAssociations: {#a -> 1. #b -> 2}          "dictionary from associations in array"
+
 
 'Dictionary ; Smalltalk'
 

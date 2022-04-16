@@ -1,5 +1,7 @@
 {- | Keyword parameter re-writing.
 
+.stc no longer supports keyword arguments, and this module is not included in stsc3.
+
 There are different ways this could be approached.
 
 For the special case of rewriting UGen graphs to work with stsc3:

@@ -22,7 +22,7 @@ and then forward the translation to a Smalltalk interpreter.
 
 C-Smalltalk utilises a subset of the SuperCollider syntax as an alternate notation for writing Smalltalk programs.
 
-C-Smalltalk programs will not ordinarily be valid SuperCollider programs without extending the SuperCollider class library. [1]
+C-Smalltalk programs will not ordinarily be valid SuperCollider programs without extending the SuperCollider class library.
 
 In addition C-Smalltalk has one syntactic extension (colons within message names) that is incompatible with SuperCollider.
 
@@ -32,14 +32,14 @@ The notation _SinOsc(440, 0)_ is allowed in SuperCollider, where it has the mean
 
 In C-Smalltalk it has a related but distinct meaning, _SinOsc.apply([440, 0])_.
 
-_apply:_ is ordinarily defined as _perform:withArguments:_ at the _primaryFactoryMethod_ of the receiver. [2]
+_apply:_ is ordinarily defined as _perform:withArguments:_ at the _primaryFactoryMethod_ of the receiver. [1]
 (This terminology is from [Newspeak](https://newspeaklanguage.org/).)
 
 The primaryFactoryMethod of _SinOsc_ is _freq:phase:_, and so on for all of the SuperCollider UGens.
 
 UGens that have no parameters, such as PinkNoise, have _new_ as their primaryFactoryMethod, and can be instantiated as _PinkNoise()_.
 
-This translation is uniform for all primary identifiers. [3]
+This translation is uniform for all primary identifiers. [2]
 
 The rationale for this notation is that certain identifiers (class names in particular) often imply a primaryFactoryMethod,
 and that in such cases it can be appropriate to elide the message name.
@@ -60,9 +60,9 @@ _f.value(i, j)_ translates as _f value: i value: j_ and _c.put(i, j)_ translates
 
 It is therefore possible to provide aliases for commonly used messages, i.e. _put:value:_ as an alias for _at:put:_.
 
-It is an error for the message name to have more parts than there are arguments, i.e. _r.p:q(i)_ is an error. [4]
+It is an error for the message name to have more parts than there are arguments, i.e. _r.p:q(i)_ is an error. [3]
 
-## Interspersed Unary and Keyword message sequences
+## Interspersed Unary and N-ary message sequences
 
 C-Smalltalk requires parentheses for all n-ary messages, and unary and n-ary messages have equal precedence.
 
@@ -71,9 +71,9 @@ This can result in a perspicuous notation for chains of message sends.
 _c.reverse.at(n).sorted.collect(f).display_ translates to
 _((c reverse at: n) sorted collect: f) display_.
 
-## Keywords
+## Optional and Keyword Parameters
 
-Keyword parameters are disallowed.
+SuperCollider syntax includes optional and keyword parameters.  These are disallowed in C-Smalltalk.
 
 They could be allowed for implicit message sends and checked against the primaryFactoryMethod.
 
@@ -93,14 +93,25 @@ The first case translates as _q(p)_ and the second as _q(p, r)_.
 This requires _q_ to have two arities, and while many scheme-like languages will allow this, it is an unnecessary complication.
 For this reason, if translation is desired, unary and binary message selectors should be named so that they translate distinctly.
 
+## Syntax for the _at:_ and _at:put:_ protocol
+
+The C-like notations _p[q]_ and _p[q] = r_ translate as _p at: q_ and _p at: q put: r_ respectively.
+This protocol is very widely implemented and a concise and familiar notation seems useful.
+The _at:put:_ syntax constructs forms an _expression_, at the same syntax level as the _assignment_ syntax.
+
+## Syntax for _Array_ and _Dictionary_ expressions
+
+In addition to the literal _Array_ notation _#(1 2 3)_ most Smalltalks allow the array notation _{p. q. r}_ meaning _Array with: p with: q with: r_.
+C-Smalltalk writes this as _[p, q, r]_.
+
+In addition C-Smalltalk has a notation for _Dictionaries_.
+The expression _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
+or _Dictionary newFromPairs: {#'a'. 1. #'b'. 2}_.
+This notation requires keys to be identifiers.
+
 * * *
 
-1: In addition to the C-Smalltalk to Smalltalk translator _stsc3_ also has a SuperCollider to Smalltalk translator.
-
-This second translator additionally rewrites message parameters as arrays with optional keywords (a kind of dictionary).
-See [Rewrite.hs](https://gitlab.com/rd--/stsc3/-/blob/master/Language/Smalltalk/SuperCollider/Rewrite.hs) for details.
-
-2: apply: is generally defined as:
+1: apply: is generally defined as:
 
 ````
 apply: arg

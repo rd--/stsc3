@@ -54,30 +54,27 @@ import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
-import Language.Smalltalk.SuperCollider.Rewrite.Keyword
 import Language.Smalltalk.SuperCollider.Rewrite.Precedence
 import Language.Smalltalk.SuperCollider.Rewrite.Temporaries
 
-scExpressionRewrite :: Bool -> ScExpression -> ScExpression
-scExpressionRewrite rewriteNary =
+scExpressionRewrite :: ScExpression -> ScExpression
+scExpressionRewrite =
   scExpressionRewritePrecedence .
-  scExpressionRewriteTemporaries .
-  if rewriteNary then scExpressionRewriteKeyword else id
+  scExpressionRewriteTemporaries
 
 {- | Option to rewrite n-ary expressions as arrays.
      Else N-ary expressions will be an error on translation.
 -}
-scInitializerDefinitionRewrite :: Bool -> ScInitializerDefinition -> ScInitializerDefinition
-scInitializerDefinitionRewrite rewriteNary =
+scInitializerDefinitionRewrite :: ScInitializerDefinition -> ScInitializerDefinition
+scInitializerDefinitionRewrite =
   scInitializerDefinitionRewritePrecedence .
-  scInitializerDefinitionRewriteTemporaries .
-  if rewriteNary then scInitializerDefinitionRewriteKeyword else id
+  scInitializerDefinitionRewriteTemporaries
 
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
-scRewriteViewer :: Bool -> String -> String
-scRewriteViewer rewriteNary =
+scRewriteViewer :: String -> String
+scRewriteViewer =
   Sc.scInitializerDefinitionPrint .
-  scInitializerDefinitionRewrite rewriteNary .
+  scInitializerDefinitionRewrite .
   Sc.superColliderParserInitializerDefinition .
   Sc.alexScanTokens
 

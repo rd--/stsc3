@@ -19,6 +19,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       '.'             { Dot }
       ','             { Comma }
       ';'             { SemiColon }
+      ':'             { Colon }
       '{'             { LeftBrace }
       '}'             { RightBrace }
       '('             { LeftParen }
@@ -35,13 +36,13 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 
       '='             { AssignmentOperator }
       '^'             { ReturnOperator }
+      '+'             { ClassExtensionOperator }
+      '*'             { ClassMethodOperator }
 
       identifier      { Identifier $$ }
-      narymessagename { NaryMessageName $$ }
       keyword         { Keyword $$ }
+      narymessagename { NaryMessageName $$ }
       binaryselector  { BinarySelector $$ }
-      classmethodname { ClassMethodName $$ }
-      classextensionname { ClassExtensionName $$ }
       float           { Float $$ }
       integer         { Integer $$ }
       quotedchar      { QuotedChar $$ }
@@ -56,74 +57,89 @@ initializerdefinition :: { ScInitializerDefinition }
 
 classextension_seq :: { [ScClassExtension] }
         : {- empty -}                          { [] }
-        | classextension classextension_seq  { $1 : $2 }
+        | classextension classextension_seq    { $1 : $2 }
 
 classextension :: { ScClassExtension }
-        : classextensionname '{'
-          classmethoddefinition_seq
+        : '+' identifier '{'
           methoddefinition_seq
-          '}'                                   { ScClassExtension $1 $4 $3 }
+          '}'                                  { ScClassExtension $2 $4 }
 
 classdefinition_seq :: { [ScClassDefinition] }
         : {- empty -}                          { [] }
         | classdefinition classdefinition_seq  { $1 : $2 }
 
 classdefinition :: { ScClassDefinition }
-        : identifier maybe_identifier '{'
+        : identifier maybe_superclass '{'
           maybe_classvariables
           maybe_variables
-          classmethoddefinition_seq
           methoddefinition_seq
-          '}'                                   { ScClassDefinition $1 $2 $5 $4 $7 $6 }
+          '}'                                   { ScClassDefinition $1 $2 $4 $5 $6 }
 
-classmethoddefinition_seq :: { [ScMethodDefinition] }
-        : {- empty -}                           { [] }
-        | classmethoddefinition classmethoddefinition_seq { $1 : $2 }
 
-classmethoddefinition :: { ScMethodDefinition }
-        : classmethodname '{' blockbody '}'     { ScMethodDefinition $1 $3 }
+maybe_superclass :: { Maybe St.Identifier }
+        : {- empty -}                           { Nothing }
+        | ':' identifier                        { Just $2 }
 
 methoddefinition_seq :: { [ScMethodDefinition] }
         : {- empty -}                           { [] }
         | methoddefinition methoddefinition_seq { $1 : $2 }
 
-methoddefinition :: { ScMethodDefinition }
-        : identifier_or_binaryselector_or_narymessagename
-          '{' blockbody '}'                    { ScMethodDefinition $1 $3 }
+binaryoperator :: { String }
+        : binaryselector                        { $1 }
+        | '+'                                   { "+" }
+        | '*'                                   { "*" }
 
-identifier_or_binaryselector_or_narymessagename :: { String }
+methoddefinition :: { ScMethodDefinition }
+        : '*' identifier '{' blockbody '}'     { ScMethodDefinition True $2 $4 }
+        | identifier_or_binaryoperator_or_narymessagename
+          '{' blockbody '}'                    { ScMethodDefinition False $1 $3 }
+
+
+identifier_or_binaryoperator_or_narymessagename :: { String }
         : identifier                           { $1 }
-        | binaryselector                       { $1 }
+        | binaryoperator                       { $1 }
         | narymessagename                      { $1 }
 
-maybe_classvariables :: { Maybe [St.Identifier] }
+maybe_classvariables :: { Maybe [ScVariable] }
         : {- empty -}                          { Nothing }
         | classvariables                       { Just $1 }
 
-classvariables :: { [St.Identifier] }
-        : classvar identifier_seq ';'          { $2 }
+classvariables :: { [ScVariable] }
+        : classvar defaultvar_seq ';'          { $2 }
 
-maybe_variables :: { Maybe [St.Identifier] }
+maybe_variables :: { Maybe [ScVariable] }
         : {- empty -}                          { Nothing }
         | variables                            { Just $1 }
 
-variables :: { [St.Identifier] }
-        : var identifier_seq ';'               { $2 }
-
-identifier_seq :: { [St.Identifier] }
-        : identifier                           { [$1] }
-        | identifier ',' identifier_seq        { $1 : $3 }
-
-maybe_identifier :: { Maybe St.Identifier }
-        : {- empty -}                          { Nothing }
-        | identifier                           { Just $1 }
+variables :: { [ScVariable] }
+        : var defaultvar_seq ';'               { $2 }
 
 expression :: { ScExpression }
         : identifier '=' expression            { ScExprAssignment $1 $3 }
+        | syntax_atput                         { ScExprBasic $1 }
         | basicexpression                      { ScExprBasic $1 }
+
+syntax_atput :: { ScBasicExpression }
+        : primary '[' basicexpression ']'
+          '=' basicexpression                  { ScBasicExpression $1 (Just (ScMessagesDot [ScDotMessage "at:put" [$3, $6]] Nothing)) }
 
 basicexpression :: { ScBasicExpression }
         : primary maybe_messages               { ScBasicExpression $1 $2 }
+        | syntax_dictionary maybe_messages     { ScBasicExpression (scBasicExpressionToPrimary $1) $2 }
+
+syntax_dictionary :: { ScBasicExpression }
+        : '(' syntax_association_seq ')'       { ScBasicExpression
+                                                  (ScPrimaryIdentifier "Dictionary")
+                                                  (Just (ScMessagesDot [ScDotMessage "newFromPairs"
+                                                    [ScBasicExpression (ScPrimaryArrayExpression $2) Nothing]] Nothing)) }
+
+syntax_association_seq :: { [ScBasicExpression] }
+        : {- empty -}                          { [] }
+        | syntax_association                   { $1 }
+        | syntax_association ',' syntax_association_seq { $1 ++ $3 }
+
+syntax_association :: { [ScBasicExpression] }
+        : keyword basicexpression              { [ScBasicExpression (ScPrimaryLiteral (St.SymbolLiteral $1)) Nothing, $2] }
 
 maybe_messages :: { Maybe ScMessages }
         : {- empty -}                          { Nothing }
@@ -146,21 +162,17 @@ dotmessage :: { ScDotMessage }
         : '.' identifier                       { ScDotMessage $2 []}
         | '.' identifier message_param         { ScDotMessage $2 $3}
         | '.' narymessagename message_param    { ScDotMessage $2 $3}
+        | syntax_at                            { $1 }
 
-message_param :: { [ScKeywordArgument] }
-        : '(' keywordargument_seq ')'          { $2 }
+syntax_at :: { ScDotMessage }
+        : '[' basicexpression ']'              { ScDotMessage "at" [$2] }
 
-keywordargument_seq :: { [ScKeywordArgument] }
-        : keywordargument                      { [$1] }
-        | keywordargument ','
-          keywordargument_seq                  { $1 : $3 }
+message_param :: { [ScBasicExpression] }
+        : '(' basicexpression_seq ')'          { $2 }
 
-keywordargument :: { ScKeywordArgument }
-        : maybe_keyword basicexpression        { ScKeywordArgument $1 $2 }
-
-maybe_keyword :: { Maybe St.Keyword }
-        : {- empty -}                          { Nothing }
-        | keyword                              { Just $1 }
+basicexpression_seq :: { [ScBasicExpression] }
+        : basicexpression                         { [$1] }
+        | basicexpression ',' basicexpression_seq { $1 : $3 }
 
 maybe_binarymessage_seq :: { Maybe [ScBinaryMessage] }
         : {- empty -}                          { Nothing }
@@ -171,7 +183,7 @@ binarymessage_seq :: { [ScBinaryMessage] }
         | binarymessage                        { [$1] }
 
 binarymessage :: { ScBinaryMessage }
-        : binaryselector binaryargument        { ScBinaryMessage $1 $2 }
+        : binaryoperator binaryargument        { ScBinaryMessage $1 $2 }
 
 binaryargument :: { ScBinaryArgument }
         : primary maybe_dotmessage_seq         { ScBinaryArgument $1 $2 }
@@ -202,12 +214,20 @@ blockbody :: { ScBlockBody }
           maybe_statements                     { ScBlockBody $1 $2 $3 }
 
 
-maybe_arguments :: { Maybe [St.Identifier] }
+maybe_arguments :: { Maybe [ScBlockArgument] }
         : {- empty -}                          { Nothing }
         | arguments                            { Just $1 }
 
-arguments :: { [St.Identifier] }
-        : arg identifier_seq ';'               { $2 }
+arguments :: { [ScBlockArgument] }
+        : arg defaultvar_seq ';'               { $2 }
+
+defaultvar_seq :: { [ScBlockArgument] }
+        : defaultvar                           { [$1] }
+        | defaultvar ',' defaultvar_seq        { $1 : $3 }
+
+defaultvar :: { ScBlockArgument }
+        :  identifier                          { ($1,Nothing) }
+        |  identifier '=' literal              { ($1,Just $3) }
 
 maybe_temporaries_seq :: { Maybe [ScTemporaries] }
         : {- empty -}                          { Nothing }

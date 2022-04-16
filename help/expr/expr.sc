@@ -2,12 +2,9 @@
 4 + 5 * 6
 4 + 5 * 6 / 7
 1.2 ** i / 16
-4**LFNoise2.kr(freq:1.2**i/16)
 5**LFNoise2.ar(f)/(i+8)*20
 x*(5**LFNoise2.ar(f)/(i+8)*20)
-p + (q + r.s())
-{var d = 1 / p.q(x: a + r.s); d}
-{var d = 1 / p.q(x: a + r.s()); d}
+p + (q + r.s)
 
 'Array Expression'
 []
@@ -15,20 +12,15 @@ p + (q + r.s())
 [true,false,nil]
 1 ! 2 == [1,1] // true
 
-'Keyword'
+'N-ary messages'
 2.max(3)                                // 3
 2.max(3) + 4                            // 7
 1.min(2).max(3)                         // 3
 1.min(2.max(3))                         // 1
 1.min(2.max(3))                         // 1
-2.max(aNumber: 3) == 3                  // true
-SinOsc.ar()
+SinOsc.ar
 SinOsc.ar(440)
 SinOsc.ar(440, 0)
-SinOsc.ar(freq: 440)
-SinOsc.ar(phase: 0)
-SinOsc.ar(freq: 440, phase: 0)
-SinOsc.ar(440, phase: 0)
 SinOsc.ar((60 + 9),0)
 SinOsc.ar((60.midiCps),0)
 x.y(a).z(b)
@@ -36,7 +28,7 @@ p.q(r).s
 Signal.hanningWindow(1024)
 Signal.hanningWindow(1024).squared
 
-'Unary & Binary & Keyword Methods'
+'Unary & Binary & N-ary Methods'
 4 + 5.neg
 4 + 5.neg + 6
 4.neg + 5
@@ -78,25 +70,19 @@ w * ((x + y).z)
 1 + (2 . max(3)) == 4              // true
 1 + 2 . max(3) == 4                // true
 1 + 2 * 3 . max(4) == 12           // true
-1 @ 2 == Point.new(x: 1, y: 2)     // true
 
 'Blocks'
 {}
 {arg x; y}
 {arg x; x}
 {arg x; var y; z}
-{SinOsc.ar(mul: 0.1)}.play
 {arg x; x + 1}.value(3) == 4            // true
 {^nil}.value                            // return in non-method
 f = {arg x=1, y; [x,y]}
 f.value == [1,nil]
-f.value() == [1,nil]
 f.value(3) == [3,nil]
-f.value(x:3) == [3,nil]
 f.value(3,2,1) == [3,2]
-f.value(z:1,x:3) == [3,nil]
 f = {arg x, y, z; [x,y,z]}
-f.value(1,2,3,4,5,6,z:7,y:8,x:9) == [9,8,7] // true
 [1,2,3].collect({'x'.postln}) == ['x','x','x']
 [1,2,3].collect({arg i; i * i}) == [1,4,9]
 [1,2,3].collect({arg i, j; i * j}) == [2,4,6]
@@ -104,10 +90,7 @@ f.value(1,2,3,4,5,6,z:7,y:8,x:9) == [9,8,7] // true
 
 'Methods'
 -3.abs == 3
--3.abs() == 3
 -3.abs(1) == 3
--3.abs(x:0) == 0
--3.performList(selector: 'abs', arglist: [1,2,3]) == 3
 
 'Temporaries'
 {var x; }
@@ -127,58 +110,22 @@ f.value(1,2,3,4,5,6,z:7,y:8,x:9) == [9,8,7] // true
 p.q                      // => p q
 p.q + r                  // => p q + r
 p + q.r                  // => p + q.r
-p + q.r()                // => p + (q.r()) ==> p + (q r: ({}))
-p + q.r(x + y.z())       // => p + (q.r(x + (y.z())))
-p + q + r.s()            // => p + q + (r.s())
-p + q + r.s() + t        // => p + q + (r.s()) + t
-p + (q + r.s())          // => p + (q + (r.s()))
-p + q.r().s              // => p + (q.r()).s
-p + q.r.s()              // => p + (q r s: ({}))
-p + q.r.s().t            // => p + (q r s: ({})) t
-p + q.r.s().t.u()        // => p + ((q r s: ({})) t u: ({}))
-p.q()                    // => p.q() ==> p q: ({})
-p.q().r                  // => (p.q()).r ==> (p q: ({})) r
-p.q().r + s              // => (p.q()).r + s
-p.q().r()                // => (p q: ({})) r: ({})
-p.q.r()                  // => (p.q.r())
 p + q                    // => p + q
 p.q + r                  // => p q + r
-p.q() + r                // => (p q: ({})) + r
-p.q() + r.s( )           // => (p q: ({})) + (r s: ({}))
-{p.q().r}                // => [ (p q: ({})) r .\n ]
-{var x = p.q().r; x}     // => [ |x|\n x := (p q: ({})) r .\n x .\n ]
-1 + p.q(x: a + r.s())    // => 1 + (p.q(x:a + (r.s())))
-p.q(r + s.t())           // => p.q(r + (s.t()))
 p.q(a + b + c * d).r * s // => (p.q(a + b + c * d)).r * s
-p.q(r.s(x.y()))          // => p.q(r.s(x.y()))
 p.q(r.s(x.y.z))          // => p.q(r.s(x.y.z))
-r.s(x.y.z())             // => r.s((x.y.z()))
-p.q(r.s(x.y.z()))        // => p.q(r.s((x.y.z())))
-p + q.r()                // => p + (q.r())
-p + q.r.s()
-p + q.r.s().t            // => p + ((q.r.s())).t
-p + q.r.s().t()
-p + q.r.s().t.u()
-p.q(a + r.s())           // => p.q(a + (r.s()))
-1 / p.q(a + r.s())
-1 / p.q(x: a + r.s())
 
 'Temporaries (Variable Declarations)'
 {var x = a; x}           // {var x; x = a; x}
 {var x = a,y; x + y}     // {var x,y; x = a; x + y}
 {var x;var y = b;x + y}  // {var x,y; y = b; x + y}
-{var x={var y=a;a*x}; x} // {var x; x = {var y; y = a; a * x}; x}
+{var x={var y=a;a * x}; x} // {var x; x = {var y; y = a; a * x}; x}
 {arg a; var p = x; var q = y; x + y}
 {u.v; {arg a; var p = x; var q = y; x + y}}
-{u.v(m: {arg a; var p = x; var q = y; x + y})}
 
-'Keyword Arguments (Parameters)'
-p.q()                    // p.q([])
+'N-ary Arguments (Parameters)'
 p.q(a)                   // p.q([a])
 p.q(a,b)                 // p.q([a,b])
-p.q(x:a,b)               // p.q([\x: -> (a),b])
-p.q(a,x:b)               // p.q([a,\x: -> (b)])
-p.q(a,x: b.c(y: d,e))    // p.q([a,\x: -> (b.c([\y: -> (d),e]))])
 
 'Integer Math'
 5.div(2) == 2                 // => true
@@ -199,27 +146,7 @@ p.q(a,x: b.c(y: d,e))    // p.q([a,\x: -> (b.c([\y: -> (d),e]))])
 
 'Variable Arguments'
 -3.abs == 3
--3.abs() == 3
 -3.abs(nil) == 3
-
-'Keyword operators'
-3 min: 2                 // 2
-3 min: 2 + 1             // 3
-3 min: -2.abs + 1        // 3
-3 min: 2.max(1)          // 2
-3 max: 2 . squared       // 4
-3 max: (2 . squared)     // 4
-(3 max: 2) . squared     // 9
-2 min: 3 pow: 2          // 4.0
-2 min: 3.pow(2)          // 2.0
-(2 min: 3) pow: 2        // 4.0
-2 min: (3 pow: 2)        // 2.0
-1.min(2).max(3) == 3     // true
-1.min(2.max(3)) == 1     // true
-1 min: 2 max: 3 == 3     // true
-1 min: (2 max: s) == 1   // true
-5 min: 2 + 2 == 4        // true (keyword operator binds as keyword message in smalltalk)
-5 min: 2 . neg + 6 == 4  // true
 
 'Interval'
 1.to(9) + 1 == Interval.new(2, 10, 1)             // true
@@ -228,7 +155,7 @@ p.q(a,x: b.c(y: d,e))    // p.q([a,\x: -> (b.c([\y: -> (d),e]))])
 (1.to(9) * 3).asArray == 3.series(6,27)           // true ; (3,6 .. 27)
 (0.to(9) * 3).at(5) == 15                         // true
 0.5.to(4.5,0.5) == Interval.new(0.5, 4.5, 0.5)    // true
-1.to(1e15)                                        // Interval
+1.to(10 ** 15)                                        // Interval
 1.to(9).collect({arg i; i + i})                   // [2, 4, 6, 8, 10, 12, 14, 16, 18]
 1.to(9,2).collect({arg i; i + i})                 // [ 2, 6, 10, 14, 18 ]
 9.to(1,-1).asArray == 9.series(nil,1)             // true ; (9 .. 1)

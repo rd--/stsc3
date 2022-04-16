@@ -7,6 +7,7 @@ data Token =
   | Dot
   | Comma
   | SemiColon
+  | Colon
   | LeftBrace
   | RightBrace
   | LeftParen
@@ -19,13 +20,13 @@ data Token =
   | ThisIdentifier
 
   | Identifier String
+  | Keyword String -- for dictionary syntax, c.f. (a: 1, b: 2)
   | NaryMessageName String -- .stc
-  | Keyword String
   | BinarySelector String
-  | ClassMethodName String
-  | ClassExtensionName String
   | ReturnOperator
   | AssignmentOperator
+  | ClassExtensionOperator
+  | ClassMethodOperator
   | Float Double
   | Integer Integer
   | QuotedChar Char

@@ -8,7 +8,7 @@ ScStatements ScReturnStatement ScExpression ScBasicExpression ScPrimary ScMessag
 
 The most important differences are:
 
-- in Sc Unary and Keyword messages have the same syntax and equal precedence
+- in Sc Unary and Nary messages have the same syntax and equal precedence
 - in Sc Temporaries can introduce bindings
 - in Sc Block parameters are passed as a Dictionary and allow default values
 - in Sc it is not possible to infer the arity of a Block from it's call site
@@ -35,6 +35,9 @@ type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
 -- | Comments are text strings.
 type ScComment = String
 
+-- | Variable with optional default value, which must be a literal.
+type ScVariable = (St.Identifier, Maybe St.Literal)
+
 {- | 3.3.2
 
 The parser for class definitions is partial.
@@ -47,26 +50,30 @@ data ScClassDefinition =
   ScClassDefinition
   {className :: St.Identifier
   ,superclassName :: Maybe St.Identifier
-  ,classInstanceVariableNames :: Maybe [St.Identifier] -- (Bool, Bool, St.Identifier)
-  ,classVariableNames :: Maybe [St.Identifier] -- (Bool, Bool, St.Identifier)
-  ,instanceMethods :: [ScMethodDefinition]
-  ,classMethods :: [ScMethodDefinition]}
+  ,classInstanceVariableNames :: Maybe [ScVariable]
+  ,classVariableNames :: Maybe [ScVariable]
+  ,methods :: [ScMethodDefinition]}
   deriving (Eq,Show)
 
+-- | Partition methods into (class-methods, instance-methods).
+scClassDefinitionPartitionMethods :: ScClassDefinition -> ([ScMethodDefinition], [ScMethodDefinition])
+scClassDefinitionPartitionMethods = partition isClassMethod . methods
+
+-- | Lookup names instance method.
 scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.Identifier -> Maybe ScMethodDefinition
-scClassDefinitionLookupInstanceMethod c m = find ((== m) . methodName) (instanceMethods c)
+scClassDefinitionLookupInstanceMethod cd nm = find (\m -> not (isClassMethod m) && methodName m == nm) (methods cd)
 
 data ScClassExtension =
   ScClassExtension
   {extendClass :: St.Identifier
-  ,withInstanceMethods :: [ScMethodDefinition]
-  ,withClassMethods :: [ScMethodDefinition]}
+  ,withMethods :: [ScMethodDefinition]}
   deriving (Eq,Show)
 
 -- | 3.4.2
 data ScMethodDefinition =
   ScMethodDefinition
-  {methodName :: St.Identifier
+  {isClassMethod :: Bool
+  ,methodName :: St.Identifier
   ,methodBody :: ScBlockBody}
   deriving (Eq,Show)
 
@@ -85,10 +92,12 @@ scInitializerDefinitionSetComment c (ScInitializerDefinition _ t s) = ScInitiali
 -- | 3.4.4
 data ScBlockBody =
   ScBlockBody
-  {blockArguments :: Maybe [St.BlockArgument]
+  {blockArguments :: Maybe [ScBlockArgument]
   ,blockTemporaries :: Maybe [ScTemporaries]
   ,blockStatements :: Maybe ScStatements}
   deriving (Eq,Show)
+
+type ScBlockArgument = ScVariable
 
 -- | 3.4.5
 data ScStatements
@@ -131,6 +140,23 @@ scBasicExpressionToPrimary e =
     ScBasicExpression p Nothing -> p
     _ -> ScPrimaryExpression (ScExprBasic e)
 
+-- | If the expression is an ScBasicExpression then scBasicExpressionToPrimary, else ScPrimaryExpression.
+scExpressionToPrimary :: ScExpression -> ScPrimary
+scExpressionToPrimary e =
+  case e of
+    ScExprBasic b -> scBasicExpressionToPrimary b
+    _ -> ScPrimaryExpression e
+
+scIdentifierToExpression :: St.Identifier -> ScExpression
+scIdentifierToExpression i = ScExprBasic (ScBasicExpression (ScPrimaryIdentifier i) Nothing)
+
+{- | Constructor for dot message send.
+
+> scConstructDotMessage "at:" [ScBasicExpression (ScPrimaryIdentifier "key") Nothing]
+-}
+scConstructDotMessage :: St.Identifier -> [ScBasicExpression] -> ScMessages
+scConstructDotMessage selector arguments = ScMessagesDot [ScDotMessage selector arguments] Nothing
+
 {- | 3.4.5.2 Reuse the Smalltalk Literal type.
      The Sc notation "x(...)" is an implicit message send.
 -}
@@ -154,16 +180,16 @@ data ScMessages
      Ie. an empty parameter list here indicates a unary message.
 -}
 data ScDotMessage =
-  ScDotMessage St.Identifier [ScKeywordArgument]
+  ScDotMessage St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
 
 -- | Does message have parameters, i.e. written as .q()
-scDotMessageIsKeyword :: ScDotMessage -> Bool
-scDotMessageIsKeyword (ScDotMessage _ m) = not (null m)
+scDotMessageIsNary :: ScDotMessage -> Bool
+scDotMessageIsNary (ScDotMessage _ m) = not (null m)
 
--- | Are any messages in the sequence keyword messages.
-scDotMessagesHaveKeyword :: [ScDotMessage] -> Bool
-scDotMessagesHaveKeyword = any scDotMessageIsKeyword
+-- | Are any messages in the sequence n-ary messages.
+scDotMessagesHaveNary :: [ScDotMessage] -> Bool
+scDotMessagesHaveNary = any scDotMessageIsNary
 
 data ScBinaryMessage =
   ScBinaryMessage St.BinaryIdentifier ScBinaryArgument
@@ -171,10 +197,6 @@ data ScBinaryMessage =
 
 data ScBinaryArgument =
   ScBinaryArgument ScPrimary (Maybe [ScDotMessage])
-  deriving (Eq, Show)
-
-data ScKeywordArgument =
-  ScKeywordArgument (Maybe St.Keyword) ScBasicExpression
   deriving (Eq, Show)
 
 -- | List of Sc pseudo variables.  In addition to the St set it has pi and inf.

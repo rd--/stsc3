@@ -61,13 +61,9 @@ scBinaryArgumentRewriteTemporaries :: ScBinaryArgument -> ScBinaryArgument
 scBinaryArgumentRewriteTemporaries (ScBinaryArgument p m) =
   ScBinaryArgument (scPrimaryRewriteTemporaries p) (fmap (map scDotMessageRewriteTemporaries) m)
 
-scKeywordArgumentRewriteTemporaries :: ScKeywordArgument -> ScKeywordArgument
-scKeywordArgumentRewriteTemporaries (ScKeywordArgument k v) =
-  ScKeywordArgument k (scBasicExpressionRewriteTemporaries v)
-
 scDotMessageRewriteTemporaries :: ScDotMessage -> ScDotMessage
 scDotMessageRewriteTemporaries (ScDotMessage i a) =
-  ScDotMessage i (map scKeywordArgumentRewriteTemporaries a)
+  ScDotMessage i (map scBasicExpressionRewriteTemporaries a)
 
 scBinaryMessageRewriteTemporaries :: ScBinaryMessage -> ScBinaryMessage
 scBinaryMessageRewriteTemporaries (ScBinaryMessage i a) =

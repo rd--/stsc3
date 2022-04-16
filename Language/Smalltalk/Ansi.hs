@@ -955,6 +955,9 @@ numberEither f1 f2 n =
     Int x -> f1 x
     Float x -> f2 x
 
+numberFloat :: Number -> Double
+numberFloat = numberEither fromIntegral id
+
 {- | <number> ::= integer | float | scaledDecimal
 
 > map (stParse number) (words "1 1.2")
