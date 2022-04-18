@@ -1,5 +1,8 @@
 # Remainder
 
+- Sc
+  + allow self for this
+  + dictionary expressions at Ast
 - build graphs in smalltalk
 - .stc to .st translator writing SinOsc(f, p) as (SinOsc freq: f phase: p)
 - .stc to .sc translator writing f(x) as f.apply(x)
