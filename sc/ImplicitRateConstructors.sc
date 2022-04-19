@@ -62,6 +62,7 @@
 + NumOutputBuses { *new { ^NumOutputBuses.performList('scalar'.rateToSelector, []) } }
 + Osc { *new { arg bufnum = 0.0, freq = 440.0, phase = 0.0; ^Osc.performList('audio'.rateToSelector, [bufnum, freq, phase]) } }
 + PanB { *new { arg in = 0.0, azimuth = 0.0, elevation = 0.0, gain = 1.0; ^PanB.performList('audio'.rateToSelector, [in, azimuth, elevation, gain]) } }
++ Perlin3 { *new { arg x = 0.0, y = 0.0, z = 0.0; ^Perlin3.performList('audio'.rateToSelector, [x, y, z]) } }
 + Phasor { *new { arg trig = 0.0, rate = 1.0, start = 0.0, end = 1.0, resetPos = 0.0; ^Phasor.performList('audio'.rateToSelector, [trig, rate, start, end, resetPos]) } }
 + PinkNoise { *new { ^PinkNoise.performList('audio'.rateToSelector, []) } }
 + Pitch { *new { arg in = 0.0, initFreq = 440.0, minFreq = 60.0, maxFreq = 4000.0, execFreq = 100.0, maxBinsPerOctave = 16.0, median = 1.0, ampThreshold = 1.0e-2, peakThreshold = 0.5, downSample = 1.0, clar = 0.0; ^Pitch.performList('control'.rateToSelector, [in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample, clar]) } }

@@ -299,6 +299,9 @@
   twoZero: freq value: radius
     ^TwoZero in: self freq: freq radius: radius
   !
+  vbJonVerb: decay value: damping value: inputbw value: erfl value: tail
+    ^VBJonVerb in: self decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail
+  !
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
   !
@@ -635,6 +638,9 @@
   twoZero: freq value: radius
     ^TwoZero in: self freq: freq radius: radius
   !
+  vbJonVerb: decay value: damping value: inputbw value: erfl value: tail
+    ^VBJonVerb in: self decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail
+  !
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
   !
@@ -892,6 +898,9 @@
   !
   panB: azimuth value: elevation value: gain
     ^PanB in: self azimuth: azimuth elevation: elevation gain: gain
+  !
+  perlin3: y value: z
+    ^Perlin3 x: self y: y z: z
   !
   phasor: rate value: start value: end value: resetPos
     ^Phasor trig: self rate: rate start: start end: end resetPos: resetPos

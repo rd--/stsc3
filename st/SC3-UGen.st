@@ -6590,6 +6590,50 @@ PeakFollower comment: 'Track peak signal amplitude.'!
   primaryFactoryMethod ^#in:decay:!
 !
 
+UGen subclass: #Perlin3
+  instanceVariableNames: 'x y z'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+Perlin3 comment: '3D Perlin Noise'!
+
+!Perlin3 methodsFor: 'accessing'!
+  x ^x!
+  x: xValue x := xValue!
+  y ^y!
+  y: x y := x!
+  z ^z!
+  z: x z := x!
+!
+
+!Perlin3 methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #Perlin3.
+    paramNames := #(#x #y #z).
+    mceNames := #().
+    ugenRate := #ar.
+    numChan := 1.
+    specialIndex := 0.
+    ugenId := nil.
+    x := 0.0. y := 0.0. z := 0.0!
+!
+
+
+!Perlin3 class methodsFor: 'instance creation'!
+  x: x y: y z: z
+    |u|
+    u := self new.
+    u x: x.
+    u y: y.
+    u z: z.
+    ^u!
+  x: x y: y z: z mul: mul ^(Perlin3 x: x y: y z: z) * mul!
+  x: x y: y z: z mul: mul add: add ^(Perlin3 x: x y: y z: z) * mul + add!
+  primaryFactoryMethod ^#x:y:z:!
+!
+
 UGen subclass: #Phasor
   instanceVariableNames: 'trig rate start end resetPos'
   classVariableNames: ''
@@ -8761,6 +8805,59 @@ VarSaw comment: 'Variable duty saw'!
   freq: freq iphase: iphase width: width mul: mul ^(VarSaw freq: freq iphase: iphase width: width) * mul!
   freq: freq iphase: iphase width: width mul: mul add: add ^(VarSaw freq: freq iphase: iphase width: width) * mul + add!
   primaryFactoryMethod ^#freq:iphase:width:!
+!
+
+UGen subclass: #VBJonVerb
+  instanceVariableNames: 'in decay damping inputbw erfl tail'
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: 'Sound-SC3'!
+
+VBJonVerb comment: 'artifical reverberator'!
+
+!VBJonVerb methodsFor: 'accessing'!
+  in ^in!
+  in: x in := x!
+  decay ^decay!
+  decay: x decay := x!
+  damping ^damping!
+  damping: x damping := x!
+  inputbw ^inputbw!
+  inputbw: x inputbw := x!
+  erfl ^erfl!
+  erfl: x erfl := x!
+  tail ^tail!
+  tail: x tail := x!
+!
+
+!VBJonVerb methodsFor: 'initialization'!
+  initialize
+    super initialize.
+    ugenName := #VBJonVerb.
+    paramNames := #(#in #decay #damping #inputbw #erfl #tail).
+    mceNames := #().
+    ugenRate := #(0).
+    numChan := 2.
+    specialIndex := 0.
+    ugenId := nil.
+    in := 0.0. decay := 0.6. damping := 0.3. inputbw := 0.8. erfl := 0.5. tail := 0.5!
+!
+
+
+!VBJonVerb class methodsFor: 'instance creation'!
+  in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail
+    |u|
+    u := self new.
+    u in: in.
+    u decay: decay.
+    u damping: damping.
+    u inputbw: inputbw.
+    u erfl: erfl.
+    u tail: tail.
+    ^u!
+  in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail mul: mul ^(VBJonVerb in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail) * mul!
+  in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail mul: mul add: add ^(VBJonVerb in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail) * mul + add!
+  primaryFactoryMethod ^#in:decay:damping:inputbw:erfl:tail:!
 !
 
 UGen subclass: #Vibrato

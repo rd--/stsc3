@@ -56,14 +56,14 @@ ugen =
   ,"MantissaMask","MaxLocalBufs","Median","ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
   ,"Normalizer","NRand","NumOutputBuses"
   ,"OnePole","OneZero","Osc","Out"
-  ,"Pan2","PanAz","PanB","PeakFollower","Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
+  ,"Pan2","PanAz","PanB","PeakFollower","Perlin3", "Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
   ,"PV_RandComb"
   ,"QuadL","QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax","RunningSum"
   ,"Rotate2"
   ,"SampleDur","SampleRate","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
-  ,"VarSaw","Vibrato"
+  ,"VarSaw","VBJonVerb", "Vibrato"
   ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"
   ,"XFade2","XLine"
   ,"ZeroCrossing"
@@ -88,7 +88,7 @@ is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)
 main :: IO ()
 main = do
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
-  Js.js_sc3_gen_bindings_wr "/home/rohan/sw/jssc3/js/sc3-bindings.js" Js.js_sc3_uop Js.js_sc3_binop ugen
+  Js.js_sc3_gen_bindings_wr True "/home/rohan/sw/jssc3/js/sc3-bindings.ts" Js.js_sc3_uop Js.js_sc3_binop ugen
   let col = map u_lookup_cs_err ugen
       flt = filter Record.u_is_filter col
       osc = filter is_osc col

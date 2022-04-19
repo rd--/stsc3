@@ -96,6 +96,7 @@
 + Trig1 { *new { arg in = 0.0, dur = 0.1;^Trig1.performList(in.rate.rateToSelector, [in, dur]) } }
 + TwoPole { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoPole.performList(in.rate.rateToSelector, [in, freq, radius]) } }
 + TwoZero { *new { arg in = 0.0, freq = 440.0, radius = 0.8;^TwoZero.performList(in.rate.rateToSelector, [in, freq, radius]) } }
++ VBJonVerb { *new { arg in = 0.0, decay = 0.6, damping = 0.3, inputbw = 0.8, erfl = 0.5, tail = 0.5;^VBJonVerb.performList(in.rate.rateToSelector, [in, decay, damping, inputbw, erfl, tail]) } }
 + Wrap { *new { arg in = 0.0, lo = 0.0, hi = 1.0;^Wrap.performList(in.rate.rateToSelector, [in, lo, hi]) } }
 + WrapIndex { *new { arg bufnum = 0.0, in = 0.0;^WrapIndex.performList(in.rate.rateToSelector, [bufnum, in]) } }
 + XFade2 { *new { arg inA = 0.0, inB = 0.0, pan = 0.0, level = 1.0;^XFade2.performList(inA.rate.rateToSelector, [inA, inB, pan, level]) } }
