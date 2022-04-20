@@ -121,25 +121,26 @@ expression :: { ScExpression }
 
 syntax_atput :: { ScBasicExpression }
         : primary '[' basicexpression ']'
-          '=' basicexpression                  { ScBasicExpression $1 (Just (ScMessagesDot [ScDotMessage "at:put" [$3, $6]] Nothing)) }
+          '=' basicexpression                  { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
 
 basicexpression :: { ScBasicExpression }
         : primary maybe_messages               { ScBasicExpression $1 $2 }
-        | syntax_dictionary maybe_messages     { ScBasicExpression (scBasicExpressionToPrimary $1) $2 }
+        | dictionaryexpression maybe_messages  { ScBasicExpression $1 $2 }
 
-syntax_dictionary :: { ScBasicExpression }
-        : '(' syntax_association_seq ')'       { ScBasicExpression
-                                                  (ScPrimaryIdentifier "Dictionary")
-                                                  (Just (ScMessagesDot [ScDotMessage "newFromPairs"
-                                                    [ScBasicExpression (ScPrimaryArrayExpression $2) Nothing]] Nothing)) }
+dictionaryexpression :: { ScPrimary }
+        : '(' keywordexpression_seq ')'       { ScPrimaryDictionaryExpression $2 }
 
-syntax_association_seq :: { [ScBasicExpression] }
+keywordexpression_seq :: { [(St.Identifier, ScBasicExpression)] }
         : {- empty -}                          { [] }
-        | syntax_association                   { $1 }
-        | syntax_association ',' syntax_association_seq { $1 ++ $3 }
+        | nonemptykeywordexpression_seq        { $1 }
 
-syntax_association :: { [ScBasicExpression] }
-        : keyword basicexpression              { [ScBasicExpression (ScPrimaryLiteral (St.SymbolLiteral $1)) Nothing, $2] }
+nonemptykeywordexpression_seq :: { [(St.Identifier, ScBasicExpression)] }
+        : keywordexpression                    { [$1] }
+        | keywordexpression
+          ',' keywordexpression_seq            { $1 : $3 }
+
+keywordexpression :: { (St.Identifier, ScBasicExpression) }
+        : keyword basicexpression              { ($1, $2) }
 
 maybe_messages :: { Maybe ScMessages }
         : {- empty -}                          { Nothing }
@@ -196,6 +197,8 @@ primary :: { ScPrimary }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
         | identifier '(' arrayexpression ')'   { ScPrimaryImplicitMessageSend $1 $3 }
+        | identifier
+          '(' nonemptykeywordexpression_seq ')' { scPrimaryKeywordMessageSend $1 $3 }
 
 reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }

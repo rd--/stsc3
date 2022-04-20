@@ -278,30 +278,30 @@ DirectoryChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') 
 FileChooserDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') pattern: '*.st' label: 'Select:'
 FileSaverDialog openOn: (FileDirectory on: '/home/rohan/sw/stsc3/help/') initialFilename: 'x.st' label: 'Select:'
 
-UIManager default chooseDirectory
-UIManager default chooseFrom: #(select from list) "few items = buttons"
-UIManager default chooseFrom: ((100 to: 125) asArray) "many items = list"
-UIManager default confirm: 'really?'
-UIManager default confirm: 'really?' orCancel: [Transcript show: 'cancel' ; cr]
-UIManager default edit: 'edit text'
-UIManager default edit: 'edit text' label: 'make changes?' accept: [:x | Transcript show: x ; cr]
-UIManager default inform: 'the information'
-UIManager default request: 'name?'
-UIManager default requestPassword: 'pwd?'
+Project uiManager chooseDirectory
+Project uiManager chooseFrom: #(select from list) "few items = buttons"
+Project uiManager chooseFrom: ((100 to: 125) asArray) "many items = list"
+Project uiManager confirm: 'really?'
+Project uiManager confirm: 'really?' orCancel: [Transcript show: 'cancel' ; cr]
+Project uiManager edit: 'edit text'
+Project uiManager edit: 'edit text' label: 'make changes?' accept: [:x | Transcript show: x ; cr]
+Project uiManager inform: 'the information'
+Project uiManager request: 'name?'
+Project uiManager requestPassword: 'pwd?'
 
 "squeak=yes pharo=no"
-UIManager default chooseClassOrTrait
-UIManager default chooseDirectoryFrom: (FileDirectory on: '/home/rohan/sw/stsc3/help/')
-UIManager default chooseFileMatching: nil
-UIManager default chooseFileMatchingSuffixes: #('st')
-UIManager default chooseFromLabeledValues: (Dictionary newFromPairs: #(select x from y list z))
-UIManager default chooseMultipleFrom: #(select multiple from list)
-UIManager default multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type text' answerHeight: 600
-UIManager default saveFilenameRequest: 'save file' initialAnswer: 'x.st'
+Project uiManager chooseClassOrTrait
+Project uiManager chooseDirectoryFrom: (FileDirectory on: '/home/rohan/sw/stsc3/help/')
+Project uiManager chooseFileMatching: nil
+Project uiManager chooseFileMatchingSuffixes: #('st')
+Project uiManager chooseFromLabeledValues: (Dictionary newFromPairs: #(select x from y list z))
+Project uiManager chooseMultipleFrom: #(select multiple from list)
+Project uiManager multiLineRequest: 'text' centerAt: Sensor peekPosition initialAnswer: 'type text' answerHeight: 600
+Project uiManager saveFilenameRequest: 'save file' initialAnswer: 'x.st'
 
 "pharo=yes squeak=no"
-UIManager default chooseDirectoryFrom: ('/home/rohan/sw/stsc3/help/' asFileReference)
-UIManager default chooseFullFileNameMatching: nil
+Project uiManager chooseDirectoryFrom: ('/home/rohan/sw/stsc3/help/' asFileReference)
+Project uiManager chooseFullFileNameMatching: nil
 
 "Squeak ; Projects"
 
@@ -381,7 +381,7 @@ CrLfFileEditor openOn: 'string to edit' withLabel: 'window label' inDirectory: F
 
 FileList2 modalFileSelectorForSuffixes: #(st) directory: (FileDirectory on: '/home/rohan/sw/stsc3/help/'). "file chooser on dir"
 
-'a text' edit. "=> UIManager default edit: 'edit text'"
+'a text' edit. "=> Project uiManager edit: 'edit text'"
 
 Display writePNGfileNamed: '/tmp/display.png'. "squeak ; screenshot"
 

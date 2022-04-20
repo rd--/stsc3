@@ -100,6 +100,7 @@ scPrimaryRewriteTemporaries p =
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewriteTemporaries x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewriteTemporaries x)
     ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map scBasicExpressionRewriteTemporaries x)
+    ScPrimaryDictionaryExpression x -> ScPrimaryDictionaryExpression (map (\(k, v) -> (k, scBasicExpressionRewriteTemporaries v)) x)
     ScPrimaryImplicitMessageSend x a -> ScPrimaryImplicitMessageSend x (map scBasicExpressionRewriteTemporaries a)
 
 -- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.

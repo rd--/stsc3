@@ -52,7 +52,7 @@ This is not, however, compatible with SuperCollider notation, where _f(p, q)_ ha
 
 The C-Smalltalk syntax allows message names to have interior colon (_:_) characters.
 
-_c.at:put(i, j)_ translates to _c at: i put: j_.
+_collection.at:put(key, value)_ translates to _collection at: key put: value_.
 
 In addition, if the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts.
 
@@ -61,6 +61,17 @@ _f.value(i, j)_ translates as _f value: i value: j_ and _c.put(i, j)_ translates
 It is therefore possible to provide aliases for commonly used messages, i.e. _put:value:_ as an alias for _at:put:_.
 
 It is an error for the message name to have more parts than there are arguments, i.e. _r.p:q(i)_ is an error. [3]
+
+## Keyword parameter notation
+
+In C-Smalltalk the notation _SinOsc(freq: 440, phase: 0)_ has the meaning _SinOsc.freq:phase(440, 0)_,
+which has the meaning _SinOsc freq: 440 phase: 0_.
+
+Likewise _collection(at: key, put: value)_ means _collection.at:put(key, value)_.
+
+In SuperCollider notation keyword arguments are a mechanism for sending a message as a _dictionary_,
+parameters may be provided out of order,
+and parameters that are elided receive _default_ values.
 
 ## Interspersed Unary and N-ary message sequences
 
@@ -71,18 +82,22 @@ This can result in a perspicuous notation for chains of message sends.
 _c.reverse.at(n).sorted.collect(f).display_ translates to
 _((c reverse at: n) sorted collect: f) display_.
 
-## Optional and Keyword Parameters
+## Optional Parameters and Default Values
 
-SuperCollider syntax includes optional and keyword parameters.  These are disallowed in C-Smalltalk.
-
-They could be allowed for implicit message sends and checked against the primaryFactoryMethod.
-
-However in cases where keyword arguments are appropriate, ordinary Smalltalk syntax is preferred.
+SuperCollider syntax includes optional parameters with default values.  These are disallowed in C-Smalltalk.
 
 ## Translation
 
 C-Smalltalk can be used as a notation for _Scheme-like_ languages.
+
 Unary messages _p.q_ are translated as _q(p)_, operators _p + q_ as _+(p, q)_, and n-ary messages _p.q(r, s)_ as _q(p, r, s)_.
+
+Note that the final _:_ is elided, _p.q(r)_ is not translated as _q:(p, r)_.
+
+Note also that trailing _value:_ elements of selectors are elided, _p.q(r, s)_ is not translated as _q:value(p, r, s)_.
+
+In addition there may be a rule to translate selectors, for instance from _at:put_ to _atPut_.
+
 _stsc3_ includes a [translator](https://rohandrape.net/pub/stsc3/html/stc-to-js.html) from C-Smalltalk to Javascript.
 
 ## Unary and binary message selectors
@@ -104,8 +119,8 @@ The _at:put:_ syntax constructs forms an _expression_, at the same syntax level 
 In addition to the literal _Array_ notation _#(1 2 3)_ most Smalltalks allow the array notation _{p. q. r}_ meaning _Array with: p with: q with: r_.
 C-Smalltalk writes this as _[p, q, r]_.
 
-In addition C-Smalltalk has a notation for _Dictionaries_.
-The expression _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
+In addition C-Smalltalk has a notation for writing _Dictionary_ expressions,
+_(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
 or _Dictionary newFromPairs: {#'a'. 1. #'b'. 2}_.
 This notation requires keys to be identifiers.
 
@@ -127,7 +142,7 @@ Rand(0,9) // a Rand
 {var r = Rand; r(0,9)}.value // error: r not understood by 0
 ````
 
-It is not as common for non Class_ objects to understand _primaryFactoryMethod_,
+It is not as common for non _Class_ objects to understand _primaryFactoryMethod_,
 however _arg c; c(...);_ is a common idiom where c is a class object.
 
 4: Implicit keyword message names are not a form of variable arity messages.

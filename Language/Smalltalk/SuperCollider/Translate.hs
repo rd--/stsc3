@@ -66,6 +66,7 @@ scPrimarySt p =
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
     ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
     ScPrimaryArrayExpression x -> St.PrimaryArrayExpression (map scBasicExpressionSt x)
+    ScPrimaryDictionaryExpression x -> scPrimarySt (scBasicExpressionToPrimary (scDictionaryToBasicExpression x))
     ScPrimaryImplicitMessageSend x a -> scImplicitMessageSendSt x a
 
 scBlockBodySt :: ScBlockBody -> St.BlockBody

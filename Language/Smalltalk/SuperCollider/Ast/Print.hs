@@ -29,6 +29,7 @@ scPrimaryPrint p =
     ScPrimaryBlock x -> inBraces (scBlockBodyPrint x)
     ScPrimaryExpression x -> inParen (scExpressionPrint x)
     ScPrimaryArrayExpression x -> inBrackets (scBasicExpressionSeqPrint x)
+    ScPrimaryDictionaryExpression x -> scBasicExpressionPrint (scDictionaryToBasicExpression x)
     ScPrimaryImplicitMessageSend x a -> x ++ inParen (scBasicExpressionSeqPrint a)
 
 scJoin :: [String] -> String

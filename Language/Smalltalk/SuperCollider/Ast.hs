@@ -147,8 +147,11 @@ scExpressionToPrimary e =
     ScExprBasic b -> scBasicExpressionToPrimary b
     _ -> ScPrimaryExpression e
 
+scIdentifierToBasicExpression :: St.Identifier -> ScBasicExpression
+scIdentifierToBasicExpression i = ScBasicExpression (ScPrimaryIdentifier i) Nothing
+
 scIdentifierToExpression :: St.Identifier -> ScExpression
-scIdentifierToExpression i = ScExprBasic (ScBasicExpression (ScPrimaryIdentifier i) Nothing)
+scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
 
 {- | Constructor for dot message send.
 
@@ -156,6 +159,22 @@ scIdentifierToExpression i = ScExprBasic (ScBasicExpression (ScPrimaryIdentifier
 -}
 scConstructDotMessage :: St.Identifier -> [ScBasicExpression] -> ScMessages
 scConstructDotMessage selector arguments = ScMessagesDot [ScDotMessage selector arguments] Nothing
+
+scConstructDotMessageSend :: ScPrimary -> St.Identifier -> [ScBasicExpression]  -> ScBasicExpression
+scConstructDotMessageSend receiver selector arguments =
+  ScBasicExpression receiver (Just (scConstructDotMessage selector arguments))
+
+scDictionaryToBasicExpression :: [(St.Identifier, ScBasicExpression)] -> ScBasicExpression
+scDictionaryToBasicExpression associationsArray =
+  let f (key, value) = [scIdentifierToBasicExpression key, value]
+      arrayExpression = ScPrimaryArrayExpression (concatMap f associationsArray)
+  in scConstructDotMessageSend (ScPrimaryIdentifier "Dictionary") "newFromPairs" [ScBasicExpression arrayExpression Nothing]
+
+scPrimaryKeywordMessageSend :: St.Identifier -> [(St.Identifier, ScBasicExpression)] -> ScPrimary
+scPrimaryKeywordMessageSend receiver parameters =
+  let selector = intercalate ":" (map fst parameters)
+      arguments = map snd parameters
+  in scBasicExpressionToPrimary (scConstructDotMessageSend (ScPrimaryIdentifier receiver) selector arguments)
 
 {- | 3.4.5.2 Reuse the Smalltalk Literal type.
      The Sc notation "x(...)" is an implicit message send.
@@ -166,6 +185,7 @@ data ScPrimary
   | ScPrimaryBlock ScBlockBody
   | ScPrimaryExpression ScExpression
   | ScPrimaryArrayExpression [ScBasicExpression]
+  | ScPrimaryDictionaryExpression [(St.Identifier, ScBasicExpression)]
   | ScPrimaryImplicitMessageSend St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
 
