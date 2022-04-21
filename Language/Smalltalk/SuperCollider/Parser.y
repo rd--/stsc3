@@ -41,7 +41,6 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 
       identifier      { Identifier $$ }
       keyword         { Keyword $$ }
-      narymessagename { NaryMessageName $$ }
       binaryselector  { BinarySelector $$ }
       float           { Float $$ }
       integer         { Integer $$ }
@@ -91,14 +90,13 @@ binaryoperator :: { String }
 
 methoddefinition :: { ScMethodDefinition }
         : '*' identifier '{' blockbody '}'     { ScMethodDefinition True $2 $4 }
-        | identifier_or_binaryoperator_or_narymessagename
+        | identifier_or_binaryoperator
           '{' blockbody '}'                    { ScMethodDefinition False $1 $3 }
 
 
-identifier_or_binaryoperator_or_narymessagename :: { String }
+identifier_or_binaryoperator :: { String }
         : identifier                           { $1 }
         | binaryoperator                       { $1 }
-        | narymessagename                      { $1 }
 
 maybe_classvariables :: { Maybe [ScVariable] }
         : {- empty -}                          { Nothing }
@@ -162,7 +160,7 @@ dotmessage_seq :: { [ScDotMessage] }
 dotmessage :: { ScDotMessage }
         : '.' identifier                       { ScDotMessage $2 []}
         | '.' identifier message_param         { ScDotMessage $2 $3}
-        | '.' narymessagename message_param    { ScDotMessage $2 $3}
+        | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
         | syntax_at                            { $1 }
 
 syntax_at :: { ScDotMessage }
@@ -170,6 +168,13 @@ syntax_at :: { ScDotMessage }
 
 message_param :: { [ScBasicExpression] }
         : '(' basicexpression_seq ')'          { $2 }
+
+keywordmessage_param :: { (ScBasicExpression, [(St.Identifier, ScBasicExpression)]) }
+        : '('
+          basicexpression
+          ','
+          nonemptykeywordexpression_seq
+          ')'                                  { ($2, $4) }
 
 basicexpression_seq :: { [ScBasicExpression] }
         : basicexpression                         { [$1] }

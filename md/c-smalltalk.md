@@ -24,8 +24,6 @@ C-Smalltalk utilises a subset of the SuperCollider syntax as an alternate notati
 
 C-Smalltalk programs will not ordinarily be valid SuperCollider programs without extending the SuperCollider class library.
 
-In addition C-Smalltalk has one syntactic extension (colons within message names) that is incompatible with SuperCollider.
-
 ## Implicit primary message notation
 
 The notation _SinOsc(440, 0)_ is allowed in SuperCollider, where it has the meaning _SinOsc.new(440, 0)_.
@@ -48,30 +46,32 @@ If _BlockClosure_ has an instance definition of _apply:_ defined as _valueWithAr
 then the notation _f(p, q)_ where _f_ is a block has the meaning _f value: p value: q_.
 This is not, however, compatible with SuperCollider notation, where _f(p, q)_ has the meaning _p.f(q)_.
 
-## N-ary methods and implicit keyword message names
+## Implicit keyword message names
 
-The C-Smalltalk syntax allows message names to have interior colon (_:_) characters.
-
-_collection.at:put(key, value)_ translates to _collection at: key put: value_.
-
-In addition, if the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts.
+If the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts.
 
 _f.value(i, j)_ translates as _f value: i value: j_ and _c.put(i, j)_ translates as _c put: i value: j_.
 
 It is therefore possible to provide aliases for commonly used messages, i.e. _put:value:_ as an alias for _at:put:_.
 
-It is an error for the message name to have more parts than there are arguments, i.e. _r.p:q(i)_ is an error. [3]
-
 ## Keyword parameter notation
 
-In C-Smalltalk the notation _SinOsc(freq: 440, phase: 0)_ has the meaning _SinOsc.freq:phase(440, 0)_,
+The C-Smalltalk notation _collection.at(key, put: value)_ means _collection at: key put: value_.
+The message selector is _at:key:_.
+The first parameter _must not_ have a keyword and _all_ following parameters _must_ have a keyword.
+
+The C-Smalltalk notation _SinOsc(freq: 440, phase: 0)_ has the meaning _SinOsc.freq(440, phase: 0)_,
 which has the meaning _SinOsc freq: 440 phase: 0_.
 
-Likewise _collection(at: key, put: value)_ means _collection.at:put(key, value)_.
+Likewise _collection(at: key, put: value)_ means _collection.at(key, put: value)_.
+
+## Optional Parameters and Default Values
 
 In SuperCollider notation keyword arguments are a mechanism for sending a message as a _dictionary_,
 parameters may be provided out of order,
 and parameters that are elided receive _default_ values.
+
+These are disallowed in C-Smalltalk.
 
 ## Interspersed Unary and N-ary message sequences
 
@@ -81,10 +81,6 @@ This can result in a perspicuous notation for chains of message sends.
 
 _c.reverse.at(n).sorted.collect(f).display_ translates to
 _((c reverse at: n) sorted collect: f) display_.
-
-## Optional Parameters and Default Values
-
-SuperCollider syntax includes optional parameters with default values.  These are disallowed in C-Smalltalk.
 
 ## Translation
 
@@ -121,7 +117,7 @@ C-Smalltalk writes this as _[p, q, r]_.
 
 In addition C-Smalltalk has a notation for writing _Dictionary_ expressions,
 _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
-or _Dictionary newFromPairs: {#'a'. 1. #'b'. 2}_.
+or _Dictionary newFromPairs: {#a. 1. #b. 2}_.
 This notation requires keys to be identifiers.
 
 * * *

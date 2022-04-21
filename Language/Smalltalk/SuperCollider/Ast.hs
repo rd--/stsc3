@@ -153,7 +153,7 @@ scIdentifierToBasicExpression i = ScBasicExpression (ScPrimaryIdentifier i) Noth
 scIdentifierToExpression :: St.Identifier -> ScExpression
 scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
 
-{- | Constructor for dot message send.
+{- | Constructor for dot message.
 
 > scConstructDotMessage "at:" [ScBasicExpression (ScPrimaryIdentifier "key") Nothing]
 -}
@@ -210,6 +210,12 @@ scDotMessageIsNary (ScDotMessage _ m) = not (null m)
 -- | Are any messages in the sequence n-ary messages.
 scDotMessagesHaveNary :: [ScDotMessage] -> Bool
 scDotMessagesHaveNary = any scDotMessageIsNary
+
+scDotMessageFromKeywordParam :: St.Identifier -> (ScBasicExpression, [(St.Identifier, ScBasicExpression)]) -> ScDotMessage
+scDotMessageFromKeywordParam initialSelector (initalParam, keywordParam) =
+  let selector = concat [initialSelector, ":", concatMap fst keywordParam]
+      param = initalParam : map snd keywordParam
+  in ScDotMessage selector param
 
 data ScBinaryMessage =
   ScBinaryMessage St.BinaryIdentifier ScBinaryArgument

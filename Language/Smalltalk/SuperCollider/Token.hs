@@ -20,8 +20,7 @@ data Token =
   | ThisIdentifier
 
   | Identifier String
-  | Keyword String -- for dictionary syntax, c.f. (a: 1, b: 2)
-  | NaryMessageName String -- .stc
+  | Keyword String
   | BinarySelector String
   | ReturnOperator
   | AssignmentOperator

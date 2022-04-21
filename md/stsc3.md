@@ -93,7 +93,7 @@ and can be used to translate SuperCollider programs to Smalltalk programs.
 
 In both cases the translator reads the source text from `stdin` and writes the the translated text to `stdout`, unless named files are given.
 
-````
+~~~~
 $ stsc3 -h | grep translate
  translate {stc | sc} st [input-file output-file]
 $ stsc3 translate stc st < help/graph/jmcc-analog-bubbles.stc
@@ -106,6 +106,8 @@ SinOsc(440, 0);
 (SinOsc apply: {440. 0}).
 SinOsc(freq: 440, phase: 0);
 (SinOsc freq: 440 phase: 0).
+collection.at(key, put: value);
+collection at: key put: value.
 ...
 $
-````
+~~~~
