@@ -144,7 +144,7 @@ scMethodDefinitionPrint (ScMethodDefinition classSide name body) =
 scClassDefinitionPrint :: ScClassDefinition -> String
 scClassDefinitionPrint (ScClassDefinition nm sc iv cv mt) =
   scJoin
-  [scJoin [nm, maybePrint (' ':) sc]
+  [scJoin [nm, maybePrint (" : " ++) sc]
   ," "
   ,inBraces
     (scJoin

@@ -1,9 +1,9 @@
 # C-Smalltalk
 
-C-Smalltalk is  C-like syntax for [Smalltalk](https://squeak.org/).
-C-Smalltalk is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) syntax.
+C-Smalltalk is  C-like notation for [Smalltalk](https://squeak.org/).
+C-Smalltalk is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) notation.
 
-C-Smalltalk syntax is an interesting complement to Smalltalk syntax.
+C-Smalltalk notation is an interesting complement to Smalltalk notation.
 
 It supports:
 
@@ -12,13 +12,14 @@ It supports:
 - a two-level precedence model (unary and n-ary messages bind equally and more closely than binary messages)
 - implicit grouping of message argument expressions
 - a notation for binding variables when they are declared
+- a notation for writing class definitions and for extending existing classes
 
 C-Smalltalk files have the extension _.stc_.
 
 The _stc_ Emacs mode includes keybindings to translate C-Smalltalk expressions to Smalltalk,
 and then forward the translation to a Smalltalk interpreter.
 
-## Relation to SuperCollider Syntax
+## Relation to SuperCollider
 
 C-Smalltalk utilises a subset of the SuperCollider syntax as an alternate notation for writing Smalltalk programs.
 
@@ -104,13 +105,13 @@ The first case translates as _q(p)_ and the second as _q(p, r)_.
 This requires _q_ to have two arities, and while many scheme-like languages will allow this, it is an unnecessary complication.
 For this reason, if translation is desired, unary and binary message selectors should be named so that they translate distinctly.
 
-## Syntax for the _at:_ and _at:put:_ protocol
+## Notation for the _at:_ and _at:put:_ protocol
 
 The C-like notations _p[q]_ and _p[q] = r_ translate as _p at: q_ and _p at: q put: r_ respectively.
 This protocol is very widely implemented and a concise and familiar notation seems useful.
-The _at:put:_ syntax constructs forms an _expression_, at the same syntax level as the _assignment_ syntax.
+The _at:put:_ notation forms an _expression_, at the same syntax level as the _assignment_ syntax.
 
-## Syntax for _Array_ and _Dictionary_ expressions
+## Notation for _Array_ and _Dictionary_ expressions
 
 In addition to the literal _Array_ notation _#(1 2 3)_ most Smalltalks allow the array notation _{p. q. r}_ meaning _Array with: p with: q with: r_.
 C-Smalltalk writes this as _[p, q, r]_.
@@ -119,6 +120,16 @@ In addition C-Smalltalk has a notation for writing _Dictionary_ expressions,
 _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
 or _Dictionary newFromPairs: {#a. 1. #b. 2}_.
 This notation requires keys to be identifiers.
+
+# Notation for class definitions
+
+The notation _c : p { var v; m { ^nil } }_ defines a class _c_, which is a subclass of _p_, with an instance variable _v_ and an instance method _m_.
+
+The notation _c { classvar v; *m { ^nil } }_ defines a class _c_, with an class variable _v_ and an class method _m_.
+
+Class variables must precede instance variables and class methods must precede instance methods.
+
+The notation _+ c { m { ^nil } }_ adds an instance method _m_ to the existing class _c_.
 
 * * *
 

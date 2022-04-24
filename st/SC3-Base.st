@@ -1,33 +1,34 @@
 !SequenceableCollection methodsFor: 'rearranging'!
-  transpose
-    "Transpose rows and columns of two-dimensional array.
-     The number of columns is inferred from the size of the first element of the collection."
+transpose
+    "Transpose my rows and columns (I am a two-dimensional array).
+     My number of columns is inferred from the size of the my first element."
     ^(1 to: self first size) collect: [:c | self collect: [:r | r at: c]]
-  !
-  groupsOf: n
-    "My elements taken n at a time. Ignore any leftovers at the end."
-    ^(n to: self size by: n) collect: [:index | self copyFrom: index - n + 1 to: index]
-  !
-  withExtending: other collect: aBlock
+!
+groupsOf: groupSize
+    "My elements taken groupSize at a time. Ignore any leftovers at the end."
+    ^(groupSize to: self size by: groupSize) collect: [:index | self copyFrom: index - groupSize + 1 to: index]
+!
+withExtending: other collect: aBlock
     "Like with:collect: but cycle shorter list."
     | n |
     n := self size max: other size.
     ^(1 to: n) collect: [ :index | aBlock value: (self atWrap: index) value: (other atWrap: index) ]
+!
+extendCyclically: answerSize
+    "Myself extended to answerSize places by cycling"
+    ^(1 to: answerSize) collect: [ :index | self atWrap: index ]
   !
-  extendCyclically: n
-    "Myself extended to n places by cycling"
-    ^(1 to: n) collect: [ :index | self atWrap: index ]
-  !
-  extendToBeOfEqualSize
+extendToBeOfEqualSize
     "All of my collections extended to to be of the same size as my largest collection"
-    | n |
-    n := (self collect: [ :e | e size ]) max.
-    ^self collect: [ :e | e extendCyclically: n ]
-  !
-  ++ otherCollection
+    | maximumSize |
+    maximumSize := (self collect: [ :e | e size ]) max.
+    ^self collect: [ :e | e extendCyclically: maximumSize ]
+!
+++ otherCollection
+    "Myself with otherCollection appended.  Alias for ,"
     ^self , otherCollection
-  !
-  clump: groupSize
+!
+clump: groupSize
     "Array of myself partitioned into adjacent sequences of groupSize elements.  It is an error if I cannot be equally partitioned."
     | answerSize answer start |
     answerSize := (self size / groupSize) ceiling.
@@ -40,14 +41,14 @@
       start := end + 1
     ].
     ^answer
-  !
+!
 !
 
 !SequenceableCollection methodsFor: 'indexing'!
-  nth: index
-      "One indexing name. For .stc, since at: in Sc is zero-indexed."
-      ^self at: index
-  !
+nth: index
+    "Alias for at:. For .stc, since at: in Sc is zero-indexed."
+    ^self at: index
+!
 !
 
 !Array class methodsFor: 'enumerating'!

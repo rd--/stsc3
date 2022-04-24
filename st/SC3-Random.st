@@ -1,55 +1,55 @@
 !Integer methodsFor: 'randomness'!
-  rand
-    "Random Integer between 1 and self (inclusive), alias for atRandom"
+rand
+    "Generate a random integer between 1 and myself (inclusive).  Alias for atRandom."
     ^self atRandom
-  !
-  rand: n
-    "Random Integer between self and n (inclusive)"
-    ^(n - self + 1) atRandom + self - 1
-  !
-  rand2
-    "Random Integer between -self and self (inclusive)"
+!
+rand: upperBound
+    "Generate a random integer between myself and upperBound (inclusive)."
+    ^(upperBound - self + 1) atRandom + self - 1
+!
+rand2
+    "Generate a random integer between myself negated and myself (inclusive)."
     ^(self negated) rand: self
-  !
-  exprand: n
-    "Random Float with exponential distribution between self and n (inclusive)"
-    ^1.0 rand linExpFrom: self asFloat to: n asFloat.
-  !
+!
+exprand: upperBound
+    "Generate a random float with exponential distribution between myself and upperBound (inclusive)"
+    ^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.
+!
 !
 
 !Float methodsFor: 'randomness'!
-  rand
-    "Random Float between 0 and self (inclusive)"
+rand
+    "Generate a random float between 0 and myself (inclusive)"
     ^(100000000 atRandom / 100000000.0) * self
-  !
-  rand: n
-    "Random Float between self and n (inclusive)"
-    ^(100000000 atRandom / 100000000.0) * (n - self) + self
-  !
-  rand2
-    "Random Integer between -self and self (inclusive)"
+!
+ rand: upperBound
+    "Generate a random float between myself and upperBound (inclusive)"
+    ^(100000000 atRandom / 100000000.0) * (upperBound - self) + self
+!
+rand2
+    "Generate a random float between myself negated and myself (inclusive)"
     ^(self negated) rand: self
-  !
-  exprand: n
-    "Random Float with exponential distribution between self and n (inclusive)"
-    ^1.0 rand linExpFrom: self to: n.
-  !
-  coin
-    "With probability self, return true. With probability 1 - self, return false."
+!
+exprand: upperBound
+    "Generate a random float with exponential distribution between myself and upperBound (inclusive)"
+    ^1.0 rand linExpFrom: self to: upperBound.
+!
+coin
+    "With probability of mself, return true. With probability of 1 - myself, return false."
     ^1.0 rand < self
-  !
+!
 !
 
 !Array methodsFor: 'randomness'!
-  choose
-    "Random element of Array, alias for atRandom"
+choose
+    "Choose a random element of myself.  Alias for atRandom."
     ^self atRandom
-  !
+!
 !
 
 !Interval methodsFor: 'randomness'!
   choose
-    "Random element of Interval, alias for atRandom"
+    "Choose a random element of myself.  Alias for atRandom."
     ^self atRandom
   !
 !

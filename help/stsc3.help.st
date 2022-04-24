@@ -117,14 +117,20 @@ MessageNames openMessageNames. "open Message Names tool"
 1 rand: 5 "=> random Integer in 1 to 5"
 4 rand2 "=> random Integer in -4 to 4"
 
-100 arrayFill: [:i | 5 rand] "=> 100 random Integers in 0 to 5"
+100 arrayFill: [ 5 rand] "=> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 #(1 2 3 4 5) atRandom "random element of Array ; i.e. atRandom ; choose"
+#(1 2 3 4 5) choose "alias for atRandom"
 #(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
-100 arrayFill: [:i | #(1 2 3 4 5) atRandom] "=> 100 randomly chosen numbers"
-100 arrayFill: [:i | {#a. #b. #c. #d. #e} atRandom] "=> 100 randomly chosen symbols"
+100 arrayFill: [ #(1 2 3 4 5) atRandom] "=> 100 randomly chosen numbers"
+100 arrayFill: [ #('a' 'b' 'c' 'd' 'e') atRandom] "=> 100 randomly chosen strings"
+
+"Interval - Random"
+
+9 arrayFill: [ (1 to: 9) atRandom ] "=> array of 9 integers between 1 and 9"
+9 arrayFill: [ (1 to: 9) choose ] "alias for atRandom"
 
 "Array"
 
@@ -140,6 +146,12 @@ MessageNames openMessageNames. "open Message Names tool"
 (0 to: 4) mixFill: [:x | x * x] "=> 30 ; Sc and St disagree about indexing, mixFill is implemented at Interval"
 (1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
 (0 to: 4) collect: [:x | x * x] "=> #(0 1 4 9 16)"
+
+#(1 2 3 4 5) groupsOf: 2 "=>  #((1 2 ) (3 4))"
+#(1 2 3 4 5 6) clump: 2 "=>  #((1 2 ) (3 4) (5 6))"
+#(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
+#((1 2) (3 4 5)) extendToBeOfEqualSize "=> #((1 2 1 ) (3 4 5))"
+#(1 2 3) ++ #(4 5) "=> #(1 2 3 4 5)"
 
 (Array with: 1) = #(1)
 (Array with: 1 with: 2) = #(1 2)

@@ -72,8 +72,7 @@ classdefinition :: { ScClassDefinition }
           maybe_classvariables
           maybe_variables
           methoddefinition_seq
-          '}'                                   { ScClassDefinition $1 $2 $4 $5 $6 }
-
+          '}'                                   { ScClassDefinition $1 $2 $5 $4 $6 }
 
 maybe_superclass :: { Maybe St.Identifier }
         : {- empty -}                           { Nothing }
@@ -92,7 +91,6 @@ methoddefinition :: { ScMethodDefinition }
         : '*' identifier '{' blockbody '}'     { ScMethodDefinition True $2 $4 }
         | identifier_or_binaryoperator
           '{' blockbody '}'                    { ScMethodDefinition False $1 $3 }
-
 
 identifier_or_binaryoperator :: { String }
         : identifier                           { $1 }

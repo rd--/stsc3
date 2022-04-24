@@ -11,3 +11,4 @@ J : A { + { arg x; ^this.add(x) } * { arg x; ^this.mul(x) } / { arg x; ^this.div
 K : B { - { arg x; ^this - x } negate { arg x; ^0 - this } }
 L { stringWithoutNewline { ^"" } literalArray { ^#[] } }
 M { var p = 1, q = 'two', r = #[3.0, $4]; s { ^[p, q, r] } }
+c : p { var v; m { ^nil } }
