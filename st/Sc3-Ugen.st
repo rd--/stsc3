@@ -1,8 +1,8 @@
-UGen subclass: #AllpassC
+Ugen subclass: #AllpassC
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AllpassC comment: 'Schroeder allpass delay line with cubic interpolation.'!
 
@@ -45,11 +45,11 @@ AllpassC comment: 'Schroeder allpass delay line with cubic interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #AllpassL
+Ugen subclass: #AllpassL
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AllpassL comment: 'Schroeder allpass delay line with linear interpolation.'!
 
@@ -92,11 +92,11 @@ AllpassL comment: 'Schroeder allpass delay line with linear interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #AllpassN
+Ugen subclass: #AllpassN
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
 
@@ -139,11 +139,11 @@ AllpassN comment: 'Schroeder allpass delay line with no interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #AmpComp
+Ugen subclass: #AmpComp
   instanceVariableNames: 'freq root exp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
 
@@ -183,11 +183,11 @@ AmpComp comment: 'Basic psychoacoustic amplitude compensation.'!
   primaryFactoryMethod ^#freq:root:exp:!
 !
 
-UGen subclass: #AmpCompA
+Ugen subclass: #AmpCompA
   instanceVariableNames: 'freq root minAmp rootAmp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AmpCompA comment: 'Basic psychoacoustic amplitude compensation (ANSI A-weighting curve).'!
 
@@ -230,11 +230,11 @@ AmpCompA comment: 'Basic psychoacoustic amplitude compensation (ANSI A-weighting
   primaryFactoryMethod ^#freq:root:minAmp:rootAmp:!
 !
 
-UGen subclass: #Amplitude
+Ugen subclass: #Amplitude
   instanceVariableNames: 'in attackTime releaseTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Amplitude comment: 'Amplitude follower'!
 
@@ -274,11 +274,11 @@ Amplitude comment: 'Amplitude follower'!
   primaryFactoryMethod ^#in:attackTime:releaseTime:!
 !
 
-UGen subclass: #Balance2
+Ugen subclass: #Balance2
   instanceVariableNames: 'left right pos level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Balance2 comment: 'Stereo signal balancer'!
 
@@ -321,11 +321,11 @@ Balance2 comment: 'Stereo signal balancer'!
   primaryFactoryMethod ^#left:right:pos:level:!
 !
 
-UGen subclass: #BBandPass
+Ugen subclass: #BBandPass
   instanceVariableNames: 'in freq bw'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BBandPass comment: 'Band Pass Filter'!
 
@@ -365,11 +365,11 @@ BBandPass comment: 'Band Pass Filter'!
   primaryFactoryMethod ^#in:freq:bw:!
 !
 
-UGen subclass: #BBandStop
+Ugen subclass: #BBandStop
   instanceVariableNames: 'in freq bw'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BBandStop comment: 'Band reject filter'!
 
@@ -409,11 +409,11 @@ BBandStop comment: 'Band reject filter'!
   primaryFactoryMethod ^#in:freq:bw:!
 !
 
-UGen subclass: #Blip
+Ugen subclass: #Blip
   instanceVariableNames: 'freq numharm'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Blip comment: 'Band limited impulse oscillator.'!
 
@@ -450,11 +450,11 @@ Blip comment: 'Band limited impulse oscillator.'!
   primaryFactoryMethod ^#freq:numharm:!
 !
 
-UGen subclass: #BlockSize
+Ugen subclass: #BlockSize
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BlockSize comment: '(Undocumented class)'!
 
@@ -479,11 +479,11 @@ BlockSize comment: '(Undocumented class)'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #BLowPass
+Ugen subclass: #BLowPass
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
 
@@ -523,11 +523,11 @@ BLowPass comment: '12db/oct rolloff - 2nd order resonant Low Pass Filter'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
-UGen subclass: #BPeakEQ
+Ugen subclass: #BPeakEQ
   instanceVariableNames: 'in freq rq db'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BPeakEQ comment: 'Parametric equalizer'!
 
@@ -570,11 +570,11 @@ BPeakEQ comment: 'Parametric equalizer'!
   primaryFactoryMethod ^#in:freq:rq:db:!
 !
 
-UGen subclass: #BPF
+Ugen subclass: #BPF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BPF comment: '2nd order Butterworth bandpass filter.'!
 
@@ -614,11 +614,11 @@ BPF comment: '2nd order Butterworth bandpass filter.'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
-UGen subclass: #BPZ2
+Ugen subclass: #BPZ2
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BPZ2 comment: 'Two zero fixed midpass.'!
 
@@ -652,11 +652,11 @@ BPZ2 comment: 'Two zero fixed midpass.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #BRF
+Ugen subclass: #BRF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BRF comment: '2nd order Butterworth band reject filter.'!
 
@@ -696,11 +696,11 @@ BRF comment: '2nd order Butterworth band reject filter.'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
-UGen subclass: #BRZ2
+Ugen subclass: #BRZ2
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BRZ2 comment: 'Two zero fixed midcut.'!
 
@@ -734,11 +734,11 @@ BRZ2 comment: 'Two zero fixed midcut.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #BrownNoise
+Ugen subclass: #BrownNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BrownNoise comment: 'Brown Noise.'!
 
@@ -763,11 +763,11 @@ BrownNoise comment: 'Brown Noise.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #BufDur
+Ugen subclass: #BufDur
   instanceVariableNames: 'bufnum'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufDur comment: 'Current duration of soundfile in buffer.'!
 
@@ -801,11 +801,11 @@ BufDur comment: 'Current duration of soundfile in buffer.'!
   primaryFactoryMethod ^#bufnum:!
 !
 
-UGen subclass: #BufFrames
+Ugen subclass: #BufFrames
   instanceVariableNames: 'bufnum'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufFrames comment: 'Current number of frames allocated in the buffer.'!
 
@@ -839,11 +839,11 @@ BufFrames comment: 'Current number of frames allocated in the buffer.'!
   primaryFactoryMethod ^#bufnum:!
 !
 
-UGen subclass: #BufRateScale
+Ugen subclass: #BufRateScale
   instanceVariableNames: 'bufnum'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufRateScale comment: 'Buffer rate scaling in respect to server samplerate.'!
 
@@ -877,11 +877,11 @@ BufRateScale comment: 'Buffer rate scaling in respect to server samplerate.'!
   primaryFactoryMethod ^#bufnum:!
 !
 
-UGen subclass: #BufRd
+Ugen subclass: #BufRd
   instanceVariableNames: 'bufnum phase loop interpolation'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufRd comment: 'Buffer reading oscillator.'!
 
@@ -925,11 +925,11 @@ BufRd comment: 'Buffer reading oscillator.'!
   primaryFactoryMethod ^#numChan:bufnum:phase:loop:interpolation:!
 !
 
-UGen subclass: #BufSampleRate
+Ugen subclass: #BufSampleRate
   instanceVariableNames: 'bufnum'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufSampleRate comment: 'Buffer sample rate.'!
 
@@ -963,11 +963,11 @@ BufSampleRate comment: 'Buffer sample rate.'!
   primaryFactoryMethod ^#bufnum:!
 !
 
-UGen subclass: #BufWr
+Ugen subclass: #BufWr
   instanceVariableNames: 'bufnum phase loop inputArray'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 BufWr comment: 'Buffer writing oscillator.'!
 
@@ -1010,11 +1010,11 @@ BufWr comment: 'Buffer writing oscillator.'!
   primaryFactoryMethod ^#bufnum:phase:loop:inputArray:!
 !
 
-UGen subclass: #ClearBuf
+Ugen subclass: #ClearBuf
   instanceVariableNames: 'buf'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ClearBuf comment: '(Undocumented class)'!
 
@@ -1048,11 +1048,11 @@ ClearBuf comment: '(Undocumented class)'!
   primaryFactoryMethod ^#buf:!
 !
 
-UGen subclass: #Clip
+Ugen subclass: #Clip
   instanceVariableNames: 'in lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Clip comment: 'Clip a signal outside given thresholds.'!
 
@@ -1092,11 +1092,11 @@ Clip comment: 'Clip a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
-UGen subclass: #ClipNoise
+Ugen subclass: #ClipNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ClipNoise comment: 'Clip Noise.'!
 
@@ -1121,11 +1121,11 @@ ClipNoise comment: 'Clip Noise.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #CoinGate
+Ugen subclass: #CoinGate
   instanceVariableNames: 'prob in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CoinGate comment: 'Statistical gate.'!
 
@@ -1162,11 +1162,11 @@ CoinGate comment: 'Statistical gate.'!
   primaryFactoryMethod ^#prob:in:!
 !
 
-UGen subclass: #CombC
+Ugen subclass: #CombC
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CombC comment: 'Comb delay line with cubic interpolation.'!
 
@@ -1209,11 +1209,11 @@ CombC comment: 'Comb delay line with cubic interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #CombL
+Ugen subclass: #CombL
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CombL comment: 'Comb delay line with linear interpolation.'!
 
@@ -1256,11 +1256,11 @@ CombL comment: 'Comb delay line with linear interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #CombN
+Ugen subclass: #CombN
   instanceVariableNames: 'in maxdelaytime delaytime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CombN comment: 'Comb delay line with no interpolation.'!
 
@@ -1303,11 +1303,11 @@ CombN comment: 'Comb delay line with no interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:decaytime:!
 !
 
-UGen subclass: #ControlDur
+Ugen subclass: #ControlDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ControlDur comment: 'Duration of one block'!
 
@@ -1332,11 +1332,11 @@ ControlDur comment: 'Duration of one block'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #ControlRate
+Ugen subclass: #ControlRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ControlRate comment: 'Server control rate.'!
 
@@ -1361,11 +1361,11 @@ ControlRate comment: 'Server control rate.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #Convolution
+Ugen subclass: #Convolution
   instanceVariableNames: 'in kernel framesize'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Convolution comment: 'Real-time convolver.'!
 
@@ -1405,11 +1405,11 @@ Convolution comment: 'Real-time convolver.'!
   primaryFactoryMethod ^#in:kernel:framesize:!
 !
 
-UGen subclass: #Crackle
+Ugen subclass: #Crackle
   instanceVariableNames: 'chaosParam'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Crackle comment: 'Chaotic noise function.'!
 
@@ -1443,11 +1443,11 @@ Crackle comment: 'Chaotic noise function.'!
   primaryFactoryMethod ^#chaosParam:!
 !
 
-UGen subclass: #CuspL
+Ugen subclass: #CuspL
   instanceVariableNames: 'freq a b xi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CuspL comment: 'Cusp map chaotic generator'!
 
@@ -1490,11 +1490,11 @@ CuspL comment: 'Cusp map chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:xi:!
 !
 
-UGen subclass: #Dbufrd
+Ugen subclass: #Dbufrd
   instanceVariableNames: 'bufnum phase loop'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dbufrd comment: 'Buffer read demand ugen'!
 
@@ -1534,11 +1534,11 @@ Dbufrd comment: 'Buffer read demand ugen'!
   primaryFactoryMethod ^#bufnum:phase:loop:!
 !
 
-UGen subclass: #Dbufwr
+Ugen subclass: #Dbufwr
   instanceVariableNames: 'bufnum phase input loop'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dbufwr comment: 'Buffer write demand ugen'!
 
@@ -1581,11 +1581,11 @@ Dbufwr comment: 'Buffer write demand ugen'!
   primaryFactoryMethod ^#bufnum:phase:input:loop:!
 !
 
-UGen subclass: #DC
+Ugen subclass: #DC
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DC comment: 'Create a constant amplitude signal'!
 
@@ -1619,11 +1619,11 @@ DC comment: 'Create a constant amplitude signal'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #Decay
+Ugen subclass: #Decay
   instanceVariableNames: 'in decayTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Decay comment: 'Exponential decay'!
 
@@ -1660,11 +1660,11 @@ Decay comment: 'Exponential decay'!
   primaryFactoryMethod ^#in:decayTime:!
 !
 
-UGen subclass: #Decay2
+Ugen subclass: #Decay2
   instanceVariableNames: 'in attackTime decayTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Decay2 comment: 'Exponential decay'!
 
@@ -1704,11 +1704,11 @@ Decay2 comment: 'Exponential decay'!
   primaryFactoryMethod ^#in:attackTime:decayTime:!
 !
 
-UGen subclass: #DegreeToKey
+Ugen subclass: #DegreeToKey
   instanceVariableNames: 'bufnum in octave'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DegreeToKey comment: 'Convert signal to modal pitch.'!
 
@@ -1748,11 +1748,11 @@ DegreeToKey comment: 'Convert signal to modal pitch.'!
   primaryFactoryMethod ^#bufnum:in:octave:!
 !
 
-UGen subclass: #Delay1
+Ugen subclass: #Delay1
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Delay1 comment: 'Single sample delay.'!
 
@@ -1786,11 +1786,11 @@ Delay1 comment: 'Single sample delay.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #Delay2
+Ugen subclass: #Delay2
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Delay2 comment: 'Two sample delay.'!
 
@@ -1824,11 +1824,11 @@ Delay2 comment: 'Two sample delay.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #DelayC
+Ugen subclass: #DelayC
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DelayC comment: 'Simple delay line with cubic interpolation.'!
 
@@ -1868,11 +1868,11 @@ DelayC comment: 'Simple delay line with cubic interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
-UGen subclass: #DelayL
+Ugen subclass: #DelayL
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DelayL comment: 'Simple delay line with linear interpolation.'!
 
@@ -1912,11 +1912,11 @@ DelayL comment: 'Simple delay line with linear interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
-UGen subclass: #DelayN
+Ugen subclass: #DelayN
   instanceVariableNames: 'in maxdelaytime delaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DelayN comment: 'Simple delay line with no interpolation.'!
 
@@ -1956,21 +1956,21 @@ DelayN comment: 'Simple delay line with no interpolation.'!
   primaryFactoryMethod ^#in:maxdelaytime:delaytime:!
 !
 
-UGen subclass: #Demand
-  instanceVariableNames: 'trig reset demandUGens'
+Ugen subclass: #Demand
+  instanceVariableNames: 'trig reset demandUgens'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-Demand comment: 'Demand results from demand rate UGens.'!
+Demand comment: 'Demand results from demand rate Ugens.'!
 
 !Demand methodsFor: 'accessing'!
   trig ^trig!
   trig: x trig := x!
   reset ^reset!
   reset: x reset := x!
-  demandUGens ^demandUGens!
-  demandUGens: x demandUGens := x!
+  demandUgens ^demandUgens!
+  demandUgens: x demandUgens := x!
 !
 
 !Demand methodsFor: 'initialization'!
@@ -1978,7 +1978,7 @@ Demand comment: 'Demand results from demand rate UGens.'!
     super initialize.
     ugenName := #Demand.
     paramNames := #(#trig #reset).
-    mceNames := #(#demandUGens).
+    mceNames := #(#demandUgens).
     ugenRate := #(0).
     numChan := #mceInput.
     specialIndex := 0.
@@ -1988,23 +1988,23 @@ Demand comment: 'Demand results from demand rate UGens.'!
 
 
 !Demand class methodsFor: 'instance creation'!
-  trig: trig reset: reset demandUGens: demandUGens
+  trig: trig reset: reset demandUgens: demandUgens
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
-    u demandUGens: demandUGens.
+    u demandUgens: demandUgens.
     ^u!
-  trig: trig reset: reset demandUGens: demandUGens mul: mul ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul!
-  trig: trig reset: reset demandUGens: demandUGens mul: mul add: add ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul + add!
-  primaryFactoryMethod ^#trig:reset:demandUGens:!
+  trig: trig reset: reset demandUgens: demandUgens mul: mul ^(Demand trig: trig reset: reset demandUgens: demandUgens) * mul!
+  trig: trig reset: reset demandUgens: demandUgens mul: mul add: add ^(Demand trig: trig reset: reset demandUgens: demandUgens) * mul + add!
+  primaryFactoryMethod ^#trig:reset:demandUgens:!
 !
 
-UGen subclass: #DetectSilence
+Ugen subclass: #DetectSilence
   instanceVariableNames: 'in amp time doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DetectSilence comment: 'Detect when input falls below an amplitude threshold'!
 
@@ -2047,11 +2047,11 @@ DetectSilence comment: 'Detect when input falls below an amplitude threshold'!
   primaryFactoryMethod ^#in:amp:time:doneAction:!
 !
 
-UGen subclass: #Diwhite
+Ugen subclass: #Diwhite
   instanceVariableNames: 'length lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Diwhite comment: 'Demand rate white noise random generator.'!
 
@@ -2091,11 +2091,11 @@ Diwhite comment: 'Demand rate white noise random generator.'!
   primaryFactoryMethod ^#length:lo:hi:!
 !
 
-UGen subclass: #Drand
+Ugen subclass: #Drand
   instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Drand comment: 'Demand rate random sequence generator.'!
 
@@ -2132,11 +2132,11 @@ Drand comment: 'Demand rate random sequence generator.'!
   primaryFactoryMethod ^#repeats:list:!
 !
 
-UGen subclass: #Dseq
+Ugen subclass: #Dseq
   instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dseq comment: 'Demand rate sequence generator.'!
 
@@ -2173,13 +2173,13 @@ Dseq comment: 'Demand rate sequence generator.'!
   primaryFactoryMethod ^#repeats:list:!
 !
 
-UGen subclass: #Dseries
+Ugen subclass: #Dseries
   instanceVariableNames: 'length start step'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-Dseries comment: 'Demand rate arithmetic series UGen.'!
+Dseries comment: 'Demand rate arithmetic series Ugen.'!
 
 !Dseries methodsFor: 'accessing'!
   length ^length!
@@ -2217,11 +2217,11 @@ Dseries comment: 'Demand rate arithmetic series UGen.'!
   primaryFactoryMethod ^#length:start:step:!
 !
 
-UGen subclass: #Dshuf
+Ugen subclass: #Dshuf
   instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dshuf comment: 'Demand rate random sequence generator'!
 
@@ -2258,11 +2258,11 @@ Dshuf comment: 'Demand rate random sequence generator'!
   primaryFactoryMethod ^#repeats:list:!
 !
 
-UGen subclass: #Dust
+Ugen subclass: #Dust
   instanceVariableNames: 'density'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dust comment: 'Random impulses.'!
 
@@ -2296,11 +2296,11 @@ Dust comment: 'Random impulses.'!
   primaryFactoryMethod ^#density:!
 !
 
-UGen subclass: #Dust2
+Ugen subclass: #Dust2
   instanceVariableNames: 'density'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Dust2 comment: 'Random impulses.'!
 
@@ -2334,13 +2334,13 @@ Dust2 comment: 'Random impulses.'!
   primaryFactoryMethod ^#density:!
 !
 
-UGen subclass: #Duty
+Ugen subclass: #Duty
   instanceVariableNames: 'dur reset doneAction level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-Duty comment: 'Demand results from demand rate UGens.'!
+Duty comment: 'Demand results from demand rate Ugens.'!
 
 !Duty methodsFor: 'accessing'!
   dur ^dur!
@@ -2381,11 +2381,11 @@ Duty comment: 'Demand results from demand rate UGens.'!
   primaryFactoryMethod ^#dur:reset:doneAction:level:!
 !
 
-UGen subclass: #DWGPluckedStiff
+Ugen subclass: #DWGPluckedStiff
   instanceVariableNames: 'freq amp gate pos c1 c3 inp release fB'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DWGPluckedStiff comment: 'Plucked physical model.'!
 
@@ -2443,11 +2443,11 @@ DWGPluckedStiff comment: 'Plucked physical model.'!
   primaryFactoryMethod ^#freq:amp:gate:pos:c1:c3:inp:release:fB:!
 !
 
-UGen subclass: #EnvGen
+Ugen subclass: #EnvGen
   instanceVariableNames: 'gate levelScale levelBias timeScale doneAction envelope'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 EnvGen comment: 'Envelope generator'!
 
@@ -2496,11 +2496,11 @@ EnvGen comment: 'Envelope generator'!
   primaryFactoryMethod ^#gate:levelScale:levelBias:timeScale:doneAction:envelope:!
 !
 
-UGen subclass: #ExpRand
+Ugen subclass: #ExpRand
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ExpRand comment: 'Exponential single random number generator.'!
 
@@ -2537,11 +2537,11 @@ ExpRand comment: 'Exponential single random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
-UGen subclass: #FBSineL
+Ugen subclass: #FBSineL
   instanceVariableNames: 'freq im fb a c xi yi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FBSineL comment: 'Feedback sine with chaotic phase indexing'!
 
@@ -2593,11 +2593,11 @@ FBSineL comment: 'Feedback sine with chaotic phase indexing'!
   primaryFactoryMethod ^#freq:im:fb:a:c:xi:yi:!
 !
 
-UGen subclass: #FBSineC
+Ugen subclass: #FBSineC
   instanceVariableNames: 'freq im fb a c xi yi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FBSineC comment: 'Feedback sine with chaotic phase indexing'!
 
@@ -2649,11 +2649,11 @@ FBSineC comment: 'Feedback sine with chaotic phase indexing'!
   primaryFactoryMethod ^#freq:im:fb:a:c:xi:yi:!
 !
 
-UGen subclass: #FFT
+Ugen subclass: #FFT
   instanceVariableNames: 'buffer in hop wintype active winsize'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FFT comment: 'Fast Fourier Transform'!
 
@@ -2702,11 +2702,11 @@ FFT comment: 'Fast Fourier Transform'!
   primaryFactoryMethod ^#buffer:in:hop:wintype:active:winsize:!
 !
 
-UGen subclass: #Fold
+Ugen subclass: #Fold
   instanceVariableNames: 'in lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Fold comment: 'Fold a signal outside given thresholds.'!
 
@@ -2746,11 +2746,11 @@ Fold comment: 'Fold a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
-UGen subclass: #Formant
+Ugen subclass: #Formant
   instanceVariableNames: 'fundfreq formfreq bwfreq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Formant comment: 'Formant oscillator'!
 
@@ -2790,11 +2790,11 @@ Formant comment: 'Formant oscillator'!
   primaryFactoryMethod ^#fundfreq:formfreq:bwfreq:!
 !
 
-UGen subclass: #Formlet
+Ugen subclass: #Formlet
   instanceVariableNames: 'in freq attacktime decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Formlet comment: 'FOF-like filter.'!
 
@@ -2837,11 +2837,11 @@ Formlet comment: 'FOF-like filter.'!
   primaryFactoryMethod ^#in:freq:attacktime:decaytime:!
 !
 
-UGen subclass: #FOS
+Ugen subclass: #FOS
   instanceVariableNames: 'in a0 a1 b1'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FOS comment: 'First order filter section.'!
 
@@ -2884,11 +2884,11 @@ FOS comment: 'First order filter section.'!
   primaryFactoryMethod ^#in:a0:a1:b1:!
 !
 
-UGen subclass: #FreqShift
+Ugen subclass: #FreqShift
   instanceVariableNames: 'in freq phase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FreqShift comment: 'Frequency Shifter.'!
 
@@ -2928,11 +2928,11 @@ FreqShift comment: 'Frequency Shifter.'!
   primaryFactoryMethod ^#in:freq:phase:!
 !
 
-UGen subclass: #FSinOsc
+Ugen subclass: #FSinOsc
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FSinOsc comment: 'Fast sine oscillator.'!
 
@@ -2969,11 +2969,11 @@ FSinOsc comment: 'Fast sine oscillator.'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
-UGen subclass: #FreeVerb
+Ugen subclass: #FreeVerb
   instanceVariableNames: 'in mix room damp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FreeVerb comment: 'A reverb'!
 
@@ -3016,11 +3016,11 @@ FreeVerb comment: 'A reverb'!
   primaryFactoryMethod ^#in:mix:room:damp:!
 !
 
-UGen subclass: #FreeVerb2
+Ugen subclass: #FreeVerb2
   instanceVariableNames: 'in in2 mix room damp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 FreeVerb2 comment: 'A two-channel reverb'!
 
@@ -3066,11 +3066,11 @@ FreeVerb2 comment: 'A two-channel reverb'!
   primaryFactoryMethod ^#in:in2:mix:room:damp:!
 !
 
-UGen subclass: #Gate
+Ugen subclass: #Gate
   instanceVariableNames: 'in trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Gate comment: 'Gate or hold.'!
 
@@ -3107,11 +3107,11 @@ Gate comment: 'Gate or hold.'!
   primaryFactoryMethod ^#in:trig:!
 !
 
-UGen subclass: #Gendy1
+Ugen subclass: #Gendy1
   instanceVariableNames: 'ampdist durdist adparam ddparam minfreq maxfreq ampscale durscale initCPs knum'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
 
@@ -3172,11 +3172,11 @@ Gendy1 comment: 'Dynamic stochastic synthesis generator.'!
   primaryFactoryMethod ^#ampdist:durdist:adparam:ddparam:minfreq:maxfreq:ampscale:durscale:initCPs:knum:!
 !
 
-UGen subclass: #GrainFM
+Ugen subclass: #GrainFM
   instanceVariableNames: 'trigger dur carfreq modfreq index pan envbufnum maxGrains'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
 
@@ -3232,11 +3232,11 @@ GrainFM comment: 'Granular synthesis with frequency modulated sine tones'!
   primaryFactoryMethod ^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:!
 !
 
-UGen subclass: #GrainSin
+Ugen subclass: #GrainSin
   instanceVariableNames: 'trigger dur freq pan envbufnum maxGrains'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 GrainSin comment: 'Granular synthesis with sine tones'!
 
@@ -3286,11 +3286,11 @@ GrainSin comment: 'Granular synthesis with sine tones'!
   primaryFactoryMethod ^#numChan:trigger:dur:freq:pan:envbufnum:maxGrains:!
 !
 
-UGen subclass: #GrayNoise
+Ugen subclass: #GrayNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 GrayNoise comment: 'Gray Noise.'!
 
@@ -3315,11 +3315,11 @@ GrayNoise comment: 'Gray Noise.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #GVerb
+Ugen subclass: #GVerb
   instanceVariableNames: 'in roomsize revtime damping inputbw spread drylevel earlyreflevel taillevel maxroomsize'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 GVerb comment: 'A two-channel reverb'!
 
@@ -3380,11 +3380,11 @@ GVerb comment: 'A two-channel reverb'!
   primaryFactoryMethod ^#in:roomsize:revtime:damping:inputbw:spread:drylevel:earlyreflevel:taillevel:maxroomsize:!
 !
 
-UGen subclass: #Hasher
+Ugen subclass: #Hasher
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Hasher comment: 'Scrambled value with a hash function.'!
 
@@ -3418,11 +3418,11 @@ Hasher comment: 'Scrambled value with a hash function.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #HenonL
+Ugen subclass: #HenonL
   instanceVariableNames: 'freq a b x0 x1'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 HenonL comment: 'Henon map chaotic generator'!
 
@@ -3468,11 +3468,11 @@ HenonL comment: 'Henon map chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:x0:x1:!
 !
 
-UGen subclass: #HenonC
+Ugen subclass: #HenonC
   instanceVariableNames: 'freq a b x0 x1'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 HenonC comment: 'Henon map chaotic generator'!
 
@@ -3518,11 +3518,11 @@ HenonC comment: 'Henon map chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:x0:x1:!
 !
 
-UGen subclass: #HPF
+Ugen subclass: #HPF
   instanceVariableNames: 'in freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 HPF comment: '2nd order Butterworth highpass filter.'!
 
@@ -3559,11 +3559,11 @@ HPF comment: '2nd order Butterworth highpass filter.'!
   primaryFactoryMethod ^#in:freq:!
 !
 
-UGen subclass: #HPZ1
+Ugen subclass: #HPZ1
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 HPZ1 comment: 'Two point difference filter'!
 
@@ -3597,11 +3597,11 @@ HPZ1 comment: 'Two point difference filter'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #HPZ2
+Ugen subclass: #HPZ2
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 HPZ2 comment: 'Two zero fixed midcut.'!
 
@@ -3635,11 +3635,11 @@ HPZ2 comment: 'Two zero fixed midcut.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #IFFT
+Ugen subclass: #IFFT
   instanceVariableNames: 'buffer wintype winsize'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 IFFT comment: 'Inverse Fast Fourier Transform'!
 
@@ -3679,11 +3679,11 @@ IFFT comment: 'Inverse Fast Fourier Transform'!
   primaryFactoryMethod ^#buffer:wintype:winsize:!
 !
 
-UGen subclass: #Impulse
+Ugen subclass: #Impulse
   instanceVariableNames: 'freq phase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Impulse comment: 'Impulse oscillator.'!
 
@@ -3720,11 +3720,11 @@ Impulse comment: 'Impulse oscillator.'!
   primaryFactoryMethod ^#freq:phase:!
 !
 
-UGen subclass: #In
+Ugen subclass: #In
   instanceVariableNames: 'bus'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 In comment: 'Read a signal from a bus.'!
 
@@ -3759,11 +3759,11 @@ In comment: 'Read a signal from a bus.'!
   primaryFactoryMethod ^#numChan:bus:!
 !
 
-UGen subclass: #Index
+Ugen subclass: #Index
   instanceVariableNames: 'bufnum in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Index comment: 'Index into a table with a signal'!
 
@@ -3800,11 +3800,11 @@ Index comment: 'Index into a table with a signal'!
   primaryFactoryMethod ^#bufnum:in:!
 !
 
-UGen subclass: #IndexInBetween
+Ugen subclass: #IndexInBetween
   instanceVariableNames: 'bufnum in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 IndexInBetween comment: 'Finds the (lowest) point in the Buffer at which the input signal lies in-between the two values'!
 
@@ -3841,11 +3841,11 @@ IndexInBetween comment: 'Finds the (lowest) point in the Buffer at which the inp
   primaryFactoryMethod ^#bufnum:in:!
 !
 
-UGen subclass: #InFeedback
+Ugen subclass: #InFeedback
   instanceVariableNames: 'bus'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 InFeedback comment: 'Read signal from a bus with a current or one cycle old timestamp.'!
 
@@ -3880,11 +3880,11 @@ InFeedback comment: 'Read signal from a bus with a current or one cycle old time
   primaryFactoryMethod ^#numChan:bus:!
 !
 
-UGen subclass: #InRange
+Ugen subclass: #InRange
   instanceVariableNames: 'in lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 InRange comment: 'Tests if a signal is within a given range.'!
 
@@ -3924,11 +3924,11 @@ InRange comment: 'Tests if a signal is within a given range.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
-UGen subclass: #IRand
+Ugen subclass: #IRand
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 IRand comment: 'Single integer random number generator.'!
 
@@ -3965,11 +3965,11 @@ IRand comment: 'Single integer random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
-UGen subclass: #Integrator
+Ugen subclass: #Integrator
   instanceVariableNames: 'in coef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Integrator comment: 'A leaky integrator.'!
 
@@ -4006,11 +4006,11 @@ Integrator comment: 'A leaky integrator.'!
   primaryFactoryMethod ^#in:coef:!
 !
 
-UGen subclass: #K2A
+Ugen subclass: #K2A
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 K2A comment: 'Control to audio rate converter.'!
 
@@ -4044,11 +4044,11 @@ K2A comment: 'Control to audio rate converter.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #KeyState
+Ugen subclass: #KeyState
   instanceVariableNames: 'keycode minval maxval lag'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 KeyState comment: 'Respond to the state of a key'!
 
@@ -4091,11 +4091,11 @@ KeyState comment: 'Respond to the state of a key'!
   primaryFactoryMethod ^#keycode:minval:maxval:lag:!
 !
 
-UGen subclass: #Klang
+Ugen subclass: #Klang
   instanceVariableNames: 'freqscale freqoffset specificationsArrayRef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Klang comment: 'Sine oscillator bank'!
 
@@ -4135,11 +4135,11 @@ Klang comment: 'Sine oscillator bank'!
   primaryFactoryMethod ^#freqscale:freqoffset:specificationsArrayRef:!
 !
 
-UGen subclass: #Klank
+Ugen subclass: #Klank
   instanceVariableNames: 'input freqscale freqoffset decayscale specificationsArrayRef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Klank comment: 'Bank of resonators'!
 
@@ -4185,11 +4185,11 @@ Klank comment: 'Bank of resonators'!
   primaryFactoryMethod ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:!
 !
 
-UGen subclass: #LFBrownNoise1
+Ugen subclass: #LFBrownNoise1
   instanceVariableNames: 'freq dev dist'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFBrownNoise1 comment: 'random walk linear interp'!
 
@@ -4229,11 +4229,11 @@ LFBrownNoise1 comment: 'random walk linear interp'!
   primaryFactoryMethod ^#freq:dev:dist:!
 !
 
-UGen subclass: #LFClipNoise
+Ugen subclass: #LFClipNoise
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFClipNoise comment: 'Clipped noise'!
 
@@ -4267,11 +4267,11 @@ LFClipNoise comment: 'Clipped noise'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFCub
+Ugen subclass: #LFCub
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFCub comment: 'A sine like shape made of two cubic pieces'!
 
@@ -4308,11 +4308,11 @@ LFCub comment: 'A sine like shape made of two cubic pieces'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
-UGen subclass: #LFDNoise1
+Ugen subclass: #LFDNoise1
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFDNoise1 comment: 'Dynamic ramp noise'!
 
@@ -4346,11 +4346,11 @@ LFDNoise1 comment: 'Dynamic ramp noise'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFDNoise3
+Ugen subclass: #LFDNoise3
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFDNoise3 comment: 'Dynamic cubic noise'!
 
@@ -4384,11 +4384,11 @@ LFDNoise3 comment: 'Dynamic cubic noise'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFGauss
+Ugen subclass: #LFGauss
   instanceVariableNames: 'duration width iphase loop doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFGauss comment: 'Gaussian function oscillator'!
 
@@ -4434,11 +4434,11 @@ LFGauss comment: 'Gaussian function oscillator'!
   primaryFactoryMethod ^#duration:width:iphase:loop:doneAction:!
 !
 
-UGen subclass: #LFNoise0
+Ugen subclass: #LFNoise0
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFNoise0 comment: 'Step noise'!
 
@@ -4472,11 +4472,11 @@ LFNoise0 comment: 'Step noise'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFNoise1
+Ugen subclass: #LFNoise1
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFNoise1 comment: 'Ramp noise'!
 
@@ -4510,11 +4510,11 @@ LFNoise1 comment: 'Ramp noise'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFNoise2
+Ugen subclass: #LFNoise2
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFNoise2 comment: 'Quadratic noise.'!
 
@@ -4548,11 +4548,11 @@ LFNoise2 comment: 'Quadratic noise.'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #LFPar
+Ugen subclass: #LFPar
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFPar comment: 'Parabolic oscillator'!
 
@@ -4589,11 +4589,11 @@ LFPar comment: 'Parabolic oscillator'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
-UGen subclass: #LFPulse
+Ugen subclass: #LFPulse
   instanceVariableNames: 'freq iphase width'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFPulse comment: 'pulse oscillator'!
 
@@ -4633,11 +4633,11 @@ LFPulse comment: 'pulse oscillator'!
   primaryFactoryMethod ^#freq:iphase:width:!
 !
 
-UGen subclass: #LFSaw
+Ugen subclass: #LFSaw
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFSaw comment: 'Sawtooth oscillator'!
 
@@ -4674,11 +4674,11 @@ LFSaw comment: 'Sawtooth oscillator'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
-UGen subclass: #LFTri
+Ugen subclass: #LFTri
   instanceVariableNames: 'freq iphase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LFTri comment: 'Triangle oscillator'!
 
@@ -4715,11 +4715,11 @@ LFTri comment: 'Triangle oscillator'!
   primaryFactoryMethod ^#freq:iphase:!
 !
 
-UGen subclass: #LPF
+Ugen subclass: #LPF
   instanceVariableNames: 'in freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LPF comment: '2nd order Butterworth lowpass filter'!
 
@@ -4756,11 +4756,11 @@ LPF comment: '2nd order Butterworth lowpass filter'!
   primaryFactoryMethod ^#in:freq:!
 !
 
-UGen subclass: #Lag
+Ugen subclass: #Lag
   instanceVariableNames: 'in lagTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Lag comment: 'Exponential lag'!
 
@@ -4797,11 +4797,11 @@ Lag comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTime:!
 !
 
-UGen subclass: #LagUD
+Ugen subclass: #LagUD
   instanceVariableNames: 'in lagTimeU lagTimeD'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LagUD comment: 'Exponential lag'!
 
@@ -4841,11 +4841,11 @@ LagUD comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTimeU:lagTimeD:!
 !
 
-UGen subclass: #Lag2
+Ugen subclass: #Lag2
   instanceVariableNames: 'in lagTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Lag2 comment: 'Exponential lag'!
 
@@ -4882,11 +4882,11 @@ Lag2 comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTime:!
 !
 
-UGen subclass: #Lag3
+Ugen subclass: #Lag3
   instanceVariableNames: 'in lagTime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Lag3 comment: 'Exponential lag'!
 
@@ -4923,11 +4923,11 @@ Lag3 comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTime:!
 !
 
-UGen subclass: #Lag3UD
+Ugen subclass: #Lag3UD
   instanceVariableNames: 'in lagTimeU lagTimeD'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Lag3UD comment: 'Exponential lag'!
 
@@ -4967,11 +4967,11 @@ Lag3UD comment: 'Exponential lag'!
   primaryFactoryMethod ^#in:lagTimeU:lagTimeD:!
 !
 
-UGen subclass: #Latch
+Ugen subclass: #Latch
   instanceVariableNames: 'in trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Latch comment: 'Sample and hold'!
 
@@ -5008,11 +5008,11 @@ Latch comment: 'Sample and hold'!
   primaryFactoryMethod ^#in:trig:!
 !
 
-UGen subclass: #LatoocarfianC
+Ugen subclass: #LatoocarfianC
   instanceVariableNames: 'freq a b c d xi yi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LatoocarfianC comment: 'Latoocarfian chaotic generator'!
 
@@ -5064,11 +5064,11 @@ LatoocarfianC comment: 'Latoocarfian chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:c:d:xi:yi:!
 !
 
-UGen subclass: #LeakDC
+Ugen subclass: #LeakDC
   instanceVariableNames: 'in coef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LeakDC comment: 'Remove DC'!
 
@@ -5105,11 +5105,11 @@ LeakDC comment: 'Remove DC'!
   primaryFactoryMethod ^#in:coef:!
 !
 
-UGen subclass: #Limiter
+Ugen subclass: #Limiter
   instanceVariableNames: 'in level dur'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Limiter comment: 'Peak limiter'!
 
@@ -5149,11 +5149,11 @@ Limiter comment: 'Peak limiter'!
   primaryFactoryMethod ^#in:level:dur:!
 !
 
-UGen subclass: #LinCongC
+Ugen subclass: #LinCongC
   instanceVariableNames: 'freq a c m xi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinCongC comment: 'Linear congruential chaotic generator'!
 
@@ -5199,11 +5199,11 @@ LinCongC comment: 'Linear congruential chaotic generator'!
   primaryFactoryMethod ^#freq:a:c:m:xi:!
 !
 
-UGen subclass: #Line
+Ugen subclass: #Line
   instanceVariableNames: 'start end dur doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Line comment: 'Line generator.'!
 
@@ -5246,11 +5246,11 @@ Line comment: 'Line generator.'!
   primaryFactoryMethod ^#start:end:dur:doneAction:!
 !
 
-UGen subclass: #Linen
+Ugen subclass: #Linen
   instanceVariableNames: 'gate attackTime susLevel releaseTime doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Linen comment: 'Simple linear envelope generator.'!
 
@@ -5296,11 +5296,11 @@ Linen comment: 'Simple linear envelope generator.'!
   primaryFactoryMethod ^#gate:attackTime:susLevel:releaseTime:doneAction:!
 !
 
-UGen subclass: #LinExp
+Ugen subclass: #LinExp
   instanceVariableNames: 'in srclo srchi dstlo dsthi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinExp comment: 'Map a linear range to an exponential range'!
 
@@ -5346,11 +5346,11 @@ LinExp comment: 'Map a linear range to an exponential range'!
   primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
 !
 
-UGen subclass: #LinPan2
+Ugen subclass: #LinPan2
   instanceVariableNames: 'in pos level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinPan2 comment: 'Two channel linear pan.'!
 
@@ -5390,11 +5390,11 @@ LinPan2 comment: 'Two channel linear pan.'!
   primaryFactoryMethod ^#in:pos:level:!
 !
 
-UGen subclass: #LinRand
+Ugen subclass: #LinRand
   instanceVariableNames: 'lo hi minmax'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinRand comment: 'Skewed random number generator.'!
 
@@ -5434,11 +5434,11 @@ LinRand comment: 'Skewed random number generator.'!
   primaryFactoryMethod ^#lo:hi:minmax:!
 !
 
-UGen subclass: #LinXFade2
+Ugen subclass: #LinXFade2
   instanceVariableNames: 'inA inB pan'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinXFade2 comment: 'Two channel linear crossfade.'!
 
@@ -5478,11 +5478,11 @@ LinXFade2 comment: 'Two channel linear crossfade.'!
   primaryFactoryMethod ^#inA:inB:pan:!
 !
 
-UGen subclass: #LocalBuf
+Ugen subclass: #LocalBuf
   instanceVariableNames: 'numChannels numFrames'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LocalBuf comment: 'Allocate a buffer local to the synth'!
 
@@ -5519,11 +5519,11 @@ LocalBuf comment: 'Allocate a buffer local to the synth'!
   primaryFactoryMethod ^#numChannels:numFrames:!
 !
 
-UGen subclass: #LocalIn
+Ugen subclass: #LocalIn
   instanceVariableNames: 'default'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LocalIn comment: 'Define and read from buses local to a synth.'!
 
@@ -5558,11 +5558,11 @@ LocalIn comment: 'Define and read from buses local to a synth.'!
   primaryFactoryMethod ^#numChan:default:!
 !
 
-UGen subclass: #LocalOut
+Ugen subclass: #LocalOut
   instanceVariableNames: 'channelsArray'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LocalOut comment: 'Write to buses local to a synth.'!
 
@@ -5596,11 +5596,11 @@ LocalOut comment: 'Write to buses local to a synth.'!
   primaryFactoryMethod ^#channelsArray:!
 !
 
-UGen subclass: #LorenzL
+Ugen subclass: #LorenzL
   instanceVariableNames: 'freq s r b h xi yi zi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LorenzL comment: 'Lorenz chaotic generator'!
 
@@ -5655,11 +5655,11 @@ LorenzL comment: 'Lorenz chaotic generator'!
   primaryFactoryMethod ^#freq:s:r:b:h:xi:yi:zi:!
 !
 
-UGen subclass: #LPZ1
+Ugen subclass: #LPZ1
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LPZ1 comment: 'Two point average filter'!
 
@@ -5693,11 +5693,11 @@ LPZ1 comment: 'Two point average filter'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #LPZ2
+Ugen subclass: #LPZ2
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LPZ2 comment: 'Two zero fixed lowpass'!
 
@@ -5731,11 +5731,11 @@ LPZ2 comment: 'Two zero fixed lowpass'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #MantissaMask
+Ugen subclass: #MantissaMask
   instanceVariableNames: 'in bits'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MantissaMask comment: 'Reduce precision.'!
 
@@ -5772,11 +5772,11 @@ MantissaMask comment: 'Reduce precision.'!
   primaryFactoryMethod ^#in:bits:!
 !
 
-UGen subclass: #MaxLocalBufs
+Ugen subclass: #MaxLocalBufs
   instanceVariableNames: 'count'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MaxLocalBufs comment: 'LocalBuf count'!
 
@@ -5810,11 +5810,11 @@ MaxLocalBufs comment: 'LocalBuf count'!
   primaryFactoryMethod ^#count:!
 !
 
-UGen subclass: #Median
+Ugen subclass: #Median
   instanceVariableNames: 'length in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Median comment: 'Median filter.'!
 
@@ -5851,11 +5851,11 @@ Median comment: 'Median filter.'!
   primaryFactoryMethod ^#length:in:!
 !
 
-UGen subclass: #ModDif
+Ugen subclass: #ModDif
   instanceVariableNames: 'x y mod'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
 
@@ -5895,11 +5895,11 @@ ModDif comment: 'Minimum difference of two values in modulo arithmetics'!
   primaryFactoryMethod ^#x:y:mod:!
 !
 
-UGen subclass: #MoogFF
+Ugen subclass: #MoogFF
   instanceVariableNames: 'in freq gain reset'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MoogFF comment: 'Moog VCF implementation, designed by Federico Fontana'!
 
@@ -5942,13 +5942,13 @@ MoogFF comment: 'Moog VCF implementation, designed by Federico Fontana'!
   primaryFactoryMethod ^#in:freq:gain:reset:!
 !
 
-UGen subclass: #MouseButton
+Ugen subclass: #MouseButton
   instanceVariableNames: 'minval maxval lag'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-MouseButton comment: 'Mouse button UGen.'!
+MouseButton comment: 'Mouse button Ugen.'!
 
 !MouseButton methodsFor: 'accessing'!
   minval ^minval!
@@ -5986,13 +5986,13 @@ MouseButton comment: 'Mouse button UGen.'!
   primaryFactoryMethod ^#minval:maxval:lag:!
 !
 
-UGen subclass: #MouseX
+Ugen subclass: #MouseX
   instanceVariableNames: 'minval maxval warp lag'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-MouseX comment: 'Cursor tracking UGen.'!
+MouseX comment: 'Cursor tracking Ugen.'!
 
 !MouseX methodsFor: 'accessing'!
   minval ^minval!
@@ -6033,13 +6033,13 @@ MouseX comment: 'Cursor tracking UGen.'!
   primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
-UGen subclass: #MouseY
+Ugen subclass: #MouseY
   instanceVariableNames: 'minval maxval warp lag'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-MouseY comment: 'Cursor tracking UGen.'!
+MouseY comment: 'Cursor tracking Ugen.'!
 
 !MouseY methodsFor: 'accessing'!
   minval ^minval!
@@ -6080,11 +6080,11 @@ MouseY comment: 'Cursor tracking UGen.'!
   primaryFactoryMethod ^#minval:maxval:warp:lag:!
 !
 
-UGen subclass: #MulAdd
+Ugen subclass: #MulAdd
   instanceVariableNames: 'in mul add'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MulAdd comment: 'Multiply add'!
 
@@ -6123,11 +6123,11 @@ MulAdd comment: 'Multiply add'!
   primaryFactoryMethod ^#in:mul:add:!
 !
 
-UGen subclass: #Normalizer
+Ugen subclass: #Normalizer
   instanceVariableNames: 'in level dur'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Normalizer comment: 'Flattens dynamics.'!
 
@@ -6167,11 +6167,11 @@ Normalizer comment: 'Flattens dynamics.'!
   primaryFactoryMethod ^#in:level:dur:!
 !
 
-UGen subclass: #NRand
+Ugen subclass: #NRand
   instanceVariableNames: 'lo hi n'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 NRand comment: 'Sum of uniform distributions.'!
 
@@ -6211,11 +6211,11 @@ NRand comment: 'Sum of uniform distributions.'!
   primaryFactoryMethod ^#lo:hi:n:!
 !
 
-UGen subclass: #NumOutputBuses
+Ugen subclass: #NumOutputBuses
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 NumOutputBuses comment: 'Number of output busses.'!
 
@@ -6240,11 +6240,11 @@ NumOutputBuses comment: 'Number of output busses.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #OnePole
+Ugen subclass: #OnePole
   instanceVariableNames: 'in coef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 OnePole comment: 'One pole filter.'!
 
@@ -6281,11 +6281,11 @@ OnePole comment: 'One pole filter.'!
   primaryFactoryMethod ^#in:coef:!
 !
 
-UGen subclass: #OneZero
+Ugen subclass: #OneZero
   instanceVariableNames: 'in coef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 OneZero comment: 'One zero filter.'!
 
@@ -6322,11 +6322,11 @@ OneZero comment: 'One zero filter.'!
   primaryFactoryMethod ^#in:coef:!
 !
 
-UGen subclass: #Osc
+Ugen subclass: #Osc
   instanceVariableNames: 'bufnum freq phase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Osc comment: 'Interpolating wavetable oscillator.'!
 
@@ -6366,11 +6366,11 @@ Osc comment: 'Interpolating wavetable oscillator.'!
   primaryFactoryMethod ^#bufnum:freq:phase:!
 !
 
-UGen subclass: #Out
+Ugen subclass: #Out
   instanceVariableNames: 'bus channelsArray'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Out comment: 'Write a signal to a bus.'!
 
@@ -6407,11 +6407,11 @@ Out comment: 'Write a signal to a bus.'!
   primaryFactoryMethod ^#bus:channelsArray:!
 !
 
-UGen subclass: #Pan2
+Ugen subclass: #Pan2
   instanceVariableNames: 'in pos level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Pan2 comment: 'Two channel equal power pan.'!
 
@@ -6451,11 +6451,11 @@ Pan2 comment: 'Two channel equal power pan.'!
   primaryFactoryMethod ^#in:pos:level:!
 !
 
-UGen subclass: #PanAz
+Ugen subclass: #PanAz
   instanceVariableNames: 'in pos level width orientation'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PanAz comment: 'Azimuth panner'!
 
@@ -6502,11 +6502,11 @@ PanAz comment: 'Azimuth panner'!
   primaryFactoryMethod ^#numChan:in:pos:level:width:orientation:!
 !
 
-UGen subclass: #PanB
+Ugen subclass: #PanB
   instanceVariableNames: 'in azimuth elevation gain'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PanB comment: 'Ambisonic B-format panner.'!
 
@@ -6549,11 +6549,11 @@ PanB comment: 'Ambisonic B-format panner.'!
   primaryFactoryMethod ^#in:azimuth:elevation:gain:!
 !
 
-UGen subclass: #PeakFollower
+Ugen subclass: #PeakFollower
   instanceVariableNames: 'in decay'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PeakFollower comment: 'Track peak signal amplitude.'!
 
@@ -6590,11 +6590,11 @@ PeakFollower comment: 'Track peak signal amplitude.'!
   primaryFactoryMethod ^#in:decay:!
 !
 
-UGen subclass: #Perlin3
+Ugen subclass: #Perlin3
   instanceVariableNames: 'x y z'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Perlin3 comment: '3D Perlin Noise'!
 
@@ -6634,11 +6634,11 @@ Perlin3 comment: '3D Perlin Noise'!
   primaryFactoryMethod ^#x:y:z:!
 !
 
-UGen subclass: #Phasor
+Ugen subclass: #Phasor
   instanceVariableNames: 'trig rate start end resetPos'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Phasor comment: 'A resettable linear ramp between two levels.'!
 
@@ -6684,11 +6684,11 @@ Phasor comment: 'A resettable linear ramp between two levels.'!
   primaryFactoryMethod ^#trig:rate:start:end:resetPos:!
 !
 
-UGen subclass: #PinkNoise
+Ugen subclass: #PinkNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PinkNoise comment: 'Pink Noise.'!
 
@@ -6713,11 +6713,11 @@ PinkNoise comment: 'Pink Noise.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #Pitch
+Ugen subclass: #Pitch
   instanceVariableNames: 'in initFreq minFreq maxFreq execFreq maxBinsPerOctave median ampThreshold peakThreshold downSample clar'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Pitch comment: 'Autocorrelation pitch follower'!
 
@@ -6781,11 +6781,11 @@ Pitch comment: 'Autocorrelation pitch follower'!
   primaryFactoryMethod ^#in:initFreq:minFreq:maxFreq:execFreq:maxBinsPerOctave:median:ampThreshold:peakThreshold:downSample:clar:!
 !
 
-UGen subclass: #PitchShift
+Ugen subclass: #PitchShift
   instanceVariableNames: 'in windowSize pitchRatio pitchDispersion timeDispersion'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PitchShift comment: 'Time domain pitch shifter.'!
 
@@ -6831,11 +6831,11 @@ PitchShift comment: 'Time domain pitch shifter.'!
   primaryFactoryMethod ^#in:windowSize:pitchRatio:pitchDispersion:timeDispersion:!
 !
 
-UGen subclass: #PlayBuf
+Ugen subclass: #PlayBuf
   instanceVariableNames: 'bufnum rate trigger startPos loop doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PlayBuf comment: 'Sample playback oscillator.'!
 
@@ -6885,13 +6885,13 @@ PlayBuf comment: 'Sample playback oscillator.'!
   primaryFactoryMethod ^#numChan:bufnum:rate:trigger:startPos:loop:doneAction:!
 !
 
-UGen subclass: #Pluck
+Ugen subclass: #Pluck
   instanceVariableNames: 'in trig maxdelaytime delaytime decaytime coef'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-Pluck comment: 'A Karplus-Strong UGen'!
+Pluck comment: 'A Karplus-Strong Ugen'!
 
 !Pluck methodsFor: 'accessing'!
   in ^in!
@@ -6938,11 +6938,11 @@ Pluck comment: 'A Karplus-Strong UGen'!
   primaryFactoryMethod ^#in:trig:maxdelaytime:delaytime:decaytime:coef:!
 !
 
-UGen subclass: #Pulse
+Ugen subclass: #Pulse
   instanceVariableNames: 'freq width'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Pulse comment: 'Band limited pulse wave.'!
 
@@ -6979,11 +6979,11 @@ Pulse comment: 'Band limited pulse wave.'!
   primaryFactoryMethod ^#freq:width:!
 !
 
-UGen subclass: #PulseCount
+Ugen subclass: #PulseCount
   instanceVariableNames: 'trig reset'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PulseCount comment: 'Pulse counter.'!
 
@@ -7020,11 +7020,11 @@ PulseCount comment: 'Pulse counter.'!
   primaryFactoryMethod ^#trig:reset:!
 !
 
-UGen subclass: #PulseDivider
+Ugen subclass: #PulseDivider
   instanceVariableNames: 'trig div start'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PulseDivider comment: 'Pulse divider.'!
 
@@ -7064,11 +7064,11 @@ PulseDivider comment: 'Pulse divider.'!
   primaryFactoryMethod ^#trig:div:start:!
 !
 
-UGen subclass: #PV_RandComb
+Ugen subclass: #PV_RandComb
   instanceVariableNames: 'buffer wipe trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 PV_RandComb comment: 'Pass random bins.'!
 
@@ -7108,11 +7108,11 @@ PV_RandComb comment: 'Pass random bins.'!
   primaryFactoryMethod ^#buffer:wipe:trig:!
 !
 
-UGen subclass: #QuadL
+Ugen subclass: #QuadL
   instanceVariableNames: 'freq a b c xi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 QuadL comment: 'General quadratic map chaotic generator'!
 
@@ -7158,11 +7158,11 @@ QuadL comment: 'General quadratic map chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:c:xi:!
 !
 
-UGen subclass: #QuadC
+Ugen subclass: #QuadC
   instanceVariableNames: 'freq a b c xi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 QuadC comment: 'General quadratic map chaotic generator'!
 
@@ -7208,11 +7208,11 @@ QuadC comment: 'General quadratic map chaotic generator'!
   primaryFactoryMethod ^#freq:a:b:c:xi:!
 !
 
-UGen subclass: #RHPF
+Ugen subclass: #RHPF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RHPF comment: 'A resonant high pass filter.'!
 
@@ -7252,11 +7252,11 @@ RHPF comment: 'A resonant high pass filter.'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
-UGen subclass: #RLPF
+Ugen subclass: #RLPF
   instanceVariableNames: 'in freq rq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RLPF comment: 'A resonant low pass filter.'!
 
@@ -7296,11 +7296,11 @@ RLPF comment: 'A resonant low pass filter.'!
   primaryFactoryMethod ^#in:freq:rq:!
 !
 
-UGen subclass: #Rand
+Ugen subclass: #Rand
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Rand comment: 'Single random number generator.'!
 
@@ -7337,11 +7337,11 @@ Rand comment: 'Single random number generator.'!
   primaryFactoryMethod ^#lo:hi:!
 !
 
-UGen subclass: #RecordBuf
+Ugen subclass: #RecordBuf
   instanceVariableNames: 'bufnum offset recLevel preLevel run loop trigger doneAction inputArray'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RecordBuf comment: 'Record or overdub into a Buffer.'!
 
@@ -7399,11 +7399,11 @@ RecordBuf comment: 'Record or overdub into a Buffer.'!
   primaryFactoryMethod ^#bufnum:offset:recLevel:preLevel:run:loop:trigger:doneAction:inputArray:!
 !
 
-UGen subclass: #ReplaceOut
+Ugen subclass: #ReplaceOut
   instanceVariableNames: 'bus channelsArray'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ReplaceOut comment: 'Send signal to a bus, overwriting previous contents.'!
 
@@ -7440,11 +7440,11 @@ ReplaceOut comment: 'Send signal to a bus, overwriting previous contents.'!
   primaryFactoryMethod ^#bus:channelsArray:!
 !
 
-UGen subclass: #Resonz
+Ugen subclass: #Resonz
   instanceVariableNames: 'in freq bwr'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Resonz comment: 'Resonant filter.'!
 
@@ -7484,11 +7484,11 @@ Resonz comment: 'Resonant filter.'!
   primaryFactoryMethod ^#in:freq:bwr:!
 !
 
-UGen subclass: #Ringz
+Ugen subclass: #Ringz
   instanceVariableNames: 'in freq decaytime'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Ringz comment: 'Ringing filter.'!
 
@@ -7528,11 +7528,11 @@ Ringz comment: 'Ringing filter.'!
   primaryFactoryMethod ^#in:freq:decaytime:!
 !
 
-UGen subclass: #RunningMax
+Ugen subclass: #RunningMax
   instanceVariableNames: 'in trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RunningMax comment: 'Track maximum level.'!
 
@@ -7569,11 +7569,11 @@ RunningMax comment: 'Track maximum level.'!
   primaryFactoryMethod ^#in:trig:!
 !
 
-UGen subclass: #RunningSum
+Ugen subclass: #RunningSum
   instanceVariableNames: 'in numsamp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RunningSum comment: 'Running sum over n frames'!
 
@@ -7610,11 +7610,11 @@ RunningSum comment: 'Running sum over n frames'!
   primaryFactoryMethod ^#in:numsamp:!
 !
 
-UGen subclass: #Rotate2
+Ugen subclass: #Rotate2
   instanceVariableNames: 'x y pos'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Rotate2 comment: 'Rotate a sound field.'!
 
@@ -7654,11 +7654,11 @@ Rotate2 comment: 'Rotate a sound field.'!
   primaryFactoryMethod ^#x:y:pos:!
 !
 
-UGen subclass: #SampleDur
+Ugen subclass: #SampleDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SampleDur comment: 'Duration of one sample.'!
 
@@ -7683,11 +7683,11 @@ SampleDur comment: 'Duration of one sample.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #SampleRate
+Ugen subclass: #SampleRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SampleRate comment: 'Server sample rate.'!
 
@@ -7712,11 +7712,11 @@ SampleRate comment: 'Server sample rate.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #Saw
+Ugen subclass: #Saw
   instanceVariableNames: 'freq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Saw comment: 'Band limited sawtooth.'!
 
@@ -7750,11 +7750,11 @@ Saw comment: 'Band limited sawtooth.'!
   primaryFactoryMethod ^#freq:!
 !
 
-UGen subclass: #Schmidt
+Ugen subclass: #Schmidt
   instanceVariableNames: 'in lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Schmidt comment: 'Schmidt trigger.'!
 
@@ -7794,11 +7794,11 @@ Schmidt comment: 'Schmidt trigger.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
-UGen subclass: #Select
+Ugen subclass: #Select
   instanceVariableNames: 'which array'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Select comment: 'Select output from an array of inputs.'!
 
@@ -7835,11 +7835,11 @@ Select comment: 'Select output from an array of inputs.'!
   primaryFactoryMethod ^#which:array:!
 !
 
-UGen subclass: #SetBuf
+Ugen subclass: #SetBuf
   instanceVariableNames: 'buf offset length array'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SetBuf comment: 'Set local buffer'!
 
@@ -7882,11 +7882,11 @@ SetBuf comment: 'Set local buffer'!
   primaryFactoryMethod ^#buf:offset:length:array:!
 !
 
-UGen subclass: #SetResetFF
+Ugen subclass: #SetResetFF
   instanceVariableNames: 'trig reset'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SetResetFF comment: 'Set-reset flip flop.'!
 
@@ -7923,11 +7923,11 @@ SetResetFF comment: 'Set-reset flip flop.'!
   primaryFactoryMethod ^#trig:reset:!
 !
 
-UGen subclass: #SinOsc
+Ugen subclass: #SinOsc
   instanceVariableNames: 'freq phase'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SinOsc comment: 'Interpolating sine wavetable oscillator.'!
 
@@ -7964,11 +7964,11 @@ SinOsc comment: 'Interpolating sine wavetable oscillator.'!
   primaryFactoryMethod ^#freq:phase:!
 !
 
-UGen subclass: #SinOscFB
+Ugen subclass: #SinOscFB
   instanceVariableNames: 'freq feedback'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SinOscFB comment: 'Feedback FM oscillator'!
 
@@ -8005,11 +8005,11 @@ SinOscFB comment: 'Feedback FM oscillator'!
   primaryFactoryMethod ^#freq:feedback:!
 !
 
-UGen subclass: #Slew
+Ugen subclass: #Slew
   instanceVariableNames: 'in up dn'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Slew comment: 'Slew rate limiter.'!
 
@@ -8049,11 +8049,11 @@ Slew comment: 'Slew rate limiter.'!
   primaryFactoryMethod ^#in:up:dn:!
 !
 
-UGen subclass: #Slope
+Ugen subclass: #Slope
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Slope comment: 'Slope of signal'!
 
@@ -8087,11 +8087,11 @@ Slope comment: 'Slope of signal'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #SOS
+Ugen subclass: #SOS
   instanceVariableNames: 'in a0 a1 a2 b1 b2'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SOS comment: 'Second order filter section (biquad).'!
 
@@ -8140,11 +8140,11 @@ SOS comment: 'Second order filter section (biquad).'!
   primaryFactoryMethod ^#in:a0:a1:a2:b1:b2:!
 !
 
-UGen subclass: #Stepper
+Ugen subclass: #Stepper
   instanceVariableNames: 'trig reset min max step resetval'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Stepper comment: 'Pulse counter.'!
 
@@ -8193,11 +8193,11 @@ Stepper comment: 'Pulse counter.'!
   primaryFactoryMethod ^#trig:reset:min:max:step:resetval:!
 !
 
-UGen subclass: #Sweep
+Ugen subclass: #Sweep
   instanceVariableNames: 'trig rate'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Sweep comment: 'Triggered linear ramp'!
 
@@ -8234,11 +8234,11 @@ Sweep comment: 'Triggered linear ramp'!
   primaryFactoryMethod ^#trig:rate:!
 !
 
-UGen subclass: #SyncSaw
+Ugen subclass: #SyncSaw
   instanceVariableNames: 'syncFreq sawFreq'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SyncSaw comment: 'Hard sync sawtooth wave.'!
 
@@ -8275,13 +8275,13 @@ SyncSaw comment: 'Hard sync sawtooth wave.'!
   primaryFactoryMethod ^#syncFreq:sawFreq:!
 !
 
-UGen subclass: #TDuty
+Ugen subclass: #TDuty
   instanceVariableNames: 'dur reset doneAction level gapFirst'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-TDuty comment: 'Demand results as trigger from demand rate UGens.'!
+TDuty comment: 'Demand results as trigger from demand rate Ugens.'!
 
 !TDuty methodsFor: 'accessing'!
   dur ^dur!
@@ -8325,11 +8325,11 @@ TDuty comment: 'Demand results as trigger from demand rate UGens.'!
   primaryFactoryMethod ^#dur:reset:doneAction:level:gapFirst:!
 !
 
-UGen subclass: #TExpRand
+Ugen subclass: #TExpRand
   instanceVariableNames: 'lo hi trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TExpRand comment: 'Triggered exponential random number generator.'!
 
@@ -8369,11 +8369,11 @@ TExpRand comment: 'Triggered exponential random number generator.'!
   primaryFactoryMethod ^#lo:hi:trig:!
 !
 
-UGen subclass: #TGrains
+Ugen subclass: #TGrains
   instanceVariableNames: 'trigger bufnum rate centerPos dur pan amp interp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TGrains comment: 'Buffer granulator.'!
 
@@ -8429,11 +8429,11 @@ TGrains comment: 'Buffer granulator.'!
   primaryFactoryMethod ^#numChan:trigger:bufnum:rate:centerPos:dur:pan:amp:interp:!
 !
 
-UGen subclass: #Timer
+Ugen subclass: #Timer
   instanceVariableNames: 'trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Timer comment: 'Returns time since last triggered.'!
 
@@ -8467,11 +8467,11 @@ Timer comment: 'Returns time since last triggered.'!
   primaryFactoryMethod ^#trig:!
 !
 
-UGen subclass: #TIRand
+Ugen subclass: #TIRand
   instanceVariableNames: 'lo hi trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TIRand comment: 'Triggered integer random number generator.'!
 
@@ -8511,11 +8511,11 @@ TIRand comment: 'Triggered integer random number generator.'!
   primaryFactoryMethod ^#lo:hi:trig:!
 !
 
-UGen subclass: #ToggleFF
+Ugen subclass: #ToggleFF
   instanceVariableNames: 'trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ToggleFF comment: 'Toggle flip flop.'!
 
@@ -8549,11 +8549,11 @@ ToggleFF comment: 'Toggle flip flop.'!
   primaryFactoryMethod ^#trig:!
 !
 
-UGen subclass: #TRand
+Ugen subclass: #TRand
   instanceVariableNames: 'lo hi trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TRand comment: 'Triggered random number generator.'!
 
@@ -8593,11 +8593,11 @@ TRand comment: 'Triggered random number generator.'!
   primaryFactoryMethod ^#lo:hi:trig:!
 !
 
-UGen subclass: #Trig
+Ugen subclass: #Trig
   instanceVariableNames: 'in dur'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Trig comment: 'Timed trigger.'!
 
@@ -8634,11 +8634,11 @@ Trig comment: 'Timed trigger.'!
   primaryFactoryMethod ^#in:dur:!
 !
 
-UGen subclass: #Trig1
+Ugen subclass: #Trig1
   instanceVariableNames: 'in dur'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Trig1 comment: 'Timed trigger.'!
 
@@ -8675,11 +8675,11 @@ Trig1 comment: 'Timed trigger.'!
   primaryFactoryMethod ^#in:dur:!
 !
 
-UGen subclass: #TwoPole
+Ugen subclass: #TwoPole
   instanceVariableNames: 'in freq radius'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TwoPole comment: 'Two pole filter.'!
 
@@ -8719,11 +8719,11 @@ TwoPole comment: 'Two pole filter.'!
   primaryFactoryMethod ^#in:freq:radius:!
 !
 
-UGen subclass: #TwoZero
+Ugen subclass: #TwoZero
   instanceVariableNames: 'in freq radius'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TwoZero comment: 'Two zero filter.'!
 
@@ -8763,11 +8763,11 @@ TwoZero comment: 'Two zero filter.'!
   primaryFactoryMethod ^#in:freq:radius:!
 !
 
-UGen subclass: #VarSaw
+Ugen subclass: #VarSaw
   instanceVariableNames: 'freq iphase width'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 VarSaw comment: 'Variable duty saw'!
 
@@ -8807,11 +8807,11 @@ VarSaw comment: 'Variable duty saw'!
   primaryFactoryMethod ^#freq:iphase:width:!
 !
 
-UGen subclass: #VBJonVerb
+Ugen subclass: #VBJonVerb
   instanceVariableNames: 'in decay damping inputbw erfl tail'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 VBJonVerb comment: 'artifical reverberator'!
 
@@ -8860,11 +8860,11 @@ VBJonVerb comment: 'artifical reverberator'!
   primaryFactoryMethod ^#in:decay:damping:inputbw:erfl:tail:!
 !
 
-UGen subclass: #Vibrato
+Ugen subclass: #Vibrato
   instanceVariableNames: 'freq rate depth delay onset rateVariation depthVariation iphase trig'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Vibrato comment: 'The Vibrato oscillator models a slow frequency modulation.'!
 
@@ -8922,11 +8922,11 @@ Vibrato comment: 'The Vibrato oscillator models a slow frequency modulation.'!
   primaryFactoryMethod ^#freq:rate:depth:delay:onset:rateVariation:depthVariation:iphase:trig:!
 !
 
-UGen subclass: #WaveLoss
+Ugen subclass: #WaveLoss
   instanceVariableNames: 'in drop outof mode'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 WaveLoss comment: 'Lose bits of your waves'!
 
@@ -8969,11 +8969,11 @@ WaveLoss comment: 'Lose bits of your waves'!
   primaryFactoryMethod ^#in:drop:outof:mode:!
 !
 
-UGen subclass: #WhiteNoise
+Ugen subclass: #WhiteNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 WhiteNoise comment: 'White noise.'!
 
@@ -8998,11 +8998,11 @@ WhiteNoise comment: 'White noise.'!
   primaryFactoryMethod ^#new!
 !
 
-UGen subclass: #Wrap
+Ugen subclass: #Wrap
   instanceVariableNames: 'in lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Wrap comment: 'Wrap a signal outside given thresholds.'!
 
@@ -9042,11 +9042,11 @@ Wrap comment: 'Wrap a signal outside given thresholds.'!
   primaryFactoryMethod ^#in:lo:hi:!
 !
 
-UGen subclass: #WrapIndex
+Ugen subclass: #WrapIndex
   instanceVariableNames: 'bufnum in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 WrapIndex comment: 'Index into a table with a signal.'!
 
@@ -9083,11 +9083,11 @@ WrapIndex comment: 'Index into a table with a signal.'!
   primaryFactoryMethod ^#bufnum:in:!
 !
 
-UGen subclass: #XFade2
+Ugen subclass: #XFade2
   instanceVariableNames: 'inA inB pan level'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 XFade2 comment: 'Equal power two channel cross fade.'!
 
@@ -9130,11 +9130,11 @@ XFade2 comment: 'Equal power two channel cross fade.'!
   primaryFactoryMethod ^#inA:inB:pan:level:!
 !
 
-UGen subclass: #XLine
+Ugen subclass: #XLine
   instanceVariableNames: 'start end dur doneAction'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 XLine comment: 'Exponential line generator.'!
 
@@ -9177,11 +9177,11 @@ XLine comment: 'Exponential line generator.'!
   primaryFactoryMethod ^#start:end:dur:doneAction:!
 !
 
-UGen subclass: #ZeroCrossing
+Ugen subclass: #ZeroCrossing
   instanceVariableNames: 'in'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ZeroCrossing comment: 'Zero crossing frequency follower'!
 
@@ -9215,11 +9215,11 @@ ZeroCrossing comment: 'Zero crossing frequency follower'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #MoogLadder
+Ugen subclass: #MoogLadder
   instanceVariableNames: 'in ffreq res'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MoogLadder comment: 'Moog Filter Emulation'!
 
@@ -9259,11 +9259,11 @@ MoogLadder comment: 'Moog Filter Emulation'!
   primaryFactoryMethod ^#in:ffreq:res:!
 !
 
-UGen subclass: #GreyholeRaw
+Ugen subclass: #GreyholeRaw
   instanceVariableNames: 'in1 in2 damping delaytime diffusion feedback moddepth modfreq size'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 GreyholeRaw comment: 'algorithmic delay'!
 
@@ -9321,11 +9321,11 @@ GreyholeRaw comment: 'algorithmic delay'!
   primaryFactoryMethod ^#in1:in2:damping:delaytime:diffusion:feedback:moddepth:modfreq:size:!
 !
 
-UGen subclass: #CrossoverDistortion
+Ugen subclass: #CrossoverDistortion
   instanceVariableNames: 'in amp smooth'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
 
@@ -9365,11 +9365,11 @@ CrossoverDistortion comment: 'class B/AB power amp distortion simulation'!
   primaryFactoryMethod ^#in:amp:smooth:!
 !
 
-UGen subclass: #Friction
+Ugen subclass: #Friction
   instanceVariableNames: 'in friction spring damp mass beltmass'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Friction comment: 'A physical model of a system with dry-friction. A chaotic filter.'!
 
@@ -9418,11 +9418,11 @@ Friction comment: 'A physical model of a system with dry-friction. A chaotic fil
   primaryFactoryMethod ^#in:friction:spring:damp:mass:beltmass:!
 !
 
-UGen subclass: #MembraneCircle
+Ugen subclass: #MembraneCircle
   instanceVariableNames: 'excitation tension loss'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
 
@@ -9462,11 +9462,11 @@ MembraneCircle comment: 'Waveguide mesh physical models of drum membranes'!
   primaryFactoryMethod ^#excitation:tension:loss:!
 !
 
-UGen subclass: #VOSIM
+Ugen subclass: #VOSIM
   instanceVariableNames: 'trig freq nCycles decay'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 VOSIM comment: 'vosim pulse generator'!
 
@@ -9509,11 +9509,11 @@ VOSIM comment: 'vosim pulse generator'!
   primaryFactoryMethod ^#trig:freq:nCycles:decay:!
 !
 
-UGen subclass: #MiRings
+Ugen subclass: #MiRings
   instanceVariableNames: 'in trig pit struct bright damp pos model poly intern_exciter easteregg bypass'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 MiRings comment: 'a resonator'!
 
@@ -9580,11 +9580,11 @@ MiRings comment: 'a resonator'!
   primaryFactoryMethod ^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:!
 !
 
-UGen subclass: #AnalogFoldOsc
+Ugen subclass: #AnalogFoldOsc
   instanceVariableNames: 'freq amp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 AnalogFoldOsc comment: '(Undocumented class)'!
 
@@ -9621,11 +9621,11 @@ AnalogFoldOsc comment: '(Undocumented class)'!
   primaryFactoryMethod ^#freq:amp:!
 !
 
-UGen subclass: #RCD
+Ugen subclass: #RCD
   instanceVariableNames: 'clock rotate reset div spread auto len down gates'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RCD comment: 'rotating clock divider'!
 
@@ -9683,11 +9683,11 @@ RCD comment: 'rotating clock divider'!
   primaryFactoryMethod ^#clock:rotate:reset:div:spread:auto:len:down:gates:!
 !
 
-UGen subclass: #SCM
+Ugen subclass: #SCM
   instanceVariableNames: 'clock bpm rotate slip shuffle skip pw'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SCM comment: 'shuffling clock multiplier'!
 
@@ -9739,11 +9739,11 @@ SCM comment: 'shuffling clock multiplier'!
   primaryFactoryMethod ^#clock:bpm:rotate:slip:shuffle:skip:pw:!
 !
 
-UGen subclass: #DustRange
+Ugen subclass: #DustRange
   instanceVariableNames: 'iotMin iotMax'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DustRange comment: '(Undocumented class)'!
 
@@ -9780,11 +9780,11 @@ DustRange comment: '(Undocumented class)'!
   primaryFactoryMethod ^#iotMin:iotMax:!
 !
 
-UGen subclass: #ExpRandN
+Ugen subclass: #ExpRandN
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ExpRandN comment: '(Undocumented class)'!
 
@@ -9822,11 +9822,11 @@ ExpRandN comment: '(Undocumented class)'!
   primaryFactoryMethod ^#numChan:lo:hi:!
 !
 
-UGen subclass: #LinRandN
+Ugen subclass: #LinRandN
   instanceVariableNames: 'lo hi minmax'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinRandN comment: '(Undocumented class)'!
 
@@ -9867,11 +9867,11 @@ LinRandN comment: '(Undocumented class)'!
   primaryFactoryMethod ^#numChan:lo:hi:minmax:!
 !
 
-UGen subclass: #RandN
+Ugen subclass: #RandN
   instanceVariableNames: 'lo hi'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RandN comment: '(Undocumented class)'!
 
@@ -9909,11 +9909,11 @@ RandN comment: '(Undocumented class)'!
   primaryFactoryMethod ^#numChan:lo:hi:!
 !
 
-UGen subclass: #TScramble
+Ugen subclass: #TScramble
   instanceVariableNames: 'trigger inputs'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 TScramble comment: '(Undocumented class)'!
 
@@ -9950,11 +9950,11 @@ TScramble comment: '(Undocumented class)'!
   primaryFactoryMethod ^#trigger:inputs:!
 !
 
-UGen subclass: #DX7
+Ugen subclass: #DX7
   instanceVariableNames: 'bufnum on off data vc mnn vel pw mw bc fc'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DX7 comment: '(Undocumented class)'!
 
@@ -10018,11 +10018,11 @@ DX7 comment: '(Undocumented class)'!
   primaryFactoryMethod ^#bufnum:on:off:data:vc:mnn:vel:pw:mw:bc:fc:!
 !
 
-UGen subclass: #RDX7Env
+Ugen subclass: #RDX7Env
   instanceVariableNames: 'gate data r1 r2 r3 r4 l1 l2 l3 l4 ol'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 RDX7Env comment: '(Undocumented class)'!
 
@@ -10086,11 +10086,11 @@ RDX7Env comment: '(Undocumented class)'!
   primaryFactoryMethod ^#gate:data:r1:r2:r3:r4:l1:l2:l3:l4:ol:!
 !
 
-UGen subclass: #ObxdFilter
+Ugen subclass: #ObxdFilter
   instanceVariableNames: 'in cutoff resonance multimode bandpass fourpole'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 ObxdFilter comment: '(Undocumented class)'!
 
@@ -10139,11 +10139,11 @@ ObxdFilter comment: '(Undocumented class)'!
   primaryFactoryMethod ^#in:cutoff:resonance:multimode:bandpass:fourpole:!
 !
 
-UGen subclass: #SvfBp
+Ugen subclass: #SvfBp
   instanceVariableNames: 'in freq q'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SvfBp comment: '(Undocumented class)'!
 
@@ -10183,11 +10183,11 @@ SvfBp comment: '(Undocumented class)'!
   primaryFactoryMethod ^#in:freq:q:!
 !
 
-UGen subclass: #SvfHp
+Ugen subclass: #SvfHp
   instanceVariableNames: 'in freq q'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SvfHp comment: '(Undocumented class)'!
 
@@ -10227,11 +10227,11 @@ SvfHp comment: '(Undocumented class)'!
   primaryFactoryMethod ^#in:freq:q:!
 !
 
-UGen subclass: #SvfLp
+Ugen subclass: #SvfLp
   instanceVariableNames: 'in freq q'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SvfLp comment: '(Undocumented class)'!
 
@@ -10271,11 +10271,11 @@ SvfLp comment: '(Undocumented class)'!
   primaryFactoryMethod ^#in:freq:q:!
 !
 
-UGen subclass: #Bezier
+Ugen subclass: #Bezier
   instanceVariableNames: 'haltAfter dx freq phase param'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Bezier comment: '(Undocumented class)'!
 
@@ -10321,11 +10321,11 @@ Bezier comment: '(Undocumented class)'!
   primaryFactoryMethod ^#haltAfter:dx:freq:phase:param:!
 !
 
-UGen subclass: #Freezer
+Ugen subclass: #Freezer
   instanceVariableNames: 'bufnum left right gain increment incrementOffset incrementRandom rightRandom syncPhaseTrigger randomizePhaseTrigger numberOfLoops'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Freezer comment: '(Undocumented class)'!
 
@@ -10389,103 +10389,7 @@ Freezer comment: '(Undocumented class)'!
   primaryFactoryMethod ^#bufnum:left:right:gain:increment:incrementOffset:incrementRandom:rightRandom:syncPhaseTrigger:randomizePhaseTrigger:numberOfLoops:!
 !
 
-UGen subclass: #ShufflerB
-  instanceVariableNames: 'bufnum readLocationMinima readLocationMaxima readIncrementMinima readIncrementMaxima durationMinima durationMaxima envelopeAmplitudeMinima envelopeAmplitudeMaxima envelopeShapeMinima envelopeShapeMaxima envelopeSkewMinima envelopeSkewMaxima stereoLocationMinima stereoLocationMaxima interOffsetTimeMinima interOffsetTimeMaxima ftableReadLocationIncrement readIncrementQuanta interOffsetTimeQuanta'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-SC3'!
-
-ShufflerB comment: '(Undocumented class)'!
-
-!ShufflerB methodsFor: 'accessing'!
-  bufnum ^bufnum!
-  bufnum: x bufnum := x!
-  readLocationMinima ^readLocationMinima!
-  readLocationMinima: x readLocationMinima := x!
-  readLocationMaxima ^readLocationMaxima!
-  readLocationMaxima: x readLocationMaxima := x!
-  readIncrementMinima ^readIncrementMinima!
-  readIncrementMinima: x readIncrementMinima := x!
-  readIncrementMaxima ^readIncrementMaxima!
-  readIncrementMaxima: x readIncrementMaxima := x!
-  durationMinima ^durationMinima!
-  durationMinima: x durationMinima := x!
-  durationMaxima ^durationMaxima!
-  durationMaxima: x durationMaxima := x!
-  envelopeAmplitudeMinima ^envelopeAmplitudeMinima!
-  envelopeAmplitudeMinima: x envelopeAmplitudeMinima := x!
-  envelopeAmplitudeMaxima ^envelopeAmplitudeMaxima!
-  envelopeAmplitudeMaxima: x envelopeAmplitudeMaxima := x!
-  envelopeShapeMinima ^envelopeShapeMinima!
-  envelopeShapeMinima: x envelopeShapeMinima := x!
-  envelopeShapeMaxima ^envelopeShapeMaxima!
-  envelopeShapeMaxima: x envelopeShapeMaxima := x!
-  envelopeSkewMinima ^envelopeSkewMinima!
-  envelopeSkewMinima: x envelopeSkewMinima := x!
-  envelopeSkewMaxima ^envelopeSkewMaxima!
-  envelopeSkewMaxima: x envelopeSkewMaxima := x!
-  stereoLocationMinima ^stereoLocationMinima!
-  stereoLocationMinima: x stereoLocationMinima := x!
-  stereoLocationMaxima ^stereoLocationMaxima!
-  stereoLocationMaxima: x stereoLocationMaxima := x!
-  interOffsetTimeMinima ^interOffsetTimeMinima!
-  interOffsetTimeMinima: x interOffsetTimeMinima := x!
-  interOffsetTimeMaxima ^interOffsetTimeMaxima!
-  interOffsetTimeMaxima: x interOffsetTimeMaxima := x!
-  ftableReadLocationIncrement ^ftableReadLocationIncrement!
-  ftableReadLocationIncrement: x ftableReadLocationIncrement := x!
-  readIncrementQuanta ^readIncrementQuanta!
-  readIncrementQuanta: x readIncrementQuanta := x!
-  interOffsetTimeQuanta ^interOffsetTimeQuanta!
-  interOffsetTimeQuanta: x interOffsetTimeQuanta := x!
-!
-
-!ShufflerB methodsFor: 'initialization'!
-  initialize
-    super initialize.
-    ugenName := #ShufflerB.
-    paramNames := #(#bufnum #readLocationMinima #readLocationMaxima #readIncrementMinima #readIncrementMaxima #durationMinima #durationMaxima #envelopeAmplitudeMinima #envelopeAmplitudeMaxima #envelopeShapeMinima #envelopeShapeMaxima #envelopeSkewMinima #envelopeSkewMaxima #stereoLocationMinima #stereoLocationMaxima #interOffsetTimeMinima #interOffsetTimeMaxima #ftableReadLocationIncrement #readIncrementQuanta #interOffsetTimeQuanta).
-    mceNames := #().
-    ugenRate := #ar.
-    numChan := 2.
-    specialIndex := 0.
-    ugenId := nil.
-    bufnum := 0.0. readLocationMinima := 0.01. readLocationMaxima := 0.02. readIncrementMinima := 1.0. readIncrementMaxima := 1.0. durationMinima := 0.2. durationMaxima := 0.2. envelopeAmplitudeMinima := 0.5. envelopeAmplitudeMaxima := 0.5. envelopeShapeMinima := 0.5. envelopeShapeMaxima := 0.5. envelopeSkewMinima := 0.5. envelopeSkewMaxima := 0.5. stereoLocationMinima := 0.5. stereoLocationMaxima := 0.5. interOffsetTimeMinima := 0.05. interOffsetTimeMaxima := 0.01. ftableReadLocationIncrement := 1.0. readIncrementQuanta := 0.0. interOffsetTimeQuanta := 0.0!
-!
-
-
-!ShufflerB class methodsFor: 'instance creation'!
-  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta
-    |u|
-    u := self new.
-    u bufnum: bufnum.
-    u readLocationMinima: readLocationMinima.
-    u readLocationMaxima: readLocationMaxima.
-    u readIncrementMinima: readIncrementMinima.
-    u readIncrementMaxima: readIncrementMaxima.
-    u durationMinima: durationMinima.
-    u durationMaxima: durationMaxima.
-    u envelopeAmplitudeMinima: envelopeAmplitudeMinima.
-    u envelopeAmplitudeMaxima: envelopeAmplitudeMaxima.
-    u envelopeShapeMinima: envelopeShapeMinima.
-    u envelopeShapeMaxima: envelopeShapeMaxima.
-    u envelopeSkewMinima: envelopeSkewMinima.
-    u envelopeSkewMaxima: envelopeSkewMaxima.
-    u stereoLocationMinima: stereoLocationMinima.
-    u stereoLocationMaxima: stereoLocationMaxima.
-    u interOffsetTimeMinima: interOffsetTimeMinima.
-    u interOffsetTimeMaxima: interOffsetTimeMaxima.
-    u ftableReadLocationIncrement: ftableReadLocationIncrement.
-    u readIncrementQuanta: readIncrementQuanta.
-    u interOffsetTimeQuanta: interOffsetTimeQuanta.
-    ^u!
-  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta mul: mul ^(ShufflerB bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta) * mul!
-  bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta mul: mul add: add ^(ShufflerB bufnum: bufnum readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta) * mul + add!
-  primaryFactoryMethod ^#bufnum:readLocationMinima:readLocationMaxima:readIncrementMinima:readIncrementMaxima:durationMinima:durationMaxima:envelopeAmplitudeMinima:envelopeAmplitudeMaxima:envelopeShapeMinima:envelopeShapeMaxima:envelopeSkewMinima:envelopeSkewMaxima:stereoLocationMinima:stereoLocationMaxima:interOffsetTimeMinima:interOffsetTimeMaxima:ftableReadLocationIncrement:readIncrementQuanta:interOffsetTimeQuanta:!
-!
-
-
-!AbstractUGen methodsFor: 'arithmetic'!
+!AbstractUgen methodsFor: 'arithmetic'!
   + b ^ BinaryOpUGen specialIndex: 0 a: self b: b!
   - b ^ BinaryOpUGen specialIndex: 1 a: self b: b!
   * b ^ BinaryOpUGen specialIndex: 2 a: self b: b!
@@ -10512,7 +10416,7 @@ ShufflerB comment: '(Undocumented class)'!
   fold2: b ^ BinaryOpUGen specialIndex: 44 a: self b: b!
 !
 
-!AbstractUGen methodsFor: 'arithmetic'!
+!AbstractUgen methodsFor: 'arithmetic'!
   negated ^ UnaryOpUGen specialIndex: 0 a: self!
   abs ^ UnaryOpUGen specialIndex: 5 a: self!
   ceil ^ UnaryOpUGen specialIndex: 8 a: self!

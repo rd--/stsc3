@@ -1,12 +1,14 @@
-common=Base Core Env Event Haskell Help Help-Graphs Math Random UGen UGen-Demand UGen-Pseudo
+core=Base Core Env Event Help Help-Graphs Math Random Ugen Ugen-Demand Ugen-Pseudo
+base=Haskell
+common=$(core) $(base)
 
-gnu=$(common) Gnu UI
-squeak=$(common) Squeak UI
+gnu=$(common) Gnu Ui
+squeak=$(common) Squeak Ui
 cuis=$(common) Cuis
 
-gnu_prefixed=$(addprefix SC3-, $(gnu))
-squeak_prefixed=$(addprefix SC3-, $(squeak))
-cuis_prefixed=$(addprefix SC3-, $(cuis))
+gnu_prefixed=$(addprefix Sc3-, $(gnu))
+squeak_prefixed=$(addprefix Sc3-, $(squeak))
+cuis_prefixed=$(addprefix Sc3-, $(cuis))
 
 all:
 	cat $(gnu_prefixed:=.st) > Sc3-Filein-For-Gnu.st

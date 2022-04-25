@@ -23,16 +23,16 @@
   !
 !
 
-SystemWindow subclass: #SC3Editor
+SystemWindow subclass: #Sc3Editor
   instanceVariableNames: 'fileName editor'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-SC3Editor comment: 'Editor for UGen graph fragments'!
+Sc3Editor comment: 'Editor for Ugen graph fragments'!
 
-!SC3Editor methodsFor: 'accessing'!
+!Sc3Editor methodsFor: 'accessing'!
   fileName ^fileName
   !
   fileName: x fileName := x
@@ -43,7 +43,7 @@ SC3Editor comment: 'Editor for UGen graph fragments'!
   !
 !
 
-!SC3Editor class methodsFor: 'instance creation'!
+!Sc3Editor class methodsFor: 'instance creation'!
   openOn: x
     | v |
     v := self new.
@@ -52,49 +52,49 @@ SC3Editor comment: 'Editor for UGen graph fragments'!
   !
 !
 
-!SC3Editor methodsFor: 'operating'!
+!Sc3Editor methodsFor: 'operating'!
   text
     ^fileName readTextFile
   !
   play
     | text |
     text := editor textMorph selection asString.
-    (SC3 evalText: text fromFile: fileName) play
+    (Sc3 evalText: text fromFile: fileName) play
   !
   draw
     | text |
     text := editor textMorph selection asString.
-    (SC3 evalText: text fromFile: fileName) draw
+    (Sc3 evalText: text fromFile: fileName) draw
   !
   menu: m shifted: i
     m add: 'play (p)' target: self selector: #play.
-    m add: 'stop (s)' target: SC3 selector: #reset.
+    m add: 'stop (s)' target: Sc3 selector: #reset.
     m add: 'draw (d)' target: self selector: #draw.
     ^m
   !
 !
 
-!SC3Editor methodsFor: 'initialization'!
+!Sc3Editor methodsFor: 'initialization'!
   createWindow
     | t |
     t := PluggableTextMorph on: self text: #text accept: nil readSelection: nil menu: #menu:shifted:.
     t color: Color veryVeryLightGray.
     self editor: t.
     self addMorph: t frame: (0@0 corner: 1@1).
-    self setLabel: 'SC3 Editor on: ' , self fileName
+    self setLabel: 'Sc3 Editor on: ' , self fileName
   !
 !
 
-SystemWindow subclass: #SC3Browser
+SystemWindow subclass: #Sc3Browser
   instanceVariableNames: 'directoryName index'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-SC3Browser comment: 'List view on UGen graph fragments'!
+Sc3Browser comment: 'List view on Ugen graph fragments'!
 
-!SC3Browser methodsFor: 'accessing'!
+!Sc3Browser methodsFor: 'accessing'!
   directoryName ^directoryName
   !
   directoryName: x directoryName := x
@@ -111,7 +111,7 @@ SC3Browser comment: 'List view on UGen graph fragments'!
   !
 !
 
-!SC3Browser class methodsFor: 'instance creation'!
+!Sc3Browser class methodsFor: 'instance creation'!
   openOn: x
     | v |
     v := self new.
@@ -120,19 +120,19 @@ SC3Browser comment: 'List view on UGen graph fragments'!
   !
 !
 
-!SC3Browser methodsFor: 'operating'!
+!Sc3Browser methodsFor: 'operating'!
   play
-    SC3 playFile: (self files at: index)
+    Sc3 playFile: (self files at: index)
   !
   edit
-    SC3Editor openOn: (self files at: index)
+    Sc3Editor openOn: (self files at: index)
   !
   draw
-    SC3 drawFile: (self files at: index)
+    Sc3 drawFile: (self files at: index)
   !
   menu: m
     m add: 'play (p)' target: self selector: #play.
-    m add: 'stop (s)' target: SC3 selector: #reset.
+    m add: 'stop (s)' target: Sc3 selector: #reset.
     m add: 'edit (e)' target: self selector: #edit.
     m add: 'draw (d)' target: self selector: #draw.
     ^m
@@ -142,19 +142,19 @@ SC3Browser comment: 'List view on UGen graph fragments'!
   !
   key: k from: i
     k == $p ifTrue: [self play].
-    k == $s ifTrue: [SC3 reset].
+    k == $s ifTrue: [Sc3 reset].
     k == $e ifTrue: [self edit].
     k == $d ifTrue: [self draw]
   !
 !
 
-!SC3Browser methodsFor: 'initialization'!
+!Sc3Browser methodsFor: 'initialization'!
   createWindow
     | l |
     l := PluggableListMorph new.
     l on: self list: #files selected: #index changeSelected: #index: menu: #menu:shifted: keystroke: #key:from:.
     l color: Color veryVeryLightGray.
     self addMorph: l frame: (0@0 corner: 1@1).
-    self setLabel: 'SC3 Browser on: ', self directoryName
+    self setLabel: 'Sc3 Browser on: ', self directoryName
   !
 !

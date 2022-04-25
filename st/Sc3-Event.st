@@ -2,7 +2,7 @@ Object subclass: #EventParam
   instanceVariableNames: 'v w x y z o rx ry p px'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 EventParam comment: 'Event Parameters'!
@@ -31,8 +31,8 @@ EventParam comment: 'Event Parameters'!
 !
 
 !EventParam class methodsFor: 'instance creation'!
-  voice: v fromUGen: u
-    "Create EventParam object from Mce UGen"
+  voice: v fromUgen: u
+    "Create EventParam object from Mce Ugen"
     | e |
     e := self new.
     e v: v.
@@ -49,11 +49,11 @@ EventParam comment: 'Event Parameters'!
   !
 !
 
-AbstractUGen subclass: #Voicer
+AbstractUgen subclass: #Voicer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Voicer comment: 'Event Control Input'!
@@ -67,12 +67,12 @@ Voicer comment: 'Event Control Input'!
       ^ eventAddr + (voiceNumber - 1 + eventZero * eventIncr)
   !
   k0: k0 stp: stp c: c
-    ^EventParam voice: c fromUGen: (ControlIn numChan: 9 bus: (k0 + (c * stp))) asMce.
+    ^EventParam voice: c fromUgen: (ControlIn numChan: 9 bus: (k0 + (c * stp))) asMce.
   !
   k0: k0 stp: stp c0: c0 numVoices: numVoices voiceFunc: voiceFunc
     | v |
     v := 0 to: numVoices - 1.
-    ^(v collect: [ :c | voiceFunc value: (self k0: k0 stp: stp c: (c0 + c))]) asUGen
+    ^(v collect: [ :c | voiceFunc value: (self k0: k0 stp: stp c: (c0 + c))]) asUgen
   !
   numVoices: numVoices voiceFunc: voiceFunc
     | k0 stp c0 |
@@ -84,61 +84,61 @@ Voicer comment: 'Event Control Input'!
   primaryFactoryMethod ^#numVoices:voiceFunc:!
 !
 
-AbstractUGen subclass: #KeyDown instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #KeyDown instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !KeyDown class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 0 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #KeyTimbre instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #KeyTimbre instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !KeyTimbre class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 2 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #KeyVelocity instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #KeyVelocity instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !KeyVelocity class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 3 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #KeyPitch instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #KeyPitch instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !KeyPitch class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 7 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenDown instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenDown instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenDown class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 0 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenX instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenX instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenX class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 1 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenY instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenY instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenY class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 2 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenZ instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenZ instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenZ class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 3 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenAngle instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenAngle instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenAngle class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 4 !
   primaryFactoryMethod ^#voiceNumber:!
 !
 
-AbstractUGen subclass: #PenRadius instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #PenRadius instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 !PenRadius class methodsFor: 'instance creation'!
   voiceNumber: voiceNumber ^ControlIn numChan: 1 bus: (Voicer voiceAddr: voiceNumber) + 5 !
   primaryFactoryMethod ^#voiceNumber:!

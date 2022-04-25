@@ -1,9 +1,9 @@
-!Sc3HelpGraph class methodsFor: 'Sc Help Graphs'!
+!Sc3HelpGraph methodsFor: 'Sc Help Graphs'!
 adcBitReduction
   "bit-reduction (adc)"
   "
-  Sc3HelpGraph adcBitReduction play.
-  SC3 reset.
+  Sc3HelpGraph new adcBitReduction play.
+  Sc3 reset.
   "
   | f nh src sr bitSz downSample bitRedux |
   f := LFNoise2 freq: 8 mul: 200 add: 300.
@@ -18,8 +18,8 @@ adcBitReduction
 adcDownSample
   "down-sample (adc)"
   "
-  Sc3HelpGraph adcDownSample play.
-  SC3 reset.
+  Sc3HelpGraph new adcDownSample play.
+  Sc3 reset.
   "
   |f nh src sr|
   f := LFNoise2 freq: 8 mul: 200 add: 300.
@@ -31,8 +31,8 @@ adcDownSample
 dmShiftRegister
   "https://sccode.org/1-590 (dm)"
   "
-  Sc3HelpGraph dmShiftRegister play.
-  SC3 reset.
+  Sc3HelpGraph new dmShiftRegister play.
+  Sc3 reset.
   "
   | shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
   shift_register := [ :length :tr :in |
@@ -61,8 +61,8 @@ dmShiftRegister
 esTw435684664200540161
   "https://twitter.com/sluyterrific_sc/status/435684664200540161 (es)"
   "
-  Sc3HelpGraph esTw435684664200540161 play.
-  SC3 reset.
+  Sc3HelpGraph new esTw435684664200540161 play.
+  Sc3 reset.
   "
   | f |
   f := [ :i |
@@ -74,8 +74,8 @@ esTw435684664200540161
 esTw570012853274615808
   "https://twitter.com/sluyterrific_sc/status/570012853274615808 (es)"
   "
-  Sc3HelpGraph esTw570012853274615808 play.
-  SC3 reset.
+  Sc3HelpGraph new esTw570012853274615808 play.
+  Sc3 reset.
   "
   | t o a s |
   t := Dust2 density: #(9 9).
@@ -87,8 +87,8 @@ esTw570012853274615808
 f0Pkt00
   "pkt 00 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490"
   "
-  Sc3HelpGraph f0Pkt00 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Pkt00 play.
+  Sc3 reset.
   "
   | f0 ph0 a0 i w s |
   f0 := SinOsc freq: #(0.11 0.22 0.33) phase: 0 mul: 1 add: #(100 200 300).
@@ -102,8 +102,8 @@ f0Pkt00
 f0Tw0011
   "tw 0011 (f0) ; https://twitter.com/redFrik/status/23182604046"
   "
-  Sc3HelpGraph f0Tw0011 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0011 play.
+  Sc3 reset.
   "
   | s f |
   s := [ :o :i |
@@ -116,8 +116,8 @@ f0Tw0011
 f0Tw0041
   "http://www.fredrikolofsson.com/f0blog/?q=node/537 (f0)"
   "
-  Sc3HelpGraph f0Tw0041 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0041 play.
+  Sc3 reset.
   "
   | s i o |
   s := Sweep trig: (LocalIn numChan: 6 default: 0) rate: 1.
@@ -128,8 +128,8 @@ f0Tw0041
 f0Tw0045
   "http://www.fredrikolofsson.com/f0blog/?q=node/537 (f0)"
   "
-  Sc3HelpGraph f0Tw0045 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0045 play.
+  Sc3 reset.
   "
   | f pf p |
   f := SinOsc freq: (SinOsc freq: 0.11 phase: 0) phase: 0.
@@ -140,8 +140,8 @@ f0Tw0045
 f0Tw0077
   "http://sccode.org/1-4Qy (f0)"
   "
-  Sc3HelpGraph f0Tw0077 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0077 play.
+  Sc3 reset.
   "
   | f p m b |
   f := (SinOsc freq: {1/5. 1/6} phase: 0) + #(798 912).
@@ -153,8 +153,8 @@ f0Tw0077
 f0Tw0084
   "http://sccode.org/1-4Qy (f0)"
   "
-  Sc3HelpGraph f0Tw0084 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0084 play.
+  Sc3 reset.
   "
   | f g w |
   f := Saw freq: ((5 to: 15 by: 2) * 19) mul: 99 add: 199.
@@ -165,8 +165,8 @@ f0Tw0084
 f0Tw0121
   "http://sccode.org/1-4Qy (f0)"
   "
-  Sc3HelpGraph f0Tw0121 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0121 play.
+  Sc3 reset.
   "
   | z l m o |
   z := SinOsc freq: {1/8. 1/7} phase: 0 mul: (SinOsc freq: (1/30) phase: 0 mul: 9).
@@ -178,8 +178,8 @@ f0Tw0121
 f0Tw0125
   "http://sccode.org/1-4Qy (f0)"
   "
-  Sc3HelpGraph f0Tw0125 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0125 play.
+  Sc3 reset.
   "
   | f u d i p |
   f := SinOsc freq: {1/8. 1/9} phase: 0 mul: 4 add: #(400 202).
@@ -192,8 +192,8 @@ f0Tw0125
 f0Tw0456384156159574016
   "https://twitter.com/redFrik/status/456384156159574016 (f0)"
   "
-  Sc3HelpGraph f0Tw0456384156159574016 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0456384156159574016 play.
+  Sc3 reset.
   "
   | a s f |
   a := 1 / #(3 12 4 1 6 2).
@@ -204,8 +204,8 @@ f0Tw0456384156159574016
 f0Tw0839296011982024704
   "f0 ; https://twitter.com/redFrik/status/839296011982024704"
   "
-  Sc3HelpGraph f0Tw0839296011982024704 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw0839296011982024704 play.
+  Sc3 reset.
   "
   | t f m i g |
   t := LFSaw freq: #(0.5 0.6) iphase: 0.
@@ -218,8 +218,8 @@ f0Tw0839296011982024704
 f0Tw1105496695637454848
   "f0 ; https://twitter.com/redFrik/status/1105496695637454848"
   "
-  Sc3HelpGraph f0Tw1105496695637454848 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1105496695637454848 play.
+  Sc3 reset.
   "
   | b w s x y z m o f rq |
   b := (1 to: 15) / 151.
@@ -237,8 +237,8 @@ f0Tw1105496695637454848
 f0Tw1125557217086857216
   "https://twitter.com/redFrik/status/1125557217086857216 (f0)"
   "
-  Sc3HelpGraph f0Tw1125557217086857216 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1125557217086857216 play.
+  Sc3 reset.
   "
   | scl b i m v o s |
   scl := #(0 2.94 4.98 7.02 9.96). "pythagorean"
@@ -253,8 +253,8 @@ f0Tw1125557217086857216
 f0Tw1210118661022867458
   "f0 ; https://twitter.com/redFrik/status/1210118661022867458"
   "
-  Sc3HelpGraph f0Tw1210118661022867458 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1210118661022867458 play.
+  Sc3 reset.
   "
   | b d g l f o c p |
   b := 1 / (2 to: 7).
@@ -270,8 +270,8 @@ f0Tw1210118661022867458
 f0Tw1254441448327479299
   "f0 <https://twitter.com/redFrik/status/1254441448327479299>"
   "
-  Sc3HelpGraph f0Tw1254441448327479299 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1254441448327479299 play.
+  Sc3 reset.
   "
   | b e c d m l j f y o |
   b := #(1 3 5 8 10).
@@ -289,8 +289,8 @@ f0Tw1254441448327479299
 f0Tw1319946903711338496
   "https://twitter.com/redFrik/status/1319946903711338496 ; graph rewrite (rd)"
   "
-  Sc3HelpGraph f0Tw1319946903711338496 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1319946903711338496 play.
+  Sc3 reset.
   "
   | scl gen |
   scl := #(0 0.804 1.944 3.084 3.888 5.028 5.832 6.972 7.776 8.916 10.056 10.86).
@@ -309,8 +309,8 @@ f0Tw1319946903711338496
 f0Tw1338987643057688579
   "f0 <https://twitter.com/redFrik/status/1338987643057688579>"
   "
-  Sc3HelpGraph f0Tw1338987643057688579 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1338987643057688579 play.
+  Sc3 reset.
   "
   | b x t d c z p |
   b := (8 to: 18) asArray.
@@ -325,8 +325,8 @@ f0Tw1338987643057688579
 f0Tw1343283697840226307
   "f0 <https://twitter.com/redFrik/status/1343283697840226307>"
   "
-  Sc3HelpGraph f0Tw1343283697840226307 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1343283697840226307 play.
+  Sc3 reset.
   "
   | b f z t d c p |
   b := (2 to: 12) / 12.
@@ -341,8 +341,8 @@ f0Tw1343283697840226307
 f0Tw1395040511795372038
   "f0 ; https://twitter.com/redFrik/status/1395040511795372038"
   "
-  Sc3HelpGraph f0Tw1395040511795372038 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1395040511795372038 play.
+  Sc3 reset.
   "
   | b c l f o p m h q r |
   b := #(2 6 3 1).
@@ -360,8 +360,8 @@ f0Tw1395040511795372038
 f0Tw1395519538008141835
   "f0 ; <https://twitter.com/redFrik/status/1395519538008141835>"
   "
-  Sc3HelpGraph f0Tw1395519538008141835 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1395519538008141835 play.
+  Sc3 reset.
   "
   | c d f p o |
   c := DmdFor dur: 0.004 reset: 0 level: (Dseries length: Float infinity start: 1 step: #(1 2)) % (DmdFor dur: 8.192 reset: 0 level: (Seq repeats: Float infinity array: ((1 to: 6) * 75))).
@@ -374,8 +374,8 @@ f0Tw1395519538008141835
 f0Tw1395878538297892865
   "f0 ; <https://twitter.com/redFrik/status/1395878538297892865>"
   "
-  Sc3HelpGraph f0Tw1395878538297892865 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1395878538297892865 play.
+  Sc3 reset.
   "
   | t g e m o c |
   t := Impulse freq: 5 phase: 0.
@@ -393,8 +393,8 @@ f0Tw1395878538297892865
 f0Tw1452318302768963589
   "<https://twitter.com/redFrik/status/1452318302768963589> ; f0"
   "
-  Sc3HelpGraph f0Tw1452318302768963589 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1452318302768963589 play.
+  Sc3 reset.
   "
   | b m c t f h a z o |
   b := 2 * Float pi * #(4 3 1 2 5) / 5.
@@ -411,8 +411,8 @@ f0Tw1452318302768963589
 f0Tw1453520892374441986
   "https://twitter.com/redFrik/status/1453520892374441986 ; f0"
   "
-  Sc3HelpGraph f0Tw1453520892374441986 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1453520892374441986 play.
+  Sc3 reset.
   "
   | b c t x f y h o |
   b := #(1 2 3) / 3.
@@ -428,8 +428,8 @@ f0Tw1453520892374441986
 f0Tw1467507942664646661
   "https://twitter.com/redFrik/status/1467507942664646661"
   "
-  Sc3HelpGraph f0Tw1467507942664646661 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1467507942664646661 play.
+  Sc3 reset.
   "
   | b fb1 d c p q |
   b := #(3 4 5 6 7 8 1 2).
@@ -450,8 +450,8 @@ f0Tw1467507942664646661
 f0Tw1479212835192332289
   "https://twitter.com/redFrik/status/1479212835192332289 (f0)"
   "
-  Sc3HelpGraph f0Tw1479212835192332289 play.
-  SC3 reset.
+  Sc3HelpGraph new f0Tw1479212835192332289 play.
+  Sc3 reset.
   "
   | q q1 b q2 e q3 q4 q5 q6 |
   q := [ :freq | QuadC freq: freq a: 1 b: -1 c: -0.75 xi: 0 ].
@@ -468,8 +468,8 @@ f0Tw1479212835192332289
 jar14Qx
   "http://sccode.org/1-4Qx (jar)"
   "
-  Sc3HelpGraph jar14Qx play.
-  SC3 reset.
+  Sc3HelpGraph new jar14Qx play.
+  Sc3 reset.
   "
   | f g h s |
   f := LFCub freq: 9.1 iphase: 0 mul: 100 add: #(200 300 400 500).
@@ -481,8 +481,8 @@ jar14Qx
 jarRk20120422
   "rukano; Apr 22, 2012; Re: Epic Pads (jar)"
   "
-  Sc3HelpGraph jarRk20120422 play.
-  SC3 reset.
+  Sc3HelpGraph new jarRk20120422 play.
+  Sc3 reset.
   "
   | freq gen fmod rqmod sig amp |
   freq := [ (LFNoise2 freq: 1 mul: 0.011 add: 1) * #(60 64 65 67) atRandom midiCps ] dup: 24.
@@ -496,16 +496,16 @@ jarRk20120422
 jh4157
   "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157"
   "
-  Sc3HelpGraph jh4157 play.
-  SC3 reset.
+  Sc3HelpGraph new jh4157 play.
+  Sc3 reset.
   "
   ^(SinOsc freq: (4 ** (200 iota * 0.002) * 300) phase: 0) mix * 0.02
 !
 jl19
   "http://sccode.org/1-9 (jl)"
   "
-  Sc3HelpGraph jl19 play.
-  SC3 reset.
+  Sc3HelpGraph new jl19 play.
+  Sc3 reset.
   "
   | n k a f |
   n := 956. "0"
@@ -517,8 +517,8 @@ jl19
 jlBitwise
   "bitwise ; a0f253ff89f6b244ea29a1e431dd9e5df5571a8b (jl)"
   "
-  Sc3HelpGraph jlBitwise play.
-  SC3 reset.
+  Sc3HelpGraph new jlBitwise play.
+  Sc3 reset.
   "
   | t p1 p2 p3 p4 s |
   t := PulseCount trig: (Impulse freq: 8000 phase: 0) reset: 0.
@@ -532,8 +532,8 @@ jlBitwise
 jlRainThunder
   "http://sccode.org/1-e (jl)"
   "
-  Sc3HelpGraph jlRainThunder play.
-  SC3 reset.
+  Sc3HelpGraph new jlRainThunder play.
+  Sc3 reset.
   "
   | d0 n0 e0 p0 n1 f1 e1 p1 |
   d0 := LPF in: (Dust2 density: (LFNoise1 freq: 0.2 mul: 5 add: 45) kr) freq: 7000.
@@ -549,8 +549,8 @@ jlRainThunder
 jmccAnalogBubblesMouse
   "analog bubbles with mouse control (jmcc) #3"
   "
-  Sc3HelpGraph jmccAnalogBubblesMouse play.
-  SC3 reset.
+  Sc3HelpGraph new jmccAnalogBubblesMouse play.
+  Sc3 reset.
   "
   | y x lfo_2 lfo_1 freq |
   y := MouseY minval: 0.1 maxval: 10 warp: 1 lag: 0.2. "lfo 1 rate"
@@ -563,8 +563,8 @@ jmccAnalogBubblesMouse
 jmccAnalogBubbles
   "analog bubbles (jmcc) #1"
   "
-  Sc3HelpGraph jmccAnalogBubbles play.
-  SC3 reset.
+  Sc3HelpGraph new jmccAnalogBubbles play.
+  Sc3 reset.
   "
   | o f s |
   o := LFSaw freq: #(8 7.23) iphase: 0 mul: 3 add: 80.
@@ -575,8 +575,8 @@ jmccAnalogBubbles
 jmccAnalogueDaze
   "analogue daze (jmcc) #3"
   "
-  Sc3HelpGraph jmccAnalogueDaze play.
-  SC3 reset.
+  Sc3HelpGraph new jmccAnalogueDaze play.
+  Sc3 reset.
   "
   | pattern f a x g |
   pattern := #(55 63 60 63 57 65 62 65).
@@ -597,8 +597,8 @@ jmccAnalogueDaze
 jmccBabblingBrook
   "babbling brook (jmcc) #SC3"
   "
-  Sc3HelpGraph jmccBabblingBrook play.
-  SC3 reset.
+  Sc3HelpGraph new jmccBabblingBrook play.
+  Sc3 reset.
   "
   | b |
   b := [ :f :m :a :g |
@@ -611,8 +611,8 @@ jmccBabblingBrook
 jmccBerlin1977
   "berlin 1977 (jmcc) #4"
   "
-  Sc3HelpGraph jmccBerlin1977 play.
-  SC3 reset.
+  Sc3HelpGraph new jmccBerlin1977 play.
+  Sc3 reset.
   "
   | sequ sequR clock_rate clock_time clock patternList note1 clock_16 note2 freq env amp filt pw sig |
   sequ := [:s :tr | DmdOn trig: tr reset: 0 demandUGens: (Seq repeats: Float infinity list: s)]. "somewhat akin to SC2 Sequencer"
@@ -635,8 +635,8 @@ jmccBerlin1977
 jmccBidirectionalStrummableGuitar
   "bidirectional strummable guitar (jmcc) #11"
   "
-  Sc3HelpGraph jmccBidirectionalStrummableGuitar play.
-  SC3 reset.
+  Sc3HelpGraph new jmccBidirectionalStrummableGuitar play.
+  Sc3 reset.
   "
   |pitch1 pitch2 mousex nd out|
   pitch1 := #(52 57 62 67 71 76).
@@ -658,8 +658,8 @@ jmccBidirectionalStrummableGuitar
 jmccBirdies
   "birdies (jmcc) #6 ; texture=overlap,7,4,4,inf"
   "
-  Sc3HelpGraph jmccBirdies play.
-  SC3 reset.
+  Sc3HelpGraph new jmccBirdies play.
+  Sc3 reset.
   "
   | p1 p2 p3 sw freq amp |
   p1 := LFPulse freq: 1.0 rand + 0.4 iphase: 0 width: 0.8 rand + 0.1 mul: 3.0 rand + 4 add: 2.
@@ -673,8 +673,8 @@ jmccBirdies
 jmccDemandingStudies
   "demanding studies (jmcc)"
   "
-  Sc3HelpGraph jmccDemandingStudies play.
-  SC3 reset.
+  Sc3HelpGraph new jmccDemandingStudies play.
+  Sc3 reset.
   "
   | s1 s2 s3 x tr f o1 o2 o3 |
   s1 := Choose repeats: Float infinity list: #(72 75 79 82).
@@ -691,8 +691,8 @@ jmccDemandingStudies
 jmccHarmonicSwimming
   "harmonic swimming (jmcc) #1"
   "
-  Sc3HelpGraph jmccHarmonicSwimming play.
-  SC3 reset.
+  Sc3HelpGraph new jmccHarmonicSwimming play.
+  Sc3 reset.
   "
   | a f p l o |
   a := 0.02. "amplitude scale"
@@ -710,8 +710,8 @@ jmccHarmonicSwimming
 jmccHarmonicTumbling
   "harmonic tumbling (jmcc) #1"
   "
-  Sc3HelpGraph jmccHarmonicTumbling play.
-  SC3 reset.
+  Sc3HelpGraph new jmccHarmonicTumbling play.
+  Sc3 reset.
   "
   | f t o |
   f := 80.
@@ -727,8 +727,8 @@ jmccHarmonicTumbling
 jmccHarmonicZither
   "harmonic zither (jmcc) #11"
   "
-  Sc3HelpGraph jmccHarmonicZither play.
-  SC3 reset.
+  Sc3HelpGraph new jmccHarmonicZither play.
+  Sc3 reset.
   "
   | pitch triggerSpacing panSpacing stringFunc |
   pitch := #(50 53.86 57.02 59.69 62 64.04 65.86 67.51 69.02 71.69 72.88 74).
@@ -746,8 +746,8 @@ jmccHarmonicZither
 jmccInharmonicWarbulence
   "jmcc - inharmonic warbulence ; graph rewrite"
   "
-  Sc3HelpGraph jmccInharmonicWarbulence play.
-  SC3 reset.
+  Sc3HelpGraph new jmccInharmonicWarbulence play.
+  Sc3 reset.
   "
   | gen z |
   gen := [ :tr |
@@ -767,8 +767,8 @@ jmccInharmonicWarbulence
 jmccLfoModulation
   "lfo modulation (jmcc) #1"
   "
-  Sc3HelpGraph jmccLfoModulation play.
-  SC3 reset.
+  Sc3HelpGraph new jmccLfoModulation play.
+  Sc3 reset.
   "
   | o p s |
   o := FSinOsc freq: 0.05 iphase: 0 mul: 80 add: 160.
@@ -779,8 +779,8 @@ jmccLfoModulation
 jmccModalSpace
   "modal space (jmcc) #8"
   "
-  Sc3HelpGraph jmccModalSpace play.
-  SC3 reset.
+  Sc3HelpGraph new jmccModalSpace play.
+  Sc3 reset.
   "
   | b x k c n |
   b := #(0 2 3.2 5 7 9 10) asLocalBuf.
@@ -800,8 +800,8 @@ jmccModalSpace
 jmccMotoRev
   "moto rev (jmcc) #1"
   "
-  Sc3HelpGraph jmccMotoRev play.
-  SC3 reset.
+  Sc3HelpGraph new jmccMotoRev play.
+  Sc3 reset.
   "
   | f s |
   f := SinOsc freq: 0.2 phase: 0 mul: 10 add: 21.
@@ -811,8 +811,8 @@ jmccMotoRev
 jmccNarrowBandFilteredCrackleNoise
   "narrow band filtered crackle noise (jmcc) #2"
   "
-  Sc3HelpGraph jmccNarrowBandFilteredCrackleNoise play.
-  SC3 reset.
+  Sc3HelpGraph new jmccNarrowBandFilteredCrackleNoise play.
+  Sc3 reset.
   "
   | rf1 rf2 rf c |
   rf1 := (0.0 rand: 2000.0) + 80 .
@@ -824,8 +824,8 @@ jmccNarrowBandFilteredCrackleNoise
 jmccPluckedStrings
   "plucked strings (jmcc)"
   "
-  Sc3HelpGraph jmccPluckedStrings play.
-  SC3 reset.
+  Sc3HelpGraph new jmccPluckedStrings play.
+  Sc3 reset.
   "
   | str |
   str := [
@@ -844,8 +844,8 @@ jmccPluckedStrings
 jmccPulsingBottlesIr
   "pulsing bottles (jmcc) #2"
   "
-  Sc3HelpGraph jmccPulsingBottlesIr play.
-  SC3 reset.
+  Sc3HelpGraph new jmccPulsingBottlesIr play.
+  Sc3 reset.
   "
   | n f |
   n := 6. "number of bottles"
@@ -859,8 +859,8 @@ jmccPulsingBottlesIr
 jmccPulsingBottles
   "pulsing bottles (jmcc) #2"
   "
-  Sc3HelpGraph jmccPulsingBottles play.
-  SC3 reset.
+  Sc3HelpGraph new jmccPulsingBottles play.
+  Sc3 reset.
   "
   | n f |
   n := 6. "number of bottles"
@@ -874,8 +874,8 @@ jmccPulsingBottles
 jmccRandomPulsations
   "random pulsations (jmcc) #1 ; graph rewrite"
   "
-  Sc3HelpGraph jmccRandomPulsations play.
-  SC3 reset.
+  Sc3HelpGraph new jmccRandomPulsations play.
+  Sc3 reset.
   "
   | f |
   f := [ :tr |
@@ -889,16 +889,16 @@ jmccRandomPulsations
 jmccRandomSineWaves
   "random sine waves (jmcc) #1 ; texture=overlap,5,2,9"
   "
-  Sc3HelpGraph jmccRandomSineWaves play.
-  SC3 reset.
+  Sc3HelpGraph new jmccRandomSineWaves play.
+  Sc3 reset.
   "
   ^Pan2 in: (FSinOsc freq: (2000.0 rand) iphase: 0 mul: 0.05) pos: 1.0 rand2 level: 1
 !
 jmccReverberatedSinePercussion
   "reverberated sine percussion (jmcc) #3"
   "
-  Sc3HelpGraph jmccReverberatedSinePercussion play.
-  SC3 reset.
+  Sc3HelpGraph new jmccReverberatedSinePercussion play.
+  Sc3 reset.
   "
   | d s z t y x |
   d := 6.
@@ -913,8 +913,8 @@ jmccReverberatedSinePercussion
 jmccSampleAndHoldLiquidities
   "sample and hold liquidities (jmcc) #4"
   "
-  Sc3HelpGraph jmccSampleAndHoldLiquidities play.
-  SC3 reset.
+  Sc3HelpGraph new jmccSampleAndHoldLiquidities play.
+  Sc3 reset.
   "
   | r t c cf f p s i |
   r := MouseX minval: 1 maxval: 200 warp: 1 lag: 0.2.
@@ -930,8 +930,8 @@ jmccSampleAndHoldLiquidities
 jmccScratchy
   "scratchy (jmcc) #1"
   "
-  Sc3HelpGraph jmccScratchy play.
-  SC3 reset.
+  Sc3HelpGraph new jmccScratchy play.
+  Sc3 reset.
   "
   | n f |
   n := (2 mceFill: [ BrownNoise new ]) * 0.5.
@@ -941,8 +941,8 @@ jmccScratchy
 jmccSprinklerMouse
   "sprinkler mouse (jmcc) #1"
   "
-  Sc3HelpGraph jmccSprinklerMouse play.
-  SC3 reset.
+  Sc3HelpGraph new jmccSprinklerMouse play.
+  Sc3 reset.
   "
   | f t |
   f := MouseX minval: 0.2 maxval: 50 warp: 0 lag: 0.2.
@@ -952,8 +952,8 @@ jmccSprinklerMouse
 jmccSprinkler
   "sprinkler (jmcc) #1"
   "
-  Sc3HelpGraph jmccSprinkler play.
-  SC3 reset.
+  Sc3HelpGraph new jmccSprinkler play.
+  Sc3 reset.
   "
   | f t |
   f := LFPulse freq: 0.09 iphase: 0 width: 0.16 mul: 10 add: 7.
@@ -963,8 +963,8 @@ jmccSprinkler
 jmccStrummableGuitar
   "strummable guitar (jmcc) #11"
   "
-  Sc3HelpGraph jmccStrummableGuitar play.
-  SC3 reset.
+  Sc3HelpGraph new jmccStrummableGuitar play.
+  Sc3 reset.
   "
   | scale str strs |
   scale := #(52 57 62 67 71 76).
@@ -983,8 +983,8 @@ jmccStrummableGuitar
 jmccStrummableSilk
   "strummable silk (jmcc) #11"
   "
-  Sc3HelpGraph jmccStrummableSilk play.
-  SC3 reset.
+  Sc3HelpGraph new jmccStrummableSilk play.
+  Sc3 reset.
   "
   | x o s |
   x := MouseX minval: 0.0 maxval: 1.0 warp: 0.0 lag: 0.2.
@@ -1004,8 +1004,8 @@ jmccStrummableSilk
 jmccSweepyNoise
   "sweepy noise (jmcc) #6"
   "
-  Sc3HelpGraph jmccSweepyNoise play.
-  SC3 reset.
+  Sc3HelpGraph new jmccSweepyNoise play.
+  Sc3 reset.
   "
   | lfoDepth lfoRate freq filtered |
   lfoDepth := MouseY minval: 200 maxval: 8000 warp: 1 lag: 0.1.
@@ -1017,8 +1017,8 @@ jmccSweepyNoise
 jmccSyntheticPiano
   "synthetic piano (jmcc) #3"
   "
-  Sc3HelpGraph jmccSyntheticPiano play.
-  SC3 reset.
+  Sc3HelpGraph new jmccSyntheticPiano play.
+  Sc3 reset.
   "
   | p |
   p := [
@@ -1041,8 +1041,8 @@ jmccSyntheticPiano
 jmccTank
   "tank (jmcc)"
   "
-  Sc3HelpGraph jmccTank play.
-  SC3 reset.
+  Sc3HelpGraph new jmccTank play.
+  Sc3 reset.
   "
   | r_allpass pling bang tank signal |
   r_allpass := [ :z | AllpassN in: z maxdelaytime: 0.03 delaytime: [Rand lo: 0.005 hi: 0.02] dup decaytime: 1 ].
@@ -1077,8 +1077,8 @@ jmccTank
 jmccTheremin
   "theremin (jmcc)"
   "
-  Sc3HelpGraph jmccTheremin play.
-  SC3 reset.
+  Sc3HelpGraph new jmccTheremin play.
+  Sc3 reset.
   "
   | mod detune x y f a |
   mod := 7.
@@ -1092,8 +1092,8 @@ jmccTheremin
 jmccUplink
   "uplink ; jmcc"
   "
-  Sc3HelpGraph jmccUplink play.
-  SC3 reset.
+  Sc3HelpGraph new jmccUplink play.
+  Sc3 reset.
   "
   | osc freq sig |
    osc := [
@@ -1107,8 +1107,8 @@ jmccUplink
 jmccWhySupercollider
   "why supercollider (jmcc) #0"
   "
-  Sc3HelpGraph jmccWhySupercollider play.
-  SC3 reset.
+  Sc3HelpGraph new jmccWhySupercollider play.
+  Sc3 reset.
   "
   | s z x |
   s := 10 mixFill: [ Resonz in: (Dust density: 0.2 mul: 50) freq: (200.0 rand: 3200.0) bwr: 0.003 ].
@@ -1120,8 +1120,8 @@ jmccWhySupercollider
 jrhbGcd
   "generative landscape (jrhb) ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68991.html"
   "
-  Sc3HelpGraph jrhbGcd play.
-  SC3 reset.
+  Sc3HelpGraph new jrhbGcd play.
+  Sc3 reset.
   "
   | x y i d a z1 z2 freq c |
   x := MouseX minval: -10 maxval: 10 warp: 0 lag: 0.2.
@@ -1138,8 +1138,8 @@ jrhbGcd
 ncSctutorial
   "https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1"
   "
-  Sc3HelpGraph ncSctutorial play.
-  SC3 reset.
+  Sc3HelpGraph new ncSctutorial play.
+  Sc3 reset.
   "
   | n mk x y |
   n := 11.
@@ -1157,8 +1157,8 @@ ncSctutorial
 nvTw04
   "nv https://swiki.hfbk-hamburg.de/MusicTechnology/899"
   "
-  Sc3HelpGraph nvTw04 play.
-  SC3 reset.
+  Sc3HelpGraph new nvTw04 play.
+  Sc3 reset.
   "
   | s f a |
   s := LocalIn numChan: 2 default: 0 mul: 7.5 add: (Saw freq: #(32 33) mul: 0.2).
@@ -1169,8 +1169,8 @@ nvTw04
 nvTw40
   "http://sccode.org/1-V (nv) [Line 40] ; minus freeverb2"
   "
-  Sc3HelpGraph nvTw40 play.
-  SC3 reset.
+  Sc3HelpGraph new nvTw40 play.
+  Sc3 reset.
   "
   | nd s |
   nd := [ :i |
@@ -1183,8 +1183,8 @@ nvTw40
 nvTw41
   "https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) [Line 41]"
   "
-  Sc3HelpGraph nvTw41 play.
-  SC3 reset.
+  Sc3HelpGraph new nvTw41 play.
+  Sc3 reset.
   "
   | n |
   n := [ :i |
@@ -1198,8 +1198,8 @@ nvTw41
 pjForestSounds
   "sc-users, 2007-04-06 (pj) [paul jones]"
   "
-  Sc3HelpGraph pjForestSounds play.
-  SC3 reset.
+  Sc3HelpGraph new pjForestSounds play.
+  Sc3 reset.
   "
   | o |
   o := SinOsc freq: (LFNoise2 freq: 50 mul: 50 add: 50) phase: 0 mul: 100 add: 2000.
@@ -1208,8 +1208,8 @@ pjForestSounds
 rdChrd
   "chrd (rd) ; graph rewrite"
   "
-  Sc3HelpGraph rdChrd play.
-  SC3 reset.
+  Sc3HelpGraph new rdChrd play.
+  Sc3 reset.
   "
   | gen |
   gen := [ :tr |
@@ -1233,8 +1233,8 @@ rdChrd
 rdEggcrate
   "eggcrate ; rd"
   "
-  Sc3HelpGraph rdEggcrate play.
-  SC3 reset.
+  Sc3HelpGraph new rdEggcrate play.
+  Sc3 reset.
   "
   | eggcrate p x y t f0 f1 f a |
   eggcrate := [ :u :v| (u * Float pi) cos * (v * Float pi) sin ].
@@ -1251,8 +1251,8 @@ rdEggcrate
 rdXyInterference
   "xy interference (rd)"
   "
-  Sc3HelpGraph rdXyInterference play.
-  SC3 reset.
+  Sc3HelpGraph new rdXyInterference play.
+  Sc3 reset.
   "
   | x y nd |
     x := MouseX minval: 20 maxval: 22000 warp: 0 lag: #(0.005 0.025).
@@ -1268,8 +1268,8 @@ rdXyInterference
 tb14Tw
   "http://sccode.org/1-4Tw (tb)"
   "
-  Sc3HelpGraph tb14Tw play.
-  SC3 reset.
+  Sc3HelpGraph new tb14Tw play.
+  Sc3 reset.
   "
   | i f n g |
   i := (Impulse freq: 1 / #(1 3 5) phase: #(0 0.133 0.5)) mix.
@@ -1281,8 +1281,8 @@ tb14Tw
 twTw01
   "<https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters)"
   "
-  Sc3HelpGraph twTw01 play.
-  SC3 reset.
+  Sc3HelpGraph new twTw01 play.
+  Sc3 reset.
   "
   | s z |
   s := [ :k |
@@ -1298,8 +1298,8 @@ twTw01
 twTw02
   "<https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters)"
   "
-  Sc3HelpGraph twTw02 play.
-  SC3 reset.
+  Sc3HelpGraph new twTw02 play.
+  Sc3 reset.
   "
   | depth nd |
   depth := 8.

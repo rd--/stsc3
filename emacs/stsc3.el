@@ -51,15 +51,15 @@
   (replace-regexp-in-string "\n\\'" "" str))
 
 (defun stsc3-ugen-list ()
-  "List of SuperCollider UGen names."
+  "List of SuperCollider Ugen names."
   (split-string (shell-command-to-string "hsc3-db list ugen all st")))
 
 (defvar stsc3-ugen-history nil
-  "List of recently selected UGens.")
+  "List of recently selected Ugens.")
 
 (defun stsc3-ugen-exemplar (ugen)
   "Insert an exemplar for UGEN instance at <point>."
-  (interactive (list (completing-read "UGen: " (stsc3-ugen-list) nil t nil 'stsc3-ugen-list)))
+  (interactive (list (completing-read "Ugen: " (stsc3-ugen-list) nil t nil 'stsc3-ugen-list)))
   (let ((p (format "hsc3-help ugen exemplar st %s" ugen)))
     (insert (stsc3-remove-trailing-newline (shell-command-to-string p)))))
 
@@ -109,12 +109,12 @@
 (defun stsc3-print-ugens-region ()
   "Print region."
   (interactive)
-  (stsc3-send-region-msg "printUGens"))
+  (stsc3-send-region-msg "printUgens"))
 
 (defun stsc3-reset-scsynth ()
-  "Send SC3 reset instruction to Smalltalk."
+  "Send Sc3 reset instruction to Smalltalk."
   (interactive)
-  (stsc3-send-string "SC3 reset"))
+  (stsc3-send-string "Sc3 reset"))
 
 (defun stsc3-start-smalltalk ()
   "Start the stsc3 Smalltalk process.
@@ -181,7 +181,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map [menu-bar stsc3] (cons "Smalltalk-SuperCollider" (make-sparse-keymap "Smalltalk-SuperCollider")))
   (define-key map [menu-bar stsc3 help] (cons "Help" (make-sparse-keymap "Help")))
   (define-key map [menu-bar stsc3 help stsc3] '("StSc3 Help" . stsc3-help))
-  (define-key map [menu-bar stsc3 help ugen] '("UGen Exemplar" . stsc3-ugen-exemplar))
+  (define-key map [menu-bar stsc3 help ugen] '("Ugen Exemplar" . stsc3-ugen-exemplar))
   (define-key map [menu-bar stsc3 expression] (cons "Expression" (make-sparse-keymap "Expression")))
   (define-key map [menu-bar stsc3 expression stop] '("Stop (interrupt and reset)" . stsc3-stop))
   (define-key map [menu-bar stsc3 expression send-current-line] '("Send current line" . stsc3-send-current-line))

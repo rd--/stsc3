@@ -1,21 +1,21 @@
-Object subclass: #AbstractUGen
+Object subclass: #AbstractUgen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-AbstractUGen comment: 'Unit Generator (Abstract)'!
+AbstractUgen comment: 'Unit Generator (Abstract)'!
 
-!AbstractUGen class methodsFor: 'instance creation'!
-  apply: argumentsArray
+!AbstractUgen class methodsFor: 'instance creation'!
+apply: argumentsArray
     ^self perform: (self primaryFactoryMethod) withArguments: argumentsArray
-  !
+!
 !
 
-!AbstractUGen methodsFor: 'filtering'!
+!AbstractUgen methodsFor: 'filtering'!
   doesNotUnderstand: aMessage
-    "Reflective form of filter variants for UGen constructors.
+    "Reflective form of filter variants for Ugen constructors.
      Examines only the first part of the message selector, and if that, when capitalised, names a class, applies it.
 
      WhiteNoise new hPZ1 pan2: 0 level: 0.05
@@ -42,7 +42,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
-!AbstractUGen methodsFor: 'accessing'!
+!AbstractUgen methodsFor: 'accessing'!
   paramNameFromIndex: i
     "Get parameter name given index.
      Parameter names are separated into paramNames and mceNames.
@@ -55,7 +55,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
     ^#(#mul #add) at: i - n - m
   !
   setParamsFromOrderedDictionary: d
-    "Set UGen parameters from an array of either ugen inputs or (name,input) associations."
+    "Set Ugen parameters from an array of either ugen inputs or (name,input) associations."
     d withIndexDo: [:e :i |
       (e class = Association)
         ifTrue: [self perform: e key with: e value]
@@ -63,39 +63,39 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
-!AbstractUGen methodsFor: 'converting'!
+!AbstractUgen methodsFor: 'converting'!
   adaptToInteger: rcvr andSend: selector
-    "If I am involved in arithmetic with an Integer, convert it to a UGen."
-    ^rcvr asUGen perform: selector with: self
+    "If I am involved in arithmetic with an Integer, convert it to a Ugen."
+    ^rcvr asUgen perform: selector with: self
   !
   adaptToFraction: rcvr andSend: selector
-    "If I am involved in arithmetic with a Fraction, convert it to a UGen."
-    ^rcvr asUGen perform: selector with: self
+    "If I am involved in arithmetic with a Fraction, convert it to a Ugen."
+    ^rcvr asUgen perform: selector with: self
   !
   adaptToFloat: rcvr andSend: selector
-    "If I am involved in arithmetic with a Float, convert it to a UGen."
-    ^rcvr asUGen perform: selector with: self
+    "If I am involved in arithmetic with a Float, convert it to a Ugen."
+    ^rcvr asUgen perform: selector with: self
   !
   adaptToCollection: rcvr andSend: selector
-    "If I am involved in arithmetic with a Collection, convert it to a UGen."
-    ^rcvr asUGen perform: selector with: self
+    "If I am involved in arithmetic with a Collection, convert it to a Ugen."
+    ^rcvr asUgen perform: selector with: self
   !
 !
 
-!AbstractUGen methodsFor: 'testing'!
+!AbstractUgen methodsFor: 'testing'!
   isZero
     "In the general case false, c.f. Constant.
-     Required for general Number / UGen math."
+     Required for general Number / Ugen math."
     ^false
   !
 !
 
-!AbstractUGen methodsFor: 'math'!
+!AbstractUgen methodsFor: 'math'!
   ** aNumber
     ^self raisedTo: aNumber
   !
-  @ aUGen
-    ^Point x: self y: aUGen
+  @ aUgen
+    ^Point x: self y: aUgen
   !
   unitCps
     ^(self * 127) midiCps
@@ -105,7 +105,7 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
 !Number methodsFor: 'math'!
   % aNumber
     "% is the SC floating point modulo operator."
-    ^self asUGen % aNumber
+    ^self asUgen % aNumber
   !
 !
 
@@ -122,22 +122,22 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
-!AbstractUGen methodsFor: 'collecting'!
-  addToUGenSet: c
-    "Add inputs to UGen set.  Only actual instances of UGen are collected."
+!AbstractUgen methodsFor: 'collecting'!
+  addToUgenSet: c
+    "Add inputs to Ugen set.  Only actual instances of Ugen are collected."
     self subclassResponsibility
   !
   ugenSet
     | c |
     c := IdentitySet new.
-    self addToUGenSet: c.
+    self addToUgenSet: c.
     ^c
   !
 !
 
-!AbstractUGen methodsFor: 'multi-channel expansion'!
+!AbstractUgen methodsFor: 'multi-channel expansion'!
   asMce
-    "Mark UGen as Mce.
+    "Mark Ugen as Mce.
      This is necessary because the current implementation defers expansion to hsc3."
     ^Mce source: self
   !
@@ -169,19 +169,19 @@ AbstractUGen comment: 'Unit Generator (Abstract)'!
   !
 !
 
-AbstractUGen subclass: #UGen
+AbstractUgen subclass: #Ugen
   instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-UGen comment: 'Unit Generator.
+Ugen comment: 'Unit Generator.
 ugenId is assigned during graph serialisation since identityHash is not unique.
-All UGens have mul: and add: methods but there are no variables associated with these.
+All Ugens have mul: and add: methods but there are no variables associated with these.
 '!
 
-!UGen methodsFor: 'accessing'!
+!Ugen methodsFor: 'accessing'!
   mceNames ^mceNames!
   mceNames: x mceNames := x!
   numChan ^numChan!
@@ -198,17 +198,17 @@ All UGens have mul: and add: methods but there are no variables associated with 
   ugenId: x ugenId := x!
 !
 
-!UGen methodsFor: 'collecting'!
-  addToUGenSet: c
+!Ugen methodsFor: 'collecting'!
+  addToUgenSet: c
     | addFunc |
-    addFunc := [ :x | (self perform: x) addToUGenSet: c ].
+    addFunc := [ :x | (self perform: x) addToUgenSet: c ].
     c add: self.
     paramNames do: addFunc.
     mceNames do: addFunc.
   !
 !
 
-!UGen methodsFor: 'arithmetic'!
+!Ugen methodsFor: 'arithmetic'!
   mul: x
      "((p mul: q) mul: r) is (p * q * r) not (p * r)."
       ^x = 1 ifTrue: [ self ] ifFalse: [ self * x ]
@@ -226,11 +226,11 @@ All UGens have mul: and add: methods but there are no variables associated with 
   !
 !
 
-UGen subclass: #BinaryOpUGen
+Ugen subclass: #BinaryOpUGen
   instanceVariableNames: 'a b'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 BinaryOpUGen comment: 'Binary Operators'!
@@ -244,7 +244,7 @@ BinaryOpUGen comment: 'Binary Operators'!
 
 !BinaryOpUGen class methodsFor: 'instance creation'!
   specialIndex: specialIndex a: a b: b
-    "Create binary operator UGen"
+    "Create binary operator Ugen"
     | u |
     u := self new.
     u ugenName: #BinaryOpUGen.
@@ -260,11 +260,11 @@ BinaryOpUGen comment: 'Binary Operators'!
   !
 !
 
-UGen subclass: #UnaryOpUGen
+Ugen subclass: #UnaryOpUGen
   instanceVariableNames: 'a'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 UnaryOpUGen comment: 'Unary Operators'!
@@ -276,7 +276,7 @@ UnaryOpUGen comment: 'Unary Operators'!
 
 !UnaryOpUGen class methodsFor: 'instance creation'!
   specialIndex: specialIndex a: a
-    "Create unary operator UGen"
+    "Create unary operator Ugen"
     | u |
     u := self new.
     u ugenName: #UnaryOpUGen.
@@ -291,18 +291,18 @@ UnaryOpUGen comment: 'Unary Operators'!
   !
 !
 
-AbstractUGen subclass: #Rate
+AbstractUgen subclass: #Rate
   instanceVariableNames: 'source rate'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-Rate comment: 'UGen Processing Rate'!
+Rate comment: 'Ugen Processing Rate'!
 
 !Rate methodsFor: 'collecting'!
-  addToUGenSet: c
-    source addToUGenSet: c
+  addToUgenSet: c
+    source addToUgenSet: c
   !
 !
 
@@ -323,7 +323,7 @@ Rate comment: 'UGen Processing Rate'!
   !
 !
 
-!AbstractUGen methodsFor: 'rate control'!
+!AbstractUgen methodsFor: 'rate control'!
   ar
     ^Rate source: self rate: #ar
   !
@@ -340,34 +340,34 @@ Rate comment: 'UGen Processing Rate'!
 
 !Array methodsFor: 'rate control'!
   kr
-    ^self asUGen kr
+    ^self asUgen kr
   !
 !
 
-AbstractUGen subclass: #Mce
+AbstractUgen subclass: #Mce
   instanceVariableNames: 'source transform'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Mce comment: 'Multiple Channel Expansion'!
 
 !Array methodsFor: 'collecting'!
-  addToUGenSet: c
-    self do: [:x | x addToUGenSet: c]
+  addToUgenSet: c
+    self do: [:x | x addToUgenSet: c]
   !
 !
 
 !Interval methodsFor: 'collecting'!
-  addToUGenSet: c
-    self asArray addToUGenSet: c
+  addToUgenSet: c
+    self asArray addToUgenSet: c
   !
 !
 
 !Mce methodsFor: 'collecting'!
-  addToUGenSet: c
-    source addToUGenSet: c
+  addToUgenSet: c
+    source addToUgenSet: c
   !
 !
 
@@ -419,7 +419,7 @@ Mce comment: 'Multiple Channel Expansion'!
   !
 !
 
-!AbstractUGen methodsFor: 'transforms'!
+!AbstractUgen methodsFor: 'transforms'!
   reverse
     "Mce reverse"
     ^self asMce reverse
@@ -434,42 +434,42 @@ Mce comment: 'Multiple Channel Expansion'!
 !
 
 !Interval methodsFor: 'multi-channel expansion'!
-  asUGen
-    ^self asArray asUGen
+  asUgen
+    ^self asArray asUgen
   !
 !
 
 !Array methodsFor: 'multi-channel expansion'!
-  asUGen
-    "Array as UGen (ie. Mce)"
+  asUgen
+    "Array as Ugen (ie. Mce)"
     ^Mce source: self
   !
 !
 
 !Number methodsFor: 'enumerating'!
   mceFill: f
-    ^(self arrayFill: f) asUGen
+    ^(self arrayFill: f) asUgen
   !
 !
 
 !Interval methodsFor: 'enumerating'!
   mceFill: aBlock
-    ^(self asArray collect: aBlock) asUGen
+    ^(self asArray collect: aBlock) asUgen
   !
 !
 
-AbstractUGen subclass: #Mix
+AbstractUgen subclass: #Mix
   instanceVariableNames: 'source'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-Mix comment: 'UGen Mixer'!
+Mix comment: 'Ugen Mixer'!
 
 !Mix methodsFor: 'collecting'!
-  addToUGenSet: c
-    source addToUGenSet: c
+  addToUgenSet: c
+    source addToUgenSet: c
   !
 !
 
@@ -485,7 +485,7 @@ Mix comment: 'UGen Mixer'!
   primaryFactoryMethod ^#source:!
 !
 
-!AbstractUGen methodsFor: 'arithmetic'!
+!AbstractUgen methodsFor: 'arithmetic'!
   mix
     ^Mix source: self
   !
@@ -497,38 +497,43 @@ Mix comment: 'UGen Mixer'!
   !
 !
 
-Object subclass: #SC3
+Object subclass: #Sc3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
-SC3 comment: 'SuperCollider3'!
+Sc3 comment: 'SuperCollider 3'!
 
-!SC3 class methodsFor: 'server control'!
-  reset
+!Sc3 class methodsFor: 'server control'!
+reset
+    "Reset Sc synthesiser."
     'hsc3-scsynth reset' systemCommand
-  !
-  playHelpGraphFile: graphFile
-    SC3 playFile: (SC3 stsc3HelpGraphFile: graphFile).
-  !
+!
+playHelpGraphFile: graphFile
+    "Play help file."
+    Sc3 playFile: (Sc3 stsc3HelpGraphFile: graphFile).
+!
 !
 
-!SC3 class methodsFor: 'environment'!
-  stsc3Directory
+!Sc3 class methodsFor: 'environment'!
+stsc3Directory
+    "Name of stsc3 directory."
     ^'/home/rohan/sw/stsc3'
-  !
-  stsc3File: fileName
-    ^SC3 stsc3Directory , '/' , fileName
-  !
-  stsc3HelpGraphFile: graphFileName
-    ^SC3 stsc3File: 'help/graph/' , graphFileName
-  !
+!
+stsc3File: fileName
+    "Absolute file name of name given relative to the stsc3 directory."
+    ^Sc3 stsc3Directory , '/' , fileName
+!
+stsc3HelpGraphFile: graphFileName
+    "Absolute file name of name given relative to the help graph directory of stsc3."
+    ^Sc3 stsc3File: 'help/graph/' , graphFileName
+!
 !
 
-!SC3 class methodsFor: 'c smalltalk'!
-  stcFileToSt: fileName
+!Sc3 class methodsFor: 'c-smalltalk'!
+stcFileToSt: fileName
     "Translate named C-Smalltalk (.stc) file to Smalltalk (.st), returning translated text."
     | tmp cmd |
     tmp := '/tmp/stcFileToSt.st'.
@@ -536,45 +541,47 @@ SC3 comment: 'SuperCollider3'!
     cmd systemCommand.
     (Delay forMilliseconds: 250) wait. "..."
     ^tmp readTextFile.
-  !
-  stcToSt: stcText
+!
+stcToSt: stcText
     "Translate .stc text to .st text."
     | tmp |
     tmp := '/tmp/stcToSt.st'.
     tmp writeTextFile: [ :fd | stcText putOn: fd ].
-    ^SC3 stcFileToSt: tmp
-  !
-  evalStOrStcFile: fileName
+    ^Sc3 stcFileToSt: tmp
+!
+evalStOrStcFile: fileName
     "Evaluate an expression read from a file.  The file may be either a Smalltalk (.st) or a C-Smalltalk (.stc) file"
     | fileText |
-    fileText := (fileName endsWith: '.stc') ifTrue: [SC3 stcFileToSt: fileName] ifFalse: [fileName readTextFile].
+    fileText := (fileName endsWith: '.stc') ifTrue: [Sc3 stcFileToSt: fileName] ifFalse: [fileName readTextFile].
     ^fileText evalString
   !
-  evalText: text fromFile: fileName
+evalText: text fromFile: fileName
     "Evaluate text, deciding if it needs to be translated from C-Smalltalk based on the name of the file the text is from"
-    (fileName endsWith: '.stc') ifTrue: [^(SC3 stcToSt: text) evalString] ifFalse: [^text evalString].
-  !
-  playFile: fileName
-    (SC3 evalStOrStcFile: fileName) play
-  !
-  drawFile: fileName
-    (SC3 evalStOrStcFile: fileName) draw
-  !
+    (fileName endsWith: '.stc') ifTrue: [^(Sc3 stcToSt: text) evalString] ifFalse: [^text evalString].
+!
+playFile: fileName
+    "Play expression loaded from named file, which may be either an .st or .stc file."
+    (Sc3 evalStOrStcFile: fileName) play
+!
+drawFile: fileName
+    "Draw expression loaded from named file, which may be either an .st or .stc file."
+    (Sc3 evalStOrStcFile: fileName) draw
+!
 !
 
-AbstractUGen subclass: #Mrg
+AbstractUgen subclass: #Mrg
   instanceVariableNames: 'lhs rhs'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Mrg comment: 'Multiple Root Graph'!
 
 !Mrg methodsFor: 'collecting'!
-  addToUGenSet: c
-    lhs addToUGenSet: c.
-    rhs addToUGenSet: c
+  addToUgenSet: c
+    lhs addToUgenSet: c.
+    rhs addToUgenSet: c
   !
 !
 
@@ -597,7 +604,7 @@ Mrg comment: 'Multiple Root Graph'!
   primaryFactoryMethod ^#lhs:rhs:!
 !
 
-!AbstractUGen methodsFor: 'multiple root graphs'!
+!AbstractUgen methodsFor: 'multiple root graphs'!
   mrg: rhs ^Mrg lhs: self rhs: rhs!
 !
 
@@ -605,17 +612,17 @@ Mrg comment: 'Multiple Root Graph'!
   mrg: rhs ^Mrg lhs: self rhs: rhs!
 !
 
-AbstractUGen subclass: #Control
+AbstractUgen subclass: #Control
   instanceVariableNames: 'name init'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Control comment: 'Control Input'!
 
 !Control methodsFor: 'collecting'!
-  addToUGenSet: c
+  addToUgenSet: c
   !
 !
 
@@ -636,11 +643,11 @@ Control comment: 'Control Input'!
   !
 !
 
-AbstractUGen subclass: #Constant
+AbstractUgen subclass: #Constant
   instanceVariableNames: 'k'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Constant comment: 'Constant Numerical Value'!
@@ -652,7 +659,7 @@ Constant comment: 'Constant Numerical Value'!
 !
 
 !Constant methodsFor: 'collecting'!
-  addToUGenSet: c
+  addToUgenSet: c
   !
 !
 
@@ -670,32 +677,32 @@ Constant comment: 'Constant Numerical Value'!
   !
 !
 
-!Number methodsFor: 'UGen constants'!
-  asUGen
+!Number methodsFor: 'Ugen constants'!
+  asUgen
     ^Constant k: self
   !
 !
 
 !Number methodsFor: 'collecting'!
-  addToUGenSet: c
+  addToUgenSet: c
   !
 !
 
 !Symbol methodsFor: 'collecting'!
-  addToUGenSet: c
+  addToUgenSet: c
   !
 !
 
 !Boolean methodsFor: 'collecting'!
-  addToUGenSet: c
+  addToUgenSet: c
   !
 !
 
-AbstractUGen subclass: #OverlapTexture
+AbstractUgen subclass: #OverlapTexture
    instanceVariableNames: ''
    classVariableNames: ''
    poolDictionaries: ''
-   category: 'Sound-SC3'
+   category: 'Sound-Sc3'
 !
 
 OverlapTexture comment: 'Texture Generator'!

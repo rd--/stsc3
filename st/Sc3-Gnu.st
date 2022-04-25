@@ -1,15 +1,15 @@
-!AbstractUGen methodsFor: 'coercing'!
+!AbstractUgen methodsFor: 'coercing'!
   generality
-    "Float is 400, UGen is more general than Float."
+    "Float is 400, Ugen is more general than Float."
     ^500
   !
   coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a UGen"
-    ^aNumber asUGen
+    "Coerce argument (which will be some form of Number) to a Ugen"
+    ^aNumber asUgen
   !
   zero
     "Gnu has a curious coercion scheme.  It rewrites x < y as (x - y) < 0."
-    0 asUGen
+    0 asUgen
   !
 !
 
@@ -142,11 +142,11 @@
 
 !Array methodsFor: 'coercing'!
   generality
-    "UGen is 500, Array is more general than UGen?"
+    "Ugen is 500, Array is more general than Ugen?"
     ^600
   !
   coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a UGen"
+    "Coerce argument (which will be some form of Number) to a Ugen"
     ^(self size) replicate: aNumber
   !
 !
@@ -157,7 +157,7 @@
     ^590
   !
   coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a UGen"
+    "Coerce argument (which will be some form of Number) to a Ugen"
     ^(self size) replicate: aNumber
   !
 !
@@ -188,9 +188,9 @@
 !Number methodsFor: 'mathematical functions'!
   ** aNumber
     "Gnu Smalltalk doesn't implement **.
-     Special cases for UGens and Collections."
+     Special cases for Ugens and Collections."
     (aNumber = 0) ifTrue: [^1].
-    (aNumber isKindOf: AbstractUGen) ifTrue: [^self asUGen raisedTo: aNumber].
+    (aNumber isKindOf: AbstractUgen) ifTrue: [^self asUgen raisedTo: aNumber].
     (aNumber isKindOf: Collection) ifTrue: [^aNumber collect: [ :x | self ** x]].
     ^self raisedTo: aNumber
   !

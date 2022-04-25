@@ -1,9 +1,9 @@
-!AbstractUGen methodsFor: 'printing'!
+!AbstractUgen methodsFor: 'printing'!
   writeHaskellTo: fn
     "Write my hsc3 representation to a file."
     | c |
     c := self ugenSet.
-    c asArray with: (1 to: c size) do: [ :u :i | u ugenId: i ]. "<- assign id to UGens for serialisation"
+    c asArray with: (1 to: c size) do: [ :u :i | u ugenId: i ]. "<- assign id to Ugens for serialisation"
     fn writeTextFile: [ :fd |
      'let {' putOn: fd.
      c do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].
@@ -21,14 +21,14 @@
     self writeHaskellTo: '/tmp/st.hs'.
     'hsc3-graphs fragments hs min draw /tmp/st.hs' systemCommand
   !
-  printUGens
+  printUgens
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
     self writeHaskellTo: '/tmp/st.hs'.
     'hsc3-graphs fragments hs min dump-ugens /tmp/st.hs' systemCommand
   !
 !
 
-!UGen methodsFor: 'printing'!
+!Ugen methodsFor: 'printing'!
   printHaskellOn: fd
     "Print the name I am bound to in hsc3."
     '_u_', self ugenId asString putOn: fd
@@ -142,16 +142,16 @@
     ')' putOn: fd
   !
   writeHaskellTo: fn
-    "Allow Array to be root of UGen graph"
-    self asUGen writeHaskellTo: fn
+    "Allow Array to be root of Ugen graph"
+    self asUgen writeHaskellTo: fn
   !
   play
-    "Allow Array to be root of UGen graph"
-    self asUGen play.
+    "Allow Array to be root of Ugen graph"
+    self asUgen play.
   !
   draw
-    "Allow Array to be root of UGen graph"
-    self asUGen draw.
+    "Allow Array to be root of Ugen graph"
+    self asUgen draw.
   !
 !
 

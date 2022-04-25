@@ -1,4 +1,4 @@
-UGen subclass: #DmdFor instanceVariableNames: 'dur reset level' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #DmdFor instanceVariableNames: 'dur reset level' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 DmdFor comment: 'Demand with duration input (Duty).'!
 
@@ -11,7 +11,7 @@ DmdFor comment: 'Demand with duration input (Duty).'!
   !
 !
 
-UGen subclass: #TDmdFor instanceVariableNames: 'dur reset level' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #TDmdFor instanceVariableNames: 'dur reset level' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 TDmdFor comment: 'Demand with duration input (Duty).'!
 
@@ -24,24 +24,24 @@ TDmdFor comment: 'Demand with duration input (Duty).'!
   !
 !
 
-UGen subclass: #DmdOn instanceVariableNames: 'trig reset demandUGens' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #DmdOn instanceVariableNames: 'trig reset demandUgens' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 DmdOn comment: 'Demand with trigger input (Demand).'!
 
 !DmdOn class methodsFor: 'instance creation'!
-  trig: trig reset: reset demandUGens: demandUGens
-    ^Demand trig: trig reset: reset demandUGens: demandUGens
+  trig: trig reset: reset demandUgens: demandUgens
+    ^Demand trig: trig reset: reset demandUgens: demandUgens
   !
   primaryFactoryMethod
-    ^#trig:reset:demandUGens:
+    ^#trig:reset:demandUgens:
   !
 !
 
-UGen subclass: #Choose
+Ugen subclass: #Choose
   instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Choose comment: 'Random sequence generator.'!
 
@@ -75,11 +75,11 @@ Choose comment: 'Random sequence generator.'!
   primaryFactoryMethod ^#repeats:list:!
 !
 
-UGen subclass: #Seq
+Ugen subclass: #Seq
   instanceVariableNames: 'repeats array'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Seq comment: 'Sequence generator.'!
 
@@ -113,13 +113,13 @@ Seq comment: 'Sequence generator.'!
   primaryFactoryMethod ^#repeats:array:!
 !
 
-UGen subclass: #Ser
+Ugen subclass: #Ser
   instanceVariableNames: 'length start step'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-Ser comment: 'Demand rate arithmetic series UGen.'!
+Ser comment: 'Demand rate arithmetic series Ugen.'!
 
 !Ser methodsFor: 'accessing'!
   length ^length!
@@ -154,11 +154,11 @@ Ser comment: 'Demand rate arithmetic series UGen.'!
   primaryFactoryMethod ^#length:start:step:!
 !
 
-UGen subclass: #Shuf
+Ugen subclass: #Shuf
   instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Shuf comment: 'Demand rate random sequence generator'!
 

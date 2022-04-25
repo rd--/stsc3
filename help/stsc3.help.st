@@ -1,14 +1,14 @@
 '/home/rohan/sw/stsc3/help/' fileListOn "open file browser on named directory"
 '/home/rohan/sw/stsc3/help/stsc3.help.st' workspaceOn "open Workspace on named file"
 
-SC3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
-SC3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on the hsc3-graphs database"
+Sc3Browser openOn: '/home/rohan/sw/stsc3/help/' "open ugen graph browser on stsc3/help"
+Sc3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on the hsc3-graphs database"
 
 "Help Graphs"
 
 Browser newOnClass: Sc3HelpGraph class.
 Sc3HelpGraph f0Tw1395878538297892865 play.
-SC3 reset.
+Sc3 reset.
 
 "(Cmd-b to browse, graphs are class methods)"
 ScHelpGraph
@@ -21,7 +21,7 @@ f0Tw1395878538297892865
 EnvSpec new curveNameDictionary "curve name dictionary"
 (EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) coord = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
 
-"UGen"
+"Ugen"
 
 SinOsc new inspect "initialize sets default values for parameters"
 SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
@@ -54,9 +54,9 @@ WhiteNoise new pan2: (SinOsc freq: 0.1 phase: 0) level: 0.05
 '1 + 1' evalString = 2 "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
-"SC3"
+"Sc3"
 
-SC3 reset "C-c C-."
+Sc3 reset "C-c C-."
 
 "UI"
 
@@ -71,10 +71,10 @@ World activeHand position. "get mouse position"
 "Browser"
 
 Browser openBrowser. "open Browser"
-Browser newOnCategory: 'Sound-SC3'. "open Browser on Category"
-Browser newOnClass: UGen. "open Browser on Class"
-Browser newOnClass: UGen messageCategory: 'arithmetic'. "open Browser on Protocol of Class"
-Browser newOnClass: AbstractUGen selector: #kr. "open Browser on Method of Class"
+Browser newOnCategory: 'Sound-Sc3'. "open Browser on Category"
+Browser newOnClass: Ugen. "open Browser on Class"
+Browser newOnClass: Ugen messageCategory: 'arithmetic'. "open Browser on Protocol of Class"
+Browser newOnClass: AbstractUgen selector: #kr. "open Browser on Method of Class"
 
 "Transcript"
 
@@ -258,13 +258,13 @@ SinOsc class class name = #Metaclass. "true"
 SinOsc class class class name. "nil ; 'Metaclass class'"
 SinOsc class class class class name = #Metaclass. "true"
 
-SinOsc superclass name = #UGen. "true"
-SinOsc superclass superclass name = #AbstractUGen. "true"
+SinOsc superclass name = #Ugen. "true"
+SinOsc superclass superclass name = #AbstractUgen. "true"
 SinOsc superclass superclass superclass name = #Object. "true"
 SinOsc superclass superclass superclass superclass. "nil ; ProtoObject"
 
 SinOsc subclasses size = 0. "true"
-UGen subclasses size = 153. "true"
+Ugen subclasses size = 153. "true"
 
 SinOsc methodDict. "Squeak"
 SinOsc methodDictionary. "Gnu Smalltalk"
@@ -467,105 +467,105 @@ File image asString. "location of image file"
 
 FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Filein-For-Gnu.st'.
 
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Base.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Core.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Env.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Event.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Math.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Random.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Composite.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Demand.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Haskell.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Base.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Core.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Env.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Event.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Math.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Random.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Composite.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Demand.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Haskell.st'.
 
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-Gnu.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Gnu.st'.
 
-FileStream fileIn: '/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st'.
+FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Filter.st'.
 
 "Help Graphs"
 
-SC3 playHelpGraphFile: 'adc-bit-reduction.st'
-SC3 playHelpGraphFile: 'adc-down-sample.st'
-SC3 playHelpGraphFile: 'es-tw-435684664200540161.st'
-SC3 playHelpGraphFile: 'es-tw-570012853274615808.st'
-SC3 playHelpGraphFile: 'f0-pkt-00.st'
-SC3 playHelpGraphFile: 'f0-tw-0011.st'
-SC3 playHelpGraphFile: 'f0-tw-0041.st'
-SC3 playHelpGraphFile: 'f0-tw-0045.st'
-SC3 playHelpGraphFile: 'f0-tw-0077.st'
-SC3 playHelpGraphFile: 'f0-tw-0084.st'
-SC3 playHelpGraphFile: 'f0-tw-0121.st'
-SC3 playHelpGraphFile: 'f0-tw-0125.st'
-SC3 playHelpGraphFile: 'f0-tw-0456384156159574016.st'
-SC3 playHelpGraphFile: 'f0-tw-0839296011982024704.st'
-SC3 playHelpGraphFile: 'f0-tw-1105496695637454848.st'
-SC3 playHelpGraphFile: 'f0-tw-1125557217086857216.st'
-SC3 playHelpGraphFile: 'f0-tw-1210118661022867458.st'
-SC3 playHelpGraphFile: 'f0-tw-1254441448327479299.st' "<= multiple graphs"
-SC3 playHelpGraphFile: 'f0-tw-1338987643057688579.st'
-SC3 playHelpGraphFile: 'f0-tw-1343283697840226307.st'
-SC3 playHelpGraphFile: 'f0-tw-1395040511795372038.st'
-SC3 playHelpGraphFile: 'f0-tw-456384156159574016.st'
-SC3 playHelpGraphFile: 'jar-1-4Qx.st'
-SC3 playHelpGraphFile: 'jar-rk_20120422.st'
-SC3 playHelpGraphFile: 'jh-4157.st'
-SC3 playHelpGraphFile: 'jl-1-9.st'
-SC3 playHelpGraphFile: 'jl-bitwise.st'
-SC3 playHelpGraphFile: 'jl-rain-thunder.st'
-SC3 playHelpGraphFile: 'jmcc-analog-bubbles-mouse.st'
-SC3 playHelpGraphFile: 'jmcc-analog-bubbles.st'
-SC3 playHelpGraphFile: 'jmcc-analogue-daze.st'
-SC3 playHelpGraphFile: 'jmcc-babbling-brook.st'
-SC3 playHelpGraphFile: 'jmcc-berlin-1977.st'
-SC3 playHelpGraphFile: 'jmcc-bidirectional-strummable-guitar.st'
-SC3 playHelpGraphFile: 'jmcc-birdies.st'
-SC3 playHelpGraphFile: 'jmcc-demanding-studies.st'
-SC3 playHelpGraphFile: 'jmcc-harmonic-swimming.st'
-SC3 playHelpGraphFile: 'jmcc-harmonic-tumbling.st'
-SC3 playHelpGraphFile: 'jmcc-harmonic-zither.st'
-SC3 playHelpGraphFile: 'jmcc-inharmonic-warbulence.st'
-SC3 playHelpGraphFile: 'jmcc-lfo-modulation.st'
-SC3 playHelpGraphFile: 'jmcc-modal-space.st'
-SC3 playHelpGraphFile: 'jmcc-moto-rev.st'
-SC3 playHelpGraphFile: 'jmcc-narrow-band-filtered-crackle-noise.st'
-SC3 playHelpGraphFile: 'jmcc-plucked-strings.st'
-SC3 playHelpGraphFile: 'jmcc-pulsing-bottles-ir.st'
-SC3 playHelpGraphFile: 'jmcc-pulsing-bottles.st'
-SC3 playHelpGraphFile: 'jmcc-random-pulsations.st'
-SC3 playHelpGraphFile: 'jmcc-random-sine-waves.st'
-SC3 playHelpGraphFile: 'jmcc-reverberated-sine-percussion.st'
-SC3 playHelpGraphFile: 'jmcc-sample-and-hold-liquidities.st'
-SC3 playHelpGraphFile: 'jmcc-scratchy.st'
-SC3 playHelpGraphFile: 'jmcc-sprinkler-mouse.st'
-SC3 playHelpGraphFile: 'jmcc-sprinkler.st'
-SC3 playHelpGraphFile: 'jmcc-strummable-guitar.st'
-SC3 playHelpGraphFile: 'jmcc-strummable-silk.st'
-SC3 playHelpGraphFile: 'jmcc-sweepy-noise.st'
-SC3 playHelpGraphFile: 'jmcc-synthetic-piano.st'
-SC3 playHelpGraphFile: 'jmcc-tank.st'
-SC3 playHelpGraphFile: 'jmcc-theremin.st'
-SC3 playHelpGraphFile: 'jmcc-uplink.st'
-SC3 playHelpGraphFile: 'jmcc-why-supercollider.st'
-SC3 playHelpGraphFile: 'jrhb-gcd.st'
-SC3 playHelpGraphFile: 'nc-sctutorial.st'
-SC3 playHelpGraphFile: 'nv-899-04.st'
-SC3 playHelpGraphFile: 'nv-tw-40.st'
-SC3 playHelpGraphFile: 'nv-tw-41.st'
-SC3 playHelpGraphFile: 'pj-forest-sounds.st'
-SC3 playHelpGraphFile: 'rd-chrd.st'
-SC3 playHelpGraphFile: 'rd-eggcrate.st'
-SC3 playHelpGraphFile: 'rd-xy-interference.st'
-SC3 playHelpGraphFile: 'tb-1-4Tw.st'
-SC3 playHelpGraphFile: 'tw-tw-01.st'
-SC3 playHelpGraphFile: 'tw-tw-02.st' "<= multiple graphs"
+Sc3 playHelpGraphFile: 'adc-bit-reduction.st'
+Sc3 playHelpGraphFile: 'adc-down-sample.st'
+Sc3 playHelpGraphFile: 'es-tw-435684664200540161.st'
+Sc3 playHelpGraphFile: 'es-tw-570012853274615808.st'
+Sc3 playHelpGraphFile: 'f0-pkt-00.st'
+Sc3 playHelpGraphFile: 'f0-tw-0011.st'
+Sc3 playHelpGraphFile: 'f0-tw-0041.st'
+Sc3 playHelpGraphFile: 'f0-tw-0045.st'
+Sc3 playHelpGraphFile: 'f0-tw-0077.st'
+Sc3 playHelpGraphFile: 'f0-tw-0084.st'
+Sc3 playHelpGraphFile: 'f0-tw-0121.st'
+Sc3 playHelpGraphFile: 'f0-tw-0125.st'
+Sc3 playHelpGraphFile: 'f0-tw-0456384156159574016.st'
+Sc3 playHelpGraphFile: 'f0-tw-0839296011982024704.st'
+Sc3 playHelpGraphFile: 'f0-tw-1105496695637454848.st'
+Sc3 playHelpGraphFile: 'f0-tw-1125557217086857216.st'
+Sc3 playHelpGraphFile: 'f0-tw-1210118661022867458.st'
+Sc3 playHelpGraphFile: 'f0-tw-1254441448327479299.st' "<= multiple graphs"
+Sc3 playHelpGraphFile: 'f0-tw-1338987643057688579.st'
+Sc3 playHelpGraphFile: 'f0-tw-1343283697840226307.st'
+Sc3 playHelpGraphFile: 'f0-tw-1395040511795372038.st'
+Sc3 playHelpGraphFile: 'f0-tw-456384156159574016.st'
+Sc3 playHelpGraphFile: 'jar-1-4Qx.st'
+Sc3 playHelpGraphFile: 'jar-rk_20120422.st'
+Sc3 playHelpGraphFile: 'jh-4157.st'
+Sc3 playHelpGraphFile: 'jl-1-9.st'
+Sc3 playHelpGraphFile: 'jl-bitwise.st'
+Sc3 playHelpGraphFile: 'jl-rain-thunder.st'
+Sc3 playHelpGraphFile: 'jmcc-analog-bubbles-mouse.st'
+Sc3 playHelpGraphFile: 'jmcc-analog-bubbles.st'
+Sc3 playHelpGraphFile: 'jmcc-analogue-daze.st'
+Sc3 playHelpGraphFile: 'jmcc-babbling-brook.st'
+Sc3 playHelpGraphFile: 'jmcc-berlin-1977.st'
+Sc3 playHelpGraphFile: 'jmcc-bidirectional-strummable-guitar.st'
+Sc3 playHelpGraphFile: 'jmcc-birdies.st'
+Sc3 playHelpGraphFile: 'jmcc-demanding-studies.st'
+Sc3 playHelpGraphFile: 'jmcc-harmonic-swimming.st'
+Sc3 playHelpGraphFile: 'jmcc-harmonic-tumbling.st'
+Sc3 playHelpGraphFile: 'jmcc-harmonic-zither.st'
+Sc3 playHelpGraphFile: 'jmcc-inharmonic-warbulence.st'
+Sc3 playHelpGraphFile: 'jmcc-lfo-modulation.st'
+Sc3 playHelpGraphFile: 'jmcc-modal-space.st'
+Sc3 playHelpGraphFile: 'jmcc-moto-rev.st'
+Sc3 playHelpGraphFile: 'jmcc-narrow-band-filtered-crackle-noise.st'
+Sc3 playHelpGraphFile: 'jmcc-plucked-strings.st'
+Sc3 playHelpGraphFile: 'jmcc-pulsing-bottles-ir.st'
+Sc3 playHelpGraphFile: 'jmcc-pulsing-bottles.st'
+Sc3 playHelpGraphFile: 'jmcc-random-pulsations.st'
+Sc3 playHelpGraphFile: 'jmcc-random-sine-waves.st'
+Sc3 playHelpGraphFile: 'jmcc-reverberated-sine-percussion.st'
+Sc3 playHelpGraphFile: 'jmcc-sample-and-hold-liquidities.st'
+Sc3 playHelpGraphFile: 'jmcc-scratchy.st'
+Sc3 playHelpGraphFile: 'jmcc-sprinkler-mouse.st'
+Sc3 playHelpGraphFile: 'jmcc-sprinkler.st'
+Sc3 playHelpGraphFile: 'jmcc-strummable-guitar.st'
+Sc3 playHelpGraphFile: 'jmcc-strummable-silk.st'
+Sc3 playHelpGraphFile: 'jmcc-sweepy-noise.st'
+Sc3 playHelpGraphFile: 'jmcc-synthetic-piano.st'
+Sc3 playHelpGraphFile: 'jmcc-tank.st'
+Sc3 playHelpGraphFile: 'jmcc-theremin.st'
+Sc3 playHelpGraphFile: 'jmcc-uplink.st'
+Sc3 playHelpGraphFile: 'jmcc-why-supercollider.st'
+Sc3 playHelpGraphFile: 'jrhb-gcd.st'
+Sc3 playHelpGraphFile: 'nc-sctutorial.st'
+Sc3 playHelpGraphFile: 'nv-899-04.st'
+Sc3 playHelpGraphFile: 'nv-tw-40.st'
+Sc3 playHelpGraphFile: 'nv-tw-41.st'
+Sc3 playHelpGraphFile: 'pj-forest-sounds.st'
+Sc3 playHelpGraphFile: 'rd-chrd.st'
+Sc3 playHelpGraphFile: 'rd-eggcrate.st'
+Sc3 playHelpGraphFile: 'rd-xy-interference.st'
+Sc3 playHelpGraphFile: 'tb-1-4Tw.st'
+Sc3 playHelpGraphFile: 'tw-tw-01.st'
+Sc3 playHelpGraphFile: 'tw-tw-02.st' "<= multiple graphs"
 
-SC3 reset.
+Sc3 reset.
 
 "Stc"
-SC3 stcToSt: 'p.q(r)'.
-SC3 stcFileToSt: (SC3 stsc3HelpGraphFile: 'f0-tw-0456384156159574016.stc').
-SC3 playHelpGraphFile: 'f0-tw-0456384156159574016.stc'.
-SC3 reset.
+Sc3 stcToSt: 'p.q(r)'.
+Sc3 stcFileToSt: (Sc3 stsc3HelpGraphFile: 'f0-tw-0456384156159574016.stc').
+Sc3 playHelpGraphFile: 'f0-tw-0456384156159574016.stc'.
+Sc3 reset.
 
 "Blocks"
 | factorial |

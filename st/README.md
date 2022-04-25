@@ -3,51 +3,51 @@ stsc3 is initially stored here.
 To use, [filein](http://wiki.squeak.org/squeak/1105) the below files to a Smalltalk image.
 
 The largest files,
-[SC3-UGen.st](?t=stsc3&e=st/SC3-UGen.st) and
-[SC3-UGen-Filter.st](?t=stsc3&e=st/SC3-UGen-Filter.st),
+[Sc3-Ugen.st](?t=stsc3&e=st/Sc3-Ugen.st) and
+[Sc3-Ugen-Filter.st](?t=stsc3&e=st/Sc3-Ugen-Filter.st),
 are auto-generated using [mk.hs](?t=stsc3&e=hs/mk.hs)
 
 Other files are:
 
-[SC3-Base.st](?t=stsc3&e=st/SC3-Base.st):
-General (neither music nor SC3 specific) classes and methods.
+[Sc3-Base.st](?t=stsc3&e=st/Sc3-Base.st):
+General (neither music nor Sc3 specific) classes and methods.
 
-[SC3-Core.st](?t=stsc3&e=st/SC3-Core.st):
-UGen and math operator classes, related core classes (mce, mrg, &etc).
+[Sc3-Core.st](?t=stsc3&e=st/Sc3-Core.st):
+Ugen and math operator classes, related core classes (mce, mrg, &etc).
 
-[SC3-Env.st](?t=stsc3&e=st/SC3-Env.st):
+[Sc3-Env.st](?t=stsc3&e=st/Sc3-Env.st):
 Envelope classes EnvSpec and EnvBuilder and related classes (EnvPerc, EnvLinen, EnvASR &etc.)
 
-[SC3-Event.st](?t=stsc3&e=st/SC3-Event.st):
+[Sc3-Event.st](?t=stsc3&e=st/Sc3-Event.st):
 A simple event model with a Voicer class.
 
-[SC3-Math.st](?t=stsc3&e=st/SC3-Math.st) &
-[SC3-Random.st](?t=stsc3&e=st/SC3-Random.st):
+[Sc3-Math.st](?t=stsc3&e=st/Sc3-Math.st) &
+[Sc3-Random.st](?t=stsc3&e=st/Sc3-Random.st):
 Methods that extend numerical classes and sequence classes.
 
-[SC3-OpenSoundControl.st](?t=stsc3&e=st/SC3-OpenSoundControl.st):
+[Sc3-OpenSoundControl.st](?t=stsc3&e=st/Sc3-OpenSoundControl.st):
 Open Sound Control protocol.
 
-[SC3-UGen-Pseudo.st](?t=stsc3&e=st/SC3-UGen-Pseudo.st):
-Psuedo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `SC3-UGen.st`.
+[Sc3-Ugen-Pseudo.st](?t=stsc3&e=st/Sc3-Ugen-Pseudo.st):
+Psuedo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `Sc3-Ugen.st`.
 
-[SC3-UGen-Demand.st](?t=stsc3&e=st/SC3-UGen-Demand.st):
-Demand UGens constructors with parameter ordering consistent with _hsc3_.
+[Sc3-Ugen-Demand.st](?t=stsc3&e=st/Sc3-Ugen-Demand.st):
+Demand Ugens constructors with parameter ordering consistent with _hsc3_.
 
-[SC3-UI.st](?t=stsc3&e=st/SC3-UI.st):
+[Sc3-UI.st](?t=stsc3&e=st/Sc3-UI.st):
 User-interface classes and methods.
 
-[SC3-Haskell.st](?t=stsc3&e=st/SC3-Haskell.st):
-Classes to write UGen graphs as expressions to text files for
+[Sc3-Haskell.st](?t=stsc3&e=st/Sc3-Haskell.st):
+Classes to write Ugen graphs as expressions to text files for
 interpretation by [hsc3](?t=hsc3).  The graphs are
 written without proxied outputs, without applying
 multiple-channel-expansion, and without applying rate-control editing.
-The writer generates let bindings for all UGens.
+The writer generates let bindings for all Ugens.
 
-[SC3-Squeak.st](?t=stsc3&e=st/SC3-Squeak.st) &
-[SC3-Gnu.st](?t=stsc3&e=st/SC3-Gnu.st) &
-[SC3-Cuis.st](?t=stsc3&e=st/SC3-Cuis.st) &
-[SC3-Pharo.st](?t=stsc3&e=st/SC3-Pharo.st):
+[Sc3-Squeak.st](?t=stsc3&e=st/Sc3-Squeak.st) &
+[Sc3-Gnu.st](?t=stsc3&e=st/Sc3-Gnu.st) &
+[Sc3-Cuis.st](?t=stsc3&e=st/Sc3-Cuis.st) &
+[Sc3-Pharo.st](?t=stsc3&e=st/Sc3-Pharo.st):
 Methods that cannot be written to work under all of Squeak, Gnu-Smalltalk, Cuis and Pharo have separate definitions.
 
 The program `hsc3-graphs` is required to communicate with `scsynth`.
@@ -61,7 +61,7 @@ It depends upon [hsc3](https://hackage.haskell.org/package/hsc3),
 
 * * *
 
-There was previously a [SC3-Lisp.st](?t=stsc3&e=st/SC3-Lisp.st) file that is now deleted.
+There was previously a [Sc3-Lisp.st](?t=stsc3&e=st/Sc3-Lisp.st) file that is now deleted.
 It wrote graphs for [rsc3](?t=rsc3).
 
 * * *

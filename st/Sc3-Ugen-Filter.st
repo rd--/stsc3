@@ -1,4 +1,4 @@
-!AbstractUGen methodsFor: 'filtering'!
+!AbstractUgen methodsFor: 'filtering'!
   allpassC: maxdelaytime value: delaytime value: decaytime
     ^AllpassC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
   !
@@ -77,8 +77,8 @@
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
-  demand: reset value: demandUGens
-    ^Demand trig: self reset: reset demandUGens: demandUGens
+  demand: reset value: demandUgens
+    ^Demand trig: self reset: reset demandUgens: demandUgens
   !
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
@@ -416,8 +416,8 @@
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
-  demand: reset value: demandUGens
-    ^Demand trig: self reset: reset demandUGens: demandUGens
+  demand: reset value: demandUgens
+    ^Demand trig: self reset: reset demandUgens: demandUgens
   !
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
@@ -676,7 +676,7 @@
   !
 
 !
-!AbstractUGen methodsFor: 'filtering'!
+!AbstractUgen methodsFor: 'filtering'!
   ampComp: root value: exp
     ^AmpComp freq: self root: root exp: exp
   !

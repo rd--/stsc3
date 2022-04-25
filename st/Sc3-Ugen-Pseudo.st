@@ -7,21 +7,21 @@
   !
 !
 
-AbstractUGen subclass: #Splay
+AbstractUgen subclass: #Splay
   instanceVariableNames: 'input spread level center levelComp'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 Splay comment: 'Pan a set of channels across the stereo field.'!
 
 !Splay methodsFor: 'collecting'!
-  addToUGenSet: c
-    input addToUGenSet: c.
-    spread addToUGenSet: c.
-    level addToUGenSet: c.
-    center addToUGenSet: c
+  addToUgenSet: c
+    input addToUgenSet: c.
+    spread addToUgenSet: c.
+    level addToUgenSet: c.
+    center addToUgenSet: c
   !
 !
 
@@ -63,7 +63,7 @@ Splay comment: 'Pan a set of channels across the stereo field.'!
   !
 !
 
-UGen subclass: #Splay2 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #Splay2 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Splay2 comment: 'Pan an array of channels across the stereo field.'!
 !Splay2 class methodsFor: 'instance creation'!
   inArray: inArray
@@ -72,7 +72,7 @@ Splay2 comment: 'Pan an array of channels across the stereo field.'!
   primaryFactoryMethod ^#inArray:!
 !
 
-!AbstractUGen methodsFor: 'panning'!
+!AbstractUgen methodsFor: 'panning'!
   splay2
     ^Splay2 inArray: self
   !
@@ -84,7 +84,7 @@ Splay2 comment: 'Pan an array of channels across the stereo field.'!
   !
 !
 
-!AbstractUGen methodsFor: 'arithmetic'!
+!AbstractUgen methodsFor: 'arithmetic'!
   inExpRangeFrom: x to: y
     "LinExp with input range of (-1,1)"
     ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y
@@ -114,17 +114,17 @@ Splay2 comment: 'Pan an array of channels across the stereo field.'!
   !
 !
 
-!SequenceableCollection methodsFor: 'UGen creation'!
+!SequenceableCollection methodsFor: 'Ugen creation'!
   asLocalBuf
     ^LocalBuf newFrom: self
   !
 !
 
-AbstractUGen subclass: #TLine
+AbstractUgen subclass: #TLine
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 TLine comment: 'Triggered Line.'!
@@ -142,11 +142,11 @@ TLine comment: 'Triggered Line.'!
   primaryFactoryMethod ^#start:end:dur:trig:!
 !
 
-AbstractUGen subclass: #TXLine
+AbstractUgen subclass: #TXLine
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 TXLine comment: 'Triggered XLine.'!
@@ -164,11 +164,11 @@ TXLine comment: 'Triggered XLine.'!
   primaryFactoryMethod ^#start:end:dur:trig:!
 !
 
-UGen subclass: #TChoose
+Ugen subclass: #TChoose
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 TChoose comment: 'Randomly select one of several inputs on trigger.'!
@@ -180,11 +180,11 @@ TChoose comment: 'Randomly select one of several inputs on trigger.'!
   primaryFactoryMethod ^#trig:array:!
 !
 
-UGen subclass: #PMOsc
+Ugen subclass: #PMOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
+  category: 'Sound-Sc3'
 !
 
 PMOsc comment: 'Phase modulation sine oscillator pair.'!
@@ -199,17 +199,17 @@ PMOsc comment: 'Phase modulation sine oscillator pair.'!
   primaryFactoryMethod ^#carfreq:modfreq:pmindex:modphase:!
 !
 
-!AbstractUGen methodsFor: 'smoothing'!
+!AbstractUgen methodsFor: 'smoothing'!
   lag: lagTime
     ^Lag in: self lagTime: lagTime
   !
 !
 
-AbstractUGen subclass: #LinLin
+AbstractUgen subclass: #LinLin
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 LinLin comment: 'Map a linear range to a linear range'!
 
@@ -220,40 +220,40 @@ LinLin comment: 'Map a linear range to a linear range'!
   primaryFactoryMethod ^#in:srclo:srchi:dstlo:dsthi:!
 !
 
-!AbstractUGen methodsFor: 'buffer management'!
+!AbstractUgen methodsFor: 'buffer management'!
   clearBuf
     "ClearBuf does not copy the buffer number through so this is an Mrg node."
     ^Mrg lhs: self rhs: (ClearBuf buf: self)
   !
 !
 
-AbstractUGen subclass: #Select2
+AbstractUgen subclass: #Select2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 Select2 comment: 'Select one of two branches based on predicate signal'!
 
 !Select2 class methodsFor: 'instance creation'!
-  predicate: predicate ifTrue: trueUGen ifFalse: falseUGen
-    ^(predicate * (trueUGen - falseUGen)) + falseUGen
+  predicate: predicate ifTrue: trueUgen ifFalse: falseUgen
+    ^(predicate * (trueUgen - falseUgen)) + falseUgen
   !
   primaryFactoryMethod ^#predicate:ifTrue:ifFalse:!
 !
 
-!AbstractUGen methodsFor: 'selecting'!
-  select2: trueUGen ifFalse: falseUGen ^Select2 predicate: self ifTrue: trueUGen ifFalse: falseUGen!
-  select2: trueUGen value: falseUGen "For .stc" ^Select2 predicate: self ifTrue: trueUGen ifFalse: falseUGen!
+!AbstractUgen methodsFor: 'selecting'!
+  select2: trueUgen ifFalse: falseUgen ^Select2 predicate: self ifTrue: trueUgen ifFalse: falseUgen!
+  select2: trueUgen value: falseUgen "For .stc" ^Select2 predicate: self ifTrue: trueUgen ifFalse: falseUgen!
 !
 
-AbstractUGen subclass: #KlankSpec
+AbstractUgen subclass: #KlankSpec
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
-KlankSpec comment: 'Format data for Klank UGen'!
+KlankSpec comment: 'Format data for Klank Ugen'!
 
 !KlankSpec class methodsFor: 'instance creation'!
   freq: freq amp: amp time: time
@@ -270,11 +270,11 @@ KlankSpec comment: 'Format data for Klank UGen'!
   asKlankSpec ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
 !
 
-AbstractUGen subclass: #DynKlank
+AbstractUgen subclass: #DynKlank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 DynKlank comment: 'Dynamic klank, set of non-fixed resonating filters'!
 
@@ -295,11 +295,11 @@ DynKlank comment: 'Dynamic klank, set of non-fixed resonating filters'!
   primaryFactoryMethod ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:!
 !
 
-AbstractUGen subclass: #SelectX
+AbstractUgen subclass: #SelectX
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'!
+  category: 'Sound-Sc3'!
 
 SelectX comment: 'Mix one output from many sources'!
 
@@ -313,7 +313,7 @@ SelectX comment: 'Mix one output from many sources'!
   primaryFactoryMethod ^#which:array:!
 !
 
-AbstractUGen subclass: #SinOscBank instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #SinOscBank instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 SinOscBank comment: 'Parallel bank of SinOsc'!
 
@@ -324,7 +324,7 @@ SinOscBank comment: 'Parallel bank of SinOsc'!
   primaryFactoryMethod ^#freq:amp:phase:!
 !
 
-AbstractUGen subclass: #RingzBank instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #RingzBank instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 RingzBank comment: 'Parallel bank of Ringz'!
 
@@ -335,7 +335,7 @@ RingzBank comment: 'Parallel bank of Ringz'!
   primaryFactoryMethod ^#input:freq:amp:time:!
 !
 
-AbstractUGen subclass: #Changed instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #Changed instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 Changed comment: 'Triggers when a value changes'!
 
@@ -346,7 +346,7 @@ Changed comment: 'Triggers when a value changes'!
   primaryFactoryMethod ^#input:threshold:!
 !
 
-AbstractUGen subclass: #BufRec instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #BufRec instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 BufRec comment: 'Record signal into a Buffer'!
 
@@ -357,7 +357,7 @@ BufRec comment: 'Record signal into a Buffer'!
   primaryFactoryMethod ^#bufnum:reset:inputArray:!
 !
 
-AbstractUGen subclass: #Ln instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #Ln instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 Ln comment: 'Line generator'!
 
@@ -368,7 +368,7 @@ Ln comment: 'Line generator'!
   primaryFactoryMethod ^#start:end:dur:!
 !
 
-AbstractUGen subclass: #XLn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #XLn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 XLn comment: 'Line generator'!
 
@@ -379,7 +379,7 @@ XLn comment: 'Line generator'!
   primaryFactoryMethod ^#start:end:dur:!
 !
 
-AbstractUGen subclass: #AudioIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #AudioIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 AudioIn comment: 'Audio input'!
 
@@ -390,7 +390,7 @@ AudioIn comment: 'Audio input'!
   primaryFactoryMethod ^#channels:!
 !
 
-AbstractUGen subclass: #ControlIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #ControlIn instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 ControlIn comment: 'Control input'!
 
@@ -403,7 +403,7 @@ ControlIn comment: 'Control input'!
   !
   primaryFactoryMethod ^#channels:!
 !
-AbstractUGen subclass: #Cc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #Cc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 Cc comment: 'Continuous controller input'!
 
@@ -414,7 +414,7 @@ Cc comment: 'Continuous controller input'!
   primaryFactoryMethod ^#index:!
 !
 
-AbstractUGen subclass: #Sw instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+AbstractUgen subclass: #Sw instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Sw comment: 'Switch (maintained or momentary) controller input'!
 !Sw class methodsFor: 'instance creation'!
   index: index
@@ -423,7 +423,7 @@ Sw comment: 'Switch (maintained or momentary) controller input'!
   primaryFactoryMethod ^#index:!
 !
 
-UGen subclass: #InFb instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #InFb instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 InFb comment: 'Read signal from a bus with a current or one cycle old timestamp.'!
 !InFb class methodsFor: 'instance creation'!
   numChan: numChan bus: bus
@@ -432,7 +432,7 @@ InFb comment: 'Read signal from a bus with a current or one cycle old timestamp.
   primaryFactoryMethod ^#numChan:bus:!
 !
 
-UGen subclass: #BufAlloc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #BufAlloc instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 BufAlloc comment: 'Allocate a buffer local to the synth.'!
 !BufAlloc class methodsFor: 'instance creation'!
   numChannels: numChannels numFrames: numFrames
@@ -441,7 +441,7 @@ BufAlloc comment: 'Allocate a buffer local to the synth.'!
   primaryFactoryMethod ^#numChannels:numFrames:!
 !
 
-UGen subclass: #Tr instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #Tr instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Tr comment: 'Trig with duration of one sample.'!
 !Tr class methodsFor: 'instance creation'!
   in: in
@@ -450,7 +450,7 @@ Tr comment: 'Trig with duration of one sample.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #Tr1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #Tr1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Tr1 comment: 'Trig1 with duration of one sample.'!
 !Tr1 class methodsFor: 'instance creation'!
   in: in
@@ -459,7 +459,7 @@ Tr1 comment: 'Trig1 with duration of one sample.'!
   primaryFactoryMethod ^#in:!
 !
 
-UGen subclass: #Osc1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-SC3'!
+Ugen subclass: #Osc1 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Osc1 comment: 'An oscillator that reads through a table once.'!
 !Osc1 class methodsFor: 'instance creation'!
   bufnum: bufnum dur: dur
