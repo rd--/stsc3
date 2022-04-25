@@ -7,21 +7,6 @@ Object subclass: #EnvSpec
 
 EnvSpec comment: 'Specification for a segmented envelope'!
 
-!EnvSpec methodsFor: 'accessing'!
-curves ^curves !
-curves: x curves := x. !
-levels ^levels !
-levels: x levels := x. !
-loopNode ^loopNode !
-loopNode: x loopNode := x. !
-offset ^offset !
-offset: x offset := x. !
-releaseNode ^releaseNode !
-releaseNode: x releaseNode := x. !
-times ^times !
-times: x times := x. !
-!
-
 !EnvSpec methodsFor: 'naming'!
 curveNameDictionary
     "Dictionary mapping curve names to their integers codes."
@@ -37,36 +22,42 @@ curveNameDictionary
 !
 !
 
-!EnvSpec class methodsFor: 'instance creation'!
+!EnvSpec methodsFor: 'initialisation'!
 levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
     "Allow curves to be a scalar"
-    | u |
-    u := self new.
-    u levels: p1.
-    u times: p2.
-    u curves: ((p3 isSymbol or: p3 isNumber) ifTrue: [ Array with: p3 ] ifFalse: [ p3 ]).
-    u releaseNode: p4.
-    u loopNode: p5.
-    u offset: p6.
-    ^u
-  !
-  levels: p1 times: p2 curves: p3
-    ^EnvSpec levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
-  !
-  levels: p1 times: p2
-    ^EnvSpec levels: p1 times: p2 curves: #(1)
-  !
-  primaryFactoryMethod
+    levels := p1.
+    times := p2.
+    curves := (p3 isSymbol or: p3 isNumber) ifTrue: [ Array with: p3 ] ifFalse: [ p3 ].
+    releaseNode := p4.
+    loopNode := p5.
+    offset := p6.
+!
+!
+
+!EnvSpec class methodsFor: 'instance creation'!
+levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
+    ^self new levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
+!
+levels: p1 times: p2 curves: p3
+    "Default values for releaseNode: and loopNode: and offset."
+    ^self levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
+!
+levels: p1 times: p2
+    "Default values for curves: and releaseNode: and loopNode: and offset."
+    ^self levels: p1 times: p2 curves: #(1)
+!
+primaryFactoryMethod
     ^#levels:times:curves:releaseNode:loopNode:offset:
-  !
-  apply: arg
+!
+apply: arg
+    "EnvSpec has a primary factory method."
     ^self perform: (self primaryFactoryMethod) withArguments: arg
 !
 !
 
 !EnvSpec methodsFor: 'envelope coordinates'!
-coord
-    "My linear co-ordinate array as required by EnvGen."
+coordinateArrayForEnvGen
+    "My linear co-ordinate array, as required by EnvGen."
     | n r d |
     n := levels size - 1.
     r := Array new: ((n + 1) * 4).
@@ -83,13 +74,13 @@ coord
       r at: (3 + (i * 4)) put: (d at: c ifAbsent: [ 5 ]).
       r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [ 0 ] ifFalse: [ c ]) ].
     ^r
-  !
+!
 !
 
 !EnvSpec methodsFor: 'envelope generator'!
 asEnvGen: g withDoneAction: d
     "Make EnvGen instance with indicated gate and doneAction"
-    ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coord
+    ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coordinateArrayForEnvGen
 !
 asEnvGen: g
     "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
@@ -154,15 +145,18 @@ EnvBuilder subclass: #EnvPerc
 
 EnvPerc comment: 'Attack-Release Envelope (Fixed duration, no release node)'!
 
+!EnvPerc methodsFor: 'initialisation'!
+attackTime: p1 releaseTime: p2 level: p3 curve: p4
+    attackTime := p1.
+    releaseTime := p2.
+    level := p3.
+    curve := p4.
+!
+!
+
 !EnvPerc class methodsFor: 'instance creation'!
 attackTime: p1 releaseTime: p2 level: p3 curve: p4
-    | u |
-    u := self new.
-    u attackTime: p1.
-    u releaseTime: p2.
-    u level: p3.
-    u curve: p4.
-    ^u
+    ^ self new attackTime: p1 releaseTime: p2 level: p3 curve: p4
 !
 primaryFactoryMethod
      ^#attackTime:releaseTime:level:curve:
@@ -190,16 +184,19 @@ EnvBuilder subclass: #EnvLinen
 
 EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
 
+!EnvLinen methodsFor: 'initialisation'!
+attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
+    attackTime := p1.
+    sustainTime := p2.
+    releaseTime := p3.
+    level := p4.
+    curve := p5.
+!
+!
+
 !EnvLinen class methodsFor: 'instance creation'!
 attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
-    | u |
-    u := self new.
-    u attackTime: p1.
-    u sustainTime: p2.
-    u releaseTime: p3.
-    u level: p4.
-    u curve: p5.
-    ^u
+    ^self new attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
 !
 primaryFactoryMethod
     ^#attackTime:sustainTime:releaseTime:level:curve:
@@ -227,15 +224,18 @@ EnvBuilder subclass: #EnvASR
 
 EnvASR comment: 'Attack-Sustain-Release Envelope'!
 
+!EnvASR methodsFor: 'initialisation'!
+attackTime: p1 sustainLevel: p2 releaseTime: p3 curve: p4
+    attackTime := p1.
+    sustainLevel := p2.
+    releaseTime := p3.
+    curve := p4.
+!
+!
+
 !EnvASR class methodsFor: 'instance creation'!
 attackTime: p1 sustainLevel: p2 releaseTime: p3 curve: p4
-    | u |
-    u := self new.
-    u attackTime: p1.
-    u sustainLevel: p2.
-    u releaseTime: p3.
-    u curve: p4.
-    ^u
+    ^self new attackTime: p1 sustainLevel: p2 releaseTime: p3 curve: p4
 !
 primaryFactoryMethod
     ^#attackTime:sustainLevel:releaseTime:curve:
@@ -263,17 +263,20 @@ EnvBuilder subclass: #EnvADSR
 
 EnvADSR comment: 'Attack-Decay-Sustain-Release Envelope'!
 
+!EnvADSR methodsFor: 'initialisation'!
+attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curve: p6
+    attackTime := p1.
+    decayTime := p2.
+    sustainLevel := p3.
+    releaseTime := p4.
+    peakLevel := p5.
+    curve := p6.
+!
+!
+
 !EnvADSR class methodsFor: 'instance creation'!
 attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curve: p6
-    | u |
-    u := self new.
-    u attackTime: p1.
-    u decayTime: p2.
-    u sustainLevel: p3.
-    u releaseTime: p4.
-    u peakLevel: p5.
-    u curve: p6.
-    ^u
+    ^self new attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curve: p6
 !
 primaryFactoryMethod
     ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curve:
@@ -301,13 +304,16 @@ EnvBuilder subclass: #EnvSine
 
 EnvSine comment: 'Sine (Hanning Window) Envelope Builder (Fixed duration, no release node)'!
 
+!EnvSine methodsFor: 'initialisation'!
+dur: p1 level: p2
+    dur := p1.
+    level := p2.
+!
+!
+
 !EnvSine class methodsFor: 'instance creation'!
 dur: p1 level: p2
-    | u |
-    u := self new.
-    u dur: p1.
-    u level: p2.
-    ^u
+    ^self new dur: p1 level: p2
 !
 primaryFactoryMethod
     ^#dur:level:

@@ -1,3 +1,18 @@
+!EnvSpec methodsFor: 'accessing'!
+curves ^curves !
+curves: x curves := x. !
+levels ^levels !
+levels: x levels := x. !
+loopNode ^loopNode !
+loopNode: x loopNode := x. !
+offset ^offset !
+offset: x offset := x. !
+releaseNode ^releaseNode !
+releaseNode: x releaseNode := x. !
+times ^times !
+times: x times := x. !
+!
+
 !EnvPerc methodsFor: 'accessing'!
   attackTime ^attackTime !
   attackTime: x attackTime := x. !
