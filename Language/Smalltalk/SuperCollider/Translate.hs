@@ -1,4 +1,4 @@
-{- | Translate from the SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
+{- | Translate from the C-Smalltalk(Stc) / SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
      Requires that the Sc Ast has been rewritten to have only constructs that can be translated to St.
      See "Language.Smalltalk.SuperCollider.Rewrite"
 -}
@@ -58,7 +58,6 @@ scPrimarySt p =
   case p of
     ScPrimaryIdentifier x ->
         case x of
-          "this" -> St.PrimaryIdentifier "self"
           "pi" -> scFloatConstant "pi"
           "inf" -> scFloatConstant "infinity"
           _ -> St.PrimaryIdentifier x
@@ -92,19 +91,22 @@ scArgumentSt e =
   Nothing
   Nothing
 
-{- | For .stc to .st translation message names are allowed to have interior colons.
-     This means "c at: i put: i" can be written as "c.at:put(i, j)".
-     In addition "r.value(i, j)" is understood to mean "r value: i value: j".
+-- | The implicit extension keyword, currently "value", perhaps should be "with"
+scImplicitKeywordName :: String
+scImplicitKeywordName = "value"
+
+{- | For .stc to .st translation "c.at(i, put: j)" means "c at: i put: j".
+     In addition "p.q(i, j)" is understood to mean "p q: i value: j".
      That is, if the message name has fewer parts than there are arguments, supply the implicit name "value" for the missing parts.
 -}
 scDotMessageKeywordSt :: ScDotMessage -> St.KeywordMessage
 scDotMessageKeywordSt (ScDotMessage nm arg) =
-  let extendWithValue = True
+  let extendWithImplicit = True
       nmParts = Split.splitOn ":" nm
       nmSize = length nmParts
       argSize = length arg
-      messageParts = if extendWithValue && nmSize < argSize
-                     then take argSize (nmParts ++ repeat "value")
+      messageParts = if extendWithImplicit && nmSize < argSize
+                     then take argSize (nmParts ++ repeat scImplicitKeywordName)
                      else nmParts
   in if null arg
      then error "scDotMessageKeywordSt: Unary"

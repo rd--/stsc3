@@ -1,5 +1,7 @@
 {- | An abstract syntax tree (Ast) for SuperCollider (Sc).
 
+This Ast initially was for Sc, however it is now for C-Smalltalk (Stc).
+
 This follows the structure of the ANSI Smalltalk (St) Ast.
 
 ScTemporaries (3.4.2)
@@ -225,6 +227,6 @@ data ScBinaryArgument =
   ScBinaryArgument ScPrimary (Maybe [ScDotMessage])
   deriving (Eq, Show)
 
--- | List of Sc pseudo variables.  In addition to the St set it has pi and inf.
+-- | List of Sc pseudo variables.  In addition to the St set it has, pi and inf.
 scPseudoVariables :: [St.Identifier]
-scPseudoVariables = words "nil true false inf pi this super"
+scPseudoVariables = words "nil true false inf pi self super"

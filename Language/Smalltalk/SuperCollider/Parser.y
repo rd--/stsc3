@@ -29,7 +29,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       nil             { NilIdentifier }
       true            { TrueIdentifier }
       false           { FalseIdentifier }
-      this            { ThisIdentifier }
+      self            { SelfIdentifier }
       arg             { Arg }
       var             { Var }
       classvar        { ClassVar }
@@ -42,6 +42,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       identifier      { Identifier $$ }
       keyword         { Keyword $$ }
       binaryselector  { BinarySelector $$ }
+      keywordselector { KeywordSelector $$ }
       float           { Float $$ }
       integer         { Integer $$ }
       quotedchar      { QuotedChar $$ }
@@ -89,12 +90,13 @@ binaryoperator :: { String }
 
 methoddefinition :: { ScMethodDefinition }
         : '*' identifier '{' blockbody '}'     { ScMethodDefinition True $2 $4 }
-        | identifier_or_binaryoperator
+        | identifier_or_binaryoperator_or_keywordselector
           '{' blockbody '}'                    { ScMethodDefinition False $1 $3 }
 
-identifier_or_binaryoperator :: { String }
-        : identifier                           { $1 }
-        | binaryoperator                       { $1 }
+identifier_or_binaryoperator_or_keywordselector :: { String }
+         : identifier                           { $1 }
+         | binaryoperator                       { $1 }
+         | keywordselector                      { $1 }
 
 maybe_classvariables :: { Maybe [ScVariable] }
         : {- empty -}                          { Nothing }
@@ -207,7 +209,7 @@ reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }
         | true                                 { "true" }
         | false                                { "false" }
-        | this                                 { "this" }
+        | self                                 { "self" }
 
 arrayexpression :: { [ScBasicExpression] }
         : {- empty -}                          { [] }

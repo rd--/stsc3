@@ -13,6 +13,7 @@ $upper                 = A-Z                                  -- 3.5.1 lowercase
 $underscore            = _                                    -- 3.5.1 nonCaseLetter
 $letter                = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit         = [a-z A-Z _ 0-9]
+$letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
 $binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/] -- !@%&*-+=|<>?/
 $graphic               = $printable # $white
 
@@ -40,7 +41,7 @@ tokens :-
   "nil"                                  { \_ -> NilIdentifier }
   "true"                                 { \_ -> TrueIdentifier }
   "false"                                { \_ -> FalseIdentifier }
-  "this"                                 { \_ -> ThisIdentifier }
+  "self"                                 { \_ -> SelfIdentifier }
   "arg"                                  { \_ -> Arg }
   "var"                                  { \_ -> Var }
   "classvar"                             { \_ -> ClassVar }
@@ -52,6 +53,7 @@ tokens :-
 
   $letter $letterordigit*                { \s -> Identifier s }
   $letter $letterordigit* ":"            { \s -> Keyword (init s) }
+  $letter $letterordigitorcolon* ":"     { \s -> KeywordSelector s }
   $binaryChar+                           { \s -> BinarySelector s }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }

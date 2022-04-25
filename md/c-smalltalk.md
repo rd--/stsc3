@@ -24,6 +24,7 @@ and then forward the translation to a Smalltalk interpreter.
 C-Smalltalk utilises a subset of the SuperCollider syntax as an alternate notation for writing Smalltalk programs.
 
 C-Smalltalk programs will not ordinarily be valid SuperCollider programs without extending the SuperCollider class library.
+However with some care it's possible to write programs that are acceptable to both systems.
 
 ## Implicit primary message notation
 
@@ -59,7 +60,7 @@ It is therefore possible to provide aliases for commonly used messages, i.e. _pu
 
 The C-Smalltalk notation _collection.at(key, put: value)_ means _collection at: key put: value_.
 The message selector is _at:key:_.
-The first parameter _must not_ have a keyword and _all_ following parameters _must_ have a keyword.
+The first parameter must not have a keyword, and all following parameters must have a keyword.
 
 The C-Smalltalk notation _SinOsc(freq: 440, phase: 0)_ has the meaning _SinOsc.freq(440, phase: 0)_,
 which has the meaning _SinOsc freq: 440 phase: 0_.
@@ -123,13 +124,30 @@ This notation requires keys to be identifiers.
 
 # Notation for class definitions
 
-The notation _c : p { var v; m { ^nil } }_ defines a class _c_, which is a subclass of _p_, with an instance variable _v_ and an instance method _m_.
+The notation _c : p { classvar cv...; var iv...; *cm { }... im { }... }_ defines
+a class _c_, which is a subclass of _p_,
+with class variables _cv..._, instance variables _iv..._,
+class methods _cm..._ and instance methods _im..._.
 
-The notation _c { classvar v; *m { ^nil } }_ defines a class _c_, with an class variable _v_ and an class method _m_.
+Class variables must precede instance variables.
 
-Class variables must precede instance variables and class methods must precede instance methods.
+The notation _+ c { *cm {}... im { }... }_ adds class methods _cm..._ and instance methods _im..._ to the existing class _c_.
 
-The notation _+ c { m { ^nil } }_ adds an instance method _m_ to the existing class _c_.
+Method naming in Sc and St is in general incompatible.
+
+In Sc there is both _Array>>put(index: anIndex, item: anItem)_  and _Dictionary>>put(key: aKey, value: aValue)_.
+The method name and the names of the parameters together form the selector.
+
+In St there is only _collection at: aKey put: aValue_, written in Stc as _collection.at(aKey, put: aValue)_.
+The names of the paramters are not part of the name of the selector.
+
+The Stc notation for defining this method is _at:put: { arg aKey, aValue; ... }_.
+Since the arity of the method is known from the argument list, any non-initial parts of the selector, and also the trailing colon, can be elided.
+The notation _put { arg aKey, aValue; ... }_ means _put:value: { arg aKey, aValue; ... }_.
+
+The notation _dup { arg count; ... }_ defines the selector _dup:_ since there is one argument,
+the notation _dup { self.dup(2) }_ defines the selector is _dup_ since there are no arguments.
+In general it is clearest to write the selector out in full.
 
 * * *
 

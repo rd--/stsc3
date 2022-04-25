@@ -17,11 +17,12 @@ data Token =
   | NilIdentifier
   | TrueIdentifier
   | FalseIdentifier
-  | ThisIdentifier
+  | SelfIdentifier
 
   | Identifier String
   | Keyword String
   | BinarySelector String
+  | KeywordSelector String
   | ReturnOperator
   | AssignmentOperator
   | ClassExtensionOperator
