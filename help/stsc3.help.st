@@ -100,6 +100,10 @@ MessageNames openMessageNames. "open Message Names tool"
 (1 min: 2) max: 3. "=> 3"
 1 min: (2 max: 3). "=> 1"
 
+"Boolean"
+
+(0.5 coin) if: [ 'p' ] value: [ 'q' ] "=> p or q with equal probability"
+
 "Random - Float"
 
 5.0 rand "=> uniform random Float in 0 to 5"
@@ -142,8 +146,9 @@ MessageNames openMessageNames. "open Message Names tool"
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
 6 replicate: 1 "=> #(1 1 1 1 1 1)"
 #(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
+#(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
 #(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
-(0 to: 4) mixFill: [:x | x * x] "=> 30 ; Sc and St disagree about indexing, mixFill is implemented at Interval"
+(0 to: 4) mixFill: [:x | x * x] "=> 30"
 (1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
 (0 to: 4) collect: [:x | x * x] "=> #(0 1 4 9 16)"
 
@@ -151,7 +156,9 @@ MessageNames openMessageNames. "open Message Names tool"
 #(1 2 3 4 5 6) clump: 2 "=>  #((1 2 ) (3 4) (5 6))"
 #(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
 #((1 2) (3 4 5)) extendToBeOfEqualSize "=> #((1 2 1 ) (3 4 5))"
+#(1 2 3) withExtending: #(4 5) collect: [:x :y| x + y] "=> #(5 7 7) ; 1 + 4 and 2 + 5 and 3 + 4"
 #(1 2 3) ++ #(4 5) "=> #(1 2 3 4 5)"
+#(1 2 3) , #(4 5) "=> #(1 2 3 4 5)"
 
 (Array with: 1) = #(1)
 (Array with: 1 with: 2) = #(1 2)
@@ -164,10 +171,16 @@ MessageNames openMessageNames. "open Message Names tool"
 #(5 4 3 2 1) withIndexDo: [:e :i | {e. i} print].
 
 Array series: 10 value: 0 value: 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
+Array geom: 5 value: 1 value: 3 "=> (1 3 9 27 81)"
+Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
+#(1 2 3 4 5) nth: 3 "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
+
+10 iota "=> 10 element array from 1 to 10"
 10 iota - 1 * 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
 
-Array geom: 5 value: 1 value: 3 "=> (1 3 9 27 81)"
+10 from: 1 by: 1 "=> 10 element array from 1 to 10 by 1"
+3 from: 3 by: 6 "=> 3 element array from 3 to 15 by 6"
 
 ({1. 2. 3} at: 2 put: -2) == -2 true              "=> true (at:put: returns the element put)"
 
@@ -216,6 +229,7 @@ Association key: #x value: 1 "=> #x -> 1"
 
 d := Dictionary new. d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z'
 d := Dictionary newFrom: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'}
+d := Dictionary newFromAssociations: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'} "=> newFrom: will do this courtesy Collection>>associationsDo:"
 d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 "Conditionals"
@@ -557,12 +571,14 @@ SC3 reset.
 | factorial |
 factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
-[10 rand] dup: 10 "=> #(7 8 10 3 6 6 7 8 3 4)"
+[10 rand] dup: 10 "=> ten random numbers between 1 and 10"
+[10 rand] dup "=> two random numbers between 1 and 10"
 [] class = BlockClosure
 [ :x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
 ([ 1 ] cull: 2) == 1 "=> true"
 ([ :x | x ] cull: 2) == 2 "=> true"
 ([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12 "=> true"
+([ :x :y :z | x * y + z ] apply: #(3 4 5)) == 17 "=> alias for valueWithArguments:"
 
 "Delay"
 (Delay forMilliseconds: 500) wait

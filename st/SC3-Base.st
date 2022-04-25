@@ -10,14 +10,14 @@ groupsOf: groupSize
 !
 withExtending: other collect: aBlock
     "Like with:collect: but cycle shorter list."
-    | n |
-    n := self size max: other size.
-    ^(1 to: n) collect: [ :index | aBlock value: (self atWrap: index) value: (other atWrap: index) ]
+    | maximumSize |
+    maximumSize := self size max: other size.
+    ^(1 to: maximumSize) collect: [ :index | aBlock value: (self atWrap: index) value: (other atWrap: index) ]
 !
 extendCyclically: answerSize
     "Myself extended to answerSize places by cycling"
     ^(1 to: answerSize) collect: [ :index | self atWrap: index ]
-  !
+!
 extendToBeOfEqualSize
     "All of my collections extended to to be of the same size as my largest collection"
     | maximumSize |
@@ -52,110 +52,114 @@ nth: index
 !
 
 !Array class methodsFor: 'enumerating'!
-  series: size value: start value: step
-    "SC idiom to make an arithmetic series (ramp)"
-    ^(1 to: size) collect: [ :i | (step * (i - 1)) + start ]
-  !
-  geom: size value: start value: grow
-    "SC idiom to make a geometric series."
+series: size value: start value: step
+    "Generate an arithmetic series (ramp) of size places from start by step.  From Sc."
+    ^(1 to: size) collect: [ :item | (step * (item - 1)) + start ]
+!
+geom: size value: start value: grow
+    "Generate a geometric series (curve) of size places from start by grow.  From Sc."
     | accum |
     accum := start.
-    ^(1 to: size) collect: [ :i |
+    ^(1 to: size) collect: [ :unusedItem |
       | entry |
       entry := accum.
       accum := grow * accum.
       entry ]
-  !
-  fill: size value: aBlock
-    "SC idiom to fill an array using a zero argument block.
+!
+fill: size value: aBlock
+    "Generate an array using a zero argument block to fill each slot.  From Sc.
      The argument as index form is not implemented since St and Sc disagree about indexing."
-    ^(1 to: size) collect: [ :i | aBlock value: i ]
-  !
+    ^(1 to: size) collect: [ :unusedItem | aBlock value ]
+!
 !
 
 !Integer methodsFor: 'enumerating'!
-  arrayFill: aBlock
-    "c.f. Array class>>fill"
-    ^(1 to: self) collect: [ :i | aBlock value ]
-  !
-  replicate: item
-    "Array of myself number of places, each being item"
+arrayFill: aBlock
+    "Array of myself number of places, each being a result of evaluating aBlock.  C.f. Array class>>fill."
+    ^(1 to: self) collect: [ :unusedItem | aBlock value ]
+!
+mixFill: aBlock
+    "Send arrayFill: to myself, and then sum result.  From Sc."
+    ^(self arrayFill: aBlock) sum
+!
+replicate: item
+    "Array of myself number of places, each being item."
     ^self arrayFill: [ item ]
-  !
-  mixFill: f
-    ^(self arrayFill: f) sum
-  !
+!
 !
 
 !Interval methodsFor: 'enumerating'!
-  mixFill: aBlock
+mixFill: aBlock
+    "Apply aBlock to my elements and sum the results.
+    Since Sc and St disagree about indexing, mixFill: with index input to block is implemented at Interval."
     ^(self asArray collect: aBlock) sum
-  !
+!
 !
 
 !Number methodsFor: 'enumerating'!
-  iota
-    "Array of sequence from 1 to myself"
+iota
+    "Array of numbers from 1 to myself."
     ^(1 to: self) asArray
-  !
-  from: start by: step
-    "Array of myself places from start by step"
+!
+from: start by: step
+    "Array of myself places from start by step."
     ^(start to: self - 1 * step + start by: step) asArray
-  !
+!
 !
 
 !BlockClosure methodsFor: 'enumerating'!
-  dup: aNumber
+dup: aNumber
     "An array of aNumber places, each filled by sending value to myself.
      Sc allows an index argument, however Sc and St disagree about indexing.
 
     [ 10 rand ] dup: 10
     "
     ^aNumber arrayFill: self
-  !
-  dup
+!
+dup
+    "An array of myself evaluated twice."
     ^self dup: 2
-  !
+!
 !
 
 !BlockClosure methodsFor: 'application'!
-  apply: anArray
-    "Alias for valueWithArguments:, for .stc notation"
+apply: anArray
+    "Alias for valueWithArguments:.  For .stc notation."
     ^self valueWithArguments: anArray
-  !
+!
 !
 
 !Collection methodsFor: 'maths'!
-  mean
-    "Sum of myself divided by my size"
+mean
+    "Sum of myself divided by my size."
     ^self sum / self size
-  !
-  product
-    "Fold of multiply"
-    ^self inject: 1 into: [ :i :j | i * j ]
-  !
+!
+product
+    "Product of my item."
+    ^self inject: 1 into: [ :accumulator :item | accumulator * item ]
+!
 !
 
 !String methodsFor: 'file i/o'!
-  evalFile
-    "evalString of readTextFile."
+evalFile
+    "Read the text file I name and evaluate it's contents."
     ^self readTextFile evalString
-  !
+!
 !
 
 !Dictionary class methodsFor: 'instance creation'!
-  newFromAssociations: assocArray
-    "Dictionary from Array of associations"
+newFromAssociations: assocArray
+    "Generate a dictionary from an Array of associations."
     | aDict |
     aDict := Dictionary new.
     assocArray do: [ :anAssoc | aDict add: anAssoc ].
     ^aDict
-  !
+!
 !
 
 !Boolean methodsFor: '.stc'!
-  if: trueBlock value: falseBlock
-    "This is the SuperCollider if method, for .stc notation."
+if: trueBlock value: falseBlock
+    "Alias for ifTrue:ifFalse:.  This is the SuperCollider if method, for .stc notation."
     ^self ifTrue: trueBlock ifFalse: falseBlock
-  !
+!
 !
