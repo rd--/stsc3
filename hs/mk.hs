@@ -79,7 +79,7 @@ ugen =
   ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
   ,"TScramble" -- sc3-rdu
   ,"DX7","RDX7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
-  ,"Bezier","Freezer","ShufflerB"
+  ,"Bezier","Freezer" -- ,"ShufflerB"
   ]
 
 is_osc :: Record.U -> Bool
@@ -87,12 +87,12 @@ is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)
 
 main :: IO ()
 main = do
-  St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/SC3-UGen.st" uop binop ugen
+  St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/Sc3-Ugen-Bindings.st" uop binop ugen
   Js.js_sc3_gen_bindings_wr True "/home/rohan/sw/jssc3/js/sc3-bindings.ts" Js.js_sc3_uop Js.js_sc3_binop ugen
   let col = map u_lookup_cs_err ugen
       flt = filter Record.u_is_filter col
       osc = filter is_osc col
-  writeFile "/home/rohan/sw/stsc3/st/SC3-UGen-Filter.st" (St.st_filter_methods flt ++ St.st_first_input_methods osc)
+  writeFile "/home/rohan/sw/stsc3/st/Sc3-Ugen-Filter.st" (St.st_filter_methods flt ++ St.st_first_input_methods osc)
 
 -- * Sc
 

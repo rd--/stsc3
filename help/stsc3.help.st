@@ -19,7 +19,7 @@ f0Tw1395878538297892865
 "Envelope"
 
 EnvSpec new curveNameDictionary "curve name dictionary"
-(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) coord = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
+(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) coordinateArrayForEnvGen = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
 
 "Ugen"
 
@@ -452,6 +452,9 @@ Float infinity "=> Inf"
 -1 raisedTo: (1/2). "=> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
 -1 raisedTo: (1/3). "=> -1 (Squeak)"
 -1 raisedTo: 0.5. "=> ArithmeticError: Negative can't be raised to float powers."
+(0.5 linExpFrom: 1 to: 2) = 1.414213562373095
+(0.5 linExpFrom: 1 to: 2) = 1.414213562373095
+(0 to: 10) collect: [ :n | (n / 10) linExpFrom: 1 to: 2 ] "=> 10 point equally spaced points on exponential curve from 1 to 2"
 
 "GNU Smalltalk"
 

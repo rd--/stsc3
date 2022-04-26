@@ -1,6 +1,8 @@
-core=Base Core Env Event Help Help-Graphs Math Random Ugen Ugen-Demand Ugen-Pseudo
-base=Haskell
-common=$(core) $(base)
+std=Array BlockClosure Boolean Collection Dictionary Float Integer Interval Number SequenceableCollection String Symbol
+core=Env Event Help Help-Graphs
+ugen=AbstractUgen Ugen BinaryOpUgen UnaryOpUgen Ugen-Bindings Ugen-Demand Ugen-Pseudo Mrg Mce Mix Constant Control Rate OverlapTexture
+base=Sc3 Haskell
+common=$(std) $(core) $(ugen) $(base)
 
 gnu=$(common) Gnu Ui
 squeak=$(common) Squeak Ui
