@@ -131,6 +131,7 @@ $a isLowercase = true                                       "test if lower case 
 3.99 asInteger = 4                                          "convert number to integer (truncates in Squeak)"
 3.99 asFraction                                             "convert number to fraction (399/100)"
 3 asFloat                                                   "convert number to float"
+3 asFloat = 3                                               "3 asFloat is equal to 3"
 65 asCharacter = $A                                         "convert integer to character"
 $A asciiValue = 65                                          "convert character to integer"
 3.99 printString = '3.99'                                   "convert object to string via printOn:"

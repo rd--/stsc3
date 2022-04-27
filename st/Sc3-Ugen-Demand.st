@@ -24,16 +24,16 @@ TDmdFor comment: 'Demand with duration input (Duty).'!
   !
 !
 
-Ugen subclass: #DmdOn instanceVariableNames: 'trig reset demandUgens' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
+Ugen subclass: #DmdOn instanceVariableNames: 'trig reset demandUGens' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 
 DmdOn comment: 'Demand with trigger input (Demand).'!
 
 !DmdOn class methodsFor: 'instance creation'!
-  trig: trig reset: reset demandUgens: demandUgens
-    ^Demand trig: trig reset: reset demandUgens: demandUgens
+  trig: trig reset: reset demandUGens: demandUGens
+    ^Demand trig: trig reset: reset demandUGens: demandUGens
   !
   primaryFactoryMethod
-    ^#trig:reset:demandUgens:
+    ^#trig:reset:demandUGens:
   !
 !
 
@@ -76,7 +76,7 @@ Choose comment: 'Random sequence generator.'!
 !
 
 Ugen subclass: #Seq
-  instanceVariableNames: 'repeats array'
+  instanceVariableNames: 'repeats list'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
@@ -84,10 +84,10 @@ Ugen subclass: #Seq
 Seq comment: 'Sequence generator.'!
 
 !Seq methodsFor: 'accessing'!
-  repeats ^repeats!
-  repeats: x repeats := x!
-  array ^array!
-  array: x array := x!
+repeats ^repeats!
+repeats: x repeats := x!
+list ^list!
+list: x list := x!
 !
 
 !Seq methodsFor: 'initialization'!
@@ -95,7 +95,7 @@ Seq comment: 'Sequence generator.'!
     super initialize.
     ugenName := #Dseq.
     paramNames := #(#repeats).
-    mceNames := #(#array).
+    mceNames := #(#list).
     ugenRate := #dr.
     numChan := 1.
     specialIndex := 0.
@@ -104,13 +104,13 @@ Seq comment: 'Sequence generator.'!
 !
 
 !Seq class methodsFor: 'instance creation'!
-  repeats: repeats array: array
+  repeats: repeats list: list
     |u|
     u := self new.
     u repeats: repeats.
-    u array: array.
+    u list: list.
     ^u!
-  primaryFactoryMethod ^#repeats:array:!
+  primaryFactoryMethod ^#repeats:list:!
 !
 
 Ugen subclass: #Ser

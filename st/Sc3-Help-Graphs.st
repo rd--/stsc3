@@ -364,7 +364,7 @@ f0Tw1395519538008141835
   Sc3 reset.
   "
   | c d f p o |
-  c := DmdFor dur: 0.004 reset: 0 level: (Dseries length: Float infinity start: 1 step: #(1 2)) % (DmdFor dur: 8.192 reset: 0 level: (Seq repeats: Float infinity array: ((1 to: 6) * 75))).
+  c := DmdFor dur: 0.004 reset: 0 level: (Dseries length: Float infinity start: 1 step: #(1 2)) % (DmdFor dur: 8.192 reset: 0 level: (Seq repeats: Float infinity list: ((1 to: 6) * 75))).
   d := HPF in: (MantissaMask in: c bits: 3) freq: 5.
   f := [ :x | (SinOscFB freq: x feedback: 0) max: 0 ].
   p := #(250 200) * ((Duty dur: 4.096 reset: 0 doneAction: 0 level: (Dseq repeats: Float infinity list: #(4 6 5 5 5 5 3) / 4)) lag: 0.1).
@@ -384,7 +384,7 @@ f0Tw1395878538297892865
   m := (#(24 0 3 5 7 10 36) collect: [ :i | i + #(36 48 36 33 60 72) ]) concatenation.
   o :=
     SinOscFB
-      freq: (DmdOn trig: t reset: 0 demandUGens: (Seq repeats: Float infinity array: m midiCps) / g)
+      freq: (DmdOn trig: t reset: 0 demandUGens: (Seq repeats: Float infinity list: m midiCps) / g)
       feedback: (SinOscFB freq: 0.02 feedback: 0)
       mul: e.
   c := (RLPF in: o freq: (((3 ** (SinOscFB freq: 0.04 feedback: 0)) + e) * 2000) rq: ((3 ** (SinOscFB freq: (g / 9) feedback: 0)) / 3)) * 4.

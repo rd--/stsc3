@@ -7,11 +7,11 @@ Sc3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 "Help Graphs"
 
 Browser newOnClass: Sc3HelpGraph class.
-Sc3HelpGraph f0Tw1395878538297892865 play.
+Sc3HelpGraph new f0Tw1395878538297892865 play.
 Sc3 reset.
 
 "(Cmd-b to browse, graphs are class methods)"
-ScHelpGraph
+Sc3HelpGraph
 
 "(Ctl-m to graph name to select and see implemetors of it)"
 f0Tw1395878538297892865

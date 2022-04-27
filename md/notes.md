@@ -55,3 +55,9 @@ It would be nice to allow stored class and method comments written at the obviou
 
 Categories can be stored in a map keyed by method name.
 This approach require all methods with the same name to be in the same category for each object they are implemented in.
+
+# Cuis
+
+- Install _Cuis_ following instructions at <https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev/>
+- Start _Cuis_ and install the _OSProcess_ package by evaluating _Feature require: 'OSProcess'_ in a workspace.
+- Filein _stsc3/st/Sc3-Filein-For-Cuis.st_ (see _stsc3/st/Makefile_)

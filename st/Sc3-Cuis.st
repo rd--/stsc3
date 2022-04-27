@@ -40,3 +40,10 @@
     ^false
   !
 !
+
+!Number methodsFor: 'mathematical functions'!
+** aNumber
+    "Special case of aNumber ** aUgen"
+    self asUgen raisedTo: aNumber
+!
+!

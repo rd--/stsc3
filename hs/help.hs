@@ -1,4 +1,4 @@
--- read .st graphs (initial fragment) from files at help/graph and write SC3-Help-Graphs.st
+-- read .st graphs (initial fragment) from files at help/graph and write Sc3-Help-Graphs.st
 
 import Data.Char {- base -}
 import Data.List {- base -}
@@ -9,7 +9,7 @@ import System.FilePath {- filepath -}
 
 import Music.Theory.Directory {- hmt-base -}
 
-methods_prefix = "!Sc3HelpGraph class methodsFor: 'Sc Help Graphs'!"
+methods_prefix = "!Sc3HelpGraph methodsFor: 'Sc Help Graphs'!"
 
 -- > file_name_to_method_name "f0-tw-1395878538297892865.st" == "f0Tw1395878538297892865"
 file_name_to_method_name fn =
@@ -20,8 +20,8 @@ file_name_to_method_name fn =
 -- > putStrLn $ runner_text "f0Tw1395878538297892865"
 runner_text nm =
   ["\""
-  ,"Sc3HelpGraph " ++ nm ++ " play."
-  ,"SC3 reset."
+  ,"Sc3HelpGraph new " ++ nm ++ " play."
+  ,"Sc3 reset."
   ,"\""]
 
 indent_text_by prefix = map (prefix ++) . lines
@@ -46,4 +46,4 @@ proc_file fn = do
 main = do
   fn_list <- dir_subset_rel [".st"] graph_dir
   mth <- mapM proc_file fn_list
-  writeFile (stsc3_dir ++ "st/SC3-Help-Graphs.st") (unlines [methods_prefix, intercalate "!\n" mth, "!\n!"])
+  writeFile (stsc3_dir ++ "st/Sc3-Help-Graphs.st") (unlines [methods_prefix, intercalate "!\n" mth, "!\n!"])

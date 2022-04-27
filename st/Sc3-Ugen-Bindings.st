@@ -1957,20 +1957,20 @@ DelayN comment: 'Simple delay line with no interpolation.'!
 !
 
 Ugen subclass: #Demand
-  instanceVariableNames: 'trig reset demandUgens'
+  instanceVariableNames: 'trig reset demandUGens'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Demand comment: 'Demand results from demand rate Ugens.'!
+Demand comment: 'Demand results from demand rate UGens.'!
 
 !Demand methodsFor: 'accessing'!
   trig ^trig!
   trig: x trig := x!
   reset ^reset!
   reset: x reset := x!
-  demandUgens ^demandUgens!
-  demandUgens: x demandUgens := x!
+  demandUGens ^demandUGens!
+  demandUGens: x demandUGens := x!
 !
 
 !Demand methodsFor: 'initialization'!
@@ -1978,7 +1978,7 @@ Demand comment: 'Demand results from demand rate Ugens.'!
     super initialize.
     ugenName := #Demand.
     paramNames := #(#trig #reset).
-    mceNames := #(#demandUgens).
+    mceNames := #(#demandUGens).
     ugenRate := #(0).
     numChan := #mceInput.
     specialIndex := 0.
@@ -1988,16 +1988,16 @@ Demand comment: 'Demand results from demand rate Ugens.'!
 
 
 !Demand class methodsFor: 'instance creation'!
-  trig: trig reset: reset demandUgens: demandUgens
+  trig: trig reset: reset demandUGens: demandUGens
     |u|
     u := self new.
     u trig: trig.
     u reset: reset.
-    u demandUgens: demandUgens.
+    u demandUGens: demandUGens.
     ^u!
-  trig: trig reset: reset demandUgens: demandUgens mul: mul ^(Demand trig: trig reset: reset demandUgens: demandUgens) * mul!
-  trig: trig reset: reset demandUgens: demandUgens mul: mul add: add ^(Demand trig: trig reset: reset demandUgens: demandUgens) * mul + add!
-  primaryFactoryMethod ^#trig:reset:demandUgens:!
+  trig: trig reset: reset demandUGens: demandUGens mul: mul ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul!
+  trig: trig reset: reset demandUGens: demandUGens mul: mul add: add ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul + add!
+  primaryFactoryMethod ^#trig:reset:demandUGens:!
 !
 
 Ugen subclass: #DetectSilence
@@ -2179,7 +2179,7 @@ Ugen subclass: #Dseries
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Dseries comment: 'Demand rate arithmetic series Ugen.'!
+Dseries comment: 'Demand rate arithmetic series UGen.'!
 
 !Dseries methodsFor: 'accessing'!
   length ^length!
@@ -2340,7 +2340,7 @@ Ugen subclass: #Duty
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Duty comment: 'Demand results from demand rate Ugens.'!
+Duty comment: 'Demand results from demand rate UGens.'!
 
 !Duty methodsFor: 'accessing'!
   dur ^dur!
@@ -5948,7 +5948,7 @@ Ugen subclass: #MouseButton
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-MouseButton comment: 'Mouse button Ugen.'!
+MouseButton comment: 'Mouse button UGen.'!
 
 !MouseButton methodsFor: 'accessing'!
   minval ^minval!
@@ -5992,7 +5992,7 @@ Ugen subclass: #MouseX
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-MouseX comment: 'Cursor tracking Ugen.'!
+MouseX comment: 'Cursor tracking UGen.'!
 
 !MouseX methodsFor: 'accessing'!
   minval ^minval!
@@ -6039,7 +6039,7 @@ Ugen subclass: #MouseY
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-MouseY comment: 'Cursor tracking Ugen.'!
+MouseY comment: 'Cursor tracking UGen.'!
 
 !MouseY methodsFor: 'accessing'!
   minval ^minval!
@@ -6891,7 +6891,7 @@ Ugen subclass: #Pluck
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Pluck comment: 'A Karplus-Strong Ugen'!
+Pluck comment: 'A Karplus-Strong UGen'!
 
 !Pluck methodsFor: 'accessing'!
   in ^in!
@@ -8281,7 +8281,7 @@ Ugen subclass: #TDuty
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-TDuty comment: 'Demand results as trigger from demand rate Ugens.'!
+TDuty comment: 'Demand results as trigger from demand rate UGens.'!
 
 !TDuty methodsFor: 'accessing'!
   dur ^dur!
@@ -10389,6 +10389,7 @@ Freezer comment: '(Undocumented class)'!
   primaryFactoryMethod ^#bufnum:left:right:gain:increment:incrementOffset:incrementRandom:rightRandom:syncPhaseTrigger:randomizePhaseTrigger:numberOfLoops:!
 !
 
+
 !AbstractUgen methodsFor: 'arithmetic'!
   + b ^ BinaryOpUgen specialIndex: 0 a: self b: b!
   - b ^ BinaryOpUgen specialIndex: 1 a: self b: b!
@@ -10443,3 +10444,4 @@ Freezer comment: '(Undocumented class)'!
   distort ^ UnaryOpUgen specialIndex: 42 a: self!
   softClip ^ UnaryOpUgen specialIndex: 43 a: self!
 !
+

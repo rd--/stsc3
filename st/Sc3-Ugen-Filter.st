@@ -77,8 +77,8 @@
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
-  demand: reset value: demandUgens
-    ^Demand trig: self reset: reset demandUgens: demandUgens
+  demand: reset value: demandUGens
+    ^Demand trig: self reset: reset demandUGens: demandUGens
   !
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
@@ -416,8 +416,8 @@
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
   !
-  demand: reset value: demandUgens
-    ^Demand trig: self reset: reset demandUgens: demandUgens
+  demand: reset value: demandUGens
+    ^Demand trig: self reset: reset demandUGens: demandUGens
   !
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
@@ -1009,9 +1009,6 @@
   !
   freezer: left value: right value: gain value: increment value: incrementOffset value: incrementRandom value: rightRandom value: syncPhaseTrigger value: randomizePhaseTrigger value: numberOfLoops
     ^Freezer bufnum: self left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops
-  !
-  shufflerB: readLocationMinima value: readLocationMaxima value: readIncrementMinima value: readIncrementMaxima value: durationMinima value: durationMaxima value: envelopeAmplitudeMinima value: envelopeAmplitudeMaxima value: envelopeShapeMinima value: envelopeShapeMaxima value: envelopeSkewMinima value: envelopeSkewMaxima value: stereoLocationMinima value: stereoLocationMaxima value: interOffsetTimeMinima value: interOffsetTimeMaxima value: ftableReadLocationIncrement value: readIncrementQuanta value: interOffsetTimeQuanta
-    ^ShufflerB bufnum: self readLocationMinima: readLocationMinima readLocationMaxima: readLocationMaxima readIncrementMinima: readIncrementMinima readIncrementMaxima: readIncrementMaxima durationMinima: durationMinima durationMaxima: durationMaxima envelopeAmplitudeMinima: envelopeAmplitudeMinima envelopeAmplitudeMaxima: envelopeAmplitudeMaxima envelopeShapeMinima: envelopeShapeMinima envelopeShapeMaxima: envelopeShapeMaxima envelopeSkewMinima: envelopeSkewMinima envelopeSkewMaxima: envelopeSkewMaxima stereoLocationMinima: stereoLocationMinima stereoLocationMaxima: stereoLocationMaxima interOffsetTimeMinima: interOffsetTimeMinima interOffsetTimeMaxima: interOffsetTimeMaxima ftableReadLocationIncrement: ftableReadLocationIncrement readIncrementQuanta: readIncrementQuanta interOffsetTimeQuanta: interOffsetTimeQuanta
   !
 
 !
