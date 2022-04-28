@@ -75,6 +75,9 @@ coordinateArrayForEnvGen
       r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [ 0 ] ifFalse: [ c ]) ].
     ^r
 !
+asArray
+    "Convenience"
+    ^self coordinateArrayForEnvGen
 !
 
 !EnvSpec methodsFor: 'envelope generator'!
@@ -119,19 +122,23 @@ apply: arg
 
 !EnvBuilder methodsFor: 'envelope specification'!
 asEnvSpec
-    "EnvBuilder instances can generate EnvSpec instances"
+    "Myself as an EnvSpec"
     self subclassResponsibility
 !
+asArray
+    "Myself as a coordinary array suitable for EnvGen "
+    ^self asEnvSpec coordinateArrayForEnvGen
+!
 asEnvGen: g withDoneAction: d
-    "Make EnvGen instance with indicated gate and doneAction"
+    "Myself as an EnvGen instance with indicated gate and doneAction"
     ^(self asEnvSpec) asEnvGen: g withDoneAction: d
 !
 asEnvGen: g
-    "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
+    "Myself as an EnvGen instance with indicated gate and default doneAction (0=doNothing)"
     ^self asEnvGen: g withDoneAction: 0
 !
 asEnvGen
-    "Make EnvGen instance with default gate (1) and doneAction (0=doNothing)"
+    "Myself as an EnvGen instance with default gate (1) and doneAction (0=doNothing)"
     ^self asEnvGen: 1 withDoneAction: 0
 !
 !

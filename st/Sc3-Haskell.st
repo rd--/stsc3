@@ -43,14 +43,14 @@
     ugenName asString printHaskellOn: fd.
     fd space.
     '[' putOn: fd.
-    paramNames do: [:x | (self perform: x) printHaskellOn: fd. fd space] separatedBy: [',' putOn: fd].
+    paramValues do: [ :item | item printHaskellOn: fd. fd space ] separatedBy: [ ',' putOn: fd ].
     '] ' putOn: fd.
     mce := ['(Just [' putOn: fd.
-            mceNames do: [:x | (self perform: x) printHaskellOn: fd. fd space] separatedBy: [',' putOn: fd].
+            mceValues do: [ :item | item printHaskellOn: fd. fd space ] separatedBy: [ ',' putOn: fd].
             ']) ' putOn: fd].
     mceNames isEmpty ifTrue: ['Nothing ' putOn: fd] ifFalse: mce.
     nc := ['(length (mceChannels ' putOn: fd.
-           (self perform: (mceNames at: 1)) printHaskellOn: fd.
+           (mceValues at: 1) printHaskellOn: fd.
            '))' putOn: fd].
     numChan = #mceInput ifTrue: nc ifFalse: [numChan asString putOn: fd].
     fd space.
@@ -186,7 +186,7 @@
   printHaskellOn: fd
     "Print my hsc3 representation."
     '(splay ' putOn: fd.
-    #(#input #spread #level #center #levelComp) do: [ :x | (self perform: x) printHaskellOn: fd ] separatedBy: [ ' ' putOn: fd ].
+    paramValues do: [ :item | item printHaskellOn: fd ] separatedBy: [ ' ' putOn: fd ].
     ') ' putOn: fd
   !
 !

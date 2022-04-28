@@ -1,679 +1,679 @@
 !AbstractUgen methodsFor: 'filtering'!
   allpassC: maxdelaytime value: delaytime value: decaytime
     ^AllpassC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   allpassL: maxdelaytime value: delaytime value: decaytime
     ^AllpassL in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   allpassN: maxdelaytime value: delaytime value: decaytime
     ^AllpassN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   balance2: right value: pos value: level
     ^Balance2 left: self right: right pos: pos level: level
-  !
+!
   bBandPass: freq value: bw
     ^BBandPass in: self freq: freq bw: bw
-  !
+!
   bBandStop: freq value: bw
     ^BBandStop in: self freq: freq bw: bw
-  !
+!
   bLowPass: freq value: rq
     ^BLowPass in: self freq: freq rq: rq
-  !
+!
   bPeakEQ: freq value: rq value: db
     ^BPeakEQ in: self freq: freq rq: rq db: db
-  !
+!
   bpf: freq value: rq
     ^BPF in: self freq: freq rq: rq
-  !
+!
   bpz2
     ^BPZ2 in: self
-  !
+!
   brf: freq value: rq
     ^BRF in: self freq: freq rq: rq
-  !
+!
   brz2
     ^BRZ2 in: self
-  !
+!
   bufWr: bufnum value: phase value: loop
     ^BufWr bufnum: bufnum phase: phase loop: loop inputArray: self
-  !
+!
   clip: lo value: hi
     ^Clip in: self lo: lo hi: hi
-  !
+!
   coinGate: prob
     ^CoinGate prob: prob in: self
-  !
+!
   combC: maxdelaytime value: delaytime value: decaytime
     ^CombC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   combL: maxdelaytime value: delaytime value: decaytime
     ^CombL in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   combN: maxdelaytime value: delaytime value: decaytime
     ^CombN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   decay: decayTime
     ^Decay in: self decayTime: decayTime
-  !
+!
   decay2: attackTime value: decayTime
     ^Decay2 in: self attackTime: attackTime decayTime: decayTime
-  !
+!
   degreeToKey: bufnum value: octave
     ^DegreeToKey bufnum: bufnum in: self octave: octave
-  !
+!
   delay1
     ^Delay1 in: self
-  !
+!
   delay2
     ^Delay2 in: self
-  !
+!
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   delayL: maxdelaytime value: delaytime
     ^DelayL in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   demand: reset value: demandUGens
     ^Demand trig: self reset: reset demandUGens: demandUGens
-  !
+!
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
-  !
+!
   fold: lo value: hi
     ^Fold in: self lo: lo hi: hi
-  !
+!
   formlet: freq value: attacktime value: decaytime
     ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
-  !
+!
   fos: a0 value: a1 value: b1
     ^FOS in: self a0: a0 a1: a1 b1: b1
-  !
+!
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
-  !
+!
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
-  !
+!
   gate: trig
     ^Gate in: self trig: trig
-  !
+!
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
-  !
+!
   hasher
     ^Hasher in: self
-  !
+!
   hpf: freq
     ^HPF in: self freq: freq
-  !
+!
   hpz1
     ^HPZ1 in: self
-  !
+!
   hpz2
     ^HPZ2 in: self
-  !
+!
   index: bufnum
     ^Index bufnum: bufnum in: self
-  !
+!
   indexInBetween: bufnum
     ^IndexInBetween bufnum: bufnum in: self
-  !
+!
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
-  !
+!
   integrator: coef
     ^Integrator in: self coef: coef
-  !
+!
   klank: freqscale value: freqoffset value: decayscale value: specificationsArrayRef
     ^Klank input: self freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
-  !
+!
   lpf: freq
     ^LPF in: self freq: freq
-  !
+!
   lag: lagTime
     ^Lag in: self lagTime: lagTime
-  !
+!
   lagUD: lagTimeU value: lagTimeD
     ^LagUD in: self lagTimeU: lagTimeU lagTimeD: lagTimeD
-  !
+!
   lag2: lagTime
     ^Lag2 in: self lagTime: lagTime
-  !
+!
   lag3: lagTime
     ^Lag3 in: self lagTime: lagTime
-  !
+!
   lag3UD: lagTimeU value: lagTimeD
     ^Lag3UD in: self lagTimeU: lagTimeU lagTimeD: lagTimeD
-  !
+!
   latch: trig
     ^Latch in: self trig: trig
-  !
+!
   leakDC: coef
     ^LeakDC in: self coef: coef
-  !
+!
   limiter: level value: dur
     ^Limiter in: self level: level dur: dur
-  !
+!
   linExp: srclo value: srchi value: dstlo value: dsthi
     ^LinExp in: self srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
-  !
+!
   linPan2: pos value: level
     ^LinPan2 in: self pos: pos level: level
-  !
+!
   linXFade2: inB value: pan
     ^LinXFade2 inA: self inB: inB pan: pan
-  !
+!
   localOut
     ^LocalOut channelsArray: self
-  !
+!
   lpz1
     ^LPZ1 in: self
-  !
+!
   lpz2
     ^LPZ2 in: self
-  !
+!
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
-  !
+!
   median: length
     ^Median length: length in: self
-  !
+!
   modDif: y value: mod
     ^ModDif x: self y: y mod: mod
-  !
+!
   moogFF: freq value: gain value: reset
     ^MoogFF in: self freq: freq gain: gain reset: reset
-  !
+!
   mulAdd: mul value: add
     ^MulAdd in: self mul: mul add: add
-  !
+!
   normalizer: level value: dur
     ^Normalizer in: self level: level dur: dur
-  !
+!
   onePole: coef
     ^OnePole in: self coef: coef
-  !
+!
   oneZero: coef
     ^OneZero in: self coef: coef
-  !
+!
   out: bus
     ^Out bus: bus channelsArray: self
-  !
+!
   pan2: pos value: level
     ^Pan2 in: self pos: pos level: level
-  !
+!
   panAz: pos value: level value: width value: orientation
     ^PanAz in: self pos: pos level: level width: width orientation: orientation
-  !
+!
   peakFollower: decay
     ^PeakFollower in: self decay: decay
-  !
+!
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
-  !
+!
   pluck: trig value: maxdelaytime value: delaytime value: decaytime value: coef
     ^Pluck in: self trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef
-  !
+!
   pulseCount: reset
     ^PulseCount trig: self reset: reset
-  !
+!
   pulseDivider: div value: start
     ^PulseDivider trig: self div: div start: start
-  !
+!
   rhpf: freq value: rq
     ^RHPF in: self freq: freq rq: rq
-  !
+!
   rlpf: freq value: rq
     ^RLPF in: self freq: freq rq: rq
-  !
+!
   replaceOut: bus
     ^ReplaceOut bus: bus channelsArray: self
-  !
+!
   resonz: freq value: bwr
     ^Resonz in: self freq: freq bwr: bwr
-  !
+!
   ringz: freq value: decaytime
     ^Ringz in: self freq: freq decaytime: decaytime
-  !
+!
   runningMax: trig
     ^RunningMax in: self trig: trig
-  !
+!
   runningSum: numsamp
     ^RunningSum in: self numsamp: numsamp
-  !
+!
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
-  !
+!
   schmidt: lo value: hi
     ^Schmidt in: self lo: lo hi: hi
-  !
+!
   select: array
     ^Select which: self array: array
-  !
+!
   setResetFF: reset
     ^SetResetFF trig: self reset: reset
-  !
+!
   slew: up value: dn
     ^Slew in: self up: up dn: dn
-  !
+!
   slope
     ^Slope in: self
-  !
+!
   sos: a0 value: a1 value: a2 value: b1 value: b2
     ^SOS in: self a0: a0 a1: a1 a2: a2 b1: b1 b2: b2
-  !
+!
   stepper: reset value: min value: max value: step value: resetval
     ^Stepper trig: self reset: reset min: min max: max step: step resetval: resetval
-  !
+!
   sweep: rate
     ^Sweep trig: self rate: rate
-  !
+!
   tExpRand: lo value: hi
     ^TExpRand lo: lo hi: hi trig: self
-  !
+!
   timer
     ^Timer trig: self
-  !
+!
   tiRand: lo value: hi
     ^TIRand lo: lo hi: hi trig: self
-  !
+!
   toggleFF
     ^ToggleFF trig: self
-  !
+!
   tRand: lo value: hi
     ^TRand lo: lo hi: hi trig: self
-  !
+!
   trig: dur
     ^Trig in: self dur: dur
-  !
+!
   trig1: dur
     ^Trig1 in: self dur: dur
-  !
+!
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius
-  !
+!
   twoZero: freq value: radius
     ^TwoZero in: self freq: freq radius: radius
-  !
+!
   vbJonVerb: decay value: damping value: inputbw value: erfl value: tail
     ^VBJonVerb in: self decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail
-  !
+!
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
-  !
+!
   wrapIndex: bufnum
     ^WrapIndex bufnum: bufnum in: self
-  !
+!
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
-  !
+!
   zeroCrossing
     ^ZeroCrossing in: self
-  !
+!
   moogLadder: ffreq value: res
     ^MoogLadder in: self ffreq: ffreq res: res
-  !
+!
   greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
     ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
-  !
+!
   crossoverDistortion: amp value: smooth
     ^CrossoverDistortion in: self amp: amp smooth: smooth
-  !
+!
   rcd: rotate value: reset value: div value: spread value: auto value: len value: down value: gates
     ^RCD clock: self rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates
-  !
+!
   tScramble: inputs
     ^TScramble trigger: self inputs: inputs
-  !
+!
   obxdFilter: cutoff value: resonance value: multimode value: bandpass value: fourpole
     ^ObxdFilter in: self cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole
-  !
+!
   svfHp: freq value: q
     ^SvfHp in: self freq: freq q: q
-  !
+!
 
 !
 !Array methodsFor: 'filtering'!
   allpassC: maxdelaytime value: delaytime value: decaytime
     ^AllpassC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   allpassL: maxdelaytime value: delaytime value: decaytime
     ^AllpassL in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   allpassN: maxdelaytime value: delaytime value: decaytime
     ^AllpassN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   balance2: right value: pos value: level
     ^Balance2 left: self right: right pos: pos level: level
-  !
+!
   bBandPass: freq value: bw
     ^BBandPass in: self freq: freq bw: bw
-  !
+!
   bBandStop: freq value: bw
     ^BBandStop in: self freq: freq bw: bw
-  !
+!
   bLowPass: freq value: rq
     ^BLowPass in: self freq: freq rq: rq
-  !
+!
   bPeakEQ: freq value: rq value: db
     ^BPeakEQ in: self freq: freq rq: rq db: db
-  !
+!
   bpf: freq value: rq
     ^BPF in: self freq: freq rq: rq
-  !
+!
   bpz2
     ^BPZ2 in: self
-  !
+!
   brf: freq value: rq
     ^BRF in: self freq: freq rq: rq
-  !
+!
   brz2
     ^BRZ2 in: self
-  !
+!
   bufWr: bufnum value: phase value: loop
     ^BufWr bufnum: bufnum phase: phase loop: loop inputArray: self
-  !
+!
   clip: lo value: hi
     ^Clip in: self lo: lo hi: hi
-  !
+!
   coinGate: prob
     ^CoinGate prob: prob in: self
-  !
+!
   combC: maxdelaytime value: delaytime value: decaytime
     ^CombC in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   combL: maxdelaytime value: delaytime value: decaytime
     ^CombL in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   combN: maxdelaytime value: delaytime value: decaytime
     ^CombN in: self maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime
-  !
+!
   decay: decayTime
     ^Decay in: self decayTime: decayTime
-  !
+!
   decay2: attackTime value: decayTime
     ^Decay2 in: self attackTime: attackTime decayTime: decayTime
-  !
+!
   degreeToKey: bufnum value: octave
     ^DegreeToKey bufnum: bufnum in: self octave: octave
-  !
+!
   delay1
     ^Delay1 in: self
-  !
+!
   delay2
     ^Delay2 in: self
-  !
+!
   delayC: maxdelaytime value: delaytime
     ^DelayC in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   delayL: maxdelaytime value: delaytime
     ^DelayL in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   delayN: maxdelaytime value: delaytime
     ^DelayN in: self maxdelaytime: maxdelaytime delaytime: delaytime
-  !
+!
   demand: reset value: demandUGens
     ^Demand trig: self reset: reset demandUGens: demandUGens
-  !
+!
   detectSilence: amp value: time value: doneAction
     ^DetectSilence in: self amp: amp time: time doneAction: doneAction
-  !
+!
   fold: lo value: hi
     ^Fold in: self lo: lo hi: hi
-  !
+!
   formlet: freq value: attacktime value: decaytime
     ^Formlet in: self freq: freq attacktime: attacktime decaytime: decaytime
-  !
+!
   fos: a0 value: a1 value: b1
     ^FOS in: self a0: a0 a1: a1 b1: b1
-  !
+!
   freeVerb: mix value: room value: damp
     ^FreeVerb in: self mix: mix room: room damp: damp
-  !
+!
   freeVerb2: in2 value: mix value: room value: damp
     ^FreeVerb2 in: self in2: in2 mix: mix room: room damp: damp
-  !
+!
   gate: trig
     ^Gate in: self trig: trig
-  !
+!
   gVerb: roomsize value: revtime value: damping value: inputbw value: spread value: drylevel value: earlyreflevel value: taillevel value: maxroomsize
     ^GVerb in: self roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize
-  !
+!
   hasher
     ^Hasher in: self
-  !
+!
   hpf: freq
     ^HPF in: self freq: freq
-  !
+!
   hpz1
     ^HPZ1 in: self
-  !
+!
   hpz2
     ^HPZ2 in: self
-  !
+!
   index: bufnum
     ^Index bufnum: bufnum in: self
-  !
+!
   indexInBetween: bufnum
     ^IndexInBetween bufnum: bufnum in: self
-  !
+!
   inRange: lo value: hi
     ^InRange in: self lo: lo hi: hi
-  !
+!
   integrator: coef
     ^Integrator in: self coef: coef
-  !
+!
   klank: freqscale value: freqoffset value: decayscale value: specificationsArrayRef
     ^Klank input: self freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef
-  !
+!
   lpf: freq
     ^LPF in: self freq: freq
-  !
+!
   lag: lagTime
     ^Lag in: self lagTime: lagTime
-  !
+!
   lagUD: lagTimeU value: lagTimeD
     ^LagUD in: self lagTimeU: lagTimeU lagTimeD: lagTimeD
-  !
+!
   lag2: lagTime
     ^Lag2 in: self lagTime: lagTime
-  !
+!
   lag3: lagTime
     ^Lag3 in: self lagTime: lagTime
-  !
+!
   lag3UD: lagTimeU value: lagTimeD
     ^Lag3UD in: self lagTimeU: lagTimeU lagTimeD: lagTimeD
-  !
+!
   latch: trig
     ^Latch in: self trig: trig
-  !
+!
   leakDC: coef
     ^LeakDC in: self coef: coef
-  !
+!
   limiter: level value: dur
     ^Limiter in: self level: level dur: dur
-  !
+!
   linExp: srclo value: srchi value: dstlo value: dsthi
     ^LinExp in: self srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi
-  !
+!
   linPan2: pos value: level
     ^LinPan2 in: self pos: pos level: level
-  !
+!
   linXFade2: inB value: pan
     ^LinXFade2 inA: self inB: inB pan: pan
-  !
+!
   localOut
     ^LocalOut channelsArray: self
-  !
+!
   lpz1
     ^LPZ1 in: self
-  !
+!
   lpz2
     ^LPZ2 in: self
-  !
+!
   mantissaMask: bits
     ^MantissaMask in: self bits: bits
-  !
+!
   median: length
     ^Median length: length in: self
-  !
+!
   modDif: y value: mod
     ^ModDif x: self y: y mod: mod
-  !
+!
   moogFF: freq value: gain value: reset
     ^MoogFF in: self freq: freq gain: gain reset: reset
-  !
+!
   mulAdd: mul value: add
     ^MulAdd in: self mul: mul add: add
-  !
+!
   normalizer: level value: dur
     ^Normalizer in: self level: level dur: dur
-  !
+!
   onePole: coef
     ^OnePole in: self coef: coef
-  !
+!
   oneZero: coef
     ^OneZero in: self coef: coef
-  !
+!
   out: bus
     ^Out bus: bus channelsArray: self
-  !
+!
   pan2: pos value: level
     ^Pan2 in: self pos: pos level: level
-  !
+!
   panAz: pos value: level value: width value: orientation
     ^PanAz in: self pos: pos level: level width: width orientation: orientation
-  !
+!
   peakFollower: decay
     ^PeakFollower in: self decay: decay
-  !
+!
   pitchShift: windowSize value: pitchRatio value: pitchDispersion value: timeDispersion
     ^PitchShift in: self windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion
-  !
+!
   pluck: trig value: maxdelaytime value: delaytime value: decaytime value: coef
     ^Pluck in: self trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef
-  !
+!
   pulseCount: reset
     ^PulseCount trig: self reset: reset
-  !
+!
   pulseDivider: div value: start
     ^PulseDivider trig: self div: div start: start
-  !
+!
   rhpf: freq value: rq
     ^RHPF in: self freq: freq rq: rq
-  !
+!
   rlpf: freq value: rq
     ^RLPF in: self freq: freq rq: rq
-  !
+!
   replaceOut: bus
     ^ReplaceOut bus: bus channelsArray: self
-  !
+!
   resonz: freq value: bwr
     ^Resonz in: self freq: freq bwr: bwr
-  !
+!
   ringz: freq value: decaytime
     ^Ringz in: self freq: freq decaytime: decaytime
-  !
+!
   runningMax: trig
     ^RunningMax in: self trig: trig
-  !
+!
   runningSum: numsamp
     ^RunningSum in: self numsamp: numsamp
-  !
+!
   rotate2: y value: pos
     ^Rotate2 x: self y: y pos: pos
-  !
+!
   schmidt: lo value: hi
     ^Schmidt in: self lo: lo hi: hi
-  !
+!
   select: array
     ^Select which: self array: array
-  !
+!
   setResetFF: reset
     ^SetResetFF trig: self reset: reset
-  !
+!
   slew: up value: dn
     ^Slew in: self up: up dn: dn
-  !
+!
   slope
     ^Slope in: self
-  !
+!
   sos: a0 value: a1 value: a2 value: b1 value: b2
     ^SOS in: self a0: a0 a1: a1 a2: a2 b1: b1 b2: b2
-  !
+!
   stepper: reset value: min value: max value: step value: resetval
     ^Stepper trig: self reset: reset min: min max: max step: step resetval: resetval
-  !
+!
   sweep: rate
     ^Sweep trig: self rate: rate
-  !
+!
   tExpRand: lo value: hi
     ^TExpRand lo: lo hi: hi trig: self
-  !
+!
   timer
     ^Timer trig: self
-  !
+!
   tiRand: lo value: hi
     ^TIRand lo: lo hi: hi trig: self
-  !
+!
   toggleFF
     ^ToggleFF trig: self
-  !
+!
   tRand: lo value: hi
     ^TRand lo: lo hi: hi trig: self
-  !
+!
   trig: dur
     ^Trig in: self dur: dur
-  !
+!
   trig1: dur
     ^Trig1 in: self dur: dur
-  !
+!
   twoPole: freq value: radius
     ^TwoPole in: self freq: freq radius: radius
-  !
+!
   twoZero: freq value: radius
     ^TwoZero in: self freq: freq radius: radius
-  !
+!
   vbJonVerb: decay value: damping value: inputbw value: erfl value: tail
     ^VBJonVerb in: self decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail
-  !
+!
   wrap: lo value: hi
     ^Wrap in: self lo: lo hi: hi
-  !
+!
   wrapIndex: bufnum
     ^WrapIndex bufnum: bufnum in: self
-  !
+!
   xFade2: inB value: pan value: level
     ^XFade2 inA: self inB: inB pan: pan level: level
-  !
+!
   zeroCrossing
     ^ZeroCrossing in: self
-  !
+!
   moogLadder: ffreq value: res
     ^MoogLadder in: self ffreq: ffreq res: res
-  !
+!
   greyholeRaw: in2 value: damping value: delaytime value: diffusion value: feedback value: moddepth value: modfreq value: size
     ^GreyholeRaw in1: self in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size
-  !
+!
   crossoverDistortion: amp value: smooth
     ^CrossoverDistortion in: self amp: amp smooth: smooth
-  !
+!
   rcd: rotate value: reset value: div value: spread value: auto value: len value: down value: gates
     ^RCD clock: self rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates
-  !
+!
   tScramble: inputs
     ^TScramble trigger: self inputs: inputs
-  !
+!
   obxdFilter: cutoff value: resonance value: multimode value: bandpass value: fourpole
     ^ObxdFilter in: self cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole
-  !
+!
   svfHp: freq value: q
     ^SvfHp in: self freq: freq q: q
-  !
+!
 
 !
 !AbstractUgen methodsFor: 'filtering'!

@@ -1,4 +1,3 @@
-
 Object subclass: #Sc3
   instanceVariableNames: ''
   classVariableNames: ''

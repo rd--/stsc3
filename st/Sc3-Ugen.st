@@ -1,68 +1,61 @@
 AbstractUgen subclass: #Ugen
-  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId'
+  instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId paramValues mceValues'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'
 !
 
 Ugen comment: 'Unit Generator.
-ugenId is assigned during graph serialisation since identityHash is not unique.
+Objects have identity, however identityHash is not unique.
+The approach here is to assigned ugenId during graph serialisation, alternately the Id could be assigned using a counter at initialization.
 All Ugens have mul: and add: methods but there are no variables associated with these.
 '!
 
-!Ugen methodsFor: 'initialising'!
-ugenName: p1 paramNames: p2 mceNames: p3 numChan: p4 ugenRate: p5 specialIndex: p6 ugenId: p7
-    ugenName := p1.
-    paramNames := p2.
-    mceNames := p3.
-    numChan := p4.
-    ugenRate := p5.
-    specialIndex := p6.
-    ugenId := p7.
-!
-!
-
-!Ugen methodsFor: 'accessing'!
-  mceNames ^mceNames!
-  mceNames: x mceNames := x!
-  numChan ^numChan!
-  numChan: x numChan := x!
-  paramNames ^paramNames!
-  paramNames: x paramNames := x!
-  specialIndex ^specialIndex!
-  specialIndex: x specialIndex := x!
-  ugenName ^ugenName!
-  ugenName: x ugenName := x!
-  ugenRate ^ugenRate!
-  ugenRate: x ugenRate := x!
-  ugenId ^ugenId!
-  ugenId: x ugenId := x!
+ !Ugen methodsFor: 'accessing'!
+ugenName ^ugenName!
+ugenName: ugenNameValue ugenName := ugenNameValue!
+paramNames ^paramNames!
+paramNames: paramNamesValue paramNames := paramNamesValue!
+mceNames ^mceNames!
+mceNames: mceNamesValue mceNames := mceNamesValue!
+numChan ^numChan!
+numChan: numChanValue numChan := numChanValue!
+ugenRate ^ugenRate!
+ugenRate: ugenRateValue ugenRate := ugenRateValue!
+specialIndex ^specialIndex!
+specialIndex: specialIndexValue specialIndex := specialIndexValue!
+ugenId ^ugenId!
+ugenId: ugenIdValue ugenId := ugenIdValue!
+paramValues ^paramValues!
+paramValues: paramValuesValue paramValues := paramValuesValue!
+mceValues ^mceValues!
+mceValues: mceValuesValue mceValues := mceValuesValue!
 !
 
 !Ugen methodsFor: 'collecting'!
-  addToUgenSet: c
+addToUgenSet: aSet
     | addFunc |
-    addFunc := [ :x | (self perform: x) addToUgenSet: c ].
-    c add: self.
-    paramNames do: addFunc.
-    mceNames do: addFunc.
-  !
+    addFunc := [ :item | item addToUgenSet: aSet ].
+    aSet add: self.
+    paramValues do: addFunc.
+    mceValues do: addFunc.
+!
 !
 
 !Ugen methodsFor: 'arithmetic'!
-  mul: x
+mul: x
      "((p mul: q) mul: r) is (p * q * r) not (p * r)."
       ^x = 1 ifTrue: [ self ] ifFalse: [ self * x ]
-  !
-  add: x
+!
+add: x
      "((p add: q) add: r) is (p + q + r) not (p + r)."
       ^x = 0 ifTrue: [ self ] ifFalse: [ self + x ]
-  !
-  mul: mul add: add
+!
+mul: mul add: add
     ^(self mul: mul) add: add
-  !
-  mulAdd: mul value: add
-    ".stc alias for mul:add:"
+!
+mulAdd: mul value: add
+    "Alias for mul:add:.  (For .stc)"
     ^self mul: mul add: add
-  !
+!
 !

@@ -19,21 +19,18 @@ f0Tw1395878538297892865
 "Envelope"
 
 EnvSpec new curveNameDictionary "curve name dictionary"
-(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) coordinateArrayForEnvGen = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
+(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) asArray = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
 
 "Ugen"
 
 SinOsc new inspect "initialize sets default values for parameters"
 SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
-SinOsc new freq: 440 ; phase: 0 "freq: and phase: are instance methods and ; is the cascade operator"
 SinOsc primaryFactoryMethod = #freq:phase: "objects may indicate a primary factory method"
 SinOsc apply: #(220 0.5) "perform:withArguments: at the primary factory method, in C-Smalltalk notation SinOsc(220, 0.5) translates to this"
 PinkNoise primaryFactoryMethod = #new "the primary factory method may be new"
 PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc perform: #freq:phase: withArguments: #(220 1)
 SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
-WhiteNoise new hPZ1 pan2: 0 level: 0.05
-WhiteNoise new pan2: (SinOsc freq: 0.1 phase: 0) level: 0.05
 
 "Klank"
 
@@ -284,6 +281,10 @@ $c class = Character                          "=> true"
 1 perform: #class withArguments: #() "=> SmallInteger"
 1 perform: #class withArguments: #() inSuperclass: SmallInteger "=> SmallInteger"
 1 perform: #class withArguments: #() inSuperclass: Integer "=> SmallInteger"
+
+"Time"
+
+Time millisecondClockValue
 
 "Morph"
 

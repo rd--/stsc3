@@ -26,13 +26,6 @@ paramNameFromIndex: index
     index <= (n + m) ifTrue: [^self mceNames at: index - n].
     ^#(#mul #add) at: index - n - m
 !
-setParamsFromOrderedDictionary: d
-    "Set Ugen parameters from an array of either ugen inputs or (name,input) associations."
-    d withIndexDo: [:e :i |
-      (e class = Association)
-        ifTrue: [self perform: e key with: e value]
-        ifFalse: [self instVarNamed: (self paramNameFromIndex: i) put: e]]
-!
 !
 
 !AbstractUgen methodsFor: 'converting'!

@@ -15,4 +15,4 @@ f := [ :e |
 "---- ; coordinates"
 | e |
 e := EnvASR attackTime: 0.01 sustainLevel: 1 releaseTime: 1 curve: -4.
-e asEnvSpec coord = #(0 2 1 -99 1 0.01 5 -4 0 1 5 -4)
+e asArray = #(0 2 1 -99 1 0.01 5 -4 0 1 5 -4)

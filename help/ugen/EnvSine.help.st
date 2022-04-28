@@ -12,4 +12,4 @@ SinOsc freq: (TRand lo: 220 hi: #(330 440) trig: tr) phase: 0 mul: e
 "---- ; coordinates"
 | e |
 e := EnvSine dur: 3 level: 1
-e asEnvSpec coord = #(0 2 -99 -99 1 1.5 5 3 0 1.5 5 3)
+e asArray = #(0 2 -99 -99 1 1.5 5 3 0 1.5 5 3)

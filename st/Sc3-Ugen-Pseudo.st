@@ -8,7 +8,7 @@
 !
 
 AbstractUgen subclass: #Splay
-  instanceVariableNames: 'input spread level center levelComp'
+  instanceVariableNames: 'paramValues'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'
@@ -16,108 +16,95 @@ AbstractUgen subclass: #Splay
 
 Splay comment: 'Pan a set of channels across the stereo field.'!
 
-!Splay methodsFor: 'collecting'!
-  addToUgenSet: c
-    input addToUgenSet: c.
-    spread addToUgenSet: c.
-    level addToUgenSet: c.
-    center addToUgenSet: c
-  !
+!Splay methodsFor: 'accessing'!
+paramValues ^paramValues!
+paramValues: paramValuesValue ^ paramValues := paramValuesValue!
 !
 
-!Splay methodsFor: 'accessing'!
-  center ^center!
-  center: x center := x!
-  input ^input!
-  input: x input := x!
-  level ^level!
-  level: x level := x!
-  levelComp ^levelComp!
-  levelComp: x levelComp := x!
-  spread ^spread!
-  spread: x spread := x!
+!Splay methodsFor: 'collecting'!
+addToUgenSet: aSet
+    paramValues do: [ :item | item addToUgenSet: aSet ]
+!
 !
 
 !Splay class methodsFor: 'instance creation'!
-  input: input spread: spread level: level center: center levelComp: levelComp
+input: input spread: spread level: level center: center levelComp: levelComp
     | u |
     u := self new.
-    u input: input.
-    u spread: spread.
-    u level: level.
-    u center: center.
-    u levelComp: levelComp.
+    u paramValues: {input. spread. level. center. levelComp}.
     ^u
-  !
-  primaryFactoryMethod
+!
+primaryFactoryMethod
     ^#input:spread:level:center:levelComp:
-  !
-  input: input spread: spread level: level center: center
+!
+input: input spread: spread level: level center: center
     ^Splay input: input spread: spread level: level center: center levelComp: true
-  !
-  input: input level: level
+!
+input: input level: level
     ^Splay input: input spread: 1 level: level center: 0 levelComp: true
-  !
-  input: input
+!
+input: input
     ^Splay input: input spread: 1 level: 1 center: 0 levelComp: true
-  !
+!
 !
 
 Ugen subclass: #Splay2 instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Sound-Sc3'!
 Splay2 comment: 'Pan an array of channels across the stereo field.'!
 !Splay2 class methodsFor: 'instance creation'!
-  inArray: inArray
+inArray: inArray
     ^Splay input: inArray spread: 1 level: 1 center: 0 levelComp: true
-  !
-  primaryFactoryMethod ^#inArray:!
+!
+primaryFactoryMethod
+    ^#inArray:
+!
 !
 
 !AbstractUgen methodsFor: 'panning'!
-  splay2
+splay2
     ^Splay2 inArray: self
-  !
+!
 !
 
 !Array methodsFor: 'panning'!
-  splay2
+splay2
     ^Splay2 inArray: self
-  !
+!
 !
 
 !AbstractUgen methodsFor: 'arithmetic'!
-  inExpRangeFrom: x to: y
+inExpRangeFrom: x to: y
     "LinExp with input range of (-1,1)"
     ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y
-  !
-  inRangeFrom: x to: y
+!
+inRangeFrom: x to: y
     "LinLin with input range of (-1,1)"
     | m a |
     m := (y - x) / 2.
     a := x + m.
     ^self * m + a.
-  !
-  exprange: anAssoc
+!
+exprange: anAssoc
     "inExpRangeFrom:to: from Association"
     ^self inExpRangeFrom: anAssoc key to: anAssoc value
-  !
-  range: anAssoc
+!
+range: anAssoc
     "inRangeFrom:to: from Association"
     ^self inRangeFrom: anAssoc key to: anAssoc value
-  !
-  exprange: lo value: hi
+!
+exprange: lo value: hi
     ".stc exprange"
     ^self inExpRangeFrom: lo to: hi
-  !
-  range: lo value: hi
+!
+range: lo value: hi
     ".stc range"
     ^self inRangeFrom: lo to: hi
-  !
+!
 !
 
 !SequenceableCollection methodsFor: 'Ugen creation'!
-  asLocalBuf
+asLocalBuf
     ^LocalBuf newFrom: self
-  !
+!
 !
 
 AbstractUgen subclass: #TLine

@@ -1,4 +1,4 @@
-"PinkNoise"
+"PinkNoise ; decorrelated"
 2 mceFill: [ PinkNoise mul: 0.05 ]
 
 "PinkNoise"

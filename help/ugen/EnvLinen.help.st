@@ -12,4 +12,4 @@ SinOsc freq: (TRand lo: 110 hi: #(330 440) trig: tr) phase: 0 mul: (e asEnvGen: 
 "---- ; coordinates"
 | e |
 e := EnvLinen attackTime: 0.4 sustainTime: 2 releaseTime: 0.4 level: 0.1 curve: #lin.
-e asEnvSpec coord = #(0 3 -99 -99 0.1 0.4 1 0 0.1 2 1 0 0 0.4 1 0)
+e asArray = #(0 3 -99 -99 0.1 0.4 1 0 0.1 2 1 0 0 0.4 1 0)

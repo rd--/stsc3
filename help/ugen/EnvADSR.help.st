@@ -8,7 +8,7 @@ SinOsc freq: 440 phase: 0 mul: (e asEnvGen: g withDoneAction: 2) kr
 | g e |
 g := MouseButton minval: 0 maxval: 1 lag: 0.2.
 e := EnvADSR attackTime: 0.75 decayTime: 1.75 sustainLevel: 0.35 releaseTime: 3.25 peakLevel: 1 curve: -4.
-SinOsc freq: 440 phase: 0 mul: (EnvGen gate: g levelScale: 0.1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: e asEnvSpec coord)
+SinOsc freq: 440 phase: 0 mul: (EnvGen gate: g levelScale: 0.1 levelBias: 0 timeScale: 1 doneAction: 0 envelope: e asArray)
 
 "ADSR ; event control"
 | f |
@@ -21,4 +21,4 @@ f := [ :e |
 "---- ; coordinates"
 | e |
 e := EnvADSR attackTime: 0.01 decayTime: 0.25 sustainLevel: 0.15 releaseTime: 0.75 peakLevel: 1 curve: -4.
-e asEnvSpec coord = #(0 3 2 -99 1 0.01 5 -4 0.15 0.25 5 -4 0 0.75 5 -4)
+e asArray = #(0 3 2 -99 1 0.01 5 -4 0.15 0.25 5 -4 0 0.75 5 -4)
