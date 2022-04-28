@@ -79,6 +79,7 @@ asArray
     "Convenience"
     ^self coordinateArrayForEnvGen
 !
+!
 
 !EnvSpec methodsFor: 'envelope generator'!
 asEnvGen: g withDoneAction: d
