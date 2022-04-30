@@ -290,7 +290,9 @@ Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString         // Mon Apr 12 14:57:
 Dictionary.superclass == Set                                // dictionaries are sets
 d = Dictionary.new(4)                                       // new empty dictionary
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
-d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence
+d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence of adjacent key value pairs
+d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations
+d == Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])       // new Dictionary from collection of associations
 d.associationsDo({ arg x; x.postln })                       // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
