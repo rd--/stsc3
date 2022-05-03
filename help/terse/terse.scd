@@ -291,8 +291,7 @@ Dictionary.superclass == Set                                // dictionaries are 
 d = Dictionary.new(4)                                       // new empty dictionary
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence of adjacent key value pairs
-d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations
-d == Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])       // new Dictionary from collection of associations
+d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations ; c.f. Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])
 d.associationsDo({ arg x; x.postln })                       // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
@@ -642,9 +641,9 @@ x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutab
 
 'Tilde Syntax'
 
-h = { ~i * ~j }                                             // ~i is syntax for 'i'.envirGet, multiply i and j
-~i = ~j = 3                                                 // ~i = ... is syntax for 'i'.envirPut(...)
+'i'.envirPut('j'.envirPut(3))                               // ~i = ... is syntax for 'i'.envirPut(...)
+'i'.envirGet * 'j'.envirGet                                 // ~i is syntax for 'i'.envirGet
 
 'Setter Syntax'
 
-Point.new.x = 9                                             // p.x = y is syntax for p.x_(y)
+Point.new.x_(9)                                             // p.x = y is syntax for p.x_(y)

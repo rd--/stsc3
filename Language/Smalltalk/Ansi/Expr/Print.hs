@@ -186,14 +186,19 @@ jsRenamerFromTable tbl nm = fromMaybe nm (lookup nm tbl)
 {- | Checks that the arity agrees (which should be correct by construction)
      and that all subsequent keyword parts are "value".
 
+"at:put:" is currently handled specially because in .stc "p[q] = r" is syntax for "p.at(q, put:r)".
+There could also be a more general rewrite rule, so that "at:put:" was returned as "atPut",
+or there could be a rewrite table with entries of the form ("at:put:", "put").
+
 > zipWith3 stcSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+> stcSelectorJsForm "at:put:" False 2 == "put"
 -}
 stcSelectorJsForm :: String -> Bool -> Int -> String
 stcSelectorJsForm sel isBinOp arity =
-  let parts = stcSelectorParts sel isBinOp arity
+  let parts = stcSelectorParts sel isBinOp arity -- performs arity check
   in if isBinOp || all (== "value") (tail parts)
      then head parts
-     else error ("stcSelectorJsForm: " ++ sel)
+     else if sel == "at:put:" then "put" else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =
