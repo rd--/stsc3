@@ -53,19 +53,25 @@ type FileOut = [FileOutSegment]
 -- | FileOut entries recognised.
 data FileOutEntry =
     FileOutClassDeclaration St.Identifier St.Identifier St.Indexable [St.Identifier] [St.Identifier] [St.Identifier] String
-  -- ^ superclass, class, subclass kind, [instance variable], [class variable], [pool dictionary], category
+  -- ^ superclass, class, subclass kind, [instance variable], [class variable], [pool dictionary], class category
   | FileOutClassComment St.Identifier String
   -- ^ class, comment
   | FileOutClassInitializer St.Identifier
   -- ^ class
-  | FileOutMethodsFor St.Identifier Bool [St.MethodDefinition]
-  -- ^ class, classmethods?, [methods]
+  | FileOutMethodsFor St.Identifier Bool String [St.MethodDefinition]
+  -- ^ class, classmethods?, category, [methods]
   deriving (Eq, Show)
 
 isFileOutClassDeclaration :: FileOutEntry -> Bool
 isFileOutClassDeclaration e =
   case e of
     FileOutClassDeclaration {} -> True
+    _ -> False
+
+isFileOutMethodsForClass :: St.Identifier -> FileOutEntry -> Bool
+isFileOutMethodsForClass className e =
+  case e of
+    FileOutMethodsFor className' _ _ _ -> className == className'
     _ -> False
 
 {- | All entries are related to a class.  Retrieves class name.
@@ -77,7 +83,7 @@ fileOutEntryClass e =
     FileOutClassDeclaration _ x _ _ _ _ _ -> x
     FileOutClassComment x _ -> x
     FileOutClassInitializer x -> x
-    FileOutMethodsFor x _ _ -> x
+    FileOutMethodsFor x _ _ _ -> x
 
 {- | The set of all classes that have entries.
      This includes classes that have method definitions but no declarations.
@@ -94,7 +100,7 @@ fileOutEntryClassesExtended :: [FileOutEntry] -> [St.Identifier]
 fileOutEntryClassesExtended l =
   let def = fileOutEntryClassesDefined l
       ent = fileOutEntryClassSet l
-  in ent \\ def
+  in sort (ent \\ def)
 
 -- | Type string of entry, for pretty printing.
 fileOutEntryType :: FileOutEntry -> String
@@ -103,16 +109,16 @@ fileOutEntryType e =
     FileOutClassDeclaration {} -> "ClassDeclaration"
     FileOutClassComment {} -> "ClassComment"
     FileOutClassInitializer {} -> "ClassInitializer"
-    FileOutMethodsFor _ c _ -> (if c then "Class" else "Instance") ++ "MethodsFor"
+    FileOutMethodsFor _ isClass _ _ -> (if isClass then "Class" else "Instance") ++ "MethodsFor"
 
 -- | Method definitions of entry, or error if not a MethodsFor entry.
 fileOutEntryMethodDefinitions :: FileOutEntry -> [St.MethodDefinition]
 fileOutEntryMethodDefinitions e =
   case e of
-    FileOutMethodsFor _ _ m -> m
+    FileOutMethodsFor _ _ _ m -> m
     _ -> error "fileOutEntryMethodDefinitions"
 
--- | (ClassDeclaration,ClassComment,[ClassMethodsFor],[InstanceMethodsFor])
+-- | (ClassDeclaration, ClassComment, ClassInitializer?, [ClassMethodsFor], [InstanceMethodsFor])
 type FileOutClassDef = (FileOutEntry,FileOutEntry,Maybe FileOutEntry,[FileOutEntry],[FileOutEntry])
 
 {- | Derive FileOutClassDef for named class.
@@ -134,6 +140,18 @@ fileOutEntryClassDef e x =
 
 fileOutEntryClassDefOrError :: [FileOutEntry] -> St.Identifier -> FileOutClassDef
 fileOutEntryClassDefOrError e = fromMaybe (error "fileOutEntryClassDef: not class definition") . fileOutEntryClassDef e
+
+-- | Select all of the class and instance method entries for the named class.
+fileOutEntryClassMethodEntries :: [FileOutEntry] -> St.Identifier -> [FileOutEntry]
+fileOutEntryClassMethodEntries e x =
+  let r = filter ((== x) . fileOutEntryClass) e
+      cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
+      im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
+  in cm ++ im
+
+-- | Select all of the class and instance method definitions for the named class.
+fileOutEntryClassMethods :: [FileOutEntry] -> St.Identifier -> [St.MethodDefinition]
+fileOutEntryClassMethods e = concatMap fileOutEntryMethodDefinitions . fileOutEntryClassMethodEntries e
 
 -- | Translate FileOutClassDef to Ansi ClassDefinition.
 fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
@@ -161,16 +179,27 @@ fileOutEntryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutE
 
 -- * Class definition printer
 
-fileOutMethodDefinitionsFor :: Bool -> St.ClassDefinition -> String -> String
-fileOutMethodDefinitionsFor isClassMethod cl cat =
-  let mth = filter (\m -> St.methodCategoryRequired m == cat) (if isClassMethod then St.classMethods cl else St.instanceMethods cl)
-  in unlines
-     [printf "!%s%s methodsFor: '%s'!" (St.className cl) (if isClassMethod then " class" else "") cat
-     ,unlines (map (\m -> St.methodDefinition_pp m ++ "!") mth) ++ "!"]
+fileOutMethodDefinitionsForEntry :: FileOutEntry -> String
+fileOutMethodDefinitionsForEntry s =
+  case s of
+    FileOutMethodsFor className isClassMethod category methodList ->
+      let selectedMethods = filter (\m -> St.methodCategoryRequired m == category) methodList
+      in unlines
+         [printf "!%s%s methodsFor: '%s'!" className (if isClassMethod then " class" else "") category
+         ,unlines (map (\method -> St.methodDefinition_pp method ++ "!") selectedMethods) ++ "!"]
+    _ -> error "fileOutMethodDefinitionsForSection"
 
-fileOutClassComment :: St.ClassDefinition -> String
-fileOutClassComment cl = printf "%s comment: '%s'!\n" (St.className cl) (St.quoteQuote (fromMaybe "" (St.classComment cl)))
+-- | Print the methodsFor: section of a FileOut for the class or instance methods for the named category.
+fileOutMethodDefinitionsFor :: Bool -> St.ClassDefinition -> St.MethodCategory -> String
+fileOutMethodDefinitionsFor isClassMethod classDef category =
+  fileOutMethodDefinitionsForEntry
+  (FileOutMethodsFor
+   (St.className classDef)
+    isClassMethod
+    category
+    (if isClassMethod then St.classMethods classDef else St.instanceMethods classDef))
 
+-- | Print the fileout class instantiation section for a class definition.
 fileOutClassInstantiation :: St.ClassDefinition -> String
 fileOutClassInstantiation cl =
   unlines
@@ -179,6 +208,10 @@ fileOutClassInstantiation cl =
   ,printf "  classVariableNames: '%s'" (unwords (St.classVariableNames cl))
   ,printf "  poolDictionaries: '%s'" (unwords (St.importedPoolNames cl))
   ,printf "  category: '%s'!" (fromMaybe "" (St.classCategory cl))]
+
+-- | Print the fileout comment: for a class definition.
+fileOutClassComment :: St.ClassDefinition -> String
+fileOutClassComment cl = printf "%s comment: '%s'!" (St.className cl) (St.quoteQuote (fromMaybe "" (St.classComment cl)))
 
 {- | This is printed if the class has a class initialize method.
      Although the FileOut parser reads the initialize instruction it's presence is not stored at the class definition.
@@ -196,6 +229,14 @@ fileOutClassDefinition cl =
      ,unlines (map (fileOutMethodDefinitionsFor False cl) im)
      ,unlines (map (fileOutMethodDefinitionsFor True cl) cm)
      ,fileOutClassInitializer cl]
+
+-- * Class extensions printer
+
+fileOutClassMethodExtensions :: St.Identifier -> [FileOutEntry] -> String
+fileOutClassMethodExtensions className =
+  unlines .
+  map fileOutMethodDefinitionsForEntry .
+  filter (isFileOutMethodsForClass className)
 
 -- * Parser
 
@@ -431,9 +472,9 @@ readerSegmentMethodDefinitions fo =
     FileOutReaderSegment r c ->
       case readerWords r of
         classname:"methodsFor:":category:[] ->
-          Just (FileOutMethodsFor classname False (map (parseMethodsForMethod False classname category) c))
+          Just (FileOutMethodsFor classname False category (map (parseMethodsForMethod False classname category) c))
         classname:"class":"methodsFor:":category:[] ->
-          Just (FileOutMethodsFor classname True (map (parseMethodsForMethod True classname category) c))
+          Just (FileOutMethodsFor classname True category (map (parseMethodsForMethod True classname category) c))
         _ -> Nothing
     _ -> Nothing
 

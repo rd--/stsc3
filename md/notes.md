@@ -1,5 +1,8 @@
 # Remainder
 
+- Psuedo Ugens
+  + class PsuedoUgen, subclass of AbstractUgen
+  + autogen all definitions from primary factory method (write these in .stc, it is part of before-pim)
 - Sc
   + allow self for this
   + dictionary expressions at Ast
