@@ -11,12 +11,11 @@ Object subclass: #SfCache
 SfCache comment: 'Cache associating named sound files with allocated buffers at a synthesis server.'!
 
 !SfCache methodsFor: 'naming'!
-  sfDictionary
+sfDictionary
     ^Dictionary newFrom: {
         'crotale-d6' -> '/home/rohan/sw/jssc3/flac/crotale-d6.flac'.
         'harp-a4' -> '/home/rohan/sw/jssc3/flac/harp-a4.flac'.
         'piano-c5' -> '/home/rohan/sw/jssc3/flac/piano-c5.flac'.
         'floating_1' -> '/home/rohan/sw/jssc3/flac/floating_1.flac'.
         'then' -> '/home/rohan/sw/jssc3/flac/then.flac' }
-  !
-!
+!!

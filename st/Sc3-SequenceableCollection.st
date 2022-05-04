@@ -41,25 +41,21 @@ clump: groupSize
       start := end + 1
     ].
     ^answer
-!
-!
+!!
 
 !SequenceableCollection methodsFor: 'indexing'!
 nth: index
     "Alias for at:. For .stc, since at: in Sc is zero-indexed."
     ^self at: index
-!
-!
+!!
 
 !SequenceableCollection methodsFor: 'arithmetic'!
 +~ other
     "Like + but cycles shorter collection"
     ^self withExtending: other collect: [:i :j| i + j]
-!
-!
+!!
 
 !SequenceableCollection methodsFor: 'multiple root graphs'!
 mrg: rhs
     ^Mrg lhs: self rhs: rhs
-!
-!
+!!

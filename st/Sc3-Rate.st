@@ -8,32 +8,25 @@ AbstractUgen subclass: #Rate
 Rate comment: 'Ugen Processing Rate'!
 
 !Rate methodsFor: 'collecting'!
-addToUgenSet: c
-    source addToUgenSet: c
-!
-!
+addToUgenSet: aSet
+    source addToUgenSet: aSet
+!!
 
 !Rate methodsFor: 'accessing'!
 rate
     ^rate
 !
-rate: x
-    rate := x
+rate: aSymbol
+    rate := aSymbol
 !
 source
     ^source
 !
-source: x
-    source := x
-!
-!
+source: aUgen
+    source := aUgen
+!!
 
 !Rate class methodsFor: 'instance creation'!
-source: p1 rate: p2
-    | r |
-    r := self new.
-    r source: p1.
-    r rate: p2.
-    ^r
-!
-!
+source: aUgen rate: aSymbol
+    ^self new source: aUgen; rate: aSymbol; yourself
+!!

@@ -7,11 +7,10 @@ Object subclass: #ScPrimitive
 
 ScPrimitive comment: 'SuperCollider primitive, i.e. a unit generator.'!
 
-!ScPrimitive methodsFor: 'Syndef'!
-  inputRate
+!ScPrimitive methodsFor: 'Sc Syndef'!
+inputRate
       ^ugenRate
-  !
-!
+!!
 
 Object subclass: #ScPort
   instanceVariableNames: 'primitive index'
@@ -23,17 +22,14 @@ Object subclass: #ScPort
 ScPort comment: 'Output port for multiple-channel ScPrimitive.'!
 
 !ScPort methodsFor: 'Syndef'!
-  inputRate
-      ^primitive inputRate
-  !
-!
+inputRate
+    ^primitive inputRate
+!!
 
 !Number methodsFor: 'Syndef'!
-  inputRate
-      ^#ir
-  !
-!
-
+inputRate
+    ^#ir
+!!
 
 "
 

@@ -1,4 +1,3 @@
-
 AbstractUgen subclass: #Mix
   instanceVariableNames: 'source'
   classVariableNames: ''
@@ -9,19 +8,22 @@ AbstractUgen subclass: #Mix
 Mix comment: 'Ugen Mixer'!
 
 !Mix methodsFor: 'collecting'!
-  addToUgenSet: c
-    source addToUgenSet: c
-  !
-!
+addToUgenSet: aSet
+    source addToUgenSet: aSet
+!!
 
 !Mix methodsFor: 'accessing'!
-  source ^source!
-  source: x source := x!
+source
+    ^source
 !
+source: aSignal
+    source := aSignal
+!!
 
 !Mix class methodsFor: 'instance creation'!
-  source: x
-    ^self new source: x
-  !
-  primaryFactoryMethod ^#source:!
+source: aSignal
+    ^self new source: aSignal
 !
+primaryFactoryMethod
+    ^#source:
+!!

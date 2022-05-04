@@ -6,8 +6,7 @@ iota
 from: start by: step
     "Array of myself places from start by step."
     ^(start to: self - 1 * step + start by: step) asArray
-!
-!
+!!
 
 !Number methodsFor: 'arithmetic'!
 midiCps
@@ -20,7 +19,7 @@ cpsMidi
  !
 dbAmp
     "Decibels to linear amplitude"
-     ^10 raisedTo: (self * 0.05)
+    ^10 raisedTo: (self * 0.05)
 !
 ampDb
     "Linear amplitude to decibels"
@@ -33,23 +32,19 @@ ampDb
 linExpFrom: lo to: hi
     "Myself (I am in range 0.0 to 1.0) mapped to the indicated range following an exponential curve."
     ^lo * ((hi / lo) ln * self) exp
-!
-!
+!!
 
 !Number methodsFor: 'collecting'!
-addToUgenSet: collection
+addToUgenSet: aSet
     ^nil
-!
-!
+!!
 
 !Number methodsFor: 'Ugen constants'!
 asUgen
     ^Constant k: self
-!
-!
+!!
 
 !Number methodsFor: 'enumerating'!
 mceFill: aBlock
     ^(self arrayFill: aBlock) asUgen
-!
-!
+!!

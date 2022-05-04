@@ -13,5 +13,4 @@ nextId
     "
     IdCounter isNil ifTrue: [ IdCounter := 0 ] ifFalse: [ IdCounter := IdCounter + 1 ].
     ^IdCounter
-!
-!
+!!

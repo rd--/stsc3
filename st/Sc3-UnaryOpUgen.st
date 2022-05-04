@@ -4,7 +4,6 @@ Ugen subclass: #UnaryOpUgen
   poolDictionaries: ''
   category: 'Sound-Sc3'
 !
-
 UnaryOpUgen comment: 'Unary Operators'!
 
 !UnaryOpUgen methodsFor: 'initialization'!
@@ -18,12 +17,10 @@ specialIndex: p1 a: p2
     ugenId :=nil.
     paramValues :={p2}.
     mceValues :={}.
-!
-!
+!!
 
 !UnaryOpUgen class methodsFor: 'instance creation'!
 specialIndex: p1 a: p2
     "Create unary operator Ugen"
     ^self new specialIndex: p1 a: p2
-!
-!
+!!

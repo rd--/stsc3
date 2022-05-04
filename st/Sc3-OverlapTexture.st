@@ -18,5 +18,4 @@ graphFunc: graphFunc sustainTime: sustainTime transitionTime: transitionTime ove
 !
 primaryFactoryMethod
     ^#graphFunc:sustainTime:transitionTime:overlap:
-!
-!
+!!

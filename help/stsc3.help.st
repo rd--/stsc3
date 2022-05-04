@@ -32,6 +32,10 @@ PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc perform: #freq:phase: withArguments: #(220 1)
 SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
 
+"Rate"
+
+(Rate source: (SinOsc freq: 440 phase: 0) rate: #kr) inspect
+
 "Klank"
 
 (KlankSpec freq: #(220 330 440) amp: nil time: nil) = #(220 1 1 330 1 1 440 1 1)
