@@ -20,12 +20,15 @@ It assumes that stream is a sequence of chunks ending with an empty chunk.
 -}
 module Language.Smalltalk.FileOut where
 
+import Data.Either {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
+import Text.Printf {- base -}
 
 import qualified Text.Parsec as P {- parsec -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
 -- * Types
 
@@ -49,13 +52,21 @@ type FileOut = [FileOutSegment]
 
 -- | FileOut entries recognised.
 data FileOutEntry =
-    FileOutClassDeclaration St.Identifier St.Identifier [String] [String] String
-  -- ^ (superclass,class,instance variables,class variables,category)
+    FileOutClassDeclaration St.Identifier St.Identifier St.Indexable [St.Identifier] [St.Identifier] [St.Identifier] String
+  -- ^ superclass, class, subclass kind, [instance variable], [class variable], [pool dictionary], category
   | FileOutClassComment St.Identifier String
-  -- ^ (class,comment)
+  -- ^ class, comment
+  | FileOutClassInitializer St.Identifier
+  -- ^ class
   | FileOutMethodsFor St.Identifier Bool [St.MethodDefinition]
-  -- ^ (class,classmethods?,[methods])
+  -- ^ class, classmethods?, [methods]
   deriving (Eq, Show)
+
+isFileOutClassDeclaration :: FileOutEntry -> Bool
+isFileOutClassDeclaration e =
+  case e of
+    FileOutClassDeclaration {} -> True
+    _ -> False
 
 {- | All entries are related to a class.  Retrieves class name.
      For class declarations this is the class being declared, not the super class.
@@ -63,22 +74,35 @@ data FileOutEntry =
 fileOutEntryClass :: FileOutEntry -> St.Identifier
 fileOutEntryClass e =
   case e of
-    FileOutClassDeclaration _ x _ _ _ -> x
+    FileOutClassDeclaration _ x _ _ _ _ _ -> x
     FileOutClassComment x _ -> x
+    FileOutClassInitializer x -> x
     FileOutMethodsFor x _ _ -> x
 
-{- | The set of classes that have entries.
+{- | The set of all classes that have entries.
      This includes classes that have method definitions but no declarations.
 -}
 fileOutEntryClassSet :: [FileOutEntry] -> [St.Identifier]
-fileOutEntryClassSet = nub . map fileOutEntryClass
+fileOutEntryClassSet = nub . sort . map fileOutEntryClass
 
--- | Category of entry.
+-- | The set of classes that are defined (declared).
+fileOutEntryClassesDefined :: [FileOutEntry] -> [St.Identifier]
+fileOutEntryClassesDefined = nub . sort . map fileOutEntryClass . filter isFileOutClassDeclaration
+
+-- | The set of classes that are extended (have method definitions but are not declared).
+fileOutEntryClassesExtended :: [FileOutEntry] -> [St.Identifier]
+fileOutEntryClassesExtended l =
+  let def = fileOutEntryClassesDefined l
+      ent = fileOutEntryClassSet l
+  in ent \\ def
+
+-- | Type string of entry, for pretty printing.
 fileOutEntryType :: FileOutEntry -> String
 fileOutEntryType e =
   case e of
-    FileOutClassDeclaration _ _ _ _ _ -> "ClassDeclaration"
-    FileOutClassComment _ _ -> "ClassComment"
+    FileOutClassDeclaration {} -> "ClassDeclaration"
+    FileOutClassComment {} -> "ClassComment"
+    FileOutClassInitializer {} -> "ClassInitializer"
     FileOutMethodsFor _ c _ -> (if c then "Class" else "Instance") ++ "MethodsFor"
 
 -- | Method definitions of entry, or error if not a MethodsFor entry.
@@ -89,7 +113,7 @@ fileOutEntryMethodDefinitions e =
     _ -> error "fileOutEntryMethodDefinitions"
 
 -- | (ClassDeclaration,ClassComment,[ClassMethodsFor],[InstanceMethodsFor])
-type FileOutClassDef = (FileOutEntry,FileOutEntry,[FileOutEntry],[FileOutEntry])
+type FileOutClassDef = (FileOutEntry,FileOutEntry,Maybe FileOutEntry,[FileOutEntry],[FileOutEntry])
 
 {- | Derive FileOutClassDef for named class.
      Requires that there is a ClassDeclaration.
@@ -100,11 +124,12 @@ fileOutEntryClassDef e x =
   let r = filter ((== x) . fileOutEntryClass) e
       cd = filter ((== "ClassDeclaration") . fileOutEntryType) r
       cc = filter ((== "ClassComment") . fileOutEntryType) r
+      ci = filter ((== "ClassInitializer") . fileOutEntryType) r
       cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
       im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
-  in case (cd,cc) of
-       ([cd1],[]) -> Just (cd1,FileOutClassComment x "No comment",cm,im)
-       ([cd1],[cc1]) -> Just (cd1,cc1,cm,im)
+      unlist l = if length l == 1 then Just (head l) else Nothing
+  in case (unlist cd) of
+       Just cd1 -> Just (cd1,fromMaybe (FileOutClassComment x "No comment") (unlist cc), unlist ci,cm,im)
        _ -> Nothing
 
 fileOutEntryClassDefOrError :: [FileOutEntry] -> St.Identifier -> FileOutClassDef
@@ -112,16 +137,16 @@ fileOutEntryClassDefOrError e = fromMaybe (error "fileOutEntryClassDef: not clas
 
 -- | Translate FileOutClassDef to Ansi ClassDefinition.
 fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
-fileOutClassDefToClassDefinition (cd,cc,cm,im) =
-  let FileOutClassDeclaration superclassName className instanceVariables classVariables category = cd
+fileOutClassDefToClassDefinition (cd,cc,_ci,cm,im) =
+  let FileOutClassDeclaration superclassName className indexable instanceVariables classVariables poolDictionaries category = cd
       FileOutClassComment _className comment = cc
-      importedPoolNames = []
+      importedPoolNames = poolDictionaries
       instanceMethods = concatMap fileOutEntryMethodDefinitions im
       classMethods = concatMap fileOutEntryMethodDefinitions cm
   in St.ClassDefinition
      className
      (Just superclassName)
-     St.noInstanceState
+     (St.InstanceState indexable []) -- ?
      instanceVariables
      classVariables
      importedPoolNames
@@ -133,6 +158,44 @@ fileOutClassDefToClassDefinition (cd,cc,cm,im) =
 
 fileOutEntryClassDefinition :: [FileOutEntry] -> St.Identifier -> Maybe St.ClassDefinition
 fileOutEntryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutEntryClassDef e
+
+-- * Class definition printer
+
+fileOutMethodDefinitionsFor :: Bool -> St.ClassDefinition -> String -> String
+fileOutMethodDefinitionsFor isClassMethod cl cat =
+  let mth = filter (\m -> St.methodCategoryRequired m == cat) (if isClassMethod then St.classMethods cl else St.instanceMethods cl)
+  in unlines
+     [printf "!%s %s methodsFor: '%s'!" (St.className cl) (if isClassMethod then "class" else "") cat
+     ,unlines (map (\m -> St.methodDefinition_pp m ++ "!") mth) ++ "!"]
+
+fileOutClassComment :: St.ClassDefinition -> String
+fileOutClassComment cl = printf "%s comment: '%s'!\n" (St.className cl) (fromMaybe "" (St.classComment cl))
+
+fileOutClassInstantiation :: St.ClassDefinition -> String
+fileOutClassInstantiation cl =
+  unlines
+  [printf "%s %s #%s" (fromMaybe "Object" (St.superclassName cl)) (St.instanceStateToSubclassKind (St.instanceState cl)) (St.className cl)
+  ,printf "  instanceVariableNames: '%s'" (unwords (St.classInstanceVariableNames cl))
+  ,printf "  classVariableNames: '%s'" (unwords (St.classVariableNames cl))
+  ,printf "  poolDictionaries: '%s'" (unwords (St.importedPoolNames cl))
+  ,printf "  category: '%s'!" (fromMaybe "" (St.classCategory cl))]
+
+{- | This is printed if the class has a class initialize method.
+     Although the FileOut parser reads the initialize instruction it's presence is not stored at the class definition.
+-}
+fileOutClassInitializer :: St.ClassDefinition -> String
+fileOutClassInitializer cl = if St.classHasClassInitializer cl then printf "%s initialize!" (St.className cl) else ""
+
+fileOutClassDefinition :: St.ClassDefinition -> String
+fileOutClassDefinition cl =
+  let im = St.classInstanceMethodCategories cl
+      cm = St.classClassMethodCategories cl
+  in unlines
+     [fileOutClassInstantiation cl
+     ,fileOutClassComment cl
+     ,unlines (map (fileOutMethodDefinitionsFor False cl) im)
+     ,unlines (map (fileOutMethodDefinitionsFor True cl) cm)
+     ,fileOutClassInitializer cl]
 
 -- * Parser
 
@@ -186,12 +249,16 @@ nonEmptyChunk =
    (P.many1 allowedChunkChar St.>>~ chunkDelimiter))
 
 -- | A sequence of one or more non empty chunks followed by an empty chunk.
+nonEmptyChunkSequence :: St.P [Chunk]
+nonEmptyChunkSequence = P.many1 (P.try nonEmptyChunk) St.>>~ emptyChunk
+
+-- | A sequence of one or more non empty chunks followed by an empty chunk.
 chunkSequence :: St.P [Chunk]
-chunkSequence = P.many1 (P.try nonEmptyChunk) St.>>~ emptyChunk
+chunkSequence = P.many (P.try nonEmptyChunk) St.>>~ emptyChunk
 
 {- | A Reader.
 
-> St.stParse reader "!reader method: argument!"
+> St.stParse reader "!reader methodsFor: 'a category'!"
 -}
 reader :: St.P Reader
 reader = P.char '!' >> nonEmptyChunk
@@ -205,22 +272,34 @@ reader = P.char '!' >> nonEmptyChunk
 fileOutEvalSegment :: St.P FileOutSegment
 fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
 
+{- | The reader segments allowed consiste of identifiers, keywords and literal strings.
+
+> St.stParse readerQuotedWords "reader methodsFor: 'a category'"
+-}
+readerQuotedWords :: St.P [String]
+readerQuotedWords = P.many1 (P.choice [P.try St.quotedString, P.try St.keyword, St.identifier])
+
+-- | Run readerQuotedWords parser.
+readerWords :: String -> [String]
+readerWords = St.stParse readerQuotedWords
+
 {- | Parser for Reader segment.  Does not delete leading spaces.
 
 > p = St.stParse fileOutReaderSegment
-> p "!reader methodsFor: arg! chunk! !"
-> p "!reader class methodsFor: arg! chunk! !"
-> p "!reader commentStamp: arg! chunk!"
-> p "!p! q! !"
-> p "!Z z! c! !"
+> p "!reader methodsFor: 'a category'! chunk! !"
+> p "!reader class methodsFor: 'a category'! chunk! !"
+> p "!reader class methodsFor: 'a category'! !" -- allow empty methods sequence
+> p "!reader commentStamp: 'a comment'! chunk!"
+> p "!p! q! !" -- fail on p
+> p "!Z z! c! !" -- fail on Z
 -}
 fileOutReaderSegment :: St.P FileOutSegment
 fileOutReaderSegment = do
   r <- reader
-  s <- case words r of
-         _:"commentStamp:":_ -> fmap return nonEmptyChunk
-         _:"class":"methodsFor:":_ -> chunkSequence
-         _:"methodsFor:":_ -> chunkSequence
+  s <- case readerWords r of
+         _:"commentStamp:":_:[] -> fmap return nonEmptyChunk
+         _:"class":"methodsFor:":_:[] -> chunkSequence
+         _:"methodsFor:":_:[] -> chunkSequence
          _ -> P.unexpected ("fileOutReaderSegment: " ++ r)
   return (FileOutReaderSegment r s)
 
@@ -229,8 +308,8 @@ fileOutReaderSegment = do
 > p = St.stParse fileOutSegment
 > p "'A string chunk!!'!" == FileOutEvalSegment "'A string chunk!'"
 > p "\"A comment chunk!!\"!" == FileOutEvalSegment "\"A comment chunk!\""
-> p "!reader methodsFor: arg! chunk one!!! chunk two!!! !"
-> p "!p ! q ! !" -- fail
+> p "!reader methodsFor: 'a category'! chunk one!!! chunk two!!! !" -- quoted !
+> p "!p ! q ! !" -- fail on p
 -}
 fileOutSegment :: St.P FileOutSegment
 fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
@@ -239,15 +318,20 @@ fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
 
 > p = St.stParse fileOut
 > p "x! y! !"
-> p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'! !"
-> p "!p ! q ! ! x ! !"
-> p "x ! y ! !p ! q ! ! z ! !"
-> p "X x!\nY y!\n!Z z! c! !"
+> p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'!"
+> p "!C methodsFor: 'some category name text'!\naUnaryMethod ^nil! !"
+> p "!p ! q ! ! x ! !" -- fail on p
+> p "x ! y ! !p ! q ! ! z ! !" -- fail on p
+> p "X x!\nY y!\n!Z z! c! !" -- fail on Z
 -}
 fileOut :: St.P FileOut
 fileOut = P.many1 (P.try fileOutSegment) St.>>~ P.optional emptyChunk
 
--- | Run fileOut parser.
+{- | Run fileOut parser.
+
+> f0:_ = parseFileOut "File subclass: #AltoFile\n\tinstanceVariableNames: 'writeTime pageAddresses leader '\n\tclassVariableNames: ''\n\tpoolDictionaries: 'AltoFilePool '\n\tcategory: 'Files-Xerox Alto'!"
+> segmentBasicExpression f0
+-}
 parseFileOut :: String -> FileOut
 parseFileOut = St.stParse fileOut
 
@@ -269,6 +353,12 @@ loadFileOut = fmap parseFileOut . readFile
 
 -- * Reader
 
+segmentBasicExpression :: FileOutSegment -> Maybe St.BasicExpression
+segmentBasicExpression fo =
+  case fo of
+    FileOutEvalSegment txt -> Just (St.stParseInitial St.basicExpression txt)
+    _ -> Nothing
+
 evalSegmentClassDeclaration :: FileOutSegment -> Maybe FileOutEntry
 evalSegmentClassDeclaration fo =
   case fo of
@@ -283,12 +373,12 @@ parseFileOutClassDeclaration e =
       (St.PrimaryIdentifier sp)
       (Just (St.MessagesKeyword
               (St.KeywordMessage
-                [("subclass:",St.KeywordArgument (St.PrimaryLiteral (St.SelectorLiteral (St.UnarySelector cl))) Nothing Nothing)
+                [(subclassKind,St.KeywordArgument (St.PrimaryLiteral (St.SelectorLiteral (St.UnarySelector cl))) Nothing Nothing)
                 ,("instanceVariableNames:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral ivar)) Nothing Nothing)
                 ,("classVariableNames:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral cvar)) Nothing Nothing)
-                ,("poolDictionaries:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral "")) Nothing Nothing)
+                ,("poolDictionaries:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral pd)) Nothing Nothing)
                 ,("category:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral cat)) Nothing Nothing)]))) Nothing ->
-      Just (FileOutClassDeclaration sp cl (words ivar) (words cvar) cat)
+      Just (FileOutClassDeclaration sp cl (St.subclassKindToIndexable subclassKind) (words ivar) (words cvar) (words pd) cat)
     _ -> Nothing
 
 evalSegmentClassComment :: FileOutSegment -> Maybe FileOutEntry
@@ -309,22 +399,40 @@ parseFileOutClassComment e =
       Just (FileOutClassComment cl comment)
     _ -> Nothing
 
+evalSegmentClassInitializer :: FileOutSegment -> Maybe FileOutEntry
+evalSegmentClassInitializer fo =
+  case fo of
+    FileOutEvalSegment txt -> parseFileOutClassInitializer (St.stParseInitial St.basicExpression txt)
+    _ -> Nothing
+
+-- | Parse a class initialize message send.
+parseFileOutClassInitializer :: St.BasicExpression -> Maybe FileOutEntry
+parseFileOutClassInitializer e =
+  case e of
+    St.BasicExpression
+      (St.PrimaryIdentifier cl)
+      (Just (St.MessagesUnary [St.UnaryMessage "initialize"] Nothing Nothing))
+      Nothing -> Just (FileOutClassInitializer cl)
+    _ -> Nothing
+
 parseMethodsForMethod :: Bool -> St.Identifier -> St.MethodCategory -> String -> St.MethodDefinition
 parseMethodsForMethod isClassMethod classname category txt =
-  (St.stParse (St.methodDefinition (classname ++ if isClassMethod then " class" else "")) txt)
-  {St.methodCategory = Just (St.unquoteQuotedString category)}
+  (St.stParse (St.methodDefinition (Just txt) (classname ++ if isClassMethod then " class" else "")) txt)
+  {St.methodCategory = Just category}
 
 {- | Parse a methodsFor: message send.
      The receiver is either the name of a class, the class of such.
+
+> readerSegmentMethodDefinitions (St.stParse fileOutSegment "!C methodsFor: 'the category text'!\nm ^nil! !")
 -}
 readerSegmentMethodDefinitions :: FileOutSegment -> Maybe FileOutEntry
 readerSegmentMethodDefinitions fo =
   case fo of
     FileOutReaderSegment r c ->
-      case words r of
-        classname:"methodsFor:":category:_ ->
+      case readerWords r of
+        classname:"methodsFor:":category:[] ->
           Just (FileOutMethodsFor classname False (map (parseMethodsForMethod False classname category) c))
-        classname:"class":"methodsFor:":category:_ ->
+        classname:"class":"methodsFor:":category:[] ->
           Just (FileOutMethodsFor classname True (map (parseMethodsForMethod True classname category) c))
         _ -> Nothing
     _ -> Nothing
@@ -337,12 +445,16 @@ trySequence sq x =
                Nothing -> trySequence sq' x
                Just r -> Just r
 
-evalFileOutSegment :: FileOutSegment -> Maybe FileOutEntry
-evalFileOutSegment =
+evalFileOutSegmentMaybe :: FileOutSegment -> Maybe FileOutEntry
+evalFileOutSegmentMaybe =
   trySequence
   [evalSegmentClassDeclaration
   ,evalSegmentClassComment
+  ,evalSegmentClassInitializer
   ,readerSegmentMethodDefinitions]
+
+evalFileOutSegment :: FileOutSegment -> Either FileOutEntry FileOutSegment
+evalFileOutSegment s = maybe (Right s) Left (evalFileOutSegmentMaybe s)
 
 -- | Predicate to decide if a segment is a comment.
 isComment :: FileOutSegment -> Bool
@@ -358,27 +470,11 @@ isString fo =
     FileOutEvalSegment txt -> head txt == '\'' && last txt == '\''
     _ -> False
 
-evalFileOut :: FileOut -> [Maybe FileOutEntry]
+evalFileOut :: FileOut -> [Either FileOutEntry FileOutSegment]
 evalFileOut = map evalFileOutSegment . filter (\x -> not (isComment x || isString x))
 
 evalFileOutSubset :: FileOut -> [FileOutEntry]
-evalFileOutSubset = mapMaybe evalFileOutSegment
+evalFileOutSubset = lefts . evalFileOut
 
 evalFileOutOrError :: FileOut -> [FileOutEntry]
-evalFileOutOrError = map (fromMaybe (error "evalFileOut: parse failed")) . evalFileOut
-
-{-
-
-load fn = loadFileOut ("/home/rohan/sw/stsc3/st/" ++ fn)
-nms = words "Base Core Env Event Haskell Math Random UGen-Pseudo UI"
-x <- mapM (\nm -> load ("SC3-" ++ nm ++ ".st")) nms
-e = concatMap evalFileOutOrError x
-length e
-
-c = fileOutEntryClassSet e
-length c
-
-wr = mapM_ (putStrLn . unlines. Language.Smalltalk.Ansi.Query.classDefinitionSummary) . fileOutEntryClassDefinition e
-mapM_ wr c
-
--}
+evalFileOutOrError = map (either id (\e -> error (show ("evalFileOut: parse failed: ", e)))) . evalFileOut

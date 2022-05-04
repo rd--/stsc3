@@ -10,7 +10,7 @@ reset
 playHelpGraphFile: graphFile
     "Play help file."
     Sc3 playFile: (Sc3 stsc3HelpGraphFile: graphFile).
-!!
+! !
 
 !Sc3 class methodsFor: 'environment'!
 stsc3Directory
@@ -24,7 +24,7 @@ stsc3File: fileName
 stsc3HelpGraphFile: graphFileName
     "Absolute file name of name given relative to the help graph directory of stsc3."
     ^Sc3 stsc3File: 'help/graph/' , graphFileName
-!!
+! !
 
 !Sc3 class methodsFor: 'c-smalltalk'!
 stcFileToSt: fileName
@@ -60,4 +60,4 @@ playFile: fileName
 drawFile: fileName
     "Draw expression loaded from named file, which may be either an .st or .stc file."
     (Sc3 evalStOrStcFile: fileName) draw
-!!
+! !

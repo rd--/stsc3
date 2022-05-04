@@ -2,8 +2,7 @@ Ugen subclass: #BinaryOpUgen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-Sc3'
-!
+  category: 'Sound-Sc3'!
 
 BinaryOpUgen comment: 'Binary Operators'!
 
@@ -17,13 +16,9 @@ specialIndex: p1 a: p2 b: p3
     specialIndex := p1.
     ugenId := nil.
     paramValues := {p2. p3}.
-    mceValues := {}.
-!
-!
+    mceValues := {}! !
 
 !BinaryOpUgen class methodsFor: 'instance creation'!
 specialIndex: specialIndex a: a b: b
     "Create binary operator Ugen"
-    ^self new specialIndex: specialIndex a: a b: b.
-!
-!
+    ^self new specialIndex: specialIndex a: a b: b! !

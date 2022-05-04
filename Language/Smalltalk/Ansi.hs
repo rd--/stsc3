@@ -18,6 +18,7 @@ module Language.Smalltalk.Ansi where
 
 import Data.Char {- base -}
 import Data.Functor.Identity {- base -}
+import Data.List {- base -}
 
 import qualified Data.List.Split as Split {- split -}
 
@@ -124,9 +125,26 @@ nonEmptyProgramElement =
 
 -- * 3.3.2 Class Definition
 
-data Indexable = ByteIndexable | ObjectIndexable | NonIndexable deriving (Eq,Show)
+data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable deriving (Eq,Show)
 
 data InstanceState = InstanceState Indexable [Identifier] deriving (Eq,Show)
+
+-- | Table relating subclass kind identifiers to Indexable values.
+subclassKindTable :: [(Identifier, Indexable)]
+subclassKindTable =
+  [("subclass:", NonIndexable)
+  ,("variableSubclass:", ObjectIndexable)
+  ,("variableByteSubclass:", ByteIndexable)
+  ,("variableWordSubclass:", WordIndexable)]
+
+subclassKindToIndexable :: Identifier -> Indexable
+subclassKindToIndexable = maybe (error "subclassKindToIndexable") id . flip lookup subclassKindTable
+
+indexableToSubclassKind :: Indexable -> Identifier
+indexableToSubclassKind = maybe (error "indexableToSubclassKind") id . flip lookup (map (\(p, q) -> (q, p)) subclassKindTable)
+
+instanceStateToSubclassKind :: InstanceState -> Identifier
+instanceStateToSubclassKind (InstanceState ix _) = indexableToSubclassKind ix
 
 noInstanceState :: InstanceState
 noInstanceState = InstanceState NonIndexable []
@@ -143,8 +161,8 @@ data ClassDefinition =
   ,instanceMethods :: [MethodDefinition]
   ,classMethods :: [MethodDefinition]
   ,classInitializer :: Maybe InitializerDefinition
-  ,classCategory :: Maybe String -- non-Ansi
-  ,classComment :: Maybe String} -- non-Ansi
+  ,classCategory :: Maybe String -- Meta-data
+  ,classComment :: Maybe String} -- Meta-data
   deriving (Eq,Show)
 
 -- | A Metaclass name is the class name with ' class' appended.
@@ -169,6 +187,18 @@ restrictedSelectors =
   ,"and:","or:","=="
   ,"timesRepeat:"
   ,"basicAt:","basicAt:put:","basicSize","basicNew:"]
+
+-- | List of instance method categories in alphabetical order.
+classInstanceMethodCategories :: ClassDefinition -> [String]
+classInstanceMethodCategories = nub . sort . map methodCategoryRequired . instanceMethods
+
+-- | All class method categories in alphabetical order.
+classClassMethodCategories :: ClassDefinition -> [String]
+classClassMethodCategories = nub . sort . map methodCategoryRequired . classMethods
+
+-- | Does the class have a class side "initialize" method?
+classHasClassInitializer :: ClassDefinition -> Bool
+classHasClassInitializer = elem "initialize" . map (selectorIdentifier . patternSelector . methodPattern) . classMethods
 
 -- * 3.3.3 Global Variable Definition
 
@@ -217,7 +247,7 @@ nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 
 -- * 3.4.2
 
--- | Method category (non-Ansi)
+-- | Method category (Meta-data)
 type MethodCategory = String
 
 {- | 3.4.2
@@ -228,6 +258,7 @@ type MethodCategory = String
        - stLanguageDef should not define comment start and end
        - there should be a comment preserving lexeme form, lexemeWithMaybeComment
        - methodPattern should be such a lexeme
+     There is a field for storing the method source text.
 -}
 data MethodDefinition =
   MethodDefinition
@@ -236,8 +267,20 @@ data MethodDefinition =
   ,methodPattern :: Pattern
   ,methodTemporaries :: Maybe Temporaries
   ,methodStatements :: Maybe Statements
-  ,methodComment :: Maybe String}
+  ,methodComment :: Maybe String
+  ,methodSource :: Maybe String}
   deriving (Eq,Show)
+
+-- | The default method category.  This applies both to methods without any category and to methods with an empty category string.
+methodDefaultCategory :: String
+methodDefaultCategory = "as yet unclassified"
+
+-- | Method category or the default.
+methodCategoryRequired :: MethodDefinition -> String
+methodCategoryRequired m =
+  case methodCategory m of
+    Nothing -> methodDefaultCategory
+    Just cat -> if null cat then methodDefaultCategory else cat
 
 {- | Does MethodDefinition end with a Return (local).
      Note this does not look to see if the method includes any non-local returns.
@@ -263,13 +306,13 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
 -}
-methodDefinition :: Identifier -> P MethodDefinition
-methodDefinition cl = do
+methodDefinition :: Maybe String -> Identifier -> P MethodDefinition
+methodDefinition src cl = do
   p <- messagePattern -- messagePattern is a token and consumes trailing comments
   c <- P.optionMaybe comment -- this is always Nothing
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (MethodDefinition cl Nothing p t s c)
+  return (MethodDefinition cl Nothing p t s c src)
 
 data Pattern
   = UnaryPattern Identifier
@@ -464,6 +507,7 @@ initializerDefinitionSetComment c (InitializerDefinition _ t s) = InitializerDef
 > p "[:a| |t|]" == p "[ :a | | t | ]"
 > p "[:a| |t u| x . y]"
 > p "[:a| |t u| t := [:b| |v w| z] . x . y]"
+> p "[:ignored]"
 -}
 blockConstructor :: P BlockBody
 blockConstructor = inBrackets blockBody
@@ -497,6 +541,7 @@ blockBodyEndsWithReturn = maybe False statementsEndsWithReturn . blockStatements
 > p "1"
 > p ":a| a + 1"
 > p ":a| |b| b := a + 1. ^b"
+> p ":ignored"
 -}
 blockBody :: P BlockBody
 blockBody = do
@@ -675,7 +720,7 @@ basicExpressionToPrimary e =
 > p "w * ((x + y) z)"
 > p "w * (x + y) z"
 > p "Transcript\n \"...\" show: 'hello ';\n show: 'world';\n cr."
-> p "Point new setX: 25 setY: 35; isZero"
+> p "Point new x: 25 y: 35; isZero"
 > p "self ifNil:" -- error
 -}
 basicExpression :: P BasicExpression
@@ -991,6 +1036,9 @@ selectorLiteral = fmap SelectorLiteral quotedSelector
 hashOpenParen :: P String
 hashOpenParen = lexeme (P.string "#(")
 
+openParen :: P Char
+openParen = lexeme (P.char '(')
+
 closeParen :: P Char
 closeParen = lexeme (P.char ')')
 
@@ -1003,29 +1051,55 @@ closeParen = lexeme (P.char ')')
 > p "#(1 2.0)"
 > p "#(1 2.0 3)"
 > p "#(1 2.0 true)"
-> p "#(1 #(2 3) 4)"
+> p "#(1 #(2 3) 4)" == p "#(1 (2 3) 4)"
+> p "#(x x: nil)" == p "#(#'x' #'x:' nil)"
 -}
 arrayLiteral :: P Literal
 arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
 
+{- | Allow array elements within literal arrays to elide the # at the opening parenthesis.
+      This is the rule in the ST-80 sources.
+      Non-Ansi.
+-}
+interiorArrayLiteral :: P Literal
+interiorArrayLiteral = fmap ArrayLiteral (P.between openParen closeParen (P.many arrayElement))
+
+{- | Allow identifiers (both ordinary and keyword) within literal arrays to elide the #.
+      This is the rule in the ST-80 sources.
+      Non-Ansi.
+
+> map (stParse interiorSymbol) (words "x y:")
+-}
+interiorSymbol :: P Literal
+interiorSymbol = fmap SymbolLiteral (P.try keyword P.<|> identifier)
+
 {- | <array element> ::= <literal> | identifier
 
+Ansi:
 If an identifier appears as an <array element> and it is one of the
 reserved identifiers nil, true or false the value of the corresponding
 element of the collection is the value of that reserved
 identifier. The meaning is undefined if any other identifier is used
 as an <array element>
 
+ST-80:
+The Ansi rule is not the rule from ST-80, where #(x x: nil) means #(#'x' #'y:' nil).
+
 > stParse arrayElement "1"
 > stParse arrayElement "2.0"
 > stParse arrayElement "nil"
+> stParse arrayElement "(1 2.0 nil symbol)"
+> stParse arrayElement "x"
+> stParse arrayElement "x:"
 -}
 arrayElement :: P (Either Literal Identifier)
-arrayElement = fmap Left literal P.<|> fmap Right reservedIdentifier -- lexeme
+arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> interiorArrayLiteral P.<|> interiorSymbol) -- lexeme
 
 -- * 3.4.7 Reserved Identifiers
 
--- | These are the reserved identifiers.
+{- | These are the reserved identifiers.
+     self and super are not of the same kind with regards to unquoted symbols in literal arrays.
+-}
 stReservedIdentifiers :: [String]
 stReservedIdentifiers = words "nil true false self super"
 
@@ -1156,6 +1230,7 @@ assignmentOperator not as an keyword followed by an '='.
 -}
 type Keyword = Identifier
 
+-- | A keyword parser that is not a lexeme.  A keyword selector is a sequence of non-lexeme keywords.
 keywordNotLexeme :: P Keyword
 keywordNotLexeme = do
   cs <- P.label ordinaryIdentifierNonLexeme "keyword"
@@ -1244,9 +1319,11 @@ quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
 -- | String quote character is '
 type QuotedString = String
 
--- | Remove quote characters from QuotedString.
---
--- > unquoteQuotedString "'string'" == "string"
+{- | Remove quote characters from QuotedString.
+
+> unquoteQuotedString "'string'" == "string"
+> unquoteQuotedString "'instance creation'" == "instance creation"
+-}
 unquoteQuotedString :: QuotedString -> String
 unquoteQuotedString x = take (length x - 2) (drop 1 x)
 

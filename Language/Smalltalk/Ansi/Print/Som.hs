@@ -21,7 +21,7 @@ classDefinitionPrintSom cd =
   in unlines (filter (not . null) ln)
 
 methodDefinitionPrintSom :: St.MethodDefinition -> String
-methodDefinitionPrintSom (St.MethodDefinition _ _ pat tmp stm _) =
+methodDefinitionPrintSom (St.MethodDefinition _ _ pat tmp stm _ _) =
   let ln =
         [unwords [St.pattern_pp pat, "=", "("]
         ,maybe "" St.temporaries_pp tmp

@@ -5,8 +5,7 @@ Object subclass: #SfCache
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
-!
+  category: 'Sound-SC3'!
 
 SfCache comment: 'Cache associating named sound files with allocated buffers at a synthesis server.'!
 
@@ -17,5 +16,4 @@ sfDictionary
         'harp-a4' -> '/home/rohan/sw/jssc3/flac/harp-a4.flac'.
         'piano-c5' -> '/home/rohan/sw/jssc3/flac/piano-c5.flac'.
         'floating_1' -> '/home/rohan/sw/jssc3/flac/floating_1.flac'.
-        'then' -> '/home/rohan/sw/jssc3/flac/then.flac' }
-!!
+        'then' -> '/home/rohan/sw/jssc3/flac/then.flac' }! !

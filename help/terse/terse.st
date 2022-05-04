@@ -58,6 +58,9 @@ Float e = 2.718281828459045                                 "exp constant"
 #(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
 x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
+#(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
+#(1 (2 (3 4))) = #(1 #(2 #(3 4)))                           "in st-80 sub-arrays do not require # prefix"
+#(x x: nil) = #(#x #x: nil)                                 "in st-80 symbols do not require #prefix"
 
 'Assignment'
 

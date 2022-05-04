@@ -4,6 +4,4 @@ newFromAssociations: aCollection
     | aDictionary |
     aDictionary := Dictionary new.
     aCollection do: [ :anAssociation | aDictionary add: anAssociation ].
-    ^aDictionary
-!
-!
+    ^aDictionary! !

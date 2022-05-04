@@ -7,8 +7,7 @@ viewImageFile
     w setLabel: self.
     w model: (Model new).
     w addMorph: i frame: (0@0 corner: 1@1).
-    w openInWorldExtent: (i extent + (10@32))
-!!
+    w openInWorldExtent: (i extent + (10@32))! !
 
 !String methodsFor: 'user interface'!
 viewTextFile
@@ -18,27 +17,25 @@ viewTextFile
     w model: (Model new).
     t := PluggableTextMorph on: (self readTextFile) text: #contents accept: #acceptContents: readSelection: nil menu: nil.
     w addMorph: t frame: (0@0 corner: 1@1).
-    w openInWorldExtent: 700@432 "800@494 700@432 600@370 400@248 500@309"
-!!
+    w openInWorldExtent: 700@432 "800@494 700@432 600@370 400@248 500@309"! !
 
 SystemWindow subclass: #Sc3Editor
 instanceVariableNames: 'fileName editor'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-Sc3'
-!
+  category: 'Sound-Sc3'!
+
 Sc3Editor comment: 'Editor for Ugen graph fragments'!
 
 !Sc3Editor methodsFor: 'accessing'!
 fileName ^fileName!
 fileName: x fileName := x!
 editor ^editor!
-editor: x editor := x!!
+editor: x editor := x! !
 
 !Sc3Editor class methodsFor: 'instance creation'!
 openOn: x
-    ^self new fileName: x; createWindow; openInWorld; yourself
-!!
+    ^self new fileName: x; createWindow; openInWorld; yourself! !
 
 !Sc3Editor methodsFor: 'operating'!
 text
@@ -58,8 +55,7 @@ menu: m shifted: i
     m add: 'play (p)' target: self selector: #play.
     m add: 'stop (s)' target: Sc3 selector: #reset.
     m add: 'draw (d)' target: self selector: #draw.
-    ^m
-!!
+    ^m! !
 
 !Sc3Editor methodsFor: 'initialization'!
 createWindow
@@ -68,8 +64,7 @@ createWindow
     t color: Color veryVeryLightGray.
     self editor: t.
     self addMorph: t frame: (0@0 corner: 1@1).
-    self setLabel: 'Sc3 Editor on: ' , self fileName
-!!
+    self setLabel: 'Sc3 Editor on: ' , self fileName! !
 
 SystemWindow subclass: #Sc3Browser
   instanceVariableNames: 'directoryName index'
@@ -77,12 +72,13 @@ SystemWindow subclass: #Sc3Browser
   poolDictionaries: ''
   category: 'Sound-Sc3'
 !
+
 Sc3Browser comment: 'List view on Ugen graph fragments'!
 
 !Sc3Browser methodsFor: 'accessing'!
 directoryName ^directoryName!
 directoryName: x directoryName := x!
-index ^index!!
+index ^index! !
 
 !Sc3Browser methodsFor: 'accessing'!
 index: anInteger
@@ -93,13 +89,11 @@ files
     | st stc |
     st := (directoryName dirAllFilesWithExt: '.st').
     stc := (directoryName dirAllFilesWithExt: '.stc').
-    ^(st , stc) sort
-!!
+    ^(st , stc) sort! !
 
 !Sc3Browser class methodsFor: 'instance creation'!
 openOn: x
-    ^self new index: 0; directoryName: x; createWindow; openInWorld; yourself
-!!
+    ^self new index: 0; directoryName: x; createWindow; openInWorld; yourself! !
 
 !Sc3Browser methodsFor: 'operating'!
 play
@@ -125,8 +119,7 @@ key: k from: i
     k == $p ifTrue: [self play].
     k == $s ifTrue: [Sc3 reset].
     k == $e ifTrue: [self edit].
-    k == $d ifTrue: [self draw]
-!!
+    k == $d ifTrue: [self draw]! !
 
 !Sc3Browser methodsFor: 'initialization'!
 createWindow
@@ -135,5 +128,4 @@ createWindow
     l on: self list: #files selected: #index changeSelected: #index: menu: #menu:shifted: keystroke: #key:from:.
     l color: Color veryVeryLightGray.
     self addMorph: l frame: (0@0 corner: 1@1).
-    self setLabel: 'Sc3 Browser on: ', self directoryName
-!!
+    self setLabel: 'Sc3 Browser on: ', self directoryName! !

@@ -2,30 +2,24 @@ AbstractUgen subclass: #Mrg
   instanceVariableNames: 'lhs rhs'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-Sc3'
-!
+  category: 'Sound-Sc3'!
 
 Mrg comment: 'Multiple Root Graph'!
 
 !Mrg methodsFor: 'collecting'!
 addToUgenSet: aSet
     lhs addToUgenSet: aSet.
-    rhs addToUgenSet: aSet
-!!
+    rhs addToUgenSet: aSet! !
 
 !Mrg methodsFor: 'accessing'!
 lhs
-    ^lhs
-!
+    ^lhs!
 lhs: aSignal
-    lhs := aSignal
-!
+    lhs := aSignal!
 rhs
-    ^rhs
-!
+    ^rhs!
 rhs: aSignal
-    rhs := aSignal
-!!
+    rhs := aSignal! !
 
 !Mrg class methodsFor: 'instance creation'!
 lhs: x rhs: y
@@ -34,8 +28,6 @@ lhs: x rhs: y
     u := self new.
     u lhs: x.
     u rhs: y.
-    ^u
-!
+    ^u!
 primaryFactoryMethod
-    ^#lhs:rhs:
-!!
+    ^#lhs:rhs:! !

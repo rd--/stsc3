@@ -49,14 +49,17 @@ programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 programInitializerDefinition_pp = initializerDefinition_pp
 
 {- | Print method definition.
+     If the method source has been stored return that, else a plain pretty print of the definition.
 
-> let rw = methodDefinition_pp . stParse (methodDefinition "")
+> let rw = methodDefinition_pp . stParse (methodDefinition Nothing "")
 > let src = "midicps ^440 * (2 ** ((self - 69) * (1 / 12)))"
 > rw src == src
 -}
 methodDefinition_pp :: MethodDefinition -> String
-methodDefinition_pp (MethodDefinition _ _ p t s _) =
-  strjn [pattern_pp p,maybe "" temporaries_pp t,maybe "" statements_pp s]
+methodDefinition_pp (MethodDefinition _ _ pat tmp stm _ src) =
+  case src of
+    Just txt -> txt
+    Nothing -> strjn [pattern_pp pat,maybe "" temporaries_pp tmp,maybe "" statements_pp stm]
 
 {- | Print pattern.
 

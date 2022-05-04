@@ -2,34 +2,29 @@ Object subclass: #ScPrimitive
   instanceVariableNames: 'ugenName numChan ugenRate specialIndex ugenId inputValues mrg'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
-!
+  category: 'Sound-SC3'!
 
 ScPrimitive comment: 'SuperCollider primitive, i.e. a unit generator.'!
 
 !ScPrimitive methodsFor: 'Sc Syndef'!
 inputRate
-      ^ugenRate
-!!
+      ^ugenRate! !
 
 Object subclass: #ScPort
   instanceVariableNames: 'primitive index'
   classVariableNames: ''
   poolDictionaries: ''
-  category: 'Sound-SC3'
-!
+  category: 'Sound-SC3'!
 
 ScPort comment: 'Output port for multiple-channel ScPrimitive.'!
 
 !ScPort methodsFor: 'Syndef'!
 inputRate
-    ^primitive inputRate
-!!
+    ^primitive inputRate! !
 
 !Number methodsFor: 'Syndef'!
 inputRate
-    ^#ir
-!!
+    ^#ir! !
 
 "
 

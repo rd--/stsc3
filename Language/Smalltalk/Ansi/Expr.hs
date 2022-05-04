@@ -116,7 +116,7 @@ blockBodyExpr blockBody =
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
 methodDefinitionExpr methodDefinition =
-  let (St.MethodDefinition _ _ pat tmp stm _) = methodDefinition
+  let (St.MethodDefinition _ _ pat tmp stm _ _) = methodDefinition
   in Lambda
      (MethodLambda methodDefinition)
      (St.patternArguments pat)
