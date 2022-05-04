@@ -165,11 +165,11 @@ fileOutMethodDefinitionsFor :: Bool -> St.ClassDefinition -> String -> String
 fileOutMethodDefinitionsFor isClassMethod cl cat =
   let mth = filter (\m -> St.methodCategoryRequired m == cat) (if isClassMethod then St.classMethods cl else St.instanceMethods cl)
   in unlines
-     [printf "!%s %s methodsFor: '%s'!" (St.className cl) (if isClassMethod then "class" else "") cat
+     [printf "!%s%s methodsFor: '%s'!" (St.className cl) (if isClassMethod then " class" else "") cat
      ,unlines (map (\m -> St.methodDefinition_pp m ++ "!") mth) ++ "!"]
 
 fileOutClassComment :: St.ClassDefinition -> String
-fileOutClassComment cl = printf "%s comment: '%s'!\n" (St.className cl) (fromMaybe "" (St.classComment cl))
+fileOutClassComment cl = printf "%s comment: '%s'!\n" (St.className cl) (St.quoteQuote (fromMaybe "" (St.classComment cl)))
 
 fileOutClassInstantiation :: St.ClassDefinition -> String
 fileOutClassInstantiation cl =
