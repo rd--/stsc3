@@ -1,4 +1,4 @@
-AbstractUgen subclass: #ControlIn
+PsuedoUgen subclass: #ControlIn
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

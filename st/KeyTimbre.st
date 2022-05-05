@@ -1,4 +1,4 @@
-AbstractUgen subclass: #KeyTimbre
+PsuedoUgen subclass: #KeyTimbre
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

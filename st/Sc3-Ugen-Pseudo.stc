@@ -1,0 +1,374 @@
+// EnvGen of simplified EnvADSR
+ADSR : PsuedoUgen {
+    *cons {
+        arg gate, attackTime, decayTime, sustainLevel, releaseTime, curve;
+        ^EnvADSR(attackTime, decayTime, sustainLevel, releaseTime, peakLevel, curve).asEnvGen(g)
+    }
+}
+
+// EnvGen of simplified EnvASR
+ASR : PsuedoUgen {
+    *cons {
+        arg gate, attackTime, releaseTime, curve;
+        ^EnvASR(attackTime, sustainLevel, releaseTime, curve).asEnvGen(g)
+    }
+}
+
+// Audio input
+AudioIn : PsuedoUgen {
+    *cons {
+        arg channels;
+        ^In(1, NumOutputBuses() + channels - 1)
+    }
+}
+
+// Allocate a buffer local to the synth
+BufAlloc : PseudoUgen {
+    *cons {
+        arg numChannels, numFrames;
+        ^LocalBuf(numChannels, numFrames)
+    }
+}
+
+// Record signal into a Buffer
+BufRec : PsuedoUgen {
+    *cons {
+        arg bufnum, reset, inputArray;
+        ^RecordBuf(bufnum, 0, 1, 0, 1, 1, reset, 0, inputArray)
+    }
+}
+
+// Continuous controller input
+Cc : PsuedoUgen {
+    *cons {
+        arg index;
+        ^In(1, 11000 + index).kr
+    }
+}
+
+// Triggers when a value changes
+Changed : PsuedoUgen {
+    *cons {
+        arg input, threshold;
+        ^HPZ1(input).abs > threshold
+    }
+}
+
+// Random sequence generator
+Choose : PsuedoUgen {
+    *cons {
+        arg repeats, list;
+        ^Drand(repeats, list)
+    }
+}
+
+// Control input
+ControlIn : PsuedoUgen {
+    *cons {
+        arg numChan, bus;
+        ^In(numChan, bus).kr
+    }
+}
+
+// EnvGen of simple cutoff envelope
+Cutoff : PsuedoUgen {
+    *cons {
+        arg sustainTime, releaseTime, curve;
+        ^EnvSpec(#[1, 1, 0], [sustainTime, releaseTime], curve, nil, nil, 0).asEnvGen
+    }
+}
+
+// Demand with duration input (Duty)
+DmdFor : PsuedoUgen {
+    *cons {
+        arg dur, reset, level;
+        ^Duty(dur, reset, 0, level)
+    }
+}
+
+// Demand with trigger input (Demand)
+DmdOn : PsuedoUgen {
+    *cons {
+        arg trig, reset, demandUGens;
+        ^Demand(trig, reset, demandUGens)
+    }
+}
+
+// Dynamic klank, set of non-fixed resonating filters
+DynKlank : PsuedoUgen {
+    *cons {
+        arg input, freqscale, freqoffset, decayscale, specificationsArrayRef;
+        var gen;
+        gen = {
+            arg ix;
+            var f = specificationsArrayRef.at(ix);
+            var a = specificationsArrayRef.at(ix + 1);
+            var d = specificationsArrayRef.at(ix + 2);
+            Ringz(input, f * freqscale + freqoffset, d * decayscale) * a
+        };
+        ^1.to(specificationsArrayRef.size, by: 3).collect(gen).sum
+    }
+}
+
+// Read signal from a bus with a current or one cycle old timestamp
+InFb : PsuedoUgen {
+    *cons {
+        arg numChan, bus;
+        ^InFeedback(numChan, bus)
+    }
+}
+
+// Key down control input for indicated voice (W)
+KeyDown : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 0)
+    }
+}
+
+// Key pitch control input for indicated voice
+KeyPitch : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 7)
+    }
+}
+
+// Key timbre control input for indicated voice (Y)
+KeyTimbre : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 2)
+    }
+}
+
+// Key velocity control input for indicated voice (Z)
+KeyVelocity : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 3)
+    }
+}
+
+// Map a linear range to a linear range
+LinLin : PsuedoUgen {
+    *cons {
+        arg in, srclo, srchi, dstlo, dsthi;
+        ^(in - srclo) / (srchi - srclo) * (dsthi - dstlo) + dstlo
+    }
+}
+
+// Line Segment Envelope
+LinSeg : PsuedoUgen {
+    *cons {
+        arg gate, coord;
+        var levels = 1.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
+        var times = 2.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
+        ^EnvSpec(levels, times, #['lin']).asEnvGen(gate)
+    }
+}
+
+// Line generator
+Ln : PsuedoUgen {
+    *cons {
+        arg start, end, dur;
+        ^Line(start, end, dur, 0)
+    }
+}
+
+// An oscillator that reads through a table once
+Osc1 : PsuedoUgen {
+    *cons {
+        arg bufnum, dur;
+        var phase = Ln(0, BufFrames(bufnum) - 1, dur);
+        ^BufRd(1, bufnum, phase, 0, 2)
+    }
+}
+
+// Pen angle
+PenAngle : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 4)
+    }
+}
+
+// Pen down (W)
+PenDown : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 0)
+    }
+}
+
+// Pen radius
+PenRadius : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 5)
+    }
+}
+
+// Pen X
+PenX : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 1)
+    }
+}
+
+// Pen Y
+PenY : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 2)
+    }
+}
+
+// Pen Z
+PenZ : PsuedoUgen {
+    *cons {
+        arg voiceNumber;
+        ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 3)
+    }
+}
+
+// Phase modulation sine oscillator pair
+PMOsc : PsuedoUgen {
+    *cons {
+        arg carfreq, modfreq, pmindex, modphase;
+        ^SinOsc(carfreq, SinOsc(modfreq, modphase) * pmindex)
+    }
+}
+
+// Parallel bank of Ringz
+RingzBank : PsuedoUgen {
+    *cons {
+        arg input, freq, amp, time;
+        ^Klank(input, 1, 0, 1, KlankSpec(freq, amp, time))
+    }
+}
+
+// Select one of two branches based on predicate signal
+Select2 : PsuedoUgen {
+    *cons {
+        arg predicate, ifTrue, ifFalse;
+        ^(predicate * (trueUgen - falseUgen)) + falseUgen
+    }
+}
+
+// Mix one output from many sources
+SelectX : PsuedoUgen {
+    *cons {
+        arg which, array;
+        ^XFade2(
+            Select(which.roundTo(2), array),
+            Select(which.truncateTo(2) + 1, array),
+            (which * 2 - 1).fold2(1),
+            1)
+    }
+}
+
+// Sequence generator
+Seq : PsuedoUgen {
+    *cons {
+        arg repeats, list;
+        ^Dseq(repeats, list)
+    }
+}
+
+// Demand rate arithmetic series Ugen
+Ser : PsuedoUgen {
+    *cons {
+        arg repeats, list;
+        ^Dser(repeats, list)
+    }
+}
+
+// Demand rate random sequence generator
+Shuf : PsuedoUgen {
+    *cons {
+        arg repeats, list;
+        ^Dshuf(repeats, list)
+    }
+}
+
+// Parallel bank of SinOsc
+SinOscBank : PsuedoUgen {
+    *cons {
+        arg freq, amp, phase;
+        ^Klang(1, 0, KlankSpec(freq, amp, phase))
+    }
+}
+
+// Pan an array of channels across the stereo field
+Splay2 : AbstractUgen {
+    *cons {
+        arg inArray;
+        ^Splay(inArray, 1, 1, 0, true)
+    }
+}
+
+// Switch (maintained or momentary) controller input
+Sw : AbstractUgen {
+    *cons {
+        arg index;
+        ^In(1, 12000 + index).kr
+    }
+}
+
+// Randomly select one of several inputs on trigger
+TChoose : PsuedoUgen {
+    *cons {
+        arg trig, array;
+        ^Select(TIRand(0, array.size - 1, trig), array)
+    }
+}
+
+// Demand with duration input (TDuty)
+TDmdFor : PsuedoUgen {
+    *cons {
+        arg dur, reset, level;
+        ^TDuty(dur, reset, 0, level, 0)
+    }
+}
+
+// Triggered Line
+TLine : PsuedoUgen {
+    *cons {
+        arg start, end, dur, trig;
+        ^EnvSpec([start, start, end], [0, dur], #['lin', 'lin'], -1, -1,).asEnvGen(trig)
+    }
+}
+
+// Trig1 with duration of one sample
+Tr1 : PsuedoUgen {
+    *cons {
+        arg in;
+        ^Trig1(in, SampleDur())
+    }
+}
+
+// Trig with duration of one sample
+Tr : PsuedoUgen {
+    *cons {
+        arg in;
+        ^Trig(in, SampleDur()) // Should be SampleDur if audio rate and ControlDur if control rate, requires QuantaDur or some such
+    }
+}
+
+// Triggered XLine
+TXLine : PsuedoUgen {
+    *cons {
+        arg start, end, dur, trig;
+        ^EnvSpec([start, start, end], [0, dur], #['exp', 'exp'], -1, -1, 0).asEnvGen(trig)
+    }
+}
+
+// Line generator
+XLn : PsuedoUgen {
+    *cons {
+        arg start, end, dur;
+        ^XLine(start, end, dur, 0)
+    }
+}

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #BufRec
+PsuedoUgen subclass: #BufRec
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #PMOsc
+PsuedoUgen subclass: #PMOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Osc1
+PsuedoUgen subclass: #Osc1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -14,6 +14,3 @@ bufnum: bufnum dur: dur
 primaryFactoryMethod
     ^#bufnum:dur:!
 !
-
-
-

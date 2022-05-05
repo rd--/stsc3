@@ -1,4 +1,4 @@
-AbstractUgen subclass: #PenY
+PsuedoUgen subclass: #PenY
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

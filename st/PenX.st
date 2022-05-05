@@ -1,4 +1,4 @@
-AbstractUgen subclass: #PenX
+PsuedoUgen subclass: #PenX
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

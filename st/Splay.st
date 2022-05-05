@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Splay
+PsuedoUgen subclass: #Splay
   instanceVariableNames: 'paramValues'
   classVariableNames: ''
   poolDictionaries: ''

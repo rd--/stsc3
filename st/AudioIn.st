@@ -1,4 +1,4 @@
-AbstractUgen subclass: #AudioIn
+PsuedoUgen subclass: #AudioIn
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #KeyDown
+PsuedoUgen subclass: #KeyDown
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

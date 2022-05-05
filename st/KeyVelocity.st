@@ -1,4 +1,4 @@
-AbstractUgen subclass: #KeyVelocity
+PsuedoUgen subclass: #KeyVelocity
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

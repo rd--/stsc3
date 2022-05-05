@@ -56,6 +56,9 @@ mrg: rhs
 
 !SequenceableCollection methodsFor: 'Ugen creation'!
 asLocalBuf
-    ^LocalBuf newFrom: self!
+    | lhs rhs |
+    lhs := LocalBuf numChannels: 1 numFrames: self size.
+    rhs := SetBuf buf: lhs offset: 0 length: self size array: self.
+    ^Mrg lhs: lhs rhs: rhs!
 !
 

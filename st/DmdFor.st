@@ -1,4 +1,4 @@
-AbstractUgen subclass: #DmdFor
+PsuedoUgen subclass: #DmdFor
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #TChoose
+PsuedoUgen subclass: #TChoose
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-Ugen subclass: #InFb
+PsuedoUgen subclass: #InFb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

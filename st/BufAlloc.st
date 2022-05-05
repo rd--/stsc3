@@ -1,4 +1,4 @@
-Ugen subclass: #BufAlloc
+PseudoUgen subclass: #BufAlloc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

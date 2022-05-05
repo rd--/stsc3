@@ -1,4 +1,4 @@
-AbstractUgen subclass: #DynKlank
+PsuedoUgen subclass: #DynKlank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

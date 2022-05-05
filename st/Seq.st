@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Seq
+PsuedoUgen subclass: #Seq
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

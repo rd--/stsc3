@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Choose
+PsuedoUgen subclass: #Choose
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

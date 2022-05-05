@@ -1,4 +1,4 @@
-AbstractUgen subclass: #SinOscBank
+PsuedoUgen subclass: #SinOscBank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

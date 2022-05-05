@@ -1,4 +1,4 @@
-AbstractUgen subclass: #ADSR
+PsuedoUgen subclass: #ADSR
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

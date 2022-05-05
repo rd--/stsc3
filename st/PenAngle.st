@@ -1,4 +1,4 @@
-AbstractUgen subclass: #PenAngle
+PsuedoUgen subclass: #PenAngle
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

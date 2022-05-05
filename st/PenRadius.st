@@ -1,4 +1,4 @@
-AbstractUgen subclass: #PenRadius
+PsuedoUgen subclass: #PenRadius
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

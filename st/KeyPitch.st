@@ -1,4 +1,4 @@
-AbstractUgen subclass: #KeyPitch
+PsuedoUgen subclass: #KeyPitch
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

@@ -1,4 +1,4 @@
-AbstractUgen subclass: #LinSeg
+PsuedoUgen subclass: #LinSeg
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

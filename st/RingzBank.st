@@ -1,4 +1,4 @@
-AbstractUgen subclass: #RingzBank
+PsuedoUgen subclass: #RingzBank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

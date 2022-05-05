@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Select2
+PsuedoUgen subclass: #Select2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

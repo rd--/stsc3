@@ -1,4 +1,4 @@
-AbstractUgen subclass: #LinLin
+PsuedoUgen subclass: #LinLin
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

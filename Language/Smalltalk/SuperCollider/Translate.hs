@@ -225,6 +225,13 @@ stcToExprToStc = Expr.exprPrintStc True . stcToExpr
 stcToSc :: String -> String
 stcToSc = Expr.exprPrintStc False . stcToExpr
 
+-- * Method and Class definitions
+
+{-
+scClassDefinitionToSt sc = ...
+scMethodDefinitionToSt className sc = ...
+-}
+
 {-
 
 rw = stcToSt

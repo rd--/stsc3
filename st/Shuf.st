@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Shuf
+PsuedoUgen subclass: #Shuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8,7 +8,7 @@ Shuf comment: 'Demand rate random sequence generator'!
 
 !Shuf class methodsFor: 'instance creation'!
 repeats: repeats list: list
-    Dshuf repeats: repeats list: list!
+    ^Dshuf repeats: repeats list: list!
 primaryFactoryMethod
     ^#repeats:list:!
 !
