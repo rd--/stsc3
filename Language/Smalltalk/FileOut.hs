@@ -155,7 +155,7 @@ fileOutEntryClassMethods e = concatMap fileOutEntryMethodDefinitions . fileOutEn
 
 -- | Translate FileOutClassDef to Ansi ClassDefinition.
 fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
-fileOutClassDefToClassDefinition (cd,cc,_ci,cm,im) =
+fileOutClassDefToClassDefinition (cd,cc,ci,cm,im) =
   let FileOutClassDeclaration superclassName className indexable instanceVariables classVariables poolDictionaries category = cd
       FileOutClassComment _className comment = cc
       importedPoolNames = poolDictionaries
@@ -164,13 +164,13 @@ fileOutClassDefToClassDefinition (cd,cc,_ci,cm,im) =
   in St.ClassDefinition
      className
      (Just superclassName)
-     (St.InstanceState indexable []) -- ?
+     (St.InstanceState indexable [])
      instanceVariables
      classVariables
      importedPoolNames
      instanceMethods
      classMethods
-     Nothing
+     (fmap (const (St.standardClassInitializerDefinition className)) ci)
      (Just category)
      (Just comment)
 
@@ -214,10 +214,13 @@ fileOutClassComment :: St.ClassDefinition -> String
 fileOutClassComment cl = printf "%s comment: '%s'!" (St.className cl) (St.quoteQuote (fromMaybe "" (St.classComment cl)))
 
 {- | This is printed if the class has a class initialize method.
-     Although the FileOut parser reads the initialize instruction it's presence is not stored at the class definition.
+     The FileOut parser reads standard initialize instructions, and stores a standard inializer at the class definition.
 -}
 fileOutClassInitializer :: St.ClassDefinition -> String
-fileOutClassInitializer cl = if St.classHasClassInitializer cl then printf "%s initialize!" (St.className cl) else ""
+fileOutClassInitializer cd =
+  case St.classInitializer cd of
+    Just ci -> St.initializerDefinition_pp ci
+    _ -> ""
 
 fileOutClassDefinition :: St.ClassDefinition -> String
 fileOutClassDefinition cl =

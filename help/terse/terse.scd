@@ -123,6 +123,7 @@ Association.new('x', 1)                                     // associate key wit
 'x' -> 1 == Association.new('x', 1)                         // literal syntax
 ('x' -> 1).key == 'x'                                       // key (left hand side) of association
 ('x' -> 1).value == 1                                       // value (right hand side) of association
+((0 -> 1) == (0 -> 2)) == true                              // equality for associations is based on key only
 
 'Bitwise Manipulation'
 

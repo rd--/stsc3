@@ -62,6 +62,11 @@ scExpressionRewrite =
   scExpressionRewritePrecedence .
   scExpressionRewriteTemporaries
 
+scBlockBodyRewrite :: ScBlockBody -> ScBlockBody
+scBlockBodyRewrite =
+  scBlockBodyRewritePrecedence .
+  scBlockBodyRewriteTemporaries
+
 {- | Option to rewrite n-ary expressions as arrays.
      Else N-ary expressions will be an error on translation.
 -}

@@ -197,8 +197,8 @@ classClassMethodCategories :: ClassDefinition -> [String]
 classClassMethodCategories = nub . sort . map methodCategoryRequired . classMethods
 
 -- | Does the class have a class side "initialize" method?
-classHasClassInitializer :: ClassDefinition -> Bool
-classHasClassInitializer = elem "initialize" . map (selectorIdentifier . patternSelector . methodPattern) . classMethods
+classHasClassInitializeMethod :: ClassDefinition -> Bool
+classHasClassInitializeMethod = elem "initialize" . map (selectorIdentifier . patternSelector . methodPattern) . classMethods
 
 -- * 3.3.3 Global Variable Definition
 
@@ -469,6 +469,15 @@ data InitializerDefinition =
   InitializerDefinition (Maybe Comment) (Maybe Temporaries) (Maybe Statements)
   deriving (Eq,Show)
 
+{- | Construct a standard class initiliaze statement, i.e. "ClassName initialize"
+
+> standardClassInitializerDefinition "ClassName"
+-}
+standardClassInitializerDefinition :: Identifier -> InitializerDefinition
+standardClassInitializerDefinition nm =
+  let e = ExprBasic (simpleUnaryMessageSend (PrimaryIdentifier nm) "initialize")
+  in InitializerDefinition Nothing Nothing (Just (StatementsExpression e Nothing))
+
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
 
 > p = stParse initializerDefinition
@@ -693,6 +702,14 @@ assignment = do
 data BasicExpression =
   BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
   deriving (Eq, Show)
+
+{- | Construct simple unary message send to primary receiver
+
+> simpleUnaryMessageSend (PrimaryIdentifier "Array") "new"
+-}
+simpleUnaryMessageSend :: Primary -> Identifier -> BasicExpression
+simpleUnaryMessageSend rcv msg =
+  BasicExpression rcv (Just (MessagesUnary [UnaryMessage msg] Nothing Nothing)) Nothing
 
 {- | If the expression consists only of a primary, return that.
      If the expression has messages make a PrimaryExpression node.

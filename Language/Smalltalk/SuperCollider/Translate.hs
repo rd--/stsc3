@@ -13,6 +13,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as Print {- stsc3 -}
+
 import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Lexer {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Parser {- stsc3 -}
@@ -227,10 +228,64 @@ stcToSc = Expr.exprPrintStc False . stcToExpr
 
 -- * Method and Class definitions
 
-{-
-scClassDefinitionToSt sc = ...
-scMethodDefinitionToSt className sc = ...
+{- | Generate primaryFactoryMethod method for named class.
+
+> stPrimaryFactoryMethod "SinOsc class" "freq:phase:"
 -}
+stPrimaryFactoryMethod :: St.Identifier -> String -> St.MethodDefinition
+stPrimaryFactoryMethod cl nm =
+  let pat = St.UnaryPattern "primaryFactoryMethod"
+      xpr = St.ExprBasic (St.BasicExpression (St.PrimaryLiteral (St.SymbolLiteral nm)) Nothing Nothing)
+      stm = St.StatementsReturn (St.ReturnStatement xpr)
+  in St.MethodDefinition cl Nothing pat Nothing (Just stm) Nothing Nothing
+
+{- | Translate Sc method to St.
+Rewrites temporaries and for precedence.
+The class method "cons" is special.
+It's pattern is derived from it's arguments names, and it generates a primary factory method.
+-}
+scMethodDefinitionToSt :: St.Identifier -> ScMethodDefinition -> [St.MethodDefinition]
+scMethodDefinitionToSt cl_nm md =
+  let is_cl = isClassMethod md
+      st_cl_nm = if is_cl then cl_nm ++ " class" else cl_nm
+      blk = Rewrite.scBlockBodyRewrite (methodBody md)
+      blk_args = maybe [] (map fst) (blockArguments blk)
+      md_nm = methodName md
+      is_star_cons = is_cl && md_nm == "cons"
+      pat = if is_star_cons
+            then case blk_args of
+                   [] -> St.UnaryPattern "new"
+                   args -> St.KeywordPattern (zip (map (++ ":") args) args)
+            else case blk_args of
+                   [] -> St.UnaryPattern md_nm
+                   [arg] -> if St.isBinaryIdentifier md_nm
+                                 then St.BinaryPattern md_nm arg
+                                 else St.KeywordPattern [(md_nm, arg)]
+                   args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
+      tmp = fmap scTemporariesSt (blockTemporaries blk)
+      stm = fmap scStatementsSt (blockStatements blk)
+      st_md = St.MethodDefinition st_cl_nm Nothing pat tmp stm Nothing Nothing
+  in if is_star_cons
+     then [st_md, stPrimaryFactoryMethod st_cl_nm (if null blk_args then "new" else concatMap (++ ":") blk_args)]
+     else [st_md]
+
+-- | Translate Sc class to St.
+scClassDefinitionToSt :: ScClassDefinition -> St.ClassDefinition
+scClassDefinitionToSt cd =
+  let nm = className cd
+      (cm, im) = scClassDefinitionPartitionMethods cd
+  in St.ClassDefinition
+     nm
+     (superclassName cd)
+     St.noInstanceState
+     (maybe [] (map fst) (classInstanceVariableNames cd))
+     (maybe [] (map fst) (classVariableNames cd))
+     []
+     (concatMap (scMethodDefinitionToSt nm) im)
+     (concatMap (scMethodDefinitionToSt nm) cm)
+     Nothing
+     Nothing
+     Nothing
 
 {-
 
