@@ -23,20 +23,15 @@ choose
     ^self atRandom!
 !
 
-!Array methodsFor: 'rate control'!
-kr
-    ^self asUgen kr!
-!
-
-!Array methodsFor: 'collecting'!
-addToUgenSet: c
-    self do: [:x | x addToUgenSet: c]!
-!
-
-!Array methodsFor: 'multi-channel expansion'!
-asUgen
-    "Array as Ugen (ie. Mce).  To be removed."
-    ^Mce source: self!
+!Array methodsFor: 'mce'!
+containsArray
+    "Are any of my elements an array?  This is the test to decide if a channel expansion is required."
+    self do: [ :item | item isArray ifTrue: [ ^true ] ].
+    ^false!
+mceTransform
+    ^self extendToBeOfEqualSize transpose!
+asArray
+    ^self!
 !
 
 !Array methodsFor: 'arithmetic'!
@@ -90,25 +85,11 @@ asKlankSpec
     ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
 !
 
-!Array methodsFor: 'printing'!
-printHaskellArrayOn: fd
-    "Print my hsc3 representation."
-    '[' putOn: fd.
-    self do: [ :x | x printHaskellOn: fd. ] separatedBy: [ ',' putOn: fd ].
-    ']' putOn: fd!
-printHaskellOn: fd
-    "Print my hsc3 Mce representation."
-    '(mce ' putOn: fd.
-    self printHaskellArrayOn: fd.
-    ')' putOn: fd!
-writeHaskellTo: fn
-    "Allow Array to be root of Ugen graph"
-    self asUgen writeHaskellTo: fn!
+!Array methodsFor: 'sc3'!
 play
-    "Allow Array to be root of Ugen graph"
-    self asUgen play!
+    Sc3 play: self!
 draw
-    "Allow Array to be root of Ugen graph"
-    self asUgen draw!
+    Sc3 draw: self!
+printUgens
+    Sc3 printUgens: self!
 !
-

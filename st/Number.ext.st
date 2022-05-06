@@ -37,17 +37,18 @@ addToUgenSet: aSet
 
 !Number methodsFor: 'Ugen constants'!
 asUgen
-    ^Constant k: self!
-!
-
-!Number methodsFor: 'enumerating'!
-mceFill: aBlock
-    "To be removed."
-    ^(self arrayFill: aBlock) asUgen!
+    ^Constant value: self
 !
 
 !Number methodsFor: 'printing'!
 printHaskellOn: fd
     "Print my hsc3 representation."
     self asString putOn: fd!
+!
+
+!Number methodsFor: 'rate control'!
+kr
+    ^self!
+rate
+    ^Rate ir!
 !

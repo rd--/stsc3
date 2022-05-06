@@ -1,42 +1,20 @@
-AbstractUgen subclass: #Rate
-  instanceVariableNames: 'source rate'
+Object subclass: #Rate
+  instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Rate comment: 'Ugen Processing Rate'!
-!Rate methodsFor: 'accessing'!
-rate
-    ^rate!
-rate: aSymbol
-    rate := aSymbol!
-source
-    ^source!
-source: aUgen
-    source := aUgen!
+Rate comment: 'Ugen processing rate'!
+
+!Rate class methodsFor: 'constants'!
+ir
+    ^0!
+kr
+    ^1!
+ar
+    ^2!
+dr
+    ^3!
+symbol: anInteger
+    ^#(#ir #kr #ar #dr) at: (anInteger + 1)!
 !
-
-!Rate methodsFor: 'collecting'!
-addToUgenSet: aSet
-    source addToUgenSet: aSet!
-!
-
-!Rate methodsFor: 'printing'!
-printHaskellOn: fd
-    "Print my hsc3 representation."
-    '(rewriteToRate ' putOn: fd.
-    rate asString putOn: fd.
-    fd space.
-    source printHaskellOn: fd.
-    ')' putOn: fd
-  !
-!
-
-
-!Rate class methodsFor: 'instance creation'!
-source: aUgen rate: aSymbol
-    ^self new source: aUgen; rate: aSymbol; yourself!
-!
-
-
-

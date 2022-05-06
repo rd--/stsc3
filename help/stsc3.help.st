@@ -23,8 +23,9 @@ EnvSpec new curveNameDictionary "curve name dictionary"
 
 "Ugen"
 
-SinOsc new inspect "initialize sets default values for parameters"
 SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
+SinOsc freq: 440 phase: 0 mul: 0.1 "freq:phase:mul: is a class method"
+SinOsc freq: 440 phase: 0 mul: 0.1 add: 0 "freq:phase:mul: is a class method"
 SinOsc primaryFactoryMethod = #freq:phase: "objects may indicate a primary factory method"
 SinOsc apply: #(220 0.5) "perform:withArguments: at the primary factory method, in C-Smalltalk notation SinOsc(220, 0.5) translates to this"
 PinkNoise primaryFactoryMethod = #new "the primary factory method may be new"
@@ -32,9 +33,20 @@ PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
 SinOsc perform: #freq:phase: withArguments: #(220 1)
 SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
 
+"UgenBuilder"
+
+UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(440 0)
+
+"Haskell"
+
+(SinOsc freq: 440 phase: 0 mul: 0.1) draw
+(SinOsc freq: 440 phase: 0 mul: 0.1) play
+(SinOsc freq: #(440 441) phase: 0 mul: 0.1) play
+
 "Rate"
 
-(Rate source: (SinOsc freq: 440 phase: 0) rate: #kr) inspect
+Rate ir = 0
+(Rate symbol: 0) = #ir
 
 "Klank"
 
@@ -474,21 +486,6 @@ ObjectMemory current inspect. "vm memory statistics"
 File image asString. "location of image file"
 
 FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Filein-For-Gnu.st'.
-
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Base.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Core.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Env.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Event.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Math.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Random.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Composite.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Demand.st'.
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Haskell.st'.
-
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Gnu.st'.
-
-FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Ugen-Filter.st'.
 
 "Help Graphs"
 

@@ -5,6 +5,7 @@ AbstractUgen subclass: #Mrg
   category: 'Sound-Sc3'!
 
 Mrg comment: 'Multiple Root Graph'!
+
 !Mrg methodsFor: 'accessing'!
 lhs
     ^lhs!
@@ -25,14 +26,8 @@ addToUgenSet: aSet
 !Mrg methodsFor: 'printing'!
 printHaskellOn: fd
     "Print my hsc3 representation."
-    '(mrg2 ' putOn: fd.
-    lhs printHaskellOn: fd.
-    ' ' putOn: fd.
-    rhs printHaskellOn: fd.
-    ')' putOn: fd
-  !
+    '(mrg2 ' putOn: fd. lhs printHaskellOn: fd. ' ' putOn: fd. rhs printHaskellOn: fd. ')' putOn: fd!
 !
-
 
 !Mrg class methodsFor: 'instance creation'!
 lhs: x rhs: y

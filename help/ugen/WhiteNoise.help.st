@@ -1,5 +1,5 @@
 "WhiteNoise"
-2 mceFill: [ WhiteNoise mul: 0.05 ]
+[ WhiteNoise mul: 0.05 ] dup
 
 "WhiteNoise"
-(2 mceFill: [ WhiteNoise new ]) * 0.05
+[ WhiteNoise new ] dup * 0.05

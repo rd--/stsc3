@@ -2,6 +2,7 @@
 module Language.Smalltalk.SuperCollider.Ast.Print where
 
 import Data.List {- base -}
+import Data.Maybe {- base -}
 import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -126,25 +127,30 @@ scExpressionPrint e =
 
 {- | Prefix each line of comment with //.
 
-> scCommentPrint "" == ""
+> scLineCommentPrint "" == ""
 -}
-scCommentPrint :: ScComment -> String
-scCommentPrint = unlines . map ("// " ++) . lines
+scLineCommentPrint :: ScComment -> String
+scLineCommentPrint = unlines . map ("// " ++) . lines
+
+scBracketCommentPrint :: ScComment -> String
+scBracketCommentPrint cmt = "/*" ++ cmt ++ "*/"
 
 scInitializerDefinitionPrint :: ScInitializerDefinition -> String
 scInitializerDefinitionPrint (ScInitializerDefinition cmt tmp stm) =
-  maybe "" scCommentPrint cmt ++ unlines (maybe [] (map scTemporariesPrint) tmp ++ [maybe "" scStatementsPrint stm])
+  maybe "" scLineCommentPrint cmt ++ unlines (maybe [] (map scTemporariesPrint) tmp ++ [maybe "" scStatementsPrint stm])
 
 scMethodDefinitionPrint :: ScMethodDefinition -> String
-scMethodDefinitionPrint (ScMethodDefinition classSide name body) =
+scMethodDefinitionPrint (ScMethodDefinition classSide name body _ comment) =
   unwords
-  [if classSide then "* " ++ name else name
+  [maybe "" scBracketCommentPrint comment
+  ,if classSide then "* " ++ name else name
   ,inBraces (scBlockBodyPrint body)]
 
 scClassDefinitionPrint :: ScClassDefinition -> String
-scClassDefinitionPrint (ScClassDefinition nm sc iv cv mt) =
+scClassDefinitionPrint (ScClassDefinition nm sc iv cv mt _ cmt) =
   scJoin
-  [scJoin [nm, maybePrint (" : " ++) sc]
+  [fromMaybe "" cmt
+  ,scJoin [nm, maybePrint (" : " ++) sc]
   ," "
   ,inBraces
     (scJoin

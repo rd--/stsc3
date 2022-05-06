@@ -1,21 +1,14 @@
 AbstractUgen subclass: #Constant
-  instanceVariableNames: 'k'
+  instanceVariableNames: 'value'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Constant comment: 'Constant numerical value. To be removed?'!
+Constant comment: 'Constant numerical value. Required for adaptToAndSend messages.'!
 
-!Constant methodsFor: 'accessing'!
-k
-    ^k!
-k: x
-    k := x!
-!
-
-!Constant methodsFor: 'collecting'!
-addToUgenSet: c
-    ^nil!
+!Constant methodsFor: 'initialization'!
+value: aNumber
+    aNumber isNumber ifTrue: [ value := aNumber ] ifFalse: [self error: 'not a number?']!
 !
 
 !Constant methodsFor: 'printing'!
@@ -23,16 +16,21 @@ printHaskellOn: fd
     "Print my hsc3 representation."
     fd
       nextPutAll: '(constant (';
-      nextPutAll: self k asString;
+      nextPutAll: value asString;
       nextPutAll: ')) '!
 !
 
 !Constant methodsFor: 'testing'!
 isZero
-    ^k isZero!
+    ^value isZero!
 !
 
 !Constant class methodsFor: 'instance creation'!
-k: k
-    ^self new k: k!
+value: aNumber
+    ^self new value: aNumber!
+!
+
+!Constant methodsFor: 'rate'!
+rate
+    ^Rate ir!
 !

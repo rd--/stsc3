@@ -14,6 +14,8 @@ mean
 product
     "All of my elements multipled togeather."
     ^self inject: 1 into: [ :accumulator :item | accumulator * item ]!
+tanh
+    ^self collect: [ :item | item tanh ]!
 ** arg
     "** is the Sc exponentiation operators.  C.f. raisedTo:"
     ^arg adaptToCollection: self andSend: #**!
@@ -22,9 +24,15 @@ product
     ^arg adaptToCollection: self andSend: #%!
 !
 
-!Collection methodsFor: 'alias'!
-mix
-    "Alias for sum.  To be removed."
-    ^self sum!
+!Collection methodsFor: 'collecting'!
+addToUgenSet: set
+    self do: [ :item | item addToUgenSet: set]!
 !
 
+!Collection methodsFor: 'rate control'!
+kr
+    self do: [ :item | item kr].
+    ^self!
+rate
+    ^(self collect: [ :item | item rate ]) max!
+!

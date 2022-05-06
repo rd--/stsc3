@@ -2,7 +2,6 @@
 module Language.Smalltalk.SuperCollider.Lexer where
 
 import Language.Smalltalk.SuperCollider.Token
-
 }
 
 %wrapper "basic"
@@ -14,7 +13,7 @@ $underscore            = _                                    -- 3.5.1 nonCaseLe
 $letter                = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit         = [a-z A-Z _ 0-9]
 $letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
-$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/] -- !@%&*-+=|<>?/
+$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/]         -- !@%&*-+=|<>?/
 $graphic               = $printable # $white
 
 @decimal               = $digit+
@@ -61,6 +60,7 @@ tokens :-
   \" ($printable # \")* \"               { \s -> QuotedString (removeOuter 1 s) }
   \' ($printable # \')* \'               { \s -> HashedString (removeOuter 1 s) }
   \\ $letter $letterordigit*             { \s -> HashedString (tail s) }
+  "/*" ($printable # \*)* "*/"           { \s -> Comment (removeOuter 2 s) }
 
 {
 removeOuter :: Int -> [t] -> [t]

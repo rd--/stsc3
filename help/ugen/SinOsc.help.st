@@ -27,7 +27,7 @@ f := #(0.5 1.0 1.19 1.56 2.0 2.51 2.66 3.01 4.1) collect: [ :x | x * 500 ].
 a := #(0.25 1.0 0.8 0.5 0.9 0.4 0.3 0.6 0.1).
 o := SinOsc freq: f phase: 0 mul: a.
 e := EnvPerc attackTime: 0.01 releaseTime: 10 level: 0.1 curve: -4.
-o mix * (e asEnvGen: 1 withDoneAction: 2)
+o sum * (e asEnvGen: 1 withDoneAction: 2)
 
 "SinOsc ; When two pure tones of slightly different frequency are superposed, our ears
 perceive audible beats at a rate given by the difference of the two frequencies."
@@ -46,16 +46,16 @@ f1 := 300.
 f2 := 300 * 3 / 2. "450"
 f3 := (f2 - f1) abs. "150"
 a3 := (SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0.
-(SinOsc freq: {f1. f2. f3} phase: 0 mul: {0.1. 0.1. a3}) mix
+(SinOsc freq: {f1. f2. f3} phase: 0 mul: {0.1. 0.1. a3}) sum
 
 "sinOsc ; with frequency of zero, operates as table lookup variant of sin"
 | mk_phasor ph o1 o2 o3 |
-mk_phasor := [ :l :r :f | Phasor trig: 0 rate: (SampleDur new * (r - l) * f) ir start: l end: r resetPos: l ].
+mk_phasor := [ :l :r :f | Phasor trig: 0 rate: (SampleDur new * (r - l) * f) start: l end: r resetPos: l ].
 ph := mk_phasor value: 0 value: Float pi * 2 value: 440.
 o1 := SinOsc freq: 440 phase: 0.
 o2 := SinOsc freq: 0 phase: ph.
 o3 := ph sin.
-{o1. XFade2 inA: o2 inB: o3 pan: (LFTri freq: 0.1 iphase: 0) kr level: 1} * 0.1
+{o1. XFade2 inA: o2 inB: o3 pan: (LFTri freq: 0.1 iphase: 0) level: 1} * 0.1
 
 "sinOsc ; 15.5 khz"
 Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75

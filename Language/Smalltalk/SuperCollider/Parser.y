@@ -48,6 +48,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       quotedchar      { QuotedChar $$ }
       quotedstring    { QuotedString $$ }
       hashedstring    { HashedString $$ }
+      comment         { Comment $$ }
 
 %%
 
@@ -68,12 +69,17 @@ classdefinition_seq :: { [ScClassDefinition] }
         : {- empty -}                          { [] }
         | classdefinition classdefinition_seq  { $1 : $2 }
 
+maybe_comment :: { Maybe String }
+        : {- empty -}                          { Nothing }
+        | comment                              { Just $1 }
+
 classdefinition :: { ScClassDefinition }
-        : identifier maybe_superclass '{'
+        : maybe_comment
+          identifier maybe_superclass '{'
           maybe_classvariables
           maybe_variables
           methoddefinition_seq
-          '}'                                   { ScClassDefinition $1 $2 $5 $4 $6 }
+          '}'                                   { ScClassDefinition $2 $3 $6 $5 $7 Nothing $1 }
 
 maybe_superclass :: { Maybe St.Identifier }
         : {- empty -}                           { Nothing }
@@ -89,9 +95,11 @@ binaryoperator :: { String }
         | '*'                                   { "*" }
 
 methoddefinition :: { ScMethodDefinition }
-        : '*' identifier '{' blockbody '}'     { ScMethodDefinition True $2 $4 }
+        : '*' identifier '{'
+          maybe_comment
+          blockbody '}'                         { ScMethodDefinition True $2 $5 Nothing $4 }
         | identifier_or_binaryoperator_or_keywordselector
-          '{' blockbody '}'                    { ScMethodDefinition False $1 $3 }
+          '{' maybe_comment blockbody '}'       { ScMethodDefinition False $1 $4 Nothing $3 }
 
 identifier_or_binaryoperator_or_keywordselector :: { String }
          : identifier                           { $1 }

@@ -15,10 +15,12 @@ extendCyclically: answerSize
     "Myself extended to answerSize places by cycling"
     ^(1 to: answerSize) collect: [ :index | self atWrap: index ]!
 extendToBeOfEqualSize
-    "All of my collections extended to to be of the same size as my largest collection"
+    "All of my elements extended to to be of the same size as my largest element.
+     #(1 (2 3) (4 5 6)) extendToBeOfEqualSize
+    "
     | maximumSize |
-    maximumSize := (self collect: [ :e | e size ]) max.
-    ^self collect: [ :e | e extendCyclically: maximumSize ]!
+    maximumSize := (self collect: [ :item | item isArray ifTrue: [ item size ] ifFalse: [ 1 ] ]) max.
+    ^self collect: [ :item | item isCollection ifTrue: [ item extendCyclically: maximumSize ] ifFalse: [ maximumSize replicate: item ] ]!
 ++ otherCollection
     "Myself with otherCollection appended.  Alias for ,"
     ^self , otherCollection!
@@ -62,3 +64,15 @@ asLocalBuf
     ^Mrg lhs: lhs rhs: rhs!
 !
 
+!SequenceableCollection methodsFor: 'hsc3'!
+printHaskellArrayOn: fd
+    "Print my elements as a Haskell array."
+    '[' putOn: fd.
+    self do: [ :x | x printHaskellOn: fd. ] separatedBy: [ ',' putOn: fd ].
+    ']' putOn: fd!
+printHaskellOn: fd
+    "Print my hsc3 Mce representation."
+    '(mce ' putOn: fd.
+    self printHaskellArrayOn: fd.
+    ')' putOn: fd!
+!

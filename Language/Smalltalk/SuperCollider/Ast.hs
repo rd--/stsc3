@@ -54,7 +54,9 @@ data ScClassDefinition =
   ,superclassName :: Maybe St.Identifier
   ,classInstanceVariableNames :: Maybe [ScVariable]
   ,classVariableNames :: Maybe [ScVariable]
-  ,methods :: [ScMethodDefinition]}
+  ,methods :: [ScMethodDefinition]
+  ,classCategory :: Maybe String
+  ,classComment :: Maybe ScComment}
   deriving (Eq,Show)
 
 -- | Partition methods into (class-methods, instance-methods).
@@ -76,7 +78,9 @@ data ScMethodDefinition =
   ScMethodDefinition
   {isClassMethod :: Bool
   ,methodName :: St.Identifier
-  ,methodBody :: ScBlockBody}
+  ,methodBody :: ScBlockBody
+  ,methodCategory :: Maybe String
+  ,methodComment :: Maybe ScComment}
   deriving (Eq,Show)
 
 -- | 3.4.2. Sequence of temporaries, single var statement.

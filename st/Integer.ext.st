@@ -2,9 +2,6 @@
 arrayFill: aBlock
     "Array of myself number of places, each being a result of evaluating aBlock.  C.f. Array class>>fill."
     ^(1 to: self) collect: [ :unusedItem | aBlock value ]!
-mixFill: aBlock
-    "Send arrayFill: to myself, and then sum result.  From Sc."
-    ^(self arrayFill: aBlock) sum!
 replicate: item
     "Array of myself number of places, each being item."
     ^self arrayFill: [ item ]!

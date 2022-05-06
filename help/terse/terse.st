@@ -54,6 +54,7 @@ Float e = 2.718281828459045                                 "exp constant"
 
 'Array'
 
+(#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
 3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"

@@ -24,7 +24,8 @@ tank := [ :i |
   l5 := AllpassN in: l4 maxdelaytime: 0.05 delaytime: [Rand lo: 0.03 hi: 0.15] dup decaytime: 2.
   l6 := LeakDC in: l5 coef: 0.995.
   l7 := l6 + i.
-  Mrg lhs: l7 rhs: (LocalOut channelsArray: l7) ].
+  l7 mrg: (LocalOut channelsArray: l7)
+].
 signal := (12 mixFill: pling) + bang.
 4 timesRepeat: [ signal := r_allpass value: signal ].
 tank value: signal

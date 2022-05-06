@@ -10,4 +10,5 @@ nextId
     (1 to: 9) collect: [ :unusedItem | Sc3Id nextId ]
     "
     IdCounter isNil ifTrue: [ IdCounter := 0 ] ifFalse: [ IdCounter := IdCounter + 1 ].
-    ^IdCounter! !
+    ^IdCounter!
+!

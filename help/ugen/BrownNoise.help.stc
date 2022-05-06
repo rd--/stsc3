@@ -3,6 +3,3 @@
 
 // BrownNoise
 HPZ1({ BrownNoise() }.dup) * 0.05
-
-// BrownNoise
-{ BrownNoise() }.dup(2).hpz1 * 0.05

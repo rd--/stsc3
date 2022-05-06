@@ -1,4 +1,4 @@
-// EnvGen of simplified EnvADSR
+/* EnvGen of simplified EnvADSR */
 ADSR : PseudoUgen {
     *cons {
         arg gate, attackTime, decayTime, sustainLevel, releaseTime, curve;
@@ -6,7 +6,7 @@ ADSR : PseudoUgen {
     }
 }
 
-// EnvGen of simplified EnvASR
+/* EnvGen of simplified EnvASR */
 ASR : PseudoUgen {
     *cons {
         arg gate, attackTime, releaseTime, curve;
@@ -14,7 +14,7 @@ ASR : PseudoUgen {
     }
 }
 
-// Audio input
+/* Audio input */
 AudioIn : PseudoUgen {
     *cons {
         arg channels;
@@ -22,7 +22,7 @@ AudioIn : PseudoUgen {
     }
 }
 
-// Allocate a buffer local to the synth
+/* Allocate a buffer local to the synth */
 BufAlloc : PseudoUgen {
     *cons {
         arg numChannels, numFrames;
@@ -30,7 +30,7 @@ BufAlloc : PseudoUgen {
     }
 }
 
-// Record signal into a Buffer
+/* Record signal into a Buffer */
 BufRec : PseudoUgen {
     *cons {
         arg bufnum, reset, inputArray;
@@ -38,7 +38,7 @@ BufRec : PseudoUgen {
     }
 }
 
-// Continuous controller input
+/* Continuous controller input */
 Cc : PseudoUgen {
     *cons {
         arg index;
@@ -46,7 +46,7 @@ Cc : PseudoUgen {
     }
 }
 
-// Triggers when a value changes
+/* Triggers when a value changes */
 Changed : PseudoUgen {
     *cons {
         arg input, threshold;
@@ -54,7 +54,7 @@ Changed : PseudoUgen {
     }
 }
 
-// Random sequence generator
+/* Random sequence generator */
 Choose : PseudoUgen {
     *cons {
         arg repeats, list;
@@ -62,7 +62,7 @@ Choose : PseudoUgen {
     }
 }
 
-// Control input
+/* Control input */
 ControlIn : PseudoUgen {
     *cons {
         arg numChan, bus;
@@ -70,7 +70,7 @@ ControlIn : PseudoUgen {
     }
 }
 
-// EnvGen of simple cutoff envelope
+/* EnvGen of simple cutoff envelope */
 Cutoff : PseudoUgen {
     *cons {
         arg sustainTime, releaseTime, curve;
@@ -78,7 +78,7 @@ Cutoff : PseudoUgen {
     }
 }
 
-// Demand with duration input (Duty)
+/* Demand with duration input (Duty) */
 DmdFor : PseudoUgen {
     *cons {
         arg dur, reset, level;
@@ -86,7 +86,7 @@ DmdFor : PseudoUgen {
     }
 }
 
-// Demand with trigger input (Demand)
+/* Demand with trigger input (Demand) */
 DmdOn : PseudoUgen {
     *cons {
         arg trig, reset, demandUGens;
@@ -94,7 +94,7 @@ DmdOn : PseudoUgen {
     }
 }
 
-// Dynamic klank, set of non-fixed resonating filters
+/* Dynamic klank, set of non-fixed resonating filters */
 DynKlank : PseudoUgen {
     *cons {
         arg input, freqscale, freqoffset, decayscale, specificationsArrayRef;
@@ -110,7 +110,7 @@ DynKlank : PseudoUgen {
     }
 }
 
-// Read signal from a bus with a current or one cycle old timestamp
+/* Read signal from a bus with a current or one cycle old timestamp */
 InFb : PseudoUgen {
     *cons {
         arg numChan, bus;
@@ -118,7 +118,7 @@ InFb : PseudoUgen {
     }
 }
 
-// Key down control input for indicated voice (W)
+/* Key down control input for indicated voice (W) */
 KeyDown : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -126,7 +126,7 @@ KeyDown : PseudoUgen {
     }
 }
 
-// Key pitch control input for indicated voice
+/* Key pitch control input for indicated voice */
 KeyPitch : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -134,7 +134,7 @@ KeyPitch : PseudoUgen {
     }
 }
 
-// Key timbre control input for indicated voice (Y)
+/* Key timbre control input for indicated voice (Y) */
 KeyTimbre : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -142,7 +142,7 @@ KeyTimbre : PseudoUgen {
     }
 }
 
-// Key velocity control input for indicated voice (Z)
+/* Key velocity control input for indicated voice (Z) */
 KeyVelocity : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -150,7 +150,7 @@ KeyVelocity : PseudoUgen {
     }
 }
 
-// Map a linear range to a linear range
+/* Map a linear range to a linear range */
 LinLin : PseudoUgen {
     *cons {
         arg in, srclo, srchi, dstlo, dsthi;
@@ -158,7 +158,7 @@ LinLin : PseudoUgen {
     }
 }
 
-// Line Segment Envelope
+/* Line Segment Envelope */
 LinSeg : PseudoUgen {
     *cons {
         arg gate, coord;
@@ -168,7 +168,7 @@ LinSeg : PseudoUgen {
     }
 }
 
-// Line generator
+/* Line generator */
 Ln : PseudoUgen {
     *cons {
         arg start, end, dur;
@@ -176,7 +176,7 @@ Ln : PseudoUgen {
     }
 }
 
-// An oscillator that reads through a table once
+/* An oscillator that reads through a table once */
 Osc1 : PseudoUgen {
     *cons {
         arg bufnum, dur;
@@ -185,7 +185,7 @@ Osc1 : PseudoUgen {
     }
 }
 
-// Pen angle
+/* Pen angle */
 PenAngle : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -193,7 +193,7 @@ PenAngle : PseudoUgen {
     }
 }
 
-// Pen down (W)
+/* Pen down (W) */
 PenDown : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -201,7 +201,7 @@ PenDown : PseudoUgen {
     }
 }
 
-// Pen radius
+/* Pen radius */
 PenRadius : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -209,7 +209,7 @@ PenRadius : PseudoUgen {
     }
 }
 
-// Pen X
+/* Pen X */
 PenX : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -217,7 +217,7 @@ PenX : PseudoUgen {
     }
 }
 
-// Pen Y
+/* Pen Y */
 PenY : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -225,7 +225,7 @@ PenY : PseudoUgen {
     }
 }
 
-// Pen Z
+/* Pen Z */
 PenZ : PseudoUgen {
     *cons {
         arg voiceNumber;
@@ -233,7 +233,7 @@ PenZ : PseudoUgen {
     }
 }
 
-// Phase modulation sine oscillator pair
+/* Phase modulation sine oscillator pair */
 PMOsc : PseudoUgen {
     *cons {
         arg carfreq, modfreq, pmindex, modphase;
@@ -241,7 +241,7 @@ PMOsc : PseudoUgen {
     }
 }
 
-// Parallel bank of Ringz
+/* Parallel bank of Ringz */
 RingzBank : PseudoUgen {
     *cons {
         arg input, freq, amp, time;
@@ -249,7 +249,7 @@ RingzBank : PseudoUgen {
     }
 }
 
-// Select one of two branches based on predicate signal
+/* Select one of two branches based on predicate signal */
 Select2 : PseudoUgen {
     *cons {
         arg predicate, ifTrue, ifFalse;
@@ -257,7 +257,7 @@ Select2 : PseudoUgen {
     }
 }
 
-// Mix one output from many sources
+/* Mix one output from many sources */
 SelectX : PseudoUgen {
     *cons {
         arg which, array;
@@ -269,7 +269,7 @@ SelectX : PseudoUgen {
     }
 }
 
-// Sequence generator
+/* Sequence generator */
 Seq : PseudoUgen {
     *cons {
         arg repeats, list;
@@ -277,7 +277,7 @@ Seq : PseudoUgen {
     }
 }
 
-// Demand rate arithmetic series Ugen
+/* Demand rate arithmetic series Ugen */
 Ser : PseudoUgen {
     *cons {
         arg repeats, list;
@@ -285,7 +285,7 @@ Ser : PseudoUgen {
     }
 }
 
-// Demand rate random sequence generator
+/* Demand rate random sequence generator */
 Shuf : PseudoUgen {
     *cons {
         arg repeats, list;
@@ -293,7 +293,7 @@ Shuf : PseudoUgen {
     }
 }
 
-// Parallel bank of SinOsc
+/* Parallel bank of SinOsc */
 SinOscBank : PseudoUgen {
     *cons {
         arg freq, amp, phase;
@@ -301,7 +301,23 @@ SinOscBank : PseudoUgen {
     }
 }
 
-// Pan an array of channels across the stereo field
+/* Pan an array of channels across the stereo field */
+Splay :	AbstractUgen {
+    *cons {
+        arg inArray, spread, level, center, levelComp;
+		var n = 2.max(inArray.size);
+		var n1 = n - 1;
+		var pos = (0.to(n1) * (2 / n1) - 1) * spread + center;
+        var lvl = levelComp.ifTrue({
+            level * n.reciprocal.sqrt
+		}, ifFalse: {
+            level
+        });
+		^Pan2(inArray, pos, lvl).sum
+	}
+}
+
+/* Pan an array of channels across the stereo field */
 Splay2 : AbstractUgen {
     *cons {
         arg inArray;
@@ -309,7 +325,7 @@ Splay2 : AbstractUgen {
     }
 }
 
-// Switch (maintained or momentary) controller input
+/* Switch (maintained or momentary) controller input */
 Sw : AbstractUgen {
     *cons {
         arg index;
@@ -317,7 +333,7 @@ Sw : AbstractUgen {
     }
 }
 
-// Randomly select one of several inputs on trigger
+/* Randomly select one of several inputs on trigger */
 TChoose : PseudoUgen {
     *cons {
         arg trig, array;
@@ -325,7 +341,7 @@ TChoose : PseudoUgen {
     }
 }
 
-// Demand with duration input (TDuty)
+/* Demand with duration input (TDuty) */
 TDmdFor : PseudoUgen {
     *cons {
         arg dur, reset, level;
@@ -333,7 +349,7 @@ TDmdFor : PseudoUgen {
     }
 }
 
-// Triggered Line
+/* Triggered Line */
 TLine : PseudoUgen {
     *cons {
         arg start, end, dur, trig;
@@ -341,7 +357,7 @@ TLine : PseudoUgen {
     }
 }
 
-// Trig1 with duration of one sample
+/* Trig1 with duration of one sample */
 Tr1 : PseudoUgen {
     *cons {
         arg in;
@@ -349,7 +365,7 @@ Tr1 : PseudoUgen {
     }
 }
 
-// Trig with duration of one sample
+/* Trig with duration of one sample */
 Tr : PseudoUgen {
     *cons {
         arg in;
@@ -357,7 +373,7 @@ Tr : PseudoUgen {
     }
 }
 
-// Triggered XLine
+/* Triggered XLine */
 TXLine : PseudoUgen {
     *cons {
         arg start, end, dur, trig;
@@ -365,7 +381,7 @@ TXLine : PseudoUgen {
     }
 }
 
-// Line generator
+/* Line generator */
 XLn : PseudoUgen {
     *cons {
         arg start, end, dur;

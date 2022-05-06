@@ -284,8 +284,8 @@ scClassDefinitionToSt cd =
      (concatMap (scMethodDefinitionToSt nm) im)
      (concatMap (scMethodDefinitionToSt nm) cm)
      Nothing
-     Nothing
-     Nothing
+     (classCategory cd)
+     (classComment cd)
 
 {-
 

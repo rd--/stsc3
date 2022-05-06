@@ -8,15 +8,11 @@ BinaryOpUgen comment: 'Binary Operators'!
 
 !BinaryOpUgen methodsFor: 'initialisation'!
 specialIndex: p1 a: p2 b: p3
-    ugenName := #BinaryOpUGen. "note case"
-    paramNames := #(#a #b).
-    mceNames := #().
+    name := #BinaryOpUGen. "note case"
     numChan := 1.
-    ugenRate := #(0 1).
+    rate := {p2. p3} rate.
     specialIndex := p1.
-    ugenId := nil.
-    paramValues := {p2. p3}.
-    mceValues := {}!
+    inputArray := {p2. p3}!
 !
 
 !BinaryOpUgen class methodsFor: 'instance creation'!
