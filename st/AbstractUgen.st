@@ -5,20 +5,18 @@ Object subclass: #AbstractUgen
   category: 'Sound-Sc3'!
 
 AbstractUgen comment: 'Unit Generator (Abstract)'!
-!AbstractUgen methodsFor: 'accessing'!
-paramNameFromIndex: index
-    "Get parameter name given index.
-     Parameter names are separated into paramNames and mceNames.
-     The implicit names mul: and add: follow."
-    | n m |
-    n := self paramNames size.
-    m := self mceNames size.
-    index <= n ifTrue: [^self paramNames at: index].
-    index <= (n + m) ifTrue: [^self mceNames at: index - n].
-    ^#(#mul #add) at: index - n - m!
-!
 
 !AbstractUgen methodsFor: 'arithmetic'!
+mul: x
+     "((p mul: q) mul: r) is (p * q * r) not (p * r)."
+      ^x = 1 ifTrue: [ self ] ifFalse: [ self * x ]
+!
+add: x
+     "((p add: q) add: r) is (p + q + r) not (p + r)."
+      ^x = 0 ifTrue: [ self ] ifFalse: [ self + x ]
+!
+mul: mul add: add
+    ^(self mul: mul) add: add!
 mix
     ^Mix source: self!
 sum
@@ -154,23 +152,19 @@ writeHaskellTo: fn
      c do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].
      '} in ' putOn: fd.
      self printHaskellOn: fd.
-     fd cr]
-  !
+     fd cr]!
 play
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min play /tmp/st.hs' systemCommand
-  !
+    'hsc3-graphs fragments hs min play /tmp/st.hs' systemCommand!
 draw
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min draw /tmp/st.hs' systemCommand
-  !
+    'hsc3-graphs fragments hs min draw /tmp/st.hs' systemCommand!
 printUgens
     "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
     self writeHaskellTo: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min dump-ugens /tmp/st.hs' systemCommand
-  !
+    'hsc3-graphs fragments hs min dump-ugens /tmp/st.hs' systemCommand!
 !
 
 !AbstractUgen methodsFor: 'rate control'!
@@ -215,12 +209,8 @@ product
     ^self asMce product!
 !
 
-
 !AbstractUgen class methodsFor: 'instance creation'!
 apply: argumentsArray
     "Ugens have primary factory methods."
     ^self perform: (self primaryFactoryMethod) withArguments: argumentsArray!
 !
-
-
-

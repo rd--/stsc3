@@ -15,6 +15,3 @@ freq: freq amp: amp time: time
 primaryFactoryMethod
     ^#freq:amp:time:!
 !
-
-
-

@@ -35,7 +35,7 @@ addToUgenSet: c
 
 !Array methodsFor: 'multi-channel expansion'!
 asUgen
-    "Array as Ugen (ie. Mce)"
+    "Array as Ugen (ie. Mce).  To be removed."
     ^Mce source: self!
 !
 
@@ -95,25 +95,20 @@ printHaskellArrayOn: fd
     "Print my hsc3 representation."
     '[' putOn: fd.
     self do: [ :x | x printHaskellOn: fd. ] separatedBy: [ ',' putOn: fd ].
-    ']' putOn: fd
-  !
+    ']' putOn: fd!
 printHaskellOn: fd
     "Print my hsc3 Mce representation."
     '(mce ' putOn: fd.
     self printHaskellArrayOn: fd.
-    ')' putOn: fd
-  !
+    ')' putOn: fd!
 writeHaskellTo: fn
     "Allow Array to be root of Ugen graph"
-    self asUgen writeHaskellTo: fn
-  !
+    self asUgen writeHaskellTo: fn!
 play
     "Allow Array to be root of Ugen graph"
-    self asUgen play.
-  !
+    self asUgen play!
 draw
     "Allow Array to be root of Ugen graph"
-    self asUgen draw.
-  !
+    self asUgen draw!
 !
 

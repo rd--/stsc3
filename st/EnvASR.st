@@ -5,6 +5,7 @@ EnvBuilder subclass: #EnvASR
   category: 'Sound-Sc3'!
 
 EnvASR comment: 'Attack-Sustain-Release Envelope'!
+
 !EnvASR methodsFor: 'envelope specification'!
 asEnvSpec
     ^EnvSpec
@@ -32,6 +33,3 @@ attackTime: p1 sustainLevel: p2 releaseTime: p3 curve: p4
 primaryFactoryMethod
     ^#attackTime:sustainLevel:releaseTime:curve:!
 !
-
-
-

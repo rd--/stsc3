@@ -1,4 +1,4 @@
-Ugen subclass: #UnaryOpUgen
+PrimitiveUgen subclass: #UnaryOpUgen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

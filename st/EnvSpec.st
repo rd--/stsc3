@@ -5,6 +5,7 @@ Object subclass: #EnvSpec
   category: 'Sound-Sc3'!
 
 EnvSpec comment: 'Specification for a segmented envelope'!
+
 !EnvSpec methodsFor: 'envelope coordinates'!
 coordinateArrayForEnvGen
     "My linear co-ordinate array, as required by EnvGen."
@@ -69,7 +70,6 @@ curveNameDictionary
       #hold -> 8 }!
 !
 
-
 !EnvSpec class methodsFor: 'instance creation'!
 levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
     ^self new levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6!
@@ -85,6 +85,3 @@ apply: arg
     "EnvSpec has a primary factory method."
     ^self perform: (self primaryFactoryMethod) withArguments: arg!
 !
-
-
-

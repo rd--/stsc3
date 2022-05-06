@@ -5,6 +5,7 @@ AbstractUgen subclass: #Mce
   category: 'Sound-Sc3'!
 
 Mce comment: 'Multiple Channel Expansion'!
+
 !Mce methodsFor: 'accessing'!
 source: x source := x!
 source ^source!
@@ -60,7 +61,6 @@ rotate: n
   !
 !
 
-
 !Mce class methodsFor: 'instance creation'!
 source: x
     ^self new source: x
@@ -69,6 +69,3 @@ with: c1 with: c2
     ^Mce source: (Array with: c1 with: c2)
   !
 !
-
-
-

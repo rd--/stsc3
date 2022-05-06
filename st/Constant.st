@@ -4,7 +4,8 @@ AbstractUgen subclass: #Constant
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Constant comment: 'Constant Numerical Value'!
+Constant comment: 'Constant numerical value. To be removed?'!
+
 !Constant methodsFor: 'accessing'!
 k
     ^k!
@@ -23,8 +24,7 @@ printHaskellOn: fd
     fd
       nextPutAll: '(constant (';
       nextPutAll: self k asString;
-      nextPutAll: ')) '
-  !
+      nextPutAll: ')) '!
 !
 
 !Constant methodsFor: 'testing'!
@@ -32,11 +32,7 @@ isZero
     ^k isZero!
 !
 
-
 !Constant class methodsFor: 'instance creation'!
 k: k
     ^self new k: k!
 !
-
-
-

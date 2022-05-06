@@ -12,18 +12,19 @@ mean
     "Sum of myself divided by my size."
     ^self sum / self size!
 product
-    "Product of my elements."
+    "All of my elements multipled togeather."
     ^self inject: 1 into: [ :accumulator :item | accumulator * item ]!
 ** arg
+    "** is the Sc exponentiation operators.  C.f. raisedTo:"
     ^arg adaptToCollection: self andSend: #**!
 % arg
-    "% is the SC floating point modulo operator."
+    "% is the Sc floating point modulo operator.  C.f. //"
     ^arg adaptToCollection: self andSend: #%!
 !
 
 !Collection methodsFor: 'alias'!
 mix
-    "Alias for sum."
+    "Alias for sum.  To be removed."
     ^self sum!
 !
 

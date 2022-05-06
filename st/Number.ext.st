@@ -1,9 +1,11 @@
 !Number methodsFor: 'enumerating'!
 iota
-    "Array of numbers from 1 to myself."
+    "Array of numbers from 1 to myself.  In St proper this should be an Interval."
     ^(1 to: self) asArray!
 from: start by: step
-    "Array of myself places from start by step."
+    "Array of myself number of places from start by step.  In St proper this should be an Interval.
+     (5 from: 3 by: 4) = #(3 7 11 15 19)
+    "
     ^(start to: self - 1 * step + start by: step) asArray!
 !
 
@@ -40,13 +42,12 @@ asUgen
 
 !Number methodsFor: 'enumerating'!
 mceFill: aBlock
+    "To be removed."
     ^(self arrayFill: aBlock) asUgen!
 !
 
 !Number methodsFor: 'printing'!
 printHaskellOn: fd
     "Print my hsc3 representation."
-    self asString putOn: fd
-  !
+    self asString putOn: fd!
 !
-

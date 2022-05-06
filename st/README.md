@@ -3,7 +3,7 @@ stsc3 is initially stored here.
 To use, [filein](http://wiki.squeak.org/squeak/1105) the below files to a Smalltalk image.
 
 The largest files,
-[Sc3-Ugen.st](?t=stsc3&e=st/Sc3-Ugen.st) and
+[Sc3-Ugen-Bindings.st](?t=stsc3&e=st/Sc3-Ugen-Bindings.st) and
 [Sc3-Ugen-Filter.st](?t=stsc3&e=st/Sc3-Ugen-Filter.st),
 are auto-generated using [mk.hs](?t=stsc3&e=hs/mk.hs)
 
@@ -29,12 +29,10 @@ Methods that extend numerical classes and sequence classes.
 Open Sound Control protocol.
 
 [Sc3-Ugen-Pseudo.st](?t=stsc3&e=st/Sc3-Ugen-Pseudo.st):
-Psuedo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `Sc3-Ugen.st`.
+Pseudo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `Sc3-Ugen.st`.
+This includes Demand Ugens constructors with parameter ordering consistent with _hsc3_.
 
-[Sc3-Ugen-Demand.st](?t=stsc3&e=st/Sc3-Ugen-Demand.st):
-Demand Ugens constructors with parameter ordering consistent with _hsc3_.
-
-[Sc3-UI.st](?t=stsc3&e=st/Sc3-UI.st):
+[Sc3-Ui.st](?t=stsc3&e=st/Sc3-Ui.st):
 User-interface classes and methods.
 
 [Sc3-Haskell.st](?t=stsc3&e=st/Sc3-Haskell.st):

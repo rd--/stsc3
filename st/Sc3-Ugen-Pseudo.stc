@@ -1,5 +1,5 @@
 // EnvGen of simplified EnvADSR
-ADSR : PsuedoUgen {
+ADSR : PseudoUgen {
     *cons {
         arg gate, attackTime, decayTime, sustainLevel, releaseTime, curve;
         ^EnvADSR(attackTime, decayTime, sustainLevel, releaseTime, peakLevel, curve).asEnvGen(g)
@@ -7,7 +7,7 @@ ADSR : PsuedoUgen {
 }
 
 // EnvGen of simplified EnvASR
-ASR : PsuedoUgen {
+ASR : PseudoUgen {
     *cons {
         arg gate, attackTime, releaseTime, curve;
         ^EnvASR(attackTime, sustainLevel, releaseTime, curve).asEnvGen(g)
@@ -15,7 +15,7 @@ ASR : PsuedoUgen {
 }
 
 // Audio input
-AudioIn : PsuedoUgen {
+AudioIn : PseudoUgen {
     *cons {
         arg channels;
         ^In(1, NumOutputBuses() + channels - 1)
@@ -31,7 +31,7 @@ BufAlloc : PseudoUgen {
 }
 
 // Record signal into a Buffer
-BufRec : PsuedoUgen {
+BufRec : PseudoUgen {
     *cons {
         arg bufnum, reset, inputArray;
         ^RecordBuf(bufnum, 0, 1, 0, 1, 1, reset, 0, inputArray)
@@ -39,7 +39,7 @@ BufRec : PsuedoUgen {
 }
 
 // Continuous controller input
-Cc : PsuedoUgen {
+Cc : PseudoUgen {
     *cons {
         arg index;
         ^In(1, 11000 + index).kr
@@ -47,7 +47,7 @@ Cc : PsuedoUgen {
 }
 
 // Triggers when a value changes
-Changed : PsuedoUgen {
+Changed : PseudoUgen {
     *cons {
         arg input, threshold;
         ^HPZ1(input).abs > threshold
@@ -55,7 +55,7 @@ Changed : PsuedoUgen {
 }
 
 // Random sequence generator
-Choose : PsuedoUgen {
+Choose : PseudoUgen {
     *cons {
         arg repeats, list;
         ^Drand(repeats, list)
@@ -63,7 +63,7 @@ Choose : PsuedoUgen {
 }
 
 // Control input
-ControlIn : PsuedoUgen {
+ControlIn : PseudoUgen {
     *cons {
         arg numChan, bus;
         ^In(numChan, bus).kr
@@ -71,7 +71,7 @@ ControlIn : PsuedoUgen {
 }
 
 // EnvGen of simple cutoff envelope
-Cutoff : PsuedoUgen {
+Cutoff : PseudoUgen {
     *cons {
         arg sustainTime, releaseTime, curve;
         ^EnvSpec(#[1, 1, 0], [sustainTime, releaseTime], curve, nil, nil, 0).asEnvGen
@@ -79,7 +79,7 @@ Cutoff : PsuedoUgen {
 }
 
 // Demand with duration input (Duty)
-DmdFor : PsuedoUgen {
+DmdFor : PseudoUgen {
     *cons {
         arg dur, reset, level;
         ^Duty(dur, reset, 0, level)
@@ -87,7 +87,7 @@ DmdFor : PsuedoUgen {
 }
 
 // Demand with trigger input (Demand)
-DmdOn : PsuedoUgen {
+DmdOn : PseudoUgen {
     *cons {
         arg trig, reset, demandUGens;
         ^Demand(trig, reset, demandUGens)
@@ -95,7 +95,7 @@ DmdOn : PsuedoUgen {
 }
 
 // Dynamic klank, set of non-fixed resonating filters
-DynKlank : PsuedoUgen {
+DynKlank : PseudoUgen {
     *cons {
         arg input, freqscale, freqoffset, decayscale, specificationsArrayRef;
         var gen;
@@ -111,7 +111,7 @@ DynKlank : PsuedoUgen {
 }
 
 // Read signal from a bus with a current or one cycle old timestamp
-InFb : PsuedoUgen {
+InFb : PseudoUgen {
     *cons {
         arg numChan, bus;
         ^InFeedback(numChan, bus)
@@ -119,7 +119,7 @@ InFb : PsuedoUgen {
 }
 
 // Key down control input for indicated voice (W)
-KeyDown : PsuedoUgen {
+KeyDown : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 0)
@@ -127,7 +127,7 @@ KeyDown : PsuedoUgen {
 }
 
 // Key pitch control input for indicated voice
-KeyPitch : PsuedoUgen {
+KeyPitch : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 7)
@@ -135,7 +135,7 @@ KeyPitch : PsuedoUgen {
 }
 
 // Key timbre control input for indicated voice (Y)
-KeyTimbre : PsuedoUgen {
+KeyTimbre : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 2)
@@ -143,7 +143,7 @@ KeyTimbre : PsuedoUgen {
 }
 
 // Key velocity control input for indicated voice (Z)
-KeyVelocity : PsuedoUgen {
+KeyVelocity : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 3)
@@ -151,7 +151,7 @@ KeyVelocity : PsuedoUgen {
 }
 
 // Map a linear range to a linear range
-LinLin : PsuedoUgen {
+LinLin : PseudoUgen {
     *cons {
         arg in, srclo, srchi, dstlo, dsthi;
         ^(in - srclo) / (srchi - srclo) * (dsthi - dstlo) + dstlo
@@ -159,7 +159,7 @@ LinLin : PsuedoUgen {
 }
 
 // Line Segment Envelope
-LinSeg : PsuedoUgen {
+LinSeg : PseudoUgen {
     *cons {
         arg gate, coord;
         var levels = 1.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
@@ -169,7 +169,7 @@ LinSeg : PsuedoUgen {
 }
 
 // Line generator
-Ln : PsuedoUgen {
+Ln : PseudoUgen {
     *cons {
         arg start, end, dur;
         ^Line(start, end, dur, 0)
@@ -177,7 +177,7 @@ Ln : PsuedoUgen {
 }
 
 // An oscillator that reads through a table once
-Osc1 : PsuedoUgen {
+Osc1 : PseudoUgen {
     *cons {
         arg bufnum, dur;
         var phase = Ln(0, BufFrames(bufnum) - 1, dur);
@@ -186,7 +186,7 @@ Osc1 : PsuedoUgen {
 }
 
 // Pen angle
-PenAngle : PsuedoUgen {
+PenAngle : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 4)
@@ -194,7 +194,7 @@ PenAngle : PsuedoUgen {
 }
 
 // Pen down (W)
-PenDown : PsuedoUgen {
+PenDown : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 0)
@@ -202,7 +202,7 @@ PenDown : PsuedoUgen {
 }
 
 // Pen radius
-PenRadius : PsuedoUgen {
+PenRadius : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 5)
@@ -210,7 +210,7 @@ PenRadius : PsuedoUgen {
 }
 
 // Pen X
-PenX : PsuedoUgen {
+PenX : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 1)
@@ -218,7 +218,7 @@ PenX : PsuedoUgen {
 }
 
 // Pen Y
-PenY : PsuedoUgen {
+PenY : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 2)
@@ -226,7 +226,7 @@ PenY : PsuedoUgen {
 }
 
 // Pen Z
-PenZ : PsuedoUgen {
+PenZ : PseudoUgen {
     *cons {
         arg voiceNumber;
         ^ControlIn(1, Voicer.voiceAddr(voiceNumber) + 3)
@@ -234,7 +234,7 @@ PenZ : PsuedoUgen {
 }
 
 // Phase modulation sine oscillator pair
-PMOsc : PsuedoUgen {
+PMOsc : PseudoUgen {
     *cons {
         arg carfreq, modfreq, pmindex, modphase;
         ^SinOsc(carfreq, SinOsc(modfreq, modphase) * pmindex)
@@ -242,7 +242,7 @@ PMOsc : PsuedoUgen {
 }
 
 // Parallel bank of Ringz
-RingzBank : PsuedoUgen {
+RingzBank : PseudoUgen {
     *cons {
         arg input, freq, amp, time;
         ^Klank(input, 1, 0, 1, KlankSpec(freq, amp, time))
@@ -250,7 +250,7 @@ RingzBank : PsuedoUgen {
 }
 
 // Select one of two branches based on predicate signal
-Select2 : PsuedoUgen {
+Select2 : PseudoUgen {
     *cons {
         arg predicate, ifTrue, ifFalse;
         ^(predicate * (trueUgen - falseUgen)) + falseUgen
@@ -258,7 +258,7 @@ Select2 : PsuedoUgen {
 }
 
 // Mix one output from many sources
-SelectX : PsuedoUgen {
+SelectX : PseudoUgen {
     *cons {
         arg which, array;
         ^XFade2(
@@ -270,7 +270,7 @@ SelectX : PsuedoUgen {
 }
 
 // Sequence generator
-Seq : PsuedoUgen {
+Seq : PseudoUgen {
     *cons {
         arg repeats, list;
         ^Dseq(repeats, list)
@@ -278,7 +278,7 @@ Seq : PsuedoUgen {
 }
 
 // Demand rate arithmetic series Ugen
-Ser : PsuedoUgen {
+Ser : PseudoUgen {
     *cons {
         arg repeats, list;
         ^Dser(repeats, list)
@@ -286,7 +286,7 @@ Ser : PsuedoUgen {
 }
 
 // Demand rate random sequence generator
-Shuf : PsuedoUgen {
+Shuf : PseudoUgen {
     *cons {
         arg repeats, list;
         ^Dshuf(repeats, list)
@@ -294,7 +294,7 @@ Shuf : PsuedoUgen {
 }
 
 // Parallel bank of SinOsc
-SinOscBank : PsuedoUgen {
+SinOscBank : PseudoUgen {
     *cons {
         arg freq, amp, phase;
         ^Klang(1, 0, KlankSpec(freq, amp, phase))
@@ -318,7 +318,7 @@ Sw : AbstractUgen {
 }
 
 // Randomly select one of several inputs on trigger
-TChoose : PsuedoUgen {
+TChoose : PseudoUgen {
     *cons {
         arg trig, array;
         ^Select(TIRand(0, array.size - 1, trig), array)
@@ -326,7 +326,7 @@ TChoose : PsuedoUgen {
 }
 
 // Demand with duration input (TDuty)
-TDmdFor : PsuedoUgen {
+TDmdFor : PseudoUgen {
     *cons {
         arg dur, reset, level;
         ^TDuty(dur, reset, 0, level, 0)
@@ -334,7 +334,7 @@ TDmdFor : PsuedoUgen {
 }
 
 // Triggered Line
-TLine : PsuedoUgen {
+TLine : PseudoUgen {
     *cons {
         arg start, end, dur, trig;
         ^EnvSpec([start, start, end], [0, dur], #['lin', 'lin'], -1, -1,).asEnvGen(trig)
@@ -342,7 +342,7 @@ TLine : PsuedoUgen {
 }
 
 // Trig1 with duration of one sample
-Tr1 : PsuedoUgen {
+Tr1 : PseudoUgen {
     *cons {
         arg in;
         ^Trig1(in, SampleDur())
@@ -350,7 +350,7 @@ Tr1 : PsuedoUgen {
 }
 
 // Trig with duration of one sample
-Tr : PsuedoUgen {
+Tr : PseudoUgen {
     *cons {
         arg in;
         ^Trig(in, SampleDur()) // Should be SampleDur if audio rate and ControlDur if control rate, requires QuantaDur or some such
@@ -358,7 +358,7 @@ Tr : PsuedoUgen {
 }
 
 // Triggered XLine
-TXLine : PsuedoUgen {
+TXLine : PseudoUgen {
     *cons {
         arg start, end, dur, trig;
         ^EnvSpec([start, start, end], [0, dur], #['exp', 'exp'], -1, -1, 0).asEnvGen(trig)
@@ -366,7 +366,7 @@ TXLine : PsuedoUgen {
 }
 
 // Line generator
-XLn : PsuedoUgen {
+XLn : PseudoUgen {
     *cons {
         arg start, end, dur;
         ^XLine(start, end, dur, 0)

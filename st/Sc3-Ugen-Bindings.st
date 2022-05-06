@@ -1,4 +1,4 @@
-Ugen subclass: #AllpassC
+PrimitiveUgen subclass: #AllpassC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -41,7 +41,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #AllpassL
+PrimitiveUgen subclass: #AllpassL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -84,7 +84,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #AllpassN
+PrimitiveUgen subclass: #AllpassN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -127,7 +127,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #AmpComp
+PrimitiveUgen subclass: #AmpComp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -170,7 +170,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #AmpCompA
+PrimitiveUgen subclass: #AmpCompA
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -213,7 +213,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Amplitude
+PrimitiveUgen subclass: #Amplitude
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -256,7 +256,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Balance2
+PrimitiveUgen subclass: #Balance2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -299,7 +299,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BBandPass
+PrimitiveUgen subclass: #BBandPass
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -342,7 +342,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BBandStop
+PrimitiveUgen subclass: #BBandStop
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -385,7 +385,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Blip
+PrimitiveUgen subclass: #Blip
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -428,7 +428,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BlockSize
+PrimitiveUgen subclass: #BlockSize
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -465,7 +465,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BLowPass
+PrimitiveUgen subclass: #BLowPass
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -508,7 +508,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BPeakEQ
+PrimitiveUgen subclass: #BPeakEQ
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -551,7 +551,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BPF
+PrimitiveUgen subclass: #BPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -594,7 +594,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BPZ2
+PrimitiveUgen subclass: #BPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -637,7 +637,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BRF
+PrimitiveUgen subclass: #BRF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -680,7 +680,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BRZ2
+PrimitiveUgen subclass: #BRZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -723,7 +723,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BrownNoise
+PrimitiveUgen subclass: #BrownNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -760,7 +760,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufDur
+PrimitiveUgen subclass: #BufDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -803,7 +803,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufFrames
+PrimitiveUgen subclass: #BufFrames
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -846,7 +846,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufRateScale
+PrimitiveUgen subclass: #BufRateScale
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -889,7 +889,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufRd
+PrimitiveUgen subclass: #BufRd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -933,7 +933,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufSampleRate
+PrimitiveUgen subclass: #BufSampleRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -976,7 +976,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #BufWr
+PrimitiveUgen subclass: #BufWr
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1020,7 +1020,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ClearBuf
+PrimitiveUgen subclass: #ClearBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1063,7 +1063,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Clip
+PrimitiveUgen subclass: #Clip
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1106,7 +1106,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ClipNoise
+PrimitiveUgen subclass: #ClipNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1143,7 +1143,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CoinGate
+PrimitiveUgen subclass: #CoinGate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1186,7 +1186,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CombC
+PrimitiveUgen subclass: #CombC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1229,7 +1229,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CombL
+PrimitiveUgen subclass: #CombL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1272,7 +1272,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CombN
+PrimitiveUgen subclass: #CombN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1315,7 +1315,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ControlDur
+PrimitiveUgen subclass: #ControlDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1352,7 +1352,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ControlRate
+PrimitiveUgen subclass: #ControlRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1389,7 +1389,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Convolution
+PrimitiveUgen subclass: #Convolution
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1432,7 +1432,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Crackle
+PrimitiveUgen subclass: #Crackle
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1475,7 +1475,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CuspL
+PrimitiveUgen subclass: #CuspL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1518,7 +1518,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dbufrd
+PrimitiveUgen subclass: #Dbufrd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1561,7 +1561,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dbufwr
+PrimitiveUgen subclass: #Dbufwr
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1604,7 +1604,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DC
+PrimitiveUgen subclass: #DC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1647,7 +1647,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Decay
+PrimitiveUgen subclass: #Decay
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1690,7 +1690,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Decay2
+PrimitiveUgen subclass: #Decay2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1733,7 +1733,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DegreeToKey
+PrimitiveUgen subclass: #DegreeToKey
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1776,7 +1776,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Delay1
+PrimitiveUgen subclass: #Delay1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1819,7 +1819,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Delay2
+PrimitiveUgen subclass: #Delay2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1862,7 +1862,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DelayC
+PrimitiveUgen subclass: #DelayC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1905,7 +1905,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DelayL
+PrimitiveUgen subclass: #DelayL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1948,7 +1948,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DelayN
+PrimitiveUgen subclass: #DelayN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1991,7 +1991,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Demand
+PrimitiveUgen subclass: #Demand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2035,7 +2035,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DetectSilence
+PrimitiveUgen subclass: #DetectSilence
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2078,7 +2078,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Diwhite
+PrimitiveUgen subclass: #Diwhite
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2121,7 +2121,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Drand
+PrimitiveUgen subclass: #Drand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2165,7 +2165,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dseq
+PrimitiveUgen subclass: #Dseq
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2209,7 +2209,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dseries
+PrimitiveUgen subclass: #Dseries
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2252,7 +2252,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dshuf
+PrimitiveUgen subclass: #Dshuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2296,7 +2296,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dust
+PrimitiveUgen subclass: #Dust
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2339,7 +2339,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Dust2
+PrimitiveUgen subclass: #Dust2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2382,7 +2382,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Duty
+PrimitiveUgen subclass: #Duty
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2425,7 +2425,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DWGPluckedStiff
+PrimitiveUgen subclass: #DWGPluckedStiff
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2468,7 +2468,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #EnvGen
+PrimitiveUgen subclass: #EnvGen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2512,7 +2512,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ExpRand
+PrimitiveUgen subclass: #ExpRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2555,7 +2555,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FBSineL
+PrimitiveUgen subclass: #FBSineL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2598,7 +2598,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FBSineC
+PrimitiveUgen subclass: #FBSineC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2641,7 +2641,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FFT
+PrimitiveUgen subclass: #FFT
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2684,7 +2684,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Fold
+PrimitiveUgen subclass: #Fold
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2727,7 +2727,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Formant
+PrimitiveUgen subclass: #Formant
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2770,7 +2770,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Formlet
+PrimitiveUgen subclass: #Formlet
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2813,7 +2813,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FOS
+PrimitiveUgen subclass: #FOS
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2856,7 +2856,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FreqShift
+PrimitiveUgen subclass: #FreqShift
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2899,7 +2899,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FSinOsc
+PrimitiveUgen subclass: #FSinOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2942,7 +2942,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FreeVerb
+PrimitiveUgen subclass: #FreeVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2985,7 +2985,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #FreeVerb2
+PrimitiveUgen subclass: #FreeVerb2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3028,7 +3028,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Gate
+PrimitiveUgen subclass: #Gate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3071,7 +3071,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Gendy1
+PrimitiveUgen subclass: #Gendy1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3114,7 +3114,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #GrainFM
+PrimitiveUgen subclass: #GrainFM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3158,7 +3158,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #GrainSin
+PrimitiveUgen subclass: #GrainSin
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3202,7 +3202,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #GrayNoise
+PrimitiveUgen subclass: #GrayNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3239,7 +3239,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #GVerb
+PrimitiveUgen subclass: #GVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3282,7 +3282,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Hasher
+PrimitiveUgen subclass: #Hasher
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3325,7 +3325,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #HenonL
+PrimitiveUgen subclass: #HenonL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3368,7 +3368,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #HenonC
+PrimitiveUgen subclass: #HenonC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3411,7 +3411,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #HPF
+PrimitiveUgen subclass: #HPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3454,7 +3454,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #HPZ1
+PrimitiveUgen subclass: #HPZ1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3497,7 +3497,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #HPZ2
+PrimitiveUgen subclass: #HPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3540,7 +3540,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #IFFT
+PrimitiveUgen subclass: #IFFT
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3583,7 +3583,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Impulse
+PrimitiveUgen subclass: #Impulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3626,7 +3626,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #In
+PrimitiveUgen subclass: #In
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3670,7 +3670,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Index
+PrimitiveUgen subclass: #Index
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3713,7 +3713,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #IndexInBetween
+PrimitiveUgen subclass: #IndexInBetween
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3756,7 +3756,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #InFeedback
+PrimitiveUgen subclass: #InFeedback
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3800,7 +3800,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #InRange
+PrimitiveUgen subclass: #InRange
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3843,7 +3843,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #IRand
+PrimitiveUgen subclass: #IRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3886,7 +3886,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Integrator
+PrimitiveUgen subclass: #Integrator
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3929,7 +3929,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #K2A
+PrimitiveUgen subclass: #K2A
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3972,7 +3972,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #KeyState
+PrimitiveUgen subclass: #KeyState
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4015,7 +4015,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Klang
+PrimitiveUgen subclass: #Klang
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4059,7 +4059,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Klank
+PrimitiveUgen subclass: #Klank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4103,7 +4103,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFBrownNoise1
+PrimitiveUgen subclass: #LFBrownNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4146,7 +4146,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFClipNoise
+PrimitiveUgen subclass: #LFClipNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4189,7 +4189,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFCub
+PrimitiveUgen subclass: #LFCub
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4232,7 +4232,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFDNoise1
+PrimitiveUgen subclass: #LFDNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4275,7 +4275,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFDNoise3
+PrimitiveUgen subclass: #LFDNoise3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4318,7 +4318,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFGauss
+PrimitiveUgen subclass: #LFGauss
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4361,7 +4361,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFNoise0
+PrimitiveUgen subclass: #LFNoise0
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4404,7 +4404,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFNoise1
+PrimitiveUgen subclass: #LFNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4447,7 +4447,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFNoise2
+PrimitiveUgen subclass: #LFNoise2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4490,7 +4490,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFPar
+PrimitiveUgen subclass: #LFPar
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4533,7 +4533,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFPulse
+PrimitiveUgen subclass: #LFPulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4576,7 +4576,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFSaw
+PrimitiveUgen subclass: #LFSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4619,7 +4619,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LFTri
+PrimitiveUgen subclass: #LFTri
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4662,7 +4662,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LPF
+PrimitiveUgen subclass: #LPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4705,7 +4705,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Lag
+PrimitiveUgen subclass: #Lag
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4748,7 +4748,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LagUD
+PrimitiveUgen subclass: #LagUD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4791,7 +4791,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Lag2
+PrimitiveUgen subclass: #Lag2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4834,7 +4834,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Lag3
+PrimitiveUgen subclass: #Lag3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4877,7 +4877,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Lag3UD
+PrimitiveUgen subclass: #Lag3UD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4920,7 +4920,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Latch
+PrimitiveUgen subclass: #Latch
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4963,7 +4963,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LatoocarfianC
+PrimitiveUgen subclass: #LatoocarfianC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5006,7 +5006,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LeakDC
+PrimitiveUgen subclass: #LeakDC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5049,7 +5049,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Limiter
+PrimitiveUgen subclass: #Limiter
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5092,7 +5092,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinCongC
+PrimitiveUgen subclass: #LinCongC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5135,7 +5135,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Line
+PrimitiveUgen subclass: #Line
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5178,7 +5178,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Linen
+PrimitiveUgen subclass: #Linen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5221,7 +5221,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinExp
+PrimitiveUgen subclass: #LinExp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5264,7 +5264,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinPan2
+PrimitiveUgen subclass: #LinPan2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5307,7 +5307,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinRand
+PrimitiveUgen subclass: #LinRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5350,7 +5350,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinXFade2
+PrimitiveUgen subclass: #LinXFade2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5393,7 +5393,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LocalBuf
+PrimitiveUgen subclass: #LocalBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5436,7 +5436,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LocalIn
+PrimitiveUgen subclass: #LocalIn
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5481,7 +5481,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LocalOut
+PrimitiveUgen subclass: #LocalOut
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5525,7 +5525,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LorenzL
+PrimitiveUgen subclass: #LorenzL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5568,7 +5568,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LPZ1
+PrimitiveUgen subclass: #LPZ1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5611,7 +5611,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LPZ2
+PrimitiveUgen subclass: #LPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5654,7 +5654,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MantissaMask
+PrimitiveUgen subclass: #MantissaMask
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5697,7 +5697,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MaxLocalBufs
+PrimitiveUgen subclass: #MaxLocalBufs
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5740,7 +5740,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Median
+PrimitiveUgen subclass: #Median
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5783,7 +5783,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ModDif
+PrimitiveUgen subclass: #ModDif
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5826,7 +5826,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MoogFF
+PrimitiveUgen subclass: #MoogFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5869,7 +5869,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MouseButton
+PrimitiveUgen subclass: #MouseButton
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5912,7 +5912,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MouseX
+PrimitiveUgen subclass: #MouseX
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5955,7 +5955,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MouseY
+PrimitiveUgen subclass: #MouseY
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -5998,7 +5998,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MulAdd
+PrimitiveUgen subclass: #MulAdd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6036,7 +6036,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Normalizer
+PrimitiveUgen subclass: #Normalizer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6079,7 +6079,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #NRand
+PrimitiveUgen subclass: #NRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6122,7 +6122,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #NumOutputBuses
+PrimitiveUgen subclass: #NumOutputBuses
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6159,7 +6159,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #OnePole
+PrimitiveUgen subclass: #OnePole
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6202,7 +6202,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #OneZero
+PrimitiveUgen subclass: #OneZero
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6245,7 +6245,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Osc
+PrimitiveUgen subclass: #Osc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6288,7 +6288,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Out
+PrimitiveUgen subclass: #Out
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6332,7 +6332,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Pan2
+PrimitiveUgen subclass: #Pan2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6375,7 +6375,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PanAz
+PrimitiveUgen subclass: #PanAz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6419,7 +6419,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PanB
+PrimitiveUgen subclass: #PanB
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6462,7 +6462,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PeakFollower
+PrimitiveUgen subclass: #PeakFollower
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6505,7 +6505,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Perlin3
+PrimitiveUgen subclass: #Perlin3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6548,7 +6548,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Phasor
+PrimitiveUgen subclass: #Phasor
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6591,7 +6591,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PinkNoise
+PrimitiveUgen subclass: #PinkNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6628,7 +6628,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Pitch
+PrimitiveUgen subclass: #Pitch
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6671,7 +6671,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PitchShift
+PrimitiveUgen subclass: #PitchShift
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6714,7 +6714,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PlayBuf
+PrimitiveUgen subclass: #PlayBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6758,7 +6758,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Pluck
+PrimitiveUgen subclass: #Pluck
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6801,7 +6801,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Pulse
+PrimitiveUgen subclass: #Pulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6844,7 +6844,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PulseCount
+PrimitiveUgen subclass: #PulseCount
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6887,7 +6887,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PulseDivider
+PrimitiveUgen subclass: #PulseDivider
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6930,7 +6930,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #PV_RandComb
+PrimitiveUgen subclass: #PV_RandComb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -6973,7 +6973,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #QuadL
+PrimitiveUgen subclass: #QuadL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7016,7 +7016,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #QuadC
+PrimitiveUgen subclass: #QuadC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7059,7 +7059,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RHPF
+PrimitiveUgen subclass: #RHPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7102,7 +7102,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RLPF
+PrimitiveUgen subclass: #RLPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7145,7 +7145,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Rand
+PrimitiveUgen subclass: #Rand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7188,7 +7188,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RecordBuf
+PrimitiveUgen subclass: #RecordBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7232,7 +7232,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ReplaceOut
+PrimitiveUgen subclass: #ReplaceOut
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7276,7 +7276,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Resonz
+PrimitiveUgen subclass: #Resonz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7319,7 +7319,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Ringz
+PrimitiveUgen subclass: #Ringz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7362,7 +7362,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RunningMax
+PrimitiveUgen subclass: #RunningMax
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7405,7 +7405,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RunningSum
+PrimitiveUgen subclass: #RunningSum
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7448,7 +7448,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Rotate2
+PrimitiveUgen subclass: #Rotate2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7491,7 +7491,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SampleDur
+PrimitiveUgen subclass: #SampleDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7528,7 +7528,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SampleRate
+PrimitiveUgen subclass: #SampleRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7565,7 +7565,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Saw
+PrimitiveUgen subclass: #Saw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7608,7 +7608,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Schmidt
+PrimitiveUgen subclass: #Schmidt
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7651,7 +7651,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Select
+PrimitiveUgen subclass: #Select
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7695,7 +7695,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SetBuf
+PrimitiveUgen subclass: #SetBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7739,7 +7739,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SetResetFF
+PrimitiveUgen subclass: #SetResetFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7782,7 +7782,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SinOsc
+PrimitiveUgen subclass: #SinOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7825,7 +7825,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SinOscFB
+PrimitiveUgen subclass: #SinOscFB
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7868,7 +7868,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Slew
+PrimitiveUgen subclass: #Slew
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7911,7 +7911,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Slope
+PrimitiveUgen subclass: #Slope
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7954,7 +7954,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SOS
+PrimitiveUgen subclass: #SOS
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -7997,7 +7997,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Stepper
+PrimitiveUgen subclass: #Stepper
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8040,7 +8040,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Sweep
+PrimitiveUgen subclass: #Sweep
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8083,7 +8083,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SyncSaw
+PrimitiveUgen subclass: #SyncSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8126,7 +8126,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TDuty
+PrimitiveUgen subclass: #TDuty
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8169,7 +8169,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TExpRand
+PrimitiveUgen subclass: #TExpRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8212,7 +8212,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TGrains
+PrimitiveUgen subclass: #TGrains
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8256,7 +8256,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Timer
+PrimitiveUgen subclass: #Timer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8299,7 +8299,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TIRand
+PrimitiveUgen subclass: #TIRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8342,7 +8342,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ToggleFF
+PrimitiveUgen subclass: #ToggleFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8385,7 +8385,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TRand
+PrimitiveUgen subclass: #TRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8428,7 +8428,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Trig
+PrimitiveUgen subclass: #Trig
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8471,7 +8471,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Trig1
+PrimitiveUgen subclass: #Trig1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8514,7 +8514,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TwoPole
+PrimitiveUgen subclass: #TwoPole
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8557,7 +8557,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TwoZero
+PrimitiveUgen subclass: #TwoZero
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8600,7 +8600,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #VarSaw
+PrimitiveUgen subclass: #VarSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8643,7 +8643,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #VBJonVerb
+PrimitiveUgen subclass: #VBJonVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8686,7 +8686,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Vibrato
+PrimitiveUgen subclass: #Vibrato
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8729,7 +8729,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #WaveLoss
+PrimitiveUgen subclass: #WaveLoss
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8772,7 +8772,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #WhiteNoise
+PrimitiveUgen subclass: #WhiteNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8809,7 +8809,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Wrap
+PrimitiveUgen subclass: #Wrap
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8852,7 +8852,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #WrapIndex
+PrimitiveUgen subclass: #WrapIndex
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8895,7 +8895,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #XFade2
+PrimitiveUgen subclass: #XFade2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8938,7 +8938,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #XLine
+PrimitiveUgen subclass: #XLine
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -8981,7 +8981,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ZeroCrossing
+PrimitiveUgen subclass: #ZeroCrossing
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9024,7 +9024,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MoogLadder
+PrimitiveUgen subclass: #MoogLadder
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9067,7 +9067,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #GreyholeRaw
+PrimitiveUgen subclass: #GreyholeRaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9110,7 +9110,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #CrossoverDistortion
+PrimitiveUgen subclass: #CrossoverDistortion
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9153,7 +9153,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Friction
+PrimitiveUgen subclass: #Friction
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9196,7 +9196,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MembraneCircle
+PrimitiveUgen subclass: #MembraneCircle
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9239,7 +9239,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #VOSIM
+PrimitiveUgen subclass: #VOSIM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9282,7 +9282,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #MiRings
+PrimitiveUgen subclass: #MiRings
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9325,7 +9325,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #AnalogFoldOsc
+PrimitiveUgen subclass: #AnalogFoldOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9368,7 +9368,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RCD
+PrimitiveUgen subclass: #RCD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9411,7 +9411,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SCM
+PrimitiveUgen subclass: #SCM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9454,7 +9454,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DustRange
+PrimitiveUgen subclass: #DustRange
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9497,7 +9497,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ExpRandN
+PrimitiveUgen subclass: #ExpRandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9541,7 +9541,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #LinRandN
+PrimitiveUgen subclass: #LinRandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9585,7 +9585,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RandN
+PrimitiveUgen subclass: #RandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9629,7 +9629,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #TScramble
+PrimitiveUgen subclass: #TScramble
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9673,7 +9673,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #DX7
+PrimitiveUgen subclass: #DX7
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9716,7 +9716,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #RDX7Env
+PrimitiveUgen subclass: #RDX7Env
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9759,7 +9759,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #ObxdFilter
+PrimitiveUgen subclass: #ObxdFilter
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9802,7 +9802,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SvfBp
+PrimitiveUgen subclass: #SvfBp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9845,7 +9845,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SvfHp
+PrimitiveUgen subclass: #SvfHp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9888,7 +9888,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #SvfLp
+PrimitiveUgen subclass: #SvfLp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9931,7 +9931,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Bezier
+PrimitiveUgen subclass: #Bezier
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -9975,7 +9975,7 @@ primaryFactoryMethod
 !
 !
 
-Ugen subclass: #Freezer
+PrimitiveUgen subclass: #Freezer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

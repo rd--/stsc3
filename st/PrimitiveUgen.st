@@ -1,15 +1,27 @@
-AbstractUgen subclass: #Ugen
+AbstractUgen subclass: #PrimitiveUgen
   instanceVariableNames: 'ugenName paramNames mceNames numChan ugenRate specialIndex ugenId paramValues mceValues'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Ugen comment: 'Unit Generator.
+PrimitiveUgen comment: 'Unit Generator.
 Objects have identity, however identityHash is not unique.
-The approach here is to assigned ugenId during graph serialisation, alternately the Id could be assigned using a counter at initialization.
-All Ugens have mul: and add: methods but there are no variables associated with these.
-'!
-!Ugen methodsFor: 'accessing'!
+The approach here is to assign ugenId during graph serialisation, alternately the Id could be assigned using a counter at initialization.'!
+
+!PrimitiveUgen methodsFor: 'accessing'!
+paramNameFromIndex: index
+    "Get parameter name given index.
+     Parameter names are separated into paramNames and mceNames.
+     The implicit names mul: and add: follow."
+    | n m |
+    n := paramNames size.
+    m := mceNames size.
+    index <= n ifTrue: [^paramNames at: index].
+    index <= (n + m) ifTrue: [^mceNames at: index - n].
+    ^#(#mul #add) at: index - n - m!
+!
+
+!PrimitiveUgen methodsFor: 'accessing'!
 ugenName ^ugenName!
 ugenName: ugenNameValue ugenName := ugenNameValue!
 paramNames ^paramNames!
@@ -30,25 +42,14 @@ mceValues ^mceValues!
 mceValues: mceValuesValue mceValues := mceValuesValue!
 !
 
-!Ugen methodsFor: 'arithmetic'!
-mul: x
-     "((p mul: q) mul: r) is (p * q * r) not (p * r)."
-      ^x = 1 ifTrue: [ self ] ifFalse: [ self * x ]
-!
-add: x
-     "((p add: q) add: r) is (p + q + r) not (p + r)."
-      ^x = 0 ifTrue: [ self ] ifFalse: [ self + x ]
-!
-mul: mul add: add
-    ^(self mul: mul) add: add
-!
+!PrimitiveUgen methodsFor: '.stc'!
 mulAdd: mul value: add
     "Alias for mul:add:.  (For .stc)"
     ^self mul: mul add: add
 !
 !
 
-!Ugen methodsFor: 'collecting'!
+!PrimitiveUgen methodsFor: 'collecting'!
 addToUgenSet: aSet
     | addFunc |
     addFunc := [ :item | item addToUgenSet: aSet ].
@@ -58,10 +59,10 @@ addToUgenSet: aSet
 !
 !
 
-!Ugen methodsFor: 'printing'!
+!PrimitiveUgen methodsFor: 'printing'!
 printHaskellOn: fd
     "Print the name I am bound to in hsc3."
-    '_u_', self ugenId asString putOn: fd
+    '_u_', ugenId asString putOn: fd
   !
 printHaskellDefinitionOn: fd
     "Print my hsc3 definition."
@@ -88,7 +89,7 @@ printHaskellDefinitionOn: fd
     specialIndex notNil ifTrue: [specialIndex asString putOn: fd] ifFalse: ['0' putOn: fd]
   . ') ' putOn: fd.
     '(UId ' putOn: fd.
-    self ugenId asString putOn: fd.
+    ugenId asString putOn: fd.
     ')' putOn: fd.
     ')' putOn: fd.
   !

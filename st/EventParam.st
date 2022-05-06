@@ -5,6 +5,7 @@ Object subclass: #EventParam
   category: 'Sound-Sc3'!
 
 EventParam comment: 'Event Parameters'!
+
 !EventParam methodsFor: 'accessing'!
 v ^v!
 v: x v := x!
@@ -28,7 +29,6 @@ px ^px!
 px: x px := x!
 !
 
-
 !EventParam class methodsFor: 'instance creation'!
 voice: v fromUgen: u
     "Create EventParam object from Mce Ugen"
@@ -44,8 +44,7 @@ voice: v fromUgen: u
     e ry: (u at: 7).
     e p: (u at: 8).
     e px: (u at: 9).
-    ^e
-  !
+    ^e!
 !
 
 

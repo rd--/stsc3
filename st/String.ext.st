@@ -5,15 +5,12 @@ evalFile
 !
 
 !String methodsFor: 'printing'!
-asHaskell
-    ^'"' , self , '"'
-  !
+asHaskellString
+    ^'"' , self , '"'!
 printHaskellOn: fd
     "Print my hsc3 representation."
     fd
       nextPut: $";
       nextPutAll: self;
-      nextPut: $"
-  !
+      nextPut: $"!
 !
-

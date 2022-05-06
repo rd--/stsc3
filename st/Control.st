@@ -5,6 +5,7 @@ AbstractUgen subclass: #Control
   category: 'Sound-Sc3'!
 
 Control comment: 'Control Input'!
+
 !Control methodsFor: 'accessing'!
 name
     ^name
@@ -35,18 +36,14 @@ printHaskellOn: fd
     "Print my hsc3 representation."
     fd
       nextPutAll: '(control kr ';
-      nextPutAll: self name asString asHaskell;
+      nextPutAll: self name asString asHaskellString;
       space;
       nextPutAll: self init asString;
       nextPutAll: ') '
   !
 !
 
-
 !Control class methodsFor: 'instance creation'!
 name: p1 init: p2
     ^self new name: p1 init: p2!
 !
-
-
-

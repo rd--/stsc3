@@ -5,6 +5,7 @@ EnvBuilder subclass: #EnvLinen
   category: 'Sound-Sc3'!
 
 EnvLinen comment: 'Trapezoidal Envelope (Fixed duration, no release node)'!
+
 !EnvLinen methodsFor: 'envelope specification'!
 asEnvSpec
     ^EnvSpec
@@ -25,7 +26,6 @@ attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
     curve := p5!
 !
 
-
 !EnvLinen class methodsFor: 'instance creation'!
 attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
     ^self new attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
@@ -33,6 +33,3 @@ attackTime: p1 sustainTime: p2 releaseTime: p3 level: p4 curve: p5
 primaryFactoryMethod
     ^#attackTime:sustainTime:releaseTime:level:curve:!
 !
-
-
-

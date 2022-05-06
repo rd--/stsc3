@@ -5,6 +5,7 @@ EnvBuilder subclass: #EnvSine
   category: 'Sound-Sc3'!
 
 EnvSine comment: 'Sine (Hanning Window) Envelope Builder (Fixed duration, no release node)'!
+
 !EnvSine methodsFor: 'envelope specification'!
 asEnvSpec
     ^EnvSpec
@@ -22,13 +23,9 @@ dur: p1 level: p2
     level := p2!
 !
 
-
 !EnvSine class methodsFor: 'instance creation'!
 dur: p1 level: p2
     ^self new dur: p1 level: p2!
 primaryFactoryMethod
     ^#dur:level:!
 !
-
-
-

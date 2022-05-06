@@ -2,7 +2,7 @@
 dup: aNumber
     "An array of aNumber places, each filled by sending value to myself.
      Sc allows an index argument, however Sc and St disagree about indexing.
-    [ 10 rand ] dup: 10
+     [ 10 rand ] dup: 10
     "
     ^aNumber arrayFill: self!
 dup
@@ -13,8 +13,8 @@ dup
 !BlockClosure methodsFor: 'application'!
 apply: anArray
     "Alias for valueWithArguments:.
-    For .stc notation.
-    Allow f(x,y) as notation to apply a block f to arguments x & y."
+     For .stc notation.
+     Allow f(x,y) as notation to apply a block f to arguments x & y."
     ^self valueWithArguments: anArray!
 !
 

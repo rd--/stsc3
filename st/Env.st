@@ -4,7 +4,4 @@ EnvSpec subclass: #Env
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Env comment: 'Alias for EnvSpec'!
-
-
-
+Env comment: 'Alias for EnvSpec.  To be removed.'!
