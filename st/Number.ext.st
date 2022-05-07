@@ -1,4 +1,6 @@
 !Number methodsFor: 'enumerating'!
+to: aNumber collect: aBlock
+    ^(self to: aNumber) collect: aBlock!
 iota
     "Array of numbers from 1 to myself.  In St proper this should be an Interval."
     ^(1 to: self) asArray!

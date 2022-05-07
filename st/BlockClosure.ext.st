@@ -1,21 +1,18 @@
-!BlockClosure methodsFor: 'enumerating'!
+!BlockClosure methodsFor: 'duplicating'!
 dup: aNumber
-    "An array of aNumber places, each filled by sending value to myself.
-     Sc allows an index argument, however Sc and St disagree about indexing.
+    "Answer an array of aNumber places, each filled by sending #value to myself.
+
      [ 10 rand ] dup: 10
     "
     ^aNumber arrayFill: self!
 dup
-    "An array of myself evaluated twice."
+    "Answer an array of myself evaluated twice."
     ^self dup: 2!
 !
 
-!BlockClosure methodsFor: 'application'!
-apply: anArray
-    "Alias for valueWithArguments:.
-     For .stc notation.
-     Allow f(x,y) as notation to apply a block f to arguments x & y."
-    ^self valueWithArguments: anArray!
+!BlockClosure methodsFor: 'primary factory method'!
+primaryFactoryMethod
+    #valueWithArguments:!
 !
 
 !BlockClosure methodsFor: 'texture generation'!
@@ -29,4 +26,3 @@ play
 draw
     self value draw!
 !
-

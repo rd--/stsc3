@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Voicer
+Object subclass: #Voicer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

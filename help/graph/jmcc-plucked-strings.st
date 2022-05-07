@@ -11,4 +11,4 @@ str := [
   dt := [ 1 / ((60.0 rand: 90.0) floor midiCps) ] value.
   t := Decay in: i value decayTime: 0.1 mul: (PinkNoise mul: 0.1).
   Pan2 in: (CombL in: t maxdelaytime: dt delaytime: dt decaytime: 4) pos: (-1.0 rand: 1.0) level: 1 ].
-5 mixFill: str
+(str dup: 5) sum

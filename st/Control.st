@@ -1,4 +1,4 @@
-AbstractUgen subclass: #Control
+Object subclass: #Control
   instanceVariableNames: 'name init'
   classVariableNames: ''
   poolDictionaries: ''

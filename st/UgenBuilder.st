@@ -13,13 +13,13 @@ name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputA
             UgenBuilder name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputArray: item
         ]
     ] ifFalse: [
-        | rate ugen |
+        | rate scUgen |
         rate := rateSpec isArray
             ifTrue: [ ((inputArray atAll: rateSpec) collect: [ :item | item rate ]) max ]
             ifFalse: [ rateSpec ].
-        ugen := PrimitiveUgen name: name numChan: numChan rate: rate specialIndex: specialIndex inputArray: inputArray.
-        (numChan = 0) ifTrue: [ ^ugen ].
-        (numChan = 1) ifTrue: [ ^ugen ].
-        ^(1 to: numChan) collect: [ :item | PrimitiveUgenOutput ugen: ugen index: item ] "one-indexed"
+        scUgen := ScUgen name: name numChan: numChan rate: rate specialIndex: specialIndex inputArray: inputArray.
+        (numChan = 0) ifTrue: [ ^Ugen scUgen: scUgen port: nil ].
+        (numChan = 1) ifTrue: [ ^Ugen scUgen: scUgen port: 1 ].
+        ^(1 to: numChan) collect: [ :item | Ugen scUgen: scUgen port: item ] "one-indexed"
     ]!
 !

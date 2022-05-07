@@ -1,4 +1,4 @@
-Cutoff = AbstractUgen (
+Cutoff = PseudoUgen (
      'EnvGen of simple cutoff envelope'
 
      ----------------------------

@@ -1,29 +1,29 @@
-AbstractUgen subclass: #PrimitiveUgen
-  instanceVariableNames: 'name numChan rate specialIndex inputArray id mrg'
+Object subclass: #ScUgen
+  instanceVariableNames: 'name numChan rate specialIndex id inputArray mrg'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-PrimitiveUgen comment: 'Primitive unit generator.
-Objects have identity, the id field is used to sort unit generators into applicative order.'!
+ScUgen comment: 'SuperCollider unit generator.
+The id field is used to sort unit generators into applicative order.'!
 
-!PrimitiveUgen methodsFor: 'initialization'!
+!ScUgen methodsFor: 'initialization'!
 name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
     name := nm.
     numChan := nc.
     rate := rt.
     specialIndex := ix.
-    inputArray := in.
     id := Sc3Id nextId.
-    mrg := OrderedCollection new!
+    inputArray := in.
+    mrg := Set new!
 !
 
-!PrimitiveUgen class methodsFor: 'instance creation'!
+!ScUgen class methodsFor: 'instance creation'!
 name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
     ^self new name: nm numChan: nc rate: rt specialIndex: ix inputArray: in!
 !
 
-!PrimitiveUgen methodsFor: 'accessing'!
+!ScUgen methodsFor: 'accessing'!
 id
     ^id!
 id: aNumber
@@ -34,14 +34,14 @@ rate: aNumber
     rate := aNumber!
 !
 
-!PrimitiveUgen methodsFor: 'rate control'!
+!ScUgen methodsFor: 'rate control'!
 kr
     (rate = Rate ar) ifTrue: [rate := Rate kr].
     inputArray kr.
     ^self!
 !
 
-!PrimitiveUgen methodsFor: 'collecting'!
+!ScUgen methodsFor: 'collecting'!
 addToUgenSet: c protectedBy: w
     (w includes: self) ifFalse: [
         c add: self.
@@ -49,22 +49,17 @@ addToUgenSet: c protectedBy: w
         mrg do: [ :item | item addToUgenSet: c protectedBy: c ] ]!
 !
 
-!PrimitiveUgen methodsFor: 'mrg'!
+!ScUgen methodsFor: 'mrg'!
 mrg: rhs
     rhs asArray do: [ :item | mrg add: item ].
     ^self.
-!
-
-!PrimitiveUgen methodsFor: 'testing'!
-acceptsMrg
-    ^true!
 !
 
 "Mrg needs to be printed here.
 It can't be at printHaskellOn because that will be used on the lhs of =, and at printHaskellDefinitionOn: it makes a loop.
 It requires an extra id, so another node, so Mrg...
 Should just print a text syndef."
-!PrimitiveUgen methodsFor: 'printing'!
+!ScUgen methodsFor: 'printing'!
 printHaskellOn: fd
     "Print the name I am bound to in hsc3."
     '_u_', id asString putOn: fd!

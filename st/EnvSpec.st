@@ -81,7 +81,4 @@ levels: p1 times: p2
     ^self levels: p1 times: p2 curves: #(1)!
 primaryFactoryMethod
     ^#levels:times:curves:releaseNode:loopNode:offset:!
-apply: arg
-    "EnvSpec has a primary factory method."
-    ^self perform: (self primaryFactoryMethod) withArguments: arg!
 !

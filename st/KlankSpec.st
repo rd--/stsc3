@@ -1,4 +1,4 @@
-AbstractUgen subclass: #KlankSpec
+Object subclass: #KlankSpec
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

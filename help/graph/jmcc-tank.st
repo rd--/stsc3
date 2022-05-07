@@ -26,6 +26,6 @@ tank := [ :i |
   l7 := l6 + i.
   l7 mrg: (LocalOut channelsArray: l7)
 ].
-signal := (12 mixFill: pling) + bang.
+signal := (pling dup: 12) sum + bang.
 4 timesRepeat: [ signal := r_allpass value: signal ].
 tank value: signal

@@ -302,7 +302,7 @@ SinOscBank : PseudoUgen {
 }
 
 /* Pan an array of channels across the stereo field */
-Splay :	AbstractUgen {
+Splay : PseudoUgen {
     *cons {
         arg inArray, spread, level, center, levelComp;
 		var n = 2.max(inArray.size);
@@ -318,7 +318,7 @@ Splay :	AbstractUgen {
 }
 
 /* Pan an array of channels across the stereo field */
-Splay2 : AbstractUgen {
+Splay2 : PseudoUgen {
     *cons {
         arg inArray;
         ^Splay(inArray, 1, 1, 0, true)
@@ -326,7 +326,7 @@ Splay2 : AbstractUgen {
 }
 
 /* Switch (maintained or momentary) controller input */
-Sw : AbstractUgen {
+Sw : PseudoUgen {
     *cons {
         arg index;
         ^In(1, 12000 + index).kr

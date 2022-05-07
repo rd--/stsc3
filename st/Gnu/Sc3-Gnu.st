@@ -1,4 +1,4 @@
-!AbstractUgen methodsFor: 'coercing'!
+!Ugen methodsFor: 'coercing'!
   generality
     "Float is 400, Ugen is more general than Float."
     ^500
@@ -190,8 +190,8 @@
     "Gnu Smalltalk doesn't implement **.
      Special cases for Ugens and Collections."
     (aNumber = 0) ifTrue: [^1].
-    (aNumber isKindOf: AbstractUgen) ifTrue: [^self asUgen raisedTo: aNumber].
-    (aNumber isKindOf: Collection) ifTrue: [^aNumber collect: [ :x | self ** x]].
+    aNumber isUgen ifTrue: [^self asUgen raisedTo: aNumber].
+    aNumber isCollection ifTrue: [^aNumber collect: [ :x | self ** x]].
     ^self raisedTo: aNumber
   !
 !

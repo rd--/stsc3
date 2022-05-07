@@ -77,10 +77,5 @@ f := m collect: l.
 
 "----"
 o := SinOsc freq: 440 phase: 0
-o hash
-o freq
-o perform: #freq
-o paramNames collect: [ :x | o perform: x ]
-o class == SinOsc
-o class name == #SinOsc
-o ugenRate == #ar
+o class == Ugen
+o rate == Rate ar

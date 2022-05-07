@@ -1,10 +1,10 @@
-AbstractUgen subclass: #Constant
+Object subclass: #Constant
   instanceVariableNames: 'value'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-Constant comment: 'Constant numerical value. Required for adaptToAndSend messages.'!
+Constant comment: 'Constant numerical value. Required for adaptToAndSend messages???'!
 
 !Constant methodsFor: 'initialization'!
 value: aNumber

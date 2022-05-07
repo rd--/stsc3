@@ -8,4 +8,4 @@
     a := SinOsc freq: x + n kr phase: 0.
     b := SinOsc freq: y phase: 0.
     a * b ].
-(3 mixFill: nd) * 0.35
+(nd dup: 3) sum * 0.35

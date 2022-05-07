@@ -1,4 +1,4 @@
-AbstractUgen subclass: #OverlapTexture
+Object subclass: #OverlapTexture
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''

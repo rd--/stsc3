@@ -23,9 +23,3 @@ asEnvGen
     "Myself as an EnvGen instance with default gate (1) and doneAction (0=doNothing)"
     ^self asEnvGen: 1 withDoneAction: 0!
 !
-
-!EnvBuilder class methodsFor: 'instance creation'!
-apply: arg
-    "EnvBuilder classes have a primaryFactoryMethod"
-    ^self perform: (self primaryFactoryMethod) withArguments: arg!
-!

@@ -1,4 +1,4 @@
-PrimitiveUgen subclass: #AllpassC
+ScUgen subclass: #AllpassC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -17,7 +17,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(AllpassC in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #AllpassL
+ScUgen subclass: #AllpassL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -36,7 +36,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(AllpassL in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #AllpassN
+ScUgen subclass: #AllpassN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -55,7 +55,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(AllpassN in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #AmpComp
+ScUgen subclass: #AmpComp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -74,7 +74,7 @@ freq: freq root: root exp: exp mul: mul add: add
     ^(AmpComp freq: freq root: root exp: exp) * mul + add!
 !
 
-PrimitiveUgen subclass: #AmpCompA
+ScUgen subclass: #AmpCompA
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -93,7 +93,7 @@ freq: freq root: root minAmp: minAmp rootAmp: rootAmp mul: mul add: add
     ^(AmpCompA freq: freq root: root minAmp: minAmp rootAmp: rootAmp) * mul + add!
 !
 
-PrimitiveUgen subclass: #Amplitude
+ScUgen subclass: #Amplitude
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -112,7 +112,7 @@ in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add
     ^(Amplitude in: in attackTime: attackTime releaseTime: releaseTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #Balance2
+ScUgen subclass: #Balance2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -131,7 +131,7 @@ left: left right: right pos: pos level: level mul: mul add: add
     ^(Balance2 left: left right: right pos: pos level: level) * mul + add!
 !
 
-PrimitiveUgen subclass: #BBandPass
+ScUgen subclass: #BBandPass
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -150,7 +150,7 @@ in: in freq: freq bw: bw mul: mul add: add
     ^(BBandPass in: in freq: freq bw: bw) * mul + add!
 !
 
-PrimitiveUgen subclass: #BBandStop
+ScUgen subclass: #BBandStop
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -169,7 +169,7 @@ in: in freq: freq bw: bw mul: mul add: add
     ^(BBandStop in: in freq: freq bw: bw) * mul + add!
 !
 
-PrimitiveUgen subclass: #Blip
+ScUgen subclass: #Blip
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -188,7 +188,7 @@ freq: freq numharm: numharm mul: mul add: add
     ^(Blip freq: freq numharm: numharm) * mul + add!
 !
 
-PrimitiveUgen subclass: #BlockSize
+ScUgen subclass: #BlockSize
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -207,7 +207,7 @@ mul: mul add: add
     ^(BlockSize new) * mul + add!
 !
 
-PrimitiveUgen subclass: #BLowPass
+ScUgen subclass: #BLowPass
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -226,7 +226,7 @@ in: in freq: freq rq: rq mul: mul add: add
     ^(BLowPass in: in freq: freq rq: rq) * mul + add!
 !
 
-PrimitiveUgen subclass: #BPeakEQ
+ScUgen subclass: #BPeakEQ
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -245,7 +245,7 @@ in: in freq: freq rq: rq db: db mul: mul add: add
     ^(BPeakEQ in: in freq: freq rq: rq db: db) * mul + add!
 !
 
-PrimitiveUgen subclass: #BPF
+ScUgen subclass: #BPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -264,7 +264,7 @@ in: in freq: freq rq: rq mul: mul add: add
     ^(BPF in: in freq: freq rq: rq) * mul + add!
 !
 
-PrimitiveUgen subclass: #BPZ2
+ScUgen subclass: #BPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -283,7 +283,7 @@ in: in mul: mul add: add
     ^(BPZ2 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #BRF
+ScUgen subclass: #BRF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -302,7 +302,7 @@ in: in freq: freq rq: rq mul: mul add: add
     ^(BRF in: in freq: freq rq: rq) * mul + add!
 !
 
-PrimitiveUgen subclass: #BRZ2
+ScUgen subclass: #BRZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -321,7 +321,7 @@ in: in mul: mul add: add
     ^(BRZ2 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #BrownNoise
+ScUgen subclass: #BrownNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -340,7 +340,7 @@ mul: mul add: add
     ^(BrownNoise new) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufDur
+ScUgen subclass: #BufDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -359,7 +359,7 @@ bufnum: bufnum mul: mul add: add
     ^(BufDur bufnum: bufnum) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufFrames
+ScUgen subclass: #BufFrames
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -378,7 +378,7 @@ bufnum: bufnum mul: mul add: add
     ^(BufFrames bufnum: bufnum) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufRateScale
+ScUgen subclass: #BufRateScale
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -397,7 +397,7 @@ bufnum: bufnum mul: mul add: add
     ^(BufRateScale bufnum: bufnum) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufRd
+ScUgen subclass: #BufRd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -416,7 +416,7 @@ numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpola
     ^(BufRd numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufSampleRate
+ScUgen subclass: #BufSampleRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -435,7 +435,7 @@ bufnum: bufnum mul: mul add: add
     ^(BufSampleRate bufnum: bufnum) * mul + add!
 !
 
-PrimitiveUgen subclass: #BufWr
+ScUgen subclass: #BufWr
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -454,7 +454,7 @@ bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul add: add
     ^(BufWr bufnum: bufnum phase: phase loop: loop inputArray: inputArray) * mul + add!
 !
 
-PrimitiveUgen subclass: #ClearBuf
+ScUgen subclass: #ClearBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -473,7 +473,7 @@ buf: buf mul: mul add: add
     ^(ClearBuf buf: buf) * mul + add!
 !
 
-PrimitiveUgen subclass: #Clip
+ScUgen subclass: #Clip
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -492,7 +492,7 @@ in: in lo: lo hi: hi mul: mul add: add
     ^(Clip in: in lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #ClipNoise
+ScUgen subclass: #ClipNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -511,7 +511,7 @@ mul: mul add: add
     ^(ClipNoise new) * mul + add!
 !
 
-PrimitiveUgen subclass: #CoinGate
+ScUgen subclass: #CoinGate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -530,7 +530,7 @@ prob: prob in: in mul: mul add: add
     ^(CoinGate prob: prob in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #CombC
+ScUgen subclass: #CombC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -549,7 +549,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(CombC in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #CombL
+ScUgen subclass: #CombL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -568,7 +568,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(CombL in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #CombN
+ScUgen subclass: #CombN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -587,7 +587,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul:
     ^(CombN in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #ControlDur
+ScUgen subclass: #ControlDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -606,7 +606,7 @@ mul: mul add: add
     ^(ControlDur new) * mul + add!
 !
 
-PrimitiveUgen subclass: #ControlRate
+ScUgen subclass: #ControlRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -625,7 +625,7 @@ mul: mul add: add
     ^(ControlRate new) * mul + add!
 !
 
-PrimitiveUgen subclass: #Convolution
+ScUgen subclass: #Convolution
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -644,7 +644,7 @@ in: in kernel: kernel framesize: framesize mul: mul add: add
     ^(Convolution in: in kernel: kernel framesize: framesize) * mul + add!
 !
 
-PrimitiveUgen subclass: #Crackle
+ScUgen subclass: #Crackle
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -663,7 +663,7 @@ chaosParam: chaosParam mul: mul add: add
     ^(Crackle chaosParam: chaosParam) * mul + add!
 !
 
-PrimitiveUgen subclass: #CuspL
+ScUgen subclass: #CuspL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -682,7 +682,7 @@ freq: freq a: a b: b xi: xi mul: mul add: add
     ^(CuspL freq: freq a: a b: b xi: xi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dbufrd
+ScUgen subclass: #Dbufrd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -701,7 +701,7 @@ bufnum: bufnum phase: phase loop: loop mul: mul add: add
     ^(Dbufrd bufnum: bufnum phase: phase loop: loop) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dbufwr
+ScUgen subclass: #Dbufwr
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -720,7 +720,7 @@ bufnum: bufnum phase: phase input: input loop: loop mul: mul add: add
     ^(Dbufwr bufnum: bufnum phase: phase input: input loop: loop) * mul + add!
 !
 
-PrimitiveUgen subclass: #DC
+ScUgen subclass: #DC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -739,7 +739,7 @@ in: in mul: mul add: add
     ^(DC in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #Decay
+ScUgen subclass: #Decay
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -758,7 +758,7 @@ in: in decayTime: decayTime mul: mul add: add
     ^(Decay in: in decayTime: decayTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #Decay2
+ScUgen subclass: #Decay2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -777,7 +777,7 @@ in: in attackTime: attackTime decayTime: decayTime mul: mul add: add
     ^(Decay2 in: in attackTime: attackTime decayTime: decayTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #DegreeToKey
+ScUgen subclass: #DegreeToKey
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -796,7 +796,7 @@ bufnum: bufnum in: in octave: octave mul: mul add: add
     ^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul + add!
 !
 
-PrimitiveUgen subclass: #Delay1
+ScUgen subclass: #Delay1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -815,7 +815,7 @@ in: in mul: mul add: add
     ^(Delay1 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #Delay2
+ScUgen subclass: #Delay2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -834,7 +834,7 @@ in: in mul: mul add: add
     ^(Delay2 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #DelayC
+ScUgen subclass: #DelayC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -853,7 +853,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
     ^(DelayC in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #DelayL
+ScUgen subclass: #DelayL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -872,7 +872,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
     ^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #DelayN
+ScUgen subclass: #DelayN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -891,7 +891,7 @@ in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add
     ^(DelayN in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #Demand
+ScUgen subclass: #Demand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -910,7 +910,7 @@ trig: trig reset: reset demandUGens: demandUGens mul: mul add: add
     ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul + add!
 !
 
-PrimitiveUgen subclass: #DetectSilence
+ScUgen subclass: #DetectSilence
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -929,7 +929,7 @@ in: in amp: amp time: time doneAction: doneAction mul: mul add: add
     ^(DetectSilence in: in amp: amp time: time doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #Diwhite
+ScUgen subclass: #Diwhite
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -948,7 +948,7 @@ length: length lo: lo hi: hi mul: mul add: add
     ^(Diwhite length: length lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Drand
+ScUgen subclass: #Drand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -967,7 +967,7 @@ repeats: repeats list: list mul: mul add: add
     ^(Drand repeats: repeats list: list) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dseq
+ScUgen subclass: #Dseq
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -986,7 +986,7 @@ repeats: repeats list: list mul: mul add: add
     ^(Dseq repeats: repeats list: list) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dseries
+ScUgen subclass: #Dseries
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1005,7 +1005,7 @@ length: length start: start step: step mul: mul add: add
     ^(Dseries length: length start: start step: step) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dshuf
+ScUgen subclass: #Dshuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1024,7 +1024,7 @@ repeats: repeats list: list mul: mul add: add
     ^(Dshuf repeats: repeats list: list) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dust
+ScUgen subclass: #Dust
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1043,7 +1043,7 @@ density: density mul: mul add: add
     ^(Dust density: density) * mul + add!
 !
 
-PrimitiveUgen subclass: #Dust2
+ScUgen subclass: #Dust2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1062,7 +1062,7 @@ density: density mul: mul add: add
     ^(Dust2 density: density) * mul + add!
 !
 
-PrimitiveUgen subclass: #Duty
+ScUgen subclass: #Duty
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1081,7 +1081,7 @@ dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add
     ^(Duty dur: dur reset: reset doneAction: doneAction level: level) * mul + add!
 !
 
-PrimitiveUgen subclass: #DWGPluckedStiff
+ScUgen subclass: #DWGPluckedStiff
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1100,7 +1100,7 @@ freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release 
     ^(DWGPluckedStiff freq: freq amp: amp gate: gate pos: pos c1: c1 c3: c3 inp: inp release: release fB: fB) * mul + add!
 !
 
-PrimitiveUgen subclass: #EnvGen
+ScUgen subclass: #EnvGen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1119,7 +1119,7 @@ gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale done
     ^(EnvGen gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope) * mul + add!
 !
 
-PrimitiveUgen subclass: #ExpRand
+ScUgen subclass: #ExpRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1138,7 +1138,7 @@ lo: lo hi: hi mul: mul add: add
     ^(ExpRand lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #FBSineL
+ScUgen subclass: #FBSineL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1157,7 +1157,7 @@ freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add
     ^(FBSineL freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add!
 !
 
-PrimitiveUgen subclass: #FBSineC
+ScUgen subclass: #FBSineC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1176,7 +1176,7 @@ freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add
     ^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add!
 !
 
-PrimitiveUgen subclass: #FFT
+ScUgen subclass: #FFT
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1195,7 +1195,7 @@ buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize 
     ^(FFT buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize) * mul + add!
 !
 
-PrimitiveUgen subclass: #Fold
+ScUgen subclass: #Fold
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1214,7 +1214,7 @@ in: in lo: lo hi: hi mul: mul add: add
     ^(Fold in: in lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Formant
+ScUgen subclass: #Formant
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1233,7 +1233,7 @@ fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add
     ^(Formant fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq) * mul + add!
 !
 
-PrimitiveUgen subclass: #Formlet
+ScUgen subclass: #Formlet
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1252,7 +1252,7 @@ in: in freq: freq attacktime: attacktime decaytime: decaytime mul: mul add: add
     ^(Formlet in: in freq: freq attacktime: attacktime decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #FOS
+ScUgen subclass: #FOS
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1271,7 +1271,7 @@ in: in a0: a0 a1: a1 b1: b1 mul: mul add: add
     ^(FOS in: in a0: a0 a1: a1 b1: b1) * mul + add!
 !
 
-PrimitiveUgen subclass: #FreqShift
+ScUgen subclass: #FreqShift
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1290,7 +1290,7 @@ in: in freq: freq phase: phase mul: mul add: add
     ^(FreqShift in: in freq: freq phase: phase) * mul + add!
 !
 
-PrimitiveUgen subclass: #FSinOsc
+ScUgen subclass: #FSinOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1309,7 +1309,7 @@ freq: freq iphase: iphase mul: mul add: add
     ^(FSinOsc freq: freq iphase: iphase) * mul + add!
 !
 
-PrimitiveUgen subclass: #FreeVerb
+ScUgen subclass: #FreeVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1328,7 +1328,7 @@ in: in mix: mix room: room damp: damp mul: mul add: add
     ^(FreeVerb in: in mix: mix room: room damp: damp) * mul + add!
 !
 
-PrimitiveUgen subclass: #FreeVerb2
+ScUgen subclass: #FreeVerb2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1347,7 +1347,7 @@ in: in in2: in2 mix: mix room: room damp: damp mul: mul add: add
     ^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul + add!
 !
 
-PrimitiveUgen subclass: #Gate
+ScUgen subclass: #Gate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1366,7 +1366,7 @@ in: in trig: trig mul: mul add: add
     ^(Gate in: in trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #Gendy1
+ScUgen subclass: #Gendy1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1385,7 +1385,7 @@ ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: min
     ^(Gendy1 ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum) * mul + add!
 !
 
-PrimitiveUgen subclass: #GrainFM
+ScUgen subclass: #GrainFM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1404,7 +1404,7 @@ numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq ind
     ^(GrainFM numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add!
 !
 
-PrimitiveUgen subclass: #GrainSin
+ScUgen subclass: #GrainSin
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1423,7 +1423,7 @@ numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbuf
     ^(GrainSin numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add!
 !
 
-PrimitiveUgen subclass: #GrayNoise
+ScUgen subclass: #GrayNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1442,7 +1442,7 @@ mul: mul add: add
     ^(GrayNoise new) * mul + add!
 !
 
-PrimitiveUgen subclass: #GVerb
+ScUgen subclass: #GVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1461,7 +1461,7 @@ in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spr
     ^(GVerb in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize) * mul + add!
 !
 
-PrimitiveUgen subclass: #Hasher
+ScUgen subclass: #Hasher
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1480,7 +1480,7 @@ in: in mul: mul add: add
     ^(Hasher in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #HenonL
+ScUgen subclass: #HenonL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1499,7 +1499,7 @@ freq: freq a: a b: b x0: x0 x1: x1 mul: mul add: add
     ^(HenonL freq: freq a: a b: b x0: x0 x1: x1) * mul + add!
 !
 
-PrimitiveUgen subclass: #HenonC
+ScUgen subclass: #HenonC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1518,7 +1518,7 @@ freq: freq a: a b: b x0: x0 x1: x1 mul: mul add: add
     ^(HenonC freq: freq a: a b: b x0: x0 x1: x1) * mul + add!
 !
 
-PrimitiveUgen subclass: #HPF
+ScUgen subclass: #HPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1537,7 +1537,7 @@ in: in freq: freq mul: mul add: add
     ^(HPF in: in freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #HPZ1
+ScUgen subclass: #HPZ1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1556,7 +1556,7 @@ in: in mul: mul add: add
     ^(HPZ1 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #HPZ2
+ScUgen subclass: #HPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1575,7 +1575,7 @@ in: in mul: mul add: add
     ^(HPZ2 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #IFFT
+ScUgen subclass: #IFFT
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1594,7 +1594,7 @@ buffer: buffer wintype: wintype winsize: winsize mul: mul add: add
     ^(IFFT buffer: buffer wintype: wintype winsize: winsize) * mul + add!
 !
 
-PrimitiveUgen subclass: #Impulse
+ScUgen subclass: #Impulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1613,7 +1613,7 @@ freq: freq phase: phase mul: mul add: add
     ^(Impulse freq: freq phase: phase) * mul + add!
 !
 
-PrimitiveUgen subclass: #In
+ScUgen subclass: #In
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1632,7 +1632,7 @@ numChan: numChan bus: bus mul: mul add: add
     ^(In numChan: numChan bus: bus) * mul + add!
 !
 
-PrimitiveUgen subclass: #Index
+ScUgen subclass: #Index
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1651,7 +1651,7 @@ bufnum: bufnum in: in mul: mul add: add
     ^(Index bufnum: bufnum in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #IndexInBetween
+ScUgen subclass: #IndexInBetween
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1670,7 +1670,7 @@ bufnum: bufnum in: in mul: mul add: add
     ^(IndexInBetween bufnum: bufnum in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #InFeedback
+ScUgen subclass: #InFeedback
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1689,7 +1689,7 @@ numChan: numChan bus: bus mul: mul add: add
     ^(InFeedback numChan: numChan bus: bus) * mul + add!
 !
 
-PrimitiveUgen subclass: #InRange
+ScUgen subclass: #InRange
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1708,7 +1708,7 @@ in: in lo: lo hi: hi mul: mul add: add
     ^(InRange in: in lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #IRand
+ScUgen subclass: #IRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1727,7 +1727,7 @@ lo: lo hi: hi mul: mul add: add
     ^(IRand lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Integrator
+ScUgen subclass: #Integrator
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1746,7 +1746,7 @@ in: in coef: coef mul: mul add: add
     ^(Integrator in: in coef: coef) * mul + add!
 !
 
-PrimitiveUgen subclass: #K2A
+ScUgen subclass: #K2A
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1765,7 +1765,7 @@ in: in mul: mul add: add
     ^(K2A in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #KeyState
+ScUgen subclass: #KeyState
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1784,7 +1784,7 @@ keycode: keycode minval: minval maxval: maxval lag: lag mul: mul add: add
     ^(KeyState keycode: keycode minval: minval maxval: maxval lag: lag) * mul + add!
 !
 
-PrimitiveUgen subclass: #Klang
+ScUgen subclass: #Klang
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1803,7 +1803,7 @@ freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificatio
     ^(Klang freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef) * mul + add!
 !
 
-PrimitiveUgen subclass: #Klank
+ScUgen subclass: #Klank
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1822,7 +1822,7 @@ input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale 
     ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFBrownNoise1
+ScUgen subclass: #LFBrownNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1841,7 +1841,7 @@ freq: freq dev: dev dist: dist mul: mul add: add
     ^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFClipNoise
+ScUgen subclass: #LFClipNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1860,7 +1860,7 @@ freq: freq mul: mul add: add
     ^(LFClipNoise freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFCub
+ScUgen subclass: #LFCub
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1879,7 +1879,7 @@ freq: freq iphase: iphase mul: mul add: add
     ^(LFCub freq: freq iphase: iphase) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFDNoise1
+ScUgen subclass: #LFDNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1898,7 +1898,7 @@ freq: freq mul: mul add: add
     ^(LFDNoise1 freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFDNoise3
+ScUgen subclass: #LFDNoise3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1917,7 +1917,7 @@ freq: freq mul: mul add: add
     ^(LFDNoise3 freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFGauss
+ScUgen subclass: #LFGauss
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1936,7 +1936,7 @@ duration: duration width: width iphase: iphase loop: loop doneAction: doneAction
     ^(LFGauss duration: duration width: width iphase: iphase loop: loop doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFNoise0
+ScUgen subclass: #LFNoise0
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1955,7 +1955,7 @@ freq: freq mul: mul add: add
     ^(LFNoise0 freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFNoise1
+ScUgen subclass: #LFNoise1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1974,7 +1974,7 @@ freq: freq mul: mul add: add
     ^(LFNoise1 freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFNoise2
+ScUgen subclass: #LFNoise2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -1993,7 +1993,7 @@ freq: freq mul: mul add: add
     ^(LFNoise2 freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFPar
+ScUgen subclass: #LFPar
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2012,7 +2012,7 @@ freq: freq iphase: iphase mul: mul add: add
     ^(LFPar freq: freq iphase: iphase) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFPulse
+ScUgen subclass: #LFPulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2031,7 +2031,7 @@ freq: freq iphase: iphase width: width mul: mul add: add
     ^(LFPulse freq: freq iphase: iphase width: width) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFSaw
+ScUgen subclass: #LFSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2050,7 +2050,7 @@ freq: freq iphase: iphase mul: mul add: add
     ^(LFSaw freq: freq iphase: iphase) * mul + add!
 !
 
-PrimitiveUgen subclass: #LFTri
+ScUgen subclass: #LFTri
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2069,7 +2069,7 @@ freq: freq iphase: iphase mul: mul add: add
     ^(LFTri freq: freq iphase: iphase) * mul + add!
 !
 
-PrimitiveUgen subclass: #LPF
+ScUgen subclass: #LPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2088,7 +2088,7 @@ in: in freq: freq mul: mul add: add
     ^(LPF in: in freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #Lag
+ScUgen subclass: #Lag
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2107,7 +2107,7 @@ in: in lagTime: lagTime mul: mul add: add
     ^(Lag in: in lagTime: lagTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #LagUD
+ScUgen subclass: #LagUD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2126,7 +2126,7 @@ in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
     ^(LagUD in: in lagTimeU: lagTimeU lagTimeD: lagTimeD) * mul + add!
 !
 
-PrimitiveUgen subclass: #Lag2
+ScUgen subclass: #Lag2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2145,7 +2145,7 @@ in: in lagTime: lagTime mul: mul add: add
     ^(Lag2 in: in lagTime: lagTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #Lag3
+ScUgen subclass: #Lag3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2164,7 +2164,7 @@ in: in lagTime: lagTime mul: mul add: add
     ^(Lag3 in: in lagTime: lagTime) * mul + add!
 !
 
-PrimitiveUgen subclass: #Lag3UD
+ScUgen subclass: #Lag3UD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2183,7 +2183,7 @@ in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add
     ^(Lag3UD in: in lagTimeU: lagTimeU lagTimeD: lagTimeD) * mul + add!
 !
 
-PrimitiveUgen subclass: #Latch
+ScUgen subclass: #Latch
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2202,7 +2202,7 @@ in: in trig: trig mul: mul add: add
     ^(Latch in: in trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #LatoocarfianC
+ScUgen subclass: #LatoocarfianC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2221,7 +2221,7 @@ freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul add: add
     ^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul + add!
 !
 
-PrimitiveUgen subclass: #LeakDC
+ScUgen subclass: #LeakDC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2240,7 +2240,7 @@ in: in coef: coef mul: mul add: add
     ^(LeakDC in: in coef: coef) * mul + add!
 !
 
-PrimitiveUgen subclass: #Limiter
+ScUgen subclass: #Limiter
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2259,7 +2259,7 @@ in: in level: level dur: dur mul: mul add: add
     ^(Limiter in: in level: level dur: dur) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinCongC
+ScUgen subclass: #LinCongC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2278,7 +2278,7 @@ freq: freq a: a c: c m: m xi: xi mul: mul add: add
     ^(LinCongC freq: freq a: a c: c m: m xi: xi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Line
+ScUgen subclass: #Line
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2297,7 +2297,7 @@ start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     ^(Line start: start end: end dur: dur doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #Linen
+ScUgen subclass: #Linen
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2316,7 +2316,7 @@ gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime do
     ^(Linen gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinExp
+ScUgen subclass: #LinExp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2335,7 +2335,7 @@ in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add
     ^(LinExp in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinPan2
+ScUgen subclass: #LinPan2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2354,7 +2354,7 @@ in: in pos: pos level: level mul: mul add: add
     ^(LinPan2 in: in pos: pos level: level) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinRand
+ScUgen subclass: #LinRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2373,7 +2373,7 @@ lo: lo hi: hi minmax: minmax mul: mul add: add
     ^(LinRand lo: lo hi: hi minmax: minmax) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinXFade2
+ScUgen subclass: #LinXFade2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2392,7 +2392,7 @@ inA: inA inB: inB pan: pan mul: mul add: add
     ^(LinXFade2 inA: inA inB: inB pan: pan) * mul + add!
 !
 
-PrimitiveUgen subclass: #LocalBuf
+ScUgen subclass: #LocalBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2411,7 +2411,7 @@ numChannels: numChannels numFrames: numFrames mul: mul add: add
     ^(LocalBuf numChannels: numChannels numFrames: numFrames) * mul + add!
 !
 
-PrimitiveUgen subclass: #LocalIn
+ScUgen subclass: #LocalIn
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2430,7 +2430,7 @@ numChan: numChan default: default mul: mul add: add
     ^(LocalIn numChan: numChan default: default) * mul + add!
 !
 
-PrimitiveUgen subclass: #LocalOut
+ScUgen subclass: #LocalOut
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2449,7 +2449,7 @@ channelsArray: channelsArray mul: mul add: add
     ^(LocalOut channelsArray: channelsArray) * mul + add!
 !
 
-PrimitiveUgen subclass: #LorenzL
+ScUgen subclass: #LorenzL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2468,7 +2468,7 @@ freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi mul: mul add: add
     ^(LorenzL freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi) * mul + add!
 !
 
-PrimitiveUgen subclass: #LPZ1
+ScUgen subclass: #LPZ1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2487,7 +2487,7 @@ in: in mul: mul add: add
     ^(LPZ1 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #LPZ2
+ScUgen subclass: #LPZ2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2506,7 +2506,7 @@ in: in mul: mul add: add
     ^(LPZ2 in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #MantissaMask
+ScUgen subclass: #MantissaMask
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2525,7 +2525,7 @@ in: in bits: bits mul: mul add: add
     ^(MantissaMask in: in bits: bits) * mul + add!
 !
 
-PrimitiveUgen subclass: #MaxLocalBufs
+ScUgen subclass: #MaxLocalBufs
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2544,7 +2544,7 @@ count: count mul: mul add: add
     ^(MaxLocalBufs count: count) * mul + add!
 !
 
-PrimitiveUgen subclass: #Median
+ScUgen subclass: #Median
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2563,7 +2563,7 @@ length: length in: in mul: mul add: add
     ^(Median length: length in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #ModDif
+ScUgen subclass: #ModDif
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2582,7 +2582,7 @@ x: x y: y mod: mod mul: mul add: add
     ^(ModDif x: x y: y mod: mod) * mul + add!
 !
 
-PrimitiveUgen subclass: #MoogFF
+ScUgen subclass: #MoogFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2601,7 +2601,7 @@ in: in freq: freq gain: gain reset: reset mul: mul add: add
     ^(MoogFF in: in freq: freq gain: gain reset: reset) * mul + add!
 !
 
-PrimitiveUgen subclass: #MouseButton
+ScUgen subclass: #MouseButton
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2620,7 +2620,7 @@ minval: minval maxval: maxval lag: lag mul: mul add: add
     ^(MouseButton minval: minval maxval: maxval lag: lag) * mul + add!
 !
 
-PrimitiveUgen subclass: #MouseX
+ScUgen subclass: #MouseX
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2639,7 +2639,7 @@ minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     ^(MouseX minval: minval maxval: maxval warp: warp lag: lag) * mul + add!
 !
 
-PrimitiveUgen subclass: #MouseY
+ScUgen subclass: #MouseY
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2658,7 +2658,7 @@ minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add
     ^(MouseY minval: minval maxval: maxval warp: warp lag: lag) * mul + add!
 !
 
-PrimitiveUgen subclass: #MulAdd
+ScUgen subclass: #MulAdd
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2673,7 +2673,7 @@ primaryFactoryMethod
     ^#in:mul:add:!
 !
 
-PrimitiveUgen subclass: #Normalizer
+ScUgen subclass: #Normalizer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2692,7 +2692,7 @@ in: in level: level dur: dur mul: mul add: add
     ^(Normalizer in: in level: level dur: dur) * mul + add!
 !
 
-PrimitiveUgen subclass: #NRand
+ScUgen subclass: #NRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2711,7 +2711,7 @@ lo: lo hi: hi n: n mul: mul add: add
     ^(NRand lo: lo hi: hi n: n) * mul + add!
 !
 
-PrimitiveUgen subclass: #NumOutputBuses
+ScUgen subclass: #NumOutputBuses
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2730,7 +2730,7 @@ mul: mul add: add
     ^(NumOutputBuses new) * mul + add!
 !
 
-PrimitiveUgen subclass: #OnePole
+ScUgen subclass: #OnePole
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2749,7 +2749,7 @@ in: in coef: coef mul: mul add: add
     ^(OnePole in: in coef: coef) * mul + add!
 !
 
-PrimitiveUgen subclass: #OneZero
+ScUgen subclass: #OneZero
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2768,7 +2768,7 @@ in: in coef: coef mul: mul add: add
     ^(OneZero in: in coef: coef) * mul + add!
 !
 
-PrimitiveUgen subclass: #Osc
+ScUgen subclass: #Osc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2787,7 +2787,7 @@ bufnum: bufnum freq: freq phase: phase mul: mul add: add
     ^(Osc bufnum: bufnum freq: freq phase: phase) * mul + add!
 !
 
-PrimitiveUgen subclass: #Out
+ScUgen subclass: #Out
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2806,7 +2806,7 @@ bus: bus channelsArray: channelsArray mul: mul add: add
     ^(Out bus: bus channelsArray: channelsArray) * mul + add!
 !
 
-PrimitiveUgen subclass: #Pan2
+ScUgen subclass: #Pan2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2825,7 +2825,7 @@ in: in pos: pos level: level mul: mul add: add
     ^(Pan2 in: in pos: pos level: level) * mul + add!
 !
 
-PrimitiveUgen subclass: #PanAz
+ScUgen subclass: #PanAz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2844,7 +2844,7 @@ numChan: numChan in: in pos: pos level: level width: width orientation: orientat
     ^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul + add!
 !
 
-PrimitiveUgen subclass: #PanB
+ScUgen subclass: #PanB
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2863,7 +2863,7 @@ in: in azimuth: azimuth elevation: elevation gain: gain mul: mul add: add
     ^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul + add!
 !
 
-PrimitiveUgen subclass: #PeakFollower
+ScUgen subclass: #PeakFollower
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2882,7 +2882,7 @@ in: in decay: decay mul: mul add: add
     ^(PeakFollower in: in decay: decay) * mul + add!
 !
 
-PrimitiveUgen subclass: #Perlin3
+ScUgen subclass: #Perlin3
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2901,7 +2901,7 @@ x: x y: y z: z mul: mul add: add
     ^(Perlin3 x: x y: y z: z) * mul + add!
 !
 
-PrimitiveUgen subclass: #Phasor
+ScUgen subclass: #Phasor
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2920,7 +2920,7 @@ trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add
     ^(Phasor trig: trig rate: rate start: start end: end resetPos: resetPos) * mul + add!
 !
 
-PrimitiveUgen subclass: #PinkNoise
+ScUgen subclass: #PinkNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2939,7 +2939,7 @@ mul: mul add: add
     ^(PinkNoise new) * mul + add!
 !
 
-PrimitiveUgen subclass: #Pitch
+ScUgen subclass: #Pitch
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2958,7 +2958,7 @@ in: in initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq m
     ^(Pitch in: in initFreq: initFreq minFreq: minFreq maxFreq: maxFreq execFreq: execFreq maxBinsPerOctave: maxBinsPerOctave median: median ampThreshold: ampThreshold peakThreshold: peakThreshold downSample: downSample clar: clar) * mul + add!
 !
 
-PrimitiveUgen subclass: #PitchShift
+ScUgen subclass: #PitchShift
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2977,7 +2977,7 @@ in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispe
     ^(PitchShift in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion) * mul + add!
 !
 
-PrimitiveUgen subclass: #PlayBuf
+ScUgen subclass: #PlayBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -2996,7 +2996,7 @@ numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos l
     ^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #Pluck
+ScUgen subclass: #Pluck
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3015,7 +3015,7 @@ in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: dec
     ^(Pluck in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef) * mul + add!
 !
 
-PrimitiveUgen subclass: #Pulse
+ScUgen subclass: #Pulse
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3034,7 +3034,7 @@ freq: freq width: width mul: mul add: add
     ^(Pulse freq: freq width: width) * mul + add!
 !
 
-PrimitiveUgen subclass: #PulseCount
+ScUgen subclass: #PulseCount
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3053,7 +3053,7 @@ trig: trig reset: reset mul: mul add: add
     ^(PulseCount trig: trig reset: reset) * mul + add!
 !
 
-PrimitiveUgen subclass: #PulseDivider
+ScUgen subclass: #PulseDivider
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3072,7 +3072,7 @@ trig: trig div: div start: start mul: mul add: add
     ^(PulseDivider trig: trig div: div start: start) * mul + add!
 !
 
-PrimitiveUgen subclass: #PV_RandComb
+ScUgen subclass: #PV_RandComb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3091,7 +3091,7 @@ buffer: buffer wipe: wipe trig: trig mul: mul add: add
     ^(PV_RandComb buffer: buffer wipe: wipe trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #QuadL
+ScUgen subclass: #QuadL
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3110,7 +3110,7 @@ freq: freq a: a b: b c: c xi: xi mul: mul add: add
     ^(QuadL freq: freq a: a b: b c: c xi: xi) * mul + add!
 !
 
-PrimitiveUgen subclass: #QuadC
+ScUgen subclass: #QuadC
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3129,7 +3129,7 @@ freq: freq a: a b: b c: c xi: xi mul: mul add: add
     ^(QuadC freq: freq a: a b: b c: c xi: xi) * mul + add!
 !
 
-PrimitiveUgen subclass: #RHPF
+ScUgen subclass: #RHPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3148,7 +3148,7 @@ in: in freq: freq rq: rq mul: mul add: add
     ^(RHPF in: in freq: freq rq: rq) * mul + add!
 !
 
-PrimitiveUgen subclass: #RLPF
+ScUgen subclass: #RLPF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3167,7 +3167,7 @@ in: in freq: freq rq: rq mul: mul add: add
     ^(RLPF in: in freq: freq rq: rq) * mul + add!
 !
 
-PrimitiveUgen subclass: #Rand
+ScUgen subclass: #Rand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3186,7 +3186,7 @@ lo: lo hi: hi mul: mul add: add
     ^(Rand lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #RecordBuf
+ScUgen subclass: #RecordBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3205,7 +3205,7 @@ bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loo
     ^(RecordBuf bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray) * mul + add!
 !
 
-PrimitiveUgen subclass: #ReplaceOut
+ScUgen subclass: #ReplaceOut
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3224,7 +3224,7 @@ bus: bus channelsArray: channelsArray mul: mul add: add
     ^(ReplaceOut bus: bus channelsArray: channelsArray) * mul + add!
 !
 
-PrimitiveUgen subclass: #Resonz
+ScUgen subclass: #Resonz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3243,7 +3243,7 @@ in: in freq: freq bwr: bwr mul: mul add: add
     ^(Resonz in: in freq: freq bwr: bwr) * mul + add!
 !
 
-PrimitiveUgen subclass: #Ringz
+ScUgen subclass: #Ringz
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3262,7 +3262,7 @@ in: in freq: freq decaytime: decaytime mul: mul add: add
     ^(Ringz in: in freq: freq decaytime: decaytime) * mul + add!
 !
 
-PrimitiveUgen subclass: #RunningMax
+ScUgen subclass: #RunningMax
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3281,7 +3281,7 @@ in: in trig: trig mul: mul add: add
     ^(RunningMax in: in trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #RunningSum
+ScUgen subclass: #RunningSum
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3300,7 +3300,7 @@ in: in numsamp: numsamp mul: mul add: add
     ^(RunningSum in: in numsamp: numsamp) * mul + add!
 !
 
-PrimitiveUgen subclass: #Rotate2
+ScUgen subclass: #Rotate2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3319,7 +3319,7 @@ x: x y: y pos: pos mul: mul add: add
     ^(Rotate2 x: x y: y pos: pos) * mul + add!
 !
 
-PrimitiveUgen subclass: #SampleDur
+ScUgen subclass: #SampleDur
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3338,7 +3338,7 @@ mul: mul add: add
     ^(SampleDur new) * mul + add!
 !
 
-PrimitiveUgen subclass: #SampleRate
+ScUgen subclass: #SampleRate
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3357,7 +3357,7 @@ mul: mul add: add
     ^(SampleRate new) * mul + add!
 !
 
-PrimitiveUgen subclass: #Saw
+ScUgen subclass: #Saw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3376,7 +3376,7 @@ freq: freq mul: mul add: add
     ^(Saw freq: freq) * mul + add!
 !
 
-PrimitiveUgen subclass: #Schmidt
+ScUgen subclass: #Schmidt
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3395,7 +3395,7 @@ in: in lo: lo hi: hi mul: mul add: add
     ^(Schmidt in: in lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #Select
+ScUgen subclass: #Select
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3414,7 +3414,7 @@ which: which array: array mul: mul add: add
     ^(Select which: which array: array) * mul + add!
 !
 
-PrimitiveUgen subclass: #SetBuf
+ScUgen subclass: #SetBuf
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3433,7 +3433,7 @@ buf: buf offset: offset length: length array: array mul: mul add: add
     ^(SetBuf buf: buf offset: offset length: length array: array) * mul + add!
 !
 
-PrimitiveUgen subclass: #SetResetFF
+ScUgen subclass: #SetResetFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3452,7 +3452,7 @@ trig: trig reset: reset mul: mul add: add
     ^(SetResetFF trig: trig reset: reset) * mul + add!
 !
 
-PrimitiveUgen subclass: #SinOsc
+ScUgen subclass: #SinOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3471,7 +3471,7 @@ freq: freq phase: phase mul: mul add: add
     ^(SinOsc freq: freq phase: phase) * mul + add!
 !
 
-PrimitiveUgen subclass: #SinOscFB
+ScUgen subclass: #SinOscFB
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3490,7 +3490,7 @@ freq: freq feedback: feedback mul: mul add: add
     ^(SinOscFB freq: freq feedback: feedback) * mul + add!
 !
 
-PrimitiveUgen subclass: #Slew
+ScUgen subclass: #Slew
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3509,7 +3509,7 @@ in: in up: up dn: dn mul: mul add: add
     ^(Slew in: in up: up dn: dn) * mul + add!
 !
 
-PrimitiveUgen subclass: #Slope
+ScUgen subclass: #Slope
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3528,7 +3528,7 @@ in: in mul: mul add: add
     ^(Slope in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #SOS
+ScUgen subclass: #SOS
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3547,7 +3547,7 @@ in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 mul: mul add: add
     ^(SOS in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2) * mul + add!
 !
 
-PrimitiveUgen subclass: #Stepper
+ScUgen subclass: #Stepper
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3566,7 +3566,7 @@ trig: trig reset: reset min: min max: max step: step resetval: resetval mul: mul
     ^(Stepper trig: trig reset: reset min: min max: max step: step resetval: resetval) * mul + add!
 !
 
-PrimitiveUgen subclass: #Sweep
+ScUgen subclass: #Sweep
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3585,7 +3585,7 @@ trig: trig rate: rate mul: mul add: add
     ^(Sweep trig: trig rate: rate) * mul + add!
 !
 
-PrimitiveUgen subclass: #SyncSaw
+ScUgen subclass: #SyncSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3604,7 +3604,7 @@ syncFreq: syncFreq sawFreq: sawFreq mul: mul add: add
     ^(SyncSaw syncFreq: syncFreq sawFreq: sawFreq) * mul + add!
 !
 
-PrimitiveUgen subclass: #TDuty
+ScUgen subclass: #TDuty
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3623,7 +3623,7 @@ dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul
     ^(TDuty dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst) * mul + add!
 !
 
-PrimitiveUgen subclass: #TExpRand
+ScUgen subclass: #TExpRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3642,7 +3642,7 @@ lo: lo hi: hi trig: trig mul: mul add: add
     ^(TExpRand lo: lo hi: hi trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #TGrains
+ScUgen subclass: #TGrains
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3661,7 +3661,7 @@ numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos
     ^(TGrains numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp) * mul + add!
 !
 
-PrimitiveUgen subclass: #Timer
+ScUgen subclass: #Timer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3680,7 +3680,7 @@ trig: trig mul: mul add: add
     ^(Timer trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #TIRand
+ScUgen subclass: #TIRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3699,7 +3699,7 @@ lo: lo hi: hi trig: trig mul: mul add: add
     ^(TIRand lo: lo hi: hi trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #ToggleFF
+ScUgen subclass: #ToggleFF
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3718,7 +3718,7 @@ trig: trig mul: mul add: add
     ^(ToggleFF trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #TRand
+ScUgen subclass: #TRand
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3737,7 +3737,7 @@ lo: lo hi: hi trig: trig mul: mul add: add
     ^(TRand lo: lo hi: hi trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #Trig
+ScUgen subclass: #Trig
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3756,7 +3756,7 @@ in: in dur: dur mul: mul add: add
     ^(Trig in: in dur: dur) * mul + add!
 !
 
-PrimitiveUgen subclass: #Trig1
+ScUgen subclass: #Trig1
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3775,7 +3775,7 @@ in: in dur: dur mul: mul add: add
     ^(Trig1 in: in dur: dur) * mul + add!
 !
 
-PrimitiveUgen subclass: #TwoPole
+ScUgen subclass: #TwoPole
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3794,7 +3794,7 @@ in: in freq: freq radius: radius mul: mul add: add
     ^(TwoPole in: in freq: freq radius: radius) * mul + add!
 !
 
-PrimitiveUgen subclass: #TwoZero
+ScUgen subclass: #TwoZero
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3813,7 +3813,7 @@ in: in freq: freq radius: radius mul: mul add: add
     ^(TwoZero in: in freq: freq radius: radius) * mul + add!
 !
 
-PrimitiveUgen subclass: #VarSaw
+ScUgen subclass: #VarSaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3832,7 +3832,7 @@ freq: freq iphase: iphase width: width mul: mul add: add
     ^(VarSaw freq: freq iphase: iphase width: width) * mul + add!
 !
 
-PrimitiveUgen subclass: #VBJonVerb
+ScUgen subclass: #VBJonVerb
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3851,7 +3851,7 @@ in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail mul:
     ^(VBJonVerb in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail) * mul + add!
 !
 
-PrimitiveUgen subclass: #Vibrato
+ScUgen subclass: #Vibrato
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3870,7 +3870,7 @@ freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rate
     ^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul + add!
 !
 
-PrimitiveUgen subclass: #WaveLoss
+ScUgen subclass: #WaveLoss
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3889,7 +3889,7 @@ in: in drop: drop outof: outof mode: mode mul: mul add: add
     ^(WaveLoss in: in drop: drop outof: outof mode: mode) * mul + add!
 !
 
-PrimitiveUgen subclass: #WhiteNoise
+ScUgen subclass: #WhiteNoise
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3908,7 +3908,7 @@ mul: mul add: add
     ^(WhiteNoise new) * mul + add!
 !
 
-PrimitiveUgen subclass: #Wrap
+ScUgen subclass: #Wrap
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3927,7 +3927,7 @@ in: in lo: lo hi: hi mul: mul add: add
     ^(Wrap in: in lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #WrapIndex
+ScUgen subclass: #WrapIndex
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3946,7 +3946,7 @@ bufnum: bufnum in: in mul: mul add: add
     ^(WrapIndex bufnum: bufnum in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #XFade2
+ScUgen subclass: #XFade2
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3965,7 +3965,7 @@ inA: inA inB: inB pan: pan level: level mul: mul add: add
     ^(XFade2 inA: inA inB: inB pan: pan level: level) * mul + add!
 !
 
-PrimitiveUgen subclass: #XLine
+ScUgen subclass: #XLine
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -3984,7 +3984,7 @@ start: start end: end dur: dur doneAction: doneAction mul: mul add: add
     ^(XLine start: start end: end dur: dur doneAction: doneAction) * mul + add!
 !
 
-PrimitiveUgen subclass: #ZeroCrossing
+ScUgen subclass: #ZeroCrossing
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4003,7 +4003,7 @@ in: in mul: mul add: add
     ^(ZeroCrossing in: in) * mul + add!
 !
 
-PrimitiveUgen subclass: #MoogLadder
+ScUgen subclass: #MoogLadder
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4022,7 +4022,7 @@ in: in ffreq: ffreq res: res mul: mul add: add
     ^(MoogLadder in: in ffreq: ffreq res: res) * mul + add!
 !
 
-PrimitiveUgen subclass: #GreyholeRaw
+ScUgen subclass: #GreyholeRaw
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4041,7 +4041,7 @@ in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion fee
     ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul + add!
 !
 
-PrimitiveUgen subclass: #CrossoverDistortion
+ScUgen subclass: #CrossoverDistortion
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4060,7 +4060,7 @@ in: in amp: amp smooth: smooth mul: mul add: add
     ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul + add!
 !
 
-PrimitiveUgen subclass: #Friction
+ScUgen subclass: #Friction
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4079,7 +4079,7 @@ in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmas
     ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add!
 !
 
-PrimitiveUgen subclass: #MembraneCircle
+ScUgen subclass: #MembraneCircle
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4098,7 +4098,7 @@ excitation: excitation tension: tension loss: loss mul: mul add: add
     ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul + add!
 !
 
-PrimitiveUgen subclass: #VOSIM
+ScUgen subclass: #VOSIM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4117,7 +4117,7 @@ trig: trig freq: freq nCycles: nCycles decay: decay mul: mul add: add
     ^(VOSIM trig: trig freq: freq nCycles: nCycles decay: decay) * mul + add!
 !
 
-PrimitiveUgen subclass: #MiRings
+ScUgen subclass: #MiRings
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4136,7 +4136,7 @@ in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos mod
     ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul + add!
 !
 
-PrimitiveUgen subclass: #AnalogFoldOsc
+ScUgen subclass: #AnalogFoldOsc
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4155,7 +4155,7 @@ freq: freq amp: amp mul: mul add: add
     ^(AnalogFoldOsc freq: freq amp: amp) * mul + add!
 !
 
-PrimitiveUgen subclass: #RCD
+ScUgen subclass: #RCD
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4174,7 +4174,7 @@ clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len:
     ^(RCD clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates) * mul + add!
 !
 
-PrimitiveUgen subclass: #SCM
+ScUgen subclass: #SCM
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4193,7 +4193,7 @@ clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: 
     ^(SCM clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw) * mul + add!
 !
 
-PrimitiveUgen subclass: #DustRange
+ScUgen subclass: #DustRange
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4212,7 +4212,7 @@ iotMin: iotMin iotMax: iotMax mul: mul add: add
     ^(DustRange iotMin: iotMin iotMax: iotMax) * mul + add!
 !
 
-PrimitiveUgen subclass: #ExpRandN
+ScUgen subclass: #ExpRandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4231,7 +4231,7 @@ numChan: numChan lo: lo hi: hi mul: mul add: add
     ^(ExpRandN numChan: numChan lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #LinRandN
+ScUgen subclass: #LinRandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4250,7 +4250,7 @@ numChan: numChan lo: lo hi: hi minmax: minmax mul: mul add: add
     ^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul + add!
 !
 
-PrimitiveUgen subclass: #RandN
+ScUgen subclass: #RandN
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4269,7 +4269,7 @@ numChan: numChan lo: lo hi: hi mul: mul add: add
     ^(RandN numChan: numChan lo: lo hi: hi) * mul + add!
 !
 
-PrimitiveUgen subclass: #TScramble
+ScUgen subclass: #TScramble
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4288,7 +4288,7 @@ trigger: trigger inputs: inputs mul: mul add: add
     ^(TScramble trigger: trigger inputs: inputs) * mul + add!
 !
 
-PrimitiveUgen subclass: #DX7
+ScUgen subclass: #DX7
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4307,7 +4307,7 @@ bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw
     ^(DX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add!
 !
 
-PrimitiveUgen subclass: #RDX7Env
+ScUgen subclass: #RDX7Env
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4326,7 +4326,7 @@ gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol
     ^(RDX7Env gate: gate data: data r1: r1 r2: r2 r3: r3 r4: r4 l1: l1 l2: l2 l3: l3 l4: l4 ol: ol) * mul + add!
 !
 
-PrimitiveUgen subclass: #ObxdFilter
+ScUgen subclass: #ObxdFilter
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4345,7 +4345,7 @@ in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpa
     ^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul + add!
 !
 
-PrimitiveUgen subclass: #SvfBp
+ScUgen subclass: #SvfBp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4364,7 +4364,7 @@ in: in freq: freq q: q mul: mul add: add
     ^(SvfBp in: in freq: freq q: q) * mul + add!
 !
 
-PrimitiveUgen subclass: #SvfHp
+ScUgen subclass: #SvfHp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4383,7 +4383,7 @@ in: in freq: freq q: q mul: mul add: add
     ^(SvfHp in: in freq: freq q: q) * mul + add!
 !
 
-PrimitiveUgen subclass: #SvfLp
+ScUgen subclass: #SvfLp
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4402,7 +4402,7 @@ in: in freq: freq q: q mul: mul add: add
     ^(SvfLp in: in freq: freq q: q) * mul + add!
 !
 
-PrimitiveUgen subclass: #Bezier
+ScUgen subclass: #Bezier
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4421,7 +4421,7 @@ haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: a
     ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add!
 !
 
-PrimitiveUgen subclass: #Freezer
+ScUgen subclass: #Freezer
   instanceVariableNames: ''
   classVariableNames: ''
   poolDictionaries: ''
@@ -4441,7 +4441,7 @@ bufnum: bufnum left: left right: right gain: gain increment: increment increment
 !
 
 
-!AbstractUgen methodsFor: 'arithmetic'!
+!Ugen methodsFor: 'arithmetic'!
   + b ^ BinaryOpUgen specialIndex: 0 a: self b: b!
   - b ^ BinaryOpUgen specialIndex: 1 a: self b: b!
   * b ^ BinaryOpUgen specialIndex: 2 a: self b: b!
@@ -4468,7 +4468,7 @@ bufnum: bufnum left: left right: right gain: gain increment: increment increment
   fold2: b ^ BinaryOpUgen specialIndex: 44 a: self b: b!
 !
 
-!AbstractUgen methodsFor: 'arithmetic'!
+!Ugen methodsFor: 'arithmetic'!
   negated ^ UnaryOpUgen specialIndex: 0 a: self!
   abs ^ UnaryOpUgen specialIndex: 5 a: self!
   ceil ^ UnaryOpUgen specialIndex: 8 a: self!
