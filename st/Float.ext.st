@@ -15,12 +15,3 @@ coin
     "With probability of myself, return true. With probability of 1 - myself, return false."
     ^1.0 rand < self!
 !
-
-!Float methodsFor: 'printing'!
-printHaskellOn: fd
-    "Print my hsc3 representation.  Special cased for Infinity"
-    | txt |
-    txt := (self = Float infinity) ifTrue: [ 'dinf' ] ifFalse: [ self asString ].
-    txt putOn: fd!
-!
-

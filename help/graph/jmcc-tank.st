@@ -1,6 +1,6 @@
 "tank (jmcc)"
 | r_allpass pling bang tank signal |
-r_allpass := [ :z | AllpassN in: z maxdelaytime: 0.03 delaytime: [Rand lo: 0.005 hi: 0.02] dup decaytime: 1 ].
+r_allpass := [ :z | AllpassN in: z maxdelaytime: 0.03 delaytime: [ Rand lo: 0.005 hi: 0.02 ] dup decaytime: 1 ].
 pling := [
   | d f p s1 s2 |
   d := Dust density: 0.2.

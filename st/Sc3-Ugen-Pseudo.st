@@ -688,6 +688,22 @@ primaryFactoryMethod
     ^#in:!
 !
 
+PseudoUgen subclass: #WrapOut
+  instanceVariableNames: ''
+  classVariableNames: ''
+  poolDictionaries: ''
+  category: ''!
+
+WrapOut comment: ''!
+
+!WrapOut class methodsFor: 'as yet unclassified'!
+bus: bus channelsArray: channelsArray
+    (channelsArray isArray not and: channelsArray isOutUgen) ifTrue: [ ^channelsArray ] ifFalse: [ ^Out bus: bus channelsArray: channelsArray ]!
+!
+primaryFactoryMethod
+    ^#'bus:channelsArray:'!
+!
+
 PseudoUgen subclass: #XLn
   instanceVariableNames: ''
   classVariableNames: ''

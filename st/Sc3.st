@@ -6,36 +6,25 @@ Object subclass: #Sc3
 
 Sc3 comment: 'SuperCollider 3'!
 
-!Sc3 class methodsFor: 'haskell'!
+!Sc3 class methodsFor: 'syndef'!
 ugenSetOf: anObject
     | set |
     set := IdentitySet new.
     anObject addToUgenSet: set protectedBy: IdentitySet new.
     ^set!
-ugenSequenceOf: anObject
-    ^(self ugenSetOf: anObject) sorted: [ :lhs :rhs | lhs id <= rhs id ]!
-writeHaskellFor: anObject To: aFileName
-    "Write the hsc3 representation of anObject to a file."
-    | set |
-    set := Sc3 ugenSetOf: anObject.
-    aFileName writeTextFile: [ :fd |
-     'let {' putOn: fd.
-     set do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].
-     '} in ' putOn: fd.
-     anObject printHaskellOn: fd.
-     fd cr]!
+writeSyndefOf: anObject To: aFileName
+    aFileName writeTextFile: [ :stream |
+        (ScGraph from: anObject withName: 'tmp') printSyndefOn: stream
+    ]!
 play: anObject
-    "Write my hsc3 representation to a temporary file and run hsc3-graphs to play me."
-    Sc3 writeHaskellFor: anObject To: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min play /tmp/st.hs' systemCommand!
+    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    'hsc3-scsynth scsyndef play /tmp/stsc3.scsyndef.text' systemCommand!
 draw: anObject
-    "Write my hsc3 representation to a temporary file and run hsc3-graphs to draw me."
-    self writeHaskellFor: anObject To: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min draw /tmp/st.hs' systemCommand!
+    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    'hsc3-dot scsyndef-draw /tmp/stsc3.scsyndef.text' systemCommand!
 printUgens: anObject
-    "Write my hsc3 representation to a temporary file and run hsc3-graphs to print me."
-    self writeHaskellFor: anObject To: '/tmp/st.hs'.
-    'hsc3-graphs fragments hs min dump-ugens /tmp/st.hs' systemCommand!
+    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    'hsc3-scsynth scsyndef print False /tmp/stsc3.scsyndef.text' systemCommand!
 !
 
 !Sc3 class methodsFor: 'c-smalltalk'!

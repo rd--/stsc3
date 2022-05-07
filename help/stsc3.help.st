@@ -39,9 +39,9 @@ UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(
 
 "Graph"
 
-u := SinOsc freq: 440 phase: 0 mul: 0.1
+u := SinOsc freq: 440 phase: Float pi mul: 0.1
+(ScGraph from: u withName: 'tmp') printSyndefOn: stdout
 (Sc3 ugenSetOf: u) do: [ :item | item inspect ]
-(Sc3 ugenSequenceOf: u) do: [ :item | item inspect ]
 
 "Haskell"
 

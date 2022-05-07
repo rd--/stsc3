@@ -32,8 +32,8 @@ tanh
 
 !Collection methodsFor: 'mrg'!
 mrg: rhs
-    (self detect: [ :item | item acceptsMrg]) mrg: rhs.
-    ^self.
+    (self detect: [ :item | item isUgen]) mrg: rhs.
+    ^self!
 !
 
 !Collection methodsFor: 'collecting'!

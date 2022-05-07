@@ -381,6 +381,13 @@ TXLine : PseudoUgen {
     }
 }
 
+WrapOut : PseudoUgen {
+    *cons {
+        arg bus, channelsArray;
+        (channelsArray.isArray.not && channelsArray.isOutUgen).ifTrue({ ^channelsArray }, ifFalse: { ^Out(bus, channelsArray) })
+    }
+}
+
 /* Line generator */
 XLn : PseudoUgen {
     *cons {

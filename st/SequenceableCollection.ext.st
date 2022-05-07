@@ -49,6 +49,9 @@ clump: groupSize
 nth: index
     "Alias for at:. For .stc, since at: in Sc is zero-indexed."
     ^self at: index!
+findIndex: aBlock
+    1 to: self size do: [ :index | (aBlock value: (self at: index)) ifTrue: [ ^index ] ].
+    ^nil!
 !
 
 !SequenceableCollection methodsFor: 'arithmetic'!
@@ -61,23 +64,17 @@ roundTo: arg
     ^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]!
 !
 
+!Array methodsFor: 'randomness'!
+choose
+    ^self atRandom!
+fisherYatesShuffle
+    self size to: 2 by: -1 do: [ :item | self swap: item with: (item atRandom) ]!
+!
+
 !SequenceableCollection methodsFor: 'Ugen creation'!
 asLocalBuf
     | lhs rhs |
     lhs := LocalBuf numChannels: 1 numFrames: self size.
     rhs := SetBuf buf: lhs offset: 0 length: self size array: self.
     ^lhs mrg: rhs!
-!
-
-!SequenceableCollection methodsFor: 'hsc3'!
-printHaskellArrayOn: fd
-    "Print my elements as a Haskell array."
-    '[' putOn: fd.
-    self do: [ :x | x printHaskellOn: fd. ] separatedBy: [ ',' putOn: fd ].
-    ']' putOn: fd!
-printHaskellOn: fd
-    "Print my hsc3 Mce representation."
-    '(mce ' putOn: fd.
-    self printHaskellArrayOn: fd.
-    ')' putOn: fd!
 !

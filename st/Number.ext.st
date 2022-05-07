@@ -26,7 +26,7 @@ ampDb
     ^(self log: 10) * 20!
 % aNumber
     "% is the Sc floating point modulo operator."
-    ^self asUgen % aNumber!
+    aNumber isUgen ifTrue: [ ^BinaryOperator selector: #% a: self % aNumber ] ifFalse: [ ^self error: '%?' ]!
 linExpFrom: lo to: hi
     "Myself (I am in range 0.0 to 1.0) mapped to the indicated range following an exponential curve."
     ^lo * ((hi / lo) ln * self) exp!
@@ -34,18 +34,8 @@ linExpFrom: lo to: hi
 
 !Number methodsFor: 'collecting'!
 addToUgenSet: c protectedBy: w
-    ^nil!
-!
-
-!Number methodsFor: 'Ugen constants'!
-asUgen
-    ^Constant value: self
-!
-
-!Number methodsFor: 'printing'!
-printHaskellOn: fd
-    "Print my hsc3 representation."
-    self asString putOn: fd!
+    c add: self.
+    ^self!
 !
 
 !Number methodsFor: 'rate control'!

@@ -4495,4 +4495,3 @@ bufnum: bufnum left: left right: right gain: gain increment: increment increment
   distort ^ UnaryOpUgen specialIndex: 42 a: self!
   softClip ^ UnaryOpUgen specialIndex: 43 a: self!
 !
-

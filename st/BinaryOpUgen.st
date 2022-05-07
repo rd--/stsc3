@@ -9,4 +9,8 @@ BinaryOpUgen comment: 'Binary operator unit generator'!
 !BinaryOpUgen class methodsFor: 'instance creation'!
 specialIndex: specialIndex a: a b: b
     ^UgenBuilder name: 'BinaryOpUGen' numChan: 1 rateSpec: #(1 2) specialIndex: specialIndex inputArray: {a. b}!
+selector: selector a: a b: b
+    ^self specialIndex: (self selectorToSpecialIndexDictionary at: selector) a: a b: b!
+selectorToSpecialIndexDictionary
+    ^Dictionary newFrom: {#+ -> 0. #- -> 1. #* -> 2. #/ -> 4. #% -> 5. #/= -> 7. #< -> 8. #> -> 9. #<= -> 10. #>= -> 11. #min: -> 12. #max: -> 13. #bitAnd: -> 14. #bitOr: -> 15. #lcm: -> 17. #gcd: -> 18. #roundTo: -> 19. #truncateTo: -> 21. #raisedTo: -> 25. #bitShiftLeft: -> 26. #bitShiftRight: -> 27. #amClip: -> 40. #clip2: -> 42. #fold2: -> 44}!
 !

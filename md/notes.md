@@ -1,5 +1,10 @@
 # Remainder
 
+"Mrg needs to be printed here.
+It can't be at printHaskellOn because that will be used on the lhs of =, and at printHaskellDefinitionOn: it makes a loop.
+It requires an extra id, so another node, so Mrg...
+Should just print a text syndef."
+
 - much much cleanup required....
 - renaming: PrimitiveUgen -> Ugen? PrimitiveUgenOutput -> UgenOutput?
 - broken:

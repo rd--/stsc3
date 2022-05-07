@@ -35,13 +35,6 @@ This includes Demand Ugens constructors with parameter ordering consistent with 
 [Sc3-Ui.st](?t=stsc3&e=st/Sc3-Ui.st):
 User-interface classes and methods.
 
-[Sc3-Haskell.st](?t=stsc3&e=st/Sc3-Haskell.st):
-Classes to write Ugen graphs as expressions to text files for
-interpretation by [hsc3](?t=hsc3).  The graphs are
-written without proxied outputs, without applying
-multiple-channel-expansion, and without applying rate-control editing.
-The writer generates let bindings for all Ugens.
-
 [Sc3-Squeak.st](?t=stsc3&e=st/Sc3-Squeak.st) &
 [Sc3-Gnu.st](?t=stsc3&e=st/Sc3-Gnu.st) &
 [Sc3-Cuis.st](?t=stsc3&e=st/Sc3-Cuis.st) &
@@ -61,6 +54,13 @@ It depends upon [hsc3](https://hackage.haskell.org/package/hsc3),
 
 There was previously a [Sc3-Lisp.st](?t=stsc3&e=st/Sc3-Lisp.st) file that is now deleted.
 It wrote graphs for [rsc3](?t=rsc3).
+
+There was previously a [Sc3-Haskell.st](?t=stsc3&e=st/Sc3-Haskell.st) file that wrote
+Ugen graphs as expressions to text files for
+interpretation by [hsc3](?t=hsc3).  The graphs were
+written without proxied outputs, without applying
+multiple-channel-expansion, and without applying rate-control editing.
+The writer generated let bindings for all Ugens.
 
 * * *
 

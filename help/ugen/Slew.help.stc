@@ -1,7 +1,7 @@
 // Slew
 var x = MouseX(200, 12000, 1, 0.2);
 var y = MouseY(200, 12000, 1, 0.2);
-[Slew (0 - Saw(440), x, y) * 0.05, Slew(LFPulse(800, 0, 0.5), x, y) * 0.1]
+[Slew (Saw(440).negated, x, y) * 0.05, Slew(LFPulse(800, 0, 0.5), x, y) * 0.1]
 
 // Slew ; square to triangle ; triangle to sin-like ; https://scsynth.org/t/5208/2 (sp)
 var freq = 440;

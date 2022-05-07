@@ -1,4 +1,6 @@
+import Data.List {- base -}
 import Data.Maybe {- base -}
+import Text.Printf {- base -}
 
 import Sound.SC3.UGen.DB as Db {- hsc3-db -}
 import qualified Sound.SC3.UGen.DB.Bindings.Js as Js {- hsc3-db -}
@@ -34,6 +36,15 @@ binop =
   ,("truncateTo:",21),("raisedTo:",25)
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
   ,("amClip:",40),("clip2:",42),("fold2:",44)]
+
+{-
+> selectorToSpecialIndex uop
+> selectorToSpecialIndex binop
+-}
+selectorToSpecialIndex :: [(String, Int)] -> String
+selectorToSpecialIndex =
+  let f (sel, ix) = printf "#%s -> %d" sel ix
+  in intercalate ". " . map f
 
 {-
 > Data.List.sort ugen == ugen

@@ -17,12 +17,6 @@ fill: size value: aBlock
     ^(1 to: size) collect: [ :unusedItem | aBlock value ]!
 !
 
-!Array methodsFor: 'randomness'!
-choose
-    "Choose a random element of myself.  Alias for atRandom."
-    ^self atRandom!
-!
-
 !Array methodsFor: 'mce'!
 containsArray
     "Are any of my elements an array?  This is the test to decide if channel expansion is required.

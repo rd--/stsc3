@@ -6,6 +6,13 @@ Object subclass: #Ugen
 
 Ugen comment: 'Output proxy'!
 
+!Ugen methodsFor: 'accessing'!
+scUgen
+    ^scUgen!
+port
+    ^port!
+!
+
 !Ugen methodsFor: 'initialization'!
 scUgen: anScUgen port: anInteger
     scUgen := anScUgen.
@@ -34,17 +41,13 @@ mrg: rhs
 !Ugen methodsFor: 'testing'!
 isUgen
     ^true!
+isOutUgen
+    ^scUgen name = 'Out'!
 !
 
 !Ugen methodsFor: 'collecting'!
 addToUgenSet: c protectedBy: w
     scUgen addToUgenSet: c protectedBy: w!
-!
-
-!Ugen methodsFor: 'printing'!
-printHaskellOn: fd
-    "Print my Hsc3 form."
-    '(mceChannel ' putOn: fd. (port - 1) asString putOn: fd. ' ' putOn: fd. scUgen printHaskellOn: fd. ') ' putOn: fd!
 !
 
 !Ugen methodsFor: 'arithmetic'!
@@ -93,20 +96,15 @@ clearBuf
     ^self mrg: (ClearBuf buf: self)!
 !
 
-"???"
 !Ugen methodsFor: 'converting'!
 adaptToInteger: rcvr andSend: selector
-    "If I am involved in arithmetic with an Integer, convert it to a Ugen."
-    ^rcvr asUgen perform: selector with: self!
+    ^BinaryOpUgen selector: selector a: rcvr b: self!
 adaptToFraction: rcvr andSend: selector
-    "If I am involved in arithmetic with a Fraction, convert it to a Ugen."
-    ^rcvr asUgen perform: selector with: self!
+    ^BinaryOpUgen selector: selector a: rcvr b: self!
 adaptToFloat: rcvr andSend: selector
-    "If I am involved in arithmetic with a Float, convert it to a Ugen."
-    ^rcvr asUgen perform: selector with: self!
+    ^BinaryOpUgen selector: selector a: rcvr b: self!
 adaptToCollection: rcvr andSend: selector
-    "If I am involved in arithmetic with a Collection, return a Collection of the results of each element combined with me in that expression."
-    ^rcvr collect: [:element | element perform: selector with: self]
+    ^rcvr collect: [ :item | item perform: selector with: self]!
 !
 
 !Ugen methodsFor: 'panning'!
