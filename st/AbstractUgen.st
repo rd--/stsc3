@@ -43,11 +43,11 @@ range: lo value: hi
 !AbstractUgen methodsFor: 'buffer management'!
 clearBuf
     "ClearBuf does not copy the buffer number through so this is an Mrg node."
-    ^Mrg lhs: self rhs: (ClearBuf buf: self)!
+    ^self mrg: (ClearBuf buf: self)!
 !
 
 !AbstractUgen methodsFor: 'collecting'!
-addToUgenSet: c
+addToUgenSet: c protectedBy: w
     "Add inputs to Ugen set.  Only instances of PrimitiveUgen are collected."
     ^nil!
 !
@@ -94,11 +94,6 @@ doesNotUnderstand: aMessage
     ^Point x: self y: aUgen!
 unitCps
     ^(self * 127) midiCps!
-!
-
-!AbstractUgen methodsFor: 'multiple root graphs'!
-mrg: rhs
-    ^Mrg lhs: self rhs: rhs!
 !
 
 !AbstractUgen methodsFor: 'panning'!

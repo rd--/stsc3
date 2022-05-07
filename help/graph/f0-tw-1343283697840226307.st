@@ -7,7 +7,7 @@ t := LFTri freq: (121 ** (LFTri freq: (2 / 121 * b) iphase: 0)) iphase: 0.
 d := (Lag2 in: ((LFTri freq: (1 / 212.1) iphase: 0) <= (1 / 212)) lagTime: (2 / b)) / 12 * 1.2 + 1.2 / f.
 c := (LFTri freq: (b / 12) iphase: 0) + 1 / 2.
 p := Pluck in: z trig: t maxdelaytime: (2 / 121) delaytime: d decaytime: (1 / 2 * 12 / 1.2) coef: c.
-Splay input: (HPF in: p freq: 12) level: 1 / 2.1 / 2
+(HPF in: p freq: 12 mul: 1 / 2.1 / 2) splay2
 
 "---- calculations"
 ((2 to: 12) / 12) asArray = (11 iota + 1 / 12)

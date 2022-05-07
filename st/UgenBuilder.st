@@ -18,8 +18,8 @@ name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputA
             ifTrue: [ ((inputArray atAll: rateSpec) collect: [ :item | item rate ]) max ]
             ifFalse: [ rateSpec ].
         ugen := PrimitiveUgen name: name numChan: numChan rate: rate specialIndex: specialIndex inputArray: inputArray.
-        (numChan = 0) ifTrue: [ ^PrimitiveUgenOutput ugen: ugen index: -1. ].
-        (numChan = 1) ifTrue: [ ^PrimitiveUgenOutput ugen: ugen index: 1. ]. "one-indexed"
-        ^(1 to: numChan) collect: [ :item | PrimitiveUgenOutput ugen: ugen index: item ]
+        (numChan = 0) ifTrue: [ ^ugen ].
+        (numChan = 1) ifTrue: [ ^ugen ].
+        ^(1 to: numChan) collect: [ :item | PrimitiveUgenOutput ugen: ugen index: item ] "one-indexed"
     ]!
 !

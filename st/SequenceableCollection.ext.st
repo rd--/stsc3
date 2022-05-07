@@ -19,8 +19,8 @@ extendToBeOfEqualSize
      #(1 (2 3) (4 5 6)) extendToBeOfEqualSize
     "
     | maximumSize |
-    maximumSize := (self collect: [ :item | item isArray ifTrue: [ item size ] ifFalse: [ 1 ] ]) max.
-    ^self collect: [ :item | item isCollection ifTrue: [ item extendCyclically: maximumSize ] ifFalse: [ maximumSize replicate: item ] ]!
+    maximumSize := (self collect: [ :item | item asArray size ]) max.
+    ^self collect: [ :item | item asArray extendCyclically: maximumSize ]!
 ++ otherCollection
     "Myself with otherCollection appended.  Alias for ,"
     ^self , otherCollection!
@@ -37,6 +37,12 @@ clump: groupSize
       start := end + 1
     ].
     ^answer!
+    rotateLeft: n
+        ^(1 + n to: self size + n) collect: [ :index | self atWrap: index ]!
+    rotateRight: n
+        ^(1 - n to: self size - n) collect: [ :index | self atWrap: index ]!
+    rotate: n
+        ^self rotateRight: n!
 !
 
 !SequenceableCollection methodsFor: 'indexing'!
@@ -46,14 +52,13 @@ nth: index
 !
 
 !SequenceableCollection methodsFor: 'arithmetic'!
+max: arg
+    ^arg adaptToCollection: self andSend: #max:!
+roundTo: arg
+    ^arg adaptToCollection: self andSend: #roundTo:!
 +~ other
     "Like + but cycles shorter collection"
-    ^self withExtending: other collect: [:i :j| i + j]!
-!
-
-!SequenceableCollection methodsFor: 'multiple root graphs'!
-mrg: rhs
-    ^Mrg lhs: self rhs: rhs!
+    ^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]!
 !
 
 !SequenceableCollection methodsFor: 'Ugen creation'!
@@ -61,7 +66,7 @@ asLocalBuf
     | lhs rhs |
     lhs := LocalBuf numChannels: 1 numFrames: self size.
     rhs := SetBuf buf: lhs offset: 0 length: self size array: self.
-    ^Mrg lhs: lhs rhs: rhs!
+    ^lhs mrg: rhs!
 !
 
 !SequenceableCollection methodsFor: 'hsc3'!

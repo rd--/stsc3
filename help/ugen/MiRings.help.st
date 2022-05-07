@@ -15,5 +15,6 @@ f := [ :e |
           intern_exciter: 0
           easteregg: 0
           bypass: 0
-          mul: e z ].
-(Voicer numVoices: 16 voiceFunc: f) mix * 4
+          mul: e z
+].
+(Voicer numVoices: 16 voiceFunc: f) sum * 4

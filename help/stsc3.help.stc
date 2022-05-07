@@ -1,0 +1,14 @@
+// Adapt to and send
+
+SinOsc(440 + SinOsc(1, 0), 0) * 0.1 // (Int + UGen) * Float
+
+SinOsc(SinOsc(1, 0) + 440, 0) * 0.1 // (UGen + Int) * Float
+
+SinOsc(#[440, 441] + SinOsc(1, 0), 0) * 0.1 // ([Int] + UGen) * Float
+
+SinOsc(440 + SinOsc(#[1, 2], 0), 0) * 0.1 // (Int + [UGen]) * Float
+
+// Mrg
+
+SinOsc(440, 0).mrg(Saw(1)) * 0.1
+

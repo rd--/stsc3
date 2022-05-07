@@ -1,5 +1,5 @@
 !Symbol methodsFor: 'collecting'!
-addToUgenSet: collection
+addToUgenSet: c protectedBy: w
     ^nil!
 !
 

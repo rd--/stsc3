@@ -1,0 +1,5 @@
+// Resonz ; resonator
+OverlapTexture({
+    arg tr;
+    Resonz(Pulse(TRand(2, 7, tr), 0.5), { TExpRand(120, 2500, tr) }.dup(4), 0.005).splay2
+}, 2, 4, 6)

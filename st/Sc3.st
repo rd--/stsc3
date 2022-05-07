@@ -10,13 +10,14 @@ Sc3 comment: 'SuperCollider 3'!
 ugenSetOf: anObject
     | set |
     set := IdentitySet new.
-    anObject addToUgenSet: set.
+    anObject addToUgenSet: set protectedBy: IdentitySet new.
     ^set!
+ugenSequenceOf: anObject
+    ^(self ugenSetOf: anObject) sorted: [ :lhs :rhs | lhs id <= rhs id ]!
 writeHaskellFor: anObject To: aFileName
     "Write the hsc3 representation of anObject to a file."
     | set |
     set := Sc3 ugenSetOf: anObject.
-    set asArray with: (1 to: set size) do: [ :item :index | item id: index ]. "<- assign id to Ugens for serialisation"
     aFileName writeTextFile: [ :fd |
      'let {' putOn: fd.
      set do: [:x | x printHaskellOn: fd. ' = ' putOn: fd. x printHaskellDefinitionOn: fd.] separatedBy: [fd cr. '; ' putOn: fd].

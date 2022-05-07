@@ -25,7 +25,11 @@ choose
 
 !Array methodsFor: 'mce'!
 containsArray
-    "Are any of my elements an array?  This is the test to decide if a channel expansion is required."
+    "Are any of my elements an array?  This is the test to decide if channel expansion is required.
+
+    #(1 2 3 4) containsArray = false
+    #(1 (2 3) 4) containsArray = true
+     "
     self do: [ :item | item isArray ifTrue: [ ^true ] ].
     ^false!
 mceTransform

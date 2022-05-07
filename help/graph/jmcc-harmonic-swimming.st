@@ -10,4 +10,4 @@ o := [ :h | "harmonic number (from one)"
   n := LFNoise1 freq: r mul: a add: l.
   e := (n max: 0) kr. "clip negative amplitudes to zero"
   FSinOsc freq: (f * h) iphase: 0 mul: e ].
-(1 to: p) mixFill: o
+((1 to: p) collect: o) sum

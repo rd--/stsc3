@@ -64,7 +64,7 @@ Pan2 in: (SinOsc freq: 15500 phase: 0) pos: 0 level: 0.75
 | f |
 f := [ :e |
  Pan2 in: (SinOsc freq: (e x * 24 + 48) midiCps phase: 0) pos: e o * 2 - 1 level: e z * e w * 0.5 ].
-(Voicer numVoices: 16 voiceFunc: f) mix
+(Voicer numVoices: 16 voiceFunc: f) sum
 
 "sinOsc ; gliss"
 | t l m a f |

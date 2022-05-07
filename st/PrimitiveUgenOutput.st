@@ -25,9 +25,20 @@ kr
     ^self!
 !
 
+!PrimitiveUgenOutput methodsFor: 'mrg'!
+mrg: rhs
+    ugen mrg: rhs.
+    ^self!
+!
+
+!PrimitiveUgenOutput methodsFor: 'testing'!
+acceptsMrg
+    ^true!
+!
+
 !PrimitiveUgenOutput methodsFor: 'collecting'!
-addToUgenSet: aSet
-    ugen addToUgenSet: aSet!
+addToUgenSet: c protectedBy: w
+    ugen addToUgenSet: c protectedBy: w!
 !
 
 !PrimitiveUgenOutput methodsFor: 'printing'!

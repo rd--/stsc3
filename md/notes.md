@@ -1,5 +1,17 @@
 # Remainder
 
+- much much cleanup required....
+- renaming: PrimitiveUgen -> Ugen? PrimitiveUgenOutput -> UgenOutput?
+- broken:
+  + the haskell printer won't work for recursive structures, i.e. x.mrg(f(x))...
+  + mrg - fails - this should follow the jssc3 model properly - i.e. find first actual ugen, not simple detect:
+  + cr-lucier
+  + kl-vibraphone.stc
+  + tmm881-3319.stc
+  + f0-tw-1197185125819277312.stc (maths astray?)
+  + dm-shift-register.st (mrg)????
+  + f0-tw-1084601286488674304.stc
+  + jmcc-tank.st
 - Psuedo Ugens
   + class PsuedoUgen, subclass of AbstractUgen
   + autogen all definitions from primary factory method (write these in .stc, it is part of before-pim)

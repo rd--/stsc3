@@ -6,17 +6,8 @@ PrimitiveUgen subclass: #BinaryOpUgen
 
 BinaryOpUgen comment: 'Binary Operators'!
 
-!BinaryOpUgen methodsFor: 'initialisation'!
-specialIndex: p1 a: p2 b: p3
-    name := #BinaryOpUGen. "note case"
-    numChan := 1.
-    rate := {p2. p3} rate.
-    specialIndex := p1.
-    inputArray := {p2. p3}!
-!
-
 !BinaryOpUgen class methodsFor: 'instance creation'!
 specialIndex: specialIndex a: a b: b
-    "Create binary operator Ugen"
-    ^self new specialIndex: specialIndex a: a b: b!
+    "This is special cased so it can optimize constant math..."
+    ^UgenBuilder name: 'BinaryOpUGen' numChan: 1 rateSpec: #(1 2) specialIndex: specialIndex inputArray: {a. b}!
 !

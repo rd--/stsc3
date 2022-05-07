@@ -8,4 +8,4 @@ o := [ :h |
  r := Rand lo: 0 hi: 0.5.
  e := Decay2 in: n attackTime: 0.005 decayTime: r.
  FSinOsc freq: (f * h) iphase: 0 mul: e kr ].
-(1 to: 10) mixFill: o
+((1 to: 10) collect: o) sum

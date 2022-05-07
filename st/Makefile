@@ -5,7 +5,7 @@
 ext = Array BlockClosure Boolean Collection Dictionary False Float Fraction Integer Interval Number Object SequenceableCollection String Symbol True
 classes = \
 	AbstractUgen EnvBuilder PseudoUgen PrimitiveUgen PrimitiveUgenOutput UgenBuilder \
-	BinaryOpUgen Constant Control Env EnvADSR EnvASR EnvLinen EnvPerc EnvSine EnvSpec EventParam KlankSpec Mrg OverlapTexture Rate Sc3 Sc3HelpGraph UnaryOpUgen Voicer
+	BinaryOpUgen Constant Control Env EnvADSR EnvASR EnvLinen EnvPerc EnvSine EnvSpec EventParam KlankSpec OverlapTexture Rate Sc3 Sc3Id Sc3HelpGraph UnaryOpUgen Voicer
 common=$(ext:=.ext) $(classes) $(pseudo)
 autogen=Sc3-Ugen-Bindings Sc3-Ugen-Pseudo Sc3-Help-Graphs
 ui=Sc3-Ui

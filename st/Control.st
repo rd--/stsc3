@@ -20,11 +20,6 @@ init: x
     init := x!
 !
 
-!Control methodsFor: 'collecting'!
-addToUgenSet: c
-    ^nil!
-!
-
 !Control methodsFor: 'initialising'!
 name: p1 init: p2
     name := p1.

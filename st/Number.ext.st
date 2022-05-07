@@ -31,7 +31,7 @@ linExpFrom: lo to: hi
 !
 
 !Number methodsFor: 'collecting'!
-addToUgenSet: aSet
+addToUgenSet: c protectedBy: w
     ^nil!
 !
 

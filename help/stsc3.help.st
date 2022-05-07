@@ -37,6 +37,12 @@ SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
 
 UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(440 0)
 
+"Graph"
+
+u := SinOsc freq: 440 phase: 0 mul: 0.1
+(Sc3 ugenSetOf: u) do: [ :item | item inspect ]
+(Sc3 ugenSequenceOf: u) do: [ :item | item inspect ]
+
 "Haskell"
 
 (SinOsc freq: 440 phase: 0 mul: 0.1) draw
@@ -161,7 +167,7 @@ MessageNames openMessageNames. "open Message Names tool"
 #(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
 #(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
 #(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
-(0 to: 4) mixFill: [:x | x * x] "=> 30"
+((0 to: 4) collect: [:x | x * x]) sum "=> 30"
 (1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
 (0 to: 4) collect: [:x | x * x] "=> #(0 1 4 9 16)"
 
@@ -197,10 +203,16 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 ({1. 2. 3} at: 2 put: -2) == -2 true              "=> true (at:put: returns the element put)"
 
+#(1 2 3 4 5) rotateRight: 1 "=> (5 1 2 3 4)"
+#(1 2 3 4 5) rotateLeft: 1 "=> (2 3 4 5 1)"
+#(1 2 3 4 5) rotate: 1 "=> (5 1 2 3 4)"
+
 "Array - Math"
+
 
 3 adaptToCollection: #(1 2 3) andSend: #*
 #(1 2 3) * 3 "=> #(3 6 9)"
+3 * #(1 2 3) "=> #3 6 9)"
 
 "Interval"
 

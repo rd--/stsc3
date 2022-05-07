@@ -10,4 +10,4 @@ m := ((SinOscFB freq: b / c feedback: 0) max: 0) / c.
 h := Hasher in: ((SinOscFB freq: b / 12 feedback: 0) max: 0) mul: m.
 q := BPF in: h freq: (2 ** (SinOscFB freq: b / c * 2 feedback: 0)) * 10000 rq: 1 / 99.
 r := GVerb in: q roomsize: 99 revtime: 9 damping: 0.2 inputbw: 0.5 spread: 15 drylevel: 1 earlyreflevel: 0.7 taillevel: 0.5 maxroomsize: 300.
-((HPF in: r + p freq: 50) clump: 2) mix * 0.2
+((HPF in: r + p freq: 50) clump: 2) sum * 0.2

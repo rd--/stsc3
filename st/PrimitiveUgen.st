@@ -1,16 +1,21 @@
 AbstractUgen subclass: #PrimitiveUgen
-  instanceVariableNames: 'name numChan rate specialIndex inputArray id'
+  instanceVariableNames: 'name numChan rate specialIndex inputArray id mrg'
   classVariableNames: ''
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
 PrimitiveUgen comment: 'Primitive unit generator.
-Objects have identity, however identityHash is not unique.
-The approach here is to assign the id during graph serialisation, alternately the id could be assigned using a counter at initialization.'!
+Objects have identity, the id field is used to sort unit generators into applicative order.'!
 
 !PrimitiveUgen methodsFor: 'initialization'!
 name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
-    name := nm. numChan := nc. rate := rt. specialIndex := ix. inputArray := in!
+    name := nm.
+    numChan := nc.
+    rate := rt.
+    specialIndex := ix.
+    inputArray := in.
+    id := Sc3Id nextId.
+    mrg := OrderedCollection new!
 !
 
 !PrimitiveUgen class methodsFor: 'instance creation'!
@@ -19,6 +24,8 @@ name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
 !
 
 !PrimitiveUgen methodsFor: 'accessing'!
+id
+    ^id!
 id: aNumber
     id := aNumber!
 rate
@@ -35,11 +42,28 @@ kr
 !
 
 !PrimitiveUgen methodsFor: 'collecting'!
-addToUgenSet: set
-    set add: self.
-    inputArray do: [ :item | item addToUgenSet: set ]!
+addToUgenSet: c protectedBy: w
+    (w includes: self) ifFalse: [
+        c add: self.
+        inputArray do: [ :item | item addToUgenSet: c protectedBy: w ].
+        mrg do: [ :item | item addToUgenSet: c protectedBy: c ] ]!
 !
 
+!PrimitiveUgen methodsFor: 'mrg'!
+mrg: rhs
+    rhs asArray do: [ :item | mrg add: item ].
+    ^self.
+!
+
+!PrimitiveUgen methodsFor: 'testing'!
+acceptsMrg
+    ^true!
+!
+
+"Mrg needs to be printed here.
+It can't be at printHaskellOn because that will be used on the lhs of =, and at printHaskellDefinitionOn: it makes a loop.
+It requires an extra id, so another node, so Mrg...
+Should just print a text syndef."
 !PrimitiveUgen methodsFor: 'printing'!
 printHaskellOn: fd
     "Print the name I am bound to in hsc3."
@@ -54,5 +78,5 @@ printHaskellDefinitionOn: fd
     numChan asString putOn: fd. fd space.
     '(Special ' putOn: fd.  specialIndex asString putOn: fd. ') ' putOn: fd.
     '(UId ' putOn: fd. id asString putOn: fd. ')' putOn: fd.
-    ')' putOn: fd!
+    ') ' putOn: fd!
 !

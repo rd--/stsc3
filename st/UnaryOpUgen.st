@@ -6,17 +6,8 @@ PrimitiveUgen subclass: #UnaryOpUgen
 
 UnaryOpUgen comment: 'Unary Operators'!
 
-!UnaryOpUgen methodsFor: 'initialization'!
-specialIndex: p1 a: p2
-    name := #UnaryOpUGen. "note case"
-    rate := p2 rate.
-    numChan := 1.
-    specialIndex := p1.
-    inputArray := {p2}!
-!
-
 !UnaryOpUgen class methodsFor: 'instance creation'!
-specialIndex: p1 a: p2
-    "Create unary operator Ugen"
-    ^self new specialIndex: p1 a: p2!
+specialIndex: specialIndex a: a
+    "This is special cased so it can optimize constant math..."
+    ^UgenBuilder name: 'UnaryOpUGen' numChan: 1 rateSpec: #(1) specialIndex: specialIndex inputArray: {a}!
 !

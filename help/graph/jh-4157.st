@@ -1,5 +1,5 @@
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157"
-(SinOsc freq: (4 ** (200 iota * 0.002) * 300) phase: 0) mix * 0.02
+(SinOsc freq: (4 ** (200 iota * 0.002) * 300) phase: 0) sum * 0.02
 
 "jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit) ; psuedo-doppler"
 (SinOsc freq: (2 ** (100 iota * 0.002) * 120) phase: 0 mul: 0.1) splay2

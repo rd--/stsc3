@@ -62,6 +62,7 @@ x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, return
 #(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
 #(1 (2 (3 4))) = #(1 #(2 #(3 4)))                           "in st-80 sub-arrays do not require # prefix"
 #(x x: nil) = #(#x #x: nil)                                 "in st-80 symbols do not require #prefix"
+#(5 4 3 2 1) detect: [ :i | i < 3 ]                         "detect element (not index), so 2"
 
 'Assignment'
 

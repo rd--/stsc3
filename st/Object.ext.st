@@ -2,3 +2,8 @@
 asArray
     ^Array with: self!
 !
+
+!Object methodsFor: 'testing'!
+acceptsMrg
+    ^false!
+!
