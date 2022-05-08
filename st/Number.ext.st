@@ -1,16 +1,3 @@
-!Number methodsFor: 'enumerating'!
-to: aNumber collect: aBlock
-    ^(self to: aNumber) collect: aBlock!
-iota
-    "Array of numbers from 1 to myself.  In St proper this should be an Interval."
-    ^(1 to: self) asArray!
-from: start by: step
-    "Array of myself number of places from start by step.  In St proper this should be an Interval.
-     (5 from: 3 by: 4) = #(3 7 11 15 19)
-    "
-    ^(start to: self - 1 * step + start by: step) asArray!
-!
-
 !Number methodsFor: 'arithmetic'!
 midiCps
     "Convert from fractional midi note number to frequency (in hertz)"

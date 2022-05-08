@@ -79,9 +79,12 @@ putOn: aStream
 !
 
 !Dictionary class methodsFor: 'instance creation'!
-newFrom: x
-    ^self from: x
-!
+newFrom: aCollection
+    "Generate a dictionary from a collection of associations."
+    | answer |
+    answer := Dictionary new.
+    aCollection do: [ :anAssociation | answer add: anAssociation ].
+    ^answer!
 newFromPairs: anArray
     "Answer an instance of me associating (anArray at:i) to (anArray at: i+1) for each odd i.  anArray must have an even number of entries."
     | newDictionary |
@@ -170,7 +173,7 @@ isZero
   !
   coerce: aNumber
     "Coerce argument (which will be some form of Number) to a Ugen"
-    ^(self size) replicate: aNumber
+    ^aNumber dup: self size
   !
 !
 
@@ -181,7 +184,7 @@ isZero
   !
   coerce: aNumber
     "Coerce argument (which will be some form of Number) to a Ugen"
-    ^(self size) replicate: aNumber
+    ^aNumber dup: self size
   !
 !
 

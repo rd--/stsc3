@@ -6,9 +6,7 @@ Object subclass: #Sc3Id
 
 !Sc3Id class methodsFor: 'identifiers'!
 nextId
-    "Generate a new identifier.  Avoid requiring class initialisation by checking for nil.
-    (1 to: 9) collect: [ :unusedItem | Sc3Id nextId ]
-    "
+    "Generate a new identifier.  Avoid requiring class initialisation by checking for nil."
     IdCounter isNil ifTrue: [ IdCounter := 0 ] ifFalse: [ IdCounter := IdCounter + 1 ].
     ^IdCounter!
 !

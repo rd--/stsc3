@@ -10,14 +10,14 @@ Control comment: 'Control Input'!
 name
     ^name
 !
-name: x
-    name := x
+name: aString
+    name := aString
 !
 init
     ^init
 !
-init: x
-    init := x!
+init: aNumber
+    init := aNumber!
 !
 
 !Control methodsFor: 'initialising'!

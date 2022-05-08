@@ -1,10 +1,10 @@
 !Integer methodsFor: 'enumerating'!
-arrayFill: aBlock
-    "Array of myself number of places, each being a result of evaluating aBlock.  C.f. Array class>>fill."
-    ^(1 to: self) collect: [ :unusedItem | aBlock value ]!
-replicate: item
-    "Array of myself number of places, each being item."
-    ^self arrayFill: [ item ]!
+iota
+    ^(1 to: self)!
+from: start by: step
+    ^(start to: self - 1 * step + start by: step)!
+to: aNumber collect: aBlock
+    ^(self to: aNumber) collect: aBlock!
 !
 
 !Integer methodsFor: 'randomness'!

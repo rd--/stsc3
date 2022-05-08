@@ -1,18 +1,11 @@
 !BlockClosure methodsFor: 'duplicating'!
-dup: aNumber
-    "Answer an array of aNumber places, each filled by sending #value to myself.
-
-     [ 10 rand ] dup: 10
-    "
-    ^aNumber arrayFill: self!
-dup
-    "Answer an array of myself evaluated twice."
-    ^self dup: 2!
+dup: anInteger
+    ^self dup: anInteger sending: #value!
 !
 
 !BlockClosure methodsFor: 'primary factory method'!
-primaryFactoryMethod
-    #valueWithArguments:!
+apply: anArray
+    ^self valueWithArguments: anArray!
 !
 
 !BlockClosure methodsFor: 'texture generation'!

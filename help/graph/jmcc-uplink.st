@@ -1,5 +1,6 @@
 "uplink ; jmcc ; graph rewrite"
-OverlapTexture graphFunc: [ :tr |
+| uplink |
+uplink := [ :tr |
   | osc freq sig |
    osc := [
     | e r |
@@ -10,7 +11,8 @@ OverlapTexture graphFunc: [ :tr |
   freq := osc value + osc value.
   sig := LFPulse freq: freq kr iphase: 0 width: 0.5 mul: 0.04.
   Pan2 in: sig pos: (TRand lo: -1 hi: 1 trig: tr) level: 1
-] sustainTime: 4 transitionTime: 1 overlap: 5
+].
+OverlapTexture graphFunc: uplink sustainTime: 4 transitionTime: 1 overlap: 5
 
 "uplink ; jmcc ; texture=overlap,4,1,5,inf"
 | osc freq sig |

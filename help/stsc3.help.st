@@ -73,6 +73,10 @@ Rate ir = 0
 '1 + 1' evalString = 2 "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
+"Sc3Id"
+
+[ Sc3Id nextId ] dup: 9
+
 "Sc3"
 
 Sc3 reset "C-c C-."
@@ -123,6 +127,14 @@ MessageNames openMessageNames. "open Message Names tool"
 
 (0.5 coin) if: [ 'p' ] value: [ 'q' ] "=> p or q with equal probability"
 
+"Object"
+
+| x | x := 'x' dup: 2 sending: #copy . {(x at: 1) == (x at: 2)} "duplicate by copying"
+| x | x := 'x' dup: 2 sending: #yourself . {(x at: 1) == (x at: 2)} "duplicate without copying"
+| x | x := 'x' dup: 2 sending: #value . {(x at: 1) == (x at: 2)} "duplicate by evaluating"
+| x | x := 'x' dup: 2 . {(x at: 1) == (x at: 2)} "at object duplicate by copying"
+| x | x := 'x' dup. {(x at: 1) == (x at: 2)} "duplicate by copying"
+
 "Random - Float"
 
 5.0 rand "=> uniform random Float in 0 to 5"
@@ -131,8 +143,8 @@ MessageNames openMessageNames. "open Message Names tool"
 1.0 exprand: 2.0 "=> exponential distribution"
 0.2 rand + 0.1 "=> uniform random Float in 0.1 to 0.3"
 
-100 arrayFill: [ 5.0 rand ] "=> 100 random Floats in 0 to 5"
-100 arrayFill: [ 0.2 coin ] "=> true 20%, false 80%"
+[ 5.0 rand ] dup: 100"=> 100 random Floats in 0 to 5"
+[ 0.2 coin ] dup: 100 "=> true 20%, false 80%"
 
 "Random - Integer"
 
@@ -140,20 +152,26 @@ MessageNames openMessageNames. "open Message Names tool"
 1 rand: 5 "=> random Integer in 1 to 5"
 4 rand2 "=> random Integer in -4 to 4"
 
-100 arrayFill: [ 5 rand] "=> 100 random Integers in 0 to 5"
+[ 5 rand ] dup: 100 "=> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 #(1 2 3 4 5) atRandom "random element of Array ; i.e. atRandom ; choose"
 #(1 2 3 4 5) choose "alias for atRandom"
 #(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
-100 arrayFill: [ #(1 2 3 4 5) atRandom] "=> 100 randomly chosen numbers"
-100 arrayFill: [ #('a' 'b' 'c' 'd' 'e') atRandom] "=> 100 randomly chosen strings"
+[ #(1 2 3 4 5) atRandom ] dup: 100 "=> 100 randomly chosen numbers"
+[ #('a' 'b' 'c' 'd' 'e') atRandom ] dup: 100 "=> 100 randomly chosen strings"
 
 "Interval - Random"
 
-9 arrayFill: [ (1 to: 9) atRandom ] "=> array of 9 integers between 1 and 9"
-9 arrayFill: [ (1 to: 9) choose ] "alias for atRandom"
+[ (1 to: 9) atRandom ] dup: 9 "=> array of 9 integers between 1 and 9"
+[ (1 to: 9) choose ] dup: 9 "alias for atRandom"
+
+"SequenceableCollection"
+
+#(1 (2 3) (4 5 6)) extendToBeOfEqualSize = #((1 1 1) (2 3 2) (4 5 6))
+#(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
+#(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
 
 "Array"
 
@@ -163,13 +181,11 @@ MessageNames openMessageNames. "open Message Names tool"
 #(1 2 3 4 5) size = 5 "=> true"
 
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
-6 replicate: 1 "=> #(1 1 1 1 1 1)"
+1 dup: 6 "=> #(1 1 1 1 1 1) ; replicate by copying"
 #(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
-#(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
-#(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
-((0 to: 4) collect: [:x | x * x]) sum "=> 30"
-(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
-(0 to: 4) collect: [:x | x * x] "=> #(0 1 4 9 16)"
+(0 to: 4 collect: [:x | x * x]) sum "=> 30"
+1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
+0 to: 4 collect: [:x | x * x] "=> #(0 1 4 9 16)"
 
 #(1 2 3 4 5) groupsOf: 2 "=>  #((1 2 ) (3 4))"
 #(1 2 3 4 5 6) clump: 2 "=>  #((1 2 ) (3 4) (5 6))"
@@ -210,6 +226,13 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 2 3 4) containsArray = false
 #(1 (2 3) 4) containsArray = true
 
+#(1 3 5 7) indexOf: 5
+#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]
+
+#(1 3 5 7) detect: [ :item | item > 5]
+#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]
+#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "squeak"
+
 "Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*
@@ -225,8 +248,8 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 (Interval from: 5 to: 9) asArray "=> #(5 6 7 8 9)"
 (Interval from: 5 to: 15 by: 2) asArray "=> #(5 7 9 11 13 15)"
-(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25)"
-(1 to: 9 by: 2) collect: [:x | x * x] "=> #(1 9 25 49 81)"
+1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
+1 to: 9 by: 2 collect: [:x | x * x] "=> #(1 9 25 49 81)"
 
 "Strings"
 
@@ -236,6 +259,7 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 '\0' "=> '\0'"
 '
 x' "=> newline x"
+| x | x := 'x'. {x == x. x == x copy. x = x. x = x copy}
 
 "Symbols"
 
@@ -246,7 +270,7 @@ x' "=> newline x"
 (1 to: 5) first = 1 "=> 1 ; head"
 (1 to: 5) last = 5 "=> 5"
 (1 to: 5) size = 5 "=> 5 ; length"
-(1 to: 5) collect: [:x | x * x] "=> #(1 4 9 16 25) ; map"
+1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25) ; map"
 (1 to: 5) select: [:x | x > 3] "=> #(4 5) ; filter"
 (1 to: 5) copyFrom: 2 to: 5 "=> #(2 3 4 5) ; drop"
 (1 to: 5) at: 3 "=> 3 ; haskell=! ; one-indexed"
@@ -591,12 +615,13 @@ Sc3 stcFileToSt: (Sc3 stsc3HelpGraphFile: 'f0-tw-0456384156159574016.stc').
 Sc3 playHelpGraphFile: 'f0-tw-0456384156159574016.stc'.
 Sc3 reset.
 
-"Blocks"
+"Block"
+
 | factorial |
 factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
-[10 rand] dup: 10 "=> ten random numbers between 1 and 10"
-[10 rand] dup "=> two random numbers between 1 and 10"
+[ 10 rand ] dup: 10 "=> at block duplicate by evaluating, ten random numbers between 1 and 10"
+[ 10 rand ] dup "=> two random numbers between 1 and 10"
 [] class = BlockClosure
 [ :x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
 ([ 1 ] cull: 2) == 1 "=> true"
@@ -604,10 +629,21 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 ([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12 "=> true"
 ([ :x :y :z | x * y + z ] apply: #(3 4 5)) == 17 "=> alias for valueWithArguments:"
 
+"Integer"
+
+5 iota asArray = #(1 2 3 4 5)
+(5 from: 3 by: 4) asArray = #(3 7 11 15 19) "Myself number of places from start by step"
+(5 from: 2 by: 0.5) = #(2 2.5 3 3.5 4)
+(1 to: 9 collect: [ :item | item * item ]) = #(1 4 9 16 25 36 49 64 81)
+
+"Number"
+
 "Delay"
+
 (Delay forMilliseconds: 500) wait
 
 "Open Sound Control - Fudi"
+
 m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
 m inspect
 m descriptor

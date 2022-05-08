@@ -28,6 +28,3 @@ numVoices: numVoices voiceFunc: voiceFunc
 primaryFactoryMethod
     ^#numVoices:voiceFunc:!
 !
-
-
-

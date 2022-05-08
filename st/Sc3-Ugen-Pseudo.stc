@@ -193,6 +193,19 @@ Osc1 : PseudoUgen {
     }
 }
 
+/* Texture generator */
+OverlapTexture : PseudoUgen {
+    *cons {
+        arg graphFunc, sustainTime, transitionTime, overlap;
+        var voiceFunc = {
+            arg i;
+            var t = Impulse(1 / (sustainTime + (transitionTime * 2)), i / overlap).kr;
+            graphFunc(t) * EnvLinen(transitionTime, sustainTime, transitionTime, 1, 'sin').asEnvGen(t)
+        };
+        ^1.to(overlap, collect: voiceFunc).sum
+    }
+}
+
 /* Pen angle */
 PenAngle : PseudoUgen {
     *cons {

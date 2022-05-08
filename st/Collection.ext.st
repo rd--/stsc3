@@ -20,6 +20,10 @@ rounded
     ^self collect: [ :item | item rounded ]!
 sin
     ^self collect: [ :item | item sin ]!
+softClip
+    ^self collect: [ :item | item softClip ]!
+squared
+    ^self collect: [ :item | item squared ]!
 tanh
     ^self collect: [ :item | item tanh ]!
 ** arg
@@ -32,7 +36,7 @@ tanh
 
 !Collection methodsFor: 'mrg'!
 mrg: rhs
-    (self detect: [ :item | item isUgen]) mrg: rhs.
+    (self detect: [ :item | item isUgen] ifNone: [ self error: 'mrg?' ]) mrg: rhs.
     ^self!
 !
 

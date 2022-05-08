@@ -27,8 +27,7 @@ from: anObject withName: aString
 !ScGraph methodsFor: ''!
 constantIndex: aNumber
     | answer |
-    answer := constantSeq indexOf: (aNumber asFloat).
-    (answer = 0) ifTrue: [ constantSeq printOn: stdout. self error: ('cannot find index for number: ' , aNumber asString) ].
+    answer := constantSeq indexOf: (aNumber asFloat) ifAbsent: [ self error: ('cannot find index for number: ' , aNumber asString) ].
     ^answer - 1!
 ugenIndex: aNumber
     ^(ugenSeq findIndex: [ :item | item id = aNumber ]) - 1!
@@ -42,16 +41,16 @@ scgf
     ^1396926310!
 printSyndefOn: aStream
     aStream
-        <| self scgf
-        <| 2 "file version"
-        <| 1 "# synth definitions"
-        <| name
-        <| constantSeq size.
-    constantSeq do: [ :item | aStream <| item asFloat ].
+        << self scgf << ' '
+        << 2 << ' ' "file version"
+        << 1 << ' ' "# synth definitions"
+        << name << ' '
+        << constantSeq size << ' '.
+    constantSeq do: [ :item | aStream << item asFloat << ' ' ].
     aStream
-        <| 0 "# param"
-        <| 0 "# param names"
-        <| ugenSeq size.
+        << 0 << ' ' "# param"
+        << 0 << ' ' "# param names"
+        << ugenSeq size << ' '.
     ugenSeq do: [ :item | item printForGraph: self on: aStream ].
-    aStream <| 0 "# variants"!
+    aStream << 0 "# variants"!
 !

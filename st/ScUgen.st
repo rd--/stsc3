@@ -60,11 +60,11 @@ mrg: rhs
 !ScUgen methodsFor: 'printing'!
 printForGraph: aGraph on: aStream
     aStream
-        <| name
-        <| rate
-        <| inputArray size
-        <| numChan
-        <| specialIndex.
-    inputArray do: [ :input | (aGraph ugenInputSpec: input) do: [ :item | aStream <| item ] ].
-    numChan timesRepeat: [ aStream <| rate ]!
+        << name << ' '
+        << rate << ' '
+        << inputArray size << ' '
+        << numChan << ' '
+        << specialIndex << ' '.
+    inputArray do: [ :input | (aGraph ugenInputSpec: input) do: [ :item | aStream << item << ' ' ] ].
+    numChan timesRepeat: [ aStream << rate << ' ' ]!
 !
