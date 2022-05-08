@@ -27,10 +27,8 @@ squared
 tanh
     ^self collect: [ :item | item tanh ]!
 ** arg
-    "** is the Sc exponentiation operators.  C.f. raisedTo:"
     ^arg adaptToCollection: self andSend: #**!
 % arg
-    "% is the Sc floating point modulo operator.  C.f. //"
     ^arg adaptToCollection: self andSend: #%!
 !
 

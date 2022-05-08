@@ -1,38 +1,15 @@
 # Remainder
 
-"Mrg needs to be printed here.
-It can't be at printHaskellOn because that will be used on the lhs of =, and at printHaskellDefinitionOn: it makes a loop.
-It requires an extra id, so another node, so Mrg...
-Should just print a text syndef."
-
-- much much cleanup required....
-- renaming: PrimitiveUgen -> Ugen? PrimitiveUgenOutput -> UgenOutput?
 - broken:
-  + the haskell printer won't work for recursive structures, i.e. x.mrg(f(x))...
-  + mrg - fails - this should follow the jssc3 model properly - i.e. find first actual ugen, not simple detect:
-  + tw-tw-02.st
-  + cr-lucier
-  + kl-vibraphone.stc
-  + tmm881-3319.stc
-  + f0-tw-1197185125819277312.stc (maths astray?)
-  + dm-shift-register.st (mrg)????
-  + f0-tw-1084601286488674304.stc
-  + jmcc-tank.st
+  + % has a cycle (in gnu and squeak)
+  + mrg should follow the jssc3 model properly - i.e. find first actual ugen, not simply detect:
+  + tw-tw-02.st (asUgen)
+  + dm-shift-register.st (prints Inf)
   + jrhb-gcd.st
-  + jmcc-inharmonic-warbulence.st
-- Psuedo Ugens
-  + class PsuedoUgen, subclass of AbstractUgen
-  + autogen all definitions from primary factory method (write these in .stc, it is part of before-pim)
-- Sc
-  + allow self for this
-  + dictionary expressions at Ast
-- build graphs in smalltalk
 - .stc to .st translator writing SinOsc(f, p) as (SinOsc freq: f phase: p)
 - .stc to .sc translator writing f(x) as f.apply(x)
-- program to collate help graphs into methods, ie. ScHelpGraph class>>jmccAlienMeadow  (see SC3-Help.st)
-  + requires re-write as final statement must be returned
-  + list of help graphs in list view with menu to play, draw, visit entries
-- add 'play it!' and 'reset supercollider' menu items to workspace menu
+- ui with help graphs in list view with menu to play, draw, visit entries
+- add 'play it!' and 'reset supercollider' menu items to workspace menu?
 
 # Form
 

@@ -52,6 +52,8 @@ max: arg
     ^arg adaptToCollection: self andSend: #max:!
 roundTo: arg
     ^arg adaptToCollection: self andSend: #roundTo:!
+> arg
+    ^arg adaptToCollection: self andSend: #>!
 +~ other
     "Like + but cycles shorter collection"
     ^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]!

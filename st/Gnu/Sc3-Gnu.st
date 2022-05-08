@@ -153,11 +153,7 @@ atWrap: index
 
 !Number methodsFor: 'mathematical functions'!
 ** aNumber
-    "Gnu Smalltalk doesn't implement **. Special cases for Ugens and Collections."
-    aNumber isZero ifTrue: [ ^1 ].
-    aNumber isUgen ifTrue: [^(Constant value: self) raisedTo: aNumber].
-    aNumber isCollection ifTrue: [^aNumber collect: [ :x | self ** x]].
-    ^self raisedTo: aNumber
+    ^BinaryOpUgen selector: #raisedTo: a: self b: aNumber
   !
 !
 
@@ -303,7 +299,7 @@ zero
   - b ^ BinaryOpUgen specialIndex: 1 a: self b: b!
   * b ^ BinaryOpUgen specialIndex: 2 a: self b: b!
   / b ^ BinaryOpUgen specialIndex: 4 a: self b: b!
-  % b ^ BinaryOpUgen specialIndex: 5 a: self b: b!
+  % b ^ self error: '%?'!
   /= b ^ BinaryOpUgen specialIndex: 7 a: self b: b!
   < b ^ BinaryOpUgen specialIndex: 8 a: self b: b!
   > b ^ BinaryOpUgen specialIndex: 9 a: self b: b!

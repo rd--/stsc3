@@ -515,6 +515,15 @@ Float infinity "=> Inf"
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095
 (0 to: 10) collect: [ :n | (n / 10) linExpFrom: 1 to: 2 ] "=> 10 point equally spaced points on exponential curve from 1 to 2"
+13 \\ 12 = 1 "13 modulo 12"
+13 \\ 12.5 = 0.5 "13 modulo 12.5"
+13 % 12
+13 % (SinOsc freq: 440 phase: 0 mul: 12)
+
+"BinaryOpUgen"
+
+(BinaryOpUgen selector: #* a: 0.1 b: (SinOsc freq: 440 phase: 0)) draw
+(BinaryOpUgen selector: #% a: 0.1 b: (SinOsc freq: 440 phase: 0)) draw
 
 "GNU Smalltalk"
 
