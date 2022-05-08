@@ -207,12 +207,19 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 2 3 4 5) rotateLeft: 1 "=> (2 3 4 5 1)"
 #(1 2 3 4 5) rotate: 1 "=> (5 1 2 3 4)"
 
-"Array - Math"
+#(1 2 3 4) containsArray = false
+#(1 (2 3) 4) containsArray = true
 
+"Array - Math"
 
 3 adaptToCollection: #(1 2 3) andSend: #*
 #(1 2 3) * 3 "=> #(3 6 9)"
 3 * #(1 2 3) "=> #3 6 9)"
+
+| x | x := #(#(4 4.5) #(2 3 5 6)). x perform: #* crossedWith: x
+
+#(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4))
+#(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples
 
 "Interval"
 

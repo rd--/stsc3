@@ -21,11 +21,11 @@ OverlapTexture({
     var syncRatio = 2;
     var syncDcy = TRand(0.5, 2, tr);
     var syncEnv = TXLine(syncEgTop / syncRatio, 1, syncDcy, tr);
-    var gainEnv = ADSR(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
+    var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
     var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).midiCps }.dup(5);
     var in = LFTri(freq, 0);
     var phase = Sweep(in, freq * syncRatio * syncEnv);
     var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
     var sig = synced * in * gainEnv;
-    sig.splay * 0.2
+    sig.splay2 * 0.2
 }, 2, 0, 2)

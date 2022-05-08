@@ -1,16 +1,16 @@
-/* EnvGen of simplified EnvADSR */
-ADSR : PseudoUgen {
+/* EnvGen of simplified EnvAdsr */
+Adsr : PseudoUgen {
     *cons {
-        arg gate, attackTime, decayTime, sustainLevel, releaseTime, curve;
-        ^EnvADSR(attackTime, decayTime, sustainLevel, releaseTime, peakLevel, curve).asEnvGen(g)
+        arg gate = 1, attackTime = 0.01, decayTime = 0.3, sustainLevel = 0.5, releaseTime = 1, curves = -4;
+        ^EnvAdsr(attackTime, decayTime, sustainLevel, releaseTime, 1, curves).asEnvGen(gate)
     }
 }
 
-/* EnvGen of simplified EnvASR */
-ASR : PseudoUgen {
+/* EnvGen of simplified EnvAsr */
+Asr : PseudoUgen {
     *cons {
-        arg gate, attackTime, releaseTime, curve;
-        ^EnvASR(attackTime, sustainLevel, releaseTime, curve).asEnvGen(g)
+        arg gate = 1, attackTime = 0.01, releaseTime = 1, curves = -4;
+        ^EnvAsr(attackTime, 1, releaseTime, curves).asEnvGen(gate)
     }
 }
 
@@ -107,6 +107,14 @@ DynKlank : PseudoUgen {
             Ringz(input, f * freqscale + freqoffset, d * decayscale) * a
         };
         ^1.to(specificationsArrayRef.size, by: 3).collect(gen).sum
+    }
+}
+
+/* Dynamic parallel bank of Ringz */
+DynRingzBank : PseudoUgen {
+    *cons {
+        arg input, freq, amp, time;
+        ^DynKlank(input, 1, 0, 1, KlankSpec(freq, amp, time))
     }
 }
 
@@ -253,7 +261,7 @@ RingzBank : PseudoUgen {
 Select2 : PseudoUgen {
     *cons {
         arg predicate, ifTrue, ifFalse;
-        ^(predicate * (trueUgen - falseUgen)) + falseUgen
+        ^(predicate * (ifTrue - ifFalse)) + ifFalse
     }
 }
 
@@ -384,7 +392,11 @@ TXLine : PseudoUgen {
 WrapOut : PseudoUgen {
     *cons {
         arg bus, channelsArray;
-        (channelsArray.isArray.not && channelsArray.isOutUgen).ifTrue({ ^channelsArray }, ifFalse: { ^Out(bus, channelsArray) })
+        channelsArray.isArray.not.and({ channelsArray.isOutUgen }).ifTrue({
+            ^channelsArray
+        }, ifFalse: {
+            ^Out(bus, channelsArray)
+        })
     }
 }
 

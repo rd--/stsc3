@@ -28,9 +28,9 @@ Methods that extend numerical classes and sequence classes.
 [Sc3-OpenSoundControl.st](?t=stsc3&e=st/Sc3-OpenSoundControl.st):
 Open Sound Control protocol.
 
-[Sc3-Ugen-Pseudo.st](?t=stsc3&e=st/Sc3-Ugen-Pseudo.st):
-Pseudo Ugens (ie. _LocalBuf_ and _Splay2_) that are not at `Sc3-Ugen.st`.
-This includes Demand Ugens constructors with parameter ordering consistent with _hsc3_.
+[Sc3-Ugen-Pseudo.stc](?t=stsc3&e=st/Sc3-Ugen-Pseudo.stc):
+Includes Demand Ugens constructors with parameter ordering consistent with _hsc3_.
+The _.st_ file is auto-generated and not stored, see Makefile.
 
 [Sc3-Ui.st](?t=stsc3&e=st/Sc3-Ui.st):
 User-interface classes and methods.

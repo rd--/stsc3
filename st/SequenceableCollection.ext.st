@@ -1,3 +1,21 @@
+!SequenceableCollection class methodsFor: 'supercollider'!
+series: size value: start value: step
+    "Generate an arithmetic series (ramp) of size places from start by step."
+    ^(1 to: size) collect: [ :item | (step * (item - 1)) + start ]!
+geom: size value: start value: grow
+    "Generate a geometric series (curve) of size places from start by grow."
+    | accum |
+    accum := start.
+    ^(1 to: size) collect: [ :unusedItem |
+        | entry |
+        entry := accum.
+        accum := grow * accum.
+        entry ]!
+fill: size value: aBlock
+    "Generate an array evaluating a zero argument block to fill each slot."
+    ^(1 to: size) collect: [ :unusedItem | aBlock value ]!
+!
+
 !SequenceableCollection methodsFor: 'rearranging'!
 transpose
     "Transpose my rows and columns (I am a two-dimensional array).
@@ -59,6 +77,10 @@ max: arg
     ^arg adaptToCollection: self andSend: #max:!
 roundTo: arg
     ^arg adaptToCollection: self andSend: #roundTo:!
+softClip
+    ^self collect: [ :item | item softClip ]!
+squared
+    ^self collect: [ :item | item squared ]!
 +~ other
     "Like + but cycles shorter collection"
     ^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]!

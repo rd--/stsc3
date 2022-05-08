@@ -8,6 +8,6 @@ Splay2(1.to(16).collect({
 Splay2(1.to(16).collect({
     arg vc;
     var freq = KeyPitch(vc).unitCps + LFNoise2(0.25);
-    var amp = ASR(KeyDown(vc), 0.1, 2, -4) * KeyVelocity(vc); // Latch(KeyVelocity(vc), KeyDown(vc))
+    var amp = Asr(KeyDown(vc), 0.1, 2, -4) * KeyVelocity(vc); // Latch(KeyVelocity(vc), KeyDown(vc))
     LPF(Saw(freq), KeyTimbre(vc) + 0.1 * freq * 8) * amp
 }))

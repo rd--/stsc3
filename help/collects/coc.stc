@@ -73,10 +73,10 @@ var lfo = LFNoise1(#[28, 27]) * 400 + 2000;
 SinOsc(lfo, 0) * 0.1
 
 // lasers ; https://github.com/cianoc/supercollider_fragments
-SinOsc(EnvADSR(0.1, 0.4, 0.8, 0.5, 1, #[-4]).asEnvGen(Dust(1)).kr * 10000, 0) * 0.1
+SinOsc(EnvAdsr(0.1, 0.4, 0.8, 0.5, 1, #[-4]).asEnvGen(Dust(1)).kr * 10000, 0) * 0.1
 
 // lasers ; https://github.com/cianoc/supercollider_fragments
-SinOsc(ADSR(Dust(1), 0.1, 0.4, 0.8, 0.5, #[-4]).kr * 10000, 0) * 0.1
+SinOsc(Adsr(Dust(1), 0.1, 0.4, 0.8, 0.5, #[-4]).kr * 10000, 0) * 0.1
 
 // saw as an lfo ; https://github.com/cianoc/supercollider_fragments
 var lfo = LFSaw(2, 0) * -100 + 600;
@@ -155,7 +155,7 @@ var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
 var f = {
     arg partial;
-    var env = ASR(tr, 0, 5, #[0]) / partial;
+    var env = Asr(tr, 0, 5, #[0]) / partial;
     var amp = LFNoise1(Rand(5, 12)).max(0);
     Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), env * amp)
 };
@@ -231,8 +231,8 @@ var vc = {
     var gate = e.w;
     var osc1 = Saw(freq + LFTri(0.3, 0));
     var osc2 = Saw((freq.cpsMidi - 0.03).midiCps);
-    var filterEnv = ADSR(gate, 1, 1.4, 0.05, 0.2, 0);
-    var ampEnv = ADSR(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
+    var filterEnv = Adsr(gate, 1, 1.4, 0.05, 0.2, 0);
+    var ampEnv = Adsr(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
     Pan2(RLPF(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.o * 2 - 1, ampEnv)
 };
 Voicer(16, vc).sum

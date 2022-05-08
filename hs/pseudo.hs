@@ -9,11 +9,15 @@ import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
 stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
 
-stsc3_psuedo_ugens_source_file :: FilePath
-stsc3_psuedo_ugens_source_file = "/home/rohan/sw/stsc3/st/Sc3-Ugen-Pseudo.stc"
+stsc3_dir :: FilePath
+stsc3_dir = "/home/rohan/sw/stsc3/"
+
+stsc3_file :: FilePath -> FilePath
+stsc3_file = (++) stsc3_dir
 
 main :: IO ()
 main = do
-  txt <- readFile stsc3_psuedo_ugens_source_file
-  let cd = stc_parse_class_definition_seq txt
-  mapM_ (putStrLn . St.fileOutClassDefinition . Sc.scClassDefinitionToSt) cd
+  stc_text <- readFile (stsc3_file "st/Sc3-Ugen-Pseudo.stc")
+  let cd = stc_parse_class_definition_seq stc_text
+      st_text = unlines (map (St.fileOutClassDefinition . Sc.scClassDefinitionToSt) cd)
+  writeFile (stsc3_file "st/Sc3-Ugen-Pseudo.st") st_text

@@ -1,20 +1,17 @@
 // coolant (jmcc)
 { RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { Rand(40, 2040) }.dup(10), [0.1], [1]) }.dup
 
-// coolant (jmcc) ; Klank
-var r = KlankSpec({ Rand(40, 2040) }.dup(10), [0.1], [1]);
-{ Klank(OnePole(BrownNoise() * 0.002, 0.95), 1, 0, 1, r) }.dup
+// coolant (jmcc) ; default values
+{ RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { Rand(40, 2040) }.dup(10), nil, nil) }.dup * 0.1
 
 // coolant (jmcc) ; Rand->rand
-var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), [1], [1]);
-{ Klank(OnePole(BrownNoise() * 0.002, 0.95), 1, 0, 1, r) }.dup
+{ RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { 40 + 2000.0.rand }.dup(10), [0.1], [1]) }.dup
 
 // coolant (jmcc) ; Ringz
 var o = OnePole(BrownNoise() * 0.002, 0.95);
-var f = { Ringz(o, Rand(40, 2040), 1) * 0.2 };
+var f = { Ringz(o, Rand(40, 2040), 1) * 0.1 };
 f.dup(10).splay2
 
 //---- coolant (jmcc) ; filtermethods
-var r = KlankSpec({ 40 + 2000.0.rand }.dup(10), nil, nil);
-{ BrownNoise().mul(0.002).onePole(0.95).klank(1, 0, 1, r) }.dup
+{ BrownNoise().mul(0.002).onePole(0.95).ringzBank({ 40 + 2000.0.rand }.dup(10), nil, nil) }.dup
 
