@@ -1,11 +1,7 @@
 # Remainder
 
 - broken:
-  + % has a cycle (in gnu and squeak)
   + mrg should follow the jssc3 model properly - i.e. find first actual ugen, not simply detect:
-  + tw-tw-02.st (asUgen)
-  + dm-shift-register.st (prints Inf)
-  + jrhb-gcd.st
 - .stc to .st translator writing SinOsc(f, p) as (SinOsc freq: f phase: p)
 - .stc to .sc translator writing f(x) as f.apply(x)
 - ui with help graphs in list view with menu to play, draw, visit entries

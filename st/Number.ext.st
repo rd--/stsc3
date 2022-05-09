@@ -13,7 +13,7 @@ ampDb
     ^(self log: 10) * 20!
 % aNumber
     "% is the Sc floating point modulo operator."
-    ^aNumber isUgen ifTrue: [ ^BinaryOpUgen selector: #% a: self % aNumber ] ifFalse: [ ^self error: '%?' ]!
+    aNumber isUgen ifTrue: [ ^BinaryOpUgen selector: #% a: self b: aNumber ] ifFalse: [ ^self \\ aNumber ]!
 linExpFrom: lo to: hi
     "Myself (I am in range 0.0 to 1.0) mapped to the indicated range following an exponential curve."
     ^lo * ((hi / lo) ln * self) exp!

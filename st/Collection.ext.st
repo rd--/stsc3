@@ -1,18 +1,19 @@
 !Collection methodsFor: 'arithmetic'!
 abs
-    "Absolute values of my elements."
     ^self collect: [ :item | item abs ]!
+dbAmp
+    ^self collect: [ :item | item dbAmp ]!
 distort
     ^self collect: [ :item | item distort ]!
+frac
+    ^self collect: [ :item | item frac ]!
 midiCps
-    "My elements converted from midi note numbers to frequencies in hertz."
     ^self collect: [ :item | item midiCps ]!
-dbAmp
-    "My elements converted from decibels to linear amplitude."
-    ^self collect: [ :item | item dbAmp ]!
 mean
     "Sum of myself divided by my size."
     ^self sum / self size!
+negated
+    ^self collect: [ :item | item negated ]!
 product
     "All of my elements multiplied togeather."
     ^self inject: 1 into: [ :accumulator :item | accumulator * item ]!

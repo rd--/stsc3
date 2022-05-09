@@ -75,6 +75,14 @@ a := #(0.25 0.25 1 0.8 0.5 0.9 0.4 0.3 0.6 0.1 0.1).
 f := m collect: l.
 (SinOsc freq: f * 500 phase: 0 mul: a * 0.05) splay2
 
+"SinOsc ; Interval"
+o := SinOsc freq: 55 * (1 to: 17) phase: 0.
+o sum * 0.05
+
+"SinOsc ; Interval"
+o := SinOsc freq: 55 * (17 to: 1 by: -1) phase: 0 mul: 0.01 * (1 to: 17).
+o sum
+
 "----"
 o := SinOsc freq: 440 phase: 0
 o class == Ugen

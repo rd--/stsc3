@@ -1,4 +1,4 @@
-"https://sccode.org/1-590 (dm)"
+"https://sccode.org/1-590 (dm) ; this prints infinity somewhere (divide by zero)"
 | shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
 shift_register := [ :length :tr :in |
   | buf count rd wr |

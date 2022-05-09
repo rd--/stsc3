@@ -8,7 +8,7 @@ UgenBuilder comment: 'Construct Ugens performing channel expansion'!
 
 !UgenBuilder class methodsFor: 'instance creation'!
 name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputArray: inputArray
-    inputArray containsArray ifTrue: [
+    inputArray containsCollection ifTrue: [
         ^inputArray mceTransform collect: [ :item |
             UgenBuilder name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputArray: item
         ]

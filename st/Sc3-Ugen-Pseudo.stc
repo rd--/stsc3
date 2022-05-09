@@ -374,7 +374,7 @@ TDmdFor : PseudoUgen {
 TLine : PseudoUgen {
     *cons {
         arg start, end, dur, trig;
-        ^EnvSpec([start, start, end], [0, dur], #['lin', 'lin'], -1, -1,).asEnvGen(trig)
+        ^EnvSpec([start, start, end], [0, dur], #['lin', 'lin'], -1, -1, 0).asEnvGen(trig)
     }
 }
 

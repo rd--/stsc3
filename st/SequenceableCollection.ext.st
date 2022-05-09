@@ -14,6 +14,7 @@ clump: groupSize
     ^answer!
 extendCyclically: answerSize
     "Myself extended to answerSize places by cycling"
+    self isEmpty ifTrue: [ self error: 'extendCyclically: empty?' ].
     ^1 to: answerSize collect: [ :index | self atWrap: index ]!
 extendToBeOfEqualSize
     "All of my elements extended to to be of the same size as my largest element.
@@ -48,10 +49,20 @@ findIndex: aBlock
 !
 
 !SequenceableCollection methodsFor: 'arithmetic'!
+bitAnd: arg
+    ^arg adaptToCollection: self andSend: #bitAnd:!
+bitOr: arg
+    ^arg adaptToCollection: self andSend: #bitOr:!
+gcd: arg
+    ^arg adaptToCollection: self andSend: #gcd:!
+lcm: arg
+    ^arg adaptToCollection: self andSend: #lcm:!
 max: arg
     ^arg adaptToCollection: self andSend: #max:!
 roundTo: arg
     ^arg adaptToCollection: self andSend: #roundTo:!
+< arg
+    ^arg adaptToCollection: self andSend: #<!
 > arg
     ^arg adaptToCollection: self andSend: #>!
 +~ other

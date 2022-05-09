@@ -169,7 +169,17 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "SequenceableCollection"
 
+#() extendCyclically: 5 "=> error"
+#(1) extendCyclically: 5 "=> #(1 1 1 1 1)"
+#(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
+(1 to: 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
 #(1 (2 3) (4 5 6)) extendToBeOfEqualSize = #((1 1 1) (2 3 2) (4 5 6))
+{1 to: 9. 1 to: 3} extendToBeOfEqualSize = #((1 2 3 4 5 6 7 8 9) (1 2 3 1 2 3 1 2 3))
+(1 to: 9) extendToBeOfEqualSize = #((1) (2) (3) (4) (5) (6) (7) (8) (9))
+(3 * (1 to: 3)) extendToBeOfEqualSize = #((3) (6) (9))
+#((1 2) (3 4 5)) extendToBeOfEqualSize = #((1 2 1 ) (3 4 5))
+#(() (1)) extendToBeOfEqualSize "=> error"
+#(1 2 3) withExtending: #(4 5) collect: [ :x :y| x + y ] "=> #(5 7 7) ; 1 + 4 and 2 + 5 and 3 + 4"
 #(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
 #(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
 
@@ -189,9 +199,6 @@ MessageNames openMessageNames. "open Message Names tool"
 
 #(1 2 3 4 5) groupsOf: 2 "=>  #((1 2 ) (3 4))"
 #(1 2 3 4 5 6) clump: 2 "=>  #((1 2 ) (3 4) (5 6))"
-#(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
-#((1 2) (3 4 5)) extendToBeOfEqualSize "=> #((1 2 1 ) (3 4 5))"
-#(1 2 3) withExtending: #(4 5) collect: [:x :y| x + y] "=> #(5 7 7) ; 1 + 4 and 2 + 5 and 3 + 4"
 #(1 2 3) ++ #(4 5) "=> #(1 2 3 4 5)"
 #(1 2 3) , #(4 5) "=> #(1 2 3 4 5)"
 
@@ -232,6 +239,10 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 3 5 7) detect: [ :item | item > 5]
 #(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]
 #(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "squeak"
+
+#() atWrap: 7 "=> error"
+#(1) atWrap: 7 "=> 1"
+#(1 2 3 4) atWrap: 7 "=> 3"
 
 "Array - Math"
 
@@ -517,7 +528,9 @@ Float infinity "=> Inf"
 (0 to: 10) collect: [ :n | (n / 10) linExpFrom: 1 to: 2 ] "=> 10 point equally spaced points on exponential curve from 1 to 2"
 13 \\ 12 = 1 "13 modulo 12"
 13 \\ 12.5 = 0.5 "13 modulo 12.5"
-13 % 12
+13 % 12 = 1
+13 % 12.5 = 0.5
+(SinOsc freq: 440 phase: 0 mul: 13) % 12
 13 % (SinOsc freq: 440 phase: 0 mul: 12)
 
 "BinaryOpUgen"
