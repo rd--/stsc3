@@ -654,6 +654,8 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 ([ :x | x ] cull: 2) == 2 "=> true"
 ([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12 "=> true"
 ([ :x :y :z | x * y + z ] apply: #(3 4 5)) == 17 "=> alias for valueWithArguments:"
+[:w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4 "=> four arguments"
+[:v :w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4 value: 5 "=> five arguments"
 
 "Integer"
 
