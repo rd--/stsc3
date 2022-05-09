@@ -1,6 +1,8 @@
 !Collection methodsFor: 'arithmetic'!
 abs
     ^self collect: [ :item | item abs ]!
+ceil
+    ^self collect: [ :item | item ceil ]!
 dbAmp
     ^self collect: [ :item | item dbAmp ]!
 distort

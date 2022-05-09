@@ -1,49 +1,65 @@
+SystemOrganization addCategory: #'Sound-Sc3'!
+
 !String methodsFor: 'file i/o'!
-  readTextFile
-    ^(self asFileEntry) textContents
-  !
-  writeTextFile: blk
-    ^(self asFileEntry) forceWriteStreamDo: blk
-  !
-  dirAllFilesWithExt: ext
+readTextFile
+    ^(self asFileEntry) textContents!
+writeTextFile: blk
+    ^(self asFileEntry) forceWriteStreamDo: blk!
+dirAllFilesWithExt: ext
     |c|
     c := OrderedCollection new.
     (self asDirectoryEntry) allFilesDo: [ :x | c add: x name ] matches: [ :x | x name endsWith: ext ].
-    ^c asArray
-  !
-  evalString
-    ^Compiler evaluate: self
-  !
-  systemCommand
-    ^OSProcess command: self
-  !
-  putOn: fd
-    ^1 to: self size do: [ :i | fd nextPut: (self at: i) ]
-  !
-  fileListOn
-    ^FileListWindow openFileList "does not open on self..."
-  !
-  workspaceOn
-    (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)
-  !
+    ^c asArray!
+evalString
+    ^Compiler evaluate: self!
+systemCommand
+    ^OSProcess command: self!
+putOn: fd
+    ^1 to: self size do: [ :i | fd nextPut: (self at: i) ]!
+fileListOn
+    "does not open on self..."
+    ^FileListWindow openFileList!
+workspaceOn
+    (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)!
 !
 
 !Character methodsFor: 'file i/o'!
-  putOn: fd ^ fd nextPut: self !
+putOn: fd ^ fd nextPut: self!
 !
 
 !Collection methodsFor: 'arithmetic'!
-  isZero
+isZero
     "Answer whether the receiver is zero.
      Required to write 1 / #(1 2 3).
      Could also be self anySatisfy: [:x| x isZero]"
-    ^false
-  !
+    ^false!
 !
 
 !Number methodsFor: 'mathematical functions'!
 ** aNumber
     "Special case of aNumber ** aUgen"
-    self asUgen raisedTo: aNumber
+    ^self raisedTo: aNumber!
 !
+
+!Stream methodsFor: 'readability'!
+<< items
+ 	items putOn: self.
+	^self!
+!
+
+!Number methodsFor: 'i/o'!
+putOn: aStream
+    self printOn: aStream!
+!
+
+!Interval methodsFor: 'math'!
++ arg
+    ^self asArray + arg!
+- arg
+    ^self asArray - arg!
+!
+
+!Array methodsFor: 'math'!
+adaptToCollection: rcvr andSend: selector
+    ^rcvr withExtending: self collect: [ :rcvrElement :myElement | rcvrElement perform: selector with: myElement ]!
 !

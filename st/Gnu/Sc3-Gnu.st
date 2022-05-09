@@ -61,7 +61,7 @@ putOn: aStream
 putOn: aStream
 	(aStream isBinary ifTrue: [ self asByteArray ] ifFalse: [ self asString]) putOn: aStream!
 !
- 
+
 !String methodsFor: 'evaluating'!
 evalString
     "Evaluate myself (I am a Smalltalk expression)"
@@ -185,13 +185,12 @@ isZero
 !
 
 !Array methodsFor: 'converting'!
-  adaptToCollection: rcvr andSend: selector
+adaptToCollection: rcvr andSend: selector
     "If I am involved in arithmetic with another Collection, return a Collection of
     the results of each element combined with the scalar in that expression."
     rcvr isSequenceable & self isSequenceable ifFalse:
       [self error: 'Only sequenceable collections may be combined arithmetically'].
-    ^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
-  !
+    ^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]!
 !
 
 !Interval methodsFor: 'converting'!

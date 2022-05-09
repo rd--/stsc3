@@ -250,6 +250,9 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 2 3) * 3 "=> #(3 6 9)"
 3 * #(1 2 3) "=> #3 6 9)"
 
+#(1 2) + #(3 4 5) = #(4 6 6)
+#(1 2 3) + #(4 5) = #(5 7 7)
+
 | x | x := #(#(4 4.5) #(2 3 5 6)). x perform: #* crossedWith: x
 
 #(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4))
@@ -304,8 +307,9 @@ d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 x := nil
 x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 
-"Collections"
+"Collection"
 
+#(1 2 3 4 5) anySatisfy: [ :item | item = 3 ] "=> true"
 #(1 2 3 4 5) sum = 15 "=> true"
 #(1 2 3 4 5) product == (1 * 2 * 3 * 4 * 5) "=> true"
 

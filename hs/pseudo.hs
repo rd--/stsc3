@@ -7,7 +7,9 @@ import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
 -- | Parse class library file, a sequence of class definitions.
 stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
-stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
+stc_parse_class_definition_seq =
+  let f cd = cd {Sc.classCategory = Just "Sound-Sc3"}
+  in map f . Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
 
 stsc3_dir :: FilePath
 stsc3_dir = "/home/rohan/sw/stsc3/"
