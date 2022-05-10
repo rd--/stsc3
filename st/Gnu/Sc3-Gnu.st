@@ -1,35 +1,84 @@
-Object subclass: #Constant
-  instanceVariableNames: 'value'
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-Sc3'!
-Constant comment: 'Constant numerical value. Required for Gnu coerce:'!
-!Constant methodsFor: 'initialization'!
-value: aNumber
-    aNumber isNumber ifTrue: [ value := aNumber ] ifFalse: [self error: 'not a number?']!
+!Object methodsFor: 'maths'!
+adaptToFloat: rcvr andSend: selector
+    ^ self adaptToNumber: rcvr andSend: selector!
+adaptToFloat: rcvr andCompare: selector
+    ^ self adaptToFloat: rcvr andSend: selector!
+adaptToInteger: rcvr andSend: selector
+    ^ self adaptToNumber: rcvr andSend: selector!
 !
-!Constant methodsFor: 'testing'!
-isZero
-    ^value isZero!
-isNumber
-    ^true!
-asFloat
-    ^value asFloat!
-asString
-    ^value asString!
+
+!Collection methodsFor: 'maths'!
+adaptToCollection: rcvr andSend: selector
+    rcvr isSequenceable & self isSequenceable ifFalse: [self error: 'Only sequenceable collections may be combined arithmetically'].
+    ^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]!
+adaptToNumber: rcvr andSend: selector
+    ^ self collect: [:element | rcvr perform: selector with: element]!
 !
-!Constant class methodsFor: 'instance creation'!
-value: aNumber
-    ^self new value: aNumber!
+
+!Collection methodsFor: 'arithmetic'!
+* arg
+    ^arg adaptToCollection: self andSend: #*!
++ arg
+    ^arg adaptToCollection: self andSend: #+!
+- arg
+    ^arg adaptToCollection: self andSend: #-!
+/ arg
+    ^arg adaptToCollection: self andSend: #/!
+// arg
+    ^arg adaptToCollection: self andSend: #//!
+raisedTo: arg
+    ^arg adaptToCollection: self andSend: #raisedTo:!
 !
-!Constant methodsFor: 'rate'!
-rate
-    ^Rate ir!
+
+!Number methodsFor: 'converting'!
+adaptToFloat: rcvr andSend: selector
+    ^ rcvr perform: selector with: self asFloat!
+adaptToInteger: rcvr andSend: selector
+    ^ self subclassResponsibility!
+adaptToCollection: rcvr andSend: selector
+    ^rcvr collect: [:element | element perform: selector with: self]!
 !
-!Constant methodsFor: 'collecting'!
-addToUgenSet: c protectedBy: w
-    c add: value.
-    ^self!
+
+!SmallInteger methodsFor: 'maths'!
++ aNumber
+    <primitive: VMpr_SmallInteger_plus>
+     aNumber isSmallInteger ifTrue: [ ^(LargeInteger fromInteger: self) + (LargeInteger fromInteger: aNumber) ].
+    ^ aNumber adaptToInteger: self andSend: #+!
+* aNumber
+    <primitive: VMpr_SmallInteger_times>
+     aNumber isSmallInteger ifTrue: [ ^(LargeInteger fromInteger: self) * (LargeInteger fromInteger: aNumber) ].
+   ^ aNumber adaptToInteger: self andSend: #*!
+/ aNumber
+    ^ self asFloat / aNumber!
+!
+
+!Float methodsFor: 'maths'!
+adaptToInteger: rcvr andSend: selector
+    ^ rcvr asFloat perform: selector with: self!
++ aNumber
+     <primitive: VMpr_FloatD_plus>
+    ^ aNumber adaptToFloat: self andSend: #+!
+- aNumber
+     <primitive: VMpr_FloatD_minus>
+    ^ aNumber adaptToFloat: self andSend: #-!
+* aNumber
+    <primitive: VMpr_FloatD_times>
+    ^ aNumber adaptToFloat: self andSend: #*!
+/ aNumber
+    <primitive: VMpr_FloatD_divide>
+    ^ aNumber adaptToFloat: self andSend: #/!
+< aNumber
+    <primitive: VMpr_FloatD_lt>
+    ^ aNumber adaptToFloat: self andCompare: #<!
+> aNumber
+    <primitive: VMpr_FloatD_gt>
+    ^ aNumber adaptToFloat: self andCompare: #>!
+<= aNumber
+    <primitive: VMpr_FloatD_le>
+    ^ aNumber adaptToFloat: self andCompare: #<=!
+>= aNumber
+    <primitive: VMpr_FloatD_ge>
+    ^ aNumber adaptToFloat: self andCompare: #>=!
 !
 
 !String methodsFor: 'file i/o'!
@@ -153,78 +202,12 @@ atWrap: index
 
 !Number methodsFor: 'mathematical functions'!
 ** aNumber
-    ^BinaryOpUgen selector: #raisedTo: a: self b: aNumber
-  !
+    ^BinaryOpUgen selector: #raisedTo: a: self b: aNumber!
 !
 
 !Number methodsFor: 'testing'!
 isZero
     ^self = 0!
-!
-
-!Array methodsFor: 'coercing'!
-  generality
-    "Ugen is 500, Array is more general than Ugen?"
-    ^600
-  !
-  coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a Ugen"
-    ^aNumber dup: self size
-  !
-!
-
-!Interval methodsFor: 'coercing'!
-  generality
-    "Array is 600, Interval is less general than Array?"
-    ^590
-  !
-  coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a Ugen"
-    ^aNumber dup: self size
-  !
-!
-
-!Array methodsFor: 'converting'!
-adaptToCollection: rcvr andSend: selector
-    "If I am involved in arithmetic with another Collection, return a Collection of
-    the results of each element combined with the scalar in that expression."
-    rcvr isSequenceable & self isSequenceable ifFalse:
-      [self error: 'Only sequenceable collections may be combined arithmetically'].
-    ^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]!
-!
-
-!Interval methodsFor: 'converting'!
-  adaptToCollection: rcvr andSend: selector
-    ^self asArray adaptToCollection: rcvr andSend: selector
-  !
-!
-
-!Number methodsFor: 'converting'!
-  adaptToCollection: rcvr andSend: selector
-    "If I am involved in arithmetic with a Collection, return a Collection of the results of each element combined with me in that expression."
-    ^rcvr collect: [:element | element perform: selector with: self]
-  !
-!
-
-!Collection methodsFor: 'arithmetic'!
-  * arg
-    ^arg adaptToCollection: self andSend: #*
-  !
-  + arg
-    ^arg adaptToCollection: self andSend: #+
-  !
-  - arg
-    ^arg adaptToCollection: self andSend: #-
-  !
-  / arg
-    ^arg adaptToCollection: self andSend: #/
-  !
-  // arg
-    ^arg adaptToCollection: self andSend: #//
-  !
-  raisedTo: arg
-    ^arg adaptToCollection: self andSend: #raisedTo:
-  !
 !
 
 !SequenceableCollection methodsFor: 'enumerating'!
@@ -278,72 +261,4 @@ value: p1 value: p2 value: p3 value: p4
     ^self valueWithArguments: {p1. p2. p3. p4}!
 value: p1 value: p2 value: p3 value: p4 value: p5
     ^self valueWithArguments: {p1. p2. p3. p4. p5}!
-!
-
-!Ugen methodsFor: 'coercing'!
-generality
-    "Float is 400, Ugen is more general than Float."
-    ^500!
-coerce: aNumber
-    "Coerce argument (which will be some form of Number) to a Ugen"
-    ^Constant value: aNumber!
-zero
-    "Gnu has a curious coercion scheme.  It rewrites x < y as (x - y) < 0."
-    ^Constant value: 0!
-!
-
-
-!Constant methodsFor: 'arithmetic'!
-  + b ^ BinaryOpUgen specialIndex: 0 a: self b: b!
-  - b ^ BinaryOpUgen specialIndex: 1 a: self b: b!
-  * b ^ BinaryOpUgen specialIndex: 2 a: self b: b!
-  / b ^ BinaryOpUgen specialIndex: 4 a: self b: b!
-  % b ^ self error: '%?'!
-  /= b ^ BinaryOpUgen specialIndex: 7 a: self b: b!
-  < b ^ BinaryOpUgen specialIndex: 8 a: self b: b!
-  > b ^ BinaryOpUgen specialIndex: 9 a: self b: b!
-  <= b ^ BinaryOpUgen specialIndex: 10 a: self b: b!
-  >= b ^ BinaryOpUgen specialIndex: 11 a: self b: b!
-  min: b ^ BinaryOpUgen specialIndex: 12 a: self b: b!
-  max: b ^ BinaryOpUgen specialIndex: 13 a: self b: b!
-  bitAnd: b ^ BinaryOpUgen specialIndex: 14 a: self b: b!
-  bitOr: b ^ BinaryOpUgen specialIndex: 15 a: self b: b!
-  lcm: b ^ BinaryOpUgen specialIndex: 17 a: self b: b!
-  gcd: b ^ BinaryOpUgen specialIndex: 18 a: self b: b!
-  roundTo: b ^ BinaryOpUgen specialIndex: 19 a: self b: b!
-  truncateTo: b ^ BinaryOpUgen specialIndex: 21 a: self b: b!
-  raisedTo: b ^ BinaryOpUgen specialIndex: 25 a: self b: b!
-  bitShiftLeft: b ^ BinaryOpUgen specialIndex: 26 a: self b: b!
-  bitShiftRight: b ^ BinaryOpUgen specialIndex: 27 a: self b: b!
-  amClip: b ^ BinaryOpUgen specialIndex: 40 a: self b: b!
-  clip2: b ^ BinaryOpUgen specialIndex: 42 a: self b: b!
-  fold2: b ^ BinaryOpUgen specialIndex: 44 a: self b: b!
-!
-
-!Constant methodsFor: 'arithmetic'!
-  negated ^ UnaryOpUgen specialIndex: 0 a: self!
-  abs ^ UnaryOpUgen specialIndex: 5 a: self!
-  ceil ^ UnaryOpUgen specialIndex: 8 a: self!
-  floor ^ UnaryOpUgen specialIndex: 9 a: self!
-  frac ^ UnaryOpUgen specialIndex: 10 a: self!
-  sign ^ UnaryOpUgen specialIndex: 11 a: self!
-  squared ^ UnaryOpUgen specialIndex: 12 a: self!
-  cubed ^ UnaryOpUgen specialIndex: 13 a: self!
-  sqrt ^ UnaryOpUgen specialIndex: 14 a: self!
-  exp ^ UnaryOpUgen specialIndex: 15 a: self!
-  reciprocal ^ UnaryOpUgen specialIndex: 16 a: self!
-  midiCps ^ UnaryOpUgen specialIndex: 17 a: self!
-  cpsMidi ^ UnaryOpUgen specialIndex: 18 a: self!
-  midiRatio ^ UnaryOpUgen specialIndex: 19 a: self!
-  ratioMidi ^ UnaryOpUgen specialIndex: 20 a: self!
-  dbAmp ^ UnaryOpUgen specialIndex: 21 a: self!
-  ampDb ^ UnaryOpUgen specialIndex: 22 a: self!
-  ln ^ UnaryOpUgen specialIndex: 25 a: self!
-  log2 ^ UnaryOpUgen specialIndex: 26 a: self!
-  log ^ UnaryOpUgen specialIndex: 27 a: self!
-  sin ^ UnaryOpUgen specialIndex: 28 a: self!
-  cos ^ UnaryOpUgen specialIndex: 29 a: self!
-  tanh ^ UnaryOpUgen specialIndex: 36 a: self!
-  distort ^ UnaryOpUgen specialIndex: 42 a: self!
-  softClip ^ UnaryOpUgen specialIndex: 43 a: self!
 !
