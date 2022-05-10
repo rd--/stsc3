@@ -53,11 +53,12 @@ u := SinOsc freq: 440 phase: Float pi mul: 0.1
 
 Rate ir = 0
 (Rate symbol: 0) = #ir
+(Rate symbol: 7) "=> error"
 
 "Klank"
 
-(KlankSpec freq: #(220 330 440) amp: nil time: nil) = #(220 1 1 330 1 1 440 1 1)
 #((220 330 440) nil nil) asKlangSpec = #(220 1 1 330 1 1 440 1 1)
+#((220 330 440) #(0.2 0.1) #(0.5)) asKlankSpec = #(220 0.2 0.5 330 0.1 0.5 440 0.2 0.5)
 
 "File I/O - Text - Squeak, Gnu, Cuis"
 

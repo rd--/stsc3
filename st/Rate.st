@@ -16,5 +16,5 @@ ar
 dr
     ^3!
 symbol: anInteger
-    ^#(#ir #kr #ar #dr) at: (anInteger + 1)!
+    ^#(#ir #kr #ar #dr) at: anInteger + 1 ifAbsent: [ self error: 'Rate class>>symbol: invalid rate integer' ]!
 !

@@ -3,6 +3,8 @@ abs
     ^self collect: [ :item | item abs ]!
 ceil
     ^self collect: [ :item | item ceil ]!
+cpsMidi
+    ^self collect: [ :item | item cpsMidi ]!
 dbAmp
     ^self collect: [ :item | item dbAmp ]!
 distort

@@ -1,6 +1,8 @@
 !BlockClosure methodsFor: 'duplicating'!
 dup: anInteger
     ^self dup: anInteger sending: #value!
+dup
+    ^self dup: 2!
 !
 
 !BlockClosure methodsFor: 'primary factory method'!

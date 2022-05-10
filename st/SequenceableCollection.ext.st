@@ -53,6 +53,10 @@ bitAnd: arg
     ^arg adaptToCollection: self andSend: #bitAnd:!
 bitOr: arg
     ^arg adaptToCollection: self andSend: #bitOr:!
+clip2: arg
+    ^arg adaptToCollection: self andSend: #clip2:!
+fold2: arg
+    ^arg adaptToCollection: self andSend: #fold2:!
 gcd: arg
     ^arg adaptToCollection: self andSend: #gcd:!
 lcm: arg
@@ -61,6 +65,8 @@ max: arg
     ^arg adaptToCollection: self andSend: #max:!
 roundTo: arg
     ^arg adaptToCollection: self andSend: #roundTo:!
+truncateTo: arg
+    ^arg adaptToCollection: self andSend: #truncateTo:!
 < arg
     ^arg adaptToCollection: self andSend: #<!
 > arg
@@ -101,6 +107,9 @@ geom: size value: start value: grow
 fill: size value: aBlock
     "Generate an array evaluating a zero argument block to fill each slot."
     ^1 to: size collect: [ :unusedItem | aBlock value ]!
+!
+
+!SequenceableCollection methodsFor: 'supercollider'!
 nth: index
     "Alias for at:. For .stc, since at: in Sc is zero-indexed."
     ^self at: index!

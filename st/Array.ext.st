@@ -46,9 +46,12 @@ splay2
 
 !Array methodsFor: 'klang data'!
 asKlangSpec
-    ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
+    | default |
+    self size = 3 ifFalse: [ self error: 'asKlangSpec: invalid input array' ].
+    default := [ 1 dup: (self at: 1) size ].
+    ^{self at: 1. (self at: 2) ifNil: default. (self at: 3) ifNil: default} extendToBeOfEqualSize transpose concatenation!
 asKlankSpec
-    ^KlankSpec freq: (self at: 1) amp: (self at: 2) time: (self at: 3)!
+    ^self asKlangSpec!
 !
 
 !Array methodsFor: 'unit generator graph'!

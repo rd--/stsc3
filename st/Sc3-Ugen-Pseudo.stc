@@ -114,7 +114,7 @@ DynKlank : PseudoUgen {
 DynRingzBank : PseudoUgen {
     *cons {
         arg input, freq, amp, time;
-        ^DynKlank(input, 1, 0, 1, KlankSpec(freq, amp, time))
+        ^DynKlank(input, 1, 0, 1, [freq, amp, time].asKlankSpec)
     }
 }
 
@@ -172,7 +172,7 @@ LinSeg : PseudoUgen {
         arg gate, coord;
         var levels = 1.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
         var times = 2.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
-        ^EnvSpec(levels, times, #['lin']).asEnvGen(gate)
+        ^EnvSpec(levels, times, #['lin'], nil, nil, 0).asEnvGen(gate)
     }
 }
 
@@ -266,7 +266,7 @@ PMOsc : PseudoUgen {
 RingzBank : PseudoUgen {
     *cons {
         arg input, freq, amp, time;
-        ^Klank(input, 1, 0, 1, KlankSpec(freq, amp, time))
+        ^Klank(input, 1, 0, 1, [freq, amp, time].asKlankSpec)
     }
 }
 
@@ -318,7 +318,7 @@ Shuf : PseudoUgen {
 SinOscBank : PseudoUgen {
     *cons {
         arg freq, amp, phase;
-        ^Klang(1, 0, KlankSpec(freq, amp, phase))
+        ^Klang(1, 0, [freq, amp, phase].asKlangSpec)
     }
 }
 

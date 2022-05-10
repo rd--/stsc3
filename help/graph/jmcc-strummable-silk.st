@@ -25,7 +25,7 @@ o := 1 to: 8 collect: [ :ix |
   env := Decay in: (Impulse freq: 14 phase: 0 mul: (Lag in: (Trig in: trigger dur: 1) lagTime: 0.2 mul: 0.01) kr) decayTime: 0.04.
   pluck := PinkNoise mul: env.
   freq := ((#(-2 0 3 5 7 10 12 15) at: ix) + 60) midiCps.
-  z := KlankSpec freq: (n iota collect: [ :j | j * freq ]) amp: nil time: ([ 0.3 rand: 1.0 ] dup: n).
+  z := {n iota collect: [ :j | j * freq ]. nil. [ 0.3 rand: 1.0 ] dup: n} asKlankSpec.
   metal := Klank input: pluck freqscale: 1 freqoffset: 0 decayscale: 1 specificationsArrayRef: z.
   Pan2 in: metal pos: ((ix - 1) * 0.2 - 0.5) level: 1
 ].
