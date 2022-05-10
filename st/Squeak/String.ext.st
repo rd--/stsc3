@@ -14,12 +14,16 @@ readTextFile
 systemCommand
     "Run myself as a synchronous OSProcess (I am an operating system command)."
     ^OSProcess command: self "<- waitForCommand: hangs Squeak 5.3?"!
+writeFile: aBlock
+    | aStream |
+    aStream := FileStream forceNewFileNamed: self.
+    aBlock value: aStream.
+    aStream flush; close!
+writeBinaryFile: aBlock
+    self writeFile: [ :aStream | aStream binary. aBlock value: aStream ]!
 writeTextFile: aBlock
     "Run aBlock on me as a FileStream (I am the name of a text file, possibly already existing)"
-    | fd |
-    fd := FileStream forceNewFileNamed: self.
-    aBlock value: fd.
-    fd flush ; close!
+    self writeFile: [ :aStream | aStream text. aBlock value: aStream ]!
 workspaceOn
     "Open a Workspace on myself (I am the name of a file)"
     (Workspace new contents: self readTextFile) openLabel: ('Workspace on ' , self)!

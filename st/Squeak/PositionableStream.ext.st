@@ -1,4 +1,11 @@
 !PositionableStream methodsFor: 'stsc3'!
-nextFloat32Put: aFloat
+float32: aFloat
     self nextNumber: 4 put: aFloat asIEEE32BitWord!
+int8: anInt
+    self nextNumber: 1 put: anInt!
+pascalString: aString
+    self uint8: aString size.
+    aString do: [ :item | self nextNumber: 1 put: item asciiValue ]!
+uint8: anUnsignedInt
+    self nextNumber: 1 put: anUnsignedInt!
 !

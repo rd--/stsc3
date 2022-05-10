@@ -22,6 +22,20 @@ AudioIn : PseudoUgen {
     }
 }
 
+Biexp : PseudoUgen {
+    *cons {
+        arg in, lo, hi;
+        ^LinExp(in, -1, 1, lo, hi)
+    }
+}
+
+Bilin : PseudoUgen {
+    *cons {
+        arg in, lo, hi;
+        ^LinLin(in, -1, 1, lo, hi)
+    }
+}
+
 /* Allocate a buffer local to the synth */
 BufAlloc : PseudoUgen {
     *cons {

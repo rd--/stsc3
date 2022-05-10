@@ -3,14 +3,22 @@ abs
     ^self collect: [ :item | item abs ]!
 ceil
     ^self collect: [ :item | item ceil ]!
+cos
+    ^self collect: [ :item | item cos ]!
 cpsMidi
     ^self collect: [ :item | item cpsMidi ]!
+cubed
+    ^self collect: [ :item | item cubed ]!
 dbAmp
     ^self collect: [ :item | item dbAmp ]!
 distort
     ^self collect: [ :item | item distort ]!
+exp
+    ^self collect: [ :item | item exp ]!
 frac
     ^self collect: [ :item | item frac ]!
+log
+    ^self collect: [ :item | item log ]!
 midiCps
     ^self collect: [ :item | item midiCps ]!
 mean

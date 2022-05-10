@@ -39,18 +39,16 @@ ugenInputSpec: aValue
     ]!
 scgf
     ^1396926310!
+encodeSyndefOn: aStream
+    aStream int32: self scgf; int32: 2; int16: 1; pascalString: name; int32: constantSeq size.
+    constantSeq do: [ :item | aStream float32: item asFloat ].
+    aStream int32: 0; int32: 0; int32: ugenSeq size.
+    ugenSeq do: [ :item | item encodeForSyndef: self on: aStream ].
+    aStream int32: 0!
 printSyndefOn: aStream
-    aStream
-        << self scgf << ' '
-        << 2 << ' ' "file version"
-        << 1 << ' ' "# synth definitions"
-        << name << ' '
-        << constantSeq size << ' '.
+    aStream << self scgf << ' ' << 2 << ' ' << 1 << ' ' << name << ' ' << constantSeq size << ' '.
     constantSeq do: [ :item | aStream << item asFloat << ' ' ].
-    aStream
-        << 0 << ' ' "# param"
-        << 0 << ' ' "# param names"
-        << ugenSeq size << ' '.
-    ugenSeq do: [ :item | item printForGraph: self on: aStream ].
-    aStream << 0 "# variants"!
+    aStream << 0 << ' ' << 0 << ' ' << ugenSeq size << ' '.
+    ugenSeq do: [ :item | item printForSyndef: self on: aStream ].
+    aStream << 0!
 !

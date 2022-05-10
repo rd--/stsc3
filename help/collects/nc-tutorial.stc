@@ -123,13 +123,10 @@ var e = EnvSpec(#[0, 0, 1, -1, 0], t.asMce, #[\lin], nil, nil, 0);
 EnvGen(Impulse(MouseX(10, 300, 1, 0.2), 0), 1, 0, 1, 0, e.asArray) * 0.2
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; portamento/glide
-Saw((Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 200).lag(MouseX(0.0, 0.2, 0, 0.2))) * 0.1
+Saw(Lag(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 200, MouseX(0.0, 0.2, 0, 0.2))) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Ringz(Saw(LFNoise0(5).lag(0.1).exprange(100, 2000)) * 0.2, 1000, 0.01) * 0.1
-
-// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; Lag and LinExp
 Ringz(Saw(LinExp(Lag(LFNoise0(5), 0.1), -1, 1, 100, 2000)) * 0.2, 1000, 0.01) * 0.1
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Ringz(Saw(LFNoise0(5).lag(MouseX(0.01, 0.3, 0, 0.2)).exprange(100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1
+Ringz(Saw(LinExp(Lag(LFNoise0(5), MouseX(0.01, 0.3, 0, 0.2)), -1, 1, 100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1

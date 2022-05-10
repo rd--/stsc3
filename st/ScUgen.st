@@ -58,13 +58,12 @@ mrg: rhs
 !
 
 !ScUgen methodsFor: 'printing'!
-printForGraph: aGraph on: aStream
-    aStream
-        << name << ' '
-        << rate << ' '
-        << inputArray size << ' '
-        << numChan << ' '
-        << specialIndex << ' '.
+encodeForSyndef: aGraph on: aStream
+    aStream pascalString: name; int8: rate; int32: inputArray size; int32: numChan; int16: specialIndex.
+    inputArray do: [ :input | (aGraph ugenInputSpec: input) do: [ :item | aStream int32: item ] ].
+    numChan timesRepeat: [ aStream int8: rate ]!
+printForSyndef: aGraph on: aStream
+    aStream << name << ' ' << rate << ' ' << inputArray size << ' ' << numChan << ' ' << specialIndex << ' '.
     inputArray do: [ :input | (aGraph ugenInputSpec: input) do: [ :item | aStream << item << ' ' ] ].
     numChan timesRepeat: [ aStream << rate << ' ' ]!
 !

@@ -1,7 +1,7 @@
 // generative landscape (jrhb) ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68991.html
 var x = MouseX(-10, 10, 0, 0.1);
 var y = MouseY(0, 5, 0, 0.1);
-var i = LFSaw(0.062,0).range(-10, 10) + (y * 0.to(8));
+var i = (LFSaw(0.062, 0) * 10) + (y * 0.to(8));
 var d = i.frac;
 var a = ModDif(d, 0.5, 1).negated + 0.8;
 var z1 = i.gcd(x) + d;

@@ -8,15 +8,17 @@ putFudiOn: aStream
 oscAlign
     "OpenSoundControl Strings and ByteArrays are 32-bit aligned.
      Calculate bytes required to extend myself to a 4-byte boundary."
-    ^((self + 3) bitAnd: 3 bitInvert) - self! !
+    ^((self + 3) bitAnd: 3 bitInvert) - self!
+!
 
 !Float methodsFor: 'OpenSoundControl'!
 oscTypeTag
     ^$f!
 putOscOn: aStream
-    aStream nextFloat32Put: self!
+    aStream float32: self!
 putFudiOn: aStream
-    self asString putOn: aStream! !
+    self asString putOn: aStream!
+!
 
 !String methodsFor: 'OpenSoundControl'!
 oscTypeTag
@@ -28,7 +30,8 @@ putOscOn: aStream
     aStream nextPut: Character nul.
     (self size + 1) oscAlign timesRepeat: [ aStream nextPut: Character nul ]!
 putFudiOn: aStream
-    self putOn: aStream! !
+    self putOn: aStream!
+!
 
 !ByteArray methodsFor: 'OpenSoundControl'!
 oscTypeTag
@@ -40,7 +43,8 @@ putOscOn: aStream
     aStream nextPutAll: self.
     self size oscAlign timesRepeat: [ aStream nextPut: Character nul ]!
 putFudiOn: aStream
-    self error: 'Fudi does not have a standard bytestring notation, perhaps #-prefixed hexdata (c.f. xxd)'! !
+    self error: 'Fudi does not have a standard bytestring notation, perhaps #-prefixed hexdata (c.f. xxd)'!
+!
 
 Object subclass: #OscMessage
   instanceVariableNames: 'address arguments'
@@ -56,14 +60,16 @@ address: aString
 arguments
     ^arguments!
 arguments: anArray
-    arguments := anArray! !
+    arguments := anArray!
+!
 
 !OscMessage class methodsFor: 'instance creation'!
 at: address with: arguments
     "Make OpenSoundControl message at address with arguments"
     ^ self new address: address; arguments: arguments; yourself!
 primaryFactoryMethod
-    ^#at:with:! !
+    ^#at:with:!
+!
 
 !OscMessage methodsFor: 'OpenSoundControl'!
 descriptor
@@ -72,8 +78,16 @@ putOscOn: aStream
     address putOscOn: aStream.
     self descriptor putOscOn: aStream.
     arguments do: [ :each | each putOscOn: aStream ]!
+encodeOsc
+    ^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]!
 putFudiOn: aStream
     address putFudiOn: aStream.
     $ putOn: aStream.
     arguments do: [ :item | item putFudiOn: aStream ] separatedBy: [ $ putOn: aStream ].
-    $; putOn: aStream! !
+    $; putOn: aStream!
+sendToHost: hostAddress atPort: portNumber
+    | socket |
+    socket := Socket newUDP.
+    socket sendUDPData: self encodeOsc toHost: hostAddress port: portNumber.
+    socket close!
+!

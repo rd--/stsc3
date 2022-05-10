@@ -61,27 +61,6 @@ mul: mul add: add
     ^(self mul: mul) add: add!
 rounded
     ^self roundTo: 1.0!
-inExpRangeFrom: x to: y
-    "LinExp with input range of (-1,1)"
-    ^LinExp in: self srclo: (-1) srchi: 1 dstlo: x dsthi: y!
-inRangeFrom: x to: y
-    "LinLin with input range of (-1,1)"
-    | m a |
-    m := (y - x) / 2.
-    a := x + m.
-    ^self * m + a!
-exprange: anAssoc
-    "inExpRangeFrom:to: from Association"
-    ^self inExpRangeFrom: anAssoc key to: anAssoc value!
-range: anAssoc
-    "inRangeFrom:to: from Association"
-    ^self inRangeFrom: anAssoc key to: anAssoc value!
-exprange: lo value: hi
-    ".stc exprange"
-    ^self inExpRangeFrom: lo to: hi!
-range: lo value: hi
-    ".stc range"
-    ^self inRangeFrom: lo to: hi!
 ** aNumber
     ^self raisedTo: aNumber!
 @ aUgen
@@ -107,11 +86,6 @@ adaptToCollection: rcvr andSend: selector
     ^rcvr collect: [ :item | item perform: selector with: self]!
 !
 
-!Ugen methodsFor: 'panning'!
-splay2
-    ^Splay2 inArray: self!
-!
-
 !Ugen methodsFor: 'sc3'!
 play
     Sc3 play: self!
@@ -121,13 +95,9 @@ printUgens
     Sc3 printUgens: self!
 !
 
-!Ugen methodsFor: 'smoothing'!
+!Ugen methodsFor: 'convenience'!
 lag: lagTime
-    "Convenience"
     ^Lag in: self lagTime: lagTime!
-!
-
-!Ugen methodsFor: 'testing'!
-isZero
-    ^false!
+splay2
+    ^Splay2 inArray: self!
 !

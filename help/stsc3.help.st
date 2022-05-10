@@ -42,6 +42,7 @@ UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(
 u := SinOsc freq: 440 phase: Float pi mul: 0.1
 (ScGraph from: u withName: 'tmp') printSyndefOn: stdout
 (Sc3 ugenSetOf: u) do: [ :item | item inspect ]
+Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Float pi mul: 0.1)) to: '/tmp/stsc3.scsyndef'
 
 "Haskell"
 
@@ -499,6 +500,11 @@ d := {'a'->1. 'b'->2. 'c'->'3'} as: Dictionary.
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out]. "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in]. "read"
 FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
+
+"Stream"
+
+String streamContents: [ :aStream | 'hello there!' printOn: aStream ]
+ByteArray streamContents: [ :aStream | aStream float32: 3.141 ] "Squeak"
 
 "Smalltalk"
 

@@ -7,4 +7,4 @@ sr := MouseX minval: 1000 maxval: SampleRate new * 0.1 warp: 1 lag: 0.2.
 bitSz := MouseY minval: 1 maxval: 24 warp: 1 lag: 0.2.
 downSample := Latch in: src trig: (Impulse freq: sr phase: 0).
 bitRedux := downSample roundTo: 0.5 ** bitSz.
-Mce with: downSample with: bitRedux
+{downSample. bitRedux}

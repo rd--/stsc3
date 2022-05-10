@@ -12,18 +12,24 @@ ugenSetOf: anObject
     set := IdentitySet new.
     anObject addToUgenSet: set protectedBy: IdentitySet new.
     ^set!
-writeSyndefOf: anObject To: aFileName
+writeBinarySyndefOf: anObject to: aFileName
+    aFileName writeBinaryFile: [ :stream |
+        (ScGraph from: anObject withName: 'tmp') encodeSyndefOn: stream
+    ]!
+writeTextSyndefOf: anObject to: aFileName
     aFileName writeTextFile: [ :stream |
         (ScGraph from: anObject withName: 'tmp') printSyndefOn: stream
     ]!
+writeTmpWrappedTextSyndefOf: anObject
+    Sc3 writeTextSyndefOf: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef.text'!
 play: anObject
-    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    Sc3 writeTmpWrappedTextSyndefOf anObject.
     'hsc3-scsynth scsyndef play /tmp/stsc3.scsyndef.text' systemCommand!
 draw: anObject
-    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    Sc3 writeTmpWrappedTextSyndefOf anObject.
     'hsc3-dot scsyndef-draw /tmp/stsc3.scsyndef.text' systemCommand!
 printUgens: anObject
-    Sc3 writeSyndefOf: (WrapOut bus: 0 channelsArray: anObject) To: '/tmp/stsc3.scsyndef.text'.
+    Sc3 writeTmpWrappedTextSyndefOf anObject.
     'hsc3-scsynth scsyndef print False /tmp/stsc3.scsyndef.text' systemCommand!
 !
 

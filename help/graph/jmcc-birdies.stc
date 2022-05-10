@@ -8,14 +8,3 @@ OverlapTexture({
     var amp = Lag(p2, 0.3);
     Pan2(SinOsc(freq, 0), TRand(-1, 1, tr), amp)
 }, 7, 4, 4)
-
-//---- birdies (jmcc) #6 ; filtermethods
-OverlapTexture({
-    arg tr;
-    var p1 = { LFPulse(tr.tRand(0.4, 1.4), 0, tr.tRand(0.1, 0.9)).mul(tr.tRand(4, 7)) } ;
-    var p2 = LFPulse(tr.tRand(0.2, 0.7), 0, 0.4).mul(0.02);
-    var sw = LFSaw(p1.value + p1.value + 2, 0).mulAdd(tr.tRand(1000, 1800).negated, 4000 + tr.tRand(-1200, 1200));
-    var freq = sw.lag(0.05);
-    var amp = p2.lag(0.3);
-    SinOsc(freq, 0).pan2(tr.tRand(-1, 1), amp)
-}, 7, 4, 4)

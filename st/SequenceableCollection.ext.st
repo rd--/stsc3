@@ -59,6 +59,12 @@ fold2: arg
     ^arg adaptToCollection: self andSend: #fold2:!
 gcd: arg
     ^arg adaptToCollection: self andSend: #gcd:!
+lag: arg
+    ^arg adaptToCollection: self andSend: #lag:!
+lag2: arg
+    ^arg adaptToCollection: self andSend: #lag2:!
+lag3: arg
+    ^arg adaptToCollection: self andSend: #lag3:!
 lcm: arg
     ^arg adaptToCollection: self andSend: #lcm:!
 max: arg
