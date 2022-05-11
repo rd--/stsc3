@@ -75,13 +75,13 @@ Rate ir = 0
 '1 + 1' evalString = 2 "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
-"Sc3Id"
-
-[ Sc3Id nextId ] dup: 9
-
 "Sc3"
 
 Sc3 reset "C-c C-."
+
+"Sc3 - Id"
+
+[ Sc3 nextId ] dup: 9
 
 "UI"
 
@@ -693,7 +693,4 @@ m putOscOn: stdout
 1234 putOscOn: stdout "must be in network byte order"
 3.14 putOscOn: stdout "must be in network byte order"
 'rq' putOscOn: stdout "must be 4-byte aligned and nul terminated"
-#(1 2 3) asByteArray putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"
-#(1 2 3) asByteArray size putOscOn: stdout
-stdout nextPutAll: #(1 2 3) asByteArray
-stdout nextPut: Character nul
+#(1 2 3) putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"

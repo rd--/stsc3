@@ -4,8 +4,7 @@ Object subclass: #ScUgen
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
-ScUgen comment: 'SuperCollider unit generator.
-The id field is used to sort unit generators into applicative order.'!
+ScUgen comment: 'SuperCollider unit generator.  The id field is used to sort unit generators into applicative order.'!
 
 !ScUgen methodsFor: 'initialization'!
 name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
@@ -13,7 +12,7 @@ name: nm numChan: nc rate: rt specialIndex: ix inputArray: in
     numChan := nc.
     rate := rt.
     specialIndex := ix.
-    id := Sc3Id nextId.
+    id := Sc3 nextId.
     inputArray := in.
     mrg := Set new!
 !

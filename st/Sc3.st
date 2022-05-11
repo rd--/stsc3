@@ -1,10 +1,17 @@
 Object subclass: #Sc3
   instanceVariableNames: ''
-  classVariableNames: ''
+  classVariableNames: 'IdCounter'
   poolDictionaries: ''
   category: 'Sound-Sc3'!
 
 Sc3 comment: 'SuperCollider 3'!
+
+!Sc3 class methodsFor: 'identifiers'!
+nextId
+    "Generate a new identifier.  Avoid requiring class initialisation by checking for nil."
+    IdCounter isNil ifTrue: [ IdCounter := 0 ] ifFalse: [ IdCounter := IdCounter + 1 ].
+    ^IdCounter!
+!
 
 !Sc3 class methodsFor: 'syndef'!
 ugenSetOf: anObject
