@@ -1,6 +1,8 @@
 # Remainder
 
 - broken:
+  + f0-tw-0054
+  + help/ugen/max.help.stc
   + mrg should follow the jssc3 model properly - i.e. find first actual ugen, not simply detect:
 - .stc to .st translator writing SinOsc(f, p) as (SinOsc freq: f phase: p)
 - .stc to .sc translator writing f(x) as f.apply(x)

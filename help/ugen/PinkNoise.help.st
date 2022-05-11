@@ -1,5 +1,5 @@
 "PinkNoise ; decorrelated"
-2 mceFill: [ PinkNoise mul: 0.05 ]
+[ PinkNoise mul: 0.05 ] dup: 2
 
 "PinkNoise"
-(2 mceFill: [ PinkNoise new ]) * 0.05
+([ PinkNoise new ] dup: 2) * 0.05

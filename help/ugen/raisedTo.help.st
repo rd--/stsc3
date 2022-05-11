@@ -1,7 +1,7 @@
 "raisedTo ; **"
 | a |
 a := SinOsc freq: 100 phase: 0 * 0.1.
-Mce with: a with: (a raisedTo: 10)
+{a. a raisedTo: 10}
 
 "----"
 (SinOsc new ** 1.1) draw

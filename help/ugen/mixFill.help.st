@@ -1,2 +1,2 @@
 "mixFill ; c.f. mceFill"
-2 mixFill: [ BrownNoise mul: 0.05 ]
+([ BrownNoise mul: 0.05 ] dup: 2) sum

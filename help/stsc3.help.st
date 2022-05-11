@@ -251,6 +251,7 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 3 adaptToCollection: #(1 2 3) andSend: #*
 #(1 2 3) * 3 "=> #(3 6 9)"
 3 * #(1 2 3) "=> #3 6 9)"
+#(1 2 3) exp
 
 #(1 2) + #(3 4 5) = #(4 6 6)
 #(1 2 3) + #(4 5) = #(5 7 7)

@@ -23,13 +23,13 @@ writeTextSyndefOf: anObject to: aFileName
 writeTmpWrappedTextSyndefOf: anObject
     Sc3 writeTextSyndefOf: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef.text'!
 play: anObject
-    Sc3 writeTmpWrappedTextSyndefOf anObject.
+    Sc3 writeTmpWrappedTextSyndefOf: anObject.
     'hsc3-scsynth scsyndef play /tmp/stsc3.scsyndef.text' systemCommand!
 draw: anObject
-    Sc3 writeTmpWrappedTextSyndefOf anObject.
+    Sc3 writeTmpWrappedTextSyndefOf: anObject.
     'hsc3-dot scsyndef-draw /tmp/stsc3.scsyndef.text' systemCommand!
 printUgens: anObject
-    Sc3 writeTmpWrappedTextSyndefOf anObject.
+    Sc3 writeTmpWrappedTextSyndefOf: anObject.
     'hsc3-scsynth scsyndef print False /tmp/stsc3.scsyndef.text' systemCommand!
 !
 
