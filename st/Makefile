@@ -10,6 +10,7 @@ classes = \
 	EventParam Voicer
 common=$(ext:=.ext) $(classes) $(pseudo)
 autogen=Sc3-Ugen-Bindings Sc3-Ugen-Pseudo Sc3-Help-Graphs
+osc = Array.ext Float.ext Integer.ext. String.ext OscMessage.st
 ui=Ui/String.ext Ui/Sc3Browser Ui/Sc3Editor
 
 all:

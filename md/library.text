@@ -1,0 +1,36 @@
+Magnitude < =
+  Character
+  Number * + - /
+    Float
+    Fraction
+    Integer
+
+Collection
+  ArrayedCollection
+    Array
+    ByteArray
+    String
+  Bag
+  HashedCollection
+    Dictionary
+    Set
+  Heap
+  SequenceableCollection
+    Interval
+    OrderedCollection
+      SortedCollection
+Stack
+Stream
+
+https://dl.acm.org/doi/pdf/10.1145/141937.141938
+
+Array
+  at:put:
+
+Bag
+  isEmpty size includes: occurrencesOf: add: remove:
+
+Collection
+  isEmpty size includes: occurrencesOf: do: select: detect:[ifNone:] reject: collect: inject:into: copyEmpty:
+  asSet asBag asSortedCollection asOrderedCollection
+

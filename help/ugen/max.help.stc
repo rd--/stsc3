@@ -1,0 +1,7 @@
+//---- max
+SinOsc(XLn([100, 200], [400, 100], 2).inject(0, into: { arg i, j; i.max(j) }), 0) * 0.1
+
+//---- max
+var freq = { LFNoise2(1) }.dup(3)  * 100 + 200;
+var freqMax = freq.inject(0, into: { arg i, j; i.max(j) });
+(LFTri(freqMax, 0) * 0.05) + (SinOsc(freq, 0).splay2 * 0.1)

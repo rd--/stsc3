@@ -1,4 +1,7 @@
 !SmallInteger methodsFor: 'stsc3'!
+printHexByte
+    (self > 255 or: self < 0) ifTrue: [ self error: 'SmallInteger>>printHexByte' ].
+    ^self printPaddedWith: $0 to: 2 base: 16!
 + aNumber
     <primitive: VMpr_SmallInteger_plus>
      aNumber isSmallInteger ifTrue: [ ^(LargeInteger fromInteger: self) + (LargeInteger fromInteger: aNumber) ].
