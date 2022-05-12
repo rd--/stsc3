@@ -1,15 +1,37 @@
-Magnitude < =
-  Character
+ProtoObject == instVarsInclude: identityHash become: nextInstance nextObject
+  Object at:[put:] basicAt:[put:] basicSize size class perform:withArguments: instVarAt:[put:]
+
+Behaviour someInstance basicNew[:] flushCache
+  ClassDescription
+    Class
+    Metaclass
+
+BlockClosure valueWithArguments:
+Message
+
+Boolean
+  False (false)
+  True (true)
+
+UndefinedObject (nil)
+
+SmalltalkImage (Smalltalk)
+
+Magnitude
+  Character =
   Number * + - /
     Float
+      SmallFloat64
     Fraction
     Integer
+      SmallInteger
 
 Collection
   ArrayedCollection
     Array
     ByteArray
     String
+      Symbol
   Bag
   HashedCollection
     Dictionary
@@ -33,4 +55,3 @@ Bag
 Collection
   isEmpty size includes: occurrencesOf: do: select: detect:[ifNone:] reject: collect: inject:into: copyEmpty:
   asSet asBag asSortedCollection asOrderedCollection
-

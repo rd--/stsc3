@@ -107,7 +107,7 @@ main = do
     "stc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_fragments fn) fn_seq
     "stc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_library fn) fn_seq
     "stc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_extensions fn) fn_seq
-    "stc":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
+    "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
