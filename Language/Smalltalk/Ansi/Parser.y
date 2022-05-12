@@ -24,12 +24,15 @@ import Language.Smalltalk.Ansi.Token {- stsc3 -}
       '#('            { HashLeftParen }
       '('             { LeftParen }
       ')'             { RightParen }
+      '<'             { LeftAngleBracket }
+      '>'             { RightAngleBracket }
 
       nil             { NilIdentifier }
       true            { TrueIdentifier }
       false           { FalseIdentifier }
       self            { SelfIdentifier }
       super           { SuperIdentifier }
+      primitiveidentifier { PrimitiveIdentifier }
 
       identifier      { Identifier $$ }
       keyword         { Keyword $$ }
@@ -81,10 +84,14 @@ initializerdefinition :: { St.InitializerDefinition }
 
 expression :: { St.Expression }
         : assignment                           { St.ExprAssignment $1 }
+        | primitive                            { St.ExprPrimitive $1 }
         | basicexpression                      { St.ExprBasic $1 }
 
 assignment :: { St.Assignment }
         : identifier ':=' expression           { St.Assignment $1 ($3) }
+
+primitive :: { St.Primitive }
+        : '<' primitiveidentifier ':' literal '>' { St.Primitive $4 }
 
 basicexpression :: { St.BasicExpression }
         : primary maybe_messages
@@ -133,6 +140,8 @@ binarymessage_seq :: { [St.BinaryMessage] }
 binaryoperator :: { St.Identifier }
         : binaryselector                       { $1 }
         | '|'                                  { "|" }
+        | '<'                                  { "<" }
+        | '>'                                  { ">" }
 
 binarymessage :: { St.BinaryMessage }
         : binaryoperator binaryargument        { St.BinaryMessage $1 $2 }

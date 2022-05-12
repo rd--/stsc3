@@ -28,6 +28,7 @@ expressionRewritePrimary rw expr =
   case expr of
     ExprAssignment as -> ExprAssignment (assignmentRewritePrimary rw as)
     ExprBasic be -> ExprBasic (basicExpressionRewritePrimary rw be)
+    ExprPrimitive _ -> expr
 
 assignmentRewritePrimary :: (Primary -> Primary) -> Assignment -> Assignment
 assignmentRewritePrimary rw (Assignment k expr) =

@@ -172,7 +172,7 @@ sc_returnStatement_pp :: ReturnStatement -> String
 sc_returnStatement_pp (ReturnStatement e) = printf "^%s" (sc_expression_pp e)
 
 sc_expression_pp :: Expression -> String
-sc_expression_pp = expressionEither sc_assignment_pp sc_basicExpression_pp
+sc_expression_pp = expressionCase sc_assignment_pp sc_basicExpression_pp St.primitive_pp
 
 sc_assignment_pp :: Assignment -> String
 sc_assignment_pp (Assignment i e) = printf "%s = %s" (downcaseFirstLetter i) (sc_expression_pp e)
@@ -281,7 +281,7 @@ sc_literal_pp lit =
     St.ArrayLiteral a -> printf "#[%s]" (St.strjnWith ',' (map (either sc_literal_pp id) a))
 
 sc_number_pp :: Number -> String
-sc_number_pp = numberEither show (\x -> Numeric.showFFloat Nothing x "")
+sc_number_pp = numberCase show (\x -> Numeric.showFFloat Nothing x "")
 
 sc_quotedCharacter_pp :: QuotedCharacter -> String
 sc_quotedCharacter_pp = printf "$%c"

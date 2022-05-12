@@ -108,8 +108,11 @@ statements_pp st =
 returnStatement_pp :: ReturnStatement -> String
 returnStatement_pp (ReturnStatement e) = printf "^%s" (expression_pp e)
 
+primitive_pp :: Primitive -> String
+primitive_pp (Primitive l) = printf "<primitive: %s>" (literal_pp l)
+
 expression_pp :: Expression -> String
-expression_pp = expressionEither assignment_pp basicExpression_pp
+expression_pp = expressionCase assignment_pp basicExpression_pp primitive_pp
 
 assignment_pp :: Assignment -> String
 assignment_pp (Assignment i e) = printf "%s := %s" i (expression_pp e)
@@ -174,7 +177,7 @@ literal_pp lit =
     ArrayLiteral a -> printf "#(%s)" (strjn (map (either literal_pp id) a))
 
 number_pp :: Number -> String
-number_pp = numberEither show (\n -> Numeric.showFFloat Nothing n "")
+number_pp = numberCase show (\n -> Numeric.showFFloat Nothing n "")
 
 quotedCharacter_pp :: QuotedCharacter -> String
 quotedCharacter_pp = printf "$%c"

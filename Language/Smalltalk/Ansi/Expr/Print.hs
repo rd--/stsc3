@@ -74,6 +74,7 @@ exprPrintStc elideApply expr =
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
+    Primitive l -> printf "<primitive: %s>" (St.sc_literal_pp l)
 
 -- * St
 
@@ -117,6 +118,7 @@ exprPrintSt expr =
                 ([],_) ->  x
                 _ -> printf "| %s | %s" (unwords t) x
       in maybe "" St.comment_pp c ++ r
+    Primitive l -> printf "<primitive: %s>" (St.literal_pp l)
 
 -- * S-Expression
 
@@ -140,6 +142,7 @@ commentPrintLisp = unlines . map ("; " ++ ) . lines
      The temporaries operator is '|'.
      The array operator is '%'.
      The sequence operator is '>>'.
+     The primitive operator is '_'.
 -}
 exprPrintLisp :: Expr -> String
 exprPrintLisp expr =
@@ -167,6 +170,7 @@ exprPrintLisp expr =
             ([],_) -> printf "(>> %s)" x
             _ -> printf "(>> (| %s) %s)" (unwords t) x
       in maybe "" commentPrintLisp c ++ r
+    Primitive l -> printf "(_ %s)" (St.sc_literal_pp l)
 
 -- * Js
 
@@ -253,6 +257,7 @@ exprPrintJs rw expr =
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
+    Primitive _ -> error "exprPrintJs: primitive?"
 
 -- * Scheme
 
@@ -308,4 +313,5 @@ exprPrintScheme rw expr =
     Begin e -> unwords  (map (exprPrintScheme rw) e)
     Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c
                                               ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp stm]
+    Primitive l -> printf "(primitive %s)" (literalPrintScheme l)
 

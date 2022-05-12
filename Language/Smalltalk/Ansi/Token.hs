@@ -14,12 +14,15 @@ data Token =
   | Colon -- :
   | LeftParen -- (
   | RightParen -- )
+  | LeftAngleBracket -- <
+  | RightAngleBracket -- >
 
   | NilIdentifier -- 3.4.7
   | TrueIdentifier -- 3.4.7
   | FalseIdentifier -- 3.4.7
   | SelfIdentifier -- 3.4.7
   | SuperIdentifier -- 3.4.7
+  | PrimitiveIdentifier -- primitive
 
   | Identifier String -- 3.5.3
   | Keyword String -- 3.5.4

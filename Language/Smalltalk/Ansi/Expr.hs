@@ -44,6 +44,7 @@ data Expr =
   | Array [Expr]
   | Begin [Expr]
   | Init (Maybe St.Comment) St.Temporaries [Expr]
+  | Primitive St.Literal
   deriving (Eq, Show)
 
 exprIsAssignment :: Expr -> Bool
@@ -70,6 +71,7 @@ expr_map f e =
     Array p -> f (Array (map (expr_map f) p))
     Begin p -> f (Begin (map (expr_map f) p))
     Init c p q -> f (Init c p (map (expr_map f) q))
+    Primitive _ -> f e
 
 -- | Is expression the reservered word "super"?
 exprIsSuper :: Expr -> Bool
@@ -197,6 +199,7 @@ expressionExpr e =
   case e of
      St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
      St.ExprBasic e' -> basicExpressionExpr e'
+     St.ExprPrimitive (St.Primitive e') -> Primitive e'
 
 -- | The returnForm is to allow for distinct MethodReturn and BlockReturn nodes (unused).
 statementsExprList :: (Expr -> Expr) -> St.Statements -> [Expr]

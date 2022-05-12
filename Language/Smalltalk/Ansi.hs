@@ -290,7 +290,7 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
-> p = stParse (methodDefinition "")
+> p = stParse (methodDefinition Nothing "")
 > p "p"
 > p "p q"
 > p "p ^q"
@@ -305,6 +305,7 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 > p "printElementsOn: aStream aStream nextPut: $(."
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
+> p "p <primitive: 0>. self continueAfterPrimitive"
 -}
 methodDefinition :: Maybe String -> Identifier -> P MethodDefinition
 methodDefinition src cl = do
@@ -645,13 +646,14 @@ returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
 
 -- | 3.4.5.2 Expressions
-data Expression = ExprAssignment Assignment | ExprBasic BasicExpression deriving (Eq, Show)
+data Expression = ExprAssignment Assignment | ExprBasic BasicExpression | ExprPrimitive Primitive deriving (Eq, Show)
 
-expressionEither :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
-expressionEither f g e =
+expressionCase :: (Assignment -> t) -> (BasicExpression -> t) -> (Primitive -> t) -> Expression -> t
+expressionCase f g h e =
   case e of
     ExprAssignment x -> f x
     ExprBasic x -> g x
+    ExprPrimitive x -> h x
 
 {- | <expression> ::= <assignment> | <basic expression>
 
@@ -673,9 +675,10 @@ expressionEither f g e =
 > p "[1] value"
 > p "o m: true"
 > p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
+> p "<primitive: 63>"
 -}
 expression :: P Expression
-expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
+expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression P.<|> fmap ExprPrimitive primitive
 
 -- | 3.4.5.2 (Expressions)
 data Assignment = Assignment Identifier Expression deriving (Eq,Show)
@@ -1007,18 +1010,18 @@ numberLiteral = do
   n <- P.optionMaybe (P.char '-')
   let rw :: Num n => n -> n
       rw = maybe id (const negate) n
-  fmap (NumberLiteral . numberEither (Int . rw) (Float . rw)) number -- lexeme
+  fmap (NumberLiteral . numberCase (Int . rw) (Float . rw)) number -- lexeme
 
 data Number = Int Integer | Float Double deriving (Eq, Show)
 
-numberEither :: (Integer -> t) -> (Double -> t) -> Number -> t
-numberEither f1 f2 n =
+numberCase :: (Integer -> t) -> (Double -> t) -> Number -> t
+numberCase f1 f2 n =
   case n of
     Int x -> f1 x
     Float x -> f2 x
 
 numberFloat :: Number -> Double
-numberFloat = numberEither fromIntegral id
+numberFloat = numberCase fromIntegral id
 
 {- | <number> ::= integer | float | scaledDecimal
 
@@ -1490,3 +1493,21 @@ keywordSelector = fmap (KeywordSelector . concat) (P.many1 keywordNotLexeme) P.<
 -}
 separator :: P String
 separator = fmap concat (P.many1 (fmap return P.space  P.<|> comment) P.<?> "separator")
+
+-- * Primitive
+
+{- | Parse Squeak/Gnu type Vm primitive. (Non-Ansi).
+
+stParse primitive "<primitive: 63>"
+stParse primitive "<primitive: VMpr_ByteString_at>"
+-}
+data Primitive = Primitive Literal deriving (Eq,Show)
+
+primitive :: P Primitive
+primitive = do
+  _ <- lexeme (P.char '<')
+  _ <- lexeme (P.string "primitive")
+  _ <- lexeme (P.char ':')
+  l <- literal P.<|> interiorSymbol
+  _ <- lexeme (P.char '>')
+  return (Primitive l)

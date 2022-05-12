@@ -30,6 +30,7 @@ expressionFoldPrimary rw st expr =
   case expr of
     ExprAssignment as -> assignmentFoldPrimary rw st as
     ExprBasic be -> basicExpressionFoldPrimary rw st be
+    ExprPrimitive _ -> st
 
 assignmentFoldPrimary :: (st -> Primary -> st) -> st -> Assignment -> st
 assignmentFoldPrimary rw st (Assignment _ expr) =

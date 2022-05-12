@@ -40,12 +40,15 @@ tokens :-
   "#("                                  { \_ -> HashLeftParen }
   "("                                   { \_ -> LeftParen }
   ")"                                   { \_ -> RightParen }
+  "<"                                   { \_ -> LeftAngleBracket }
+  ">"                                   { \_ -> RightAngleBracket }
 
   "nil"                                 { \_ -> NilIdentifier }
   "true"                                { \_ -> TrueIdentifier }
   "false"                               { \_ -> FalseIdentifier }
   "self"                                { \_ -> SelfIdentifier }
   "super"                               { \_ -> SuperIdentifier }
+  "primitive                            { \_ -> PrimitiveIdentifier }
 
   $letter $letterordigit*               { \s -> Identifier s }
   $letter $letterordigit* ":"           { \s -> Keyword s }
