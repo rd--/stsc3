@@ -60,6 +60,8 @@ data FileOutEntry =
   -- ^ class
   | FileOutMethodsFor St.Identifier Bool String [St.MethodDefinition]
   -- ^ class, classmethods?, category, [methods]
+  | FileOutClassClassInstanceVariables St.Identifier [St.Identifier]
+  -- ^ class, variables
   deriving (Eq, Show)
 
 isFileOutClassDeclaration :: FileOutEntry -> Bool
@@ -84,6 +86,7 @@ fileOutEntryClass e =
     FileOutClassComment x _ -> x
     FileOutClassInitializer x -> x
     FileOutMethodsFor x _ _ _ -> x
+    FileOutClassClassInstanceVariables x _ -> x
 
 {- | The set of all classes that have entries.
      This includes classes that have method definitions but no declarations.
@@ -110,6 +113,7 @@ fileOutEntryType e =
     FileOutClassComment {} -> "ClassComment"
     FileOutClassInitializer {} -> "ClassInitializer"
     FileOutMethodsFor _ isClass _ _ -> (if isClass then "Class" else "Instance") ++ "MethodsFor"
+    FileOutClassClassInstanceVariables {} -> "ClassClassInstanceVariables"
 
 -- | Method definitions of entry, or error if not a MethodsFor entry.
 fileOutEntryMethodDefinitions :: FileOutEntry -> [St.MethodDefinition]
@@ -214,12 +218,12 @@ fileOutClassComment :: St.ClassDefinition -> String
 fileOutClassComment cl = printf "%s comment: '%s'!" (St.className cl) (St.quoteQuote (fromMaybe "" (St.classComment cl)))
 
 {- | This is printed if the class has a class initialize method.
-     The FileOut parser reads standard initialize instructions, and stores a standard inializer at the class definition.
+     The FileOut parser reads standard initialize instructions, and stores a standard initializer at the class definition.
 -}
 fileOutClassInitializer :: St.ClassDefinition -> String
 fileOutClassInitializer cd =
   case St.classInitializer cd of
-    Just ci -> St.initializerDefinition_pp ci
+    Just (St.InitializerDefinition Nothing Nothing (Just (St.StatementsExpression e Nothing))) -> St.expression_pp e ++ "!"
     _ -> ""
 
 fileOutClassDefinition :: St.ClassDefinition -> String
@@ -229,6 +233,7 @@ fileOutClassDefinition cl =
   in unlines
      [fileOutClassInstantiation cl
      ,fileOutClassComment cl
+     ,""
      ,unlines (map (fileOutMethodDefinitionsFor False cl) im)
      ,unlines (map (fileOutMethodDefinitionsFor True cl) cm)
      ,fileOutClassInitializer cl]
@@ -363,6 +368,7 @@ fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
 > p = St.stParse fileOut
 > p "x! y! !"
 > p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'!"
+> p "ArrayedCollection class instanceVariableNames: ''!"
 > p "!C methodsFor: 'some category name text'!\naUnaryMethod ^nil! !"
 > p "!p ! q ! ! x ! !" -- fail on p
 > p "x ! y ! !p ! q ! ! z ! !" -- fail on p
@@ -374,6 +380,9 @@ fileOut = P.many1 (P.try fileOutSegment) St.>>~ P.optional emptyChunk
 {- | Run fileOut parser.
 
 > f0:_ = parseFileOut "File subclass: #AltoFile\n\tinstanceVariableNames: 'writeTime pageAddresses leader '\n\tclassVariableNames: ''\n\tpoolDictionaries: 'AltoFilePool '\n\tcategory: 'Files-Xerox Alto'!"
+> segmentBasicExpression f0
+
+> f0:_ = parseFileOut "ArrayedCollection class instanceVariableNames: ''!"
 > segmentBasicExpression f0
 -}
 parseFileOut :: String -> FileOut
@@ -423,6 +432,25 @@ parseFileOutClassDeclaration e =
                 ,("poolDictionaries:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral pd)) Nothing Nothing)
                 ,("category:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral cat)) Nothing Nothing)]))) Nothing ->
       Just (FileOutClassDeclaration sp cl (St.subclassKindToIndexable subclassKind) (words ivar) (words cvar) (words pd) cat)
+    _ -> Nothing
+
+evalClassClassInstanceVariables :: FileOutSegment -> Maybe FileOutEntry
+evalClassClassInstanceVariables fo =
+  case fo of
+    FileOutEvalSegment txt -> parseFileOutClassClassInstanceVariables (St.stParseInitial St.basicExpression txt)
+    _ -> Nothing
+
+parseFileOutClassClassInstanceVariables :: St.BasicExpression -> Maybe FileOutEntry
+parseFileOutClassClassInstanceVariables e =
+  case e of
+    St.BasicExpression
+      (St.PrimaryIdentifier cl)
+      (Just
+        (St.MessagesUnary
+          [St.UnaryMessage "class"]
+          Nothing
+          (Just (St.KeywordMessage [("instanceVariableNames:",St.KeywordArgument (St.PrimaryLiteral (St.StringLiteral nm)) Nothing Nothing)]))))
+      Nothing -> Just (FileOutClassClassInstanceVariables cl (words nm))
     _ -> Nothing
 
 evalSegmentClassComment :: FileOutSegment -> Maybe FileOutEntry
@@ -495,7 +523,8 @@ evalFileOutSegmentMaybe =
   [evalSegmentClassDeclaration
   ,evalSegmentClassComment
   ,evalSegmentClassInitializer
-  ,readerSegmentMethodDefinitions]
+  ,readerSegmentMethodDefinitions
+  ,evalClassClassInstanceVariables]
 
 evalFileOutSegment :: FileOutSegment -> Either FileOutEntry FileOutSegment
 evalFileOutSegment s = maybe (Right s) Left (evalFileOutSegmentMaybe s)

@@ -7,6 +7,8 @@ Behaviour someInstance basicNew[:] flushCache
     Metaclass
 
 BlockClosure valueWithArguments:
+CompiledMethod
+Context [BlockContext MethodContext]
 Message
 
 Boolean

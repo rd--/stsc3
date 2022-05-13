@@ -171,6 +171,22 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "SequenceableCollection"
 
+#(1 2 3) append: #(4 5 6) "=> #(1 2 3 4 5 6)"
+
+#() atWrap: 7 "=> error"
+#(1) atWrap: 7 "=> 1"
+#(1 2 3 4) atWrap: 7 "=> 3"
+
+#(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
+
+#(1 2 3 4 5) shuffle "=> error, array is read only (Gnu)"
+x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
+#(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
+
+#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ] "=> #((5 1) (4 2) (3 3) (2 4) (1 5))"
+
+#(5 4 3 2 1) withIndexDo: [ :item :index | {item. index} print ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
+
 #() extendCyclically: 5 "=> error"
 #(1) extendCyclically: 5 "=> #(1 1 1 1 1)"
 #(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
@@ -194,7 +210,7 @@ MessageNames openMessageNames. "open Message Names tool"
 
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
 1 dup: 6 "=> #(1 1 1 1 1 1) ; replicate by copying"
-#(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
+
 (0 to: 4 collect: [:x | x * x]) sum "=> 30"
 1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
 0 to: 4 collect: [:x | x * x] "=> #(0 1 4 9 16)"
@@ -211,8 +227,6 @@ MessageNames openMessageNames. "open Message Names tool"
 (Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5)
 
 (Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str')
-
-#(5 4 3 2 1) withIndexDo: [:e :i | {e. i} print].
 
 Array series: 10 value: 0 value: 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
 Array geom: 5 value: 1 value: 3 "=> (1 3 9 27 81)"
@@ -241,10 +255,6 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 3 5 7) detect: [ :item | item > 5]
 #(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]
 #(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "squeak"
-
-#() atWrap: 7 "=> error"
-#(1) atWrap: 7 "=> 1"
-#(1 2 3 4) atWrap: 7 "=> 3"
 
 "Array - Math"
 

@@ -15,6 +15,7 @@ printHexByte
      aNumber isSmallInteger ifTrue: [ ^(LargeInteger fromInteger: self) * (LargeInteger fromInteger: aNumber) ].
    ^ aNumber adaptToInteger: self andSend: #*!
 / aNumber
-    <primitive: VMpr_SmallInteger_divide> "the primitive answers integer results, i.e. 4 / 2"
-   ^ self asFloat / aNumber! "avoid fractions"
+    "The primitive answers integer results, i.e. 4 / 2.  Avoid fractions..."
+    <primitive: VMpr_SmallInteger_divide>
+   ^ self asFloat / aNumber!
 !
