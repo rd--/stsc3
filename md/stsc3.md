@@ -2,6 +2,20 @@
 
 Command line stsc3.
 
+## som cat
+
+~~~~
+$ stsc3 som cat ~/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Object.som
+Object = nil (
+class = primitive
+objectSize = primitive
+= other = (
+^self == other
+)
+...
+$
+~~~~
+
 ## stc cat fragment
 
 Parse and pretty print _.stc_ program files.
@@ -102,11 +116,12 @@ In both cases the translator reads the source text from `stdin` and writes the t
 ~~~~
 $ stsc3 -h | grep translate
  translate {stc | sc} st [input-file output-file]
-$ stsc3 translate stc st < help/graph/jmcc-analog-bubbles.stc
-|o f|
-o := (LFSaw apply: {#(8 7.23) . 0}) * 3 + 80 .
-f := (LFSaw apply: {0.4 . 0}) * 24 + o .
-(CombN apply: {(SinOsc apply: {f midicps . 0}) * 0.04 . 0.2 . 0.2 . 4}) * 0.1 .
+$ stsc3 translate stc st < ~/sw/stsc3/help/graph/jmcc-analog-bubbles-mouse.stc
+"analog bubbles with mouse control (jmcc) #3"
+| o1 o2 |
+o1 := (LFSaw apply: {(MouseX apply: {2. 40. 1. 0.2}). 0}) * -3 + 80 .
+o2 := (LFSaw apply: {(MouseY apply: {0.1. 10. 1. 0.2}). 0}) * 24 + o1 .
+(CombN apply: {(SinOsc apply: {o2 midiCps. 0}) * 0.04. 0.2. 0.2. 2}) .
 $ stsc3 translate stream stc st
 SinOsc(440, 0);
 (SinOsc apply: {440. 0}).

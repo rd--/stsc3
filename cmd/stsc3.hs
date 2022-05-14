@@ -9,6 +9,7 @@ import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
+import qualified Language.Smalltalk.FileOut as FileOut {- stsc -}
 import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
 
@@ -68,10 +69,32 @@ stc_cat_extensions fn =
   let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . stc_parse_class_extension_seq
   in rw =<< readFile fn
 
+{- | Read and re-print Som class definition file.
+
+> som_cat "/home/rohan/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Object.som"
+-}
 som_cat :: FilePath -> IO ()
 som_cat fn =
   let rw = putStrLn . Som.classDefinitionPrintSom . Som.parseSomClassDefinition
   in rw =<< readFile fn
+
+{- Read Som class definition and write in FileOut format.
+
+> cd_som_to_fileout "/home/rohan/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Array.som" "/dev/stdout"
+-}
+cd_som_to_fileout :: FilePath -> FilePath -> IO ()
+cd_som_to_fileout som_fn fileout_fn = do
+  cd <- Som.somLoadClassDefinition som_fn
+  writeFile fileout_fn (FileOut.fileOutClassDefinition cd)
+
+{- | Read Som class definition and write in FileOut format.
+
+> cd_fileout_to_som "/home/rohan/rd/j/2022-05-04/Smalltalk-80/ArrayedCollection.st" "/dev/stdout"
+-}
+cd_fileout_to_som :: FilePath -> FilePath -> IO ()
+cd_fileout_to_som fileout_fn som_fn = do
+  cd <- FileOut.fileOutLoadClassFile fileout_fn
+  writeFile som_fn (Som.classDefinitionPrintSom cd)
 
 {-
 -- | Fragment input file and run stcToJs at each fragment.
@@ -110,5 +133,7 @@ main = do
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
+    ["translate","class","som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout som_fn fileout_fn
+    ["translate","class","fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som fileout_fn som_fn
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

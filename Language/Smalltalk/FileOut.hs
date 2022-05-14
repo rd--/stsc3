@@ -207,7 +207,7 @@ fileOutMethodDefinitionsFor isClassMethod classDef category =
 fileOutClassInstantiation :: St.ClassDefinition -> String
 fileOutClassInstantiation cl =
   unlines
-  [printf "%s %s #%s" (fromMaybe "Object" (St.superclassName cl)) (St.instanceStateToSubclassKind (St.instanceState cl)) (St.className cl)
+  [printf "%s %s #%s" (fromMaybe "nil" (St.superclassName cl)) (St.instanceStateToSubclassKind (St.instanceState cl)) (St.className cl)
   ,printf "  instanceVariableNames: '%s'" (unwords (St.classInstanceVariableNames cl))
   ,printf "  classVariableNames: '%s'" (unwords (St.classVariableNames cl))
   ,printf "  poolDictionaries: '%s'" (unwords (St.importedPoolNames cl))
@@ -551,3 +551,20 @@ evalFileOutSubset = lefts . evalFileOut
 
 evalFileOutOrError :: FileOut -> [FileOutEntry]
 evalFileOutOrError = map (either id (\e -> error (show ("evalFileOut: parse failed: ", e)))) . evalFileOut
+
+-- * Load class file
+
+{- | Load singular class definition from fileout, else error.
+
+fo = file-out, fn = file-name, cd = class-definition, cn = class-name
+-}
+fileOutLoadClassFile :: FilePath -> IO St.ClassDefinition
+fileOutLoadClassFile fn = do
+  fo <- loadFileOut fn
+  let ent = evalFileOutSubset fo
+  case fileOutEntryClassesDefined ent of
+    [cn] ->
+      case fileOutEntryClassDefinition ent cn of
+        Just cd -> return cd
+        Nothing -> error "fileOutLoadClassFile: not class definition?"
+    _ -> error "fileOutLoadClassFile: not singular class file?"
