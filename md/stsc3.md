@@ -6,6 +6,14 @@ Command line stsc3.
 
 Parse and pretty print _.stc_ program files.
 
+~~~~
+$ stsc3 stc cat fragment ~/sw/stsc3/help/graph/jmcc-why-supercollider.stc
+var s = { Resonz(Dust(0.2) * 50, 200 + 3000.0.rand, 0.003) }.dup(10).sum;
+var x = { CombL(DelayN(s, 0.048, 0.048), 0.1, LFNoise1(0.1.rand) * 0.04 + 0.05, 15) }.dup(7).sum;
+4.timesRepeat({ x = AllpassN(x, 0.05, { 0.05.rand }.dup, 1) }); s + (x * 0.2)
+$
+~~~~
+
 The parser is for a minimal subset of SuperCollider
 and does not recognise the following constructs:
 
@@ -14,8 +22,6 @@ p.(q)     => p.value(q)
 `p        => Ref.new(p)
 p q: r    => p.q(r)
 |p|       => arg p;
-p[q]      => p.at(q)
-p[q]=r    => p.put(q,r)
 p.q(*r)   => p.performList(\q,r)
 p.q {}    => p.q({})
 (p..q)    => p.series(nil,q)
@@ -36,7 +42,7 @@ $
 ## sc cat extensions
 
 ~~~~
-$ stsc3 sc cat extensions ~/sw/stsc3/help/expr/extensions.sc
+$ stsc3 stc cat extensions ~/sw/stsc3/help/expr/extensions.sc
 /home/rohan/sw/stsc3/help/expr/extensions.sc
 +A {  f { arg a; ^a * v } }
 +B {  * { arg aNumber; ^this.mul(aNumber) } }

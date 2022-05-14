@@ -247,6 +247,7 @@ arrayliteral :: { [Either St.Literal St.Identifier] }
 
 arrayliteral_elem :: { Either St.Literal St.Identifier }
         : literal                               { Left $1 }
+        | '(' maybe_arrayliteral ')'            { Left (St.ArrayLiteral $2) }
         | reserveridentifier                    { Right $1 }
 
 optdot :: { () }
