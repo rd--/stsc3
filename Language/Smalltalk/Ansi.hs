@@ -17,8 +17,9 @@ Literal (3.4.6)
 module Language.Smalltalk.Ansi where
 
 import Data.Char {- base -}
-import Data.Functor.Identity {- base -}
+import qualified Data.Functor.Identity as Identity {- base -}
 import Data.List {- base -}
+import Data.Maybe {- base -}
 
 import qualified Data.List.Split as Split {- split -}
 
@@ -39,7 +40,7 @@ lexeme :: P t -> P t
 lexeme = Token.lexeme stLexer
 
 -- | Smalltalk language definition (for token parser)
-stLanguageDef :: Language.GenLanguageDef String () Identity
+stLanguageDef :: Language.GenLanguageDef String () Identity.Identity
 stLanguageDef =
   Token.LanguageDef
   {Token.commentStart = "\""
@@ -55,7 +56,7 @@ stLanguageDef =
   ,Token.caseSensitive = True}
 
 -- | Lexer
-stLexer :: Token.GenTokenParser String () Identity
+stLexer :: Token.GenTokenParser String () Identity.Identity
 stLexer = Token.makeTokenParser stLanguageDef
 
 -- | Run parser and report any error.  Does not delete leading spaces.
@@ -287,6 +288,23 @@ methodCategoryRequired m =
 -}
 methodDefinitionEndsWithReturn :: MethodDefinition -> Bool
 methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodStatements
+
+-- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
+methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Literal
+methodDefinitionPrimitiveLabel m =
+  case m of
+    MethodDefinition
+      _
+      _
+      _
+      _
+      (Just (StatementsExpression (ExprPrimitive (Primitive k)) Nothing))
+      _
+      _ -> Just k
+    _ -> Nothing
+
+methodDefinitionHasPrimitive :: MethodDefinition -> Bool
+methodDefinitionHasPrimitive = isJust . methodDefinitionPrimitiveLabel
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 

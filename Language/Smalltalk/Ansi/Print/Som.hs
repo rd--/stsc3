@@ -5,7 +5,6 @@ import Data.Maybe {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
 somVariablesPrint :: [St.Identifier] -> String
 somVariablesPrint var = if null var then "" else St.temporaries_pp (St.Temporaries var)
@@ -34,7 +33,7 @@ methodDefinitionPrintSom md =
         ,maybe "" St.temporaries_pp tmp
         ,maybe "" St.statements_pp stm
         ,")"]
-  in if Som.somMethodIsPrimitive md
+  in if St.methodDefinitionHasPrimitive md
      then St.pattern_pp pat ++ " = primitive"
      else unlines (filter (not . null) ln)
 

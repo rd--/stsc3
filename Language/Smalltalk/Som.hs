@@ -126,20 +126,6 @@ somPrimitive = do
   let se = St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.SymbolLiteral "nil"))) Nothing
   return (MethodBlock Nothing (Just se))
 
--- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
-somMethodIsPrimitive :: St.MethodDefinition -> Bool
-somMethodIsPrimitive m =
-  case m of
-    St.MethodDefinition
-      _
-      _
-      _
-      Nothing
-      (Just (St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.SymbolLiteral "nil"))) Nothing))
-      _
-      _ -> True
-    _ -> False
-
 {- | Seperator for instance and class methods.
      The SOM separator is an allowed Smalltalk operator name.
      It can therefore form the start of a Smalltalk method definition.
