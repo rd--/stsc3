@@ -118,12 +118,12 @@ methodBlock = do
 -- * Lexer
 
 {- | Primitive is a reserved word indicating that a method is Primitive.
-     The St Ast node for primitives have a literal field, which is here set to the symbol "nil".
+     The St Ast node for primitives have a literal field, which is here set to -1.
 -}
 somPrimitive :: St.P MethodBlock
 somPrimitive = do
   _ <- St.lexeme (P.string "primitive")
-  let se = St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.SymbolLiteral "nil"))) Nothing
+  let se = St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.NumberLiteral (St.Int (-1))))) Nothing
   return (MethodBlock Nothing (Just se))
 
 {- | Seperator for instance and class methods.

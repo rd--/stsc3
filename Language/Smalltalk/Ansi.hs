@@ -290,7 +290,7 @@ methodDefinitionEndsWithReturn :: MethodDefinition -> Bool
 methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodStatements
 
 -- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
-methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Integer
+methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Literal
 methodDefinitionPrimitiveLabel m =
   case m of
     MethodDefinition
@@ -298,13 +298,21 @@ methodDefinitionPrimitiveLabel m =
       _
       _
       _
-      (Just (StatementsExpression (ExprPrimitive (Primitive (NumberLiteral (Int k)))) _))
+      (Just (StatementsExpression (ExprPrimitive (Primitive lbl)) _))
       _
-      _ -> Just k
+      _ -> Just lbl
     _ -> Nothing
 
 methodDefinitionHasPrimitive :: MethodDefinition -> Bool
 methodDefinitionHasPrimitive = isJust . methodDefinitionPrimitiveLabel
+
+methodDefinitionPrimitiveCode :: MethodDefinition -> Maybe Integer
+methodDefinitionPrimitiveCode =
+  let f lbl =
+        case lbl of
+          NumberLiteral (Int k) -> k
+          _ -> error "methodDefinitionPrimitiveCode: not integer?"
+  in fmap f . methodDefinitionPrimitiveLabel
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
