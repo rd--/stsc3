@@ -101,7 +101,7 @@ methodDefinition cl = do
   P.notFollowedBy separator
   p <- St.messagePattern
   _ <- equalSign
-  MethodBlock t s <- primitive P.<|> St.inParentheses methodBlock
+  MethodBlock t s <- somPrimitive P.<|> St.inParentheses methodBlock
   return (St.MethodDefinition cl Nothing p t s Nothing Nothing)
 
 -- | Method block.  Arguments are given by the methodPattern.
@@ -120,8 +120,8 @@ methodBlock = do
 {- | Primitive is a reserved word indicating that a method is Primitive.
      The St Ast node for primitives have a literal field, which is here set to the symbol "nil".
 -}
-primitive :: St.P MethodBlock
-primitive = do
+somPrimitive :: St.P MethodBlock
+somPrimitive = do
   _ <- St.lexeme (P.string "primitive")
   let se = St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.SymbolLiteral "nil"))) Nothing
   return (MethodBlock Nothing (Just se))
