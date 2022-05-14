@@ -290,7 +290,7 @@ methodDefinitionEndsWithReturn :: MethodDefinition -> Bool
 methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodStatements
 
 -- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
-methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Literal
+methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Integer
 methodDefinitionPrimitiveLabel m =
   case m of
     MethodDefinition
@@ -298,7 +298,7 @@ methodDefinitionPrimitiveLabel m =
       _
       _
       _
-      (Just (StatementsExpression (ExprPrimitive (Primitive k)) Nothing))
+      (Just (StatementsExpression (ExprPrimitive (Primitive (NumberLiteral (Int k)))) _))
       _
       _ -> Just k
     _ -> Nothing
