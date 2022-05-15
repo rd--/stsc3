@@ -248,11 +248,10 @@ somLoadClassDefinition fn = do
   return (parseSomClassDefinition txt)
 
 -- | Load list of class definitions into association list.
-somLoadClassList :: FilePath -> [St.Identifier] -> IO [(St.Identifier, St.ClassDefinition)]
+somLoadClassList :: FilePath -> [St.Identifier] -> IO [St.ClassDefinition]
 somLoadClassList somDirectory classList = do
   let somClassFilename nm = somDirectory </> nm <.> "som"
-  c <- mapM (somLoadClassDefinition . somClassFilename) classList
-  return (zip classList c)
+  mapM (somLoadClassDefinition . somClassFilename) classList
 
 -- * Env
 
