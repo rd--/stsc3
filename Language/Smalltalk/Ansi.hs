@@ -150,7 +150,11 @@ instanceStateToSubclassKind (InstanceState ix _) = indexableToSubclassKind ix
 noInstanceState :: InstanceState
 noInstanceState = InstanceState NonIndexable []
 
--- | A class definition defines the behavior and encapsulated state of objects.
+{- | A class definition defines the behavior and encapsulated state of objects.
+
+The super class is empty (Nothing) if the class is base class (i.e. Object or ProtoObject) else it is the name of the super class,
+an empty super class does not indicate that a "default" superclass should be selected.
+-}
 data ClassDefinition =
   ClassDefinition
   {className :: Identifier

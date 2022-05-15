@@ -82,8 +82,8 @@ classdefinition :: { ScClassDefinition }
           '}'                                   { ScClassDefinition $2 $3 $6 $5 $7 Nothing $1 }
 
 maybe_superclass :: { Maybe St.Identifier }
-        : {- empty -}                           { Nothing }
-        | ':' identifier                        { Just $2 }
+        : {- empty -}                           { Just "Object" }
+        | ':' identifier                        { (if $2 == "nil" then Nothing else Just $2) }
 
 methoddefinition_seq :: { [ScMethodDefinition] }
         : {- empty -}                           { [] }

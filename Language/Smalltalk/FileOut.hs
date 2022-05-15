@@ -167,7 +167,7 @@ fileOutClassDefToClassDefinition (cd,cc,ci,cm,im) =
       classMethods = concatMap fileOutEntryMethodDefinitions cm
   in St.ClassDefinition
      className
-     (Just superclassName)
+     (if superclassName == "nil" then Nothing else Just superclassName)
      (St.InstanceState indexable [])
      instanceVariables
      classVariables
