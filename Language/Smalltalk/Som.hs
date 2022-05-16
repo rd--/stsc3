@@ -92,39 +92,38 @@ classSide cl = do
   m <- P.many (methodDefinition cl)
   return (t,m)
 
+-- | Method block.  Arguments are given by the methodPattern.  Primitives have a label.
+data MethodBlock =
+  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements) (Maybe St.Primitive)
+  deriving (Eq, Show)
+
 {- | Method definition.
+The St Ast methof node for has a literal field for primitives, which is here set to 0.
 
 > St.stParse methodDefinition "sumSqr: x = ( ^(self * self) + (x * x) )"
 -}
 methodDefinition :: St.Identifier -> St.P St.MethodDefinition
 methodDefinition cl = do
   P.notFollowedBy separator
-  p <- St.messagePattern
+  pat <- St.messagePattern
   _ <- equalSign
-  MethodBlock t s <- somPrimitive P.<|> St.inParentheses methodBlock
-  return (St.MethodDefinition cl Nothing p t s Nothing Nothing)
-
--- | Method block.  Arguments are given by the methodPattern.
-data MethodBlock =
-  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements)
-  deriving (Eq, Show)
+  MethodBlock tmp stm prm <- somPrimitive P.<|> St.inParentheses methodBlock
+  return (St.MethodDefinition cl Nothing pat tmp stm prm Nothing Nothing)
 
 methodBlock :: St.P MethodBlock
 methodBlock = do
-  t <- P.optionMaybe St.temporaries
-  s <- P.optionMaybe St.statements
-  return (MethodBlock t s)
+  prm <- P.optionMaybe St.primitive
+  tmp <- P.optionMaybe St.temporaries
+  stm <- P.optionMaybe St.statements
+  return (MethodBlock tmp stm prm)
 
 -- * Lexer
 
-{- | Primitive is a reserved word indicating that a method is Primitive.
-     The St Ast node for primitives have a literal field, which is here set to -1.
--}
+-- | Som allows primitive as a singular reserved word indicating that a method is Primitive.
 somPrimitive :: St.P MethodBlock
 somPrimitive = do
   _ <- St.lexeme (P.string "primitive")
-  let se = St.StatementsExpression (St.ExprPrimitive (St.Primitive (St.NumberLiteral (St.Int (-1))))) Nothing
-  return (MethodBlock Nothing (Just se))
+  return (MethodBlock Nothing Nothing (Just (St.primitiveOf 0)))
 
 {- | Seperator for instance and class methods.
      The SOM separator is an allowed Smalltalk operator name.

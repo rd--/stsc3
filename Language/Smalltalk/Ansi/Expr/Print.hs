@@ -47,6 +47,9 @@ messagePrintStc elideApply (Message sel arg) =
        _ ->
          printf ".%s(%s)" selStc (intercalate ", " (map (exprPrintStc elideApply) arg))
 
+primitive_pp :: LambdaDefinition -> String
+primitive_pp = maybe "" ((++ " ") . St.primitive_pp) . lambdaDefinitionPrimitive
+
 {- | Parenthesise all binary operator sends.
      A more elaborate rule could be written if required.
 -}
@@ -60,8 +63,8 @@ exprPrintStc elideApply expr =
     Send e m ->
       let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
       in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
-    Lambda _ a (St.Temporaries t) e ->
-      let x = intercalate "; " (map (exprPrintStc elideApply) e)
+    Lambda ld a (St.Temporaries t) e ->
+      let x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e)
       in case (a,t) of
         ([],[]) -> printf "{ %s }" x
         (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " a) x
@@ -74,7 +77,6 @@ exprPrintStc elideApply expr =
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
-    Primitive l -> printf "<primitive: %s>" (St.sc_literal_pp l)
 
 -- * St
 
@@ -118,7 +120,6 @@ exprPrintSt expr =
                 ([],_) ->  x
                 _ -> printf "| %s | %s" (unwords t) x
       in maybe "" St.comment_pp c ++ r
-    Primitive l -> printf "<primitive: %s>" (St.literal_pp l)
 
 -- * S-Expression
 
@@ -142,7 +143,6 @@ commentPrintLisp = unlines . map ("; " ++ ) . lines
      The temporaries operator is '|'.
      The array operator is '%'.
      The sequence operator is '>>'.
-     The primitive operator is '_'.
 -}
 exprPrintLisp :: Expr -> String
 exprPrintLisp expr =
@@ -170,7 +170,6 @@ exprPrintLisp expr =
             ([],_) -> printf "(>> %s)" x
             _ -> printf "(>> (| %s) %s)" (unwords t) x
       in maybe "" commentPrintLisp c ++ r
-    Primitive l -> printf "(_ %s)" (St.sc_literal_pp l)
 
 -- * Js
 
@@ -257,7 +256,6 @@ exprPrintJs rw expr =
                 ([],_) ->  x
                 _ -> printf "var %s; %s" (intercalate ", " t) x
       in maybe "" St.sc_comment_pp c ++ r
-    Primitive _ -> error "exprPrintJs: primitive?"
 
 -- * Scheme
 
@@ -313,5 +311,4 @@ exprPrintScheme rw expr =
     Begin e -> unwords  (map (exprPrintScheme rw) e)
     Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c
                                               ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp stm]
-    Primitive l -> printf "(primitive %s)" (literalPrintScheme l)
 

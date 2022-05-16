@@ -272,6 +272,7 @@ data MethodDefinition =
   ,methodPattern :: Pattern
   ,methodTemporaries :: Maybe Temporaries
   ,methodStatements :: Maybe Statements
+  ,methodPrimitive :: Maybe Primitive -- ^ Non-ansi
   ,methodComment :: Maybe String
   ,methodSource :: Maybe String}
   deriving (Eq,Show)
@@ -295,27 +296,14 @@ methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodSt
 
 -- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
 methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Literal
-methodDefinitionPrimitiveLabel m =
-  case m of
-    MethodDefinition
-      _
-      _
-      _
-      _
-      (Just (StatementsExpression (ExprPrimitive (Primitive lbl)) _))
-      _
-      _ -> Just lbl
-    _ -> Nothing
+methodDefinitionPrimitiveLabel = fmap primitiveLabel . methodPrimitive
 
 methodDefinitionHasPrimitive :: MethodDefinition -> Bool
 methodDefinitionHasPrimitive = isJust . methodDefinitionPrimitiveLabel
 
 methodDefinitionPrimitiveCode :: MethodDefinition -> Maybe Integer
 methodDefinitionPrimitiveCode =
-  let f lbl =
-        case lbl of
-          NumberLiteral (Int k) -> k
-          _ -> error "methodDefinitionPrimitiveCode: not integer?"
+  let f = maybe (error "methodDefinitionPrimitiveCode: not integer?") id . literalInteger
   in fmap f . methodDefinitionPrimitiveLabel
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
@@ -335,15 +323,16 @@ methodDefinitionPrimitiveCode =
 > p "printElementsOn: aStream aStream nextPut: $(."
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
-> p "p <primitive: 0>. self continueAfterPrimitive"
+> p "p <primitive: 0> self continueAfterPrimitive"
 -}
 methodDefinition :: Maybe String -> Identifier -> P MethodDefinition
 methodDefinition src cl = do
-  p <- messagePattern -- messagePattern is a token and consumes trailing comments
-  c <- P.optionMaybe comment -- this is always Nothing
-  t <- P.optionMaybe temporaries
-  s <- P.optionMaybe statements
-  return (MethodDefinition cl Nothing p t s c src)
+  pat <- messagePattern -- messagePattern is a token and consumes trailing comments
+  cmt <- P.optionMaybe comment -- this is always Nothing
+  prm <- P.optionMaybe primitive
+  tmp <- P.optionMaybe temporaries
+  stm <- P.optionMaybe statements
+  return (MethodDefinition cl Nothing pat tmp stm prm cmt src)
 
 data Pattern
   = UnaryPattern Identifier
@@ -676,14 +665,13 @@ returnStatement :: P ReturnStatement
 returnStatement = fmap ReturnStatement (returnOperator >> expression)
 
 -- | 3.4.5.2 Expressions
-data Expression = ExprAssignment Assignment | ExprBasic BasicExpression | ExprPrimitive Primitive deriving (Eq, Show)
+data Expression = ExprAssignment Assignment | ExprBasic BasicExpression deriving (Eq, Show)
 
-expressionCase :: (Assignment -> t) -> (BasicExpression -> t) -> (Primitive -> t) -> Expression -> t
-expressionCase f g h e =
+expressionCase :: (Assignment -> t) -> (BasicExpression -> t) -> Expression -> t
+expressionCase f g e =
   case e of
     ExprAssignment x -> f x
     ExprBasic x -> g x
-    ExprPrimitive x -> h x
 
 {- | <expression> ::= <assignment> | <basic expression>
 
@@ -705,10 +693,9 @@ expressionCase f g h e =
 > p "[1] value"
 > p "o m: true"
 > p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
-> p "<primitive: 63>"
 -}
 expression :: P Expression
-expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression P.<|> fmap ExprPrimitive primitive
+expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
 
 -- | 3.4.5.2 (Expressions)
 data Assignment = Assignment Identifier Expression deriving (Eq,Show)
@@ -1005,6 +992,15 @@ data Literal
   | SelectorLiteral Selector
   | ArrayLiteral [Either Literal Identifier]
   deriving (Eq, Show)
+
+literalInteger :: Literal -> Maybe Integer
+literalInteger lit =
+  case lit of
+    NumberLiteral (Int k) -> Just k
+    _ -> Nothing
+
+integerLiteral :: Integer -> Literal
+integerLiteral = NumberLiteral . Int
 
 {- | Parse literal.
 
@@ -1531,7 +1527,11 @@ separator = fmap concat (P.many1 (fmap return P.space  P.<|> comment) P.<?> "sep
 stParse primitive "<primitive: 63>"
 stParse primitive "<primitive: VMpr_ByteString_at>"
 -}
-data Primitive = Primitive Literal deriving (Eq,Show)
+data Primitive = Primitive { primitiveLabel :: Literal } deriving (Eq, Show)
+
+-- | Primitive with integer label.
+primitiveOf :: Integer -> Primitive
+primitiveOf = Primitive . integerLiteral
 
 primitive :: P Primitive
 primitive = do

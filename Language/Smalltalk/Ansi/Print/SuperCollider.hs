@@ -107,13 +107,14 @@ sc_patternSelector pat =
     KeywordPattern kp -> sc_keywordSelector (map fst kp)
 
 sc_methodDefinition_pp :: Maybe Char -> MethodDefinition -> String
-sc_methodDefinition_pp maybeStar (MethodDefinition _ _ p t s _ _) =
+sc_methodDefinition_pp maybeStar (MethodDefinition _ _ pat tmp stm prm _ _) =
   strjn [maybe "" return maybeStar
-        ,sc_patternSelector p
+        ,sc_patternSelector pat
         ,"{"
-        ,sc_patternArgs_pp p
-        ,maybe "" sc_temporaries_pp t
-        ,maybe "" sc_statements_pp s
+        ,sc_patternArgs_pp pat
+        ,maybe "" St.primitive_pp prm
+        ,maybe "" sc_temporaries_pp tmp
+        ,maybe "" sc_statements_pp stm
         ,"}"]
 
 sc_patternArgs_pp :: Pattern -> String
@@ -172,7 +173,7 @@ sc_returnStatement_pp :: ReturnStatement -> String
 sc_returnStatement_pp (ReturnStatement e) = printf "^%s" (sc_expression_pp e)
 
 sc_expression_pp :: Expression -> String
-sc_expression_pp = expressionCase sc_assignment_pp sc_basicExpression_pp St.primitive_pp
+sc_expression_pp = expressionCase sc_assignment_pp sc_basicExpression_pp
 
 sc_assignment_pp :: Assignment -> String
 sc_assignment_pp (Assignment i e) = printf "%s = %s" (downcaseFirstLetter i) (sc_expression_pp e)

@@ -27,13 +27,12 @@ classDefinitionPrintSom cd =
 
 methodDefinitionPrintSom :: St.MethodDefinition -> String
 methodDefinitionPrintSom md =
-  let St.MethodDefinition _ _ pat tmp stm _ _ = md
+  let St.MethodDefinition _ _ pat tmp stm prm _ _ = md
       ln =
         [unwords [St.pattern_pp pat, "=", "("]
         ,maybe "" St.temporaries_pp tmp
         ,maybe "" St.statements_pp stm
         ,")"]
-  in if St.methodDefinitionHasPrimitive md
-     then St.pattern_pp pat ++ " = primitive"
-     else unlines (filter (not . null) ln)
-
+  in case prm of
+       Just _ -> St.pattern_pp pat ++ " = primitive"
+       _ -> unlines (filter (not . null) ln)

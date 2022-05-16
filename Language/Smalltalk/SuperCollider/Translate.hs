@@ -237,7 +237,7 @@ stPrimaryFactoryMethod cl nm =
   let pat = St.UnaryPattern "primaryFactoryMethod"
       xpr = St.ExprBasic (St.BasicExpression (St.PrimaryLiteral (St.SymbolLiteral nm)) Nothing Nothing)
       stm = St.StatementsReturn (St.ReturnStatement xpr)
-  in St.MethodDefinition cl Nothing pat Nothing (Just stm) Nothing Nothing
+  in St.MethodDefinition cl Nothing pat Nothing (Just stm) Nothing Nothing Nothing
 
 {- | Translate Sc method to St.
 Rewrites temporaries and for precedence.
@@ -264,7 +264,7 @@ scMethodDefinitionToSt cl_nm md =
                    args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
       tmp = fmap scTemporariesSt (blockTemporaries blk)
       stm = fmap scStatementsSt (blockStatements blk)
-      st_md = St.MethodDefinition st_cl_nm Nothing pat tmp stm Nothing Nothing
+      st_md = St.MethodDefinition st_cl_nm Nothing pat tmp stm Nothing Nothing Nothing
   in if is_star_cons
      then [st_md, stPrimaryFactoryMethod st_cl_nm (if null blk_args then "new" else concatMap (++ ":") blk_args)]
      else [st_md]

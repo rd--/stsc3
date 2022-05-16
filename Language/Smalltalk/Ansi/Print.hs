@@ -56,10 +56,10 @@ programInitializerDefinition_pp = initializerDefinition_pp
 > rw src == src
 -}
 methodDefinition_pp :: MethodDefinition -> String
-methodDefinition_pp (MethodDefinition _ _ pat tmp stm _ src) =
+methodDefinition_pp (MethodDefinition _ _ pat tmp stm prm _ src) =
   case src of
     Just txt -> txt
-    Nothing -> strjn [pattern_pp pat,maybe "" temporaries_pp tmp,maybe "" statements_pp stm]
+    Nothing -> strjn [pattern_pp pat,maybe "" primitive_pp prm, maybe "" temporaries_pp tmp,maybe "" statements_pp stm]
 
 {- | Print pattern.
 
@@ -112,7 +112,7 @@ primitive_pp :: Primitive -> String
 primitive_pp (Primitive l) = printf "<primitive: %s>" (literal_pp l)
 
 expression_pp :: Expression -> String
-expression_pp = expressionCase assignment_pp basicExpression_pp primitive_pp
+expression_pp = expressionCase assignment_pp basicExpression_pp
 
 assignment_pp :: Assignment -> String
 assignment_pp (Assignment i e) = printf "%s := %s" i (expression_pp e)

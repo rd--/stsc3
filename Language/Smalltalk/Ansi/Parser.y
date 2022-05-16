@@ -84,7 +84,6 @@ initializerdefinition :: { St.InitializerDefinition }
 
 expression :: { St.Expression }
         : assignment                           { St.ExprAssignment $1 }
-        | primitive                            { St.ExprPrimitive $1 }
         | basicexpression                      { St.ExprBasic $1 }
 
 assignment :: { St.Assignment }
