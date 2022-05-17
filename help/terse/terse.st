@@ -169,10 +169,13 @@ OrderedCollection isVariable                                "St-80 = true, Squea
 String isVariable                                           "St-80 = true, Squeak = false"
 'string'                                                    "string literal"
 '  text  ' withBlanksTrimmed                                "remove leading and trailing space"
+s := 'string'. s at: 4 put: $u. s                           "=> strung, string literals are mutable"
 
 'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
+(#'symbol' at: 3) = $m                                      "Symbols are indexable but immutable"
+#x at: 1 put: $y                                            "=> error"
 
 'Debugging'
 
