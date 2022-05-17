@@ -111,6 +111,7 @@ help =
     ," som cat som-file"
     ," stc cat { fragment | library | extensions } supercollider-file..."
     ," st cat { parsec | happy } smalltalk-file..."
+    ," translate class { fileout | som } { fileout | som } input-file output-file"
     ," translate [ stream ] stc { js | sc | scm | st } [ input-file output-file ]"
     ]
 

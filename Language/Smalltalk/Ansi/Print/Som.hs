@@ -27,11 +27,14 @@ classDefinitionPrintSom cd =
 
 methodDefinitionPrintSom :: St.MethodDefinition -> String
 methodDefinitionPrintSom md =
-  let St.MethodDefinition _ _ pat tmp stm prm _ _ = md
+  let St.MethodDefinition _ _ pat tmp stm prm _ src = md
       ln =
         [unwords [St.pattern_pp pat, "=", "("]
-        ,maybe "" St.temporaries_pp tmp
-        ,maybe "" St.statements_pp stm
+        ,case src of
+            Just txt -> unlines (tail (lines txt))
+            Nothing -> unlines
+              [maybe "" St.temporaries_pp tmp
+              ,maybe "" St.statements_pp stm]
         ,")"]
   in case prm of
        Just _ -> St.pattern_pp pat ++ " = primitive"
