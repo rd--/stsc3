@@ -55,7 +55,7 @@ data Expr =
 exprIsAssignment :: Expr -> Bool
 exprIsAssignment e =
   case e of
-    Assignment _ _ -> True
+    Assignment {} -> True
     _ -> False
 
 assignmentIdentifier :: Expr -> Maybe St.Identifier
@@ -63,6 +63,12 @@ assignmentIdentifier e =
   case e of
     Assignment x _ -> Just x
     _ -> Nothing
+
+exprIsReturn :: Expr -> Bool
+exprIsReturn e =
+  case e of
+    Return {} -> True
+    _ -> False
 
 expr_map :: (Expr -> Expr) -> Expr -> Expr
 expr_map f e =

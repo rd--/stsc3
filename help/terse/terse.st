@@ -9,6 +9,8 @@
 (5 / 3) class = Fraction                                    "division with fractional result"
 5.0 / 2.0 = 2.5                                             "division with float result (operand float)"
 355.0 / 113                                                 "division with float result (operand integer)"
+9 // 12 = 0                                                 "integer divide"
+9 \\ 12 = 9                                                 "integer remainder (modulo)"
 5.0 // 3.0 = 1                                              "integer divide"
 5.0 \\ 3.0 = 2                                              "integer remainder"
 -5 = 5 negated                                              "unary minus"
@@ -54,6 +56,7 @@ Float e = 2.718281828459045                                 "exp constant"
 
 'Array'
 
+Array isVariable = true                                     "array is indexable"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
 3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
@@ -148,7 +151,7 @@ $A asciiValue = 65                                          "convert character t
 Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself       "add: inserts associations"
 Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
 Dictionary newFromAssociations: {#a -> 1. #b -> 2}          "dictionary from associations in array"
-
+Dictionary isVariable                                       "St-80=true, Squeak=false"
 
 'Dictionary ; Smalltalk'
 
@@ -157,8 +160,13 @@ Dictionary newFromAssociations: {#a -> 1. #b -> 2}          "dictionary from ass
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
 
+'OrderedCollection'
+
+OrderedCollection isVariable                                "St-80 = true, Squeak = false"
+
 'Strings'
 
+String isVariable                                           "St-80 = true, Squeak = false"
 'string'                                                    "string literal"
 '  text  ' withBlanksTrimmed                                "remove leading and trailing space"
 
