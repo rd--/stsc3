@@ -40,6 +40,7 @@ library
                         Language.Smalltalk.Ansi.Rewrite,
                         Language.Smalltalk.Ansi.Token,
                         Language.Smalltalk.FileOut,
+                        Language.Smalltalk.Organisation,
                         Language.Smalltalk.Som,
                         Language.Smalltalk.SuperCollider.Ast,
                         Language.Smalltalk.SuperCollider.Ast.Print,

@@ -4,7 +4,8 @@
 
 A fileout consists of a sequence of code segments called "chunks" separated by a ! character.
 
-Any ! character occurring within the code segment must be quoted as !!
+Any ! character occurring within the code segment must be quoted as !!.
+This inluces the $! character literal, and ! in quoted strings and comments.
 
 An empty chunk consisting of one or more whitespace characters terminates the sequence.
 
@@ -271,11 +272,13 @@ allowedChunkChar = quotedExclamationPoint P.<|> P.noneOf ['!']
 
 {- | Sequence of allowedChunkChar.
 
-> St.stParse chunkText "Any text"
-> St.stParse chunkText "Any text with quoted exclamation points also!!"
+> St.stParse chunkText "Any text!"
+> St.stParse chunkText "Any text with quoted exclamation points also!!!"
+> St.stParse chunkText "Any text with $!! character literals!"
+> St.stParse chunkText "Any text with 'string literals!!' literals!"
 -}
 chunkText :: St.P String
-chunkText = P.many1 allowedChunkChar
+chunkText = P.many1 allowedChunkChar St.>>~ chunkDelimiter
 
 {- | A chunk that has only whitespace.
 
@@ -293,9 +296,7 @@ emptyChunk = P.many P.space St.>>~ chunkDelimiter
 > St.stParse (P.many1 nonEmptyChunk) " x ! y ! z!! !" == [" x ","y ","z! "]
 -}
 nonEmptyChunk :: St.P Chunk
-nonEmptyChunk =
-  ((P.try emptyChunk >> P.unexpected "emptyChunk") P.<|>
-   (P.many1 allowedChunkChar St.>>~ chunkDelimiter))
+nonEmptyChunk = (P.try emptyChunk >> P.unexpected "emptyChunk") P.<|> chunkText
 
 -- | A sequence of one or more non empty chunks followed by an empty chunk.
 nonEmptyChunkSequence :: St.P [Chunk]

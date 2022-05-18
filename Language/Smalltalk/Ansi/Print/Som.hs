@@ -36,6 +36,6 @@ methodDefinitionPrintSom md =
               [maybe "" St.temporaries_pp tmp
               ,maybe "" St.statements_pp stm]
         ,")"]
-  in case prm of
-       Just _ -> St.pattern_pp pat ++ " = primitive"
+  in case (prm, src) of
+       (Just _, Nothing) -> St.pattern_pp pat ++ " = primitive"
        _ -> unlines (filter (not . null) ln)

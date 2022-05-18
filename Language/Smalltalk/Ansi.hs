@@ -168,7 +168,10 @@ data ClassDefinition =
   ,classInitializer :: Maybe InitializerDefinition
   ,classCategory :: Maybe String -- Meta-data
   ,classComment :: Maybe String} -- Meta-data
-  deriving (Eq,Show)
+  deriving (Eq, Show)
+
+-- | A class library is a collection of class definitions.
+type ClassLibrary = [ClassDefinition]
 
 -- | A Metaclass name is the class name with ' class' appended.
 metaclassName :: Identifier -> Identifier
@@ -204,6 +207,28 @@ classClassMethodCategories = nub . sort . map methodCategoryRequired . classMeth
 -- | Does the class have a class side "initialize" method?
 classHasClassInitializeMethod :: ClassDefinition -> Bool
 classHasClassInitializeMethod = elem "initialize" . map (selectorIdentifier . patternSelector . methodPattern) . classMethods
+
+classCategoryOrError :: ClassDefinition -> String
+classCategoryOrError = fromMaybe (error "classCategory") . classCategory
+
+-- | (Major, Minor)
+type ClassCategoryParts = (String, String)
+
+{- | Split category string into two parts at hyphen.
+
+> map categoryParts (words "Kernel-Numbers Sound-Sc3 Broken")
+-}
+categoryParts :: String -> ClassCategoryParts
+categoryParts cat =
+  case elemIndex '-' cat of
+    Just ix -> (take ix cat, drop (ix + 1) cat)
+    _ -> ("Unknown", cat)
+
+classCategoryParts :: ClassDefinition -> Maybe ClassCategoryParts
+classCategoryParts = fmap categoryParts . classCategory
+
+classCategoryPartsOrError :: ClassDefinition -> ClassCategoryParts
+classCategoryPartsOrError = categoryParts . classCategoryOrError
 
 -- * 3.3.3 Global Variable Definition
 
