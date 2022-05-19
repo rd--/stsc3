@@ -177,6 +177,16 @@ type ClassLibrary = [ClassDefinition]
 metaclassName :: Identifier -> Identifier
 metaclassName x = x ++ " class"
 
+{- | Remove the ' class' suffix from a Metaclass name.
+
+> metaclassNameClassName "Array class" == "Array"
+-}
+metaclassNameClassName :: Identifier -> Identifier
+metaclassNameClassName x =
+  if " class" `isSuffixOf` x
+  then take (length x - 6) x
+  else error "metaclassNameClassName?"
+
 {- | The name of the meta class, ie. the class name with a class suffix.
      Metaclasses do not have separate ClassDefinitions.
      In Smalltalk the rule is that the class of a metaclass is "Metaclass".
@@ -229,6 +239,14 @@ classCategoryParts = fmap categoryParts . classCategory
 
 classCategoryPartsOrError :: ClassDefinition -> ClassCategoryParts
 classCategoryPartsOrError = categoryParts . classCategoryOrError
+
+-- | Sort methods by name.
+classDefinitionSortMethods :: ClassDefinition -> ClassDefinition
+classDefinitionSortMethods cd =
+  let im = instanceMethods cd
+      cm = classMethods cd
+      srt = sortOn methodName
+  in cd { instanceMethods = srt im, classMethods = srt cm }
 
 -- * 3.3.3 Global Variable Definition
 
