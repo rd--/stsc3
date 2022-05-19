@@ -185,7 +185,7 @@ metaclassNameClassName :: Identifier -> Identifier
 metaclassNameClassName x =
   if " class" `isSuffixOf` x
   then take (length x - 6) x
-  else error "metaclassNameClassName?"
+  else error ("metaclassNameClassName: not Metaclass: " ++ x)
 
 {- | The name of the meta class, ie. the class name with a class suffix.
      Metaclasses do not have separate ClassDefinitions.
