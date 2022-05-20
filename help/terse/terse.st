@@ -53,14 +53,16 @@ Float pi radiansToDegrees = 180.0                           "convert radians to 
 (10 min: 20) = 10                                           "get minimum of two numbers"
 Float pi = 3.141592653589793                                "pi"
 Float e = 2.718281828459045                                 "exp constant"
-100 atRandom                                                "random number in (1,self)"
+100 atRandom                                                "random integer in (1,self)"
+1.0 atRandom                                                "random float in (0,self)"
+
 
 'Array'
 
 Array isVariable = true                                     "array is indexable"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
-3 timesRepeat: [ Smalltalk print: 'repeat' ]                "prints repeat three times, returns count"
-#(1 2 3) do: [ :item | Smalltalk print: item ]              "prints 123"
+3 timesRepeat: [ Transcript show: 'repeat' ]                "prints repeat three times, returns count"
+#(1 2 3) do: [ :item | Transcript show: item ]              "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
 x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
 #(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
@@ -131,6 +133,28 @@ nil isNil = true                                            "test if object is n
 $A isUppercase = true                                       "test if upper case character"
 $a isLowercase = true                                       "test if lower case character"
 
+'Character'
+
+Character space = $ 
+Character tab = $	
+Character newLine
+Character newPage
+(Character value: 97) = $a
+$a asInteger = 97
+$A asInteger = 65
+$Z asInteger = 90
+$a = $a
+$a ~= $b
+$1 digitValue = 1
+$c isCharacter = true
+$a isLetter = true
+$1 isDigit = true
+$a isLowercase = true
+Character space isSeparator = true
+$e isVowel
+$a asUppercase = $A
+$A asLowercase = $a
+
 'Collection'
 
 #(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
@@ -194,6 +218,19 @@ s := 'string' copy. s at: 4 put: $u. s                      "=> strung, string l
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
 (#'symbol' at: 3) = $m                                      "Symbols are indexable but immutable"
 #x at: 1 put: $y                                            "=> error"
+
+'Transcript'
+
+Transcript clear                                            "clear to transcript window"
+Transcript show: 'Hello World'                              "output string in transcript window"
+Transcript nextPutAll: 'Hello World'                        "output string in transcript window"
+Transcript nextPut: $A                                      "output character in transcript window"
+Transcript space                                            "output space character in transcript window"
+Transcript tab                                              "output tab character in transcript window"
+Transcript cr                                               "carriage return / linefeed"
+'Hello' printOn: Transcript                                 "append print string into the window"
+'Hello' storeOn: Transcript                                 "append store string into the window"
+Transcript endEntry                                         "flush the output buffer"
 
 'Debugging'
 
