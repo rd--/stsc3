@@ -117,17 +117,17 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Precedence"
 
-2 + 5 * 5. "=> 35"
-2 + (5 * 5). "=> 27"
-2 + 5 min: 5.  "=> 5"
-2 + (5 min: 5). "=> 7"
-1 min: 2 max: 3. "=> 3"
-(1 min: 2) max: 3. "=> 3"
-1 min: (2 max: 3). "=> 1"
+2 + 5 * 5 "=> 35"
+2 + (5 * 5) "=> 27"
+2 + 5 min: 5  "=> 5"
+2 + (5 min: 5) "=> 7"
+1 min: 2 max: 3 "=> 3"
+(1 min: 2) max: 3 "=> 3"
+1 min: (2 max: 3) "=> 1"
 
 "Boolean"
 
-(0.5 coin) if: [ 'p' ] value: [ 'q' ] "=> p or q with equal probability"
+(0.5 coin) ifTrue: [ 'p' ] ifFalse: [ 'q' ] "=> p or q with equal probability"
 
 "Object"
 
@@ -150,6 +150,7 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Random - Integer"
 
+5 atRandom
 5 rand "=> random Integer in 1 to 5 ; i.e. atRandom"
 1 rand: 5 "=> random Integer in 1 to 5"
 4 rand2 "=> random Integer in -4 to 4"
@@ -171,7 +172,8 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "SequenceableCollection"
 
-#(1 2 3) append: #(4 5 6) "=> #(1 2 3 4 5 6)"
+#(1 2 3)
+#(1 2 3) , #(4 5 6) "=> #(1 2 3 4 5 6)"
 
 #() atWrap: 7 "=> error"
 #(1) atWrap: 7 "=> 1"
@@ -211,6 +213,7 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 #(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
 1 dup: 6 "=> #(1 1 1 1 1 1) ; replicate by copying"
 
+0 to: 4
 (0 to: 4 collect: [:x | x * x]) sum "=> 30"
 1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
 0 to: 4 collect: [:x | x * x] "=> #(0 1 4 9 16)"
@@ -240,7 +243,7 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 10 from: 1 by: 1 "=> 10 element array from 1 to 10 by 1"
 3 from: 3 by: 6 "=> 3 element array from 3 to 15 by 6"
 
-({1. 2. 3} at: 2 put: -2) == -2 true              "=> true (at:put: returns the element put)"
+({1. 2. 3} at: 2 put: -2) == -2              "=> true (at:put: returns the element put)"
 
 #(1 2 3 4 5) rotateRight: 1 "=> (5 1 2 3 4)"
 #(1 2 3 4 5) rotateLeft: 1 "=> (2 3 4 5 1)"
@@ -252,9 +255,9 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 3 5 7) indexOf: 5
 #(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]
 
-#(1 3 5 7) detect: [ :item | item > 5]
-#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]
-#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "squeak"
+#(1 3 5 7) detect: [ :item | item > 5] "=> 7"
+#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ] "=> '?'"
+#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "=> 49 (squeak)"
 
 "Array - Math"
 
@@ -271,6 +274,10 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4))
 #(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples
 
+"Array - Expressions"
+
+{'a' copy. {'b' copy. {'c' copy. {'d' copy. {'e' copy. {'f' copy. {'g' copy}}}}}}}
+
 "Interval"
 
 (Interval from: 5 to: 9) asArray "=> #(5 6 7 8 9)"
@@ -280,7 +287,7 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 "Strings"
 
-'file' , '.ext' = 'file.ext'. "=> true"
+'file' , '.ext' = 'file.ext' "=> true"
 '\n' "=> '\n'"
 '\\n' "=> '\\n'"
 '\0' "=> '\0'"
@@ -704,3 +711,6 @@ m putOscOn: stdout
 3.14 putOscOn: stdout "must be in network byte order"
 'rq' putOscOn: stdout "must be 4-byte aligned and nul terminated"
 #(1 2 3) putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"
+
+"Emacs"
+(setq stsc3-interpreter (list "stsc3-st"))

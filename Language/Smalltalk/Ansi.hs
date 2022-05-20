@@ -388,6 +388,7 @@ data Pattern
 
 > p = stParse messagePattern
 > patternSelector (p "midicps") == UnarySelector "midicps"
+> patternSelector (p "| aBoolean") == BinarySelector "|"
 > patternSelector (p "+ aNumber") == BinarySelector "+"
 > patternSelector (p "new: x") == KeywordSelector "new:"
 > patternSelector (p "freq: f phase: p") == KeywordSelector "freq:phase:"
@@ -1354,15 +1355,16 @@ type BinaryIdentifier = Identifier
 
 {- | Is an identifier a binary operator?
 
-> map isBinaryIdentifier (words "+ - * / % @ **")
+> map isBinaryIdentifier (words "+ - * / % @ ** | &")
 -}
 isBinaryIdentifier :: Identifier -> Bool
 isBinaryIdentifier = all (`elem` binaryCharacterSet)
 
--- | binarySelector ::= binaryCharacter+
---
--- > stParse binarySelector "+" == BinarySelector "+"
--- > stParse binarySelector "+p" == BinarySelector "+" -- +1 must parse as selector=+ argument=1
+{- | binarySelector ::= binaryCharacter+
+
+> stParse binarySelector "&" == BinarySelector "|"
+> stParse binarySelector "+p" == BinarySelector "+" -- +1 must parse as selector=+ argument=1
+-}
 binarySelector :: P Selector
 binarySelector = fmap BinarySelector (Token.operator stLexer)
 

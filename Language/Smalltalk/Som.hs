@@ -50,6 +50,9 @@ parseSomClassDefinition = St.stParse classDefinition . rewriteSomQuotingToSmallt
      In Som if the superclassName is not specified it is "Object".
      In Som the end of the class chain is indicated by "nil".
      For Ansi "nil" becomes Nothing and empty becomes "Object".
+     Note: fails if the first method definition is for '|' and there are no variables.
+
+> St.stParse classDefinition "Boolean = ( | aBoolean = ( ^self or: aBoolean ) )"
 -}
 classDefinition :: St.P St.ClassDefinition
 classDefinition = do
@@ -98,9 +101,11 @@ data MethodBlock =
   deriving (Eq, Show)
 
 {- | Method definition.
-The St Ast methof node for has a literal field for primitives, which is here set to 0.
+The St Ast method node has a literal field for primitives, which is here set to 0.
 
-> St.stParse methodDefinition "sumSqr: x = ( ^(self * self) + (x * x) )"
+> St.stParse (methodDefinition "Number") "sumSqr: x = ( ^(self * self) + (x * x) )"
+> St.stParse (methodDefinition "Boolean") "| aBoolean = ( ^self or: aBoolean )"
+> St.stParse (methodDefinition "Boolean") "& aBoolean = ( ^self and: aBoolean )"
 -}
 methodDefinition :: St.Identifier -> St.P St.MethodDefinition
 methodDefinition cl = do
@@ -203,7 +208,7 @@ escapedStringBody = P.many stringCharacter
 {- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
 
 > somEscapedString "\\t" == "\t"
-> somEscapedString "\'" == "'" -- single quote character in SOM
+> somEscapedString "\'" == "'" -- single quote character in Som
 > somEscapedString "''" == "''" -- single quote character in Smalltalk
 > somEscapedString "\\\\"
 -}

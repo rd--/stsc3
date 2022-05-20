@@ -43,6 +43,7 @@ Float e ln = 1.0                                            "natural logarithm"
 (10.0 raisedTo: 2.0) log = 2.0                              "base 10 logarithm"
 (100 log: 10) = 2.0                                         "logarithm with specified base"
 (100 floorLog: 10) = 2                                      "floor of the log"
+Float radiansPerDegree = (Float pi / 180)                   "radians per degree"
 180 degreesToRadians = Float pi                             "convert degrees to radians"
 Float pi radiansToDegrees = 180.0                           "convert radians to degrees"
 (Float pi / 2) sin = 1.0                                    "sine"
@@ -58,8 +59,8 @@ Float e = 2.718281828459045                                 "exp constant"
 
 Array isVariable = true                                     "array is indexable"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
-3 timesRepeat: [ 'repeat' putOn: Transcript ]               "prints repeat three times, returns count"
-#(1 2 3) do: [ :item | item asString putOn: Transcript ]    "prints 123"
+3 timesRepeat: [ Smalltalk print: 'repeat' ]                "prints repeat three times, returns count"
+#(1 2 3) do: [ :item | Smalltalk print: item ]              "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
 x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
 #(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
@@ -136,7 +137,7 @@ $a isLowercase = true                                       "test if lower case 
 
 'Conversion'
 
-3.99 asInteger = 4                                          "convert number to integer (truncates in Squeak)"
+3.99 asInteger = 3                                          "convert number to integer (truncates in Squeak)"
 3.99 asFraction                                             "convert number to fraction (399/100)"
 3 asFloat                                                   "convert number to float"
 3 asFloat = 3                                               "3 asFloat is equal to 3"
@@ -160,6 +161,23 @@ Dictionary isVariable                                       "St-80=true, Squeak=
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
 
+'Interval'
+
+Interval from: 5 to: 10                                     "create interval object"
+5 to: 10                                                    "interval from 5 to 10"
+Interval from: 5 to: 10 by: 2                               "create interval object with specified increment"
+5 to: 10 by: 2                                              "interval from 5 to 10 by 2"
+(1 to: 5) isEmpty                                           "test if empty"
+(1 to: 5) size                                              "number of elements"
+(1 to: 9) includes: 9                                       "test if element is in collection"
+(1 to: 9) do: [ :item | Smalltalk print: item ]             "iterate over interval"
+(1 to: 9) select: [ :item | item > 7 ]                      "return elements that pass test"
+(1 to: 9) reject: [ :item | item < 2 ]                      "return elements that fail test"
+(1 to: 9) collect: [ :item | item + item ]                  "transform each element"
+(1 to: 9) detect: [ :item | item > 3 ] ifNone: []           "find position of first element that passes test"
+(1 to: 9) inject: 0 into: [ :state :item | state + item ]   "sum elements"
+(1 to: 9) asArray                                           "convert to array"
+
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
@@ -169,7 +187,7 @@ OrderedCollection isVariable                                "St-80 = true, Squea
 String isVariable                                           "St-80 = true, Squeak = false"
 'string'                                                    "string literal"
 '  text  ' withBlanksTrimmed                                "remove leading and trailing space"
-s := 'string'. s at: 4 put: $u. s                           "=> strung, string literals are mutable"
+s := 'string' copy. s at: 4 put: $u. s                      "=> strung, string literals are mutable"
 
 'Symbols'
 
