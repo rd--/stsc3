@@ -6,7 +6,7 @@
 6 - 3 = 3                                                   "subtraction"
 6 * 3 = 18                                                  "multiplication"
 1 + 2 * 3 = 9                                               "evaluation always left to right (1 + 2) * 3"
-(5 / 3) class = Fraction                                    "division with fractional result"
+(5 / 3) class                                               "division with non-intger result"
 5.0 / 2.0 = 2.5                                             "division with float result (operand float)"
 355.0 / 113                                                 "division with float result (operand integer)"
 9 // 12 = 0                                                 "integer divide"
@@ -92,34 +92,57 @@ Association key: #x value: 1                                "associate key with 
 (#x -> 1) key = #x                                          "key (left hand side) of association"
 (#x -> 1) value = 1                                         "value (right hand side) of association"
 
+'Behaviour'
+
+Float selectors                                             "array of selectors implemented at class"
+Float selectorsDo: [ :item | Transcript show: item; cr ]    "perform block at each selector"
+Double includesSelector: #+                                 "test if class implements selector"
+(Float includesSelector: #+) = false                        "does not look in superclasses"
+Float canUnderstand: #+                                     "test if class can understand selector"
+Float superclass = Number                                   "superclass of class"
+Float inheritsFrom: Number                                  "immediate inheritance"
+Float inheritsFrom: Magnitude                               "non-immediate inheritance"
+Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
+Float allSelectors                                          "get all selectors an object responds to"
+
+
 'Bitwise Manipulation'
 
-(16rFF bitAnd: 16r0F) = 16r0F                               "and bits"
-(16rF0 bitOr: 16r0F) = 16rFF                                "or bits"
-(16rFF bitXor: 16r0F) = 16rF0                               "xor bits"
-16rFF bitInvert = -16r100                                   "invert bits"
-(16r0F bitShift: 4) = 16rF0                                 "left shift"
-(16rF0 bitShift: -4) = 16r0F                                "right shift"
-(16r80 bitAt: 7) = 0                                        "bit at position (0|1) [!Squeak]"
-(16rFF allMask: 16r0F) = true                               "test if all bits set in mask set in receiver"
-(16rFF anyMask: 16r0F) = true                               "test if any bits set in mask set in receiver"
-(16rFF noMask: 16r0F) = false                               "test if all bits set in mask clear in receiver"
+(255 bitAnd: 15) = 15                                       "and bits"
+(240 bitOr: 15) = 255                                       "or bits"
+(255 bitXor: 240) = 15                                      "xor bits"
+255 bitInvert = -256                                        "invert bits"
+(15 bitShift: 4) = 240                                      "left shift"
+(240 bitShift: -4) = 15                                     "right shift"
+(128 bitAt: 7) = 0                                          "bit at position (0|1) [!Squeak]"
+(255 allMask: 15) = true                                    "test if all bits set in mask set in receiver"
+(255 anyMask: 15) = true                                    "test if any bits set in mask set in receiver"
+(255 noMask: 15) = false                                    "test if all bits set in mask clear in receiver"
 
 'Booleans'
 
+1 = 1 = true                                                "equality predicate (operator)"
+1 ~= 2 = true                                               "equality predicate (operator)"
+(1 == 1)                                                    "identical"
+1 ~~ 2                                                      "not identical"
+2 > 1                                                       "greater than"
+1 < 2                                                       "less than"
+1 >= 1                                                      "greater than or equal"
+1 <= 1                                                      "less than or equal"
+false not                                                   "boolean not"
+true & false = false                                        "logical and (operator)"
+true | false = true                                         "logical or (operator)"
+(true and: false) = false                                   "logical and"
+(true or: false) = true                                     "logical or"
+(false and: ['and' error]) = false                          "logical and (short-circuit)"
+(true or: ['or' error]) = true                              "logical or"
+true xor: false                                             "test if one true and other false"
+b := 5 between: 3 and: 12.                                  "between (inclusive)"
 123 isKindOf: Number                                        "test if object is class or subclass of"
 123 isMemberOf: SmallInteger                                "test if object is type of class"
 123 respondsTo: #sqrt                                       "test if object responds to message"
 true = true                                                 "constant"
 false = false                                               "constant"
-1 = 1 = true                                                "equality predicate (operator)"
-1 ~= 2 = true                                               "equality predicate (operator)"
-(true and: false) = false                                   "logical and"
-(true or: false) = true                                     "logical or"
-true & false = false                                        "logical and (operator)"
-true | false = true                                         "logical or (operator)"
-(false and: ['and' error]) = false                          "logical and (short-circuit)"
-(true or: ['or' error]) = true                              "logical or"
 true not not = true                                         "not"
 nil isNil = true                                            "test if object is nil"
 1 positive = true                                           "test if number is positive"
@@ -132,13 +155,16 @@ nil isNil = true                                            "test if object is n
 1.0 isNumber = true                                         "test if object is number"
 $A isUppercase = true                                       "test if upper case character"
 $a isLowercase = true                                       "test if lower case character"
+false asBit = 0
+true asBit = 1
+true asInteger > false asInteger
 
 'Character'
 
 Character space = $ 
 Character tab = $	
-Character newLine
-Character newPage
+Character newLine = Character nl
+Character newPage asInteger = 12
 (Character value: 97) = $a
 $a asInteger = 97
 $A asInteger = 65
@@ -154,10 +180,37 @@ Character space isSeparator = true
 $e isVowel
 $a asUppercase = $A
 $A asLowercase = $a
+$a hash = $a asInteger hash
+
+'CharacterSet'
+
+CharacterSet ascii size = 127                               "ascii character set"
+CharacterSet crlf                                           "carriage return and line feed"
 
 'Collection'
 
 #(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
+#(1 3 2 9 4 5 7 8 6) includes: 6                            "includes element"
+#(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6)                  "includes any element of a collection"
+
+'Constants'
+
+true                                                        "true constant"
+false                                                       "false constant"
+nil                                                         "nil object constant"
+1                                                           "integer constants"
+3.14                                                        "float constants"
+2e-2                                                        "fractional constants"
+16r0F                                                       "hex constant"
+-1                                                          "negative constants"
+'Hello'                                                     "string constant"
+'I''m here'                                                 "single quote escape"
+$A                                                          "character constant"
+$                                                           "character constant (space)"
+#aSymbol                                                    "symbol constants"
+#(3 2 1)                                                    "array constants"
+#('abc' 2 $a)                                               "mixing of types allowed"
+
 
 'Conversion'
 
@@ -185,6 +238,26 @@ Dictionary isVariable                                       "St-80=true, Squeak=
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
 
+'Error'
+
+1 error: 'an integer?'
+3.141 error: 'a float?'
+#sym error: 'a symbol?'
+Transcript error: 'a transcript?'
+Smalltalk error: 'a smalltalk?'
+
+'Float'
+
+3.141 isFloat = true                                        "is floating point"
+3.141 identityHash = 3.141 hash                             "hash"
+3.0 hash = 3 hash                                           "hash of integral is integral hash"
+
+'Integer'
+
+1 isInteger = true
+1 hash
+1 identityHash
+
 'Interval'
 
 Interval from: 5 to: 10                                     "create interval object"
@@ -201,10 +274,69 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (1 to: 9) detect: [ :item | item > 3 ] ifNone: []           "find position of first element that passes test"
 (1 to: 9) inject: 0 into: [ :state :item | state + item ]   "sum elements"
 (1 to: 9) asArray                                           "convert to array"
+(1 to: 9) hash
+
+'Method calls'
+
+2 sqrt                                                      "unary message"
+2 raisedTo: 10                                              "keyword message*"
+194 * 9                                                     "binary message"
+Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
+2 perform: #sqrt                                            "indirect method invocation"
+Transcript show: 'hello '; show: 'world'; cr                "cascading, send multiple messages to receiver"
+3 + 2; * 100                                                "=> 300, sends message to same receiver not answer"
 
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
+
+'Set'
+
+Set newFrom: {Character cr. Character lf}
+
+'SmallInteger'
+
+1 class = SmallInteger
+1 hash = 1 identityHash
+
+
+'Stream'
+
+(ReadStream on: 'Hello read stream') contents               "contents of ReadStream on String"
+(ReadStream on: 'Hello read stream' from: 1 to: 5) contents "contents of ReadStream on String limited to 5 places"
+s := (ReadStream on: 'Hello read stream')                   "ReadStream on string"
+s position: 3                                               "set position"
+s position = 3                                              "read position"
+s next = $l                                                 "get next"
+s peek = $o                                                 "peek next"
+s contents                                                  "get all"
+s atEnd = false                                             "test is at end of stream"
+(s upTo: $s) = 'o read '                                    "read up to"
+s reset                                                     "set position to zero"
+s nextLine                                                  "read line"
+
+s := WriteStream on: (String new: 10)                       "WriteStream on String"
+s nextPutAll: 'terse'                                       "put each item from colection into stream"
+s position = 5                                              "get position"
+s position: 5                                               "set position"
+s contents = 'terse'                                        "get contents"
+s size = 5                                                  "stream size"
+s atEnd = true                                              "test if at end (read limit)"
+s nextPut: $r                                               "put item on stream"
+s contents = 'terser'
+
+s := ReadWriteStream on: 'ReadWrite' copy from: 1 to: 6
+s contents = 'ReadWr'
+s position = 0
+s nextPut: $t
+s nextPutAll: 'erse'
+s nextPut: Character space
+s contents = 'terse '
+s atEnd = true
+s reset
+
+(ReadWriteStream on: 'Hello read write stream' copy) contents
+
 
 'Strings'
 
@@ -212,18 +344,30 @@ String isVariable                                           "St-80 = true, Squea
 'string'                                                    "string literal"
 '  text  ' withBlanksTrimmed                                "remove leading and trailing space"
 s := 'string' copy. s at: 4 put: $u. s                      "=> strung, string literals are mutable"
+'123' asInteger = 123                                       "parse integer"
+'12345' asNumber = 12345                                    "parse integer or float"
+'3.141' asNumber = 3.141                                    "parse integer or float"
+
 
 'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
-(#'symbol' at: 3) = $m                                      "Symbols are indexable but immutable"
+(#symbol at: 3) = $m                                        "Symbols are indexable but immutable"
 #x at: 1 put: $y                                            "=> error"
+(#perform:with: numArgs) = 2                                "number of arguments of selector"
+#perform:with: keywords = #('perform:' 'with:')             "keywords of selector as array of strings"
+#symbol asString = 'symbol'                                 "convert to string"
+#symbol asSymbol = #'symbol'                                "identity"
+#+ isInfix                                                  "is infix (binary) selector"
+#perform: isKeyword                                         "is keyword selector"
+#symbol isSymbol                                            "predicate"
+'symbol' isSymbol = false                                   "predicate"
 
 'Transcript'
 
 Transcript clear                                            "clear to transcript window"
-Transcript show: 'Hello World'                              "output string in transcript window"
-Transcript nextPutAll: 'Hello World'                        "output string in transcript window"
+Transcript show: 'Hello World'; cr                          "output string in transcript window"
+Transcript nextPutAll: 'Hello World'; cr                    "output string in transcript window"
 Transcript nextPut: $A                                      "output character in transcript window"
 Transcript space                                            "output space character in transcript window"
 Transcript tab                                              "output tab character in transcript window"
