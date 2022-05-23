@@ -10,8 +10,6 @@ import System.FilePath {- filepath -}
 
 import qualified Text.Parsec as P {- parsec -}
 
-import qualified Music.Theory.Directory as Directory {- hmt-base -}
-
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Annotate as Annotate {- stsc3 -}
 
@@ -256,34 +254,3 @@ somLoadClassList :: FilePath -> [St.Identifier] -> IO [St.ClassDefinition]
 somLoadClassList somDirectory classList = do
   let somClassFilename nm = somDirectory </> nm <.> "som"
   mapM (somLoadClassDefinition . somClassFilename) classList
-
--- * Env
-
--- | The name of the environment variable to read the Som class path from.
-somClassPathVar :: String
-somClassPathVar = "SOM_CLASS_PATH"
-
--- | Read the environment variable giving the sequence of directories to search for Som class files.
-somClassPath :: IO [FilePath]
-somClassPath = Directory.path_from_env somClassPathVar
-
-{- | The system class path must be the first entry of somClassPath.
-     It is an error for it not to be set.
--}
-somSystemClassPath :: IO FilePath
-somSystemClassPath = do
-  cp <- somClassPath
-  case cp of
-    sys:_ -> return sys
-    _ -> error "somSystemClassPath"
-
-{- | Find Som class definition file (recursively) on somClassPath.
-
-> somFindClassFile "Array" == Just "/home/rohan/opt/src/som/SOM/Smalltalk/Array.som"
--}
-somFindClassFile :: St.Identifier -> IO (Maybe FilePath)
-somFindClassFile cls = somClassPath >>= \path -> Directory.path_scan_recursively path (cls ++ ".som")
-
--- | Load the class file for a named class.
-somLoadClassFile :: St.Identifier -> IO (Maybe St.ClassDefinition)
-somLoadClassFile x = somFindClassFile x >>= mapM somLoadClassDefinition

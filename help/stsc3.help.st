@@ -712,5 +712,12 @@ m putOscOn: stdout
 'rq' putOscOn: stdout "must be 4-byte aligned and nul terminated"
 #(1 2 3) putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"
 
+"Testing"
+
+TestRunner open "squeak"
+
+CollectionTest suite run
+CollectionTest run: #testAny
+
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

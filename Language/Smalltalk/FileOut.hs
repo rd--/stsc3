@@ -5,7 +5,7 @@
 A fileout consists of a sequence of code segments called "chunks" separated by a ! character.
 
 Any ! character occurring within the code segment must be quoted as !!.
-This inluces the $! character literal, and ! in quoted strings and comments.
+This includes the $! character literal, and ! in quoted strings and comments.
 
 An empty chunk consisting of one or more whitespace characters terminates the sequence.
 
@@ -65,6 +65,9 @@ data FileOutEntry =
   -- ^ class, variables
   deriving (Eq, Show)
 
+-- | A FileOut library is the list of recognised entries.
+type FileOutLibrary = [FileOutEntry]
+
 isFileOutClassDeclaration :: FileOutEntry -> Bool
 isFileOutClassDeclaration e =
   case e of
@@ -92,18 +95,18 @@ fileOutEntryClass e =
 {- | The set of all classes that have entries.
      This includes classes that have method definitions but no declarations.
 -}
-fileOutEntryClassSet :: [FileOutEntry] -> [St.Identifier]
-fileOutEntryClassSet = nub . sort . map fileOutEntryClass
+fileOutLibraryClassSet :: FileOutLibrary -> [St.Identifier]
+fileOutLibraryClassSet = nub . sort . map fileOutEntryClass
 
 -- | The set of classes that are defined (declared).
-fileOutEntryClassesDefined :: [FileOutEntry] -> [St.Identifier]
-fileOutEntryClassesDefined = nub . sort . map fileOutEntryClass . filter isFileOutClassDeclaration
+fileOutLibraryClassesDefined :: FileOutLibrary -> [St.Identifier]
+fileOutLibraryClassesDefined = nub . sort . map fileOutEntryClass . filter isFileOutClassDeclaration
 
 -- | The set of classes that are extended (have method definitions but are not declared).
-fileOutEntryClassesExtended :: [FileOutEntry] -> [St.Identifier]
-fileOutEntryClassesExtended l =
-  let def = fileOutEntryClassesDefined l
-      ent = fileOutEntryClassSet l
+fileOutLibraryClassesExtended :: FileOutLibrary -> [St.Identifier]
+fileOutLibraryClassesExtended l =
+  let def = fileOutLibraryClassesDefined l
+      ent = fileOutLibraryClassSet l
   in sort (ent \\ def)
 
 -- | Type string of entry, for pretty printing.
@@ -130,8 +133,8 @@ type FileOutClassDef = (FileOutEntry,FileOutEntry,Maybe FileOutEntry,[FileOutEnt
      Requires that there is a ClassDeclaration.
      Will generate a default ClassComment if none is present.
 -}
-fileOutEntryClassDef :: [FileOutEntry] -> St.Identifier -> Maybe FileOutClassDef
-fileOutEntryClassDef e x =
+fileOutLibraryClassDef :: FileOutLibrary -> St.Identifier -> Maybe FileOutClassDef
+fileOutLibraryClassDef e x =
   let r = filter ((== x) . fileOutEntryClass) e
       cd = filter ((== "ClassDeclaration") . fileOutEntryType) r
       cc = filter ((== "ClassComment") . fileOutEntryType) r
@@ -143,20 +146,20 @@ fileOutEntryClassDef e x =
        Just cd1 -> Just (cd1,fromMaybe (FileOutClassComment x "No comment") (unlist cc), unlist ci,cm,im)
        _ -> Nothing
 
-fileOutEntryClassDefOrError :: [FileOutEntry] -> St.Identifier -> FileOutClassDef
-fileOutEntryClassDefOrError e = fromMaybe (error "fileOutEntryClassDef: not class definition") . fileOutEntryClassDef e
+fileOutLibraryClassDefOrError :: FileOutLibrary -> St.Identifier -> FileOutClassDef
+fileOutLibraryClassDefOrError e = fromMaybe (error "fileOutLibraryClassDef: not class definition") . fileOutLibraryClassDef e
 
 -- | Select all of the class and instance method entries for the named class.
-fileOutEntryClassMethodEntries :: [FileOutEntry] -> St.Identifier -> [FileOutEntry]
-fileOutEntryClassMethodEntries e x =
+fileOutLibraryClassMethodEntries :: FileOutLibrary -> St.Identifier -> [FileOutEntry]
+fileOutLibraryClassMethodEntries e x =
   let r = filter ((== x) . fileOutEntryClass) e
       cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
       im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
   in cm ++ im
 
 -- | Select all of the class and instance method definitions for the named class.
-fileOutEntryClassMethods :: [FileOutEntry] -> St.Identifier -> [St.MethodDefinition]
-fileOutEntryClassMethods e = concatMap fileOutEntryMethodDefinitions . fileOutEntryClassMethodEntries e
+fileOutLibraryClassMethods :: FileOutLibrary -> St.Identifier -> [St.MethodDefinition]
+fileOutLibraryClassMethods e = concatMap fileOutEntryMethodDefinitions . fileOutLibraryClassMethodEntries e
 
 -- | Translate FileOutClassDef to Ansi ClassDefinition.
 fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
@@ -179,8 +182,8 @@ fileOutClassDefToClassDefinition (cd,cc,ci,cm,im) =
      (Just category)
      (Just comment)
 
-fileOutEntryClassDefinition :: [FileOutEntry] -> St.Identifier -> Maybe St.ClassDefinition
-fileOutEntryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutEntryClassDef e
+fileOutLibraryClassDefinition :: FileOutLibrary -> St.Identifier -> Maybe St.ClassDefinition
+fileOutLibraryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutLibraryClassDef e
 
 -- * Class definition printer
 
@@ -547,13 +550,23 @@ isString fo =
 evalFileOut :: FileOut -> [Either FileOutEntry FileOutSegment]
 evalFileOut = map evalFileOutSegment . filter (\x -> not (isComment x || isString x))
 
-evalFileOutSubset :: FileOut -> [FileOutEntry]
-evalFileOutSubset = lefts . evalFileOut
+-- | File out library, ignoring any segments that cannot be parsed.
+fileOutLibraryPartial :: FileOut -> FileOutLibrary
+fileOutLibraryPartial = lefts . evalFileOut
 
-evalFileOutOrError :: FileOut -> [FileOutEntry]
-evalFileOutOrError = map (either id (\e -> error (show ("evalFileOut: parse failed: ", e)))) . evalFileOut
+fileOutLibrary :: FileOut -> FileOutLibrary
+fileOutLibrary = map (either id (\e -> error (show ("evalFileOut: parse failed: ", e)))) . evalFileOut
+
+fileOutUnparsedSegments :: FileOut -> [FileOutSegment]
+fileOutUnparsedSegments = rights . evalFileOut
 
 -- * Load class file
+
+fileOutLoadPartial :: FilePath -> IO FileOutLibrary
+fileOutLoadPartial = fmap fileOutLibraryPartial . loadFileOut
+
+fileOutLoad :: FilePath -> IO FileOutLibrary
+fileOutLoad = fmap fileOutLibrary . loadFileOut
 
 {- | Load singular class definition from fileout, else error.
 
@@ -562,10 +575,23 @@ fo = file-out, fn = file-name, cd = class-definition, cn = class-name
 fileOutLoadClassFile :: FilePath -> IO St.ClassDefinition
 fileOutLoadClassFile fn = do
   fo <- loadFileOut fn
-  let ent = evalFileOutSubset fo
-  case fileOutEntryClassesDefined ent of
+  let ent = fileOutLibraryPartial fo
+  case fileOutLibraryClassesDefined ent of
     [cn] ->
-      case fileOutEntryClassDefinition ent cn of
+      case fileOutLibraryClassDefinition ent cn of
         Just cd -> return cd
         Nothing -> error "fileOutLoadClassFile: not class definition?"
     _ -> error "fileOutLoadClassFile: not singular class file?"
+
+-- * Summary
+
+fileOutLibraryPrintSummary :: FileOutLibrary -> IO ()
+fileOutLibraryPrintSummary lib = do
+  let cls = fileOutLibraryClassSet lib
+      def = fileOutLibraryClassesDefined lib
+      ext = fileOutLibraryClassesExtended lib
+  print ("#entries", length lib)
+  print ("#classes", length cls)
+  print ("#classes defined", length def)
+  print ("#classes extended", length ext)
+  print ("#classes unknown", length cls - length ext - length def)

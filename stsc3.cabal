@@ -19,7 +19,6 @@ library
   build-depends:        array,
                         base >= 4.7 && < 5,
                         filepath,
-                        hmt-base == 0.20.*,
                         parsec,
                         split
   default-language:     Haskell2010
