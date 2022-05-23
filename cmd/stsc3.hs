@@ -78,7 +78,7 @@ som_cat fn =
   let rw = putStrLn . Som.classDefinitionPrintSom . Som.parseSomClassDefinition
   in rw =<< readFile fn
 
-{- Read Som class definition and write in FileOut format.
+{- | Read Som class definition and write in FileOut format.
 
 > cd_som_to_fileout True "/home/rohan/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Array.som" "/dev/stdout"
 -}
@@ -88,7 +88,7 @@ cd_som_to_fileout do_sort som_fn fileout_fn = do
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
   writeFile fileout_fn (FileOut.fileOutClassDefinition cd')
 
-{- | Read Som class definition and write in FileOut format.
+{- | Read FileOut class definition and write in Som format.
 
 > cd_fileout_to_som "/home/rohan/rd/j/2022-05-04/Smalltalk-80/ArrayedCollection.st" "/dev/stdout"
 -}
@@ -97,6 +97,16 @@ cd_fileout_to_som do_sort fileout_fn som_fn = do
   cd <- FileOut.fileOutLoadClassFile fileout_fn
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
   writeFile som_fn (Som.classDefinitionPrintSom cd')
+
+writeAllSomClassDef :: Bool -> FilePath -> FileOut.FileOutLibrary -> IO ()
+writeAllSomClassDef do_sort som_dir lib = do
+  let srt = if do_sort then St.classDefinitionSortMethods else id
+  mapM_ (Som.writeSomClassDefinition som_dir . srt) (FileOut.fileOutLibraryClassDefinitions lib)
+
+lib_fileout_to_som :: Bool -> FilePath -> FilePath -> IO ()
+lib_fileout_to_som do_sort fileout_fn som_dir = do
+  lib <- FileOut.fileOutLoadPartial fileout_fn
+  writeAllSomClassDef do_sort som_dir lib
 
 {-
 -- | Fragment input file and run stcToJs at each fragment.
@@ -110,11 +120,12 @@ help :: [String]
 help =
     ["stsc3 command [arguments]"
     ," rewrite ndef"
-    ," som cat som-file"
-    ," stc cat { fragment | library | extensions } supercollider-file..."
-    ," st cat { parsec | happy } smalltalk-file..."
-    ," translate class { plain | sort } { fileout | som } { fileout | som } input-file output-file"
-    ," translate [ stream ] stc { js | sc | scm | st } [ input-file output-file ]"
+    ," som cat <som-file>"
+    ," stc cat { fragment | library | extensions } <supercollider-file...>"
+    ," st cat { parsec | happy } <smalltalk-file...>"
+    ," translate class { plain | sort } { fileout | som } { fileout | som } <input-file> <output-file>"
+    ," translate library { plain | sort } fileout som <input-file> <output-directory>"
+    ," translate [ stream ] stc { js | sc | scm | st } [ <input-file> <output-file> ]"
     ]
 
 main :: IO ()
@@ -136,7 +147,8 @@ main = do
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
-    ["translate","class", doSort, "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (read doSort) som_fn fileout_fn
-    ["translate","class", doSort, "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (read doSort) fileout_fn som_fn
+    ["translate","class", doSort, "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (doSort == "sort") som_fn fileout_fn
+    ["translate","class", doSort, "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (doSort == "sort") fileout_fn som_fn
+    ["translate","library", doSort, "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (doSort == "sort") fileout_fn som_dir
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

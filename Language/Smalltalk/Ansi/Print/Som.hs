@@ -3,6 +3,8 @@ module Language.Smalltalk.Ansi.Print.Som where {- stsc3 -}
 
 import Data.Maybe {- base -}
 
+import System.FilePath {- system -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
@@ -51,3 +53,6 @@ methodDefinitionPrintSom md =
   in case (prm, src) of
        (Just _, Nothing) -> St.pattern_pp pat ++ " = primitive"
        _ -> unlines (filter (not . null) ln)
+
+writeSomClassDefinition :: FilePath -> St.ClassDefinition -> IO ()
+writeSomClassDefinition dir cd = writeFile (dir </> St.className cd <.> "som") (classDefinitionPrintSom cd)

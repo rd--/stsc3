@@ -38,7 +38,8 @@ lambdaDefinitionShow ld =
      Block and Method bodies are written as Lambda.
      Block and Method returns are written as Return.
      There are both literal and expression arrays.
-     Sequences (including cascades) are written as Begin.
+     Sequences are written as Begin.
+     Cascades are written as Lambda, see cascadeLambda.
 -}
 data Expr =
     Identifier St.Identifier
@@ -46,7 +47,7 @@ data Expr =
   | Assignment St.Identifier Expr
   | Return Expr -- ^ Block (non local) or Method (local) return.
   | Send Expr Message
-  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body.
+  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body. Definition, arguments, temporaries, statements.
   | Array [Expr]
   | Begin [Expr]
   | Init (Maybe St.Comment) St.Temporaries [Expr]
@@ -94,7 +95,7 @@ exprIsBinaryMessageSend expr =
     Send _lhs (Message (St.BinarySelector _) [_rhs]) -> True
     _ -> False
 
--- | Is Expr a keyword message send.
+-- | Is Expr a keyword message.
 exprIsKeywordMessageSend :: Expr -> Bool
 exprIsKeywordMessageSend expr =
   case expr of
@@ -192,17 +193,39 @@ exprSequence l =
     [e] -> e
     _ -> Begin l
 
+{- | Cascade message translation.
+
+Cascades send a sequence of messages to the same receiver.
+"p q; r; s" sends q to p, and then r to p and then s to p, returning the last answer.
+Cascades cannot be re-written as a sequence of expressions without introducing a local variable.
+I.e. in "(p q) r; s" s is sent to the answer of "p q", which is unknown after evaluating "(p q) r".
+To introduce the binding the rewriting is of the form "[:z | z r. z s] value: (p q)" where z is an invented name.
+
+> p = St.stParse St.basicExpression
+> basicExpressionExpr (p "p q; r")
+> basicExpressionExpr (p "p q: r; s: t")
+> basicExpressionExpr (p "(p q: r) s; t: u")
+> basicExpressionExpr (p "p; q") -- error
+-}
+cascadeLambda :: Message -> St.CascadedMessages -> Expr
+cascadeLambda m c =
+  let z = "cascadeTemporaryVariable"
+      f = messagesExpr (Identifier z)
+  in Lambda NullLambda [z] (St.Temporaries []) (Send (Identifier z) m : map f c)
+
+-- | In the case of a cascade, the last message of m must be lifted out and send to cascadeLambda.
 basicExpressionExpr :: St.BasicExpression -> Expr
 basicExpressionExpr (St.BasicExpression p m c) =
-  let q = case m of
-            Nothing -> primaryExpr p
-            Just m1 -> messagesExpr (primaryExpr p) m1
-      t = case q of
-            Send e _ -> e
-            _ -> q
-  in case c of
-       Nothing -> q
-       Just mList -> exprSequence (q : map (messagesExpr t) mList)
+  case m of
+    Nothing -> primaryExpr p
+    Just m' ->
+      let e = messagesExpr (primaryExpr p) m'
+      in case c of
+        Nothing -> e
+        Just c' ->
+          case e of
+            Send e' m'' -> keywordSend (cascadeLambda m'' c') "value:" [e']
+            _ -> error "basicExpressionExpr: cascade an non-Send?"
 
 expressionExpr :: St.Expression -> Expr
 expressionExpr e =

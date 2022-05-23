@@ -137,6 +137,10 @@ MessageNames openMessageNames. "open Message Names tool"
 | x | x := 'x' dup: 2 . {(x at: 1) == (x at: 2)} "at object duplicate by copying"
 | x | x := 'x' dup. {(x at: 1) == (x at: 2)} "duplicate by copying"
 
+"Ordered Collection"
+
+(OrderedCollection with: #x) detect: [ :each | each isSymbol ]
+
 "Random - Float"
 
 5.0 rand "=> uniform random Float in 0 to 5"
@@ -294,6 +298,9 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 '
 x' "=> newline x"
 | x | x := 'x'. {x == x. x == x copy. x = x. x = x copy}
+'one {1} three' format: 'two'
+3.141 printString = '3.141'
+3.141 printStringLimitedTo: 4
 
 "Symbols"
 
@@ -718,6 +725,11 @@ TestRunner open "squeak"
 
 CollectionTest suite run
 CollectionTest run: #testAny
+CollectionTest run: #testDetectIfFound
+
+t := CollectionTest new
+t setUp
+t testDetectIfFound
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

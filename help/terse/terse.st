@@ -119,6 +119,12 @@ Float allSelectors                                          "get all selectors a
 (255 anyMask: 15) = true                                    "test if any bits set in mask set in receiver"
 (255 noMask: 15) = false                                    "test if all bits set in mask clear in receiver"
 
+'BlockClosure'
+
+([ :aNumber | aNumber * aNumber ] value: 3) = 9             "apply block to one argument"
+([ :aNumber | aNumber * aNumber ] cull: 3) = 9              "apply block with or without argument"
+([ 42 ] cull: 3) = 42                                       "apply block with or without argument"
+
 'Booleans'
 
 1 = 1 = true                                                "equality predicate (operator)"
@@ -158,6 +164,12 @@ $a isLowercase = true                                       "test if lower case 
 false asBit = 0
 true asBit = 1
 true asInteger > false asInteger
+
+'Cascade messages'
+
+Transcript show: 'hello '; show: 'world'; cr                "cascading, send multiple messages to receiver"
+3 + 2; * 100                                                "=> 300, sends message to same receiver, not answer, i.e to 3 not 5"
+Set new add: 1; add: 2; yourself
 
 'Character'
 
@@ -210,7 +222,6 @@ $                                                           "character constant 
 #aSymbol                                                    "symbol constants"
 #(3 2 1)                                                    "array constants"
 #('abc' 2 $a)                                               "mixing of types allowed"
-
 
 'Conversion'
 
@@ -283,12 +294,11 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 194 * 9                                                     "binary message"
 Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
 2 perform: #sqrt                                            "indirect method invocation"
-Transcript show: 'hello '; show: 'world'; cr                "cascading, send multiple messages to receiver"
-3 + 2; * 100                                                "=> 300, sends message to same receiver not answer"
 
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
+(OrderedCollection with: #x) detect: [:x | x isSymbol]
 
 'Set'
 

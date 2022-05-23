@@ -846,20 +846,22 @@ inBrackets = Token.brackets stLexer
 
 {- | <primary> ::= identifier | <literal> | <block constructor> | ( '(' <expression> ')' )
 
-> stParse primary "p" == PrimaryIdentifier "p"
-> stParse primary "1"
-> primary_pp (stParse primary "[:a| a + 1]")
-> primary_pp (stParse primary "(p)")
-> primary_pp (stParse primary "(p q)") == "(p q)"
-> primary_pp (stParse primary "(p q: r)")
-> primary_pp (stParse primary "(1 + 2)")
-> primary_pp (stParse primary "{p.q.r}")
+> let p = stParse primary
+> p "p" == PrimaryIdentifier "p"
+> p "1"
+> p "[:a| a + 1]"
+> p "(p)"
+> p "(p q)"
+> p "(p q: r)"
+> p "(1 + 2)"
+> map p ["{p.q.r}", "{p. q. r}", "{ p . q . r }", "{ p . q . r . }", "{p.q.r.}"]
+> map p ["{p. {q. r} }", "{p. {q. r.} .}"]
 -}
 primary :: P Primary
 primary =
   lexeme (P.choice [fmap PrimaryBlock blockConstructor
                    ,fmap PrimaryExpression (inParentheses expression)
-                   ,fmap PrimaryArrayExpression (inBraces (P.sepBy basicExpression period))
+                   ,fmap PrimaryArrayExpression (inBraces (P.sepEndBy basicExpression period)) -- allow ending period?
                    ,fmap PrimaryIdentifier identifier
                    ,fmap PrimaryLiteral literal] P.<?> "primary")
 

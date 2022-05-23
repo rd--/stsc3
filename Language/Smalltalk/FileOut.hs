@@ -98,9 +98,13 @@ fileOutEntryClass e =
 fileOutLibraryClassSet :: FileOutLibrary -> [St.Identifier]
 fileOutLibraryClassSet = nub . sort . map fileOutEntryClass
 
--- | The set of classes that are defined (declared).
+-- | The names of the set of classes that are defined (declared).
 fileOutLibraryClassesDefined :: FileOutLibrary -> [St.Identifier]
 fileOutLibraryClassesDefined = nub . sort . map fileOutEntryClass . filter isFileOutClassDeclaration
+
+-- | The class definitions of the set of classes that are defined (declared).
+fileOutLibraryClassDefinitions :: FileOutLibrary -> [St.ClassDefinition]
+fileOutLibraryClassDefinitions e = map (fileOutLibraryClassDefinitionOrError e) (fileOutLibraryClassesDefined e)
 
 -- | The set of classes that are extended (have method definitions but are not declared).
 fileOutLibraryClassesExtended :: FileOutLibrary -> [St.Identifier]
@@ -184,6 +188,9 @@ fileOutClassDefToClassDefinition (cd,cc,ci,cm,im) =
 
 fileOutLibraryClassDefinition :: FileOutLibrary -> St.Identifier -> Maybe St.ClassDefinition
 fileOutLibraryClassDefinition e = fmap fileOutClassDefToClassDefinition . fileOutLibraryClassDef e
+
+fileOutLibraryClassDefinitionOrError :: FileOutLibrary -> St.Identifier -> St.ClassDefinition
+fileOutLibraryClassDefinitionOrError fo = maybe (error "fileOutLibraryClassDefinition") id . fileOutLibraryClassDefinition fo
 
 -- * Class definition printer
 
