@@ -60,6 +60,7 @@ Float e = 2.718281828459045                                 "exp constant"
 'Array'
 
 Array isVariable = true                                     "array is indexable"
+Array withAll: #(1 2 3 4)                                   "array from collection"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
 3 timesRepeat: [ Transcript show: 'repeat' ]                "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | Transcript show: item ]              "prints 123"
@@ -237,10 +238,27 @@ $A asciiValue = 65                                          "convert character t
 
 'Dictionary'
 
+Dictionary isVariable                                       "St-80=true, Squeak=false"
 Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself       "add: inserts associations"
 Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
-Dictionary newFromAssociations: {#a -> 1. #b -> 2}          "dictionary from associations in array"
-Dictionary isVariable                                       "St-80=true, Squeak=false"
+Dictionary newFrom: {#a -> 1. #b -> 2}                      "dictionary from associations in collection"
+(Dictionary withAll: { #a -> 1. #b -> 2 }) any: 2           "select any two of"
+d := Dictionary newFrom: {#a -> 1. #b -> 2. #c -> 3}
+d isDictionary
+d associationsDo: [ :each | Transcript show: each; cr ]
+d do: [ :each | Transcript show: each; cr ]
+d keysDo: [ :each | Transcript show: each; cr ]
+d valuesDo: [ :each | Transcript show: each; cr ]
+d keysAndValuesDo: [ :key :value | Transcript show: {key. value}; cr ]
+d select: [ :each | each = 2 ]
+d associationsSelect: [ :each | each = (#b -> 2) ]
+d collect: [ :each | each * 2 ]
+d includes: 2
+d includesAssociation: (#b -> 2)
+d includesIdentity: 2
+d includesKey: #b
+d includesAllOf: #(2 3)
+d includesAllOf: (d any: 2)
 
 'Dictionary ; Smalltalk'
 
@@ -298,6 +316,7 @@ Transcript show: (194 * 9) printString; cr                  "combination (chaini
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
+OrderedCollection withAll: #(1 2 3 4)                       "Instantiate from collection"
 (OrderedCollection with: #x) detect: [:x | x isSymbol]
 
 'Set'
@@ -334,6 +353,11 @@ s size = 5                                                  "stream size"
 s atEnd = true                                              "test if at end (read limit)"
 s nextPut: $r                                               "put item on stream"
 s contents = 'terser'
+
+s := WriteStream on: (Array new: 10)                       "WriteStream on Array"
+s nextPutAll: (1 to: 10)                                   "Put ten numbers into stream, the initial array is fill"
+s nextPut: 11                                              "Put an eleventh number"
+s size = 11                                                "The array is grown"
 
 s := ReadWriteStream on: 'ReadWrite' copy from: 1 to: 6
 s contents = 'ReadWr'

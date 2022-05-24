@@ -551,13 +551,14 @@ Smalltalk aboutThisSystem. "System Reporter"
 1.0 raisedTo: 0.0 "=> 1.0"
 0.0 raisedTo: 0.0 "=> 1.0"
 1 / 0 "=> error"
-1.0 / 0.0 "=> Inf"
+1.0 / 0.0 "=> Infinity"
+0.0 / 0.0 "=> NaN"
 Float pi "=> 3.141592653589793"
 Float pi * 2 "=> 6.283185307179586"
 [:x | x * x] value: Float pi * 2 "=> 39.47841760435743"
 Float infinity "=> Inf"
--1 raisedTo: (1/2). "=> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
--1 raisedTo: (1/3). "=> -1 (Squeak)"
+-1 raisedTo: (1 / 2). "=> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
+-1 raisedTo: (1 / 3). "=> -1 (Squeak)"
 -1 raisedTo: 0.5. "=> ArithmeticError: Negative can't be raised to float powers."
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095
@@ -725,11 +726,22 @@ TestRunner open "squeak"
 
 CollectionTest suite run
 CollectionTest run: #testAny
+CollectionTest run: #testAnyAs
+CollectionTest run: #testCollectAs
 CollectionTest run: #testDetectIfFound
+CollectionTest run: #testIfEmpty
+CollectionTest run: #testIfEmptyifNotEmpty
+CollectionTest run: #testMinMax
+CollectionTest run: #testReduce
+CollectionTest run: #testTake
+
+ArrayTest run: #testAtWrap
 
 t := CollectionTest new
 t setUp
 t testDetectIfFound
+
+Color black
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))
