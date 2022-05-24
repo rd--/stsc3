@@ -171,6 +171,7 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Interval - Random"
 
+(1 to: 9) atRandom
 [ (1 to: 9) atRandom ] dup: 9 "=> array of 9 integers between 1 and 9"
 [ (1 to: 9) choose ] dup: 9 "alias for atRandom"
 
@@ -191,7 +192,7 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 
 #(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ] "=> #((5 1) (4 2) (3 3) (2 4) (1 5))"
 
-#(5 4 3 2 1) withIndexDo: [ :item :index | {item. index} print ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
+#(5 4 3 2 1) withIndexDo: [ :item :index | Transcript show: {item. index}; cr ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
 
 #() extendCyclically: 5 "=> error"
 #(1) extendCyclically: 5 "=> #(1 1 1 1 1)"
@@ -723,25 +724,6 @@ m putOscOn: stdout
 "Testing"
 
 TestRunner open "squeak"
-
-CollectionTest suite run
-CollectionTest run: #testAny
-CollectionTest run: #testAnyAs
-CollectionTest run: #testCollectAs
-CollectionTest run: #testDetectIfFound
-CollectionTest run: #testIfEmpty
-CollectionTest run: #testIfEmptyifNotEmpty
-CollectionTest run: #testMinMax
-CollectionTest run: #testReduce
-CollectionTest run: #testTake
-
-ArrayTest run: #testAtWrap
-
-t := CollectionTest new
-t setUp
-t testDetectIfFound
-
-Color black
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

@@ -56,7 +56,6 @@ Float e = 2.718281828459045                                 "exp constant"
 100 atRandom                                                "random integer in (1,self)"
 1.0 atRandom                                                "random float in (0,self)"
 
-
 'Array'
 
 Array isVariable = true                                     "array is indexable"
@@ -70,6 +69,10 @@ x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, return
 #(1 (2 (3 4))) = #(1 #(2 #(3 4)))                           "in st-80 sub-arrays do not require # prefix"
 #(x x: nil) = #(#x #x: nil)                                 "in st-80 symbols do not require #prefix"
 #(5 4 3 2 1) detect: [ :i | i < 3 ]                         "detect element (not index), so 2"
+#(1 true 3 #four) printString
+#(1 2 3 4 5) take: 2                                        "#(1 2)"
+#(1 2) take: 5                                              "#(1 2)"
+#(1 2) readStream take: 5                                   "#(1 2)"
 
 'Assignment'
 
@@ -92,6 +95,11 @@ Association key: #x value: 1                                "associate key with 
 #x -> 1 = (Association key: #x value: 1)                    "literal syntax"
 (#x -> 1) key = #x                                          "key (left hand side) of association"
 (#x -> 1) value = 1                                         "value (right hand side) of association"
+
+'Bag'
+
+Bag isVariable
+Bag withAll: #(1 2 2 3 3 3)
 
 'Behaviour'
 
@@ -322,6 +330,7 @@ OrderedCollection withAll: #(1 2 3 4)                       "Instantiate from co
 'Set'
 
 Set newFrom: {Character cr. Character lf}
+Set withAll: #(1 2 2 3 3 3)
 
 'SmallInteger'
 
