@@ -302,6 +302,7 @@ x' "=> newline x"
 'one {1} three' format: 'two'
 3.141 printString = '3.141'
 3.141 printStringLimitedTo: 4
+{Array class} printString
 
 "Symbols"
 
@@ -534,6 +535,7 @@ ByteArray streamContents: [ :aStream | aStream float32: 3.141 ] "Squeak"
 
 "Smalltalk"
 
+(Smalltalk at: #Array) = Array. "true"
 (Smalltalk at: #SinOsc) = SinOsc. "true"
 
 Smalltalk garbageCollect. "Squeak"
@@ -724,6 +726,21 @@ m putOscOn: stdout
 "Testing"
 
 TestRunner open "squeak"
+
+"Parsing"
+
+FortranNumberParser parse: 'NaN'
+FortranNumberParser parse: 'Infinity'
+FortranNumberParser parse: '-Infinity'
+FortranNumberParser parse: '100'
+FortranNumberParser parse: '-99'
+FortranNumberParser parse: '3.14'
+FortranNumberParser parse: '-1.4'
+FortranNumberParser parse: '1e6'
+FortranNumberParser parse: '-1e6'
+FortranNumberParser parse: '1e-1'
+FortranNumberParser parse: '-1e-1'
+
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

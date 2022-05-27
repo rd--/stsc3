@@ -310,7 +310,7 @@ type MethodCategory = String
 -}
 data MethodDefinition =
   MethodDefinition
-  {methodClass :: Identifier
+  {methodClass :: Identifier -- ^ Class method for
   ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
   ,methodPattern :: Pattern
   ,methodTemporaries :: Maybe Temporaries
@@ -337,13 +337,15 @@ methodCategoryRequired m =
 methodDefinitionEndsWithReturn :: MethodDefinition -> Bool
 methodDefinitionEndsWithReturn = maybe False statementsEndsWithReturn . methodStatements
 
--- | Predicate to examine a MethodDefinition and decide if it is a Som primitive.
+-- | Get label of primitive, if there is one.
 methodDefinitionPrimitiveLabel :: MethodDefinition -> Maybe Literal
 methodDefinitionPrimitiveLabel = fmap primitiveLabel . methodPrimitive
 
+-- | Predicate to examine a MethodDefinition and decide if it is a primitive.
 methodDefinitionHasPrimitive :: MethodDefinition -> Bool
 methodDefinitionHasPrimitive = isJust . methodDefinitionPrimitiveLabel
 
+-- | Get integer code of primitive, if there is one.
 methodDefinitionPrimitiveCode :: MethodDefinition -> Maybe Integer
 methodDefinitionPrimitiveCode =
   let f = maybe (error "methodDefinitionPrimitiveCode: not integer?") id . literalInteger

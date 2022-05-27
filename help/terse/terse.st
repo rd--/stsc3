@@ -6,7 +6,7 @@
 6 - 3 = 3                                                   "subtraction"
 6 * 3 = 18                                                  "multiplication"
 1 + 2 * 3 = 9                                               "evaluation always left to right (1 + 2) * 3"
-(5 / 3) class                                               "division with non-intger result"
+(5 / 3) class                                               "division with non-intger result (Fraction)"
 5.0 / 2.0 = 2.5                                             "division with float result (operand float)"
 355.0 / 113                                                 "division with float result (operand integer)"
 9 // 12 = 0                                                 "integer divide"
@@ -56,12 +56,33 @@ Float e = 2.718281828459045                                 "exp constant"
 100 atRandom                                                "random integer in (1,self)"
 1.0 atRandom                                                "random float in (0,self)"
 
+'ArrayedCollection'
+
+#(3 2 1) copy sort = #(1 2 3)
+(9 to: 1 by: -1) asArray sort = (1 to: 9) asArray
+(1 to: 99) asArray shuffle mergeSort = (1 to: 99) asArray
+(1 to: 99) asArray shuffle quickSort = (1 to: 99) asArray
+'string' copy quickSort = 'ginrst'
+'quick' copy quickSort = 'cikqu'
+'quickSort' copy quickSort = 'Scikoqrtu'
+'merge' copy mergeSort = 'eegmr'
+'mergeSortFrom:to:by:' copy mergeSort = ':::FSbeegmmooorrrtty'
+letters := 'abcdefghijklmnopqrstuvwxzy' copy
+letters quickSort = letters
+letters mergeSort = letters
+letters reverse quickSort = letters
+letters reverse mergeSort = letters
+letters reverse asArray mergeSort = letters asArray
+letters shuffle sort = letters
+#(5 4 3 2 1) copy sort: [ :lhs :rhs | lhs < rhs ]
+#(5 4 3 2 1) copy sort: #<
+
 'Array'
 
 Array isVariable = true                                     "array is indexable"
 Array withAll: #(1 2 3 4)                                   "array from collection"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
-3 timesRepeat: [ Transcript show: 'repeat' ]                "prints repeat three times, returns count"
+3 timesRepeat: [ Transcript show: 'repeat'; cr ]            "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | Transcript show: item ]              "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
 x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
@@ -73,6 +94,18 @@ x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, return
 #(1 2 3 4 5) take: 2                                        "#(1 2)"
 #(1 2) take: 5                                              "#(1 2)"
 #(1 2) readStream take: 5                                   "#(1 2)"
+#(1 2) == #(1 2)                                            "literals are identical"
+#(1 2) ~~ #(1 2) shallowCopy                                "copies are not identical"
+{1. 2} ~~ {1. 2}                                            "array expressions are not identical"
+{1. 2} ~~ {1. 2} shallowCopy                                "also when copied"
+#(1 2 3) at: 1 put: '1'                                     "error: array literals are immutable (gnu)"
+{1. 2. 3} at: 1 put: '1'                                    "array expressions are mutable"
+#(1 2 3) == #(1 2 3)                                        "array literals are identical"
+#(1 2 3) ~~ {1. 2. 3}                                       "array literals and array expressions are not identical"
+c := {'string'. #symbol. 42}
+(c at: 1) = 'string'
+(c at: 2) = #symbol
+(c at: 3) = 42
 
 'Assignment'
 
@@ -88,6 +121,7 @@ x := 1.2 hash                                               "hash value for obje
 y := x copy                                                 "copy object"
 y := x shallowCopy                                          "copy object (not overridden)"
 y := x deepCopy                                             "copy object and instance vars"
+x := 3. ('string' at: (x := x + 1)) = $i
 
 'Association'
 
@@ -95,11 +129,20 @@ Association key: #x value: 1                                "associate key with 
 #x -> 1 = (Association key: #x value: 1)                    "literal syntax"
 (#x -> 1) key = #x                                          "key (left hand side) of association"
 (#x -> 1) value = 1                                         "value (right hand side) of association"
+(#x -> 1) copy
+{#x -> 1. #y -> 2} as: Dictionary
 
 'Bag'
 
 Bag isVariable
 Bag withAll: #(1 2 2 3 3 3)
+Bag withAll: #(x y y z)
+Bag newFrom: {#x -> 2 . #y -> 3 . #y -> 4. #z -> 2 }
+{#x -> 2 . #y -> 3 . #y -> 4. #z -> 2 } as: Bag
+#(1 2 2) asBag = #(1 2 2) asBag
+#(x y z) asBag = ({'x'. 'y'. 'z'} collect: [ :each | each asSymbol ]) asBag
+b := Bag new add: 'a' withOccurrences: 4; add:'b' withOccurrences: 2; yourself
+b = b copy                      "copies are equal"
 
 'Behaviour'
 
@@ -113,7 +156,6 @@ Float inheritsFrom: Number                                  "immediate inheritan
 Float inheritsFrom: Magnitude                               "non-immediate inheritance"
 Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
 Float allSelectors                                          "get all selectors an object responds to"
-
 
 'Bitwise Manipulation'
 
@@ -130,9 +172,14 @@ Float allSelectors                                          "get all selectors a
 
 'BlockClosure'
 
+[ 42 ] class = BlockClosure
 ([ :aNumber | aNumber * aNumber ] value: 3) = 9             "apply block to one argument"
 ([ :aNumber | aNumber * aNumber ] cull: 3) = 9              "apply block with or without argument"
 ([ 42 ] cull: 3) = 42                                       "apply block with or without argument"
+b := [ :x | x * 42 ]
+b = b copy
+(b copy value: 2) = 84
+b = ({ b } copy at: 1)
 
 'Booleans'
 
@@ -177,13 +224,13 @@ true asInteger > false asInteger
 'Cascade messages'
 
 Transcript show: 'hello '; show: 'world'; cr                "cascading, send multiple messages to receiver"
-3 + 2; * 100                                                "=> 300, sends message to same receiver, not answer, i.e to 3 not 5"
+3 + 2; * 100                                                "=> 300, sends message to receiver, i.e to 3 not 5"
 Set new add: 1; add: 2; yourself
 
 'Character'
 
-Character space = $ 
-Character tab = $	
+$ = Character space
+$	 = Character tab
 Character newLine = Character nl
 Character newPage asInteger = 12
 (Character value: 97) = $a
@@ -202,6 +249,8 @@ $e isVowel
 $a asUppercase = $A
 $A asLowercase = $a
 $a hash = $a asInteger hash
+$s = nil
+($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
 
 'CharacterSet'
 
@@ -213,6 +262,9 @@ CharacterSet crlf                                           "carriage return and
 #(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
 #(1 3 2 9 4 5 7 8 6) includes: 6                            "includes element"
 #(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6)                  "includes any element of a collection"
+(#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
+'string' includes: $i           "true"
+('string' includes: nil) = false
 
 'Constants'
 
@@ -247,7 +299,7 @@ $A asciiValue = 65                                          "convert character t
 'Dictionary'
 
 Dictionary isVariable                                       "St-80=true, Squeak=false"
-Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself       "add: inserts associations"
+Dictionary new add: #a -> 1; add: #b -> 2; yourself       "add: inserts associations"
 Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
 Dictionary newFrom: {#a -> 1. #b -> 2}                      "dictionary from associations in collection"
 (Dictionary withAll: { #a -> 1. #b -> 2 }) any: 2           "select any two of"
@@ -267,13 +319,15 @@ d includesIdentity: 2
 d includesKey: #b
 d includesAllOf: #(2 3)
 d includesAllOf: (d any: 2)
+d keys asBag = #(a b c) asBag
 
 'Dictionary ; Smalltalk'
 
-(Smalltalk at: #SinOsc) = SinOsc                            "lookup value in Smalltalk dictionary"
+(Smalltalk at: #Array) = Array                            "lookup value in Smalltalk dictionary"
 (Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil       "lookup value with clause for absent values "
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
+Smalltalk halt
 
 'Error'
 
@@ -288,12 +342,26 @@ Smalltalk error: 'a smalltalk?'
 3.141 isFloat = true                                        "is floating point"
 3.141 identityHash = 3.141 hash                             "hash"
 3.0 hash = 3 hash                                           "hash of integral is integral hash"
+Float epsilon <= (1 * (10 raisedTo: -12))
+1.0 < 1.0 successor
+1.0 > 1.0 predecessor
+(1.25 timesTwoPower: 5) = 40
+Float readFrom: '3.141'
+Float readFrom: '-1.4' readStream
+Float nan ~~ Float nan
+Float nan ~= Float nan
 
 'Integer'
 
 1 isInteger = true
-1 hash
-1 identityHash
+1 hash = 1 identityHash
+11 isPrime
+(1 to: 99) select: [ :each | each isPrime ]
+(Integer primesUpTo: 4096) size = 564
+Integer readFrom: '100'
+Integer readFrom: '-99' readStream
+40 lowBit = 4
+(0 digitAt: 1) = 0
 
 'Interval'
 
@@ -301,10 +369,10 @@ Interval from: 5 to: 10                                     "create interval obj
 5 to: 10                                                    "interval from 5 to 10"
 Interval from: 5 to: 10 by: 2                               "create interval object with specified increment"
 5 to: 10 by: 2                                              "interval from 5 to 10 by 2"
-(1 to: 5) isEmpty                                           "test if empty"
-(1 to: 5) size                                              "number of elements"
+(1 to: 5) isEmpty not                                       "test if empty"
+(1 to: 5) size = 5                                          "number of elements"
 (1 to: 9) includes: 9                                       "test if element is in collection"
-(1 to: 9) do: [ :item | Smalltalk print: item ]             "iterate over interval"
+(1 to: 9) do: [ :item | Transcript show: item; cr ]         "iterate over interval"
 (1 to: 9) select: [ :item | item > 7 ]                      "return elements that pass test"
 (1 to: 9) reject: [ :item | item < 2 ]                      "return elements that fail test"
 (1 to: 9) collect: [ :item | item + item ]                  "transform each element"
@@ -312,6 +380,20 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (1 to: 9) inject: 0 into: [ :state :item | state + item ]   "sum elements"
 (1 to: 9) asArray                                           "convert to array"
 (1 to: 9) hash
+(Interval newFrom: #(1 2 3)) = (1 to: 3)
+(#(33 5 -23) as: Interval) = (33 to: -23 by: -28)
+(-4 to: -12 by: -1) as: Interval
+(#(2 4 6) as: Interval) = (2 to: 6 by: 2)
+(1 to: 10) + 5 = (6 to: 15)
+(6 to: 15) - 5 = (1 to: 10)
+(1 to: 9) hash
+(1 to: 9) ~= ((1 to: 9) asArray) "intervals are not equal to arrays"
+(1 to: 9) hasEqualElements: ((1 to: 9) asArray) "intervals and arrays may have equal elements"
+(1.0 to: 3.0 by: 1.0) includes: 3.0             "true"
+(1.0 to: 3.0 by: 1.0 successor) includes: 3.0   "false"
+(0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10)
+(1 to: 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
+(10 to: 20 by: 3) reverseDo: [ :each | Transcript show: each printString; cr ]
 
 'Method calls'
 
@@ -325,20 +407,13 @@ Transcript show: (194 * 9) printString; cr                  "combination (chaini
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
 OrderedCollection withAll: #(1 2 3 4)                       "Instantiate from collection"
-(OrderedCollection with: #x) detect: [:x | x isSymbol]
+((OrderedCollection with: #x) detect: [:x | x isSymbol]) = #x
+OrderedCollection newFrom: #(1 2 3)
+#(1 2 3) as: OrderedCollection
+c := #('Jim' 'Mary' 'John' 'Alice' ) asOrderedCollection
+c add: 'Mary' before: 'Mary'; asArray
 
-'Set'
-
-Set newFrom: {Character cr. Character lf}
-Set withAll: #(1 2 2 3 3 3)
-
-'SmallInteger'
-
-1 class = SmallInteger
-1 hash = 1 identityHash
-
-
-'Stream'
+'ReadStream'
 
 (ReadStream on: 'Hello read stream') contents               "contents of ReadStream on String"
 (ReadStream on: 'Hello read stream' from: 1 to: 5) contents "contents of ReadStream on String limited to 5 places"
@@ -351,24 +426,14 @@ s contents                                                  "get all"
 s atEnd = false                                             "test is at end of stream"
 (s upTo: $s) = 'o read '                                    "read up to"
 s reset                                                     "set position to zero"
-s nextLine                                                  "read line"
+s nextLine = 'Hello read stream' "read line"
+'3.14' readStream peek = $3
+ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
+(ReadStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
 
-s := WriteStream on: (String new: 10)                       "WriteStream on String"
-s nextPutAll: 'terse'                                       "put each item from colection into stream"
-s position = 5                                              "get position"
-s position: 5                                               "set position"
-s contents = 'terse'                                        "get contents"
-s size = 5                                                  "stream size"
-s atEnd = true                                              "test if at end (read limit)"
-s nextPut: $r                                               "put item on stream"
-s contents = 'terser'
+'ReadWriteStream'
 
-s := WriteStream on: (Array new: 10)                       "WriteStream on Array"
-s nextPutAll: (1 to: 10)                                   "Put ten numbers into stream, the initial array is fill"
-s nextPut: 11                                              "Put an eleventh number"
-s size = 11                                                "The array is grown"
-
-s := ReadWriteStream on: 'ReadWrite' copy from: 1 to: 6
+s := ReadWriteStream on: 'ReadWriteStream' from: 1 to: 6
 s contents = 'ReadWr'
 s position = 0
 s nextPut: $t
@@ -377,34 +442,102 @@ s nextPut: Character space
 s contents = 'terse '
 s atEnd = true
 s reset
+(ReadWriteStream on: 'Hello read write stream') contents = 'Hello read write stream'
+(ReadWriteStream with: #(1 2)) contents = #(1 2)
+ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
+(ReadWriteStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
 
-(ReadWriteStream on: 'Hello read write stream' copy) contents
+'SequenceableCollection'
 
+#(1 2 3 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
+#(1 2 3 4) permutations asSet size = 24
+
+'Set'
+
+Set newFrom: {Character cr. Character lf}
+Set newFrom: #(1 2 3)
+Set withAll: #(1 2 2 3 3 3)
+#(1 2 3) as: Set
+(#(1 2 3) asSet copyWithout: 3) = #(1 2) asSet
+
+'SmallInteger'
+
+1 class = SmallInteger
+1 hash = 1 identityHash
+12345 digitAt: 1
+40 lowBit = 4
+
+'SortedCollection'
+
+#(4 2 7) as: SortedCollection
+#($p $e $n) as: SortedCollection
+'pen' as: SortedCollection
+#pen as: SortedCollection
+#(10 9 8 7 5 4 4 2) asSortedCollection
+((1 to: 5) asSortedCollection collect: [ :each | each ]) class = OrderedCollection "collect generates an ordered collection"
+c := SortedCollection new sortBlock: [:a :b | a < b]; add: 'truite'; add: 'brochet'; yourself
+c copyEmpty
+c first = 'brochet'
+cpy := c copy
+cpy hasEqualElements: c
+cpy species = c species
+cpy sortBlock = c sortBlock
+cpy first = 'brochet'
 
 'Strings'
 
 String isVariable                                           "St-80 = true, Squeak = false"
 'string'                                                    "string literal"
-'  text  ' withBlanksTrimmed                                "remove leading and trailing space"
+'  text  ' withBlanksTrimmed = 'text'                       "remove leading and trailing space"
 s := 'string' copy. s at: 4 put: $u. s                      "=> strung, string literals are mutable"
 '123' asInteger = 123                                       "parse integer"
 '12345' asNumber = 12345                                    "parse integer or float"
 '3.141' asNumber = 3.141                                    "parse integer or float"
-
+String newFrom: #($P $e $n)
+#($P $e $n) as: String
+('string' compare: 'symbol') = 1 "less than"
+('string' compare: 'string') = 2 "equal"
+('symbol' compare: 'string') = 3 "greater than"
+'string' < 'symbol' "less than"
+'string' = 'string' "equal"
+'symbol' > 'string' "greater than"
+'string' = 'string' copy        "copied strings are equal"
+'string' asString = 'string'
+'string' copy asString = 'string' copy
+'string' == 'string' "string literals are identical"
+'string' ~~ 'string' copy "copied strings are not identical"
+#('string') = {'string'}
+(String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'
+($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
+'string' hash = 'string' copy hash
 
 'Symbols'
 
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
 (#symbol at: 3) = $m                                        "Symbols are indexable but immutable"
-#x at: 1 put: $y                                            "=> error"
+#symbol at: 1 put: $S                                       "=> error"
 (#perform:with: numArgs) = 2                                "number of arguments of selector"
 #perform:with: keywords = #('perform:' 'with:')             "keywords of selector as array of strings"
 #symbol asString = 'symbol'                                 "convert to string"
 #symbol asSymbol = #'symbol'                                "identity"
+'symbol' asSymbol = #symbol
+'symbol' copy asSymbol = #symbol
 #+ isInfix                                                  "is infix (binary) selector"
 #perform: isKeyword                                         "is keyword selector"
 #symbol isSymbol                                            "predicate"
 'symbol' isSymbol = false                                   "predicate"
+Symbol newFrom: #($P $e $n)
+#($P $e $n) as: Symbol
+#testAnd isTestSelector = true
+#symbol species = String
+#(x y z) = {#x. #y. #z}
+#x copy = #x
+'x' asSymbol = #x
+'x' copy asSymbol = #x
+'a string' copy asSymbol = #'a string'
+#symbol hash = 'symbol' hash    "false in gnu, true in squeak"
+#abs value: -1                "implement value procotol for selectors"
+#< value: 1 value: 2            "implement value procotol for selectors"
 
 'Transcript'
 
@@ -418,6 +551,35 @@ Transcript cr                                               "carriage return / l
 'Hello' printOn: Transcript                                 "append print string into the window"
 'Hello' storeOn: Transcript                                 "append store string into the window"
 Transcript endEntry                                         "flush the output buffer"
+
+'UndefinedObject'
+
+nil ifNil: ['nil'] ifNotNil: ['notNil'] "nil"
+#() ifNil: ['nil'] ifNotNil: ['notNil'] "notNil"
+UndefinedObject initializedInstance class == UndefinedObject
+
+'WriteStream'
+
+s := WriteStream on: (String new: 10)                       "WriteStream on String"
+s nextPutAll: 'terse'                                       "put each item from colection into stream"
+s position = 5                                              "get position"
+s position: 5                                               "set position"
+s contents = 'terse'                                        "get contents"
+s size = 5                                                  "stream size"
+s atEnd = true                                              "test if at end (read limit)"
+s nextPut: $r                                               "put item on stream"
+s contents = 'terser'
+s := WriteStream on: (Array new: 10)                       "WriteStream on Array"
+s nextPutAll: (1 to: 10)                                   "Put ten numbers into stream, the initial array is fill"
+s nextPut: 11                                              "Put an eleventh number"
+s size = 11                                                "The array is grown"
+s := WriteStream on: #(1 2) copy
+s nextPut: 3
+s contents = #(3)
+s := WriteStream on: String new
+s nextPutAll: #($t $e $s $t)
+s contents = 'test'
+ (WriteStream on: (String new: 100))
 
 'Debugging'
 
