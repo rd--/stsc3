@@ -6,7 +6,8 @@
 6 - 3 = 3                                                   "subtraction"
 6 * 3 = 18                                                  "multiplication"
 1 + 2 * 3 = 9                                               "evaluation always left to right (1 + 2) * 3"
-(5 / 3) class                                               "division with non-intger result (Fraction)"
+(5 / 3) class = Fraction                                    "division with non-integer result"
+(5 / 3) asFloat
 5.0 / 2.0 = 2.5                                             "division with float result (operand float)"
 355.0 / 113                                                 "division with float result (operand integer)"
 9 // 12 = 0                                                 "integer divide"
@@ -350,6 +351,33 @@ Float readFrom: '3.141'
 Float readFrom: '-1.4' readStream
 Float nan ~~ Float nan
 Float nan ~= Float nan
+
+'Fraction'
+
+(2/3) + (2/3) = (Fraction numerator: 4 denominator: 3)
+(2/3) + (1/2)		"case showing reduction to common denominator"
+(2/3) + (4/3)		"case where result is reduced to an Integer"
+(3 / 2) ceiling = 2
+(-3 / 2) ceiling = -1
+(4/3) denominator = 3
+4/9 raisedTo: 1/2 "2/3"
+9/4 raisedTo: 1/2 "3/2"
+8/27 raisedTo: 1/3 "2/3"
+27/8 raisedTo: 1/3 "3/2"
+32/243 raisedTo: 3/5 "8/27"
+8/27 raisedTo: 5/3 "32/243"
+((4/3) gcd: (7/5)) = (1/15)
+(4/3) hash
+((4/3) lcm: (7/5)) = 28
+(4/3) negated = (-4/3)
+(4/3) negative not "is negative?"
+(4/3) numerator = 4
+(2/3) raisedToInteger: 5		 "fractions also can be exponentiated"
+(9 / 5) reciprocal
+(7 / 5) squared
+(3 / 2) truncated = 1
+Transcript show: (5 / 4); cr
+(5 / 4) raisedToFraction: (7 / 5)
 
 'Integer'
 
