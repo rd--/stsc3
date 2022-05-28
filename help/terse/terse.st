@@ -437,10 +437,12 @@ Transcript show: (5 / 4); cr
 11 isPrime
 (1 to: 99) select: [ :each | each isPrime ]
 (Integer primesUpTo: 4096) size = 564
-Integer readFrom: '100'
-Integer readFrom: '-99' readStream
+(Integer readFrom: '100') = 100
+(Integer readFrom: '-99' readStream) = -99
 40 lowBit = 4
 (0 digitAt: 1) = 0
+123 printString = '123'
+-987654321 printString = '-987654321'
 
 'Interval'
 
@@ -488,6 +490,19 @@ Transcript show: (194 * 9) printString; cr                  "combination (chaini
 
 (Number readFrom: '42') = 42
 (Number readFrom: '3.14') = 3.14
+23 printShowingDecimalPlaces: 2
+23.5698 printShowingDecimalPlaces: 2
+-234.567 printShowingDecimalPlaces: 5
+23.4567 printShowingDecimalPlaces: 0
+23.5567 printShowingDecimalPlaces: 0
+-23.4567 printShowingDecimalPlaces: 0
+-23.5567 printShowingDecimalPlaces: 0
+100000000 printShowingDecimalPlaces: 1
+0.98 printShowingDecimalPlaces: 5
+-0.98 printShowingDecimalPlaces: 2
+2.567 printShowingDecimalPlaces: 2
+-2.567 printShowingDecimalPlaces: 2
+0 printShowingDecimalPlaces: 2
 
 'OrderedCollection'
 
