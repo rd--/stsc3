@@ -1,6 +1,6 @@
-import System.Environment {- base -}
-
 import qualified Music.Theory.IO {- hmt-base -}
+import qualified Music.Theory.Opt as Opt {- hmt-base -}
+import qualified Music.Theory.String as String {- hmt-base -}
 
 import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
 
@@ -88,15 +88,21 @@ cd_som_to_fileout do_sort som_fn fileout_fn = do
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
   writeFile fileout_fn (FileOut.fileOutClassDefinition cd')
 
+tidy_method_source :: String -> String
+tidy_method_source src =
+  let ln = map String.delete_trailing_whitespace (lines src)
+  in unlines (filter (not . null) ln)
+
 {- | Read FileOut class definition and write in Som format.
 
-> cd_fileout_to_som "/home/rohan/rd/j/2022-05-04/Smalltalk-80/ArrayedCollection.st" "/dev/stdout"
+> cd_fileout_to_som (True, True) "/home/rohan/rd/j/2022-05-04/Smalltalk-80/ArrayedCollection.st" "/dev/stdout"
 -}
-cd_fileout_to_som :: Bool -> FilePath -> FilePath -> IO ()
-cd_fileout_to_som do_sort fileout_fn som_fn = do
+cd_fileout_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
+cd_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
   cd <- FileOut.fileOutLoadClassFile fileout_fn
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
-  writeFile som_fn (Som.classDefinitionPrintSom cd')
+      cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
+  writeFile som_fn (Som.classDefinitionPrintSom cd'')
 
 writeAllSomClassDef :: Bool -> FilePath -> FileOut.FileOutLibrary -> IO ()
 writeAllSomClassDef do_sort som_dir lib = do
@@ -116,6 +122,12 @@ stc_to_js fn = do
   mapM_ (putStrLn . Sc.stcToJs) txt_fragments
 -}
 
+opt_def :: [Opt.OptUsr]
+opt_def =
+  [("sort","False","bool","sort methods in class")
+  ,("tidy","False","bool","tidy method source")
+  ]
+
 help :: [String]
 help =
     ["stsc3 command [arguments]"
@@ -123,14 +135,14 @@ help =
     ," som cat <som-file>"
     ," stc cat { fragment | library | extensions } <supercollider-file...>"
     ," st cat { parsec | happy } <smalltalk-file...>"
-    ," translate class { plain | sort } { fileout | som } { fileout | som } <input-file> <output-file>"
-    ," translate library { plain | sort } fileout som <input-file> <output-directory>"
+    ," translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
+    ," translate library [opt] fileout som <input-file> <output-directory>"
     ," translate [ stream ] stc { js | sc | scm | st } [ <input-file> <output-file> ]"
     ]
 
 main :: IO ()
 main = do
-  a <- getArgs
+  (o, a) <- Opt.opt_get_arg True help opt_def
   let trs in_ty out_ty =
         case (in_ty, out_ty) of
           ("stc", "st") -> Sc.stcToSt
@@ -147,8 +159,8 @@ main = do
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
-    ["translate","class", doSort, "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (doSort == "sort") som_fn fileout_fn
-    ["translate","class", doSort, "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (doSort == "sort") fileout_fn som_fn
-    ["translate","library", doSort, "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (doSort == "sort") fileout_fn som_dir
+    ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
+    ["translate","class", "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort") fileout_fn som_dir
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

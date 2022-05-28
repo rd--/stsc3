@@ -84,7 +84,7 @@ Array isVariable = true                                     "array is indexable"
 Array withAll: #(1 2 3 4)                                   "array from collection"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
 3 timesRepeat: [ Transcript show: 'repeat'; cr ]            "prints repeat three times, returns count"
-#(1 2 3) do: [ :item | Transcript show: item ]              "prints 123"
+#(1 2 3) do: [ :item | Transcript show: item; cr ]              "prints 123"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
 x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
 #(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
@@ -252,11 +252,27 @@ $A asLowercase = $a
 $a hash = $a asInteger hash
 $s = nil
 ($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
+('/', Character separators) size = (Character separators size + 1)
+('/', CharacterSet separators) size = (CharacterSet separators asArray size + 1)
+$a printString = '$a'
+$5 printString = '$5'
+$@ printString = '$@'
+Character cr printString = 'Character cr'
+Character lf printString = 'Character lf'
+Character space printString = 'Character space'
+Character null printString = 'Character null'
+(Character value: 17) printString = 'Character value: 17'
+${ = ${
+$\ = $\
+$/ = $/
+${ asciiValue = 123
+$} asciiValue = 125
 
 'CharacterSet'
 
 CharacterSet ascii size = 127                               "ascii character set"
 CharacterSet crlf                                           "carriage return and line feed"
+CharacterSet separators size = 5
 
 'Collection'
 
@@ -266,6 +282,7 @@ CharacterSet crlf                                           "carriage return and
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
 'string' includes: $i           "true"
 ('string' includes: nil) = false
+(#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6)
 
 'Constants'
 
@@ -295,7 +312,12 @@ $                                                           "character constant 
 $A asciiValue = 65                                          "convert character to integer"
 3.99 printString = '3.99'                                   "convert object to string via printOn:"
 3.99 storeString = '3.99'                                   "convert object to string via storeOn:"
-(15 radix: 16) = '16rF'                                     "convert to string in given base"
+((2 raisedTo: 4) - 1 radix: 16) = 'F'                    "convert to string in given base"
+((2 raisedTo: 8) - 1 radix: 16) = 'FF'
+((2 raisedTo: 12) - 1 radix: 16) = 'FFF'
+((2 raisedTo: 16) - 1 radix: 16) = 'FFFF'
+(15 numberOfDigitsInBase: 16) = 1
+(16 numberOfDigitsInBase: 16) = 2
 
 'Dictionary'
 
@@ -354,7 +376,10 @@ Float nan ~= Float nan
 
 'Fraction'
 
-(2/3) + (2/3) = (Fraction numerator: 4 denominator: 3)
+(2/3) isMemberOf: Fraction
+(Fraction readFrom: '5/4') = (5/4)
+2 / (3/4) = (8/3)
+(2/3) + (2/3) = (4/3)
 (2/3) + (1/2)		"case showing reduction to common denominator"
 (2/3) + (4/3)		"case where result is reduced to an Integer"
 (3 / 2) ceiling = 2
@@ -378,6 +403,32 @@ Float nan ~= Float nan
 (3 / 2) truncated = 1
 Transcript show: (5 / 4); cr
 (5 / 4) raisedToFraction: (7 / 5)
+100 / 100.0 "1!"
+(1/2) < 0.5 "false"
+(1/3) > 0.25 "true"
+0.5 < (1/2) "false"
+0.25 < (1/3) "true"
+0.5 < (1/4) "false"
+0.5 < (1/2) "false"
+0.5 < (3/4) "true"
+0.5 <= (1/4) "false"
+0.5 <= (1/2) "true"
+0.5 <= (3/4) "true"
+0.5 > (1/4) "true"
+0.5 > (1/2) "false"
+0.5 > (3/4) "false"
+0.5 >= (1/4) "true"
+0.5 >= (1/2) "true"
+0.5 >= (3/4) "false"
+0.5 = (1/4) "false"
+0.5 = (1/2) "true"
+0.5 = (3/4) "false"
+0.5 ~= (1/4) "true"
+0.5 ~= (1/2) "false"
+0.5 ~= (3/4) "true"
+(1/3) isAnExactFloat not
+(1/4) isAnExactFloat
+(1/4) asExactFloat = 0.25
 
 'Integer'
 
@@ -422,6 +473,8 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10)
 (1 to: 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
 (10 to: 20 by: 3) reverseDo: [ :each | Transcript show: each printString; cr ]
+(1 to: 2 by: 1/2) = ({1. 3/2. 2} as: Interval)
+(1 to: 2 by: 1/5) = ({1. 6/5. 7/5. 8/5. 9/5. 2} as: Interval)
 
 'Method calls'
 
@@ -430,6 +483,11 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 194 * 9                                                     "binary message"
 Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
 2 perform: #sqrt                                            "indirect method invocation"
+
+'Number'
+
+(Number readFrom: '42') = 42
+(Number readFrom: '3.14') = 3.14
 
 'OrderedCollection'
 
@@ -495,6 +553,28 @@ Set withAll: #(1 2 2 3 3 3)
 12345 digitAt: 1
 40 lowBit = 4
 
+'FortranNumberParser'
+
+(FortranNumberParser parse: '42') = 42
+(FortranNumberParser parse: '3.141') = 3.141
+(FortranNumberParser parse: '-23') = -23
+(FortranNumberParser parse: '-0.01') = -0.01
+(FortranNumberParser parse: '1e3') = 1000
+(FortranNumberParser parse: '1e-3') = 0.001
+(FortranNumberParser parse: '-5e-2') = -0.05
+
+'SmalltalkNumberParser'
+
+(SmalltalkNumberParser parse: '42') = 42
+(SmalltalkNumberParser parse: '3.141') = 3.141
+(SmalltalkNumberParser parse: '16rFF') = 255
+(SmalltalkNumberParser parse: '2r1000001') = 65
+(SmalltalkNumberParser on: '2/3') nextFraction = (2/3)
+(SmalltalkNumberParser parse: 'Infinity') = Float infinity
+(SmalltalkNumberParser parse: 'NaN') isNaN
+(SmalltalkNumberParser parse: '-0.0')
+(SmalltalkNumberParser parse: '-Infinity') = Float negativeInfinity
+
 'SortedCollection'
 
 #(4 2 7) as: SortedCollection
@@ -538,9 +618,29 @@ String newFrom: #($P $e $n)
 (String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'
 ($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
 'string' hash = 'string' copy hash
+'' asIntegerSigned: True = nil
+'' asInteger = nil
+'1796p-qR' asInteger = 1796
+'donald' asInteger = nil
+'abc234def567' asInteger = 234
+'-94' asInteger = -94
+'foo-bar-92' asInteger = -92
+('fred the bear' copyWithout: $e) = 'frd th bar'
+String empty == String empty
+String empty size = 0
+String new species = String new species
+'{\' = '{\'
+'foo {1} bar' format: #(3.141)
+('foo {1} bar' indexOfAnyOf: String formatCharacterSet startingAt: 1) = 5
+'up:to:' keywords = #('up:' 'to:')
+'copy:from:to:' keywords = #('copy:' 'from:' 'to:')
+'up' keywords = #('up')
+'at:' keywords = #('at:')
 
 'Symbols'
 
+(#symbol isKindOf: String)
+(#symbol isMemberOf: String) = false
 (#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
 (#symbol at: 3) = $m                                        "Symbols are indexable but immutable"
 #symbol at: 1 put: $S                                       "=> error"
@@ -566,6 +666,7 @@ Symbol newFrom: #($P $e $n)
 #symbol hash = 'symbol' hash    "false in gnu, true in squeak"
 #abs value: -1                "implement value procotol for selectors"
 #< value: 1 value: 2            "implement value procotol for selectors"
+#'symbol' capitalized
 
 'Transcript'
 

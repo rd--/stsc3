@@ -240,13 +240,20 @@ classCategoryParts = fmap categoryParts . classCategory
 classCategoryPartsOrError :: ClassDefinition -> ClassCategoryParts
 classCategoryPartsOrError = categoryParts . classCategoryOrError
 
--- | Sort methods by name.
-classDefinitionSortMethods :: ClassDefinition -> ClassDefinition
-classDefinitionSortMethods cd =
+-- | Apply f to both class and instance methods.
+classDefinitionEditMethods :: ([MethodDefinition] -> [MethodDefinition]) -> ClassDefinition -> ClassDefinition
+classDefinitionEditMethods f cd =
   let im = instanceMethods cd
       cm = classMethods cd
-      srt = sortOn methodName
-  in cd { instanceMethods = srt im, classMethods = srt cm }
+  in cd { instanceMethods = f im, classMethods = f cm }
+
+-- | Sort methods by name.
+classDefinitionSortMethods :: ClassDefinition -> ClassDefinition
+classDefinitionSortMethods = classDefinitionEditMethods (sortOn methodName)
+
+-- | Apply source editor to all methods.
+classDefinitionEditMethodSources :: (String -> String) -> ClassDefinition -> ClassDefinition
+classDefinitionEditMethodSources f = classDefinitionEditMethods (map (methodDefinitionEditSource f))
 
 -- * 3.3.3 Global Variable Definition
 
@@ -350,6 +357,11 @@ methodDefinitionPrimitiveCode :: MethodDefinition -> Maybe Integer
 methodDefinitionPrimitiveCode =
   let f = maybe (error "methodDefinitionPrimitiveCode: not integer?") id . literalInteger
   in fmap f . methodDefinitionPrimitiveLabel
+
+methodDefinitionEditSource :: (String -> String) -> MethodDefinition -> MethodDefinition
+methodDefinitionEditSource f md =
+  let src = methodSource md
+  in md { methodSource = fmap f src }
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -1057,8 +1069,8 @@ integerLiteral = NumberLiteral . Int
 > p "-123"
 > p "123.456"
 > p "-123.456"
-> p "'x'" == CharacterLiteral 'x'
-> p "$x" == StringLiteral "x"
+> p "'x'" == StringLiteral "x"
+> p "$x" == CharacterLiteral 'x'
 > p "#'xyz'" == SymbolLiteral "xyz"
 > p "#abs" == SelectorLiteral (UnarySelector "abs")
 > p "#m:" == SelectorLiteral (KeywordSelector "m:")
@@ -1066,7 +1078,7 @@ integerLiteral = NumberLiteral . Int
 > p "#+" == SelectorLiteral (BinarySelector "+")
 > p "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
 > p "#(-12 -7 -5 0 2 5)"
-> p "#(x y z)"
+> p "#(x y: #z: 1)"
 -}
 literal :: P Literal
 literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayLiteral, P.try symbolLiteral, selectorLiteral] -- lexeme
@@ -1146,7 +1158,7 @@ closeParen = lexeme (P.char ')')
 > p "#(1 2.0 3)"
 > p "#(1 2.0 true)"
 > p "#(1 #(2 3) 4)" == p "#(1 (2 3) 4)"
-> p "#(x x: nil)" == p "#(#'x' #'x:' nil)"
+> p "#(x x: #x: nil)" == p "#(#'x' #'x:' #x: nil)"
 -}
 arrayLiteral :: P Literal
 arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
@@ -1162,7 +1174,7 @@ interiorArrayLiteral = fmap ArrayLiteral (P.between openParen closeParen (P.many
       This is the rule in the ST-80 sources.
       Non-Ansi.
 
-> map (stParse interiorSymbol) (words "x y:")
+> map (stParse interiorSymbol) (words "x y: #z:")
 -}
 interiorSymbol :: P Literal
 interiorSymbol = fmap SymbolLiteral (P.try keyword P.<|> identifier)
@@ -1179,12 +1191,15 @@ as an <array element>
 ST-80:
 The Ansi rule is not the rule from ST-80, where #(x x: nil) means #(#'x' #'y:' nil).
 
-> stParse arrayElement "1"
-> stParse arrayElement "2.0"
-> stParse arrayElement "nil"
-> stParse arrayElement "(1 2.0 nil symbol)"
-> stParse arrayElement "x"
-> stParse arrayElement "x:"
+> p = stParse arrayElement
+> p "1"
+> p "2.0"
+> p "nil"
+> p "(1 2.0 nil symbol keyword: #hashedKeyword: -1)"
+> p "x"
+> p "x:"
+> p "#x:"
+> stParse (P.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
 -}
 arrayElement :: P (Either Literal Identifier)
 arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> interiorArrayLiteral P.<|> interiorSymbol) -- lexeme
@@ -1299,14 +1314,15 @@ type Identifier = String
 
 {- | identifier ::= letter (letter | digit)*
 
-> stParse identifier "x1" == "x1"
-> stParse identifier "X1" == "X1"
-> stParse identifier "1x" -- FAIL
-> stParse identifier "" -- FAIL
-> stParse identifier "true" == "true"
-> stParse identifier "nil" == "nil"
-> stParse identifier "y:" == "y"
-> stParse identifier "#y:" -- error
+> p = stParse identifier
+> p "x1" == "x1"
+> p "X1" == "X1"
+> p "1x" -- FAIL
+> p "" -- FAIL
+> p "true" == "true"
+> p "nil" == "nil"
+> p "y:" == "y"
+> p "#y:" -- error
 -}
 identifier :: P Identifier
 identifier = ordinaryIdentifier P.<|> reservedIdentifier
@@ -1550,8 +1566,11 @@ quotedSelector =
 > p "p: q:" == KeywordSelector "p:"
 > p "freq:iphase:x" -- error
 -}
+keywordSelectorNotLexeme :: P Selector
+keywordSelectorNotLexeme = fmap (KeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
+
 keywordSelector :: P Selector
-keywordSelector = fmap (KeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
+keywordSelector = lexeme keywordSelectorNotLexeme
 
 -- * 3.5.11
 
