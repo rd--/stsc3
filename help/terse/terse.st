@@ -319,6 +319,37 @@ $A asciiValue = 65                                          "convert character t
 (15 numberOfDigitsInBase: 16) = 1
 (16 numberOfDigitsInBase: 16) = 2
 
+'DateAndTime'
+
+DateAndTime unixEpoch asSeconds = 2177452800
+DateAndTime unixEpoch printString = '1970-01-01T00:00:00+00:00'
+DateAndTime now printString "2022-05-30T01:44:29.492936+10:00"
+(DateAndTime year: 1970 day: 1) printString = '1970-01-01T00:00:00+10:00'
+DateAndTime localTimeZone printString "a TimeZone(UTC)"
+(Week nameOfDay: 1) = #Sunday
+Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ])
+Year current printString "a Year(2022)"
+Year current daysInYear "365"
+(Month readFrom: 'July 1998' readStream) printString = 'July 1998'
+(Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'
+(Time readFromString: '12:34:57') printString = '12:34:57 pm'
+(Time readFromString: '4:02:47.42 am')
+Date dateAndTimeNow printString
+Time dateAndTimeNow printString
+Time totalSeconds
+Time now
+Date dateAndTimeNow first printString
+Date today printString "30 May 2022"
+(Date today previous: #'Thursday') yyyymmdd "2022-05-26"
+(Date readFrom: '01-23-2004' readStream) yyyymmdd
+t := DateAndTime year: 1 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 6 hours
+t julianDayNumber = 1721427
+t offset = 6 hours
+t hour = 2
+t minute = 3
+t second = 4
+t nanoSecond = 5
+
 'Dictionary'
 
 Dictionary isVariable                                       "St-80=true, Squeak=false"
@@ -351,6 +382,10 @@ d keys asBag = #(a b c) asBag
 (Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
 Smalltalk keys size                                         "get set of all known keys "
 Smalltalk halt
+
+'Duration'
+
+Duration zero
 
 'Error'
 
@@ -567,6 +602,8 @@ Set withAll: #(1 2 2 3 3 3)
 1 hash = 1 identityHash
 12345 digitAt: 1
 40 lowBit = 4
+SmallInteger maxVal = 9223372036854775807
+SmallInteger maxVal = ((2 raisedTo: 63) - 1)
 
 'FortranNumberParser'
 
@@ -683,6 +720,10 @@ Symbol newFrom: #($P $e $n)
 #< value: 1 value: 2            "implement value procotol for selectors"
 #'symbol' capitalized
 
+'Time'
+
+Time posixMicrosecondClockWithOffset
+
 'Transcript'
 
 Transcript clear                                            "clear to transcript window"
@@ -735,6 +776,9 @@ nil error: 'Reason'                                         "error with indicate
 nil shouldNotImplement                                      "flag message should not be implemented"
 nil subclassResponsibility                                  "flag message as abstract"
 nil primitiveFailed                                         "system primitive failed"
+Point allInstVarNames
+((Point x: 4 y: 2) instVarAt: 1) = 4
+CharacterSet allClassVarNames
 
 'Methods'
 
@@ -751,3 +795,9 @@ Integer superclass                                          "discover the superc
 Object allInstances                                         "get an array of all instances of a class"
 Array allSuperclasses                                       "get sequence of all superclasses of a class"
 (Set withAllSuperclasses) size                              "an ordered collection of a class and it's parents"
+
+'Benchmark'
+
+28 benchFib = 1028457 "(result // seconds to run) = approx calls per second"
+1 benchmark = 2 benchmark
+

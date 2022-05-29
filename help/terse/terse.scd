@@ -585,6 +585,9 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 'string'.asString.put(3, $u) == "strung"                    // mutate string setting char at indexed slot
 'string'.asString.removeAt(5) == $g                         // mutate string removing char at slot
 "string".size == 6                                          // length
+["m", "ss", "ss", "pp", ""].join($i) == "mississippi"       // join using character
+["m", "ss", "ss", "pp", ""].join("i") == "mississippi"      // join using string
+"mississippi".split($i) == ["m", "ss", "ss", "pp", ""]      // split at char
 "str ing".split($ ) == ["str", "ing"]                       // split at char
 "a=1 b=2 c=3".split($ ).collect({ arg e; e.split($=) })     // split as parser
 "a" < "b" == true                                           // string comparison
