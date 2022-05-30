@@ -151,12 +151,12 @@ Float selectors                                             "array of selectors 
 Float selectorsDo: [ :item | Transcript show: item; cr ]    "perform block at each selector"
 Double includesSelector: #+                                 "test if class implements selector"
 (Float includesSelector: #+) = false                        "does not look in superclasses"
-Float canUnderstand: #+                                     "test if class can understand selector"
+(Float canUnderstand: #+) = true                            "test if class can understand selector"
 Float superclass = Number                                   "superclass of class"
 Float inheritsFrom: Number                                  "immediate inheritance"
 Float inheritsFrom: Magnitude                               "non-immediate inheritance"
 Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
-Float allSelectors                                          "get all selectors an object responds to"
+Float allSelectors size = 209                               "get all selectors an object responds to"
 
 'Bitwise Manipulation'
 
@@ -319,36 +319,40 @@ $A asciiValue = 65                                          "convert character t
 (15 numberOfDigitsInBase: 16) = 1
 (16 numberOfDigitsInBase: 16) = 2
 
+'Date'
+
+Date dateAndTimeNow first printString "30 May 2022"
+Date dateAndTimeNow second printString "10:49:44 am"
+Date today printString "30 May 2022"
+(Date today previous: #'Thursday') yyyymmdd "2022-05-26"
+(Date readFrom: '1986-05-23' readStream) printString = '23 May 1986'
+(Date readFrom: '01-23-2004' readStream) yyyymmdd = '2004-01-23'
+(Date readFrom: '1-01-2005' readStream) printString = '1 January 2005'
+
 'DateAndTime'
 
 DateAndTime unixEpoch asSeconds = 2177452800
+DateAndTime epoch printString = '1901-01-01T00:00:00+00:00'
 DateAndTime unixEpoch printString = '1970-01-01T00:00:00+00:00'
+(DateAndTime unixEpoch - (Duration days: Time daysFromSmalltalkEpochToPosixEpoch)) = DateAndTime epoch
 DateAndTime now printString "2022-05-30T01:44:29.492936+10:00"
 (DateAndTime year: 1970 day: 1) printString = '1970-01-01T00:00:00+10:00'
+(DateAndTime year: 2003 month: 03 day: 22 hour: 12 minute: 0) makeUTC printString = '2003-03-22T12:00:00+00:00'
 DateAndTime localTimeZone printString "a TimeZone(UTC)"
-(Week nameOfDay: 1) = #Sunday
-Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ])
-Year current printString "a Year(2022)"
-Year current daysInYear "365"
-(Month readFrom: 'July 1998' readStream) printString = 'July 1998'
-(Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'
-(Time readFromString: '12:34:57') printString = '12:34:57 pm'
-(Time readFromString: '4:02:47.42 am')
-Date dateAndTimeNow printString
-Time dateAndTimeNow printString
-Time totalSeconds
-Time now
-Date dateAndTimeNow first printString
-Date today printString "30 May 2022"
-(Date today previous: #'Thursday') yyyymmdd "2022-05-26"
-(Date readFrom: '01-23-2004' readStream) yyyymmdd
-t := DateAndTime year: 1 month: 1 day: 2 hour: 2 minute: 3 second: 4 nanoSecond: 5 offset: 6 hours
-t julianDayNumber = 1721427
+t := DateAndTime year: 2000 month: 1 day: 3 hour: 4 minute: 5 second: 6 nanoSecond: 7 offset: 8 hours
+t printString
+t julianDayNumber = 2451547
 t offset = 6 hours
 t hour = 2
 t minute = 3
 t second = 4
 t nanoSecond = 5
+date := Date readFrom: '1-01-2005' readStream
+time := Time readFrom: '0:00 am' readStream
+(DateAndTime date: date time: time) printString = '2005-01-01T00:00:00+00:00'
+(TimeStamp date: date time: time) printString = '1 January 2005 12:00 am'
+(TimeStamp readFrom: '1-01-2005 0:00 am' readStream) printString = '1 January 2005 12:00 am'
+(DateAndTime year: 2005 month: 1 day: 1) dayOfWeek = 7
 
 'Dictionary'
 
@@ -386,6 +390,7 @@ Smalltalk halt
 'Duration'
 
 Duration zero
+Duration days: Time daysFromSmalltalkEpochToPosixEpoch
 
 'Error'
 
@@ -521,6 +526,10 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
 2 perform: #sqrt                                            "indirect method invocation"
 
+'Month'
+
+(Month readFrom: 'July 1998' readStream) printString = 'July 1998'
+
 'Number'
 
 (Number readFrom: '42') = 42
@@ -566,6 +575,8 @@ s nextLine = 'Hello read stream' "read line"
 '3.14' readStream peek = $3
 ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (ReadStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
+$ isSeparator = true
+' string' readStream skipSeparators upToEnd = 'string'
 
 'ReadWriteStream'
 
@@ -578,7 +589,7 @@ s nextPut: Character space
 s contents = 'terse '
 s atEnd = true
 s reset
-(ReadWriteStream on: 'Hello read write stream') contents = 'Hello read write stream'
+(ReadWriteStream on: 'Hello read write stream') contents = '' "gnu = 'Hello read write stream'"
 (ReadWriteStream with: #(1 2)) contents = #(1 2)
 ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (ReadWriteStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
@@ -722,7 +733,32 @@ Symbol newFrom: #($P $e $n)
 
 'Time'
 
-Time posixMicrosecondClockWithOffset
+Time epochOffset = 2177452800
+Time epochOffsetMicros = 2177452800000000
+Time posixMicrosecondClockWithOffset "{1653874256296392. 36000}"
+Time utcMicrosecondClock "3831326473237958"
+Time dateAndTimeNow first printString "30 May 2022"
+Time dateAndTimeNow second printString "10:47:11 am"
+Time totalSeconds "3831362321"
+Time now printString "10:47:30.644892 am"
+(Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'
+(Time readFromString: '12:34:57') printString = '12:34:57 pm'
+(Time readFromString: '4:02:47.42 am') printString = '4:02:47.42 am'
+(Time readFrom: '0:00 am' readStream) printString = '12:00 am'
+Time microsecondsToRun: [ 28 benchFib ]
+Time millisecondsToRun: [ 28 benchFib ]
+Time durationToRun: [ 28 benchFib ]
+
+'Timespan'
+
+Timespan new printString = 'a Timespan(1901-01-01T00:00:00+00:00D0:00:00:00)'
+date := Date readFrom: '1986-05-23' readStream
+(Timespan starting: date) printString = 'a Timespan(1986-05-23T00:00:00+00:00D0:00:00:00)'
+(Timespan starting: date duration: 365 days) end printString = '1987-05-22T23:59:59.999999999+00:00'
+(Timespan starting: (DateAndTime nowAtOffset: Duration zero)) makeUTC <= Timespan current
+Timespan current <= (Timespan starting: (DateAndTime current)) makeUTC
+Timespan current printString "a Timespan(2022-05-31T02:44:10.055496+00:00D0:00:00:00)"
+(Timespan starting: (DateAndTime year: 2005 month: 1 day: 1) duration: 1 week) makeUTC printString
 
 'Transcript'
 
@@ -742,6 +778,11 @@ Transcript endEntry                                         "flush the output bu
 nil ifNil: ['nil'] ifNotNil: ['notNil'] "nil"
 #() ifNil: ['nil'] ifNotNil: ['notNil'] "notNil"
 UndefinedObject initializedInstance class == UndefinedObject
+
+'Week'
+
+(Week nameOfDay: 1) = #Sunday
+Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ])
 
 'WriteStream'
 
@@ -764,7 +805,12 @@ s contents = #(3)
 s := WriteStream on: String new
 s nextPutAll: #($t $e $s $t)
 s contents = 'test'
- (WriteStream on: (String new: 100))
+
+'Year'
+
+Year current printString "a Year(2022)"
+1908 asYear daysInYear = 366
+1975 asYear daysInYear = 365
 
 'Debugging'
 
@@ -776,9 +822,9 @@ nil error: 'Reason'                                         "error with indicate
 nil shouldNotImplement                                      "flag message should not be implemented"
 nil subclassResponsibility                                  "flag message as abstract"
 nil primitiveFailed                                         "system primitive failed"
-Point allInstVarNames
-((Point x: 4 y: 2) instVarAt: 1) = 4
-CharacterSet allClassVarNames
+Point allInstVarNames                                       "instance variable names of class"
+((Point x: 4 y: 2) instVarAt: 1) = 4                        "lookup instance variable by index"
+CharacterSet allClassVarNames                               "class variable names of class"
 
 'Methods'
 
@@ -791,13 +837,19 @@ Number sourceCodeAt: #+                                     "get the source code
 
 'Class hierachy'
 
-Integer superclass                                          "discover the superclass of a class"
+Integer superclass = Number                                 "discover the superclass of a class"
 Object allInstances                                         "get an array of all instances of a class"
-Array allSuperclasses                                       "get sequence of all superclasses of a class"
-(Set withAllSuperclasses) size                              "an ordered collection of a class and it's parents"
+Array allSuperclasses size = 4                              "get sequence of all superclasses of a class"
+(Set withAllSuperclasses) size = 4                          "an ordered collection of a class and it's parents"
 
 'Benchmark'
 
 28 benchFib = 1028457 "(result // seconds to run) = approx calls per second"
 1 benchmark = 2 benchmark
+
+(Time durationToRun: [ 28 benchFib ]) asMilliSecond
+(Time durationToRun: [ 2 benchmark ]) asMilliSeconds
+
+Time microsecondsToRun: [ 28 benchFib ]
+Time millisecondsToRun: [ 28 benchFib ]
 

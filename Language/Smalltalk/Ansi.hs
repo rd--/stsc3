@@ -177,13 +177,16 @@ type ClassLibrary = [ClassDefinition]
 metaclassName :: Identifier -> Identifier
 metaclassName x = x ++ " class"
 
+isMetaclassName :: Identifier -> Bool
+isMetaclassName x = " class" `isSuffixOf` x
+
 {- | Remove the ' class' suffix from a Metaclass name.
 
 > metaclassNameClassName "Array class" == "Array"
 -}
 metaclassNameClassName :: Identifier -> Identifier
 metaclassNameClassName x =
-  if " class" `isSuffixOf` x
+  if isMetaclassName x
   then take (length x - 6) x
   else error ("metaclassNameClassName: not Metaclass: " ++ x)
 
@@ -314,10 +317,12 @@ type MethodCategory = String
        - there should be a comment preserving lexeme form, lexemeWithMaybeComment
        - methodPattern should be such a lexeme
      There is a field for storing the method source text.
+     The methodClass field indicates which class the method is held by.
+     It will be ("Name", False) for instance methods and ("Name class", True) for class methods.
 -}
 data MethodDefinition =
   MethodDefinition
-  {methodClass :: Identifier -- ^ Class method for
+  {methodClass :: (Identifier, Bool) -- ^ Holder
   ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
   ,methodPattern :: Pattern
   ,methodTemporaries :: Maybe Temporaries
@@ -382,7 +387,7 @@ methodDefinitionEditSource f md =
 > p "p \"c\" ^q"
 > p "p <primitive: 0> self continueAfterPrimitive"
 -}
-methodDefinition :: Maybe String -> Identifier -> P MethodDefinition
+methodDefinition :: Maybe String -> (Identifier, Bool) -> P MethodDefinition
 methodDefinition src cl = do
   pat <- messagePattern -- messagePattern is a token and consumes trailing comments
   cmt <- P.optionMaybe comment -- this is always Nothing
@@ -442,7 +447,7 @@ type MethodName = (Identifier,Identifier)
 
 -- | Calculate MethodName from MethodDefinition.
 methodName :: MethodDefinition -> MethodName
-methodName m = (methodClass m,methodSignature m)
+methodName m = (fst (methodClass m),methodSignature m)
 
 -- | Method name in traditional Smalltalk form, ie. ClassName>>methodSignature.
 methodNameIdentifier :: MethodName -> Identifier

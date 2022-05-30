@@ -500,7 +500,7 @@ parseFileOutClassInitializer e =
 
 parseMethodsForMethod :: Bool -> St.Identifier -> St.MethodCategory -> String -> St.MethodDefinition
 parseMethodsForMethod isClassMethod classname category txt =
-  (St.stParse (St.methodDefinition (Just txt) (classname ++ if isClassMethod then " class" else "")) txt)
+  (St.stParse (St.methodDefinition (Just txt) (classname ++ if isClassMethod then " class" else "", isClassMethod)) txt)
   {St.methodCategory = Just category}
 
 {- | Parse a methodsFor: message send.

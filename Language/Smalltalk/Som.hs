@@ -81,7 +81,7 @@ classDefinition = do
 classBody :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition], [St.Identifier], [St.MethodDefinition])
 classBody cl = do
   iv <- P.option [] St.temporariesIdentifierSequence
-  im <- P.many (methodDefinition cl)
+  im <- P.many (methodDefinition (cl, False))
   (cv,cm) <- P.option ([],[]) (classSide (St.metaclassName cl))
   return (iv,im,cv,cm)
 
@@ -90,7 +90,7 @@ classSide :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition])
 classSide cl = do
   _ <- separator
   t <- P.option [] St.temporariesIdentifierSequence
-  m <- P.many (methodDefinition cl)
+  m <- P.many (methodDefinition (cl, True))
   return (t,m)
 
 -- | Method block.  Arguments are given by the methodPattern.  Primitives have a label.
@@ -101,11 +101,11 @@ data MethodBlock =
 {- | Method definition.
 The St Ast method node has a literal field for primitives, which is here set to 0.
 
-> St.stParse (methodDefinition "Number") "sumSqr: x = ( ^(self * self) + (x * x) )"
-> St.stParse (methodDefinition "Boolean") "| aBoolean = ( ^self or: aBoolean )"
-> St.stParse (methodDefinition "Boolean") "& aBoolean = ( ^self and: aBoolean )"
+> St.stParse (methodDefinition ("Number", False)) "sumSqr: x = ( ^(self * self) + (x * x) )"
+> St.stParse (methodDefinition ("Boolean", False)) "| aBoolean = ( ^self or: aBoolean )"
+> St.stParse (methodDefinition ("Boolean", False)) "& aBoolean = ( ^self and: aBoolean )"
 -}
-methodDefinition :: St.Identifier -> St.P St.MethodDefinition
+methodDefinition :: (St.Identifier, Bool) -> St.P St.MethodDefinition
 methodDefinition cl = do
   P.notFollowedBy separator
   pat <- St.messagePattern

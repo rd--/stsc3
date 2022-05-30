@@ -232,7 +232,7 @@ stcToSc = Expr.exprPrintStc False . stcToExpr
 
 > stPrimaryFactoryMethod "SinOsc class" "freq:phase:"
 -}
-stPrimaryFactoryMethod :: St.Identifier -> String -> St.MethodDefinition
+stPrimaryFactoryMethod :: (St.Identifier, Bool) -> String -> St.MethodDefinition
 stPrimaryFactoryMethod cl nm =
   let pat = St.UnaryPattern "primaryFactoryMethod"
       xpr = St.ExprBasic (St.BasicExpression (St.PrimaryLiteral (St.SymbolLiteral nm)) Nothing Nothing)
@@ -264,9 +264,9 @@ scMethodDefinitionToSt cl_nm md =
                    args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
       tmp = fmap scTemporariesSt (blockTemporaries blk)
       stm = fmap scStatementsSt (blockStatements blk)
-      st_md = St.MethodDefinition st_cl_nm Nothing pat tmp stm Nothing Nothing Nothing
+      st_md = St.MethodDefinition (st_cl_nm, is_cl) Nothing pat tmp stm Nothing Nothing Nothing
   in if is_star_cons
-     then [st_md, stPrimaryFactoryMethod st_cl_nm (if null blk_args then "new" else concatMap (++ ":") blk_args)]
+     then [st_md, stPrimaryFactoryMethod (st_cl_nm, is_cl) (if null blk_args then "new" else concatMap (++ ":") blk_args)]
      else [st_md]
 
 -- | Translate Sc class to St.
