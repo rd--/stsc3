@@ -104,6 +104,13 @@ cd_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
       cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
   writeFile som_fn (Som.classDefinitionPrintSom cd'')
 
+cd_som_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
+cd_som_to_som (do_sort, do_tidy) input_fn output_fn = do
+  cd <- Som.somLoadClassDefinition input_fn
+  let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
+      cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
+  writeFile output_fn (Som.classDefinitionPrintSom cd'')
+
 writeAllSomClassDef :: Bool -> FilePath -> FileOut.FileOutLibrary -> IO ()
 writeAllSomClassDef do_sort som_dir lib = do
   let srt = if do_sort then St.classDefinitionSortMethods else id
@@ -159,8 +166,9 @@ main = do
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
     ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
-    ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
     ["translate","class", "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
+    ["translate","class", "som","som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
     ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort") fileout_fn som_dir
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)
