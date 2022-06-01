@@ -181,6 +181,12 @@ b := [ :x | x * 42 ]
 b = b copy
 (b copy value: 2) = 84
 b = ({ b } copy at: 1)
+cnt := 1. [ cnt > 9 ] whileFalse: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
+cnt := 1. [ cnt <= 9 ] whileTrue: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
+cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt > 9 ] whileFalse
+cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
+[ 42 ] value: nil "error"
+[ :item | 42 ] value "error"
 
 'Booleans'
 
@@ -274,14 +280,16 @@ CharacterSet ascii size = 127                               "ascii character set
 CharacterSet crlf                                           "carriage return and line feed"
 CharacterSet separators size = 5
 
+'Class'
+
+Class superclass = ClassDescription
+
 'Collection'
 
 #(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
 #(1 3 2 9 4 5 7 8 6) includes: 6                            "includes element"
 #(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6)                  "includes any element of a collection"
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
-'string' includes: $i           "true"
-('string' includes: nil) = false
 (#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6)
 
 'Constants'
@@ -301,6 +309,13 @@ $                                                           "character constant 
 #aSymbol                                                    "symbol constants"
 #(3 2 1)                                                    "array constants"
 #('abc' 2 $a)                                               "mixing of types allowed"
+
+'Context'
+
+thisContext class
+[ thisContext printString ] value
+[ thisContext sender printString ] value
+1 to: 3 do: [ :item | Transcript show: item; cr. item haltIf: [ item > 3] ] "halt if item is greater than three"
 
 'Conversion'
 
@@ -548,6 +563,18 @@ Transcript show: (194 * 9) printString; cr                  "combination (chaini
 -2.567 printShowingDecimalPlaces: 2
 0 printShowingDecimalPlaces: 2
 
+'Object'
+
+Object superclass = nil
+Object class class = Metaclass
+[ :a | { a } ] perform: #value: with: 1
+[ :a :b | { a. b } ] perform: #value:value: with: 1 with: 2
+[ :a :b :c | { a. b. c } ] perform: #value:value:value: with: 1 with: 2 with: 3
+[ :a :b :c :d | { a. b. c. d } ] perform: #value:value:value:value: with: 1 with: 2 with: 3 with: 4
+[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: with: 1 with: 2 with: 3 with: 4 with: 5
+[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: #(1 2 3 4 5)
+[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: {1. 2. 3. 4. 5}
+
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
@@ -655,6 +682,12 @@ cpy species = c species
 cpy sortBlock = c sortBlock
 cpy first = 'brochet'
 
+'SortFunction'
+
+(#name ascending value: Array value: Set) = true
+(#sum ascending value: #(1 2) value: #(3 4)) = true
+(#min ascending value: #(1 2) value: #(3 4)) = true
+
 'Strings'
 
 String isVariable                                           "St-80 = true, Squeak = false"
@@ -672,7 +705,7 @@ String newFrom: #($P $e $n)
 'string' < 'symbol' "less than"
 'string' = 'string' "equal"
 'symbol' > 'string' "greater than"
-'string' = 'string' copy        "copied strings are equal"
+'string' = 'string' copy "copied strings are equal"
 'string' asString = 'string'
 'string' copy asString = 'string' copy
 'string' == 'string' "string literals are identical"
@@ -680,7 +713,8 @@ String newFrom: #($P $e $n)
 #('string') = {'string'}
 (String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'
 ($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
-'string' hash = 'string' copy hash
+'string' hash = 'string' copy hash "strings and copies of strings hash equally"
+'string' hash ~= #'string' hash "strings and symbols hash unequally"
 '' asIntegerSigned: True = nil
 '' asInteger = nil
 '1796p-qR' asInteger = 1796
@@ -696,9 +730,12 @@ String new species = String new species
 'foo {1} bar' format: #(3.141)
 ('foo {1} bar' indexOfAnyOf: String formatCharacterSet startingAt: 1) = 5
 'up:to:' keywords = #('up:' 'to:')
+#up:to: keywords = #('up:' 'to:').
 'copy:from:to:' keywords = #('copy:' 'from:' 'to:')
 'up' keywords = #('up')
 'at:' keywords = #('at:')
+'string' includes: $i           "true"
+('string' includes: nil) = false
 
 'Symbols'
 
@@ -847,7 +884,7 @@ Array allSuperclasses size = 4                              "get sequence of all
 28 benchFib = 1028457 "(result // seconds to run) = approx calls per second"
 1 benchmark = 2 benchmark
 
-(Time durationToRun: [ 28 benchFib ]) asMilliSecond
+(Time durationToRun: [ 28 benchFib ]) asMilliSeconds
 (Time durationToRun: [ 2 benchmark ]) asMilliSeconds
 
 Time microsecondsToRun: [ 28 benchFib ]

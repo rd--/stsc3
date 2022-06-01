@@ -1510,7 +1510,7 @@ data Selector
   = UnarySelector Identifier
   | BinarySelector BinaryIdentifier
   | KeywordSelector Identifier
-  deriving (Eq, Show)
+  deriving (Eq, Ord, Show)
 
 -- | Is Selector an infix binary operator.
 isBinarySelector :: Selector -> Bool
