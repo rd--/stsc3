@@ -59,9 +59,17 @@ stLanguageDef =
 stLexer :: Token.GenTokenParser String () Identity.Identity
 stLexer = Token.makeTokenParser stLanguageDef
 
+-- | Run parser and return either an error string or an answer.
+stParseEither :: P t -> String -> Either String t
+stParseEither p = either (\m -> Left ("stParse: " ++ show m)) Right . P.parse p ""
+
 -- | Run parser and report any error.  Does not delete leading spaces.
 stParse :: P t -> String -> t
-stParse p = either (\m -> error ("stParse: " ++ show m)) id . P.parse p ""
+stParse p = either (\e -> error e) id . stParseEither p
+
+-- | Run parser and report maybe give answer.
+stParseMaybe :: P t -> String -> Maybe t
+stParseMaybe p = either (\_ -> Nothing) Just . P.parse p ""
 
 -- | Delete leading spaces and run stParse.
 stParseInitial :: P t -> String -> t
@@ -370,7 +378,7 @@ methodDefinitionEditSource f md =
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
-> p = stParse (methodDefinition Nothing "")
+> p = stParse (methodDefinition Nothing ("", False))
 > p "p"
 > p "p q"
 > p "p ^q"
@@ -385,14 +393,15 @@ methodDefinitionEditSource f md =
 > p "printElementsOn: aStream aStream nextPut: $(."
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
-> p "p <primitive: 0> self continueAfterPrimitive"
+> p "p |tmp| <primitive: 0> self continueAfterPrimitive"
+> p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail...
 -}
 methodDefinition :: Maybe String -> (Identifier, Bool) -> P MethodDefinition
 methodDefinition src cl = do
   pat <- messagePattern -- messagePattern is a token and consumes trailing comments
   cmt <- P.optionMaybe comment -- this is always Nothing
-  prm <- P.optionMaybe primitive
   tmp <- P.optionMaybe temporaries
+  prm <- P.optionMaybe primitive -- primitive comes after temporaries
   stm <- P.optionMaybe statements
   return (MethodDefinition cl Nothing pat tmp stm prm cmt src)
 

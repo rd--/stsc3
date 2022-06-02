@@ -54,7 +54,7 @@ Array.new.isKindOf(SequenceableCollection) == true          // c.f. Sequenceable
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
-Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by calling function
+Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by value protocol
 Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
 Array.new(3).add(1).addAll([2, 3]) == [1, 2, 3]             // add all elements of collection to end of array
 { var x = [1, 2]; [x.remove(2), x] }.value == [2, [1]]      // remove element from array (in place)

@@ -107,6 +107,7 @@ c := {'string'. #symbol. 42}
 (c at: 1) = 'string'
 (c at: 2) = #symbol
 (c at: 3) = 42
+Array new: -1 "error"
 
 'Assignment'
 
@@ -187,6 +188,8 @@ cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt > 9 ] whileFalse
 cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
 [ 42 ] value: nil "error"
 [ :item | 42 ] value "error"
+[ 1 unimplementedMessage ] on: Error do: [ :err | err printString ]
+[ UnknownGlobal ] on: Error do: [ :err | 'Unknown global?' ]
 
 'Booleans'
 
@@ -291,6 +294,13 @@ Class superclass = ClassDescription
 #(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6)                  "includes any element of a collection"
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
 (#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6)
+#(1 2) take: -1
+
+'Compiler'
+
+(Compiler evaluate: '3 + 4') = 7
+(Compiler evaluate: 'Compiler evaluate: ''3 + 4''') = 7
+(Compiler evaluate: 'Transcript show: 42; cr') "prints 42 on transcript"
 
 'Constants'
 
@@ -409,11 +419,17 @@ Duration days: Time daysFromSmalltalkEpochToPosixEpoch
 
 'Error'
 
+(Error new messageText: 'oh oh') printString
+UnhandledError new defaultAction
+Error signal
+Error signal: 'oh oh'
+[ 1 error: 'oh oh' ] on: Error do: [ :error | Transcript show: 'Error handler: answers: '; show: error; cr ]
 1 error: 'an integer?'
 3.141 error: 'a float?'
 #sym error: 'a symbol?'
 Transcript error: 'a transcript?'
 Smalltalk error: 'a smalltalk?'
+[nil haltIf: true] on: Halt do: [ :err | 'Halted!' ]
 
 'Float'
 
@@ -498,6 +514,10 @@ Transcript show: (5 / 4); cr
 (0 digitAt: 1) = 0
 123 printString = '123'
 -987654321 printString = '-987654321'
+(987654321 significantDigits: 1) = 1000000000
+(987654321 significantDigits: 2) = 990000000
+123456789 asStringWithCommas = '123,456,789'
+-123456789 asStringWithCommas = '-123,456,789'
 
 'Interval'
 
@@ -532,14 +552,26 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (10 to: 20 by: 3) reverseDo: [ :each | Transcript show: each printString; cr ]
 (1 to: 2 by: 1/2) = ({1. 3/2. 2} as: Interval)
 (1 to: 2 by: 1/5) = ({1. 6/5. 7/5. 8/5. 9/5. 2} as: Interval)
+(2 to: 1) anyOne
 
-'Method calls'
+'Message sends'
 
 2 sqrt                                                      "unary message"
 2 raisedTo: 10                                              "keyword message*"
 194 * 9                                                     "binary message"
 Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
 2 perform: #sqrt                                            "indirect method invocation"
+1 unimplementedMessage
+
+'Method'
+
+(1 class compiledMethodAt: #*) printString
+(1 class compiledMethodAt: #*) methodClass = SmallInteger
+((1 class compiledMethodAt: #*) invokeOn: 2 with: #(3)) = 6
+(1 class compiledMethodAt: #*) primitive = 9
+(SmallInteger >> #*) primitive = 9
+(3.14 class compiledMethodAt: #*) primitive = 49
+(1 class compiledMethodAt: #*) selector = #*
 
 'Month'
 
@@ -584,6 +616,11 @@ OrderedCollection newFrom: #(1 2 3)
 #(1 2 3) as: OrderedCollection
 c := #('Jim' 'Mary' 'John' 'Alice' ) asOrderedCollection
 c add: 'Mary' before: 'Mary'; asArray
+OrderedCollection new add:true ; add: true ; add: true ;add: false ; add: false; yourself
+
+'Primitive'
+
+(SmallInteger methodDict at: #*) primitive "squeak"
 
 'ReadStream'
 
@@ -681,6 +718,8 @@ cpy hasEqualElements: c
 cpy species = c species
 cpy sortBlock = c sortBlock
 cpy first = 'brochet'
+(1 to: 5) asSortedCollection add: 0; yourself
+(1 to: 5) asSortedCollection collect: [ :each | each < 4]
 
 'SortFunction'
 
@@ -890,3 +929,4 @@ Array allSuperclasses size = 4                              "get sequence of all
 Time microsecondsToRun: [ 28 benchFib ]
 Time millisecondsToRun: [ 28 benchFib ]
 
+Smalltalk tinyBenchmarks
