@@ -32,7 +32,7 @@
 (defun stsc3-send-quit ()
   "Quit Smalltalk."
   (interactive)
-  (stsc3-send-string "ObjectMemory quit"))
+  (stsc3-send-string "Smalltalk quitPrimitive"))
 
 (defun stsc3-find-files (dir rgx)
   "Find files at DIR matching RGX."

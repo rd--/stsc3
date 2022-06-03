@@ -231,6 +231,23 @@ false asBit = 0
 true asBit = 1
 true asInteger > false asInteger
 
+'ByteArray'
+
+ByteArray new: 4
+(ByteArray new: 4) size = 4
+(ByteArray new: 4) byteSize = 4
+((ByteArray new: 4) at: 1) = 0
+((ByteArray new: 4) byteAt: 2) = 0
+(ByteArray new: 4) at: 1 put: 15; at: 3 put: 240; hex) = '0f00f000'
+(ByteArray new: 4) byteAt: 2 put: 15; byteAt: 4 put: 240; hex) = '000f00f0'
+(ByteArray newFrom: #(1 2 3 4)) hex = '01020304'
+(ByteArray new: 1) readHexFrom: '01' readStream
+(ByteArray readHexFrom: '0f00f000') hex = '0f00f000'
+'string' asByteArray hex = '737472696e67'
+(ByteArray readHexFrom: '737472696e67') asString = 'string'
+((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'
+((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64)
+
 'Cascade messages'
 
 Transcript show: 'hello '; show: 'world'; cr                "cascading, send multiple messages to receiver"
@@ -379,6 +396,17 @@ time := Time readFrom: '0:00 am' readStream
 (TimeStamp readFrom: '1-01-2005 0:00 am' readStream) printString = '1 January 2005 12:00 am'
 (DateAndTime year: 2005 month: 1 day: 1) dayOfWeek = 7
 
+'Delay'
+
+(Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr
+(Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr
+(Delay forSeconds: 1) wait. Transcript nextPutAll: 'delayed'; cr
+d := Delay forSeconds: 5
+d delayDuration = 5000
+d beingWaitedOn = false
+d resumptionTime = nil
+[ d wait ] fork. [ [ d beingWaitedOn ] whileTrue: [Transcript show: d; cr. (Delay forSeconds: 0.5) wait ] ] fork
+
 'Dictionary'
 
 Dictionary isVariable                                       "St-80=true, Squeak=false"
@@ -444,6 +472,8 @@ Float readFrom: '3.141'
 Float readFrom: '-1.4' readStream
 Float nan ~~ Float nan
 Float nan ~= Float nan
+3.141 asIEEE32BitWord = 1078527525
+(Double fromIEEE32Bit: 1078527525) closeTo: 3.141
 
 'Fraction'
 
@@ -500,6 +530,11 @@ Transcript show: (5 / 4); cr
 (1/3) isAnExactFloat not
 (1/4) isAnExactFloat
 (1/4) asExactFloat = 0.25
+
+'Generator'
+
+g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]
+[ g atEnd ] whileFalse: [ Transcript show: g next; cr ]
 
 'Integer'
 
@@ -662,6 +697,9 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 
 #(1 2 3 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
 #(1 2 3 4) permutations asSet size = 24
+(#(1 9 2 8 3 7 4 6) pairsCollect: [ :i :j | i + j ]) = #(10 10 10 10)
+#(1 9 2 8 3 7 4 6) pairsDo: [ :i :j | Transcript show: i + j; cr ]
+#(1 9 2 8 3 7 4 6) groupsDo: [ :i :j | Transcript show: i + j; cr ]
 
 'Set'
 
