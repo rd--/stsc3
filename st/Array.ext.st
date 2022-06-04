@@ -1,7 +1,6 @@
 !Array methodsFor: 'mce'!
 containsCollection
-    self do: [ :item | item isCollection ifTrue: [ ^true ] ].
-    ^false!
+    ^self anySatisfy: [ :item | item isCollection ]!
 mceTransform
     ^self extendToBeOfEqualSize transpose!
 asArray

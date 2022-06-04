@@ -298,7 +298,7 @@ $} asciiValue = 125
 
 CharacterSet ascii size = 127                               "ascii character set"
 CharacterSet crlf                                           "carriage return and line feed"
-CharacterSet separators size = 5
+CharacterSet separators size = 5                            "whitespace"
 
 'Class'
 
@@ -312,6 +312,16 @@ Class superclass = ClassDescription
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
 (#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6)
 #(1 2) take: -1
+
+'Color'
+
+(Color brown * #(1 0 1)) printString = '(Color r: 0.6 g: 0 b: 0)'
+(Color blue + Color green) printString = '(Color r: 0 g: 1 b: 1)'
+(Color white - Color red) printString =  '(Color r: 0 g: 1 b: 1)'
+(Color red / 2) printString =  '(Color r: 0.5 g: 0 b: 0)'
+(Color red lightShades: 12) do: [ :each | Transcript show: each; cr ]
+(Color lightBlue) printString =  '(Color r: 0.8 g: 1 b: 1)'
+(Color red: 0.2 green: 0.6 blue: 1.0) = (Color r: 0.2 g: 0.6 b: 1.0)
 
 'Compiler'
 
@@ -442,8 +452,9 @@ Smalltalk halt
 
 'Duration'
 
-Duration zero
-Duration days: Time daysFromSmalltalkEpochToPosixEpoch
+Duration zero seconds = 0
+Duration oneDay days = 1
+(Duration days: Time daysFromSmalltalkEpochToPosixEpoch) days = 25202
 
 'Error'
 
@@ -533,8 +544,18 @@ Transcript show: (5 / 4); cr
 
 'Generator'
 
-g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]
-[ g atEnd ] whileFalse: [ Transcript show: g next; cr ]
+g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]. [ g atEnd ] whileFalse: [ Transcript show: g next; cr ]
+g := Generator on: [ :g | g yield: 1. g error: 'error']. g next "propogate errors"
+x := 0. g := Generator on: [ :g | x := 1. g yield: 'A'. x := 2. g yield: 'B'. x := 3. g yield: 'C']. o := ''. g do: [ :s | o := o, x, s]. o "1A2B3C"
+
+'IdentityBag'
+
+s := 'string'
+c := s copy "s = c and: (s == c) not"
+b := Bag new add: s; add: s; add: c; yourself
+(b occurrencesOf: s) = 3 and: (b occurrencesOf: c) = 3
+i := IdentityBag new add: s;  add: s; add: c; yourself
+(i occurrencesOf: s) = 2 and: (i occurrencesOf: c) = 1
 
 'Integer'
 
@@ -653,6 +674,12 @@ c := #('Jim' 'Mary' 'John' 'Alice' ) asOrderedCollection
 c add: 'Mary' before: 'Mary'; asArray
 OrderedCollection new add:true ; add: true ; add: true ;add: false ; add: false; yourself
 
+'OrderedDictionary'
+
+(OrderedDictionary new: 7)
+ instVarNamed: #tally
+(OrderedDictionary new: 7) instVarNamed: #order
+
 'Primitive'
 
 (SmallInteger methodDict at: #*) primitive "squeak"
@@ -761,6 +788,7 @@ cpy first = 'brochet'
 
 'SortFunction'
 
+#(#(1 2) #(2 3) #(0 0)) sorted: #first ascending.
 (#name ascending value: Array value: Set) = true
 (#sum ascending value: #(1 2) value: #(3 4)) = true
 (#min ascending value: #(1 2) value: #(3 4)) = true
@@ -782,11 +810,11 @@ String newFrom: #($P $e $n)
 'string' < 'symbol' "less than"
 'string' = 'string' "equal"
 'symbol' > 'string' "greater than"
-'string' = 'string' copy "copied strings are equal"
+'string' copy = 'string' copy "copied strings are equal"
 'string' asString = 'string'
 'string' copy asString = 'string' copy
 'string' == 'string' "string literals are identical"
-'string' ~~ 'string' copy "copied strings are not identical"
+'string' copy ~~ 'string' copy "copied strings are not identical"
 #('string') = {'string'}
 (String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'
 ($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
@@ -937,7 +965,9 @@ nil shouldNotImplement                                      "flag message should
 nil subclassResponsibility                                  "flag message as abstract"
 nil primitiveFailed                                         "system primitive failed"
 Point allInstVarNames                                       "instance variable names of class"
+(Point instVarIndexFor: #x ifAbsent: []) = 1 "index for named instance variable"
 ((Point x: 4 y: 2) instVarAt: 1) = 4                        "lookup instance variable by index"
+((Point x: 4 y: 2) instVarNamed: #x) = 4 "lookup instance variable by name"
 CharacterSet allClassVarNames                               "class variable names of class"
 
 'Methods'
@@ -951,7 +981,11 @@ Number sourceCodeAt: #+                                     "get the source code
 
 'Class hierachy'
 
+(nil isKindOf: Class) not
 Integer superclass = Number                                 "discover the superclass of a class"
+Integer subclasses includes: SmallInteger
+(ArrayedCollection subclasses includes: Symbol) not
+ArrayedCollection allSubclasses includes: Symbol
 Object allInstances                                         "get an array of all instances of a class"
 Array allSuperclasses size = 4                              "get sequence of all superclasses of a class"
 (Set withAllSuperclasses) size = 4                          "an ordered collection of a class and it's parents"

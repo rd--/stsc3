@@ -1,7 +1,11 @@
+%.som : %.st
+	stsc3 translate class --sort fileout som $< $@
+
 # ext are .ext.st files with extensions to standard classes
 # classes are stsc3 defined classes
 # autogen are the sc ugens and pseudo ugens and the help graphs
 # ui is for squeak
+
 ext = Array BlockClosure Collection Float Integer Interval Number Object SequenceableCollection String
 classes = \
 	ScUgen Ugen UgenBuilder PseudoUgen ScGraph Rate BinaryOpUgen UnaryOpUgen Control \
