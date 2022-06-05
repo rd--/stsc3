@@ -43,6 +43,8 @@ isUgen
     ^true!
 isOutUgen
     ^scUgen name = 'Out'!
+isZero
+    ^false!
 !
 
 !Ugen methodsFor: 'collecting'!

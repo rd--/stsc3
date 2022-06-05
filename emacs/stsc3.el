@@ -169,6 +169,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (define-key map (kbd "C-c C-c") 'stsc3-send-current-line)
   (define-key map (kbd "C-c C-h") 'stsc3-help)
   (define-key map (kbd "C-c C-u") 'stsc3-ugen-exemplar)
+  (define-key map (kbd "C-c C-d") 'stsc3-send-region)
   (define-key map (kbd "C-c C-a") 'stsc3-play-region)
   (define-key map (kbd "C-c C-g") 'stsc3-draw-region)
   (define-key map (kbd "C-c C-i") 'stsc3-interrupt-smalltalk)

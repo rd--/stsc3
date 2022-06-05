@@ -2,112 +2,124 @@
 
 'Arithmetic expressions'
 
-6 + 3 = 9                                                   "addition"
-6 - 3 = 3                                                   "subtraction"
-6 * 3 = 18                                                  "multiplication"
-1 + 2 * 3 = 9                                               "evaluation always left to right (1 + 2) * 3"
-(5 / 3) class = Fraction                                    "division with non-integer result"
-(5 / 3) asFloat
-5.0 / 2.0 = 2.5                                             "division with float result (operand float)"
-355.0 / 113                                                 "division with float result (operand integer)"
-9 // 12 = 0                                                 "integer divide"
-9 \\ 12 = 9                                                 "integer remainder (modulo)"
-5.0 // 3.0 = 1                                              "integer divide"
-5.0 \\ 3.0 = 2                                              "integer remainder"
--5 = 5 negated                                              "unary minus"
-5 sign = 1                                                  "numeric sign (1, -1 or 0)"
-5 negated = -5                                              "negate receiver"
-1.25 integerPart = 1.0                                      "integer part of number"
-1.25 fractionPart = 0.25                                    "fractional part of number"
-5 reciprocal = (1/5)                                        "reciprocal function"
-6 * 3.1 = 18.6                                              "auto convert to float"
-5 squared = 25                                              "square function"
-25 sqrt = 5.0                                               "square root"
-(5 raisedTo: 2) = 25                                        "power function"
-(5 raisedToInteger: 2) = 25                                 "power function with integer"
-1 exp = Float e                                             "exponential"
--5 abs = 5                                                  "absolute value"
-3.99 rounded = 4                                            "round"
-3.99 truncated = 3                                          "truncate"
-(3.99 roundTo: 1) = 4.0                                     "round to specified decimal places"
-(3.99 truncateTo: 1) = 3.0                                  "truncate to specified decimal places"
-3.99 floor = 3                                              "round down"
-3.99 ceiling = 4                                            "round up"
-5 factorial = 120                                           "factorial"
-(-5 quo: 3) = -1                                            "integer divide rounded toward zero"
-(-5 rem: 3) = -2                                            "integer remainder rounded toward zero"
-(28 gcd: 12) = 4                                            "greatest common denominator"
-(28 lcm: 12) = 84                                           "least common multiple"
-Float e ln = 1.0                                            "natural logarithm"
-1.0 exp ln = 1.0                                            "natural logarithm"
-100 log = 2.0                                               "base 10 logarithm"
-(10.0 raisedTo: 2.0) log = 2.0                              "base 10 logarithm"
-(100 log: 10) = 2.0                                         "logarithm with specified base"
-(100 floorLog: 10) = 2                                      "floor of the log"
-Float radiansPerDegree = (Float pi / 180)                   "radians per degree"
-180 degreesToRadians = Float pi                             "convert degrees to radians"
-Float pi radiansToDegrees = 180.0                           "convert radians to degrees"
-(Float pi / 2) sin = 1.0                                    "sine"
-0.0 cos = 1.0                                               "cosine"
-0.0 tan = 0.0                                               "tangent"
-(10 max: 20) = 20                                           "get maximum of two numbers"
-(10 min: 20) = 10                                           "get minimum of two numbers"
-Float pi = 3.141592653589793                                "pi"
-Float e = 2.718281828459045                                 "exp constant"
-100 atRandom                                                "random integer in (1,self)"
-1.0 atRandom                                                "random float in (0,self)"
+{
+6 + 3 = 9.                                                   "addition"
+6 - 3 = 3.                                                   "subtraction"
+6 * 3 = 18.                                                  "multiplication"
+1 + 2 * 3 = 9.                                               "evaluation always left to right (1 + 2) * 3"
+(5 / 3) class = Fraction.                                    "division with non-integer result"
+((5 / 3) asFloat) closeTo: 1.666666.                         "fraction as float"
+5.0 / 2.0 = 2.5.                                             "division with float result (operand float)"
+(355.0 / 113) closeTo: 3.141592.                             "division with float result (operand integer)"
+9 // 12 = 0.                                                 "integer divide"
+9 \\ 12 = 9.                                                 "integer remainder (modulo)"
+5.0 // 3.0 = 1.                                              "integer divide"
+5.0 \\ 3.0 = 2.                                              "integer remainder"
+-5 = 5 negated.                                              "unary minus"
+5 sign = 1.                                                  "numeric sign (1, -1 or 0)"
+5 negated = -5.                                              "negate receiver"
+1.25 integerPart = 1.0.                                      "integer part of number"
+1.25 fractionPart = 0.25.                                    "fractional part of number"
+5 reciprocal = (1/5).                                        "reciprocal function"
+6 * 3.1 = 18.6.                                              "auto convert to float"
+5 squared = 25.                                              "square function"
+25 sqrt = 5.0.                                               "square root"
+(5 raisedTo: 2) = 25.                                        "power function"
+(5 raisedToInteger: 2) = 25.                                 "power function with integer"
+1 exp = Float e.                                             "exponential"
+-5 abs = 5.                                                  "absolute value"
+3.99 rounded = 4.                                            "round"
+3.99 truncated = 3.                                          "truncate"
+(3.99 roundTo: 1) = 4.0.                                     "round to specified decimal places"
+(3.99 truncateTo: 1) = 3.0.                                  "truncate to specified decimal places"
+3.99 floor = 3.                                              "round down"
+3.99 ceiling = 4.                                            "round up"
+5 factorial = 120.                                           "factorial"
+(-5 quo: 3) = -1.                                            "integer divide rounded toward zero"
+(-5 rem: 3) = -2.                                            "integer remainder rounded toward zero"
+(28 gcd: 12) = 4.                                            "greatest common denominator"
+(28 lcm: 12) = 84.                                           "least common multiple"
+Float e ln = 1.0.                                            "natural logarithm"
+1.0 exp ln = 1.0.                                            "natural logarithm"
+100 log = 2.0.                                               "base 10 logarithm"
+(10.0 raisedTo: 2.0) log = 2.0.                              "base 10 logarithm"
+(100 log: 10) = 2.0.                                         "logarithm with specified base"
+(100 floorLog: 10) = 2.                                      "floor of the log"
+Float radiansPerDegree = (Float pi / 180).                   "radians per degree"
+180 degreesToRadians = Float pi.                             "convert degrees to radians"
+Float pi radiansToDegrees = 180.0.                           "convert radians to degrees"
+(Float pi / 2) sin = 1.0.                                    "sine"
+0.0 cos = 1.0.                                               "cosine"
+0.0 tan = 0.0.                                               "tangent"
+(10 max: 20) = 20.                                           "get maximum of two numbers"
+(10 min: 20) = 10.                                           "get minimum of two numbers"
+Float pi = 3.141592653589793.                                "pi"
+Float e = 2.718281828459045.                                 "exp constant"
+100 atRandom between: 1 and: 100.                            "random integer in (1,self)"
+1.0 atRandom between: 0 and: 1.0.                            "random float in (0,self)"
+} allSatisfy: #yourself
 
 'ArrayedCollection'
 
-#(3 2 1) copy sort = #(1 2 3)
-(9 to: 1 by: -1) asArray sort = (1 to: 9) asArray
-(1 to: 99) asArray shuffle mergeSort = (1 to: 99) asArray
-(1 to: 99) asArray shuffle quickSort = (1 to: 99) asArray
-'string' copy quickSort = 'ginrst'
-'quick' copy quickSort = 'cikqu'
-'quickSort' copy quickSort = 'Scikoqrtu'
-'merge' copy mergeSort = 'eegmr'
-'mergeSortFrom:to:by:' copy mergeSort = ':::FSbeegmmooorrrtty'
-letters := 'abcdefghijklmnopqrstuvwxzy' copy
-letters quickSort = letters
-letters mergeSort = letters
-letters reverse quickSort = letters
-letters reverse mergeSort = letters
-letters reverse asArray mergeSort = letters asArray
-letters shuffle sort = letters
-#(5 4 3 2 1) copy sort: [ :lhs :rhs | lhs < rhs ]
-#(5 4 3 2 1) copy sort: #<
+{
+#(3 2 1) copy sort = #(1 2 3).
+(9 to: 1 by: -1) asArray sort = (1 to: 9) asArray.
+(1 to: 99) asArray shuffle mergeSort = (1 to: 99) asArray.
+(1 to: 99) asArray shuffle quickSort = (1 to: 99) asArray.
+'string' copy quickSort = 'ginrst'.
+'quick' copy quickSort = 'cikqu'.
+'quickSort' copy quickSort = 'Scikoqrtu'.
+'merge' copy mergeSort = 'eegmr'.
+'mergeSortFrom:to:by:' copy mergeSort = ':::FSbeegmmooorrrtty'.
+(#(5 4 3 2 1) copy sort: [ :lhs :rhs | lhs < rhs ]) = #(1 2 3 4 5).
+(#(5 4 3 2 1) copy sort: #<) = #(1 2 3 4 5).
+} allSatisfy: #yourself
+
+letters := 'abcdefghijklmnopqrstuvwxzy' copy.
+
+{
+letters quickSort = letters.
+letters mergeSort = letters.
+letters reverse quickSort = letters.
+letters reverse mergeSort = letters.
+letters reverse asArray mergeSort = letters asArray.
+letters shuffle sort = letters.
+}
 
 'Array'
 
-Array isVariable = true                                     "array is indexable"
-Array withAll: #(1 2 3 4)                                   "array from collection"
-(#(4 5 6 7) atAll: #(2 3)) = #(5 6)                         "at: for each index of array of indices"
-3 timesRepeat: [ Transcript show: 'repeat'; cr ]            "prints repeat three times, returns count"
-#(1 2 3) do: [ :item | Transcript show: item; cr ]              "prints 123"
-(#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4)                 "copy range"
-x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}    "mutate slot, returns the value put"
-#(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
-#(1 (2 (3 4))) = #(1 #(2 #(3 4)))                           "in st-80 sub-arrays do not require # prefix"
-#(x x: nil) = #(#x #x: nil)                                 "in st-80 symbols do not require #prefix"
-#(5 4 3 2 1) detect: [ :i | i < 3 ]                         "detect element (not index), so 2"
-#(1 true 3 #four) printString
-#(1 2 3 4 5) take: 2                                        "#(1 2)"
-#(1 2) take: 5                                              "#(1 2)"
-#(1 2) readStream take: 5                                   "#(1 2)"
-#(1 2) == #(1 2)                                            "literals are identical"
-#(1 2) ~~ #(1 2) shallowCopy                                "copies are not identical"
-{1. 2} ~~ {1. 2}                                            "array expressions are not identical"
-{1. 2} ~~ {1. 2} shallowCopy                                "also when copied"
-#(1 2 3) at: 1 put: '1'                                     "error: array literals are immutable (gnu)"
-{1. 2. 3} at: 1 put: '1'                                    "array expressions are mutable"
-#(1 2 3) == #(1 2 3)                                        "array literals are identical"
-#(1 2 3) ~~ {1. 2. 3}                                       "array literals and array expressions are not identical"
+{
+Array isVariable = true.                                     "array is indexable"
+(Array withAll: #(1 2 3 4)) = #(1 2 3 4).                    "array from collection"
+(#(4 5 6 7) atAll: #(2 3)) = #(5 6).                         "at: for each index of array of indices"
+(#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4).                 "copy range"
+#(1 (2 (3 4))) = #(1 #(2 #(3 4))).                           "in st-80 sub-arrays do not require # prefix"
+#(x x: nil) = #(#x #x: nil).                                 "in st-80 symbols do not require #prefix"
+(#(5 4 3 2 1) detect: [ :i | i < 3 ]) = 2.                   "detect element (not index), so 2"
+(#(1 2 3 4 5) take: 2) = #(1 2).
+(#(1 2) take: 5) = #(1 2).
+(#(1 2) readStream take: 5) = #(1 2).
+#(1 2) == #(1 2).                                            "literals are identical"
+#(1 2) ~~ #(1 2) shallowCopy.                                "copies are not identical"
+{1. 2} ~~ {1. 2}.                                            "array expressions are not identical"
+{1. 2} ~~ {1. 2} shallowCopy.                                "also when copied"
+({1. 2. 3} at: 1 put: '1') = '1'.                            "array expressions are mutable"
+#(1 2 3) == #(1 2 3).                                        "array literals are identical"
+#(1 2 3) ~~ {1. 2. 3}.                                       "array literals and array expressions are not identical"
+[ Array new: -1 ] ifError: [ true ].                         "error"
+} allSatisfy: #yourself
+
 c := {'string'. #symbol. 42}
 (c at: 1) = 'string'
 (c at: 2) = #symbol
 (c at: 3) = 42
-Array new: -1 "error"
+
+3 timesRepeat: [ Transcript show: 'repeat'; cr ]            "prints repeat three times, returns count"
+#(1 2 3) do: [ :item | Transcript show: item; cr ]              "prints 123"
+x := {1. 2. 3}. {(x at: 2 put: $2) = $2. x = {1. $2. 3}}.    "mutate slot, returns the value put"
+#(1 2.3 '4' $5 #'6' #seven #(8 9) nil)                      "array literal syntax"
+#(1 true 3 #four) printString
+#(1 2 3) at: 1 put: '1'                                     "error: array literals are immutable (gnu)"
 
 'Assignment'
 
@@ -193,60 +205,64 @@ cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
 
 'Booleans'
 
-1 = 1 = true                                                "equality predicate (operator)"
-1 ~= 2 = true                                               "equality predicate (operator)"
-(1 == 1)                                                    "identical"
-1 ~~ 2                                                      "not identical"
-2 > 1                                                       "greater than"
-1 < 2                                                       "less than"
-1 >= 1                                                      "greater than or equal"
-1 <= 1                                                      "less than or equal"
-false not                                                   "boolean not"
-true & false = false                                        "logical and (operator)"
-true | false = true                                         "logical or (operator)"
-(true and: false) = false                                   "logical and"
-(true or: false) = true                                     "logical or"
-(false and: ['and' error]) = false                          "logical and (short-circuit)"
-(true or: ['or' error]) = true                              "logical or"
-true xor: false                                             "test if one true and other false"
-b := 5 between: 3 and: 12.                                  "between (inclusive)"
-123 isKindOf: Number                                        "test if object is class or subclass of"
-123 isMemberOf: SmallInteger                                "test if object is type of class"
-123 respondsTo: #sqrt                                       "test if object responds to message"
-true = true                                                 "constant"
-false = false                                               "constant"
-true not not = true                                         "not"
-nil isNil = true                                            "test if object is nil"
-1 positive = true                                           "test if number is positive"
-0 strictlyPositive = false                                  "test if number is greater than zero"
--1 negative = true                                          "test if number is negative"
-2 even = true                                               "test if number is even"
-1 odd = true                                                "test if number is odd"
-1 isInteger = true                                          "test if object is integer"
-1.0 isFloat = true                                          "test if object is float"
-1.0 isNumber = true                                         "test if object is number"
-$A isUppercase = true                                       "test if upper case character"
-$a isLowercase = true                                       "test if lower case character"
-false asBit = 0
-true asBit = 1
-true asInteger > false asInteger
+{
+1 = 1 = true.                                                "equality predicate (operator)"
+1 ~= 2 = true.                                               "equality predicate (operator)"
+(1 == 1).                                                    "identical"
+1 ~~ 2.                                                      "not identical"
+2 > 1.                                                       "greater than"
+1 < 2.                                                       "less than"
+1 >= 1.                                                      "greater than or equal"
+1 <= 1.                                                      "less than or equal"
+false not.                                                   "boolean not"
+true & false = false.                                        "logical and (operator)"
+true | false = true.                                         "logical or (operator)"
+(true and: false) = false.                                   "logical and"
+(true or: false) = true.                                     "logical or"
+(false and: ['and' error]) = false.                          "logical and (short-circuit)"
+(true or: ['or' error]) = true.                              "logical or"
+true xor: false.                                             "test if one true and other false"
+5 between: 3 and: 12.                                        "between (inclusive)"
+123 isKindOf: Number.                                        "test if object is class or subclass of"
+123 isMemberOf: SmallInteger.                                "test if object is type of class"
+123 respondsTo: #sqrt.                                       "test if object responds to message"
+true = true.                                                 "constant"
+false = false.                                               "constant"
+true not not = true.                                         "not"
+nil isNil = true.                                            "test if object is nil"
+1 positive = true.                                           "test if number is positive"
+0 strictlyPositive = false.                                  "test if number is greater than zero"
+-1 negative = true.                                          "test if number is negative"
+2 even = true.                                               "test if number is even"
+1 odd = true.                                                "test if number is odd"
+1 isInteger = true.                                          "test if object is integer"
+1.0 isFloat = true.                                          "test if object is float"
+1.0 isNumber = true.                                         "test if object is number"
+$A isUppercase = true.                                       "test if upper case character"
+$a isLowercase = true.                                       "test if lower case character"
+false asBit = 0.
+true asBit = 1.
+true asInteger > false asInteger.
+} allSatisfy: #yourself
 
 'ByteArray'
 
-ByteArray new: 4
-(ByteArray new: 4) size = 4
-(ByteArray new: 4) byteSize = 4
-((ByteArray new: 4) at: 1) = 0
-((ByteArray new: 4) byteAt: 2) = 0
-(ByteArray new: 4) at: 1 put: 15; at: 3 put: 240; hex) = '0f00f000'
-(ByteArray new: 4) byteAt: 2 put: 15; byteAt: 4 put: 240; hex) = '000f00f0'
-(ByteArray newFrom: #(1 2 3 4)) hex = '01020304'
-(ByteArray new: 1) readHexFrom: '01' readStream
-(ByteArray readHexFrom: '0f00f000') hex = '0f00f000'
-'string' asByteArray hex = '737472696e67'
-(ByteArray readHexFrom: '737472696e67') asString = 'string'
-((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'
-((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64)
+{
+(ByteArray new: 4) hex = '00000000'.
+(ByteArray new: 4) size = 4.
+(ByteArray new: 4) byteSize = 4.
+((ByteArray new: 4) at: 1) = 0.
+((ByteArray new: 4) byteAt: 2) = 0.
+((ByteArray new: 4) at: 1 put: 15; at: 3 put: 240; hex) = '0f00f000'.
+((ByteArray new: 4) byteAt: 2 put: 15; byteAt: 4 put: 240; hex) = '000f00f0'.
+(ByteArray newFrom: #(1 2 3 4)) hex = '01020304'.
+((ByteArray new: 1) readHexFrom: '01' readStream) hex = '01'.
+(ByteArray readHexFrom: '0f00f000') hex = '0f00f000'.
+'string' asByteArray hex = '737472696e67'.
+(ByteArray readHexFrom: '737472696e67') asString = 'string'.
+((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'.
+((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64).
+} allSatisfy: #yourself
 
 'Cascade messages'
 
@@ -256,78 +272,89 @@ Set new add: 1; add: 2; yourself
 
 'Character'
 
-$ = Character space
-$	 = Character tab
-Character newLine = Character nl
-Character newPage asInteger = 12
-(Character value: 97) = $a
-$a asInteger = 97
-$A asInteger = 65
-$Z asInteger = 90
-$a = $a
-$a ~= $b
-$1 digitValue = 1
-$c isCharacter = true
-$a isLetter = true
-$1 isDigit = true
-$a isLowercase = true
-Character space isSeparator = true
-$e isVowel
-$a asUppercase = $A
-$A asLowercase = $a
-$a hash = $a asInteger hash
-$s = nil
-($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
-('/', Character separators) size = (Character separators size + 1)
-('/', CharacterSet separators) size = (CharacterSet separators asArray size + 1)
-$a printString = '$a'
-$5 printString = '$5'
-$@ printString = '$@'
-Character cr printString = 'Character cr'
-Character lf printString = 'Character lf'
-Character space printString = 'Character space'
-Character null printString = 'Character null'
-(Character value: 17) printString = 'Character value: 17'
-${ = ${
-$\ = $\
-$/ = $/
-${ asciiValue = 123
-$} asciiValue = 125
+{
+$ = Character space.
+$	 = Character tab.
+Character newLine = Character nl.
+Character newPage asInteger = 12.
+(Character value: 97) = $a.
+$a asInteger = 97.
+$A asInteger = 65.
+$Z asInteger = 90.
+$a = $a.
+$a ~= $b.
+$1 digitValue = 1.
+$c isCharacter = true.
+$a isLetter = true.
+$1 isDigit = true.
+$a isLowercase = true.
+Character space isSeparator = true.
+$e isVowel.
+$a asUppercase = $A.
+$A asLowercase = $a.
+$a hash = $a asInteger hash.
+$s ~= nil.
+($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'.
+('/', Character separators) size = (Character separators size + 1).
+('/', CharacterSet separators) size = (CharacterSet separators asArray size + 1).
+$a printString = '$a'.
+$5 printString = '$5'.
+$@ printString = '$@'.
+Character cr printString = 'Character cr'.
+Character lf printString = 'Character lf'.
+Character space printString = 'Character space'.
+Character null printString = 'Character null'.
+(Character value: 17) printString = 'Character value: 17'.
+${ = ${.
+$\ = $\.
+$/ = $/.
+${ asciiValue = 123.
+$} asciiValue = 125.
+} allSatisfy: #yourself
 
 'CharacterSet'
 
-CharacterSet ascii size = 127                               "ascii character set"
-CharacterSet crlf                                           "carriage return and line feed"
-CharacterSet separators size = 5                            "whitespace"
+{
+CharacterSet ascii size = 127.                               "ascii character set"
+CharacterSet crlf size = 2.                                  "carriage return and line feed"
+CharacterSet separators size = 5.                            "whitespace"
+} allSatisfy: #yourself
 
 'Class'
 
-Class superclass = ClassDescription
+Class superclass = ClassDescription.
 
 'Collection'
 
-#(1 3 2 9 4 5 7 8 6) max = 9                                "maximum item"
-#(1 3 2 9 4 5 7 8 6) includes: 6                            "includes element"
-#(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6)                  "includes any element of a collection"
-(#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag
-(#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6)
-#(1 2) take: -1
+{
+#(1 3 2 9 4 5 7 8 6) max = 9.                                "maximum item"
+#(1 3 2 9 4 5 7 8 6) includes: 6.                            "includes element"
+#(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6).                  "includes any element of a collection"
+(#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag.
+(#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6).
+[ #(1 2) take: -1 ] ifError: [ true ].
+} allSatisfy: #yourself
 
 'Color'
 
-(Color brown * #(1 0 1)) printString = '(Color r: 0.6 g: 0 b: 0)'
-(Color blue + Color green) printString = '(Color r: 0 g: 1 b: 1)'
-(Color white - Color red) printString =  '(Color r: 0 g: 1 b: 1)'
-(Color red / 2) printString =  '(Color r: 0.5 g: 0 b: 0)'
+{
+(Color brown * #(1 0 1)) printString = '(Color r: 0.6 g: 0 b: 0)'.
+(Color blue + Color green) printString = '(Color r: 0 g: 1 b: 1)'.
+(Color white - Color red) printString =  '(Color r: 0 g: 1 b: 1)'.
+(Color red / 2) printString =  '(Color r: 0.5 g: 0 b: 0)'.
+(Color lightBlue) printString =  '(Color r: 0.8 g: 1 b: 1)'.
+(Color red: 0.2 green: 0.6 blue: 1.0) = (Color r: 0.2 g: 0.6 b: 1.0).
+} allSatisfy: #yourself
+
 (Color red lightShades: 12) do: [ :each | Transcript show: each; cr ]
-(Color lightBlue) printString =  '(Color r: 0.8 g: 1 b: 1)'
-(Color red: 0.2 green: 0.6 blue: 1.0) = (Color r: 0.2 g: 0.6 b: 1.0)
 
 'Compiler'
 
-(Compiler evaluate: '3 + 4') = 7
-(Compiler evaluate: 'Compiler evaluate: ''3 + 4''') = 7
-(Compiler evaluate: 'Transcript show: 42; cr') "prints 42 on transcript"
+{
+(Compiler evaluate: '3 + 4') = 7.
+(Compiler evaluate: 'Compiler evaluate: ''3 + 4''') = 7.
+(Compiler evaluate: 'Transcript show: 42; cr') = Transcript. "prints 42 on transcript"
+} allSatisfy: #yourself
 
 'Constants'
 
@@ -356,40 +383,51 @@ thisContext class
 
 'Conversion'
 
-3.99 asInteger = 3                                          "convert number to integer (truncates in Squeak)"
+{
+3.99 asInteger = 3.                                          "convert number to integer (truncates in Squeak)"
+3 asFloat = 3.0.                                                   "convert number to float"
+3 asFloat = 3.0.                                               "3 asFloat is equal to 3"
+65 asCharacter = $A.                                         "convert integer to character"
+$A asciiValue = 65.                                          "convert character to integer"
+3.99 printString = '3.99'.                                   "convert object to string via printOn:"
+3.99 storeString = '3.99'.                                   "convert object to string via storeOn:"
+((2 raisedTo: 4) - 1 radix: 16) = 'F'.                    "convert to string in given base"
+((2 raisedTo: 8) - 1 radix: 16) = 'FF'.
+((2 raisedTo: 12) - 1 radix: 16) = 'FFF'.
+((2 raisedTo: 16) - 1 radix: 16) = 'FFFF'.
+(15 numberOfDigitsInBase: 16) = 1.
+(16 numberOfDigitsInBase: 16) = 2.
+} allSatisfy: #yourself
+
 3.99 asFraction                                             "convert number to fraction (399/100)"
-3 asFloat                                                   "convert number to float"
-3 asFloat = 3                                               "3 asFloat is equal to 3"
-65 asCharacter = $A                                         "convert integer to character"
-$A asciiValue = 65                                          "convert character to integer"
-3.99 printString = '3.99'                                   "convert object to string via printOn:"
-3.99 storeString = '3.99'                                   "convert object to string via storeOn:"
-((2 raisedTo: 4) - 1 radix: 16) = 'F'                    "convert to string in given base"
-((2 raisedTo: 8) - 1 radix: 16) = 'FF'
-((2 raisedTo: 12) - 1 radix: 16) = 'FFF'
-((2 raisedTo: 16) - 1 radix: 16) = 'FFFF'
-(15 numberOfDigitsInBase: 16) = 1
-(16 numberOfDigitsInBase: 16) = 2
 
 'Date'
+
+{
+(Date readFrom: '1986-05-23' readStream) printString = '23 May 1986'.
+(Date readFrom: '01-23-2004' readStream) yyyymmdd = '2004-01-23'.
+(Date readFrom: '1-01-2005' readStream) printString = '1 January 2005'.
+} allSatisfy: #yourself
 
 Date dateAndTimeNow first printString "30 May 2022"
 Date dateAndTimeNow second printString "10:49:44 am"
 Date today printString "30 May 2022"
 (Date today previous: #'Thursday') yyyymmdd "2022-05-26"
-(Date readFrom: '1986-05-23' readStream) printString = '23 May 1986'
-(Date readFrom: '01-23-2004' readStream) yyyymmdd = '2004-01-23'
-(Date readFrom: '1-01-2005' readStream) printString = '1 January 2005'
 
 'DateAndTime'
 
-DateAndTime unixEpoch asSeconds = 2177452800
-DateAndTime epoch printString = '1901-01-01T00:00:00+00:00'
-DateAndTime unixEpoch printString = '1970-01-01T00:00:00+00:00'
-(DateAndTime unixEpoch - (Duration days: Time daysFromSmalltalkEpochToPosixEpoch)) = DateAndTime epoch
+{
+DateAndTime unixEpoch asSeconds = 2177452800.
+DateAndTime epoch printString = '1901-01-01T00:00:00+00:00'.
+DateAndTime unixEpoch printString = '1970-01-01T00:00:00+00:00'.
+(DateAndTime unixEpoch - (Duration days: Time daysFromSmalltalkEpochToPosixEpoch)) = DateAndTime epoch.
+(DateAndTime year: 1970 day: 1) printString = '1970-01-01T00:00:00+10:00'.
+(DateAndTime year: 2003 month: 03 day: 22 hour: 12 minute: 0) makeUTC printString = '2003-03-22T12:00:00+00:00'.
+(TimeStamp readFrom: '1-01-2005 0:00 am' readStream) printString = '1 January 2005 12:00 am'.
+(DateAndTime year: 2005 month: 1 day: 1) dayOfWeek = 7.
+} allSatisfy: #yourself
+
 DateAndTime now printString "2022-05-30T01:44:29.492936+10:00"
-(DateAndTime year: 1970 day: 1) printString = '1970-01-01T00:00:00+10:00'
-(DateAndTime year: 2003 month: 03 day: 22 hour: 12 minute: 0) makeUTC printString = '2003-03-22T12:00:00+00:00'
 DateAndTime localTimeZone printString "a TimeZone(UTC)"
 t := DateAndTime year: 2000 month: 1 day: 3 hour: 4 minute: 5 second: 6 nanoSecond: 7 offset: 8 hours
 t printString
@@ -403,24 +441,23 @@ date := Date readFrom: '1-01-2005' readStream
 time := Time readFrom: '0:00 am' readStream
 (DateAndTime date: date time: time) printString = '2005-01-01T00:00:00+00:00'
 (TimeStamp date: date time: time) printString = '1 January 2005 12:00 am'
-(TimeStamp readFrom: '1-01-2005 0:00 am' readStream) printString = '1 January 2005 12:00 am'
-(DateAndTime year: 2005 month: 1 day: 1) dayOfWeek = 7
 
 'Delay'
 
-(Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr
-(Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr
-(Delay forSeconds: 1) wait. Transcript nextPutAll: 'delayed'; cr
 d := Delay forSeconds: 5
 d delayDuration = 5000
 d beingWaitedOn = false
 d resumptionTime = nil
+
+(Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr
+(Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr
+(Delay forSeconds: 1) wait. Transcript nextPutAll: 'delayed'; cr
 [ d wait ] fork. [ [ d beingWaitedOn ] whileTrue: [Transcript show: d; cr. (Delay forSeconds: 0.5) wait ] ] fork
 
 'Dictionary'
 
-Dictionary isVariable                                       "St-80=true, Squeak=false"
-Dictionary new add: #a -> 1; add: #b -> 2; yourself       "add: inserts associations"
+Dictionary isVariable.                                     "St-80=true, Squeak=false"
+Dictionary new add: #a -> 1; add: #b -> 2; yourself        "add: inserts associations"
 Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
 Dictionary newFrom: {#a -> 1. #b -> 2}                      "dictionary from associations in collection"
 (Dictionary withAll: { #a -> 1. #b -> 2 }) any: 2           "select any two of"
@@ -444,17 +481,22 @@ d keys asBag = #(a b c) asBag
 
 'Dictionary ; Smalltalk'
 
-(Smalltalk at: #Array) = Array                            "lookup value in Smalltalk dictionary"
-(Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil       "lookup value with clause for absent values "
-(Smalltalk includesKey: #DoesNotExist) = false              "see if key exists in dictionary"
+{
+(Smalltalk at: #Array) = Array.                             "lookup value in Smalltalk dictionary"
+(Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil.       "lookup value with clause for absent values "
+(Smalltalk includesKey: #DoesNotExist) = false.              "see if key exists in dictionary"
+}
+
 Smalltalk keys size                                         "get set of all known keys "
 Smalltalk halt
 
 'Duration'
 
-Duration zero seconds = 0
-Duration oneDay days = 1
-(Duration days: Time daysFromSmalltalkEpochToPosixEpoch) days = 25202
+{
+Duration zero seconds = 0.
+Duration oneDay days = 1.
+(Duration days: Time daysFromSmalltalkEpochToPosixEpoch) days = 25202.
+}
 
 'Error'
 
@@ -472,47 +514,55 @@ Smalltalk error: 'a smalltalk?'
 
 'Float'
 
-3.141 isFloat = true                                        "is floating point"
-3.141 identityHash = 3.141 hash                             "hash"
-3.0 hash = 3 hash                                           "hash of integral is integral hash"
-Float epsilon <= (1 * (10 raisedTo: -12))
-1.0 < 1.0 successor
-1.0 > 1.0 predecessor
-(1.25 timesTwoPower: 5) = 40
-Float readFrom: '3.141'
-Float readFrom: '-1.4' readStream
-Float nan ~~ Float nan
-Float nan ~= Float nan
-3.141 asIEEE32BitWord = 1078527525
-(Double fromIEEE32Bit: 1078527525) closeTo: 3.141
+{
+3.141 isFloat = true.                                        "is floating point"
+3.141 identityHash = 3.141 hash.                             "hash"
+3.0 hash = 3 hash.                                           "hash of integral is integral hash"
+Float epsilon <= (1 * (10 raisedTo: -12)).
+1.0 < 1.0 successor.
+1.0 > 1.0 predecessor.
+(1.25 timesTwoPower: 5) = 40.
+(Float readFrom: '3.141') = 3.141.
+(Float readFrom: '-1.4' readStream) = -1.4.
+Float nan ~~ Float nan.
+Float nan ~= Float nan.
+3.141 asIEEE32BitWord = 1078527525.
+(Double fromIEEE32Bit: 1078527525) closeTo: 3.141.
+} allSatisfy: #yourself
 
 'Fraction'
 
-(2/3) isMemberOf: Fraction
-(Fraction readFrom: '5/4') = (5/4)
-2 / (3/4) = (8/3)
-(2/3) + (2/3) = (4/3)
-(2/3) + (1/2)		"case showing reduction to common denominator"
-(2/3) + (4/3)		"case where result is reduced to an Integer"
-(3 / 2) ceiling = 2
-(-3 / 2) ceiling = -1
-(4/3) denominator = 3
+{
+(2/3) isMemberOf: Fraction.
+(Fraction readFrom: '5/4') = (5/4).
+2 / (3/4) = (8/3).
+(2/3) + (2/3) = (4/3).
+((2/3) + (1/2)) = (7/6).		"case showing reduction to common denominator"
+((2/3) + (4/3)) = 2.		"case where result is reduced to an Integer"
+(3 / 2) ceiling = 2.
+(-3 / 2) ceiling = -1.
+(4/3) denominator = 3.
+((4/3) gcd: (7/5)) = (1/15).
+((4/3) lcm: (7/5)) = 28.
+(4/3) negated = (-4/3).
+(4/3) negative not. "is negative?"
+(4/3) numerator = 4.
+((2/3) raisedToInteger: 5) = (32/243).		 "fractions also can be exponentiated"
+(9 / 5) reciprocal = (5/9).
+(7 / 5) squared = (49/25).
+(3 / 2) truncated = 1.
+(1/3) isAnExactFloat not.
+(1/4) isAnExactFloat.
+(1/4) asExactFloat = 0.25.
+} allSatisfy: #yourself
+
 4/9 raisedTo: 1/2 "2/3"
 9/4 raisedTo: 1/2 "3/2"
 8/27 raisedTo: 1/3 "2/3"
 27/8 raisedTo: 1/3 "3/2"
 32/243 raisedTo: 3/5 "8/27"
 8/27 raisedTo: 5/3 "32/243"
-((4/3) gcd: (7/5)) = (1/15)
 (4/3) hash
-((4/3) lcm: (7/5)) = 28
-(4/3) negated = (-4/3)
-(4/3) negative not "is negative?"
-(4/3) numerator = 4
-(2/3) raisedToInteger: 5		 "fractions also can be exponentiated"
-(9 / 5) reciprocal
-(7 / 5) squared
-(3 / 2) truncated = 1
 Transcript show: (5 / 4); cr
 (5 / 4) raisedToFraction: (7 / 5)
 100 / 100.0 "1!"
@@ -538,15 +588,12 @@ Transcript show: (5 / 4); cr
 0.5 ~= (1/4) "true"
 0.5 ~= (1/2) "false"
 0.5 ~= (3/4) "true"
-(1/3) isAnExactFloat not
-(1/4) isAnExactFloat
-(1/4) asExactFloat = 0.25
 
 'Generator'
 
-g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]. [ g atEnd ] whileFalse: [ Transcript show: g next; cr ]
+g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]. [ g atEnd ] whileFalse: [ Transcript show: g next printString; cr ]
 g := Generator on: [ :g | g yield: 1. g error: 'error']. g next "propogate errors"
-x := 0. g := Generator on: [ :g | x := 1. g yield: 'A'. x := 2. g yield: 'B'. x := 3. g yield: 'C']. o := ''. g do: [ :s | o := o, x, s]. o "1A2B3C"
+x := 0. g := Generator on: [ :g | x := 1. g yield: 'A'. x := 2. g yield: 'B'. x := 3. g yield: 'C']. o := ''. g do: [ :s | o := o, x printString, s]. o "1A2B3C"
 
 'IdentityBag'
 
@@ -559,21 +606,23 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 
 'Integer'
 
-1 isInteger = true
-1 hash = 1 identityHash
-11 isPrime
-(1 to: 99) select: [ :each | each isPrime ]
-(Integer primesUpTo: 4096) size = 564
-(Integer readFrom: '100') = 100
-(Integer readFrom: '-99' readStream) = -99
-40 lowBit = 4
-(0 digitAt: 1) = 0
-123 printString = '123'
--987654321 printString = '-987654321'
-(987654321 significantDigits: 1) = 1000000000
-(987654321 significantDigits: 2) = 990000000
-123456789 asStringWithCommas = '123,456,789'
--123456789 asStringWithCommas = '-123,456,789'
+{
+1 isInteger = true.
+1 hash = 1 identityHash.
+11 isPrime.
+((1 to: 99) select: [ :each | each isPrime ]) size = 25.
+(Integer primesUpTo: 4096) size = 564.
+(Integer readFrom: '100') = 100.
+(Integer readFrom: '-99' readStream) = -99.
+40 lowBit = 4.
+(0 digitAt: 1) = 0.
+123 printString = '123'.
+-987654321 printString = '-987654321'.
+(987654321 significantDigits: 1) = 1000000000.
+(987654321 significantDigits: 2) = 990000000.
+123456789 asStringWithCommas = '123,456,789'.
+-123456789 asStringWithCommas = '-123,456,789'.
+} allSatisfy: #yourself
 
 'Interval'
 
@@ -736,6 +785,15 @@ Set withAll: #(1 2 2 3 3 3)
 #(1 2 3) as: Set
 (#(1 2 3) asSet copyWithout: 3) = #(1 2) asSet
 
+'SetElement (Set with nil)'
+
+nil asSetElement class = SetElement
+1 asSetElement class = SmallInteger
+nil asSetElement ~~ nil
+nil asSetElement == nil asSetElement
+1 asSetElement == 1
+(Set new add: nil; add: nil; yourself) size = 1
+
 'SmallInteger'
 
 1 class = SmallInteger
@@ -842,63 +900,71 @@ String new species = String new species
 'string' includes: $i           "true"
 ('string' includes: nil) = false
 
-'Symbols'
+'Symbol'
 
-(#symbol isKindOf: String)
-(#symbol isMemberOf: String) = false
-(#a , #b) = 'ab'                                            "Symbol -> Symbol -> String"
-(#symbol at: 3) = $m                                        "Symbols are indexable but immutable"
-#symbol at: 1 put: $S                                       "=> error"
-(#perform:with: numArgs) = 2                                "number of arguments of selector"
-#perform:with: keywords = #('perform:' 'with:')             "keywords of selector as array of strings"
-#symbol asString = 'symbol'                                 "convert to string"
-#symbol asSymbol = #'symbol'                                "identity"
-'symbol' asSymbol = #symbol
-'symbol' copy asSymbol = #symbol
-#+ isInfix                                                  "is infix (binary) selector"
-#perform: isKeyword                                         "is keyword selector"
-#symbol isSymbol                                            "predicate"
-'symbol' isSymbol = false                                   "predicate"
-Symbol newFrom: #($P $e $n)
-#($P $e $n) as: Symbol
-#testAnd isTestSelector = true
-#symbol species = String
-#(x y z) = {#x. #y. #z}
-#x copy = #x
-'x' asSymbol = #x
-'x' copy asSymbol = #x
-'a string' copy asSymbol = #'a string'
-#symbol hash = 'symbol' hash    "false in gnu, true in squeak"
-#abs value: -1                "implement value procotol for selectors"
-#< value: 1 value: 2            "implement value procotol for selectors"
-#'symbol' capitalized
+{
+(#symbol isKindOf: String).
+(#symbol isMemberOf: String) = false.
+(#a , #b) = 'ab'.                                            "Symbol -> Symbol -> String"
+(#symbol at: 3) = $m.                                        "Symbols are indexable but immutable"
+[ #symbol at: 1 put: $S ] ifError: [ true ].                 "=> error"
+(#perform:with: numArgs) = 2.                                "number of arguments of selector"
+#perform:with: keywords = #('perform:' 'with:').             "keywords of selector as array of strings"
+#symbol asString = 'symbol'.                                 "convert to string"
+#symbol asSymbol = #'symbol'.                                "identity"
+'symbol' asSymbol = #symbol.
+'symbol' copy asSymbol = #symbol.
+#+ isInfix.                                                  "is infix (binary) selector"
+#perform: isKeyword.                                         "is keyword selector"
+#symbol isSymbol.                                            "predicate"
+'symbol' isSymbol = false.                                   "predicate"
+(Symbol newFrom: #($P $e $n)) = #Pen.
+(#($P $e $n) as: Symbol) = #Pen.
+#testAnd isTestSelector = true.
+#symbol species = String.
+#(x y z) = {#x. #y. #z}.
+#x copy = #x.
+'x' asSymbol = #x.
+'x' copy asSymbol = #x.
+'a string' copy asSymbol = #'a string'.
+#symbol hash = 'symbol' hash.    "false in gnu, true in squeak"
+(#abs value: -1) = 1.                "implement value procotol for selectors"
+#< value: 1 value: 2.            "implement value procotol for selectors"
+#symbol capitalized = #Symbol.
+} allSatisfy: #yourself
 
 'Time'
 
-Time epochOffset = 2177452800
-Time epochOffsetMicros = 2177452800000000
+{
+Time epochOffset = 2177452800.
+Time epochOffsetMicros = 2177452800000000.
+(Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'.
+(Time readFromString: '12:34:57') printString = '12:34:57 pm'.
+(Time readFromString: '4:02:47.42 am') printString = '4:02:47.42 am'.
+(Time readFrom: '0:00 am' readStream) printString = '12:00 am'.
+} allSatisfy: #yourself
+
 Time posixMicrosecondClockWithOffset "{1653874256296392. 36000}"
 Time utcMicrosecondClock "3831326473237958"
 Time dateAndTimeNow first printString "30 May 2022"
 Time dateAndTimeNow second printString "10:47:11 am"
 Time totalSeconds "3831362321"
 Time now printString "10:47:30.644892 am"
-(Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'
-(Time readFromString: '12:34:57') printString = '12:34:57 pm'
-(Time readFromString: '4:02:47.42 am') printString = '4:02:47.42 am'
-(Time readFrom: '0:00 am' readStream) printString = '12:00 am'
 Time microsecondsToRun: [ 28 benchFib ]
 Time millisecondsToRun: [ 28 benchFib ]
 Time durationToRun: [ 28 benchFib ]
 
 'Timespan'
 
-Timespan new printString = 'a Timespan(1901-01-01T00:00:00+00:00D0:00:00:00)'
+{
+Timespan new printString = 'a Timespan(1901-01-01T00:00:00+00:00D0:00:00:00)'.
+(Timespan starting: (DateAndTime nowAtOffset: Duration zero)) makeUTC <= Timespan current.
+Timespan current <= (Timespan starting: (DateAndTime current)) makeUTC.
+}
+
 date := Date readFrom: '1986-05-23' readStream
 (Timespan starting: date) printString = 'a Timespan(1986-05-23T00:00:00+00:00D0:00:00:00)'
 (Timespan starting: date duration: 365 days) end printString = '1987-05-22T23:59:59.999999999+00:00'
-(Timespan starting: (DateAndTime nowAtOffset: Duration zero)) makeUTC <= Timespan current
-Timespan current <= (Timespan starting: (DateAndTime current)) makeUTC
 Timespan current printString "a Timespan(2022-05-31T02:44:10.055496+00:00D0:00:00:00)"
 (Timespan starting: (DateAndTime year: 2005 month: 1 day: 1) duration: 1 week) makeUTC printString
 
@@ -917,6 +983,7 @@ Transcript endEntry                                         "flush the output bu
 
 'UndefinedObject'
 
+nil hash
 nil ifNil: ['nil'] ifNotNil: ['notNil'] "nil"
 #() ifNil: ['nil'] ifNotNil: ['notNil'] "notNil"
 UndefinedObject initializedInstance class == UndefinedObject
