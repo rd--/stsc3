@@ -36,20 +36,19 @@ lambdaDefinitionShow ld =
 {- | A standard applicative Expression type.
      Send replaces Apply.
      Block and Method bodies are written as Lambda.
-     Block and Method returns are written as Return.
+     Lambda has a definition, arguments, temporaries, statements, and a return.
+     The final return expression is optional, for blocks it is a non local return, for methods it is a local return.
      There are both literal and expression arrays.
-     Sequences are written as Begin.
+     Programs are written as Init, which is not allowed to have a return statement.
      Cascades are written as Lambda, see cascadeLambda.
 -}
 data Expr =
     Identifier St.Identifier
   | Literal St.Literal
   | Assignment St.Identifier Expr
-  | Return Expr -- ^ Block (non local) or Method (local) return.
   | Send Expr Message
-  | Lambda LambdaDefinition [St.Identifier] St.Temporaries [Expr] -- ^ Block or Method body. Definition, arguments, temporaries, statements.
+  | Lambda LambdaDefinition [St.Identifier] St.Temporaries ([Expr], Maybe Expr)
   | Array [Expr]
-  | Begin [Expr]
   | Init (Maybe St.Comment) St.Temporaries [Expr]
   deriving (Eq, Show)
 
@@ -65,23 +64,15 @@ assignmentIdentifier e =
     Assignment x _ -> Just x
     _ -> Nothing
 
-exprIsReturn :: Expr -> Bool
-exprIsReturn e =
-  case e of
-    Return {} -> True
-    _ -> False
-
 expr_map :: (Expr -> Expr) -> Expr -> Expr
 expr_map f e =
   case e of
     Identifier _ -> f e
     Literal _ -> f e
     Assignment p q -> f (Assignment p (expr_map f q))
-    Return p -> f (Return (expr_map f p))
     Send p (Message q r) -> f (Send (expr_map f p) (Message q (map (expr_map f) r)))
-    Lambda p q r s -> f (Lambda p q r (map (expr_map f) s))
+    Lambda p q r (s, t) -> f (Lambda p q r (map (expr_map f) s, fmap (expr_map f) t))
     Array p -> f (Array (map (expr_map f) p))
-    Begin p -> f (Begin (map (expr_map f) p))
     Init c p q -> f (Init c p (map (expr_map f) q))
 
 -- | Is expression the reservered word "super"?
@@ -125,7 +116,7 @@ blockBodyExpr blockBody =
      (BlockLambda blockBody)
      (maybe [] id arg)
      (maybe St.emptyTemporaries id tmp)
-     (maybe [] (statementsExprList Return) stm)
+     (maybe ([], Nothing) statementsExprList stm)
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
 methodDefinitionExpr methodDefinition =
@@ -134,7 +125,7 @@ methodDefinitionExpr methodDefinition =
      (MethodLambda methodDefinition)
      (St.patternArguments pat)
      (maybe St.emptyTemporaries id tmp)
-     (maybe [] (statementsExprList Return) stm)
+     (maybe ([], Nothing) statementsExprList stm)
 
 unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
 unaryMessagesExpr e u =
@@ -186,13 +177,6 @@ messagesExpr e m =
     St.MessagesBinary b (Just k) -> keywordMessageExpr (binaryMessagesExpr e b) k
     St.MessagesKeyword k -> keywordMessageExpr e k
 
-exprSequence :: [Expr] -> Expr
-exprSequence l =
-  case l of
-    [] -> error "exprSequence: empty"
-    [e] -> e
-    _ -> Begin l
-
 {- | Cascade message translation.
 
 Cascades send a sequence of messages to the same receiver.
@@ -211,7 +195,7 @@ cascadeLambda :: Message -> St.CascadedMessages -> Expr
 cascadeLambda m c =
   let z = "cascadeTemporaryVariable"
       f = messagesExpr (Identifier z)
-  in Lambda NullLambda [z] (St.Temporaries []) (Send (Identifier z) m : map f c)
+  in Lambda NullLambda [z] (St.Temporaries []) (Send (Identifier z) m : map f c, Nothing)
 
 -- | In the case of a cascade, the last message of m must be lifted out and send to cascadeLambda.
 basicExpressionExpr :: St.BasicExpression -> Expr
@@ -225,7 +209,7 @@ basicExpressionExpr (St.BasicExpression p m c) =
         Just c' ->
           case e of
             Send e' m'' -> keywordSend (cascadeLambda m'' c') "value:" [e']
-            _ -> error "basicExpressionExpr: cascade an non-Send?"
+            _ -> error "basicExpressionExpr: cascade a non-Send?"
 
 expressionExpr :: St.Expression -> Expr
 expressionExpr e =
@@ -233,31 +217,16 @@ expressionExpr e =
      St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
      St.ExprBasic e' -> basicExpressionExpr e'
 
--- | The returnForm is to allow for distinct MethodReturn and BlockReturn nodes (unused).
-statementsExprList :: (Expr -> Expr) -> St.Statements -> [Expr]
-statementsExprList returnForm s =
-  case s of
-    St.StatementsReturn (St.ReturnStatement e) -> [returnForm (expressionExpr e)]
-    St.StatementsExpression e Nothing -> [expressionExpr e]
-    St.StatementsExpression e (Just s') -> expressionExpr e : statementsExprList returnForm s'
+statementsExprList :: St.Statements -> ([Expr], Maybe Expr)
+statementsExprList =
+  let f (p, q) = (map expressionExpr p, fmap expressionExpr q)
+  in f . St.statementsUnfold
 
-statementsExpr :: (Expr -> Expr) -> St.Statements -> Expr
-statementsExpr returnForm = exprSequence . statementsExprList returnForm
-
-smalltalkProgramExpr :: St.SmalltalkProgram -> Expr
-smalltalkProgramExpr x =
-  case x of
-    St.SmalltalkProgram e -> exprSequence (map programElementExpr e)
-
-programElementExpr :: St.ProgramElement -> Expr
-programElementExpr e =
-  case e of
-    St.ProgramGlobal x -> globalDefinitionExpr x
-    St.ProgramInitializer x -> initializerDefinitionExpr x
-
-globalDefinitionExpr :: St.GlobalDefinition -> Expr
-globalDefinitionExpr (St.GlobalDefinition k v) =
-  Assignment k (maybe (Identifier "nil") initializerDefinitionExpr v)
+statementsExprListNoReturn :: St.Statements -> [Expr]
+statementsExprListNoReturn stm =
+  case statementsExprList stm of
+    (expr, Nothing) -> expr
+    _ -> error "Statements has disallowed return?"
 
 -- | Ansi 3.4.3
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr
@@ -265,7 +234,7 @@ initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
   Init
   cmt
   (maybe St.emptyTemporaries id tmp)
-  (maybe [] (statementsExprList Return) stm)
+  (maybe [] statementsExprListNoReturn stm)
 
 -- * Expr operators
 
@@ -301,7 +270,7 @@ implicitSend e l = keywordSend (Identifier e) "apply:" [Array l]
 
 -- | x -> { x }
 inLambda :: Expr -> Expr
-inLambda x = Lambda NullLambda [] St.emptyTemporaries [x]
+inLambda x = Lambda NullLambda [] St.emptyTemporaries ([x], Nothing)
 
 -- * Apply
 

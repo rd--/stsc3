@@ -32,7 +32,6 @@ import Language.Smalltalk.Ansi.Token {- stsc3 -}
       false           { FalseIdentifier }
       self            { SelfIdentifier }
       super           { SuperIdentifier }
-      primitiveidentifier { PrimitiveIdentifier }
 
       identifier      { Identifier $$ }
       keyword         { Keyword $$ }
@@ -88,9 +87,6 @@ expression :: { St.Expression }
 
 assignment :: { St.Assignment }
         : identifier ':=' expression           { St.Assignment $1 ($3) }
-
-primitive :: { St.Primitive }
-        : '<' primitiveidentifier ':' literal '>' { St.Primitive $4 }
 
 basicexpression :: { St.BasicExpression }
         : primary maybe_messages

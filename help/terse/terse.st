@@ -76,7 +76,6 @@ Float e = 2.718281828459045.                                 "exp constant"
 } allSatisfy: #yourself
 
 letters := 'abcdefghijklmnopqrstuvwxzy' copy.
-
 {
 letters quickSort = letters.
 letters mergeSort = letters.
@@ -84,7 +83,7 @@ letters reverse quickSort = letters.
 letters reverse mergeSort = letters.
 letters reverse asArray mergeSort = letters asArray.
 letters shuffle sort = letters.
-}
+} allSatisfy: #yourself
 
 'Array'
 
@@ -107,12 +106,17 @@ Array isVariable = true.                                     "array is indexable
 #(1 2 3) == #(1 2 3).                                        "array literals are identical"
 #(1 2 3) ~~ {1. 2. 3}.                                       "array literals and array expressions are not identical"
 [ Array new: -1 ] ifError: [ true ].                         "error"
+(#(1 2 3 4 5) any: 3) = #(1 2 3).                            "any three are first three"
+((Array new: 2) fillFrom: #(3 4) with: [ :n | n * n ]) = #(9 16).
+((Array new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4).
 } allSatisfy: #yourself
 
-c := {'string'. #symbol. 42}
-(c at: 1) = 'string'
-(c at: 2) = #symbol
-(c at: 3) = 42
+c := {'string'. #symbol. 42}.
+{
+(c at: 1) = 'string'.
+(c at: 2) = #symbol.
+(c at: 3) = 42.
+} allSatisfy: #yourself
 
 3 timesRepeat: [ Transcript show: 'repeat'; cr ]            "prints repeat three times, returns count"
 #(1 2 3) do: [ :item | Transcript show: item; cr ]              "prints 123"
@@ -145,10 +149,12 @@ Association key: #x value: 1                                "associate key with 
 (#x -> 1) value = 1                                         "value (right hand side) of association"
 (#x -> 1) copy
 {#x -> 1. #y -> 2} as: Dictionary
+(#x -> 1) printString
+(#+ -> 1) printString
 
 'Bag'
 
-Bag isVariable
+Bag isVariable not
 Bag withAll: #(1 2 2 3 3 3)
 Bag withAll: #(x y y z)
 Bag newFrom: {#x -> 2 . #y -> 3 . #y -> 4. #z -> 2 }
@@ -160,46 +166,57 @@ b = b copy                      "copies are equal"
 
 'Behaviour'
 
-Float selectors                                             "array of selectors implemented at class"
+{
+Float selectors size = 39.                                   "array of selectors implemented at class"
+Float allSelectors size = 241.                               "get all selectors an object responds to"
+Double includesSelector: #+.                                 "test if class implements selector"
+(Float includesSelector: #+) not.                            "does not look in superclasses"
+(Float canUnderstand: #+).                                   "test if class can understand selector"
+Float superclass = Number.                                   "superclass of class"
+Float inheritsFrom: Number.                                  "immediate inheritance"
+Float inheritsFrom: Magnitude.                               "non-immediate inheritance"
+}
+
 Float selectorsDo: [ :item | Transcript show: item; cr ]    "perform block at each selector"
-Double includesSelector: #+                                 "test if class implements selector"
-(Float includesSelector: #+) = false                        "does not look in superclasses"
-(Float canUnderstand: #+) = true                            "test if class can understand selector"
-Float superclass = Number                                   "superclass of class"
-Float inheritsFrom: Number                                  "immediate inheritance"
-Float inheritsFrom: Magnitude                               "non-immediate inheritance"
 Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
-Float allSelectors size = 209                               "get all selectors an object responds to"
 
 'Bitwise Manipulation'
 
-(255 bitAnd: 15) = 15                                       "and bits"
-(240 bitOr: 15) = 255                                       "or bits"
-(255 bitXor: 240) = 15                                      "xor bits"
-255 bitInvert = -256                                        "invert bits"
-(15 bitShift: 4) = 240                                      "left shift"
-(240 bitShift: -4) = 15                                     "right shift"
-(128 bitAt: 7) = 0                                          "bit at position (0|1) [!Squeak]"
-(255 allMask: 15) = true                                    "test if all bits set in mask set in receiver"
-(255 anyMask: 15) = true                                    "test if any bits set in mask set in receiver"
-(255 noMask: 15) = false                                    "test if all bits set in mask clear in receiver"
+{
+(255 bitAnd: 15) = 15.                                       "and bits"
+(240 bitOr: 15) = 255.                                       "or bits"
+(255 bitXor: 240) = 15.                                      "xor bits"
+255 bitInvert = -256.                                        "invert bits"
+(15 bitShift: 4) = 240.                                      "left shift"
+(240 bitShift: -4) = 15.                                     "right shift"
+(128 bitAt: 7) = 0.                                          "bit at position (0|1) [!Squeak]"
+(255 allMask: 15).                                           "test if all bits set in mask set in receiver"
+(255 anyMask: 15).                                           "test if any bits set in mask set in receiver"
+(255 noMask: 15) not.                                        "test if all bits set in mask clear in receiver"
+}
 
 'BlockClosure'
 
-[ 42 ] class = BlockClosure
-([ :aNumber | aNumber * aNumber ] value: 3) = 9             "apply block to one argument"
-([ :aNumber | aNumber * aNumber ] cull: 3) = 9              "apply block with or without argument"
-([ 42 ] cull: 3) = 42                                       "apply block with or without argument"
-b := [ :x | x * 42 ]
-b = b copy
-(b copy value: 2) = 84
-b = ({ b } copy at: 1)
+{
+[ 42 ] class = BlockClosure.
+([ :aNumber | aNumber * aNumber ] value: 3) = 9.             "apply block to one argument"
+([ :aNumber | aNumber * aNumber ] cull: 3) = 9.              "apply block with or without argument"
+([ 42 ] cull: 3) = 42.                                       "apply block with or without argument"
+[ [ 42 ] value: nil ] ifError: [ true ]. "error"
+[ [ :item | 42 ] value ] ifError: [ true ]. "error"
+}
+
+b := [ :x | x * 42 ].
+{
+b = b copy.
+(b copy value: 2) = 84.
+b = ({ b } copy at: 1).
+}
+
 cnt := 1. [ cnt > 9 ] whileFalse: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
 cnt := 1. [ cnt <= 9 ] whileTrue: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
 cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt > 9 ] whileFalse
 cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
-[ 42 ] value: nil "error"
-[ :item | 42 ] value "error"
 [ 1 unimplementedMessage ] on: Error do: [ :err | err printString ]
 [ UnknownGlobal ] on: Error do: [ :err | 'Unknown global?' ]
 
@@ -318,6 +335,7 @@ $} asciiValue = 125.
 CharacterSet ascii size = 127.                               "ascii character set"
 CharacterSet crlf size = 2.                                  "carriage return and line feed"
 CharacterSet separators size = 5.                            "whitespace"
+CharacterSet ascii any: 1 as: Array
 } allSatisfy: #yourself
 
 'Class'
@@ -385,13 +403,13 @@ thisContext class
 
 {
 3.99 asInteger = 3.                                          "convert number to integer (truncates in Squeak)"
-3 asFloat = 3.0.                                                   "convert number to float"
-3 asFloat = 3.0.                                               "3 asFloat is equal to 3"
+3 asFloat = 3.0.                                             "convert number to float"
+3 asFloat = 3.0.                                             "3 asFloat is equal to 3"
 65 asCharacter = $A.                                         "convert integer to character"
 $A asciiValue = 65.                                          "convert character to integer"
 3.99 printString = '3.99'.                                   "convert object to string via printOn:"
 3.99 storeString = '3.99'.                                   "convert object to string via storeOn:"
-((2 raisedTo: 4) - 1 radix: 16) = 'F'.                    "convert to string in given base"
+((2 raisedTo: 4) - 1 radix: 16) = 'F'.                       "convert to string in given base"
 ((2 raisedTo: 8) - 1 radix: 16) = 'FF'.
 ((2 raisedTo: 12) - 1 radix: 16) = 'FFF'.
 ((2 raisedTo: 16) - 1 radix: 16) = 'FFFF'.
@@ -444,25 +462,29 @@ time := Time readFrom: '0:00 am' readStream
 
 'Delay'
 
-d := Delay forSeconds: 5
-d delayDuration = 5000
-d beingWaitedOn = false
-d resumptionTime = nil
+d := Delay forSeconds: 5.
+{
+d delayDuration = 5000.
+d beingWaitedOn = false.
+d resumptionTime = nil.
+}
 
-(Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr
-(Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr
-(Delay forSeconds: 1) wait. Transcript nextPutAll: 'delayed'; cr
+(Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr.
+(Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr.
+(Delay forSeconds: 1) wait. Transcript nextPutAll: 'delayed'; cr.
 [ d wait ] fork. [ [ d beingWaitedOn ] whileTrue: [Transcript show: d; cr. (Delay forSeconds: 0.5) wait ] ] fork
 
 'Dictionary'
 
-Dictionary isVariable.                                     "St-80=true, Squeak=false"
+Dictionary isVariable not.                                 "St-80=true, Squeak=false"
 Dictionary new add: #a -> 1; add: #b -> 2; yourself        "add: inserts associations"
 Dictionary newFromPairs: #(#a 1 #b 2)                       "dictionary from adjacent key and value elements of array"
 Dictionary newFrom: {#a -> 1. #b -> 2}                      "dictionary from associations in collection"
 (Dictionary withAll: { #a -> 1. #b -> 2 }) any: 2           "select any two of"
 d := Dictionary newFrom: {#a -> 1. #b -> 2. #c -> 3}
-d isDictionary
+d isDictionary.
+(d any: 2)
+(d any: 2 as: Array)
 d associationsDo: [ :each | Transcript show: each; cr ]
 d do: [ :each | Transcript show: each; cr ]
 d keysDo: [ :each | Transcript show: each; cr ]
@@ -478,6 +500,7 @@ d includesKey: #b
 d includesAllOf: #(2 3)
 d includesAllOf: (d any: 2)
 d keys asBag = #(a b c) asBag
+((Dictionary new: 2) fillFrom: #(3 4) with: [ :item | item -> item printString ])
 
 'Dictionary ; Smalltalk'
 
@@ -591,9 +614,9 @@ Transcript show: (5 / 4); cr
 
 'Generator'
 
-g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]. [ g atEnd ] whileFalse: [ Transcript show: g next printString; cr ]
-g := Generator on: [ :g | g yield: 1. g error: 'error']. g next "propogate errors"
-x := 0. g := Generator on: [ :g | x := 1. g yield: 'A'. x := 2. g yield: 'B'. x := 3. g yield: 'C']. o := ''. g do: [ :s | o := o, x printString, s]. o "1A2B3C"
+g := Generator on: [ :g | 1 to: 9 do: [ :item | g yield: item ] ]. [ g atEnd ] whileFalse: [ Transcript show: g next; cr ]
+g := Generator on: [ :g | g yield: 1. g error: 'error']. g next "propagate errors"
+x := 0. o := ''. g := Generator on: [ :g | x := 1. g yield: 'A',x. x := 2. g yield: 'B',x. x := 3. g yield: 'C',x]. g do: [ :s | o := o, $(, x, $), s]. o "ghc = (3)A1(3)B2(3)C3"
 
 'IdentityBag'
 
@@ -661,56 +684,64 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 
 'Message sends'
 
-2 sqrt                                                      "unary message"
-2 raisedTo: 10                                              "keyword message*"
-194 * 9                                                     "binary message"
-Transcript show: (194 * 9) printString; cr                  "combination (chaining)"
-2 perform: #sqrt                                            "indirect method invocation"
-1 unimplementedMessage
+{
+2 sqrt = 1.4142135623730951.                                "unary message"
+(2 raisedTo: 10) = 1024.                                    "keyword message*"
+(194 * 9) = 1746.                                           "binary message"
+(Transcript show: (194 * 9) printString; cr) = Transcript.  "combination (chaining)"
+(2 perform: #sqrt) = 2 sqrt.                                "indirect method invocation"
+[ 1 unimplementedMessage ] ifError: [ true ].
+}
 
 'Method'
 
+{
+(1 class compiledMethodAt: #*) methodClass = SmallInteger.
+((1 class compiledMethodAt: #*) invokeOn: 2 with: #(3)) = 6.
+(1 class compiledMethodAt: #*) primitive = 9.
+(SmallInteger >> #*) primitive = 9.
+(3.14 class compiledMethodAt: #*) primitive = 49.
+(1 class compiledMethodAt: #*) selector = #*.
+}
+
 (1 class compiledMethodAt: #*) printString
-(1 class compiledMethodAt: #*) methodClass = SmallInteger
-((1 class compiledMethodAt: #*) invokeOn: 2 with: #(3)) = 6
-(1 class compiledMethodAt: #*) primitive = 9
-(SmallInteger >> #*) primitive = 9
-(3.14 class compiledMethodAt: #*) primitive = 49
-(1 class compiledMethodAt: #*) selector = #*
 
 'Month'
 
-(Month readFrom: 'July 1998' readStream) printString = 'July 1998'
+(Month readFrom: 'July 1998' readStream) printString = 'July 1998'.
 
 'Number'
 
-(Number readFrom: '42') = 42
-(Number readFrom: '3.14') = 3.14
-23 printShowingDecimalPlaces: 2
-23.5698 printShowingDecimalPlaces: 2
--234.567 printShowingDecimalPlaces: 5
-23.4567 printShowingDecimalPlaces: 0
-23.5567 printShowingDecimalPlaces: 0
--23.4567 printShowingDecimalPlaces: 0
--23.5567 printShowingDecimalPlaces: 0
-100000000 printShowingDecimalPlaces: 1
-0.98 printShowingDecimalPlaces: 5
--0.98 printShowingDecimalPlaces: 2
-2.567 printShowingDecimalPlaces: 2
--2.567 printShowingDecimalPlaces: 2
-0 printShowingDecimalPlaces: 2
+{
+(Number readFrom: '42') = 42.
+(Number readFrom: '3.14') = 3.14.
+(23 printShowingDecimalPlaces: 2) = '23.00'.
+(23.5698 printShowingDecimalPlaces: 2) = '23.57'.
+(-234.567 printShowingDecimalPlaces: 5) = '-234.56700'.
+(23.4567 printShowingDecimalPlaces: 0) = '23'.
+(23.5567 printShowingDecimalPlaces: 0) = '24'.
+(-23.4567 printShowingDecimalPlaces: 0) = '-23'.
+(-23.5567 printShowingDecimalPlaces: 0) = '-24'.
+(100000000 printShowingDecimalPlaces: 1) = '100000000.0'.
+(0.98 printShowingDecimalPlaces: 5) = '0.98000'.
+(-0.98 printShowingDecimalPlaces: 2) = '-0.98'.
+(2.567 printShowingDecimalPlaces: 2) = '2.57'.
+(-2.567 printShowingDecimalPlaces: 2) = '-2.57'.
+(0 printShowingDecimalPlaces: 2) = '0.00'.
+}
 
 'Object'
 
-Object superclass = nil
-Object class class = Metaclass
-[ :a | { a } ] perform: #value: with: 1
-[ :a :b | { a. b } ] perform: #value:value: with: 1 with: 2
-[ :a :b :c | { a. b. c } ] perform: #value:value:value: with: 1 with: 2 with: 3
-[ :a :b :c :d | { a. b. c. d } ] perform: #value:value:value:value: with: 1 with: 2 with: 3 with: 4
-[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: with: 1 with: 2 with: 3 with: 4 with: 5
-[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: #(1 2 3 4 5)
-[ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: {1. 2. 3. 4. 5}
+{
+Object superclass = nil.
+Object class class = Metaclass.
+([ :a | { a } ] perform: #value: with: 1) = #(1).
+([ :a :b | { a. b } ] perform: #value:value: with: 1 with: 2) = #(1 2).
+([ :a :b :c | { a. b. c } ] perform: #value:value:value: with: 1 with: 2 with: 3) = #(1 2 3).
+([ :a :b :c :d | { a. b. c. d } ] perform: #value:value:value:value: with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
+([ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
+([ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: #(1 2 3 4 5)) = #(1 2 3 4 5).
+}
 
 'OrderedCollection'
 
@@ -725,13 +756,12 @@ OrderedCollection new add:true ; add: true ; add: true ;add: false ; add: false;
 
 'OrderedDictionary'
 
-(OrderedDictionary new: 7)
- instVarNamed: #tally
+(OrderedDictionary new: 7) instVarNamed: #tally
 (OrderedDictionary new: 7) instVarNamed: #order
 
 'Primitive'
 
-(SmallInteger methodDict at: #*) primitive "squeak"
+(SmallInteger methodDict at: #*) primitive = 9 "squeak"
 
 'ReadStream'
 
@@ -773,66 +803,81 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 
 #(1 2 3 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
 #(1 2 3 4) permutations asSet size = 24
-(#(1 9 2 8 3 7 4 6) pairsCollect: [ :i :j | i + j ]) = #(10 10 10 10)
+(#(1 9 2 8 3 7 4 6) pairsCollect: [ :i :j | i + j ]) = #(10 10 10 10).
 #(1 9 2 8 3 7 4 6) pairsDo: [ :i :j | Transcript show: i + j; cr ]
 #(1 9 2 8 3 7 4 6) groupsDo: [ :i :j | Transcript show: i + j; cr ]
 
 'Set'
 
-Set newFrom: {Character cr. Character lf}
-Set newFrom: #(1 2 3)
-Set withAll: #(1 2 2 3 3 3)
-#(1 2 3) as: Set
-(#(1 2 3) asSet copyWithout: 3) = #(1 2) asSet
+{
+(Set newFrom: {Character cr. Character lf}) size = 2.
+(Set newFrom: #(1 2 3)) size = 3.
+(Set withAll: #(1 2 2 3 3 3)) size = 3.
+(#(1 2 3) as: Set) asArray = #(1 2 3).
+(#(1 2 3) asSet copyWithout: 3) = #(1 2) asSet.
+(#(1 2 2 3 3) asSet any: 2) = #(1 2) asSet.
+((Set new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4) asSet.
+} allSatisfy: #yourself
 
 'SetElement (Set with nil)'
 
-nil asSetElement class = SetElement
-1 asSetElement class = SmallInteger
-nil asSetElement ~~ nil
-nil asSetElement == nil asSetElement
-1 asSetElement == 1
-(Set new add: nil; add: nil; yourself) size = 1
+{
+nil asSetElement class = SetElement.
+1 asSetElement class = SmallInteger.
+nil asSetElement ~~ nil.
+nil asSetElement == nil asSetElement.
+1 asSetElement == 1.
+(Set new add: nil; add: nil; yourself) size = 1.
+} allSatisfy: #yourself
 
 'SmallInteger'
 
-1 class = SmallInteger
-1 hash = 1 identityHash
-12345 digitAt: 1
-40 lowBit = 4
-SmallInteger maxVal = 9223372036854775807
-SmallInteger maxVal = ((2 raisedTo: 63) - 1)
+{
+1 class = SmallInteger.
+1 hash = 1 identityHash.
+(12345 digitAt: 1) = 57.
+40 lowBit = 4.
+SmallInteger maxVal = 9223372036854775807.
+SmallInteger maxVal = ((2 raisedTo: 63) - 1).
+} allSatisfy: #yourself
 
 'FortranNumberParser'
 
-(FortranNumberParser parse: '42') = 42
-(FortranNumberParser parse: '3.141') = 3.141
-(FortranNumberParser parse: '-23') = -23
-(FortranNumberParser parse: '-0.01') = -0.01
-(FortranNumberParser parse: '1e3') = 1000
-(FortranNumberParser parse: '1e-3') = 0.001
-(FortranNumberParser parse: '-5e-2') = -0.05
+{
+(FortranNumberParser parse: '42') = 42.
+(FortranNumberParser parse: '3.141') = 3.141.
+(FortranNumberParser parse: '-23') = -23.
+(FortranNumberParser parse: '-0.01') = -0.01.
+(FortranNumberParser parse: '1e3') = 1000.
+(FortranNumberParser parse: '1e-3') = 0.001.
+(FortranNumberParser parse: '-5e-2') = -0.05.
+} allSatisfy: #yourself
 
 'SmalltalkNumberParser'
 
-(SmalltalkNumberParser parse: '42') = 42
-(SmalltalkNumberParser parse: '3.141') = 3.141
-(SmalltalkNumberParser parse: '16rFF') = 255
-(SmalltalkNumberParser parse: '2r1000001') = 65
-(SmalltalkNumberParser on: '2/3') nextFraction = (2/3)
-(SmalltalkNumberParser parse: 'Infinity') = Float infinity
-(SmalltalkNumberParser parse: 'NaN') isNaN
-(SmalltalkNumberParser parse: '-0.0')
-(SmalltalkNumberParser parse: '-Infinity') = Float negativeInfinity
+{
+(SmalltalkNumberParser parse: '42') = 42.
+(SmalltalkNumberParser parse: '3.141') = 3.141.
+(SmalltalkNumberParser parse: '16rFF') = 255.
+(SmalltalkNumberParser parse: '2r1000001') = 65.
+(SmalltalkNumberParser on: '2/3') nextFraction = (2/3).
+(SmalltalkNumberParser parse: 'Infinity') = Float infinity.
+(SmalltalkNumberParser parse: 'NaN') isNaN.
+(SmalltalkNumberParser parse: '-0.0') = Float negativeZero.
+(SmalltalkNumberParser parse: '-Infinity') = Float negativeInfinity.
+} allSatisfy: #yourself
 
 'SortedCollection'
 
-#(4 2 7) as: SortedCollection
-#($p $e $n) as: SortedCollection
-'pen' as: SortedCollection
-#pen as: SortedCollection
-#(10 9 8 7 5 4 4 2) asSortedCollection
-((1 to: 5) asSortedCollection collect: [ :each | each ]) class = OrderedCollection "collect generates an ordered collection"
+{
+(#(4 2 7) as: SortedCollection) asArray = #(2 4 7).
+((#($p $e $n) as: SortedCollection) as: String) = 'enp'.
+('pen' as: SortedCollection) asArray = #($e $n $p).
+(#pen as: SortedCollection) asArray = #($e $n $p).
+(#(10 9 8 7 5 4 4 2) asSortedCollection asArray) = #(2 4 4 5 7 8 9 10).
+((1 to: 5) asSortedCollection collect: [ :each | each ]) class = OrderedCollection. "collect generates an ordered collection"
+} allSatisfy: #yourself
+
 c := SortedCollection new sortBlock: [:a :b | a < b]; add: 'truite'; add: 'brochet'; yourself
 c copyEmpty
 c first = 'brochet'
@@ -846,10 +891,12 @@ cpy first = 'brochet'
 
 'SortFunction'
 
-#(#(1 2) #(2 3) #(0 0)) sorted: #first ascending.
-(#name ascending value: Array value: Set) = true
-(#sum ascending value: #(1 2) value: #(3 4)) = true
-(#min ascending value: #(1 2) value: #(3 4)) = true
+{
+(#((1 2) (2 3) (0 0)) sorted: #first ascending) = #((0 0) (1 2) (2 3)).
+(#name ascending value: Array value: Set) = true.
+(#sum ascending value: #(1 2) value: #(3 4)) = true.
+(#min ascending value: #(1 2) value: #(3 4)) = true.
+} allSatisfy: #yourself
 
 'Strings'
 
@@ -983,15 +1030,22 @@ Transcript endEntry                                         "flush the output bu
 
 'UndefinedObject'
 
-nil hash
-nil ifNil: ['nil'] ifNotNil: ['notNil'] "nil"
-#() ifNil: ['nil'] ifNotNil: ['notNil'] "notNil"
+{
+nil hash = nil copy hash.
+nil copy = nil.
+nil copy == nil.
+(nil ifNil: ['nil'] ifNotNil: ['notNil']) = 'nil'.
+(#() ifNil: ['nil'] ifNotNil: ['notNil']) = 'notNil'.
+} allSatisfy: #yourself
+
 UndefinedObject initializedInstance class == UndefinedObject
 
 'Week'
 
-(Week nameOfDay: 1) = #Sunday
-Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ])
+{
+(Week nameOfDay: 1) = #Sunday.
+Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ]).
+} allSatisfy: #yourself
 
 'WriteStream'
 
@@ -1017,9 +1071,11 @@ s contents = 'test'
 
 'Year'
 
-Year current printString "a Year(2022)"
-1908 asYear daysInYear = 366
-1975 asYear daysInYear = 365
+{
+Year current printString = 'a Year (2022)'.
+1908 asYear daysInYear = 366.
+1975 asYear daysInYear = 365.
+} allSatisfy: #yourself
 
 'Debugging'
 
@@ -1031,15 +1087,16 @@ nil error: 'Reason'                                         "error with indicate
 nil shouldNotImplement                                      "flag message should not be implemented"
 nil subclassResponsibility                                  "flag message as abstract"
 nil primitiveFailed                                         "system primitive failed"
-Point allInstVarNames                                       "instance variable names of class"
-(Point instVarIndexFor: #x ifAbsent: []) = 1 "index for named instance variable"
-((Point x: 4 y: 2) instVarAt: 1) = 4                        "lookup instance variable by index"
-((Point x: 4 y: 2) instVarNamed: #x) = 4 "lookup instance variable by name"
+
+Point allInstVarNames = #(x y).                             "instance variable names of class"
+(Point instVarIndexFor: #x ifAbsent: []) = 1.               "index for named instance variable"
+((Point x: 4 y: 2) instVarAt: 1) = 4.                       "lookup instance variable by index"
+((Point x: 4 y: 2) instVarNamed: #x) = 4.                   "lookup instance variable by name"
 CharacterSet allClassVarNames                               "class variable names of class"
 
 'Methods'
 
-(String respondsTo: #size) = true                           "does an object implement a selector"
+(String respondsTo: #size) = true.                           "does an object implement a selector"
 (Set allSelectors) size                                     "get all selectors an object responds to"
 Array lookupSelector: #at:                                  "get method implementing selector, may be in superclass"
 (Float compiledMethodAt: #sqrt)                             "get method implementing selector, must be in class"
@@ -1048,14 +1105,17 @@ Number sourceCodeAt: #+                                     "get the source code
 
 'Class hierachy'
 
-(nil isKindOf: Class) not
-Integer superclass = Number                                 "discover the superclass of a class"
-Integer subclasses includes: SmallInteger
-(ArrayedCollection subclasses includes: Symbol) not
-ArrayedCollection allSubclasses includes: Symbol
+{
+(nil isKindOf: Class) not.
+Integer superclass = Number.                                 "discover the superclass of a class"
+Integer subclasses includes: SmallInteger.
+(ArrayedCollection subclasses includes: Symbol) not.
+ArrayedCollection allSubclasses includes: Symbol.
+Array allSuperclasses size = 4.                              "get sequence of all superclasses of a class"
+(Set withAllSuperclasses) size = 4.                          "an ordered collection of a class and it's parents"
+} allSatisfy: #yourself
+
 Object allInstances                                         "get an array of all instances of a class"
-Array allSuperclasses size = 4                              "get sequence of all superclasses of a class"
-(Set withAllSuperclasses) size = 4                          "an ordered collection of a class and it's parents"
 
 'Benchmark'
 

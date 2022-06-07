@@ -1,0 +1,8 @@
+!Collection methodsFor: 'stsc3'!
+adaptToCollection: rcvr andSend: selector
+	"Modified to extend shorter collection cyclically.  This is the Sc rule.  It may be better to have tilde variants for the cyclic variant, i.e. *~ &etc."
+	rcvr isSequenceable & self isSequenceable ifFalse:
+		[self error: 'Only sequenceable collections may be combined arithmetically'].
+	^ rcvr withExtending: self collect:
+		[:rcvrElement :myElement | rcvrElement perform: selector with: myElement]!
+!

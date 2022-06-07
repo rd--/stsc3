@@ -59,18 +59,17 @@ exprPrintStc elideApply expr =
     Identifier i -> i
     Literal l -> St.sc_literal_pp l
     Assignment i e -> printf "%s = %s" i (exprPrintStc elideApply e)
-    Return e -> printf "^%s" (exprPrintStc elideApply e)
     Send e m ->
       let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
       in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
-    Lambda ld a (St.Temporaries t) e ->
-      let x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e)
+    Lambda ld a (St.Temporaries t) (e,r) ->
+      let r' = maybe [] (return . printf "^%s" . exprPrintStc elideApply) r
+          x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
       in case (a,t) of
         ([],[]) -> printf "{ %s }" x
         (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " a) x
         _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " a) (intercalate ", " t) x
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
-    Begin e -> intercalate "; "  (map (exprPrintStc elideApply) e)
     Init c (St.Temporaries t) e ->
       let x = intercalate "; "  (map (exprPrintStc elideApply) e)
           r = case (t,e) of
@@ -102,18 +101,17 @@ exprPrintSt expr =
     Identifier i -> i
     Literal l -> St.literal_pp l
     Assignment i e -> printf "%s := %s" i (exprPrintSt e)
-    Return e -> printf "^%s" (exprPrintSt e)
     Send e m ->
       let template = if exprIsUnaryMessageSend expr then "%s%s" else "(%s%s)"
       in printf template (exprPrintSt e) (messagePrintSt m)
-    Lambda _ a (St.Temporaries t) e ->
-      let x = intercalate ". " (map (exprPrintSt) e)
+    Lambda _ a (St.Temporaries t) (e,r) ->
+      let r' = maybe [] (return . ('^' :) . exprPrintSt) r
+          x = intercalate ". " (map (exprPrintSt) e ++ r')
       in case (map (':' : ) a,t) of
         ([],[]) -> printf "[ %s ]" x
         (a',[]) -> printf "[ %s | %s ]" (unwords a') x
         (a',_) -> printf "[ %s | | %s | %s ]" (unwords a') (unwords t) x
     Array e -> printf "{ %s }" (intercalate ". " (map (exprPrintSt) e))
-    Begin e -> intercalate ". "  (map (exprPrintSt) e)
     Init c (St.Temporaries t) e ->
       let x = intercalate ". "  (map (exprPrintSt) e)
           r = case (t,e) of
@@ -150,19 +148,15 @@ exprPrintLisp expr =
     Identifier i -> i
     Literal l -> St.literal_pp l
     Assignment i e -> printf "(:= %s %s)" i (exprPrintLisp e)
-    Return e -> printf "(^ %s)" (exprPrintLisp e)
     Send e m -> printf "(. %s %s)" (exprPrintLisp e) (messagePrintLisp m)
-    Lambda _ a (St.Temporaries t) e ->
-      let x = unwords (map exprPrintLisp e)
+    Lambda _ a (St.Temporaries t) (e,r) ->
+      let r' = maybe [] (return . printf "(^ %s)" . exprPrintLisp) r
+          x = unwords (map exprPrintLisp e ++ r')
       in case (a,t) of
         ([],[]) -> printf "(\\ %s)" x
         (_,[]) -> printf "(\\ (: %s) %s)" (unwords a) x
         _ -> printf "(\\ (: %s) (| %s) %s)" (unwords a) (unwords t) x
     Array e -> printf "(%% %s)" (unwords (map exprPrintLisp e))
-    Begin e ->
-      case e of
-        [x] -> exprPrintLisp x
-        _ -> printf "(>> %s)" (unwords (map exprPrintLisp e))
     Init c (St.Temporaries t) e ->
       let x = unwords (map exprPrintLisp e)
           r = case (t,e) of
@@ -234,7 +228,6 @@ exprPrintJs rw expr =
         _ -> x
     Literal x -> literalPrintJs x
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
-    Return e -> printf "return %s;" (exprPrintJs rw e)
     Send rcv (Message sel arg) ->
       case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
         (_, "apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
@@ -242,14 +235,14 @@ exprPrintJs rw expr =
         (Identifier "Float", "pi", []) -> "pi"
         (Identifier "Float", "infinity", _) -> "inf"
         (_, msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
-    Lambda _ arg (St.Temporaries tmp) stm ->
-      printf
-      "function(%s) { %s %s }"
-      (intercalate ", " arg)
-      (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
-      (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) (init stm ++ [Return (last stm)])))
+    Lambda _ arg (St.Temporaries tmp) (stm, ret) ->
+      let ret' = maybe [] (return . printf "return %s;" . exprPrintJs rw) ret
+      in printf
+         "function(%s) { %s %s }"
+         (intercalate ", " arg)
+         (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
+         (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm ++ ret'))
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
-    Begin e -> intercalate "; "  (map (exprPrintJs rw) e)
     Init c (St.Temporaries t) e ->
       let x = intercalate "; "  (map (exprPrintJs rw) e)
           r = case (t,e) of
@@ -269,12 +262,13 @@ literalPrintScheme l =
     St.ArrayLiteral a -> printf "'(%s)" (unwords (map (either literalPrintScheme id) a))
     _ -> St.literal_pp l
 
-exprTmpStmScheme :: (St.Identifier -> St.Identifier) -> [St.Identifier] -> [Expr] -> String
-exprTmpStmScheme rw tmp stm =
-  printf
-  "(let (%s) %s))"
-  (if null tmp then "" else unwords (map (\nm -> printf "(%s 'undefined)" nm) tmp))
-  (if null stm then "'()" else unwords (map (exprPrintScheme rw) stm))
+exprTmpStmScheme :: (St.Identifier -> St.Identifier) -> [St.Identifier] -> ([Expr], Maybe Expr) -> String
+exprTmpStmScheme rw tmp (stm, ret) =
+  let stm' = stm ++ maybe [] return ret
+  in printf
+     "(let (%s) %s))"
+     (if null tmp then "" else unwords (map (\nm -> printf "(%s 'undefined)" nm) tmp))
+     (if null stm' then "'()" else unwords (map (exprPrintScheme rw) stm'))
 
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
@@ -298,7 +292,6 @@ exprPrintScheme rw expr =
         _ -> x
     Literal x -> literalPrintScheme x
     Assignment lhs rhs -> printf "(set! %s %s)" lhs (exprPrintScheme rw rhs)
-    Return e -> exprPrintScheme rw e
     Send rcv (Message sel arg) ->
       case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
         (_, "apply", [Array p]) -> printf "(%s %s)" (exprPrintScheme rw rcv) (unwords (map (exprPrintScheme rw) p))
@@ -308,7 +301,6 @@ exprPrintScheme rw expr =
         (_, msg, _) -> printf "(%s %s)" msg (unwords (map (exprPrintScheme rw) (rcv : arg)))
     Lambda _ arg (St.Temporaries tmp) stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
     Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
-    Begin e -> unwords  (map (exprPrintScheme rw) e)
     Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c
-                                              ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp stm]
+                                              ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp (stm, Nothing)]
 

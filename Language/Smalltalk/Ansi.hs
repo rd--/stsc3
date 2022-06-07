@@ -668,15 +668,21 @@ blockArgument = lexeme (P.char ':') >> identifier
 data Statements
   = StatementsReturn ReturnStatement
   | StatementsExpression Expression (Maybe Statements)
-  deriving (Eq,Show)
+  deriving (Eq, Show)
+
+-- | Unfold Statements value into a sequence of expressions and an optional return expression.
+statementsUnfold :: Statements -> ([Expression], Maybe Expression)
+statementsUnfold =
+  let f lst stm =
+        case stm of
+          StatementsReturn (ReturnStatement ret) -> (reverse lst, Just ret)
+          StatementsExpression expr Nothing -> (reverse (expr : lst), Nothing)
+          StatementsExpression expr (Just stm') -> f (expr : lst) stm'
+  in f []
 
 -- | Does Statements end with a Return?
 statementsEndsWithReturn :: Statements -> Bool
-statementsEndsWithReturn x =
-  case x of
-    StatementsReturn _ -> True
-    StatementsExpression _ Nothing -> False
-    StatementsExpression _ (Just x') -> statementsEndsWithReturn x'
+statementsEndsWithReturn = isJust . snd . statementsUnfold
 
 -- | Prepend a list of expressions, as statements, to an existing statement.
 expressionSequenceToStatements :: Maybe Statements -> [Expression] -> Statements
