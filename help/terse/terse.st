@@ -7,7 +7,8 @@
 6 - 3 = 3.                                                   "subtraction"
 6 * 3 = 18.                                                  "multiplication"
 1 + 2 * 3 = 9.                                               "evaluation always left to right (1 + 2) * 3"
-(5 / 3) class = Fraction.                                    "division with non-integer result"
+6 / 3 = 2.                                    "integer division with integer result"
+(5 / 3) class = Fraction.                                    "integer division with non-integer result"
 ((5 / 3) asFloat) closeTo: 1.666666.                         "fraction as float"
 5.0 / 2.0 = 2.5.                                             "division with float result (operand float)"
 (355.0 / 113) closeTo: 3.141592.                             "division with float result (operand integer)"
@@ -57,20 +58,22 @@ Float pi = 3.141592653589793.                                "pi"
 Float e = 2.718281828459045.                                 "exp constant"
 100 atRandom between: 1 and: 100.                            "random integer in (1,self)"
 1.0 atRandom between: 0 and: 1.0.                            "random float in (0,self)"
+0 isZero.
+1 isZero not.
 } allSatisfy: #yourself
 
 'ArrayedCollection'
 
 {
-#(3 2 1) copy sort = #(1 2 3).
-(9 to: 1 by: -1) asArray sort = (1 to: 9) asArray.
-(1 to: 99) asArray shuffle mergeSort = (1 to: 99) asArray.
+#(3 2 1) copy sort = #(1 2 3). "merge sort"
+(9 to: 1 by: -1) asArray sort = (1 to: 9) asArray. "merge sort"
+(1 to: 99) asArray shuffle sort = (1 to: 99) asArray. "merge sort"
 (1 to: 99) asArray shuffle quickSort = (1 to: 99) asArray.
 'string' copy quickSort = 'ginrst'.
 'quick' copy quickSort = 'cikqu'.
+'merge' copy sort = 'eegmr'. "merge sort"
+'mergeSortFrom:to:by:' copy sort = ':::FSbeegmmooorrrtty'. "merge sort"
 'quickSort' copy quickSort = 'Scikoqrtu'.
-'merge' copy mergeSort = 'eegmr'.
-'mergeSortFrom:to:by:' copy mergeSort = ':::FSbeegmmooorrrtty'.
 (#(5 4 3 2 1) copy sort: [ :lhs :rhs | lhs < rhs ]) = #(1 2 3 4 5).
 (#(5 4 3 2 1) copy sort: #<) = #(1 2 3 4 5).
 } allSatisfy: #yourself
@@ -78,10 +81,10 @@ Float e = 2.718281828459045.                                 "exp constant"
 letters := 'abcdefghijklmnopqrstuvwxzy' copy.
 {
 letters quickSort = letters.
-letters mergeSort = letters.
+letters sort = letters. "merge sort"
 letters reverse quickSort = letters.
-letters reverse mergeSort = letters.
-letters reverse asArray mergeSort = letters asArray.
+letters reverse sort = letters. "merge sort"
+letters reverse asArray sort = letters asArray. " merge sort"
 letters shuffle sort = letters.
 } allSatisfy: #yourself
 
@@ -105,7 +108,7 @@ Array isVariable = true.                                     "array is indexable
 ({1. 2. 3} at: 1 put: '1') = '1'.                            "array expressions are mutable"
 #(1 2 3) == #(1 2 3).                                        "array literals are identical"
 #(1 2 3) ~~ {1. 2. 3}.                                       "array literals and array expressions are not identical"
-[ Array new: -1 ] ifError: [ true ].                         "error"
+[ Array new: -1 ] on: Error do: [ true ].                         "error"
 (#(1 2 3 4 5) any: 3) = #(1 2 3).                            "any three are first three"
 ((Array new: 2) fillFrom: #(3 4) with: [ :n | n * n ]) = #(9 16).
 ((Array new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4).
@@ -144,7 +147,7 @@ x := 3. ('string' at: (x := x + 1)) = $i
 'Association'
 
 Association key: #x value: 1                                "associate key with value"
-#x -> 1 = (Association key: #x value: 1)                    "literal syntax"
+#x -> 1 = (Association key: #x value: 1)                    "arrow message at Object"
 (#x -> 1) key = #x                                          "key (left hand side) of association"
 (#x -> 1) value = 1                                         "value (right hand side) of association"
 (#x -> 1) copy
@@ -168,14 +171,14 @@ b = b copy                      "copies are equal"
 
 {
 Float selectors size = 39.                                   "array of selectors implemented at class"
-Float allSelectors size = 241.                               "get all selectors an object responds to"
+Float allSelectors size = 242.                               "get all selectors an object responds to"
 Double includesSelector: #+.                                 "test if class implements selector"
 (Float includesSelector: #+) not.                            "does not look in superclasses"
 (Float canUnderstand: #+).                                   "test if class can understand selector"
 Float superclass = Number.                                   "superclass of class"
 Float inheritsFrom: Number.                                  "immediate inheritance"
 Float inheritsFrom: Magnitude.                               "non-immediate inheritance"
-}
+} allSatisfy: #yourself
 
 Float selectorsDo: [ :item | Transcript show: item; cr ]    "perform block at each selector"
 Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
@@ -193,7 +196,7 @@ Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at se
 (255 allMask: 15).                                           "test if all bits set in mask set in receiver"
 (255 anyMask: 15).                                           "test if any bits set in mask set in receiver"
 (255 noMask: 15) not.                                        "test if all bits set in mask clear in receiver"
-}
+} allSatisfy: #yourself
 
 'BlockClosure'
 
@@ -211,7 +214,7 @@ b := [ :x | x * 42 ].
 b = b copy.
 (b copy value: 2) = 84.
 b = ({ b } copy at: 1).
-}
+} allSatisfy: #yourself
 
 cnt := 1. [ cnt > 9 ] whileFalse: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
 cnt := 1. [ cnt <= 9 ] whileTrue: [ Transcript show: cnt; cr. cnt := cnt + 1 ]
@@ -261,7 +264,6 @@ false asBit = 0.
 true asBit = 1.
 true asInteger > false asInteger.
 } allSatisfy: #yourself
-
 'ByteArray'
 
 {
@@ -335,7 +337,7 @@ $} asciiValue = 125.
 CharacterSet ascii size = 127.                               "ascii character set"
 CharacterSet crlf size = 2.                                  "carriage return and line feed"
 CharacterSet separators size = 5.                            "whitespace"
-CharacterSet ascii any: 1 as: Array
+(CharacterSet separators any: 1 as: Array) = {Character tab}.
 } allSatisfy: #yourself
 
 'Class'
@@ -350,7 +352,7 @@ Class superclass = ClassDescription.
 #(1 3 2 9 4 5 7 8 6) includesAnyOf: #(0 6).                  "includes any element of a collection"
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag.
 (#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6).
-[ #(1 2) take: -1 ] ifError: [ true ].
+[ #(1 2) take: -1 ] on: Error do: [ true ].
 } allSatisfy: #yourself
 
 'Color'
@@ -508,7 +510,7 @@ d keys asBag = #(a b c) asBag
 (Smalltalk at: #Array) = Array.                             "lookup value in Smalltalk dictionary"
 (Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil.       "lookup value with clause for absent values "
 (Smalltalk includesKey: #DoesNotExist) = false.              "see if key exists in dictionary"
-}
+} allSatisfy: #yourself
 
 Smalltalk keys size                                         "get set of all known keys "
 Smalltalk halt
@@ -556,8 +558,10 @@ Float nan ~= Float nan.
 'Fraction'
 
 {
+(Fraction numerator: 2 denominator: 3) class = Fraction.
 (2/3) isMemberOf: Fraction.
 (Fraction readFrom: '5/4') = (5/4).
+(Fraction numerator: 2 denominator: 3) reduced = (2/3).
 2 / (3/4) = (8/3).
 (2/3) + (2/3) = (4/3).
 ((2/3) + (1/2)) = (7/6).		"case showing reduction to common denominator"
@@ -645,6 +649,7 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 (987654321 significantDigits: 2) = 990000000.
 123456789 asStringWithCommas = '123,456,789'.
 -123456789 asStringWithCommas = '-123,456,789'.
+4 / 2 = 2.                      "integer division with integer result"
 } allSatisfy: #yourself
 
 'Interval'
@@ -690,8 +695,8 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (194 * 9) = 1746.                                           "binary message"
 (Transcript show: (194 * 9) printString; cr) = Transcript.  "combination (chaining)"
 (2 perform: #sqrt) = 2 sqrt.                                "indirect method invocation"
-[ 1 unimplementedMessage ] ifError: [ true ].
-}
+[ 1 unimplementedMessage ] on: Error do: [ true ].
+} allSatisfy: #yourself
 
 'Method'
 
@@ -702,7 +707,7 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (SmallInteger >> #*) primitive = 9.
 (3.14 class compiledMethodAt: #*) primitive = 49.
 (1 class compiledMethodAt: #*) selector = #*.
-}
+} allSatisfy: #yourself
 
 (1 class compiledMethodAt: #*) printString
 
@@ -728,7 +733,7 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (2.567 printShowingDecimalPlaces: 2) = '2.57'.
 (-2.567 printShowingDecimalPlaces: 2) = '-2.57'.
 (0 printShowingDecimalPlaces: 2) = '0.00'.
-}
+} allSatisfy: #yourself
 
 'Object'
 
@@ -741,7 +746,7 @@ Object class class = Metaclass.
 ([ :a :b :c :d | { a. b. c. d } ] perform: #value:value:value:value: with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
 ([ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
 ([ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: #(1 2 3 4 5)) = #(1 2 3 4 5).
-}
+} allSatisfy: #yourself
 
 'OrderedCollection'
 
@@ -839,6 +844,7 @@ nil asSetElement == nil asSetElement.
 40 lowBit = 4.
 SmallInteger maxVal = 9223372036854775807.
 SmallInteger maxVal = ((2 raisedTo: 63) - 1).
+1 isMemberOf: SmallInteger.
 } allSatisfy: #yourself
 
 'FortranNumberParser'
@@ -954,7 +960,7 @@ String new species = String new species
 (#symbol isMemberOf: String) = false.
 (#a , #b) = 'ab'.                                            "Symbol -> Symbol -> String"
 (#symbol at: 3) = $m.                                        "Symbols are indexable but immutable"
-[ #symbol at: 1 put: $S ] ifError: [ true ].                 "=> error"
+[ #symbol at: 1 put: $S ] on: Error do: [ true ].                 "=> error"
 (#perform:with: numArgs) = 2.                                "number of arguments of selector"
 #perform:with: keywords = #('perform:' 'with:').             "keywords of selector as array of strings"
 #symbol asString = 'symbol'.                                 "convert to string"
@@ -1007,7 +1013,7 @@ Time durationToRun: [ 28 benchFib ]
 Timespan new printString = 'a Timespan(1901-01-01T00:00:00+00:00D0:00:00:00)'.
 (Timespan starting: (DateAndTime nowAtOffset: Duration zero)) makeUTC <= Timespan current.
 Timespan current <= (Timespan starting: (DateAndTime current)) makeUTC.
-}
+} allSatisfy: #yourself
 
 date := Date readFrom: '1986-05-23' readStream
 (Timespan starting: date) printString = 'a Timespan(1986-05-23T00:00:00+00:00D0:00:00:00)'
@@ -1129,3 +1135,4 @@ Time microsecondsToRun: [ 28 benchFib ]
 Time millisecondsToRun: [ 28 benchFib ]
 
 Smalltalk tinyBenchmarks
+Smalltalk keys

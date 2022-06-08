@@ -51,13 +51,16 @@ pi == 3.141592653589793                                     // pi (3.14159265358
 
 Array.new.isKindOf(Collection) == true                      // c.f. Collection
 Array.new.isKindOf(SequenceableCollection) == true          // c.f. SequenceableCollection
+Array.new.isKindOf(ArrayedCollection) == true               // c.f. ArrayedCollection
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
 Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by value protocol
+Array.new(4).maxSize == 4                                   // Array has both size and maxSize
 Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
 Array.new(3).add(1).addAll([2, 3]) == [1, 2, 3]             // add all elements of collection to end of array
-{ var x = [1, 2]; [x.remove(2), x] }.value == [2, [1]]      // remove element from array (in place)
+{ Array.new.addAll("string").at[4] }.try({ "error!" })      // ArrayedCollection is maybe-copying
+var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element from array (in place)
 [1, 2, 3, 4].removeAll([3, 4]) == [1, 2]                    // remove all elements of collection from array
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
 #[1, 2, 3, 4] == [1, 2, 3, 4]                               // literal array syntax
@@ -98,7 +101,7 @@ Array.linrand(4, 1, 9)                                      // array of random n
 Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
 [1, 2, 3].reverse == [3, 2, 1]                              // reverse elements
-{var x = [1, 2], y = x.reverse; x + y}.value == [3, 3]      // reverse array (not in place)
+var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse array (not in place)
 
 'Assignment'
 
@@ -112,10 +115,10 @@ x = 1.2.hash                                                // hash value for ob
 y = x.copy                                                  // copy object
 y = x.shallowCopy                                           // copy object (not overridden)
 y = x.deepCopy                                              // copy object and instance vars
-{ var x; x = 5; x == 5 }.value                              // assignment (set variable x to 5)
-{ var x, y; x = y = 5; [x, y] == [5, 5] }.value             // compound assignment (set variables x and y to 5)
-{ var x, y; x = (y = 5) + 1; [x, y] == [6, 5] }.value       // expression assignment
-{ var x = 1; var y = x + 1, z = y; [x, z] == [1, 2] }.value // multiple variable declarations
+var x; x = 5; x == 5                                        // assignment (set variable x to 5)
+var x, y; x = y = 5; [x, y] == [5, 5]                       // compound assignment (set variables x and y to 5)
+var x, y; x = (y = 5) + 1; [x, y] == [6, 5]                 // expression assignment
+var x = 1; var y = x + 1, z = y; [x, z] == [1, 2]           // multiple variable declarations
 
 'Association'
 
@@ -303,7 +306,7 @@ d.keys == Set.newFrom(['x', 'y', 'z'])                      // set of keys at di
 d.keysDo({ arg x; x.postln })                               // run f at keys of dictionary
 d.keysValuesDo({ arg k, v; [k, v].postln })                 // run f at keys & values of dictionary
 d.occurrencesOf(3) == 1                                     // number of occurences of value in dictionary
-{ d.removeAt('x') == 1; d.add('x' -> 1) }.value             // remove (and return value associated with) key from dictionary
+{ d.removeAt('x') == 1; d.add('x' -> 1) }.value             // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
 
@@ -395,10 +398,10 @@ File.delete("/tmp/x")                                       // delete file
 'Functions (Blocks)'
 
 x = { }                                                     // blocks are objects and may be assigned to a variable
-{ nil; 1 }.value == 1                                       // value is last expression evaluated unless explicit return
+{ nil; 1 }.value == 1                                       // value is last expression evaluated unless ^ (return)
 { { 1 }.value }.value == 1                                  // blocks may be nested
 { arg x; var y = x; y }.value(1) == 1                       // specification { arguments localvars expressions }
-{ ^1 }.value                                                // ^expression terminates block & method (exits all nested blocks)
+{ ^1 }.value                                                // ^ terminates block & method (exits all nested blocks)
 { 'x'.postln }.value                                        // simple block usage
 { arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
 { arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
@@ -411,13 +414,14 @@ List.new.isKindOf(SequenceableCollection) == true           // c.f. Sequenceable
 List.newUsing([1, 3, 2, 4, 5])                              // list from array
 [1, 3, 2, 4, 5].asList                                      // list from collection
 [1, 3, 2, 4, 5].asList.asArray                              // list to array
-{var l = [1, 3, 2, 4, 5].asList; [l.reverse, l]}.value      // list reverse (copying)
+var l = [1, 3, 2, 4, 5].asList; [l.reverse, l]              // list reverse (copying)
 [1, 3, 2, 4, 5].asList.add(6)                               // add element at end (snoc)
 [1, 3, 2, 4, 5].asList.addFirst(6)                          // add element at start (cons)
-{var l = [1, 3, 2, 4, 5].asList; [l.pop == 5, l]}.value     // remove (in place) and return last element
-{var l = [1, 2, 4].asList.put(2, 3); l}.value               // replace (in place) element at index
-{var l = [1, 2, 4].asList.insert(2, 3); l}.value            // insert (in place) element at index
-{var l = [1, 2, 4].asList; [l.removeAt(2), l]}.value        // remove (in place) and return element at index
+var l = [1, 3, 2, 4, 5].asList; [l.pop == 5, l]             // remove (in place) and return last element
+var l = [1, 2, 4].asList.put(2, 3); l                       // replace (in place) element at index
+var l = [1, 2, 4].asList.insert(2, 3); l                    // insert (in place) element at index
+var l = [1, 2, 4].asList; [l.removeAt(2), l]                // remove (in place) and return element at index
+var l = [1, 2, 3].asList; l.clear; l.isEmpty                // remove all items from collection
 
 'Magnitude'
 
@@ -520,9 +524,9 @@ true.class == True                                          // constant (instanc
 
 'Routine'
 
-f = { arg x; var y = x * 2; var z = y.yield; f.value(z) }   // yield send the receiver to the coroutine (it is received by next)
+f = { arg x; var y = x * 2; var z = y.yield; f.value(z) }   // yield the receiver to the coroutine (received by next)
 r = Routine.new(f)                                          // a routine is instantiated on a function
-1.to(9).collect({ arg i; var j = r.next(i); i -> j })       // next sends a value to a routine (resume, value, and run are synonyms)
+1.to(9).collect({ arg i; var j = r.next(i); i -> j })       // sends value to coroutine (also resume, value, run)
 
 'SequenceableCollection'
 
@@ -595,6 +599,9 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "text".copyRange(1,2) == "ex"                               // substring
 "text".copyRange(2,2) == "x"                                // substring (single character)
 "% string % interpolation".format('format', 'with')         // format string with interpolation
+{ "string".add($!) }.try({ "oh oh..." }) == "oh oh..."      // literal strings are immutable arrayed collections
+["", "string"].collect('maxSize') == [16, 64]               // of minimum maxSize 16
+var s = "string".copy; s.add($!); s.at(6) == $!             // copied string literals inherit maxSize
 
 'Symbol'
 
@@ -607,9 +614,9 @@ Symbol.superclass == Object                                 // Symbol is not a s
 
 'Temporaries'
 
-{ var x; x }.value == nil                                   // uninitialised variables are nil
-{ var x = 1, y = 2; [x, y] }.value == [1, 2]                // var can introduce multiple temporaries
-{ var x; var y = 0, z; [x, y, z] }.value == [nil, 0, nil]   // there can be multiple var sequences
+var x; x == nil                                             // uninitialised variables are nil
+var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce multiple temporaries
+var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
 
 'Debugging'
 
