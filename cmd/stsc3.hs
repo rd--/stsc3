@@ -84,7 +84,7 @@ som_cat fn =
 -}
 cd_som_to_fileout :: Bool -> FilePath -> FilePath -> IO ()
 cd_som_to_fileout do_sort som_fn fileout_fn = do
-  cd <- Som.somLoadClassDefinition som_fn
+  cd <- Som.somLoadClassDefinitionFromFile som_fn
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
   writeFile fileout_fn (FileOut.fileOutClassDefinition cd')
 
@@ -106,7 +106,7 @@ cd_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
 
 cd_som_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
 cd_som_to_som (do_sort, do_tidy) input_fn output_fn = do
-  cd <- Som.somLoadClassDefinition input_fn
+  cd <- Som.somLoadClassDefinitionFromFile input_fn
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
       cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
   writeFile output_fn (Som.classDefinitionPrintSom cd'')

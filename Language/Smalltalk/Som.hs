@@ -6,9 +6,13 @@
 -}
 module Language.Smalltalk.Som where
 
+import Data.List {- base -}
+
 import System.FilePath {- filepath -}
 
 import qualified Text.Parsec as P {- parsec -}
+
+import qualified Music.Theory.Directory {- hmt-base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Annotate as Annotate {- stsc3 -}
@@ -243,14 +247,18 @@ somStandardClassList =
 
 -- * IO
 
--- | Load ClassDefinition from named file.
-somLoadClassDefinition :: FilePath -> IO St.ClassDefinition
-somLoadClassDefinition fn = do
-  txt <- readFile fn
-  return (parseSomClassDefinition txt)
+somLoadClassDefinitionFromFile :: FilePath -> IO St.ClassDefinition
+somLoadClassDefinitionFromFile fn = readFile fn >>=  return . parseSomClassDefinition
 
--- | Load list of class definitions into association list.
-somLoadClassList :: FilePath -> [St.Identifier] -> IO [St.ClassDefinition]
-somLoadClassList somDirectory classList = do
-  let somClassFilename nm = somDirectory </> nm <.> "som"
-  mapM (somLoadClassDefinition . somClassFilename) classList
+somLoadClassDefinition :: [FilePath] -> St.Identifier -> IO (Maybe St.ClassDefinition)
+somLoadClassDefinition cp nm =
+  Music.Theory.Directory.path_scan cp (nm <.> "som") >>=
+  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromFile)
+
+somLoadClassDefinitionOrError :: [FilePath] -> St.Identifier -> IO St.ClassDefinition
+somLoadClassDefinitionOrError cp nm =
+  let err = error ("somLoadClassDefinition: not found: " ++ nm ++ " on: " ++ intercalate ":" cp)
+  in somLoadClassDefinition cp nm >>= maybe err return
+
+somLoadClassList :: [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
+somLoadClassList cp = mapM (somLoadClassDefinitionOrError cp)

@@ -224,6 +224,8 @@ cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
 [ 1 unimplementedMessage ] on: Error do: [ :err | err printString ]
 [ UnknownGlobal ] on: Error do: [ :err | 'Unknown global?' ]
 
+[ :a | | a | a ] value: 1 "error - duplicate name error"
+
 'Booleans'
 
 {
