@@ -376,6 +376,18 @@ methodDefinitionEditSource f md =
   let src = methodSource md
   in md { methodSource = fmap f src }
 
+methodDefinitionArguments :: MethodDefinition -> [Identifier]
+methodDefinitionArguments = patternArguments . methodPattern
+
+methodDefinitionTemporaries :: MethodDefinition -> [Identifier]
+methodDefinitionTemporaries = maybe [] temporariesIdentifiers . methodTemporaries
+
+methodDefinitionHasDuplicateTemporaries :: MethodDefinition -> Bool
+methodDefinitionHasDuplicateTemporaries m =
+  let a = methodDefinitionArguments m
+      t = methodDefinitionTemporaries m
+  in (length a + length t) == length (nub (a ++ t))
+
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
 > p = stParse (methodDefinition Nothing ("", False))

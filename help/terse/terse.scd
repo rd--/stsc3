@@ -406,6 +406,8 @@ x = { }                                                     // blocks are object
 { arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
 { arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
 ({ arg x; x * 2 } <> { arg x; x + 3 }).value(4) == 14       // function composition
+{ arg x; x = nil }.value(42).isNil                          // arguments are mutable
+
 
 'List'
 

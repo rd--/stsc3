@@ -207,6 +207,7 @@ Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at se
 ([ 42 ] cull: 3) = 42.                                       "apply block with or without argument"
 [ [ 42 ] value: nil ] ifError: [ true ]. "error"
 [ [ :item | 42 ] value ] ifError: [ true ]. "error"
+([ :item | item := nil ] value: 42) isNil. "arguments are mutable (not in gst)"
 }
 
 b := [ :x | x * 42 ].
