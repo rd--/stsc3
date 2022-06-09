@@ -57,6 +57,7 @@ Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
 Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by value protocol
 Array.new(4).maxSize == 4                                   // Array has both size and maxSize
+Array.new.add(1) == [1]                                     // add element to array, return array
 Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
 Array.new(3).add(1).addAll([2, 3]) == [1, 2, 3]             // add all elements of collection to end of array
 { Array.new.addAll("string").at[4] }.try({ "error!" })      // ArrayedCollection is maybe-copying
@@ -424,6 +425,7 @@ var l = [1, 2, 4].asList.put(2, 3); l                       // replace (in place
 var l = [1, 2, 4].asList.insert(2, 3); l                    // insert (in place) element at index
 var l = [1, 2, 4].asList; [l.removeAt(2), l]                // remove (in place) and return element at index
 var l = [1, 2, 3].asList; l.clear; l.isEmpty                // remove all items from collection
+List.new.add(1) == [1].asList                               // add element to list, return list
 
 'Magnitude'
 
@@ -459,16 +461,18 @@ inf                                                         // constant positive
 3.squared == 9                                              // x * x
 pi.raddeg == 180                                            // radiansToDegrees
 
-'Method'
+'Message sends'
 
-9.sqrt == 3                                                 // unary method
-1.min(2) == 1                                               // keyword method
+9.sqrt == 3                                                 // unary message
+1.min(2) == 1                                               // n-ary message (keyword message in St)
 1 + 2 == 3                                                  // binary operator method
-9.perform('sqrt') == 3                                      // indirect method invocation (unary)
-1.perform('min', 2) == 1                                    // indirect method invocation (binary)
-1.perform('+', 2) == 3                                      // indirect method invocation (operator)
+9.perform('sqrt') == 3                                      // indirect message send (unary)
+1.perform('min', 2) == 1                                    // indirect message send (binary)
+1.perform('+', 2) == 3                                      // indirect message send (operator)
 1.exp.log == 1                                              // unary method chaining (log of exp of 1)
+6561.sqrt.sqrt.sqrt == 3                                    // unary method chaining
 1.min(2).max(3) == 3                                        // n-ary method chaining
+
 
 'Nil'
 

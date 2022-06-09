@@ -695,8 +695,9 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (2 raisedTo: 10) = 1024.                                    "keyword message*"
 (194 * 9) = 1746.                                           "binary message"
 (Transcript show: (194 * 9) printString; cr) = Transcript.  "combination (chaining)"
-(2 perform: #sqrt) = 2 sqrt.                                "indirect method invocation"
+(2 perform: #sqrt) = 2 sqrt.                                "indirect message send"
 [ 1 unimplementedMessage ] on: Error do: [ true ].
+6561 sqrt sqrt sqrt = 3.        "unary message sequence"
 } allSatisfy: #yourself
 
 'Method'

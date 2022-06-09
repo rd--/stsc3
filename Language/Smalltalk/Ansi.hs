@@ -16,6 +16,7 @@ Literal (3.4.6)
 -}
 module Language.Smalltalk.Ansi where
 
+import Control.Monad {- base -}
 import Data.Char {- base -}
 import qualified Data.Functor.Identity as Identity {- base -}
 import Data.List {- base -}
@@ -382,11 +383,14 @@ methodDefinitionArguments = patternArguments . methodPattern
 methodDefinitionTemporaries :: MethodDefinition -> [Identifier]
 methodDefinitionTemporaries = maybe [] temporariesIdentifiers . methodTemporaries
 
-methodDefinitionHasDuplicateTemporaries :: MethodDefinition -> Bool
-methodDefinitionHasDuplicateTemporaries m =
+methodDefinitionDuplicateTemporaries :: MethodDefinition -> [Identifier]
+methodDefinitionDuplicateTemporaries m =
   let a = methodDefinitionArguments m
       t = methodDefinitionTemporaries m
-  in (length a + length t) == length (nub (a ++ t))
+  in (a ++ t) \\ nub (a ++ t)
+
+duplicateNamesError :: [Identifier] -> P ()
+duplicateNamesError dup = when (not (null dup)) (P.unexpected ("Name already used: " ++ show dup))
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -406,7 +410,8 @@ methodDefinitionHasDuplicateTemporaries m =
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
 > p "p |tmp| <primitive: 0> self continueAfterPrimitive"
-> p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail...
+> p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail, instead it discards statements!
+> p "p: q | q | ^q" -- duplicate name error
 -}
 methodDefinition :: Maybe String -> (Identifier, Bool) -> P MethodDefinition
 methodDefinition src cl = do
@@ -415,7 +420,10 @@ methodDefinition src cl = do
   tmp <- P.optionMaybe temporaries
   prm <- P.optionMaybe primitive -- primitive comes after temporaries
   stm <- P.optionMaybe statements
-  return (MethodDefinition cl Nothing pat tmp stm prm cmt src)
+  let def = MethodDefinition cl Nothing pat tmp stm prm cmt src
+      dup = methodDefinitionDuplicateTemporaries def
+  duplicateNamesError dup
+  return def
 
 data Pattern
   = UnaryPattern Identifier
@@ -648,11 +656,11 @@ blockBodyArguments = fromMaybe [] . blockArguments
 blockBodyTemporaries :: BlockBody -> [Identifier]
 blockBodyTemporaries = maybe [] temporariesIdentifiers . blockTemporaries
 
-blockBodyHasDuplicateTemporaries :: BlockBody -> Bool
-blockBodyHasDuplicateTemporaries m =
+blockBodyDuplicateTemporaries :: BlockBody -> [Identifier]
+blockBodyDuplicateTemporaries m =
   let a = blockBodyArguments m
       t = blockBodyTemporaries m
-  in (length a + length t) == length (nub (a ++ t))
+  in (a ++ t) \\ nub (a ++ t)
 
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
@@ -667,13 +675,17 @@ blockBodyHasDuplicateTemporaries m =
 > p ":a| a + 1"
 > p ":a| |b| b := a + 1. ^b"
 > p ":ignored"
+> p ":a| | a | a + 1" -- duplicate name error
 -}
 blockBody :: P BlockBody
 blockBody = do
   a <- P.optionMaybe (P.try (P.many1 blockArgument >>~ verticalBar))
   t <- P.optionMaybe temporaries
   s <- P.optionMaybe statements
-  return (BlockBody Nothing a t s)
+  let blk = BlockBody Nothing a t s
+      dup = blockBodyDuplicateTemporaries blk
+  duplicateNamesError dup
+  return blk
 
 -- | An identifier for a block argument.  Written with a ':' prefix.
 type BlockArgument = Identifier
