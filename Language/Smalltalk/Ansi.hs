@@ -642,6 +642,18 @@ data BlockBody =
 blockBodyEndsWithReturn :: BlockBody -> Bool
 blockBodyEndsWithReturn = maybe False statementsEndsWithReturn . blockStatements
 
+blockBodyArguments :: BlockBody -> [Identifier]
+blockBodyArguments = fromMaybe [] . blockArguments
+
+blockBodyTemporaries :: BlockBody -> [Identifier]
+blockBodyTemporaries = maybe [] temporariesIdentifiers . blockTemporaries
+
+blockBodyHasDuplicateTemporaries :: BlockBody -> Bool
+blockBodyHasDuplicateTemporaries m =
+  let a = blockBodyArguments m
+      t = blockBodyTemporaries m
+  in (length a + length t) == length (nub (a ++ t))
+
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
 
 > p = stParse blockBody

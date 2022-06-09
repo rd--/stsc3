@@ -1,6 +1,8 @@
 -- | A tree Expr type for Smalltalk expressions.
 module Language.Smalltalk.Ansi.Expr where
 
+import Data.List {- base -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 {- | A message is a selector and zero or more parameters.
@@ -47,10 +49,16 @@ data Expr =
   | Literal St.Literal
   | Assignment St.Identifier Expr
   | Send Expr Message
-  | Lambda LambdaDefinition [St.Identifier] St.Temporaries ([Expr], Maybe Expr)
+  | Lambda LambdaDefinition [St.Identifier] [St.Identifier] ([Expr], Maybe Expr)
   | Array [Expr]
-  | Init (Maybe St.Comment) St.Temporaries [Expr]
+  | Init (Maybe St.Comment) [St.Identifier] [Expr]
   deriving (Eq, Show)
+
+exprHasDuplicateTemporaries :: Expr -> Bool
+exprHasDuplicateTemporaries e =
+  case e of
+    Lambda _ a t _ -> (length a + length t) == length (nub (a ++ t))
+    _ -> False
 
 exprIsAssignment :: Expr -> Bool
 exprIsAssignment e =
@@ -115,7 +123,7 @@ blockBodyExpr blockBody =
   in Lambda
      (BlockLambda blockBody)
      (maybe [] id arg)
-     (maybe St.emptyTemporaries id tmp)
+     (maybe [] St.temporariesIdentifiers tmp)
      (maybe ([], Nothing) statementsExprList stm)
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
@@ -124,7 +132,7 @@ methodDefinitionExpr methodDefinition =
   in Lambda
      (MethodLambda methodDefinition)
      (St.patternArguments pat)
-     (maybe St.emptyTemporaries id tmp)
+     (maybe [] St.temporariesIdentifiers tmp)
      (maybe ([], Nothing) statementsExprList stm)
 
 unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
@@ -195,7 +203,7 @@ cascadeLambda :: Message -> St.CascadedMessages -> Expr
 cascadeLambda m c =
   let z = "cascadeTemporaryVariable"
       f = messagesExpr (Identifier z)
-  in Lambda NullLambda [z] (St.Temporaries []) (Send (Identifier z) m : map f c, Nothing)
+  in Lambda NullLambda [z] [] (Send (Identifier z) m : map f c, Nothing)
 
 -- | In the case of a cascade, the last message of m must be lifted out and send to cascadeLambda.
 basicExpressionExpr :: St.BasicExpression -> Expr
@@ -233,7 +241,7 @@ initializerDefinitionExpr :: St.InitializerDefinition -> Expr
 initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
   Init
   cmt
-  (maybe St.emptyTemporaries id tmp)
+  (maybe [] St.temporariesIdentifiers tmp)
   (maybe [] statementsExprListNoReturn stm)
 
 -- * Expr operators
@@ -270,7 +278,7 @@ implicitSend e l = keywordSend (Identifier e) "apply:" [Array l]
 
 -- | x -> { x }
 inLambda :: Expr -> Expr
-inLambda x = Lambda NullLambda [] St.emptyTemporaries ([x], Nothing)
+inLambda x = Lambda NullLambda [] [] ([x], Nothing)
 
 -- * Apply
 

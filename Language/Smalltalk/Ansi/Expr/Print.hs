@@ -62,19 +62,19 @@ exprPrintStc elideApply expr =
     Send e m ->
       let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
       in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
-    Lambda ld a (St.Temporaries t) (e,r) ->
+    Lambda ld arg tmp (e,r) ->
       let r' = maybe [] (return . printf "^%s" . exprPrintStc elideApply) r
           x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
-      in case (a,t) of
+      in case (arg, tmp) of
         ([],[]) -> printf "{ %s }" x
-        (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " a) x
-        _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " a) (intercalate ", " t) x
+        (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
+        _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
-    Init c (St.Temporaries t) e ->
+    Init c tmp e ->
       let x = intercalate "; "  (map (exprPrintStc elideApply) e)
-          r = case (t,e) of
+          r = case (tmp, e) of
                 ([],_) ->  x
-                _ -> printf "var %s; %s" (intercalate ", " t) x
+                _ -> printf "var %s; %s" (intercalate ", " tmp) x
       in maybe "" St.sc_comment_pp c ++ r
 
 -- * St
@@ -104,19 +104,19 @@ exprPrintSt expr =
     Send e m ->
       let template = if exprIsUnaryMessageSend expr then "%s%s" else "(%s%s)"
       in printf template (exprPrintSt e) (messagePrintSt m)
-    Lambda _ a (St.Temporaries t) (e,r) ->
+    Lambda _ arg tmp (e,r) ->
       let r' = maybe [] (return . ('^' :) . exprPrintSt) r
           x = intercalate ". " (map (exprPrintSt) e ++ r')
-      in case (map (':' : ) a,t) of
+      in case (map (':' : ) arg, tmp) of
         ([],[]) -> printf "[ %s ]" x
-        (a',[]) -> printf "[ %s | %s ]" (unwords a') x
-        (a',_) -> printf "[ %s | | %s | %s ]" (unwords a') (unwords t) x
+        (arg',[]) -> printf "[ %s | %s ]" (unwords arg') x
+        (arg',_) -> printf "[ %s | | %s | %s ]" (unwords arg') (unwords tmp) x
     Array e -> printf "{ %s }" (intercalate ". " (map (exprPrintSt) e))
-    Init c (St.Temporaries t) e ->
+    Init c tmp e ->
       let x = intercalate ". "  (map (exprPrintSt) e)
-          r = case (t,e) of
+          r = case (tmp, e) of
                 ([],_) ->  x
-                _ -> printf "| %s | %s" (unwords t) x
+                _ -> printf "| %s | %s" (unwords tmp) x
       in maybe "" St.comment_pp c ++ r
 
 -- * S-Expression
@@ -149,20 +149,20 @@ exprPrintLisp expr =
     Literal l -> St.literal_pp l
     Assignment i e -> printf "(:= %s %s)" i (exprPrintLisp e)
     Send e m -> printf "(. %s %s)" (exprPrintLisp e) (messagePrintLisp m)
-    Lambda _ a (St.Temporaries t) (e,r) ->
+    Lambda _ arg tmp (e,r) ->
       let r' = maybe [] (return . printf "(^ %s)" . exprPrintLisp) r
           x = unwords (map exprPrintLisp e ++ r')
-      in case (a,t) of
+      in case (arg, tmp) of
         ([],[]) -> printf "(\\ %s)" x
-        (_,[]) -> printf "(\\ (: %s) %s)" (unwords a) x
-        _ -> printf "(\\ (: %s) (| %s) %s)" (unwords a) (unwords t) x
+        (_,[]) -> printf "(\\ (: %s) %s)" (unwords arg) x
+        _ -> printf "(\\ (: %s) (| %s) %s)" (unwords arg) (unwords tmp) x
     Array e -> printf "(%% %s)" (unwords (map exprPrintLisp e))
-    Init c (St.Temporaries t) e ->
+    Init c tmp e ->
       let x = unwords (map exprPrintLisp e)
-          r = case (t,e) of
+          r = case (tmp, e) of
             ([],[e0]) -> exprPrintLisp e0
             ([],_) -> printf "(>> %s)" x
-            _ -> printf "(>> (| %s) %s)" (unwords t) x
+            _ -> printf "(>> (| %s) %s)" (unwords tmp) x
       in maybe "" commentPrintLisp c ++ r
 
 -- * Js
@@ -235,7 +235,7 @@ exprPrintJs rw expr =
         (Identifier "Float", "pi", []) -> "pi"
         (Identifier "Float", "infinity", _) -> "inf"
         (_, msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
-    Lambda _ arg (St.Temporaries tmp) (stm, ret) ->
+    Lambda _ arg tmp (stm, ret) ->
       let ret' = maybe [] (return . printf "return %s;" . exprPrintJs rw) ret
       in printf
          "function(%s) { %s %s }"
@@ -243,11 +243,11 @@ exprPrintJs rw expr =
          (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
          (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm ++ ret'))
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
-    Init c (St.Temporaries t) e ->
+    Init c tmp e ->
       let x = intercalate "; "  (map (exprPrintJs rw) e)
-          r = case (t,e) of
+          r = case (tmp, e) of
                 ([],_) ->  x
-                _ -> printf "var %s; %s" (intercalate ", " t) x
+                _ -> printf "var %s; %s" (intercalate ", " tmp) x
       in maybe "" St.sc_comment_pp c ++ r
 
 -- * Scheme
@@ -299,8 +299,9 @@ exprPrintScheme rw expr =
         (Identifier "Float", "pi", []) -> "pi"
         (Identifier "Float", "infinity", _) -> "inf"
         (_, msg, _) -> printf "(%s %s)" msg (unwords (map (exprPrintScheme rw) (rcv : arg)))
-    Lambda _ arg (St.Temporaries tmp) stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
+    Lambda _ arg tmp stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
     Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
-    Init c (St.Temporaries tmp) stm -> concat [maybe "" (unlines . map ("; " ++) . lines) c
-                                              ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp (stm, Nothing)]
+    Init c tmp stm ->
+      concat [maybe "" (unlines . map ("; " ++) . lines) c
+             ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp (stm, Nothing)]
 
