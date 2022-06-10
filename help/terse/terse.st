@@ -826,6 +826,7 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (#(1 2 3) asSet copyWithout: 3) = #(1 2) asSet.
 (#(1 2 2 3 3) asSet any: 2) = #(1 2) asSet.
 ((Set new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4) asSet.
+(Set with: 1) printString = 'a Set(1)'.
 } allSatisfy: #yourself
 
 'SetElement (Set with nil)'
@@ -861,6 +862,14 @@ SmallInteger maxVal = ((2 raisedTo: 63) - 1).
 (FortranNumberParser parse: '1e3') = 1000.
 (FortranNumberParser parse: '1e-3') = 0.001.
 (FortranNumberParser parse: '-5e-2') = -0.05.
+} allSatisfy: #yourself
+
+'Scanner'
+
+{
+Scanner doItCharacter asInteger = 1114111.
+Scanner typeTable size = 256.
+Scanner isLiteralSymbol: #symbol.
 } allSatisfy: #yourself
 
 'SmalltalkNumberParser'
@@ -908,54 +917,58 @@ cpy first = 'brochet'
 (#min ascending value: #(1 2) value: #(3 4)) = true.
 } allSatisfy: #yourself
 
-'Strings'
+'String'
 
-String isVariable                                           "St-80 = true, Squeak = false"
-'string'                                                    "string literal"
-'  text  ' withBlanksTrimmed = 'text'                       "remove leading and trailing space"
-s := 'string' copy. s at: 4 put: $u. s                      "=> strung, string literals are mutable"
-'123' asInteger = 123                                       "parse integer"
-'12345' asNumber = 12345                                    "parse integer or float"
-'3.141' asNumber = 3.141                                    "parse integer or float"
-String newFrom: #($P $e $n)
-#($P $e $n) as: String
-('string' compare: 'symbol') = 1 "less than"
-('string' compare: 'string') = 2 "equal"
-('symbol' compare: 'string') = 3 "greater than"
-'string' < 'symbol' "less than"
-'string' = 'string' "equal"
-'symbol' > 'string' "greater than"
-'string' copy = 'string' copy "copied strings are equal"
-'string' asString = 'string'
-'string' copy asString = 'string' copy
-'string' == 'string' "string literals are identical"
-'string' copy ~~ 'string' copy "copied strings are not identical"
-#('string') = {'string'}
-(String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'
-($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'
-'string' hash = 'string' copy hash "strings and copies of strings hash equally"
-'string' hash ~= #'string' hash "strings and symbols hash unequally"
-'' asIntegerSigned: True = nil
-'' asInteger = nil
-'1796p-qR' asInteger = 1796
-'donald' asInteger = nil
-'abc234def567' asInteger = 234
-'-94' asInteger = -94
-'foo-bar-92' asInteger = -92
-('fred the bear' copyWithout: $e) = 'frd th bar'
-String empty == String empty
-String empty size = 0
-String new species = String new species
-'{\' = '{\'
-'foo {1} bar' format: #(3.141)
-('foo {1} bar' indexOfAnyOf: String formatCharacterSet startingAt: 1) = 5
-'up:to:' keywords = #('up:' 'to:')
+{
+String isVariable.                                           "St-80 = true, Squeak = false"
+'string' isLiteral.                                                    "string literal"
+'  text  ' withBlanksTrimmed = 'text'.                       "remove leading and trailing space"
+'123' asInteger = 123.                                       "parse integer"
+'12345' asNumber = 12345.                                    "parse integer or float"
+'3.141' asNumber = 3.141.                                    "parse integer or float"
+(String newFrom: #($P $e $n)) = 'Pen'.
+(#($P $e $n) as: String) = 'Pen'.
+('string' compare: 'symbol') = 1. "less than"
+('string' compare: 'string') = 2. "equal"
+('symbol' compare: 'string') = 3. "greater than"
+'string' < 'symbol'. "less than"
+'string' = 'string'. "equal"
+'symbol' > 'string'. "greater than"
+'string' copy = 'string' copy. "copied strings are equal"
+'string' asString = 'string'.
+'string' copy asString = 'string' copy.
+'string' == 'string'. "string literals are identical"
+'string' copy ~~ 'string' copy. "copied strings are not identical"
+#('string') = {'string'}.
+(String withAll: ($a to: $z)) = 'abcdefghijklmnopqrstuvwxyz'.
+($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'.
+'string' hash = 'string' copy hash. "strings and copies of strings hash equally"
+('' asIntegerSigned: True) = nil.
+'' asInteger = nil.
+'1796p-qR' asInteger = 1796.
+'donald' asInteger = nil.
+'abc234def567' asInteger = 234.
+'-94' asInteger = -94.
+'foo-bar-92' asInteger = -92.
+('fred the bear' copyWithout: $e) = 'frd th bar'.
+String empty == String empty.
+String empty size = 0.
+String new species = String new species.
+'{\' = '{\'.
+('foo {1} bar' indexOfAnyOf: String formatCharacterSet startingAt: 1) = 5.
+'up:to:' keywords = #('up:' 'to:').
 #up:to: keywords = #('up:' 'to:').
-'copy:from:to:' keywords = #('copy:' 'from:' 'to:')
-'up' keywords = #('up')
-'at:' keywords = #('at:')
-'string' includes: $i           "true"
-('string' includes: nil) = false
+'copy:from:to:' keywords = #('copy:' 'from:' 'to:').
+'up' keywords = #('up').
+'at:' keywords = #('at:').
+'string' includes: $i.           "true"
+('string' includes: nil) = false.
+String initializedInstance = ''.
+} allSatisfy: #yourself
+
+s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
+'string' hash ~= #'string' hash "strings and symbols hash unequally"
+'foo {1} bar' format: #(3.141)
 
 'Symbol'
 
@@ -988,6 +1001,8 @@ String new species = String new species
 (#abs value: -1) = 1.                "implement value procotol for selectors"
 #< value: 1 value: 2.            "implement value procotol for selectors"
 #symbol capitalized = #Symbol.
+Symbol initializedInstance = #''.
+#four printString = '#four'.
 } allSatisfy: #yourself
 
 'Time'
