@@ -205,10 +205,14 @@ Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at se
 ([ :aNumber | aNumber * aNumber ] value: 3) = 9.             "apply block to one argument"
 ([ :aNumber | aNumber * aNumber ] cull: 3) = 9.              "apply block with or without argument"
 ([ 42 ] cull: 3) = 42.                                       "apply block with or without argument"
+[ [ 42 ] value: nil ] on: Error do: [ true ]. "error"
 [ [ 42 ] value: nil ] ifError: [ true ]. "error"
+[ [ :item | 42 ] value ] on: Error do: [ true ]. "error"
 [ [ :item | 42 ] value ] ifError: [ true ]. "error"
 ([ :item | item := nil ] value: 42) isNil. "arguments are mutable (not in gst)"
-}
+[ 42 ] ~= 42.
+} allSatisfy: #yourself
+
 
 b := [ :x | x * 42 ].
 {
@@ -223,6 +227,7 @@ cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt > 9 ] whileFalse
 cnt := 1. [ Transcript show: cnt; cr. cnt := cnt + 1. cnt <= 9 ] whileTrue
 [ 1 unimplementedMessage ] on: Error do: [ :err | err printString ]
 [ UnknownGlobal ] on: Error do: [ :err | 'Unknown global?' ]
+[ nil error ] on: Error do: nil. "error (illegal block)"
 
 [ :a | | a | a ] value: 1 "error - duplicate name error"
 
@@ -532,13 +537,13 @@ Duration oneDay days = 1.
 UnhandledError new defaultAction
 Error signal
 Error signal: 'oh oh'
-[ 1 error: 'oh oh' ] on: Error do: [ :error | Transcript show: 'Error handler: answers: '; show: error; cr ]
+[ 1 error: 'oh oh' ] on: Error do: [ :error | Transcript show: 'Error handler: answers: '; show: error; cr. true]
 1 error: 'an integer?'
 3.141 error: 'a float?'
 #sym error: 'a symbol?'
 Transcript error: 'a transcript?'
 Smalltalk error: 'a smalltalk?'
-[nil haltIf: true] on: Halt do: [ :err | 'Halted!' ]
+([nil haltIf: true] on: Halt do: [ :err | 'Halted!' ]) = 'Halted!'
 
 'Float'
 
@@ -850,7 +855,13 @@ nil asSetElement == nil asSetElement.
 SmallInteger maxVal = 9223372036854775807.
 SmallInteger maxVal = ((2 raisedTo: 63) - 1).
 1 isMemberOf: SmallInteger.
+1 decimalDigitLength = 1.
+10 decimalDigitLength = 2.
+(10 raisedTo: 8) decimalDigitLength = 9.
+(10 raisedTo: 18) decimalDigitLength = 19.
+SmallInteger maxVal decimalDigitLength = 19.
 } allSatisfy: #yourself
+
 
 'FortranNumberParser'
 
