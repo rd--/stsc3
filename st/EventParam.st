@@ -7,26 +7,46 @@ Object subclass: #EventParam
 EventParam comment: 'Event Parameters'!
 
 !EventParam methodsFor: 'accessing'!
-v ^v!
-v: x v := x!
-w ^w!
-w: x w := x!
-x ^x!
-x: i x := i!
-y ^y!
-y: x y := x!
-z ^z!
-z: x z := x!
-o ^o!
-o: x o := x!
-rx ^rx!
-rx: x rx := x!
-ry ^ry!
-ry: x ry := x!
-p ^p!
-p: x p := x!
-px ^px!
-px: x px := x!
+v
+	^v!
+v: x
+	v := x!
+w
+	^w!
+w: x
+	w := x!
+x
+	^x!
+x: i
+	x := i!
+y
+	^y!
+y: x
+	y := x!
+z
+	^z!
+z: x
+	z := x!
+o
+	^o!
+o: x
+	o := x!
+rx
+	^rx!
+rx: x
+	rx := x!
+ry
+	^ry!
+ry: x
+	ry := x!
+p
+	^p!
+p: x
+	p := x!
+px
+	^px!
+px: x
+	px := x!
 !
 
 !EventParam class methodsFor: 'instance creation'!

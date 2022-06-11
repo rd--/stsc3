@@ -99,7 +99,7 @@ tidy_method_source src =
 -}
 cd_fileout_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
 cd_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
-  cd <- FileOut.fileOutLoadClassFile fileout_fn
+  cd <- FileOut.fileOutLoadClassDefinitionFile fileout_fn
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
       cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
   writeFile som_fn (Som.classDefinitionPrintSom cd'')
@@ -110,6 +110,14 @@ cd_som_to_som (do_sort, do_tidy) input_fn output_fn = do
   let cd' = if do_sort then St.classDefinitionSortMethods cd else cd
       cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
   writeFile output_fn (Som.classDefinitionPrintSom cd'')
+
+ext_fileout_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
+ext_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
+  (nm, mth) <- FileOut.fileOutLoadClassExtensionFile fileout_fn
+  let cd = St.classDefinitionFromMethods (nm, Nothing, Nothing) mth
+      cd' = if do_sort then St.classDefinitionSortMethods cd else cd
+      cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
+  writeFile som_fn (Som.classDefinitionPrintSom cd'')
 
 writeAllSomClassDef :: Bool -> FilePath -> FileOut.FileOutLibrary -> IO ()
 writeAllSomClassDef do_sort som_dir lib = do
@@ -169,6 +177,7 @@ main = do
     ["translate","class", "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
     ["translate","class", "som","som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
+    ["translate","extensions", "fileout","som",fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort") fileout_fn som_dir
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

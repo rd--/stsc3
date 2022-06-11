@@ -267,6 +267,24 @@ classDefinitionSortMethods = classDefinitionEditMethods (sortOn methodName)
 classDefinitionEditMethodSources :: (String -> String) -> ClassDefinition -> ClassDefinition
 classDefinitionEditMethodSources f = classDefinitionEditMethods (map (methodDefinitionEditSource f))
 
+-- | Generate a class definition from a list of methods definitions.
+classDefinitionFromMethods :: (Identifier, Maybe String, Maybe String) -> [MethodDefinition] -> ClassDefinition
+classDefinitionFromMethods (nm, cat, cmt) mth =
+  let (cm, im) = partition isClassMethod mth
+  in if nub (map methodClassName mth) == [nm]
+     then ClassDefinition nm Nothing noInstanceState [] [] [] im cm Nothing cat cmt
+     else error "classDefinitionFromMethods: wrong method list?"
+
+classDefinitionExtendWithMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
+classDefinitionExtendWithMethods cd mth =
+  let (cm, im) = partition isClassMethod mth
+  in if nub (map methodClassName mth) == [className cd]
+     then cd { instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm }
+     else error "classDefinitionExtendWithMethods: wrong method list?"
+
+classDefinitionMethods :: ClassDefinition -> [MethodDefinition]
+classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
+
 -- * 3.3.3 Global Variable Definition
 
 -- | 3.3.3
@@ -340,6 +358,16 @@ data MethodDefinition =
   ,methodComment :: Maybe String
   ,methodSource :: Maybe String}
   deriving (Eq,Show)
+
+-- | Class name method is for, without the " class" suffix for class methods.
+methodClassName :: MethodDefinition -> Identifier
+methodClassName m =
+  case methodClass m of
+    (nm, False) -> nm
+    (nm, True) -> metaclassNameClassName nm
+
+isClassMethod :: MethodDefinition -> Bool
+isClassMethod = snd . methodClass
 
 -- | The default method category.  This applies both to methods without any category and to methods with an empty category string.
 methodDefaultCategory :: String

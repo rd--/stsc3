@@ -84,6 +84,7 @@ var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element fr
 [1, 2, 3, 4].reject({ arg x; x > 2 }) == [1, 2]             // filter elements
 [1, 2, 3, 4].select({ arg x; x > 2 }) == [3, 4]             // filter elements
 [1, 2, 3, 4].scramble                                       // randomly shuffle elements
+var c = [1, 2, 3]; c.scramble; c == [1, 2, 3]               // scramble is non-mutating
 [1, 2, 3, 4].mirror == [1, 2, 3, 4, 3, 2, 1]                // append reverse of prefix of array
 [[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
 [1, 3, 5, 2, 4, 6].unlace(3) == [[1, 2], [3, 4], [5, 6]]    // inverse of lace, argument tells number of subarrays
@@ -102,7 +103,9 @@ Array.linrand(4, 1, 9)                                      // array of random n
 Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
 [1, 2, 3].reverse == [3, 2, 1]                              // reverse elements
-var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse array (not in place)
+var c = [1, 2]; c.reverse; c == [1, 2]                      // reverse is not in place
+var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in place
+[1, 3, 7, 9].rand                                           // collect with .rand
 
 'Assignment'
 
@@ -426,6 +429,9 @@ var l = [1, 2, 4].asList.insert(2, 3); l                    // insert (in place)
 var l = [1, 2, 4].asList; [l.removeAt(2), l]                // remove (in place) and return element at index
 var l = [1, 2, 3].asList; l.clear; l.isEmpty                // remove all items from collection
 List.new.add(1) == [1].asList                               // add element to list, return list
+List.new(4).size == 0                                       // new with size makes empty list
+List.newClear(4).size == 4                                  // newClear makes list of nil values
+List.new.species == Array                                   // Lists species is Array
 
 'Magnitude'
 
@@ -541,6 +547,8 @@ SequenceableCollection.allSubclasses.size == 180            // sequencable colle
 [1, 3, 2, 4, 5].reverse == [5, 4, 2, 3, 1]                  // reverse sequence
 [1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
 [1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
+[3, 3, 3, 2, 2, 1].sort                                     // sort retains duplicates
+var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place (mutating)
 [1, 2, 3, 4, 5].keep(3) == [1, 2, 3]                        // keep first n items
 [1, 2, 3, 4, 5].drop(2) == [3, 4, 5]                        // discard first n items
 [1, 3, 5, 7, 9].isSeries == true                            // is array an arithmetic series
@@ -558,6 +566,9 @@ SequenceableCollection.allSubclasses.size == 180            // sequencable colle
 [1, 3, 5, 7, 9].integrate == [1, 4, 9, 16, 25]              // incremental sum
 [1, 4, 9, 16, 25].differentiate == [1, 3, 5, 7, 9]          // pairwise difference
 [0, 2, 4, 5, 7, 9, 11].mode(5, 12) == [0, 2, 3, 5, 7, 8, 10]// rotate and transpose scale
+List.rand(4, 1, 9)                                          // list of random numbers (uniform distribution)
+List.linrand(4, 1, 9)                                       // list of random numbers (linear distribution)
+List.exprand(4, 1, 9)                                       // list of random numbers (exponential distribution)
 
 'Set'
 

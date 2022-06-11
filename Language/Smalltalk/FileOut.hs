@@ -579,8 +579,8 @@ fileOutLoad = fmap fileOutLibrary . loadFileOut
 
 fo = file-out, fn = file-name, cd = class-definition, cn = class-name
 -}
-fileOutLoadClassFile :: FilePath -> IO St.ClassDefinition
-fileOutLoadClassFile fn = do
+fileOutLoadClassDefinitionFile :: FilePath -> IO St.ClassDefinition
+fileOutLoadClassDefinitionFile fn = do
   fo <- loadFileOut fn
   let ent = fileOutLibraryPartial fo
   case fileOutLibraryClassesDefined ent of
@@ -589,6 +589,21 @@ fileOutLoadClassFile fn = do
         Just cd -> return cd
         Nothing -> error "fileOutLoadClassFile: not class definition?"
     _ -> error "fileOutLoadClassFile: not singular class file?"
+
+{- | Load a FileOut containing method definitions for a single class, else error.
+
+(cl, mth) <- fileOutLoadClassExtensionFile "/home/rohan/sw/stsc3/st/Array.ext.st"
+(cl, length mth) == ("Array",11)
+-}
+fileOutLoadClassExtensionFile :: FilePath -> IO (St.Identifier, [St.MethodDefinition])
+fileOutLoadClassExtensionFile fn = do
+  fo <- loadFileOut fn
+  let ent = fileOutLibraryPartial fo
+      mth = concatMap fileOutEntryMethodDefinitions ent
+      cls = nub (map St.methodClassName mth)
+  case cls of
+    [nm] -> return (nm, mth)
+    _ -> error "fileOutLoadClassExtensionFile: methods not for singular class?"
 
 -- * Summary
 

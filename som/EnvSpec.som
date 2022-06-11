@@ -1,0 +1,92 @@
+EnvSpec = Object (
+
+| levels times curves releaseNode loopNode offset |
+
+asArray = (
+    "Convenience"
+    ^self coordinateArrayForEnvGen
+)
+
+asEnvGen = (
+    "Make EnvGen instance with default gate (1) and doneAction (0=doNothing)"
+    ^self asEnvGen: 1
+)
+
+asEnvGen: g = (
+    "Make EnvGen instance with indicated gate and default doneAction (0=doNothing)"
+    ^self asEnvGen: g withDoneAction: 0
+)
+
+asEnvGen: g withDoneAction: d = (
+    "Make EnvGen instance with indicated gate and doneAction"
+    ^EnvGen gate: g levelScale: 1 levelBias: 0 timeScale: 1 doneAction: d envelope: self coordinateArrayForEnvGen
+)
+
+coordinateArrayForEnvGen = (
+    "My linear co-ordinate array, as required by EnvGen."
+    | n r d |
+    n := levels size - 1.
+    r := Array new: ((n + 1) * 4).
+    r at: 1 put: (levels at: 1).
+    r at: 2 put: n.
+    r at: 3 put: (releaseNode ifNil: [ -99 ] ifNotNil: [ releaseNode ]).
+    r at: 4 put: (loopNode ifNil: [ -99 ] ifNotNil: [ loopNode ]).
+    d := self curveNameDictionary.
+    (1 to: n) do: [ :i |
+      | c |
+      c := curves atWrap: i.
+      r at: (1 + (i * 4)) put: (levels at: (i + 1)).
+      r at: (2 + (i * 4)) put: (times atWrap: i).
+      r at: (3 + (i * 4)) put: (d at: c ifAbsent: [ 5 ]).
+      r at: (4 + (i * 4)) put: (c isSymbol ifTrue: [ 0 ] ifFalse: [ c ]) ].
+    ^r
+)
+
+curveNameDictionary = (
+    "Dictionary mapping curve names to their integers codes."
+    ^Dictionary newFrom: {
+      #step -> 0.
+      #lin -> 1. #linear -> 1.
+      #exp -> 2. #exponential -> 2.
+      #sin -> 3. #sine -> 3.
+      #wel -> 4. #welch -> 4.
+      #sqr -> 6. #squared -> 6.
+      #cub -> 7. #cubed -> 7.
+      #hold -> 8 }
+)
+
+levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6 = (
+    "Allow curves to be a scalar"
+    levels := p1.
+    times := p2.
+    curves := (p3 isSymbol or: p3 isNumber) ifTrue: [ Array with: p3 ] ifFalse: [ p3 ].
+    releaseNode := p4.
+    loopNode := p5.
+    offset := p6
+)
+
+----------------------------
+
+levels: p1 times: p2 = (
+    "Default values for curves: and releaseNode: and loopNode: and offset."
+    ^self levels: p1 times: p2 curves: #(1)
+)
+
+levels: p1 times: p2 curves: p3 = (
+    "Default values for releaseNode: and loopNode: and offset."
+    ^self levels: p1 times: p2 curves: p3 releaseNode: nil loopNode: nil offset: 0
+)
+
+levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6 = (
+    ^self new levels: p1 times: p2 curves: p3 releaseNode: p4 loopNode: p5 offset: p6
+)
+
+primaryFactoryMethod = (
+    ^#levels:times:curves:releaseNode:loopNode:offset:
+)
+
+comment = (
+	^'Specification for a segmented envelope'
+)
+
+)

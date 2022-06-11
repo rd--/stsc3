@@ -213,6 +213,7 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   (setq stsc3-literate-p nil)
   (turn-on-font-lock))
 
+(add-to-list 'auto-mode-alist '("\\.som$" . stsc3-mode))
 (add-to-list 'auto-mode-alist '("\\.st$" . stsc3-mode))
 
 (provide 'stsc3)

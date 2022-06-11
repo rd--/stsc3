@@ -22,6 +22,8 @@ extendToBeOfEqualSize
     | maximumSize |
     maximumSize := (self collect: [ :item | item asArray size ]) max.
     ^self collect: [ :item | item asArray extendCyclically: maximumSize ]!
+mceTransform
+    ^self extendToBeOfEqualSize transpose!
 groupsOf: groupSize
     "My elements taken groupSize at a time. Ignore any leftovers at the end."
     ^groupSize to: self size by: groupSize collect: [ :index | self copyFrom: index - groupSize + 1 to: index ]!
@@ -82,7 +84,7 @@ truncateTo: arg
     ^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]!
 !
 
-!Array methodsFor: 'randomness'!
+!SequenceableCollection methodsFor: 'randomness'!
 choose
     ^self atRandom!
 fisherYatesShuffle
@@ -122,4 +124,35 @@ nth: index
 ++ otherCollection
     "Myself with otherCollection appended.  Alias for ,"
     ^self , otherCollection!
+!
+
+!SequenceableCollection methodsFor: 'supercollider'!
+perform: aSelector crossedWith: aSequence
+    "Perform aSelector for each of my items with each of anArrays items in turn (p *.x q in Sc)"
+    | answer nextIndex |
+    answer := self species new: self size * aSequence size.
+    nextIndex := 1.
+    self do: [ :leftItem |
+        aSequence do: [ :rightItem |
+            answer at: nextIndex put: (leftItem perform: aSelector with: rightItem).
+            nextIndex := nextIndex + 1
+        ]
+    ].
+    ^answer!
+allTuples
+    "Answer all of the possible n-tuples of each of my elements (I am an n-element sequence of any sized sequences)."
+    | answerSize |
+    answerSize := (self collect: [ :item | item size ]) product.
+    ^(1 to: answerSize) collect: [ :i |
+        | k nextTuple |
+        k := i - 1.
+        nextTuple := self species new: self size.
+        (self size to: 1 by: -1) collect: [ :j |
+            | fromSequence |
+            fromSequence := self at: j.
+            nextTuple at: j put: (fromSequence at: (k \\ fromSequence size) + 1).
+            k := k // fromSequence size
+        ].
+        nextTuple
+    ]!
 !

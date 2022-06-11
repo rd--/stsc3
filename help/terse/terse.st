@@ -820,6 +820,7 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (#(1 9 2 8 3 7 4 6) pairsCollect: [ :i :j | i + j ]) = #(10 10 10 10).
 #(1 9 2 8 3 7 4 6) pairsDo: [ :i :j | Transcript show: i + j; cr ]
 #(1 9 2 8 3 7 4 6) groupsDo: [ :i :j | Transcript show: i + j; cr ]
+#(1 9 2 8 3 7 4 6) reverseDo: [ :each | Transcript show: each printString ] "64738291"
 
 'Set'
 

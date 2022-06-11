@@ -54,6 +54,8 @@ mrg: rhs
 !Collection methodsFor: 'collecting'!
 addToUgenSet: c protectedBy: w
     self do: [ :item | item addToUgenSet: c protectedBy: w]!
+containsCollection
+    ^self anySatisfy: [ :item | item isCollection ]!
 !
 
 !Collection methodsFor: 'rate control'!

@@ -1,0 +1,36 @@
+Control = Object (
+
+| name init |
+
+init = (
+    ^init
+)
+
+init: aNumber = (
+    init := aNumber
+)
+
+name = (
+    ^name
+)
+
+name: aString = (
+    name := aString
+)
+
+name: p1 init: p2 = (
+    name := p1.
+    init := p2
+)
+
+----------------------------
+
+name: p1 init: p2 = (
+    ^self new name: p1 init: p2
+)
+
+comment = (
+	^'Control Input'
+)
+
+)

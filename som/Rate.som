@@ -1,0 +1,29 @@
+Rate = Object (
+
+----------------------------
+
+ar = (
+    ^2
+)
+
+dr = (
+    ^3
+)
+
+ir = (
+    ^0
+)
+
+kr = (
+    ^1
+)
+
+symbol: anInteger = (
+    ^#(#ir #kr #ar #dr) at: anInteger + 1 ifAbsent: [ self error: 'Rate class>>symbol: invalid rate integer' ]
+)
+
+comment = (
+	^'Ugen processing rate'
+)
+
+)

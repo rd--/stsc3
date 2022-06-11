@@ -1,0 +1,26 @@
+UgenBuilder = Object (
+
+----------------------------
+
+name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputArray: inputArray = (
+    inputArray containsCollection ifTrue: [
+        ^inputArray mceTransform collect: [ :item |
+            UgenBuilder name: name numChan: numChan rateSpec: rateSpec specialIndex: specialIndex inputArray: item
+        ]
+    ] ifFalse: [
+        | rate scUgen |
+        rate := rateSpec isArray
+            ifTrue: [ ((inputArray atAll: rateSpec) collect: [ :item | item rate ]) max ]
+            ifFalse: [ rateSpec ].
+        scUgen := ScUgen name: name numChan: numChan rate: rate specialIndex: specialIndex inputArray: inputArray.
+        (numChan = 0) ifTrue: [ ^Ugen scUgen: scUgen port: nil ].
+        (numChan = 1) ifTrue: [ ^Ugen scUgen: scUgen port: 1 ].
+        ^(1 to: numChan) collect: [ :item | Ugen scUgen: scUgen port: item ] "one-indexed"
+    ]
+)
+
+comment = (
+	^'Construct Ugens performing channel expansion'
+)
+
+)

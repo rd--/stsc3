@@ -1,0 +1,27 @@
+BlockClosure = BlockClosure (
+
+apply: anArray = (
+    ^self valueWithArguments: anArray
+)
+
+draw = (
+    self value draw
+)
+
+dup = (
+    ^self dup: 2
+)
+
+dup: anInteger = (
+    ^self dup: anInteger sending: #value
+)
+
+overlapTexture: sustainTime value: transitionTime value: overlap = (
+    ^OverlapTexture graphFunc: self sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
+)
+
+play = (
+    self value play
+)
+
+)

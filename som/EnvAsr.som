@@ -1,0 +1,36 @@
+EnvAsr = EnvBuilder (
+
+| attackTime sustainLevel releaseTime curves |
+
+asEnvSpec = (
+    ^EnvSpec
+      levels: (Array with: 0 with: sustainLevel with: 0)
+      times: (Array with: attackTime with: releaseTime)
+      curves: curves
+      releaseNode: 1
+      loopNode: nil
+      offset: 0
+)
+
+attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4 = (
+    attackTime := p1.
+    sustainLevel := p2.
+    releaseTime := p3.
+    curves := p4
+)
+
+----------------------------
+
+attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4 = (
+    ^self new attackTime: p1 sustainLevel: p2 releaseTime: p3 curves: p4
+)
+
+primaryFactoryMethod = (
+    ^#attackTime:sustainLevel:releaseTime:curves:
+)
+
+comment = (
+	^'Attack-Sustain-Release Envelope'
+)
+
+)

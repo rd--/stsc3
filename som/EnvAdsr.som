@@ -1,0 +1,38 @@
+EnvAdsr = EnvBuilder (
+
+| attackTime decayTime sustainLevel releaseTime peakLevel curves |
+
+asEnvSpec = (
+    ^EnvSpec
+      levels: (Array with: 0 with: peakLevel with: peakLevel * sustainLevel with: 0)
+      times: (Array with: attackTime with: decayTime with: releaseTime)
+      curves: curves
+      releaseNode: 2
+      loopNode: nil
+      offset: 0
+)
+
+attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6 = (
+    attackTime := p1.
+    decayTime := p2.
+    sustainLevel := p3.
+    releaseTime := p4.
+    peakLevel := p5.
+    curves := p6
+)
+
+----------------------------
+
+attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6 = (
+    ^self new attackTime: p1 decayTime: p2 sustainLevel: p3 releaseTime: p4 peakLevel: p5 curves: p6
+)
+
+primaryFactoryMethod = (
+    ^#attackTime:decayTime:sustainLevel:releaseTime:peakLevel:curves:
+)
+
+comment = (
+	^'Attack-Decay-Sustain-Release Envelope'
+)
+
+)
