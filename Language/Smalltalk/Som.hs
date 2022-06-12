@@ -7,6 +7,7 @@
 module Language.Smalltalk.Som where
 
 import Data.List {- base -}
+import Data.Maybe {- base -}
 
 import System.FilePath {- filepath -}
 
@@ -286,15 +287,14 @@ A .mod file must only re-define methods that have been defined in either the cla
 > cp = ["/home/rohan/sw/stsc3-som/lib/Smalltalk", "/home/rohan/sw/stsc3/som"]
 > somClassDefinitionFindFilesFor True cp "Array"
 -}
-somClassDefinitionFindFilesFor :: Bool -> [FilePath] -> String -> IO SomDefinitionFiles
+somClassDefinitionFindFilesFor :: Bool -> [FilePath] -> String -> IO (Maybe SomDefinitionFiles)
 somClassDefinitionFindFilesFor recurse cp nm = do
   cp' <- if recurse then Music.Theory.Directory.path_recursive cp else return cp
   let get ext = Music.Theory.Directory.path_search cp' (nm <.> ext)
   c <- get "som"
   e <- get "ext.som"
   m <- get "mod.som"
-  let err = error ("somClassDefinitionFilesFor: not singular class file: " ++ unwords c)
-  if length c /= 1 then err else return (head c, e, sort m)
+  if length c /= 1 then return Nothing else return (Just (head c, e, sort m))
 
 somLoadClassDefinitionFromFiles :: SomDefinitionFiles -> IO St.ClassDefinition
 somLoadClassDefinitionFromFiles (c, e, m) = do
@@ -305,7 +305,16 @@ somLoadClassDefinitionFromFiles (c, e, m) = do
       mm = concatMap St.classDefinitionMethods m'
   return (St.classDefinitionReplaceMethods (St.classDefinitionExtendWithMethods c' em) mm)
 
-somLoadClassDefinitionExtMod :: Bool -> [FilePath] -> String -> IO St.ClassDefinition
+somLoadClassDefinitionExtMod :: Bool -> [FilePath] -> String -> IO (Maybe St.ClassDefinition)
 somLoadClassDefinitionExtMod recurse cp nm = do
   cem <- somClassDefinitionFindFilesFor recurse cp nm
-  somLoadClassDefinitionFromFiles cem
+  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromFiles) cem
+
+somLoadClassDefinitionExtModOrError :: Bool -> [FilePath] -> String -> IO St.ClassDefinition
+somLoadClassDefinitionExtModOrError recurse cp nm = do
+  let err = error ("somLoadClassDefinitionExtMod: not singular class file: " ++ nm)
+  maybeCd <- somLoadClassDefinitionExtMod recurse cp nm
+  return (fromMaybe err maybeCd)
+
+somLoadClassListExtMod :: Bool -> [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
+somLoadClassListExtMod recurse cp = mapM (somLoadClassDefinitionExtModOrError recurse cp)
