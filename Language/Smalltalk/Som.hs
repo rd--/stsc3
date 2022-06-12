@@ -305,6 +305,11 @@ somLoadClassDefinitionFromFiles (c, e, m) = do
       mm = concatMap St.classDefinitionMethods m'
   return (St.classDefinitionReplaceMethods (St.classDefinitionExtendWithMethods c' em) mm)
 
+{- | Load class merging in .ext and .mod files.
+
+> cp = ["/home/rohan/sw/stsc3-som/lib/Smalltalk", "/home/rohan/sw/stsc3/som"]
+> somLoadClassDefinitionExtMod True cp "Array"
+-}
 somLoadClassDefinitionExtMod :: Bool -> [FilePath] -> String -> IO (Maybe St.ClassDefinition)
 somLoadClassDefinitionExtMod recurse cp nm = do
   cem <- somClassDefinitionFindFilesFor recurse cp nm

@@ -281,23 +281,33 @@ classDefinitionHasMethod cd for = any (isMethodFor for) (classDefinitionMethods 
 -- | Checks that methods do not already exist at class, c.f. classDefinitionReplaceMethods
 classDefinitionExtendWithMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
 classDefinitionExtendWithMethods cd mth =
-  let (cm, im) = partition isClassMethod mth
-      areForClass = nub (map methodClassName mth) == [className cd]
-      areNotExisting = any (classDefinitionHasMethod cd) (map methodDescriptor mth)
-  in if areForClass && areNotExisting
-     then cd { instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm }
-     else error "classDefinitionExtendWithMethods: wrong method list?"
+  let nm = className cd
+      (cm, im) = partition isClassMethod mth
+      notFor = filter (/= nm) (map methodClassName mth)
+      alreadyExist = filter (classDefinitionHasMethod cd) (map methodDescriptor mth)
+  in if null mth
+     then cd
+     else if null notFor && null alreadyExist
+          then cd { instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm }
+          else error (concat ["classDefinitionExtendWithMethods: wrong method list for: ", nm
+                             ," of: ", unwords (map methodSignature mth)
+                             ," because: " ++ show (notFor, alreadyExist)])
 
 -- | Checks that all methods already exist at class, c.f. classDefinitionExtendWithMethods
 classDefinitionReplaceMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
 classDefinitionReplaceMethods cd mth =
-  let areForClass = nub (map methodClassName mth) == [className cd]
-      areExisting = all (classDefinitionHasMethod cd) (map methodDescriptor mth)
+  let nm = className cd
+      notFor = filter (/= nm) (map methodClassName mth)
+      dontExist = filter (not . classDefinitionHasMethod cd) (map methodDescriptor mth)
       mthTbl = map (\m -> (methodDescriptor m, m)) mth
       replaceMethod m = fromMaybe m (lookup (methodDescriptor m) mthTbl)
-  in if areForClass && areExisting
-     then cd { instanceMethods = map replaceMethod (instanceMethods cd), classMethods = map replaceMethod (classMethods cd) }
-     else error "classDefinitionReplaceMethods: wrong method list?"
+  in if null mth
+     then cd
+     else if null notFor && null dontExist
+          then cd { instanceMethods = map replaceMethod (instanceMethods cd), classMethods = map replaceMethod (classMethods cd) }
+          else error (concat ["classDefinitionReplaceMethods: wrong method list for: ", nm
+                             ," of: ", unwords (map methodSignature mth)
+                             ," because: " ++ show (notFor, dontExist)])
 
 classDefinitionMethods :: ClassDefinition -> [MethodDefinition]
 classDefinitionMethods cd = instanceMethods cd ++ classMethods cd

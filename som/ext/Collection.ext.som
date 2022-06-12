@@ -80,7 +80,7 @@ negated = (
 )
 
 product = (
-    "All of my elements multiplied togeather."
+    "All of my elements multiplied together."
     ^self inject: 1 into: [ :accumulator :item | accumulator * item ]
 )
 
