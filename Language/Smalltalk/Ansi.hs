@@ -275,12 +275,29 @@ classDefinitionFromMethods (nm, cat, cmt) mth =
      then ClassDefinition nm Nothing noInstanceState [] [] [] im cm Nothing cat cmt
      else error "classDefinitionFromMethods: wrong method list?"
 
+classDefinitionHasMethod :: ClassDefinition -> MethodDescriptor -> Bool
+classDefinitionHasMethod cd for = any (isMethodFor for) (classDefinitionMethods cd)
+
+-- | Checks that methods do not already exist at class, c.f. classDefinitionReplaceMethods
 classDefinitionExtendWithMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
 classDefinitionExtendWithMethods cd mth =
   let (cm, im) = partition isClassMethod mth
-  in if nub (map methodClassName mth) == [className cd]
+      areForClass = nub (map methodClassName mth) == [className cd]
+      areNotExisting = any (classDefinitionHasMethod cd) (map methodDescriptor mth)
+  in if areForClass && areNotExisting
      then cd { instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm }
      else error "classDefinitionExtendWithMethods: wrong method list?"
+
+-- | Checks that all methods already exist at class, c.f. classDefinitionExtendWithMethods
+classDefinitionReplaceMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
+classDefinitionReplaceMethods cd mth =
+  let areForClass = nub (map methodClassName mth) == [className cd]
+      areExisting = all (classDefinitionHasMethod cd) (map methodDescriptor mth)
+      mthTbl = map (\m -> (methodDescriptor m, m)) mth
+      replaceMethod m = fromMaybe m (lookup (methodDescriptor m) mthTbl)
+  in if areForClass && areExisting
+     then cd { instanceMethods = map replaceMethod (instanceMethods cd), classMethods = map replaceMethod (classMethods cd) }
+     else error "classDefinitionReplaceMethods: wrong method list?"
 
 classDefinitionMethods :: ClassDefinition -> [MethodDefinition]
 classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
@@ -358,6 +375,12 @@ data MethodDefinition =
   ,methodComment :: Maybe String
   ,methodSource :: Maybe String}
   deriving (Eq,Show)
+
+-- | (isClassSide, selector)
+type MethodDescriptor = (Bool, Selector)
+
+isMethodFor :: MethodDescriptor -> MethodDefinition -> Bool
+isMethodFor (classSide, selector) m = (classSide == isClassMethod m) && (selector == methodSelector m)
 
 -- | Class name method is for, without the " class" suffix for class methods.
 methodClassName :: MethodDefinition -> Identifier
@@ -494,6 +517,9 @@ methodArguments = patternArguments . methodPattern
 -- | Method selector.
 methodSelector :: MethodDefinition -> Selector
 methodSelector = patternSelector . methodPattern
+
+methodDescriptor :: MethodDefinition -> MethodDescriptor
+methodDescriptor m = (isClassMethod m, methodSelector m)
 
 -- | Untyped identifier for method selector.
 methodSignature :: MethodDefinition -> Identifier

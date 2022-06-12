@@ -247,18 +247,65 @@ somStandardClassList =
 
 -- * IO
 
+-- | Searches for file with ".som" extension along class path (recursively if requested).
+somClassDefinitionFindFileFor :: Bool -> [FilePath] -> FilePath -> IO (Maybe FilePath)
+somClassDefinitionFindFileFor recurse cp nm = do
+  cp' <- if recurse then Music.Theory.Directory.path_recursive cp else return cp
+  Music.Theory.Directory.path_scan cp' (nm <.> "som")
+
 somLoadClassDefinitionFromFile :: FilePath -> IO St.ClassDefinition
 somLoadClassDefinitionFromFile fn = readFile fn >>=  return . parseSomClassDefinition
 
-somLoadClassDefinition :: [FilePath] -> St.Identifier -> IO (Maybe St.ClassDefinition)
-somLoadClassDefinition cp nm =
-  Music.Theory.Directory.path_scan cp (nm <.> "som") >>=
-  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromFile)
+somLoadClassDefinition :: Bool -> [FilePath] -> St.Identifier -> IO (Maybe St.ClassDefinition)
+somLoadClassDefinition recurse cp nm = do
+  fn <- somClassDefinitionFindFileFor recurse cp nm
+  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromFile) fn
 
-somLoadClassDefinitionOrError :: [FilePath] -> St.Identifier -> IO St.ClassDefinition
-somLoadClassDefinitionOrError cp nm =
+somLoadClassDefinitionOrError :: Bool -> [FilePath] -> St.Identifier -> IO St.ClassDefinition
+somLoadClassDefinitionOrError recurse cp nm =
   let err = error ("somLoadClassDefinition: not found: " ++ nm ++ " on: " ++ intercalate ":" cp)
-  in somLoadClassDefinition cp nm >>= maybe err return
+  in somLoadClassDefinition recurse cp nm >>= maybe err return
 
-somLoadClassList :: [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
-somLoadClassList cp = mapM (somLoadClassDefinitionOrError cp)
+somLoadClassList :: Bool -> [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
+somLoadClassList recurse cp = mapM (somLoadClassDefinitionOrError recurse cp)
+
+-- * Extensions and modifications
+
+-- | (class, [ext], [mod])
+type SomDefinitionFiles = (FilePath, [FilePath], [FilePath])
+
+{- | An extended model where a class C is:
+- defined initially in a file C.som
+- extended using files named C.ext.som
+- modified using files named C.mod.som
+
+The .ext and .mod files are ordinary Som files that contain only method definitions.
+An .ext file must only define methods that are not defined in either the class file or in any other .ext file.
+A .mod file must only re-define methods that have been defined in either the class file or in an .ext file.
+
+> cp = ["/home/rohan/sw/stsc3-som/lib/Smalltalk", "/home/rohan/sw/stsc3/som"]
+> somClassDefinitionFindFilesFor True cp "Array"
+-}
+somClassDefinitionFindFilesFor :: Bool -> [FilePath] -> String -> IO SomDefinitionFiles
+somClassDefinitionFindFilesFor recurse cp nm = do
+  cp' <- if recurse then Music.Theory.Directory.path_recursive cp else return cp
+  let get ext = Music.Theory.Directory.path_search cp' (nm <.> ext)
+  c <- get "som"
+  e <- get "ext.som"
+  m <- get "mod.som"
+  let err = error ("somClassDefinitionFilesFor: not singular class file: " ++ unwords c)
+  if length c /= 1 then err else return (head c, e, sort m)
+
+somLoadClassDefinitionFromFiles :: SomDefinitionFiles -> IO St.ClassDefinition
+somLoadClassDefinitionFromFiles (c, e, m) = do
+  c' <- somLoadClassDefinitionFromFile c
+  e' <- mapM somLoadClassDefinitionFromFile e
+  m' <- mapM somLoadClassDefinitionFromFile m
+  let em = concatMap St.classDefinitionMethods e'
+      mm = concatMap St.classDefinitionMethods m'
+  return (St.classDefinitionReplaceMethods (St.classDefinitionExtendWithMethods c' em) mm)
+
+somLoadClassDefinitionExtMod :: Bool -> [FilePath] -> String -> IO St.ClassDefinition
+somLoadClassDefinitionExtMod recurse cp nm = do
+  cem <- somClassDefinitionFindFilesFor recurse cp nm
+  somLoadClassDefinitionFromFiles cem
