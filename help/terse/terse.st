@@ -979,6 +979,7 @@ String initializedInstance = ''.
 } allSatisfy: #yourself
 
 s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
+ s = 'strung'. "=> strung, string literals are mutable"
 'string' hash ~= #'string' hash "strings and symbols hash unequally"
 'foo {1} bar' format: #(3.141)
 
@@ -1087,6 +1088,7 @@ Week dayNames = ((1 to: 7) collect: [ :each | Week nameOfDay: each ]).
 'WriteStream'
 
 s := WriteStream on: (String new: 10)                       "WriteStream on String"
+s isBinary not.                                             "text stream"
 s nextPutAll: 'terse'                                       "put each item from colection into stream"
 s position = 5                                              "get position"
 s position: 5                                               "set position"
@@ -1105,6 +1107,9 @@ s contents = #(3)
 s := WriteStream on: String new
 s nextPutAll: #($t $e $s $t)
 s contents = 'test'
+s := WriteStream on: String new
+$c putOn: s
+1 asString putOn: s
 
 'Year'
 

@@ -1,0 +1,26 @@
+LinExp = ScUgen (
+----------------------------
+
+in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi = (
+    ^UgenBuilder name: 'LinExp' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. srclo. srchi. dstlo. dsthi}
+)
+
+in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul = (
+    ^(LinExp in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi) * mul
+)
+
+in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi mul: mul add: add = (
+    ^(LinExp in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:srclo:srchi:dstlo:dsthi:
+)
+
+
+comment = (^'
+Map a linear range to an exponential range
+')
+
+
+)

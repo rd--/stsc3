@@ -1,0 +1,19 @@
+Integer = Object (
+
+oscAlign = (
+    ^((self + 3) bitAnd: 3 bitInvert) - self
+)
+
+oscTypeTag = (
+    ^$i
+)
+
+printOscOn: aStream = (
+    aStream << self asString << ' '
+)
+
+putOscOn: aStream = (
+    aStream int32: self
+)
+
+)

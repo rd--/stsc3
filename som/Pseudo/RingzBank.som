@@ -1,0 +1,18 @@
+RingzBank = PseudoUgen (
+----------------------------
+
+input: input freq: freq amp: amp time: time = (
+	^(Klank apply: {input. 1. 0. 1. {freq. amp. time} asKlankSpec})
+)
+
+primaryFactoryMethod = (
+	^#'input:freq:amp:time:'
+)
+
+
+comment = (^'
+ Parallel bank of Ringz *
+')
+
+
+)

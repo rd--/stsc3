@@ -1,0 +1,26 @@
+Dshuf = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#repeats:list:
+)
+
+repeats: repeats list: list = (
+    ^UgenBuilder name: 'Dshuf' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
+)
+
+repeats: repeats list: list mul: mul = (
+    ^(Dshuf repeats: repeats list: list) * mul
+)
+
+repeats: repeats list: list mul: mul add: add = (
+    ^(Dshuf repeats: repeats list: list) * mul + add
+)
+
+
+comment = (^'
+Demand rate random sequence generator
+')
+
+
+)

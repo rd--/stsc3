@@ -1,0 +1,26 @@
+BlockSize = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(BlockSize new) * mul
+)
+
+mul: mul add: add = (
+    ^(BlockSize new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'BlockSize' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

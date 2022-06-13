@@ -1,0 +1,18 @@
+Bilin = PseudoUgen (
+----------------------------
+
+in: in lo: lo hi: hi = (
+	^(LinLin apply: {in. -1. 1. lo. hi})
+)
+
+primaryFactoryMethod = (
+	^#'in:lo:hi:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

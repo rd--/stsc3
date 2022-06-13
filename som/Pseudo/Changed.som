@@ -1,0 +1,18 @@
+Changed = PseudoUgen (
+----------------------------
+
+input: input threshold: threshold = (
+	^(HPZ1 apply: {input}) abs > threshold
+)
+
+primaryFactoryMethod = (
+	^#'input:threshold:'
+)
+
+
+comment = (^'
+ Triggers when a value changes *
+')
+
+
+)

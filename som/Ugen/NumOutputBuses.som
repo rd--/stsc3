@@ -1,0 +1,26 @@
+NumOutputBuses = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(NumOutputBuses new) * mul
+)
+
+mul: mul add: add = (
+    ^(NumOutputBuses new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'NumOutputBuses' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+Number of output busses.
+')
+
+
+)

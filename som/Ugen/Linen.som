@@ -1,0 +1,26 @@
+Linen = ScUgen (
+----------------------------
+
+gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction = (
+    ^UgenBuilder name: 'Linen' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {gate. attackTime. susLevel. releaseTime. doneAction}
+)
+
+gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction mul: mul = (
+    ^(Linen gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction) * mul
+)
+
+gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction mul: mul add: add = (
+    ^(Linen gate: gate attackTime: attackTime susLevel: susLevel releaseTime: releaseTime doneAction: doneAction) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#gate:attackTime:susLevel:releaseTime:doneAction:
+)
+
+
+comment = (^'
+Simple linear envelope generator.
+')
+
+
+)

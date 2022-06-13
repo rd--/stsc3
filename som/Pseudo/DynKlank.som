@@ -1,0 +1,24 @@
+DynKlank = PseudoUgen (
+----------------------------
+
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef = (
+ gen := [ :ix | | f a d |
+ f := specificationsArrayRef at: ix .
+ a := specificationsArrayRef at: (ix + 1) .
+ d := specificationsArrayRef at: (ix + 2) .
+ (Ringz apply: {input. f * freqscale + freqoffset. d * decayscale}) * a .
+ ] .
+	^((1 to: (specificationsArrayRef size) by: 3) collect: gen) sum
+)
+
+primaryFactoryMethod = (
+	^#'input:freqscale:freqoffset:decayscale:specificationsArrayRef:'
+)
+
+
+comment = (^'
+ Dynamic klank, set of non-fixed resonating filters *
+')
+
+
+)

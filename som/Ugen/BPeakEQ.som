@@ -1,0 +1,26 @@
+BPeakEQ = ScUgen (
+----------------------------
+
+in: in freq: freq rq: rq db: db = (
+    ^UgenBuilder name: 'BPeakEQ' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq. db}
+)
+
+in: in freq: freq rq: rq db: db mul: mul = (
+    ^(BPeakEQ in: in freq: freq rq: rq db: db) * mul
+)
+
+in: in freq: freq rq: rq db: db mul: mul add: add = (
+    ^(BPeakEQ in: in freq: freq rq: rq db: db) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:rq:db:
+)
+
+
+comment = (^'
+Parametric equalizer
+')
+
+
+)

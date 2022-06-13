@@ -1,0 +1,26 @@
+Formlet = ScUgen (
+----------------------------
+
+in: in freq: freq attacktime: attacktime decaytime: decaytime = (
+    ^UgenBuilder name: 'Formlet' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. attacktime. decaytime}
+)
+
+in: in freq: freq attacktime: attacktime decaytime: decaytime mul: mul = (
+    ^(Formlet in: in freq: freq attacktime: attacktime decaytime: decaytime) * mul
+)
+
+in: in freq: freq attacktime: attacktime decaytime: decaytime mul: mul add: add = (
+    ^(Formlet in: in freq: freq attacktime: attacktime decaytime: decaytime) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:attacktime:decaytime:
+)
+
+
+comment = (^'
+FOF-like filter.
+')
+
+
+)

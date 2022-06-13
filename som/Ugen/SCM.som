@@ -1,0 +1,26 @@
+SCM = ScUgen (
+----------------------------
+
+clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw = (
+    ^UgenBuilder name: 'SCM' numChan: 8 rateSpec: (Rate ar) specialIndex: 0 inputArray: {clock. bpm. rotate. slip. shuffle. skip. pw}
+)
+
+clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw mul: mul = (
+    ^(SCM clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw) * mul
+)
+
+clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw mul: mul add: add = (
+    ^(SCM clock: clock bpm: bpm rotate: rotate slip: slip shuffle: shuffle skip: skip pw: pw) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#clock:bpm:rotate:slip:shuffle:skip:pw:
+)
+
+
+comment = (^'
+shuffling clock multiplier
+')
+
+
+)

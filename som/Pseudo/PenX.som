@@ -1,0 +1,18 @@
+PenX = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'voiceNumber:'
+)
+
+voiceNumber: voiceNumber = (
+	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 1})
+)
+
+
+comment = (^'
+ Pen X *
+')
+
+
+)

@@ -1,0 +1,26 @@
+Fold = ScUgen (
+----------------------------
+
+in: in lo: lo hi: hi = (
+    ^UgenBuilder name: 'Fold' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lo. hi}
+)
+
+in: in lo: lo hi: hi mul: mul = (
+    ^(Fold in: in lo: lo hi: hi) * mul
+)
+
+in: in lo: lo hi: hi mul: mul add: add = (
+    ^(Fold in: in lo: lo hi: hi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:lo:hi:
+)
+
+
+comment = (^'
+Fold a signal outside given thresholds.
+')
+
+
+)

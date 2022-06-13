@@ -1,0 +1,18 @@
+LinLin = PseudoUgen (
+----------------------------
+
+in: in srclo: srclo srchi: srchi dstlo: dstlo dsthi: dsthi = (
+	^(in - srclo) / (srchi - srclo) * (dsthi - dstlo) + dstlo
+)
+
+primaryFactoryMethod = (
+	^#'in:srclo:srchi:dstlo:dsthi:'
+)
+
+
+comment = (^'
+ Map a linear range to a linear range *
+')
+
+
+)

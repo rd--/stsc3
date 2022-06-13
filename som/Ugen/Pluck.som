@@ -1,0 +1,26 @@
+Pluck = ScUgen (
+----------------------------
+
+in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef = (
+    ^UgenBuilder name: 'Pluck' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig. maxdelaytime. delaytime. decaytime. coef}
+)
+
+in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul = (
+    ^(Pluck in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef) * mul
+)
+
+in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef mul: mul add: add = (
+    ^(Pluck in: in trig: trig maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime coef: coef) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:trig:maxdelaytime:delaytime:decaytime:coef:
+)
+
+
+comment = (^'
+A Karplus-Strong UGen
+')
+
+
+)

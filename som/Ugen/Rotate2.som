@@ -1,0 +1,26 @@
+Rotate2 = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#x:y:pos:
+)
+
+x: x y: y pos: pos = (
+    ^UgenBuilder name: 'Rotate2' numChan: 2 rateSpec: #(1 2) specialIndex: 0 inputArray: {x. y. pos}
+)
+
+x: x y: y pos: pos mul: mul = (
+    ^(Rotate2 x: x y: y pos: pos) * mul
+)
+
+x: x y: y pos: pos mul: mul add: add = (
+    ^(Rotate2 x: x y: y pos: pos) * mul + add
+)
+
+
+comment = (^'
+Rotate a sound field.
+')
+
+
+)

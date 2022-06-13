@@ -1,0 +1,26 @@
+LFGauss = ScUgen (
+----------------------------
+
+duration: duration width: width iphase: iphase loop: loop doneAction: doneAction = (
+    ^UgenBuilder name: 'LFGauss' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {duration. width. iphase. loop. doneAction}
+)
+
+duration: duration width: width iphase: iphase loop: loop doneAction: doneAction mul: mul = (
+    ^(LFGauss duration: duration width: width iphase: iphase loop: loop doneAction: doneAction) * mul
+)
+
+duration: duration width: width iphase: iphase loop: loop doneAction: doneAction mul: mul add: add = (
+    ^(LFGauss duration: duration width: width iphase: iphase loop: loop doneAction: doneAction) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#duration:width:iphase:loop:doneAction:
+)
+
+
+comment = (^'
+Gaussian function oscillator
+')
+
+
+)

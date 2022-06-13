@@ -1,0 +1,26 @@
+WaveLoss = ScUgen (
+----------------------------
+
+in: in drop: drop outof: outof mode: mode = (
+    ^UgenBuilder name: 'WaveLoss' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. drop. outof. mode}
+)
+
+in: in drop: drop outof: outof mode: mode mul: mul = (
+    ^(WaveLoss in: in drop: drop outof: outof mode: mode) * mul
+)
+
+in: in drop: drop outof: outof mode: mode mul: mul add: add = (
+    ^(WaveLoss in: in drop: drop outof: outof mode: mode) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:drop:outof:mode:
+)
+
+
+comment = (^'
+Lose bits of your waves
+')
+
+
+)

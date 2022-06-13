@@ -1,0 +1,18 @@
+TChoose = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'trig:array:'
+)
+
+trig: trig array: array = (
+	^(Select apply: {(TIRand apply: {0. array size - 1. trig}). array})
+)
+
+
+comment = (^'
+ Randomly select one of several inputs on trigger *
+')
+
+
+)

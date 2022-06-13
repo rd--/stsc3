@@ -1,0 +1,18 @@
+Sw = PseudoUgen (
+----------------------------
+
+index: index = (
+	^(In apply: {1. 12000 + index}) kr
+)
+
+primaryFactoryMethod = (
+	^#'index:'
+)
+
+
+comment = (^'
+ Switch (maintained or momentary) controller input *
+')
+
+
+)

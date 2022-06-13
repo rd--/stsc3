@@ -1,0 +1,26 @@
+Limiter = ScUgen (
+----------------------------
+
+in: in level: level dur: dur = (
+    ^UgenBuilder name: 'Limiter' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. level. dur}
+)
+
+in: in level: level dur: dur mul: mul = (
+    ^(Limiter in: in level: level dur: dur) * mul
+)
+
+in: in level: level dur: dur mul: mul add: add = (
+    ^(Limiter in: in level: level dur: dur) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:level:dur:
+)
+
+
+comment = (^'
+Peak limiter
+')
+
+
+)

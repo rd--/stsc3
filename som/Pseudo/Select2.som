@@ -1,0 +1,18 @@
+Select2 = PseudoUgen (
+----------------------------
+
+predicate: predicate ifTrue: ifTrue ifFalse: ifFalse = (
+	^(predicate * (ifTrue - ifFalse)) + ifFalse
+)
+
+primaryFactoryMethod = (
+	^#'predicate:ifTrue:ifFalse:'
+)
+
+
+comment = (^'
+ Select one of two branches based on predicate signal *
+')
+
+
+)

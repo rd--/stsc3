@@ -1,0 +1,26 @@
+Phasor = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#trig:rate:start:end:resetPos:
+)
+
+trig: trig rate: rate start: start end: end resetPos: resetPos = (
+    ^UgenBuilder name: 'Phasor' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {trig. rate. start. end. resetPos}
+)
+
+trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul = (
+    ^(Phasor trig: trig rate: rate start: start end: end resetPos: resetPos) * mul
+)
+
+trig: trig rate: rate start: start end: end resetPos: resetPos mul: mul add: add = (
+    ^(Phasor trig: trig rate: rate start: start end: end resetPos: resetPos) * mul + add
+)
+
+
+comment = (^'
+A resettable linear ramp between two levels.
+')
+
+
+)

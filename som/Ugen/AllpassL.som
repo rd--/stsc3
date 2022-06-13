@@ -1,0 +1,26 @@
+AllpassL = ScUgen (
+----------------------------
+
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime = (
+    ^UgenBuilder name: 'AllpassL' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. maxdelaytime. delaytime. decaytime}
+)
+
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul = (
+    ^(AllpassL in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul
+)
+
+in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime mul: mul add: add = (
+    ^(AllpassL in: in maxdelaytime: maxdelaytime delaytime: delaytime decaytime: decaytime) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:maxdelaytime:delaytime:decaytime:
+)
+
+
+comment = (^'
+Schroeder allpass delay line with linear interpolation.
+')
+
+
+)

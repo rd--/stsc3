@@ -1,0 +1,26 @@
+LFClipNoise = ScUgen (
+----------------------------
+
+freq: freq = (
+    ^UgenBuilder name: 'LFClipNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
+)
+
+freq: freq mul: mul = (
+    ^(LFClipNoise freq: freq) * mul
+)
+
+freq: freq mul: mul add: add = (
+    ^(LFClipNoise freq: freq) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:
+)
+
+
+comment = (^'
+Clipped noise
+')
+
+
+)

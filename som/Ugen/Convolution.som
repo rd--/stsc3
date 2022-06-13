@@ -1,0 +1,26 @@
+Convolution = ScUgen (
+----------------------------
+
+in: in kernel: kernel framesize: framesize = (
+    ^UgenBuilder name: 'Convolution' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. kernel. framesize}
+)
+
+in: in kernel: kernel framesize: framesize mul: mul = (
+    ^(Convolution in: in kernel: kernel framesize: framesize) * mul
+)
+
+in: in kernel: kernel framesize: framesize mul: mul add: add = (
+    ^(Convolution in: in kernel: kernel framesize: framesize) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:kernel:framesize:
+)
+
+
+comment = (^'
+Real-time convolver.
+')
+
+
+)

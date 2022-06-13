@@ -1,0 +1,18 @@
+DmdFor = PseudoUgen (
+----------------------------
+
+dur: dur reset: reset level: level = (
+	^(Duty apply: {dur. reset. 0. level})
+)
+
+primaryFactoryMethod = (
+	^#'dur:reset:level:'
+)
+
+
+comment = (^'
+ Demand with duration input (Duty) *
+')
+
+
+)

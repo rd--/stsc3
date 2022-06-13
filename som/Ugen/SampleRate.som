@@ -1,0 +1,26 @@
+SampleRate = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(SampleRate new) * mul
+)
+
+mul: mul add: add = (
+    ^(SampleRate new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'SampleRate' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+Server sample rate.
+')
+
+
+)

@@ -1,0 +1,18 @@
+BufAlloc = PseudoUgen (
+----------------------------
+
+numChannels: numChannels numFrames: numFrames = (
+	^(LocalBuf apply: {numChannels. numFrames})
+)
+
+primaryFactoryMethod = (
+	^#'numChannels:numFrames:'
+)
+
+
+comment = (^'
+ Allocate a buffer local to the synth *
+')
+
+
+)

@@ -1,8 +1,4 @@
-%.ext.som : %.ext.st
-	stsc3 translate extensions --tidy --sort fileout som $< $@
-
-%.som : %.st
-	stsc3 translate class --sort fileout som $< $@
+include ../mk/som.mk
 
 # ext are .ext.st files with extensions to standard classes
 # classes are stsc3 defined classes
@@ -28,5 +24,11 @@ all:
 	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) Cuis/*.ext.st > Sc3-Filein-For-Cuis.st
 
 clean:
-	rm -f Sc3-Ugen-Pseudo.st Sc3-Help-Graphs.st
+	rm -f Sc3-Ugen-Pseudo.lib.st Sc3-Help-Graphs.st
 	rm -f Sc3-Filein-For-*.st
+
+translate-bindings:
+	stsc3 translate library --tidy --sort fileout som Sc3-Ugen-Bindings.lib.st .
+
+translate-pseudo:
+	stsc3 translate library --tidy --sort fileout som Sc3-Ugen-Pseudo.lib.st .

@@ -1,0 +1,26 @@
+LFPulse = ScUgen (
+----------------------------
+
+freq: freq iphase: iphase width: width = (
+    ^UgenBuilder name: 'LFPulse' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase. width}
+)
+
+freq: freq iphase: iphase width: width mul: mul = (
+    ^(LFPulse freq: freq iphase: iphase width: width) * mul
+)
+
+freq: freq iphase: iphase width: width mul: mul add: add = (
+    ^(LFPulse freq: freq iphase: iphase width: width) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:iphase:width:
+)
+
+
+comment = (^'
+pulse oscillator
+')
+
+
+)

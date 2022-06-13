@@ -1,0 +1,26 @@
+RunningSum = ScUgen (
+----------------------------
+
+in: in numsamp: numsamp = (
+    ^UgenBuilder name: 'RunningSum' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. numsamp}
+)
+
+in: in numsamp: numsamp mul: mul = (
+    ^(RunningSum in: in numsamp: numsamp) * mul
+)
+
+in: in numsamp: numsamp mul: mul add: add = (
+    ^(RunningSum in: in numsamp: numsamp) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:numsamp:
+)
+
+
+comment = (^'
+Running sum over n frames
+')
+
+
+)

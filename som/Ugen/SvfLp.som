@@ -1,0 +1,26 @@
+SvfLp = ScUgen (
+----------------------------
+
+in: in freq: freq q: q = (
+    ^UgenBuilder name: 'SvfLp' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. freq. q}
+)
+
+in: in freq: freq q: q mul: mul = (
+    ^(SvfLp in: in freq: freq q: q) * mul
+)
+
+in: in freq: freq q: q mul: mul add: add = (
+    ^(SvfLp in: in freq: freq q: q) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:q:
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

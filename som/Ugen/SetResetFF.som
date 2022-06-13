@@ -1,0 +1,26 @@
+SetResetFF = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#trig:reset:
+)
+
+trig: trig reset: reset = (
+    ^UgenBuilder name: 'SetResetFF' numChan: 1 rateSpec: #(1 2) specialIndex: 0 inputArray: {trig. reset}
+)
+
+trig: trig reset: reset mul: mul = (
+    ^(SetResetFF trig: trig reset: reset) * mul
+)
+
+trig: trig reset: reset mul: mul add: add = (
+    ^(SetResetFF trig: trig reset: reset) * mul + add
+)
+
+
+comment = (^'
+Set-reset flip flop.
+')
+
+
+)

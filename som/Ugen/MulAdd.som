@@ -1,0 +1,18 @@
+MulAdd = ScUgen (
+----------------------------
+
+in: in mul: mul add: add = (
+    ^UgenBuilder name: 'MulAdd' numChan: 1 rateSpec: #(1 2 3) specialIndex: 0 inputArray: {in. mul. add}
+)
+
+primaryFactoryMethod = (
+    ^#in:mul:add:
+)
+
+
+comment = (^'
+Multiply add
+')
+
+
+)

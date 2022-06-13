@@ -1,0 +1,26 @@
+SOS = ScUgen (
+----------------------------
+
+in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 = (
+    ^UgenBuilder name: 'SOS' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. a0. a1. a2. b1. b2}
+)
+
+in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 mul: mul = (
+    ^(SOS in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2) * mul
+)
+
+in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2 mul: mul add: add = (
+    ^(SOS in: in a0: a0 a1: a1 a2: a2 b1: b1 b2: b2) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:a0:a1:a2:b1:b2:
+)
+
+
+comment = (^'
+Second order filter section (biquad).
+')
+
+
+)

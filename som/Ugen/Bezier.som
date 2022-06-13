@@ -1,0 +1,26 @@
+Bezier = ScUgen (
+----------------------------
+
+haltAfter: haltAfter dx: dx freq: freq phase: phase param: param = (
+    ^UgenBuilder name: 'Bezier' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: ({haltAfter. dx. freq. phase} , (param asArray))
+)
+
+haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul = (
+    ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul
+)
+
+haltAfter: haltAfter dx: dx freq: freq phase: phase param: param mul: mul add: add = (
+    ^(Bezier haltAfter: haltAfter dx: dx freq: freq phase: phase param: param) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#haltAfter:dx:freq:phase:param:
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

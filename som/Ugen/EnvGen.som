@@ -1,0 +1,26 @@
+EnvGen = ScUgen (
+----------------------------
+
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope = (
+    ^UgenBuilder name: 'EnvGen' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: ({gate. levelScale. levelBias. timeScale. doneAction} , (envelope asArray))
+)
+
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul = (
+    ^(EnvGen gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope) * mul
+)
+
+gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope mul: mul add: add = (
+    ^(EnvGen gate: gate levelScale: levelScale levelBias: levelBias timeScale: timeScale doneAction: doneAction envelope: envelope) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#gate:levelScale:levelBias:timeScale:doneAction:envelope:
+)
+
+
+comment = (^'
+Envelope generator
+')
+
+
+)

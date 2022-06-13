@@ -1,0 +1,26 @@
+Dbufrd = ScUgen (
+----------------------------
+
+bufnum: bufnum phase: phase loop: loop = (
+    ^UgenBuilder name: 'Dbufrd' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: {bufnum. phase. loop}
+)
+
+bufnum: bufnum phase: phase loop: loop mul: mul = (
+    ^(Dbufrd bufnum: bufnum phase: phase loop: loop) * mul
+)
+
+bufnum: bufnum phase: phase loop: loop mul: mul add: add = (
+    ^(Dbufrd bufnum: bufnum phase: phase loop: loop) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:phase:loop:
+)
+
+
+comment = (^'
+Buffer read demand ugen
+')
+
+
+)

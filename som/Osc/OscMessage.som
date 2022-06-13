@@ -1,0 +1,66 @@
+OscMessage = Object (
+
+| address arguments |
+
+address = (
+    ^address
+)
+
+address: aString = (
+     address := aString
+)
+
+arguments = (
+    ^arguments
+)
+
+arguments: anArray = (
+    arguments := anArray
+)
+
+descriptor = (
+    ^',' , (String newFrom: (arguments collect: [ :item | item oscTypeTag ]))
+)
+
+encodeOsc = (
+    ^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]
+)
+
+oscString = (
+	^String streamContents: [ :str | self printOscOn: str ]
+)
+
+printOscOn: aStream = (
+    address printOscOn: aStream.
+    self descriptor printOscOn: aStream.
+    arguments do: [ :item | item printOscOn: aStream ]
+)
+
+putOscOn: aStream = (
+    address putOscOn: aStream.
+    self descriptor putOscOn: aStream.
+    arguments do: [ :item | item putOscOn: aStream ]
+)
+
+sendToHost: hostAddress atPort: portNumber = (
+    | socket |
+    socket := Socket newUDP.
+    socket sendUDPData: self encodeOsc toHost: hostAddress port: portNumber.
+    socket close
+)
+
+----------------------------
+
+at: address with: arguments = (
+    ^self new address: address; arguments: arguments; yourself
+)
+
+primaryFactoryMethod = (
+    ^#at:with:
+)
+
+comment = (
+	^'No comment'
+)
+
+)

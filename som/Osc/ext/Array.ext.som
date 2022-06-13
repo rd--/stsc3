@@ -1,0 +1,19 @@
+Array = Object (
+
+oscTypeTag = (
+    ^$b
+)
+
+printOscOn: aStream = (
+    self isEmpty ifTrue: [ ^self error: 'Array>>printOscOn: isEmpty' ].
+    self do: [ :item | aStream << item printHexByte ]
+)
+
+putOscOn: aStream = (
+    self isEmpty ifTrue: [ ^self error: 'Array>>putOscOn: isEmpty' ].
+    self size putOscOn: aStream.
+    aStream nextPutAll: self asByteArray.
+    self size oscAlign timesRepeat: [ aStream nextPut: 0 ] "i.e. Character null asInteger"
+)
+
+)

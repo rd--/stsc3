@@ -1,0 +1,26 @@
+Saw = ScUgen (
+----------------------------
+
+freq: freq = (
+    ^UgenBuilder name: 'Saw' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
+)
+
+freq: freq mul: mul = (
+    ^(Saw freq: freq) * mul
+)
+
+freq: freq mul: mul add: add = (
+    ^(Saw freq: freq) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:
+)
+
+
+comment = (^'
+Band limited sawtooth.
+')
+
+
+)

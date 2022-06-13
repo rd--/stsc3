@@ -1,0 +1,26 @@
+TwoPole = ScUgen (
+----------------------------
+
+in: in freq: freq radius: radius = (
+    ^UgenBuilder name: 'TwoPole' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. radius}
+)
+
+in: in freq: freq radius: radius mul: mul = (
+    ^(TwoPole in: in freq: freq radius: radius) * mul
+)
+
+in: in freq: freq radius: radius mul: mul add: add = (
+    ^(TwoPole in: in freq: freq radius: radius) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:radius:
+)
+
+
+comment = (^'
+Two pole filter.
+')
+
+
+)

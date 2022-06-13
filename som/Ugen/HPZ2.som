@@ -1,0 +1,26 @@
+HPZ2 = ScUgen (
+----------------------------
+
+in: in = (
+    ^UgenBuilder name: 'HPZ2' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+)
+
+in: in mul: mul = (
+    ^(HPZ2 in: in) * mul
+)
+
+in: in mul: mul add: add = (
+    ^(HPZ2 in: in) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:
+)
+
+
+comment = (^'
+Two zero fixed midcut.
+')
+
+
+)

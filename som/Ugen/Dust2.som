@@ -1,0 +1,26 @@
+Dust2 = ScUgen (
+----------------------------
+
+density: density = (
+    ^UgenBuilder name: 'Dust2' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {density}
+)
+
+density: density mul: mul = (
+    ^(Dust2 density: density) * mul
+)
+
+density: density mul: mul add: add = (
+    ^(Dust2 density: density) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#density:
+)
+
+
+comment = (^'
+Random impulses.
+')
+
+
+)

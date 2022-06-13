@@ -1,0 +1,26 @@
+MouseX = ScUgen (
+----------------------------
+
+minval: minval maxval: maxval warp: warp lag: lag = (
+    ^UgenBuilder name: 'MouseX' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {minval. maxval. warp. lag}
+)
+
+minval: minval maxval: maxval warp: warp lag: lag mul: mul = (
+    ^(MouseX minval: minval maxval: maxval warp: warp lag: lag) * mul
+)
+
+minval: minval maxval: maxval warp: warp lag: lag mul: mul add: add = (
+    ^(MouseX minval: minval maxval: maxval warp: warp lag: lag) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#minval:maxval:warp:lag:
+)
+
+
+comment = (^'
+Cursor tracking UGen.
+')
+
+
+)

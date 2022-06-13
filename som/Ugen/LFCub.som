@@ -1,0 +1,26 @@
+LFCub = ScUgen (
+----------------------------
+
+freq: freq iphase: iphase = (
+    ^UgenBuilder name: 'LFCub' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
+)
+
+freq: freq iphase: iphase mul: mul = (
+    ^(LFCub freq: freq iphase: iphase) * mul
+)
+
+freq: freq iphase: iphase mul: mul add: add = (
+    ^(LFCub freq: freq iphase: iphase) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:iphase:
+)
+
+
+comment = (^'
+A sine like shape made of two cubic pieces
+')
+
+
+)

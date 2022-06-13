@@ -1,0 +1,26 @@
+InFeedback = ScUgen (
+----------------------------
+
+numChan: numChan bus: bus = (
+    ^UgenBuilder name: 'InFeedback' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bus}
+)
+
+numChan: numChan bus: bus mul: mul = (
+    ^(InFeedback numChan: numChan bus: bus) * mul
+)
+
+numChan: numChan bus: bus mul: mul add: add = (
+    ^(InFeedback numChan: numChan bus: bus) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#numChan:bus:
+)
+
+
+comment = (^'
+Read signal from a bus with a current or one cycle old timestamp.
+')
+
+
+)

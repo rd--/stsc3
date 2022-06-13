@@ -1,0 +1,26 @@
+FreqShift = ScUgen (
+----------------------------
+
+in: in freq: freq phase: phase = (
+    ^UgenBuilder name: 'FreqShift' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. freq. phase}
+)
+
+in: in freq: freq phase: phase mul: mul = (
+    ^(FreqShift in: in freq: freq phase: phase) * mul
+)
+
+in: in freq: freq phase: phase mul: mul add: add = (
+    ^(FreqShift in: in freq: freq phase: phase) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:phase:
+)
+
+
+comment = (^'
+Frequency Shifter.
+')
+
+
+)

@@ -1,0 +1,18 @@
+PenAngle = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'voiceNumber:'
+)
+
+voiceNumber: voiceNumber = (
+	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 4})
+)
+
+
+comment = (^'
+ Pen angle *
+')
+
+
+)

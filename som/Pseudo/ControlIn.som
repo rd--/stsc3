@@ -1,0 +1,18 @@
+ControlIn = PseudoUgen (
+----------------------------
+
+numChan: numChan bus: bus = (
+	^(In apply: {numChan. bus}) kr
+)
+
+primaryFactoryMethod = (
+	^#'numChan:bus:'
+)
+
+
+comment = (^'
+ Control input *
+')
+
+
+)

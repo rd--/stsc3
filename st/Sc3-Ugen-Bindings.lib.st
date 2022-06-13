@@ -4117,25 +4117,6 @@ trig: trig freq: freq nCycles: nCycles decay: decay mul: mul add: add
     ^(VOSIM trig: trig freq: freq nCycles: nCycles decay: decay) * mul + add!
 !
 
-ScUgen subclass: #MiRings
-  instanceVariableNames: ''
-  classVariableNames: ''
-  poolDictionaries: ''
-  category: 'Sound-Sc3'!
-
-MiRings comment: 'a resonator'!
-
-!MiRings class methodsFor: 'instance creation'!
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass
-    ^UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. intern_exciter. easteregg. bypass}!
-primaryFactoryMethod
-    ^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:!
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul
-    ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul!
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add
-    ^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul + add!
-!
-
 ScUgen subclass: #AnalogFoldOsc
   instanceVariableNames: ''
   classVariableNames: ''

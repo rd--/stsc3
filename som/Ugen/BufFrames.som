@@ -1,0 +1,26 @@
+BufFrames = ScUgen (
+----------------------------
+
+bufnum: bufnum = (
+    ^UgenBuilder name: 'BufFrames' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {bufnum}
+)
+
+bufnum: bufnum mul: mul = (
+    ^(BufFrames bufnum: bufnum) * mul
+)
+
+bufnum: bufnum mul: mul add: add = (
+    ^(BufFrames bufnum: bufnum) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:
+)
+
+
+comment = (^'
+Current number of frames allocated in the buffer.
+')
+
+
+)

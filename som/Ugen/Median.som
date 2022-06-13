@@ -1,0 +1,26 @@
+Median = ScUgen (
+----------------------------
+
+length: length in: in = (
+    ^UgenBuilder name: 'Median' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {length. in}
+)
+
+length: length in: in mul: mul = (
+    ^(Median length: length in: in) * mul
+)
+
+length: length in: in mul: mul add: add = (
+    ^(Median length: length in: in) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#length:in:
+)
+
+
+comment = (^'
+Median filter.
+')
+
+
+)

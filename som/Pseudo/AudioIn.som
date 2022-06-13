@@ -1,0 +1,16 @@
+AudioIn = PseudoUgen (
+----------------------------
+
+channels: channels = (
+	^(In apply: {1. (NumOutputBuses apply: {}) + channels - 1})
+)
+
+primaryFactoryMethod = (
+	^#'channels:'
+)
+
+comment = (
+	^'Audio input'
+)
+
+)

@@ -1,0 +1,18 @@
+Cutoff = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'sustainTime:releaseTime:curve:'
+)
+
+sustainTime: sustainTime releaseTime: releaseTime curve: curve = (
+	^(EnvSpec apply: {#(1 1 0). {sustainTime. releaseTime}. curve. nil. nil. 0}) asEnvGen
+)
+
+
+comment = (^'
+ EnvGen of simple cutoff envelope *
+')
+
+
+)

@@ -1,0 +1,16 @@
+Tr = PseudoUgen (
+----------------------------
+
+in: in = (
+	^(Trig apply: {in. (SampleDur apply: {})})
+)
+
+primaryFactoryMethod = (
+	^#'in:'
+)
+
+comment = (
+	^'Trig with duration of one sample'
+)
+
+)

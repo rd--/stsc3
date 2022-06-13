@@ -1,0 +1,26 @@
+GreyholeRaw = ScUgen (
+----------------------------
+
+in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size = (
+    ^UgenBuilder name: 'GreyholeRaw' numChan: 2 rateSpec: #(1 2) specialIndex: 0 inputArray: {in1. in2. damping. delaytime. diffusion. feedback. moddepth. modfreq. size}
+)
+
+in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul = (
+    ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul
+)
+
+in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size mul: mul add: add = (
+    ^(GreyholeRaw in1: in1 in2: in2 damping: damping delaytime: delaytime diffusion: diffusion feedback: feedback moddepth: moddepth modfreq: modfreq size: size) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in1:in2:damping:delaytime:diffusion:feedback:moddepth:modfreq:size:
+)
+
+
+comment = (^'
+algorithmic delay
+')
+
+
+)

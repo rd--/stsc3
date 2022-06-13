@@ -1,0 +1,18 @@
+Seq = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'repeats:list:'
+)
+
+repeats: repeats list: list = (
+	^(Dseq apply: {repeats. list})
+)
+
+
+comment = (^'
+ Sequence generator *
+')
+
+
+)

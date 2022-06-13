@@ -1,0 +1,26 @@
+Decay2 = ScUgen (
+----------------------------
+
+in: in attackTime: attackTime decayTime: decayTime = (
+    ^UgenBuilder name: 'Decay2' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. attackTime. decayTime}
+)
+
+in: in attackTime: attackTime decayTime: decayTime mul: mul = (
+    ^(Decay2 in: in attackTime: attackTime decayTime: decayTime) * mul
+)
+
+in: in attackTime: attackTime decayTime: decayTime mul: mul add: add = (
+    ^(Decay2 in: in attackTime: attackTime decayTime: decayTime) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:attackTime:decayTime:
+)
+
+
+comment = (^'
+Exponential decay
+')
+
+
+)

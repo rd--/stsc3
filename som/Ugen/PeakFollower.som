@@ -1,0 +1,26 @@
+PeakFollower = ScUgen (
+----------------------------
+
+in: in decay: decay = (
+    ^UgenBuilder name: 'PeakFollower' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. decay}
+)
+
+in: in decay: decay mul: mul = (
+    ^(PeakFollower in: in decay: decay) * mul
+)
+
+in: in decay: decay mul: mul add: add = (
+    ^(PeakFollower in: in decay: decay) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:decay:
+)
+
+
+comment = (^'
+Track peak signal amplitude.
+')
+
+
+)

@@ -1,0 +1,26 @@
+SampleDur = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(SampleDur new) * mul
+)
+
+mul: mul add: add = (
+    ^(SampleDur new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'SampleDur' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+Duration of one sample.
+')
+
+
+)

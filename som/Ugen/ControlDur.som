@@ -1,0 +1,26 @@
+ControlDur = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(ControlDur new) * mul
+)
+
+mul: mul add: add = (
+    ^(ControlDur new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'ControlDur' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+Duration of one block
+')
+
+
+)

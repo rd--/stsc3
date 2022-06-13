@@ -1,0 +1,26 @@
+Stepper = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#trig:reset:min:max:step:resetval:
+)
+
+trig: trig reset: reset min: min max: max step: step resetval: resetval = (
+    ^UgenBuilder name: 'Stepper' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. reset. min. max. step. resetval}
+)
+
+trig: trig reset: reset min: min max: max step: step resetval: resetval mul: mul = (
+    ^(Stepper trig: trig reset: reset min: min max: max step: step resetval: resetval) * mul
+)
+
+trig: trig reset: reset min: min max: max step: step resetval: resetval mul: mul add: add = (
+    ^(Stepper trig: trig reset: reset min: min max: max step: step resetval: resetval) * mul + add
+)
+
+
+comment = (^'
+Pulse counter.
+')
+
+
+)

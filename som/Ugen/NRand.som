@@ -1,0 +1,26 @@
+NRand = ScUgen (
+----------------------------
+
+lo: lo hi: hi n: n = (
+    ^UgenBuilder name: 'NRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi. n}
+)
+
+lo: lo hi: hi n: n mul: mul = (
+    ^(NRand lo: lo hi: hi n: n) * mul
+)
+
+lo: lo hi: hi n: n mul: mul add: add = (
+    ^(NRand lo: lo hi: hi n: n) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#lo:hi:n:
+)
+
+
+comment = (^'
+Sum of uniform distributions.
+')
+
+
+)

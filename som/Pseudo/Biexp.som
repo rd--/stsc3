@@ -1,0 +1,18 @@
+Biexp = PseudoUgen (
+----------------------------
+
+in: in lo: lo hi: hi = (
+	^(LinExp apply: {in. -1. 1. lo. hi})
+)
+
+primaryFactoryMethod = (
+	^#'in:lo:hi:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

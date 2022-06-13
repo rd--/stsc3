@@ -1,0 +1,18 @@
+DmdOn = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'trig:reset:demandUGens:'
+)
+
+trig: trig reset: reset demandUGens: demandUGens = (
+	^(Demand apply: {trig. reset. demandUGens})
+)
+
+
+comment = (^'
+ Demand with trigger input (Demand) *
+')
+
+
+)

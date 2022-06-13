@@ -1,0 +1,26 @@
+Line = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#start:end:dur:doneAction:
+)
+
+start: start end: end dur: dur doneAction: doneAction = (
+    ^UgenBuilder name: 'Line' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {start. end. dur. doneAction}
+)
+
+start: start end: end dur: dur doneAction: doneAction mul: mul = (
+    ^(Line start: start end: end dur: dur doneAction: doneAction) * mul
+)
+
+start: start end: end dur: dur doneAction: doneAction mul: mul add: add = (
+    ^(Line start: start end: end dur: dur doneAction: doneAction) * mul + add
+)
+
+
+comment = (^'
+Line generator.
+')
+
+
+)

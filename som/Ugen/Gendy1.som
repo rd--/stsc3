@@ -1,0 +1,26 @@
+Gendy1 = ScUgen (
+----------------------------
+
+ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum = (
+    ^UgenBuilder name: 'Gendy1' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {ampdist. durdist. adparam. ddparam. minfreq. maxfreq. ampscale. durscale. initCPs. knum}
+)
+
+ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul = (
+    ^(Gendy1 ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum) * mul
+)
+
+ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum mul: mul add: add = (
+    ^(Gendy1 ampdist: ampdist durdist: durdist adparam: adparam ddparam: ddparam minfreq: minfreq maxfreq: maxfreq ampscale: ampscale durscale: durscale initCPs: initCPs knum: knum) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#ampdist:durdist:adparam:ddparam:minfreq:maxfreq:ampscale:durscale:initCPs:knum:
+)
+
+
+comment = (^'
+Dynamic stochastic synthesis generator.
+')
+
+
+)

@@ -1,0 +1,26 @@
+GVerb = ScUgen (
+----------------------------
+
+in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize = (
+    ^UgenBuilder name: 'GVerb' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. roomsize. revtime. damping. inputbw. spread. drylevel. earlyreflevel. taillevel. maxroomsize}
+)
+
+in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul = (
+    ^(GVerb in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize) * mul
+)
+
+in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize mul: mul add: add = (
+    ^(GVerb in: in roomsize: roomsize revtime: revtime damping: damping inputbw: inputbw spread: spread drylevel: drylevel earlyreflevel: earlyreflevel taillevel: taillevel maxroomsize: maxroomsize) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:roomsize:revtime:damping:inputbw:spread:drylevel:earlyreflevel:taillevel:maxroomsize:
+)
+
+
+comment = (^'
+A two-channel reverb
+')
+
+
+)

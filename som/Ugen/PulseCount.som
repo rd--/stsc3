@@ -1,0 +1,26 @@
+PulseCount = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#trig:reset:
+)
+
+trig: trig reset: reset = (
+    ^UgenBuilder name: 'PulseCount' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. reset}
+)
+
+trig: trig reset: reset mul: mul = (
+    ^(PulseCount trig: trig reset: reset) * mul
+)
+
+trig: trig reset: reset mul: mul add: add = (
+    ^(PulseCount trig: trig reset: reset) * mul + add
+)
+
+
+comment = (^'
+Pulse counter.
+')
+
+
+)

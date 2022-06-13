@@ -19,7 +19,7 @@ stsc3_file = (++) stsc3_dir
 
 main :: IO ()
 main = do
-  stc_text <- readFile (stsc3_file "st/Sc3-Ugen-Pseudo.stc")
+  stc_text <- readFile (stsc3_file "st/Sc3-Ugen-Pseudo.lib.stc")
   let cd = stc_parse_class_definition_seq stc_text
       st_text = unlines (map (St.fileOutClassDefinition . Sc.scClassDefinitionToSt) cd)
-  writeFile (stsc3_file "st/Sc3-Ugen-Pseudo.st") st_text
+  writeFile (stsc3_file "st/Sc3-Ugen-Pseudo.lib.st") st_text

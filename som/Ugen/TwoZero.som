@@ -1,0 +1,26 @@
+TwoZero = ScUgen (
+----------------------------
+
+in: in freq: freq radius: radius = (
+    ^UgenBuilder name: 'TwoZero' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. radius}
+)
+
+in: in freq: freq radius: radius mul: mul = (
+    ^(TwoZero in: in freq: freq radius: radius) * mul
+)
+
+in: in freq: freq radius: radius mul: mul add: add = (
+    ^(TwoZero in: in freq: freq radius: radius) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:radius:
+)
+
+
+comment = (^'
+Two zero filter.
+')
+
+
+)

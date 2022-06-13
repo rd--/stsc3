@@ -1,0 +1,26 @@
+Formant = ScUgen (
+----------------------------
+
+fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq = (
+    ^UgenBuilder name: 'Formant' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {fundfreq. formfreq. bwfreq}
+)
+
+fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul = (
+    ^(Formant fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq) * mul
+)
+
+fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq mul: mul add: add = (
+    ^(Formant fundfreq: fundfreq formfreq: formfreq bwfreq: bwfreq) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#fundfreq:formfreq:bwfreq:
+)
+
+
+comment = (^'
+Formant oscillator
+')
+
+
+)

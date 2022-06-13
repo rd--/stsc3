@@ -1,0 +1,26 @@
+SvfHp = ScUgen (
+----------------------------
+
+in: in freq: freq q: q = (
+    ^UgenBuilder name: 'SvfHp' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. q}
+)
+
+in: in freq: freq q: q mul: mul = (
+    ^(SvfHp in: in freq: freq q: q) * mul
+)
+
+in: in freq: freq q: q mul: mul add: add = (
+    ^(SvfHp in: in freq: freq q: q) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:q:
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

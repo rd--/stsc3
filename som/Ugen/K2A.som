@@ -1,0 +1,26 @@
+K2A = ScUgen (
+----------------------------
+
+in: in = (
+    ^UgenBuilder name: 'K2A' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in}
+)
+
+in: in mul: mul = (
+    ^(K2A in: in) * mul
+)
+
+in: in mul: mul add: add = (
+    ^(K2A in: in) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:
+)
+
+
+comment = (^'
+Control to audio rate converter.
+')
+
+
+)

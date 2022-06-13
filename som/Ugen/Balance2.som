@@ -1,0 +1,26 @@
+Balance2 = ScUgen (
+----------------------------
+
+left: left right: right pos: pos level: level = (
+    ^UgenBuilder name: 'Balance2' numChan: 2 rateSpec: #(1 2) specialIndex: 0 inputArray: {left. right. pos. level}
+)
+
+left: left right: right pos: pos level: level mul: mul = (
+    ^(Balance2 left: left right: right pos: pos level: level) * mul
+)
+
+left: left right: right pos: pos level: level mul: mul add: add = (
+    ^(Balance2 left: left right: right pos: pos level: level) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#left:right:pos:level:
+)
+
+
+comment = (^'
+Stereo signal balancer
+')
+
+
+)

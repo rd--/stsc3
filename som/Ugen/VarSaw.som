@@ -1,0 +1,26 @@
+VarSaw = ScUgen (
+----------------------------
+
+freq: freq iphase: iphase width: width = (
+    ^UgenBuilder name: 'VarSaw' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase. width}
+)
+
+freq: freq iphase: iphase width: width mul: mul = (
+    ^(VarSaw freq: freq iphase: iphase width: width) * mul
+)
+
+freq: freq iphase: iphase width: width mul: mul add: add = (
+    ^(VarSaw freq: freq iphase: iphase width: width) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:iphase:width:
+)
+
+
+comment = (^'
+Variable duty saw
+')
+
+
+)

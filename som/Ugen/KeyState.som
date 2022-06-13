@@ -1,0 +1,26 @@
+KeyState = ScUgen (
+----------------------------
+
+keycode: keycode minval: minval maxval: maxval lag: lag = (
+    ^UgenBuilder name: 'KeyState' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {keycode. minval. maxval. lag}
+)
+
+keycode: keycode minval: minval maxval: maxval lag: lag mul: mul = (
+    ^(KeyState keycode: keycode minval: minval maxval: maxval lag: lag) * mul
+)
+
+keycode: keycode minval: minval maxval: maxval lag: lag mul: mul add: add = (
+    ^(KeyState keycode: keycode minval: minval maxval: maxval lag: lag) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#keycode:minval:maxval:lag:
+)
+
+
+comment = (^'
+Respond to the state of a key
+')
+
+
+)

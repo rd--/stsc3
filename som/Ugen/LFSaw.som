@@ -1,0 +1,26 @@
+LFSaw = ScUgen (
+----------------------------
+
+freq: freq iphase: iphase = (
+    ^UgenBuilder name: 'LFSaw' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
+)
+
+freq: freq iphase: iphase mul: mul = (
+    ^(LFSaw freq: freq iphase: iphase) * mul
+)
+
+freq: freq iphase: iphase mul: mul add: add = (
+    ^(LFSaw freq: freq iphase: iphase) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:iphase:
+)
+
+
+comment = (^'
+Sawtooth oscillator
+')
+
+
+)

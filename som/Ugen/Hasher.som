@@ -1,0 +1,26 @@
+Hasher = ScUgen (
+----------------------------
+
+in: in = (
+    ^UgenBuilder name: 'Hasher' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+)
+
+in: in mul: mul = (
+    ^(Hasher in: in) * mul
+)
+
+in: in mul: mul add: add = (
+    ^(Hasher in: in) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:
+)
+
+
+comment = (^'
+Scrambled value with a hash function.
+')
+
+
+)

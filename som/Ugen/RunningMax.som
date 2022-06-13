@@ -1,0 +1,26 @@
+RunningMax = ScUgen (
+----------------------------
+
+in: in trig: trig = (
+    ^UgenBuilder name: 'RunningMax' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig}
+)
+
+in: in trig: trig mul: mul = (
+    ^(RunningMax in: in trig: trig) * mul
+)
+
+in: in trig: trig mul: mul add: add = (
+    ^(RunningMax in: in trig: trig) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:trig:
+)
+
+
+comment = (^'
+Track maximum level.
+')
+
+
+)

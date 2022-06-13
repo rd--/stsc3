@@ -1,0 +1,26 @@
+SinOscFB = ScUgen (
+----------------------------
+
+freq: freq feedback: feedback = (
+    ^UgenBuilder name: 'SinOscFB' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. feedback}
+)
+
+freq: freq feedback: feedback mul: mul = (
+    ^(SinOscFB freq: freq feedback: feedback) * mul
+)
+
+freq: freq feedback: feedback mul: mul add: add = (
+    ^(SinOscFB freq: freq feedback: feedback) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:feedback:
+)
+
+
+comment = (^'
+Feedback FM oscillator
+')
+
+
+)

@@ -1,0 +1,26 @@
+ToggleFF = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#trig:
+)
+
+trig: trig = (
+    ^UgenBuilder name: 'ToggleFF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig}
+)
+
+trig: trig mul: mul = (
+    ^(ToggleFF trig: trig) * mul
+)
+
+trig: trig mul: mul add: add = (
+    ^(ToggleFF trig: trig) * mul + add
+)
+
+
+comment = (^'
+Toggle flip flop.
+')
+
+
+)

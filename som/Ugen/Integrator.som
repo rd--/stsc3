@@ -1,0 +1,26 @@
+Integrator = ScUgen (
+----------------------------
+
+in: in coef: coef = (
+    ^UgenBuilder name: 'Integrator' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. coef}
+)
+
+in: in coef: coef mul: mul = (
+    ^(Integrator in: in coef: coef) * mul
+)
+
+in: in coef: coef mul: mul add: add = (
+    ^(Integrator in: in coef: coef) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:coef:
+)
+
+
+comment = (^'
+A leaky integrator.
+')
+
+
+)

@@ -1,0 +1,15 @@
+Float = Object (
+
+oscTypeTag = (
+    ^$f
+)
+
+printOscOn: aStream = (
+    aStream << self asString << ' '
+)
+
+putOscOn: aStream = (
+    aStream float32: self
+)
+
+)

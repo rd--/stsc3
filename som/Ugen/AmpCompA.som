@@ -1,0 +1,26 @@
+AmpCompA = ScUgen (
+----------------------------
+
+freq: freq root: root minAmp: minAmp rootAmp: rootAmp = (
+    ^UgenBuilder name: 'AmpCompA' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. root. minAmp. rootAmp}
+)
+
+freq: freq root: root minAmp: minAmp rootAmp: rootAmp mul: mul = (
+    ^(AmpCompA freq: freq root: root minAmp: minAmp rootAmp: rootAmp) * mul
+)
+
+freq: freq root: root minAmp: minAmp rootAmp: rootAmp mul: mul add: add = (
+    ^(AmpCompA freq: freq root: root minAmp: minAmp rootAmp: rootAmp) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:root:minAmp:rootAmp:
+)
+
+
+comment = (^'
+Basic psychoacoustic amplitude compensation (ANSI A-weighting curve).
+')
+
+
+)

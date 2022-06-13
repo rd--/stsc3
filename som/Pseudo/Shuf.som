@@ -1,0 +1,18 @@
+Shuf = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'repeats:list:'
+)
+
+repeats: repeats list: list = (
+	^(Dshuf apply: {repeats. list})
+)
+
+
+comment = (^'
+ Demand rate random sequence generator *
+')
+
+
+)

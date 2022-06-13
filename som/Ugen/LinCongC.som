@@ -1,0 +1,26 @@
+LinCongC = ScUgen (
+----------------------------
+
+freq: freq a: a c: c m: m xi: xi = (
+    ^UgenBuilder name: 'LinCongC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. c. m. xi}
+)
+
+freq: freq a: a c: c m: m xi: xi mul: mul = (
+    ^(LinCongC freq: freq a: a c: c m: m xi: xi) * mul
+)
+
+freq: freq a: a c: c m: m xi: xi mul: mul add: add = (
+    ^(LinCongC freq: freq a: a c: c m: m xi: xi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:a:c:m:xi:
+)
+
+
+comment = (^'
+Linear congruential chaotic generator
+')
+
+
+)

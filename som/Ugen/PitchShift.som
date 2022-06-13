@@ -1,0 +1,26 @@
+PitchShift = ScUgen (
+----------------------------
+
+in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion = (
+    ^UgenBuilder name: 'PitchShift' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. windowSize. pitchRatio. pitchDispersion. timeDispersion}
+)
+
+in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul = (
+    ^(PitchShift in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion) * mul
+)
+
+in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion mul: mul add: add = (
+    ^(PitchShift in: in windowSize: windowSize pitchRatio: pitchRatio pitchDispersion: pitchDispersion timeDispersion: timeDispersion) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:windowSize:pitchRatio:pitchDispersion:timeDispersion:
+)
+
+
+comment = (^'
+Time domain pitch shifter.
+')
+
+
+)

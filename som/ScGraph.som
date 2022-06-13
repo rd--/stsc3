@@ -20,6 +20,10 @@ name: nm ugenSeq: us constantSeq: cs = (
     name := nm. ugenSeq := us. constantSeq := cs
 )
 
+printOn: aStream = (
+	self printSyndefOn: aStream
+)
+
 printSyndefOn: aStream = (
     aStream << self scgf << ' ' << 2 << ' ' << 1 << ' ' << name << ' ' << constantSeq size << ' '.
     constantSeq do: [ :item | aStream << item asFloat << ' ' ].

@@ -1,0 +1,26 @@
+CrossoverDistortion = ScUgen (
+----------------------------
+
+in: in amp: amp smooth: smooth = (
+    ^UgenBuilder name: 'CrossoverDistortion' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. amp. smooth}
+)
+
+in: in amp: amp smooth: smooth mul: mul = (
+    ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul
+)
+
+in: in amp: amp smooth: smooth mul: mul add: add = (
+    ^(CrossoverDistortion in: in amp: amp smooth: smooth) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:amp:smooth:
+)
+
+
+comment = (^'
+class B/AB power amp distortion simulation
+')
+
+
+)

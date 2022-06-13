@@ -1,0 +1,18 @@
+KeyDown = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'voiceNumber:'
+)
+
+voiceNumber: voiceNumber = (
+	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 0})
+)
+
+
+comment = (^'
+ Key down control input for indicated voice (W) *
+')
+
+
+)

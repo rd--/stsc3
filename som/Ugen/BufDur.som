@@ -1,0 +1,26 @@
+BufDur = ScUgen (
+----------------------------
+
+bufnum: bufnum = (
+    ^UgenBuilder name: 'BufDur' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {bufnum}
+)
+
+bufnum: bufnum mul: mul = (
+    ^(BufDur bufnum: bufnum) * mul
+)
+
+bufnum: bufnum mul: mul add: add = (
+    ^(BufDur bufnum: bufnum) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:
+)
+
+
+comment = (^'
+Current duration of soundfile in buffer.
+')
+
+
+)

@@ -1,0 +1,26 @@
+LPZ1 = ScUgen (
+----------------------------
+
+in: in = (
+    ^UgenBuilder name: 'LPZ1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+)
+
+in: in mul: mul = (
+    ^(LPZ1 in: in) * mul
+)
+
+in: in mul: mul add: add = (
+    ^(LPZ1 in: in) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:
+)
+
+
+comment = (^'
+Two point average filter
+')
+
+
+)

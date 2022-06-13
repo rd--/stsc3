@@ -1,0 +1,26 @@
+ExpRandN = ScUgen (
+----------------------------
+
+numChan: numChan lo: lo hi: hi = (
+    ^UgenBuilder name: 'ExpRandN' numChan: numChan rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
+)
+
+numChan: numChan lo: lo hi: hi mul: mul = (
+    ^(ExpRandN numChan: numChan lo: lo hi: hi) * mul
+)
+
+numChan: numChan lo: lo hi: hi mul: mul add: add = (
+    ^(ExpRandN numChan: numChan lo: lo hi: hi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#numChan:lo:hi:
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

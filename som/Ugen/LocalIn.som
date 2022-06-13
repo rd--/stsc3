@@ -1,0 +1,26 @@
+LocalIn = ScUgen (
+----------------------------
+
+numChan: numChan default: default = (
+    ^UgenBuilder name: 'LocalIn' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: ({} , (default asArray))
+)
+
+numChan: numChan default: default mul: mul = (
+    ^(LocalIn numChan: numChan default: default) * mul
+)
+
+numChan: numChan default: default mul: mul add: add = (
+    ^(LocalIn numChan: numChan default: default) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#numChan:default:
+)
+
+
+comment = (^'
+Define and read from buses local to a synth.
+')
+
+
+)

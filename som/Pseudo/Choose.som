@@ -1,0 +1,18 @@
+Choose = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'repeats:list:'
+)
+
+repeats: repeats list: list = (
+	^(Drand apply: {repeats. list})
+)
+
+
+comment = (^'
+ Random sequence generator *
+')
+
+
+)

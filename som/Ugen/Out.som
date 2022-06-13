@@ -1,0 +1,26 @@
+Out = ScUgen (
+----------------------------
+
+bus: bus channelsArray: channelsArray = (
+    ^UgenBuilder name: 'Out' numChan: 0 rateSpec: #(2) specialIndex: 0 inputArray: ({bus} , (channelsArray asArray))
+)
+
+bus: bus channelsArray: channelsArray mul: mul = (
+    ^(Out bus: bus channelsArray: channelsArray) * mul
+)
+
+bus: bus channelsArray: channelsArray mul: mul add: add = (
+    ^(Out bus: bus channelsArray: channelsArray) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bus:channelsArray:
+)
+
+
+comment = (^'
+Write a signal to a bus.
+')
+
+
+)

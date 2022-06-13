@@ -1,0 +1,26 @@
+TGrains = ScUgen (
+----------------------------
+
+numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp = (
+    ^UgenBuilder name: 'TGrains' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. bufnum. rate. centerPos. dur. pan. amp. interp}
+)
+
+numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp mul: mul = (
+    ^(TGrains numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp) * mul
+)
+
+numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp mul: mul add: add = (
+    ^(TGrains numChan: numChan trigger: trigger bufnum: bufnum rate: rate centerPos: centerPos dur: dur pan: pan amp: amp interp: interp) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#numChan:trigger:bufnum:rate:centerPos:dur:pan:amp:interp:
+)
+
+
+comment = (^'
+Buffer granulator.
+')
+
+
+)

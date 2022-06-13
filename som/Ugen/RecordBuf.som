@@ -1,0 +1,26 @@
+RecordBuf = ScUgen (
+----------------------------
+
+bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray = (
+    ^UgenBuilder name: 'RecordBuf' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: ({bufnum. offset. recLevel. preLevel. run. loop. trigger. doneAction} , (inputArray asArray))
+)
+
+bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray mul: mul = (
+    ^(RecordBuf bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray) * mul
+)
+
+bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray mul: mul add: add = (
+    ^(RecordBuf bufnum: bufnum offset: offset recLevel: recLevel preLevel: preLevel run: run loop: loop trigger: trigger doneAction: doneAction inputArray: inputArray) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:offset:recLevel:preLevel:run:loop:trigger:doneAction:inputArray:
+)
+
+
+comment = (^'
+Record or overdub into a Buffer.
+')
+
+
+)

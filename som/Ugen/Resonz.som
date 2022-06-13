@@ -1,0 +1,26 @@
+Resonz = ScUgen (
+----------------------------
+
+in: in freq: freq bwr: bwr = (
+    ^UgenBuilder name: 'Resonz' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. bwr}
+)
+
+in: in freq: freq bwr: bwr mul: mul = (
+    ^(Resonz in: in freq: freq bwr: bwr) * mul
+)
+
+in: in freq: freq bwr: bwr mul: mul add: add = (
+    ^(Resonz in: in freq: freq bwr: bwr) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:freq:bwr:
+)
+
+
+comment = (^'
+Resonant filter.
+')
+
+
+)

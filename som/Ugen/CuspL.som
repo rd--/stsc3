@@ -1,0 +1,26 @@
+CuspL = ScUgen (
+----------------------------
+
+freq: freq a: a b: b xi: xi = (
+    ^UgenBuilder name: 'CuspL' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. xi}
+)
+
+freq: freq a: a b: b xi: xi mul: mul = (
+    ^(CuspL freq: freq a: a b: b xi: xi) * mul
+)
+
+freq: freq a: a b: b xi: xi mul: mul add: add = (
+    ^(CuspL freq: freq a: a b: b xi: xi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:a:b:xi:
+)
+
+
+comment = (^'
+Cusp map chaotic generator
+')
+
+
+)

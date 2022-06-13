@@ -1,0 +1,18 @@
+Ln = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'start:end:dur:'
+)
+
+start: start end: end dur: dur = (
+	^(Line apply: {start. end. dur. 0})
+)
+
+
+comment = (^'
+ Line generator *
+')
+
+
+)

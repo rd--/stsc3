@@ -1,0 +1,26 @@
+LorenzL = ScUgen (
+----------------------------
+
+freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi = (
+    ^UgenBuilder name: 'LorenzL' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. s. r. b. h. xi. yi. zi}
+)
+
+freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi mul: mul = (
+    ^(LorenzL freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi) * mul
+)
+
+freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi mul: mul add: add = (
+    ^(LorenzL freq: freq s: s r: r b: b h: h xi: xi yi: yi zi: zi) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:s:r:b:h:xi:yi:zi:
+)
+
+
+comment = (^'
+Lorenz chaotic generator
+')
+
+
+)

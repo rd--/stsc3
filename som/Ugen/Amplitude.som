@@ -1,0 +1,26 @@
+Amplitude = ScUgen (
+----------------------------
+
+in: in attackTime: attackTime releaseTime: releaseTime = (
+    ^UgenBuilder name: 'Amplitude' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. attackTime. releaseTime}
+)
+
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul = (
+    ^(Amplitude in: in attackTime: attackTime releaseTime: releaseTime) * mul
+)
+
+in: in attackTime: attackTime releaseTime: releaseTime mul: mul add: add = (
+    ^(Amplitude in: in attackTime: attackTime releaseTime: releaseTime) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#in:attackTime:releaseTime:
+)
+
+
+comment = (^'
+Amplitude follower
+')
+
+
+)

@@ -1,0 +1,26 @@
+In = ScUgen (
+----------------------------
+
+numChan: numChan bus: bus = (
+    ^UgenBuilder name: 'In' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bus}
+)
+
+numChan: numChan bus: bus mul: mul = (
+    ^(In numChan: numChan bus: bus) * mul
+)
+
+numChan: numChan bus: bus mul: mul add: add = (
+    ^(In numChan: numChan bus: bus) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#numChan:bus:
+)
+
+
+comment = (^'
+Read a signal from a bus.
+')
+
+
+)

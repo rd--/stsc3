@@ -1,0 +1,26 @@
+RCD = ScUgen (
+----------------------------
+
+clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates = (
+    ^UgenBuilder name: 'RCD' numChan: 8 rateSpec: #(1) specialIndex: 0 inputArray: {clock. rotate. reset. div. spread. auto. len. down. gates}
+)
+
+clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates mul: mul = (
+    ^(RCD clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates) * mul
+)
+
+clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates mul: mul add: add = (
+    ^(RCD clock: clock rotate: rotate reset: reset div: div spread: spread auto: auto len: len down: down gates: gates) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#clock:rotate:reset:div:spread:auto:len:down:gates:
+)
+
+
+comment = (^'
+rotating clock divider
+')
+
+
+)

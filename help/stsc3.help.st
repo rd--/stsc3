@@ -19,7 +19,7 @@ f0Tw1395878538297892865
 "Envelope"
 
 EnvSpec new curveNameDictionary "curve name dictionary"
-(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) asArray = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 )
+(EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) asArray = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 ).
 
 "Ugen"
 
@@ -40,11 +40,11 @@ UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(
 "Graph"
 
 u := SinOsc freq: 440 phase: Float pi mul: 0.1
-(ScGraph from: u withName: 'tmp') printSyndefOn: stdout
+(ScGraph from: u withName: 'tmp') printString
 (Sc3 ugenSetOf: u) do: [ :item | item inspect ]
 Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Float pi mul: 0.1)) to: '/tmp/stsc3.scsyndef'
 
-"Haskell"
+"Scsynth"
 
 (SinOsc freq: 440 phase: 0 mul: 0.1) draw
 (SinOsc freq: 440 phase: 0 mul: 0.1) play
@@ -82,9 +82,6 @@ Rate ir = 0.
 "Sc3"
 
 Sc3 reset "C-c C-."
-
-"Sc3 - Id"
-
 [ Sc3 nextId ] dup: 9
 
 "UI"
@@ -109,6 +106,7 @@ Browser newOnClass: AbstractUgen selector: #kr. "open Browser on Method of Class
 
 Transcript open. "=> opens Transcript ; MVC"
 1 to: 5 do: [ :x | Transcript show: x; cr ]. "=> prints to Transcript"
+Transcript << 'string' << ' ' << 'string' copy
 
 "Method Finder"
 
@@ -133,7 +131,7 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Boolean"
 
-(0.5 coin) ifTrue: [ 'p' ] ifFalse: [ 'q' ] "=> p or q with equal probability"
+[ 0.5 coin ifTrue: [ $p ] ifFalse: [ $q ]  ] dup: 9 "=> p or q with equal probability"
 
 "Object"
 
@@ -154,7 +152,6 @@ MessageNames openMessageNames. "open Message Names tool"
 4.0 rand2 "=> uniform random Float in -4 to 4"
 1.0 exprand: 2.0 "=> exponential distribution"
 0.2 rand + 0.1 "=> uniform random Float in 0.1 to 0.3"
-
 [ 5.0 rand ] dup: 100"=> 100 random Floats in 0 to 5"
 [ 0.2 coin ] dup: 100 "=> true 20%, false 80%"
 
@@ -164,13 +161,12 @@ MessageNames openMessageNames. "open Message Names tool"
 5 rand "=> random Integer in 1 to 5 ; i.e. atRandom"
 1 rand: 5 "=> random Integer in 1 to 5"
 4 rand2 "=> random Integer in -4 to 4"
-
 [ 5 rand ] dup: 100 "=> 100 random Integers in 0 to 5"
 
 "Random - Array"
 
 #(1 2 3 4 5) atRandom "random element of Array ; i.e. atRandom ; choose"
-#(1 2 3 4 5) choose "alias for atRandom"
+#(1 2 3 4 5) choose "synonym for atRandom"
 #(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
 [ #(1 2 3 4 5) atRandom ] dup: 100 "=> 100 randomly chosen numbers"
 [ #('a' 'b' 'c' 'd' 'e') atRandom ] dup: 100 "=> 100 randomly chosen strings"
@@ -179,7 +175,7 @@ MessageNames openMessageNames. "open Message Names tool"
 
 (1 to: 9) atRandom
 [ (1 to: 9) atRandom ] dup: 9 "=> array of 9 integers between 1 and 9"
-[ (1 to: 9) choose ] dup: 9 "alias for atRandom"
+[ (1 to: 9) choose ] dup: 9 "synonym for atRandom"
 
 "SequenceableCollection"
 
@@ -697,14 +693,17 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 ((1 to: 10) collect: factorial) = #(1 2 6 24 120 720 5040 40320 362880 3628800).
 [ 10 rand ] dup: 10 "=> at block duplicate by evaluating, ten random numbers between 1 and 10"
 [ 10 rand ] dup "=> two random numbers between 1 and 10"
-[] class = BlockClosure
-[ :x | x := 2. x] value: 1 "=> 2 ; Gnu Smalltalk disallows assignment to arguments"
-([ 1 ] cull: 2) == 1 "=> true"
-([ :x | x ] cull: 2) == 2 "=> true"
-([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12 "=> true"
-([ :x :y :z | x * y + z ] apply: #(3 4 5)) == 17 "=> alias for valueWithArguments:"
-[:w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4 "=> four arguments"
-[:v :w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4 value: 5 "=> five arguments"
+
+{
+[] class = BlockClosure.
+([ :x | x := 2. x] value: 1) = 2. "Gnu Smalltalk disallows assignment to arguments"
+([ 1 ] cull: 2) == 1.
+([ :x | x ] cull: 2) == 2.
+([ :x :y | x * y ] valueWithArguments: #(3 4)) == 12.
+([ :x :y :z | x * y + z ] apply: #(3 4 5)) == 17.
+([:w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4) = 'hello'.
+([:v :w :x :y :z | 'hello' ] value: 1 value: 2 value: 3 value: 4 value: 5) = 'hello'.
+} allSatisfy: #yourself
 
 "Integer"
 
@@ -713,7 +712,7 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 (5 from: 3 by: 4) asArray = #(3 7 11 15 19). "Myself number of places from start by step"
 (5 from: 2 by: 0.5) asArray = {2. 5/2. 3. 7/2. 4}.
 (1 to: 9 collect: [ :item | item * item ]) = #(1 4 9 16 25 36 49 64 81).
-}
+} allSatisfy: #yourself
 
 "Number"
 
@@ -724,19 +723,32 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 "Open Sound Control"
 
 m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
-m printOscOn: stdout
 
-m := OscMessage at: '/memset' with: #('addr' (0 1 15 16 255))
-m printOscOn: stdout
+{
+m address = '/n_set'.
+m arguments = #(-1 'freq' 440 'amp' 0.1).
+(m arguments collect: #oscTypeTag) = #($i $s $i $s $f).
+m descriptor = ',isisf'.
+m oscString = '/n_set ,isisf -1 freq 440 amp 0.1 '.
+} allSatisfy: #yourself
 
-m inspect
-m descriptor
-m putOscOn: stdout
+m printOscOn: Transcript
 
-1234 putOscOn: stdout "must be in network byte order"
-3.14 putOscOn: stdout "must be in network byte order"
-'rq' putOscOn: stdout "must be 4-byte aligned and nul terminated"
-#(1 2 3) putOscOn: stdout "must be length prefixed in network order and 4-byte aligned"
+m := OscMessage at: '/memset' with: #('addr' (0 1 15 16 255)).
+
+{
+m descriptor = ',sb'.
+m oscString = '/memset ,sb addr 00010F10FF'.
+} allSatisfy: #yourself
+
+m printOscOn: Transcript
+
+s := WriteStream on: (ByteArray new: 20)
+1234 putOscOn: s "must be in network byte order"
+3.14 putOscOn: s "must be in network byte order"
+'rq' putOscOn: s "must be 4-byte aligned and nul terminated"
+#(1 2 3) putOscOn: s "must be length prefixed in network order and 4-byte aligned"
+s contents
 
 "Testing"
 
@@ -744,17 +756,20 @@ TestRunner open "squeak"
 
 "Parsing"
 
-FortranNumberParser parse: 'NaN'
-FortranNumberParser parse: 'Infinity'
-FortranNumberParser parse: '-Infinity'
-FortranNumberParser parse: '100'
-FortranNumberParser parse: '-99'
-FortranNumberParser parse: '3.14'
-FortranNumberParser parse: '-1.4'
-FortranNumberParser parse: '1e6'
-FortranNumberParser parse: '-1e6'
-FortranNumberParser parse: '1e-1'
-FortranNumberParser parse: '-1e-1'
+{
+(FortranNumberParser parse: 'NaN') isNaN.
+(FortranNumberParser parse: 'Infinity') isInfinite.
+(FortranNumberParser parse: '-Infinity')  isInfinite.
+(FortranNumberParser parse: '100') = 100.
+(FortranNumberParser parse: '-99') = -99.
+(FortranNumberParser parse: '3.14') = 3.14.
+(FortranNumberParser parse: '-1.4') = -1.4.
+(FortranNumberParser parse: '1e6') = 1e6.
+(FortranNumberParser parse: '-1e6') = -1e6.
+(FortranNumberParser parse: '1e-1') = 1e-1.
+(FortranNumberParser parse: '-1e-1') = -1e-1.
+} allSatisfy: #yourself
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))
+(setq stsc3-interpreter (list "gst"))

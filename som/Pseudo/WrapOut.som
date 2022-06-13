@@ -1,0 +1,20 @@
+WrapOut = PseudoUgen (
+----------------------------
+
+bus: bus channelsArray: channelsArray = (
+ ])) ifTrue: [
+	^channelsArray ] ifFalse: [
+	^(Out apply: {bus. channelsArray}) ] .
+)
+
+primaryFactoryMethod = (
+	^#'bus:channelsArray:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

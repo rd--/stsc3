@@ -1,0 +1,26 @@
+CoinGate = ScUgen (
+----------------------------
+
+primaryFactoryMethod = (
+    ^#prob:in:
+)
+
+prob: prob in: in = (
+    ^UgenBuilder name: 'CoinGate' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {prob. in}
+)
+
+prob: prob in: in mul: mul = (
+    ^(CoinGate prob: prob in: in) * mul
+)
+
+prob: prob in: in mul: mul add: add = (
+    ^(CoinGate prob: prob in: in) * mul + add
+)
+
+
+comment = (^'
+Statistical gate.
+')
+
+
+)

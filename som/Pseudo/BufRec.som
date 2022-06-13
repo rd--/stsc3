@@ -1,0 +1,18 @@
+BufRec = PseudoUgen (
+----------------------------
+
+bufnum: bufnum reset: reset inputArray: inputArray = (
+	^(RecordBuf apply: {bufnum. 0. 1. 0. 1. 1. reset. 0. inputArray})
+)
+
+primaryFactoryMethod = (
+	^#'bufnum:reset:inputArray:'
+)
+
+
+comment = (^'
+ Record signal into a Buffer *
+')
+
+
+)

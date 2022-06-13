@@ -1,0 +1,26 @@
+TExpRand = ScUgen (
+----------------------------
+
+lo: lo hi: hi trig: trig = (
+    ^UgenBuilder name: 'TExpRand' numChan: 1 rateSpec: #(3) specialIndex: 0 inputArray: {lo. hi. trig}
+)
+
+lo: lo hi: hi trig: trig mul: mul = (
+    ^(TExpRand lo: lo hi: hi trig: trig) * mul
+)
+
+lo: lo hi: hi trig: trig mul: mul add: add = (
+    ^(TExpRand lo: lo hi: hi trig: trig) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#lo:hi:trig:
+)
+
+
+comment = (^'
+Triggered exponential random number generator.
+')
+
+
+)

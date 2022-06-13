@@ -1,0 +1,24 @@
+Splay = PseudoUgen (
+----------------------------
+
+inArray: inArray spread: spread level: level center: center levelComp: levelComp = (
+ n := 2 max: (inArray size) .
+ n1 := n - 1 .
+ pos := ((0 to: n1) * (2 / n1) - 1) * spread + center .
+ lvl := levelComp ifTrue: [ level * n reciprocal sqrt .
+ ] ifFalse: [ level .
+ ] .
+	^(Pan2 apply: {inArray. pos. lvl}) sum
+)
+
+primaryFactoryMethod = (
+	^#'inArray:spread:level:center:levelComp:'
+)
+
+
+comment = (^'
+ Pan an array of channels across the stereo field *
+')
+
+
+)

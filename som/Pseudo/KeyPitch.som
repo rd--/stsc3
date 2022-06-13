@@ -1,0 +1,18 @@
+KeyPitch = PseudoUgen (
+----------------------------
+
+primaryFactoryMethod = (
+	^#'voiceNumber:'
+)
+
+voiceNumber: voiceNumber = (
+	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 7})
+)
+
+
+comment = (^'
+ Key pitch control input for indicated voice *
+')
+
+
+)

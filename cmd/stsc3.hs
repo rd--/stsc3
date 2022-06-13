@@ -119,15 +119,16 @@ ext_fileout_to_som (do_sort, do_tidy) fileout_fn som_fn = do
       cd'' = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source cd' else cd'
   writeFile som_fn (Som.classDefinitionPrintSom cd'')
 
-writeAllSomClassDef :: Bool -> FilePath -> FileOut.FileOutLibrary -> IO ()
-writeAllSomClassDef do_sort som_dir lib = do
+writeAllSomClassDef :: (Bool, Bool) -> FilePath -> FileOut.FileOutLibrary -> IO ()
+writeAllSomClassDef (do_sort, do_tidy) som_dir lib = do
   let srt = if do_sort then St.classDefinitionSortMethods else id
-  mapM_ (Som.writeSomClassDefinition som_dir . srt) (FileOut.fileOutLibraryClassDefinitions lib)
+      tidy = if do_tidy then St.classDefinitionEditMethodSources tidy_method_source else id
+  mapM_ (Som.writeSomClassDefinition som_dir . tidy . srt) (FileOut.fileOutLibraryClassDefinitions lib)
 
-lib_fileout_to_som :: Bool -> FilePath -> FilePath -> IO ()
-lib_fileout_to_som do_sort fileout_fn som_dir = do
+lib_fileout_to_som :: (Bool, Bool) -> FilePath -> FilePath -> IO ()
+lib_fileout_to_som opt fileout_fn som_dir = do
   lib <- FileOut.fileOutLoadPartial fileout_fn
-  writeAllSomClassDef do_sort som_dir lib
+  writeAllSomClassDef opt som_dir lib
 
 {-
 -- | Fragment input file and run stcToJs at each fragment.
@@ -178,6 +179,6 @@ main = do
     ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
     ["translate","class", "som","som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
     ["translate","extensions", "fileout","som",fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
-    ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort") fileout_fn som_dir
+    ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
     ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

@@ -1,0 +1,26 @@
+BufRateScale = ScUgen (
+----------------------------
+
+bufnum: bufnum = (
+    ^UgenBuilder name: 'BufRateScale' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {bufnum}
+)
+
+bufnum: bufnum mul: mul = (
+    ^(BufRateScale bufnum: bufnum) * mul
+)
+
+bufnum: bufnum mul: mul add: add = (
+    ^(BufRateScale bufnum: bufnum) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:
+)
+
+
+comment = (^'
+Buffer rate scaling in respect to server samplerate.
+')
+
+
+)

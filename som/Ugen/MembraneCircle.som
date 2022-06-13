@@ -1,0 +1,26 @@
+MembraneCircle = ScUgen (
+----------------------------
+
+excitation: excitation tension: tension loss: loss = (
+    ^UgenBuilder name: 'MembraneCircle' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {excitation. tension. loss}
+)
+
+excitation: excitation tension: tension loss: loss mul: mul = (
+    ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul
+)
+
+excitation: excitation tension: tension loss: loss mul: mul add: add = (
+    ^(MembraneCircle excitation: excitation tension: tension loss: loss) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#excitation:tension:loss:
+)
+
+
+comment = (^'
+Waveguide mesh physical models of drum membranes
+')
+
+
+)

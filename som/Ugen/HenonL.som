@@ -1,0 +1,26 @@
+HenonL = ScUgen (
+----------------------------
+
+freq: freq a: a b: b x0: x0 x1: x1 = (
+    ^UgenBuilder name: 'HenonL' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. x0. x1}
+)
+
+freq: freq a: a b: b x0: x0 x1: x1 mul: mul = (
+    ^(HenonL freq: freq a: a b: b x0: x0 x1: x1) * mul
+)
+
+freq: freq a: a b: b x0: x0 x1: x1 mul: mul add: add = (
+    ^(HenonL freq: freq a: a b: b x0: x0 x1: x1) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freq:a:b:x0:x1:
+)
+
+
+comment = (^'
+Henon map chaotic generator
+')
+
+
+)

@@ -1,0 +1,26 @@
+Freezer = ScUgen (
+----------------------------
+
+bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops = (
+    ^UgenBuilder name: 'Freezer' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. left. right. gain. increment. incrementOffset. incrementRandom. rightRandom. syncPhaseTrigger. randomizePhaseTrigger. numberOfLoops}
+)
+
+bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops mul: mul = (
+    ^(Freezer bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops) * mul
+)
+
+bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops mul: mul add: add = (
+    ^(Freezer bufnum: bufnum left: left right: right gain: gain increment: increment incrementOffset: incrementOffset incrementRandom: incrementRandom rightRandom: rightRandom syncPhaseTrigger: syncPhaseTrigger randomizePhaseTrigger: randomizePhaseTrigger numberOfLoops: numberOfLoops) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#bufnum:left:right:gain:increment:incrementOffset:incrementRandom:rightRandom:syncPhaseTrigger:randomizePhaseTrigger:numberOfLoops:
+)
+
+
+comment = (^'
+(Undocumented class)
+')
+
+
+)

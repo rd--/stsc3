@@ -1,0 +1,26 @@
+Klang = ScUgen (
+----------------------------
+
+freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef = (
+    ^UgenBuilder name: 'Klang' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: ({freqscale. freqoffset} , (specificationsArrayRef asArray))
+)
+
+freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef mul: mul = (
+    ^(Klang freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef) * mul
+)
+
+freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef mul: mul add: add = (
+    ^(Klang freqscale: freqscale freqoffset: freqoffset specificationsArrayRef: specificationsArrayRef) * mul + add
+)
+
+primaryFactoryMethod = (
+    ^#freqscale:freqoffset:specificationsArrayRef:
+)
+
+
+comment = (^'
+Sine oscillator bank
+')
+
+
+)

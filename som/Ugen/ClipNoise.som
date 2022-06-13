@@ -1,0 +1,26 @@
+ClipNoise = ScUgen (
+----------------------------
+
+mul: mul = (
+    ^(ClipNoise new) * mul
+)
+
+mul: mul add: add = (
+    ^(ClipNoise new) * mul + add
+)
+
+new = (
+    ^UgenBuilder name: 'ClipNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
+)
+
+primaryFactoryMethod = (
+    ^#new
+)
+
+
+comment = (^'
+Clip Noise.
+')
+
+
+)
