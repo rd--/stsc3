@@ -46,6 +46,9 @@ Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Flo
 
 "Scsynth"
 
+Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1)
+Sc3 play: (SinOsc freq: 440 phase: 0 mul: 0.1)
+
 (SinOsc freq: 440 phase: 0 mul: 0.1) draw
 (SinOsc freq: 440 phase: 0 mul: 0.1) play
 (SinOsc freq: #(440 441) phase: 0 mul: 0.1) play
@@ -67,8 +70,8 @@ Rate ir = 0.
 
 "File I/O - Text - Squeak, Gnu, Cuis"
 
-'/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd ].
-'/tmp/str.text' readTextFile.
+('/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd ]) = '/tmp/str.text'.
+'/tmp/str.text' readTextFile = '5.0'.
 
 "File I/O - Directory - Squeak, Gnu, Cuis"
 
@@ -271,18 +274,19 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 "Array - Math"
 
+{
 (3 adaptToCollection: #(1 2 3) andSend: #*) = #(3 6 9).
-#(1 2 3) * 3 "=> #(3 6 9)"
-3 * #(1 2 3) "=> #3 6 9)"
-#(1 2 3) exp
-
-#(1 2) + #(3 4 5) = #(4 6 6) "same size check?"
-#(1 2 3) + #(4 5) = #(5 7 7) "same size check?"
+#(1 2 3) * 3 = #(3 6 9).
+3 * #(1 2 3) = #(3 6 9).
+#(1 2 3) exp = #(2.718281828459045 7.38905609893065 20.085536923187668).
+#(1 2) + #(3 4 5) = #(4 6 6). "requires modification of squeak, which would raise an error (collections not same size)"
+#(1 2 3) + #(4 5) = #(5 7 7).
+} allSatisfy: #yourself
 
 | x | x := #(#(4 4.5) #(2 3 5 6)). x perform: #* crossedWith: x
 
 #(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4)).
-#(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples size = 32
+#(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples size = 32.
 
 "Array - Expressions"
 

@@ -2,6 +2,7 @@ LinSeg = PseudoUgen (
 ----------------------------
 
 gate: gate coord: coord = (
+ | levels times |
  levels := (1 to: (coord size) by: 2) collect: [ :i | coord at: i .
  ] .
  times := (2 to: (coord size) by: 2) collect: [ :i | coord at: i .

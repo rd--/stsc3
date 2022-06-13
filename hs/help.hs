@@ -50,4 +50,4 @@ proc_file fn = do
 main = do
   fn_list <- dir_subset_rel [".st"] graph_dir
   mth <- mapM proc_file fn_list
-  writeFile (stsc3_dir ++ "st/Sc3-Help-Graphs.st") (unlines [methods_prefix, intercalate "!\n" mth, "!\n!"])
+  writeFile (stsc3_dir ++ "st/Sc3HelpGraph.ext.st") (unlines [methods_prefix, intercalate "!\n" mth, "!\n!"])

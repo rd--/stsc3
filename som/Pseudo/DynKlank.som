@@ -2,6 +2,7 @@ DynKlank = PseudoUgen (
 ----------------------------
 
 input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef = (
+ | gen |
  gen := [ :ix | | f a d |
  f := specificationsArrayRef at: ix .
  a := specificationsArrayRef at: (ix + 1) .

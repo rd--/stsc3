@@ -2,6 +2,7 @@ Osc1 = PseudoUgen (
 ----------------------------
 
 bufnum: bufnum dur: dur = (
+ | phase |
  phase := (Ln apply: {0. (BufFrames apply: {bufnum}) - 1. dur}) .
 	^(BufRd apply: {1. bufnum. phase. 0. 2})
 )

@@ -12,7 +12,7 @@ classes = \
 	EnvBuilder EnvAdsr EnvAsr EnvLinen EnvPerc EnvSine EnvSpec \
 	EventParam Voicer
 common=$(ext:=.ext) $(classes) $(pseudo)
-autogen=Sc3-Ugen-Bindings Sc3-Ugen-Pseudo Sc3-Help-Graphs
+autogen=Sc3-Ugen-Bindings.lib Sc3-Ugen-Pseudo.lib Sc3HelpGraph.ext
 osc = Osc/Array.ext Osc/Float.ext Osc/Integer.ext Osc/String.ext Osc/OscMessage
 ui=Ui/String.ext Ui/Sc3Browser Ui/Sc3Editor
 
@@ -20,7 +20,7 @@ all:
 	runhaskell ../hs/help.hs
 	runhaskell ../hs/pseudo.hs
 	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) Gnu/*.ext.st > Sc3-Filein-For-Gnu.st
-	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) $(ui:=.st) Squeak/*.ext.st > Sc3-Filein-For-Squeak.st
+	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) $(ui:=.st) Squeak/*.ext.st Squeak/*.mod.st > Sc3-Filein-For-Squeak.st
 	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) Cuis/*.ext.st > Sc3-Filein-For-Cuis.st
 
 clean:

@@ -2,6 +2,7 @@ Splay = PseudoUgen (
 ----------------------------
 
 inArray: inArray spread: spread level: level center: center levelComp: levelComp = (
+ | n n1 pos lvl |
  n := 2 max: (inArray size) .
  n1 := n - 1 .
  pos := ((0 to: n1) * (2 / n1) - 1) * spread + center .
