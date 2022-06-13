@@ -52,18 +52,22 @@ Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Flo
 
 "Rate"
 
-Rate ir = 0
-(Rate symbol: 0) = #ir
-(Rate symbol: 7) "=> error"
+{
+Rate ir = 0.
+(Rate symbol: 0) = #ir.
+[ Rate symbol: 7 ] on: Error do: [ true ].
+} allSatisfy: #yourself
 
 "Klank"
 
-#((220 330 440) nil nil) asKlangSpec = #(220 1 1 330 1 1 440 1 1)
+{
+#((220 330 440) nil nil) asKlangSpec = #(220 1 1 330 1 1 440 1 1).
 #((220 330 440) #(0.2 0.1) #(0.5)) asKlankSpec = #(220 0.2 0.5 330 0.1 0.5 440 0.2 0.5)
+} allSatisfy: #yourself
 
 "File I/O - Text - Squeak, Gnu, Cuis"
 
-'/tmp/str.text' writeTextFile: [:fd | 5.0 asString putOn: fd].
+'/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd ].
 '/tmp/str.text' readTextFile.
 
 "File I/O - Directory - Squeak, Gnu, Cuis"
@@ -104,7 +108,7 @@ Browser newOnClass: AbstractUgen selector: #kr. "open Browser on Method of Class
 "Transcript"
 
 Transcript open. "=> opens Transcript ; MVC"
-1 to: 5 do: [ :x | Transcript cr ; show: x ]. "=> prints to Transcript"
+1 to: 5 do: [ :x | Transcript show: x; cr ]. "=> prints to Transcript"
 
 "Method Finder"
 
@@ -117,13 +121,15 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Precedence"
 
-2 + 5 * 5 "=> 35"
-2 + (5 * 5) "=> 27"
-2 + 5 min: 5  "=> 5"
-2 + (5 min: 5) "=> 7"
-1 min: 2 max: 3 "=> 3"
-(1 min: 2) max: 3 "=> 3"
-1 min: (2 max: 3) "=> 1"
+{
+(2 + 5 * 5) = 35.
+(2 + (5 * 5)) = 27.
+(2 + 5 min: 5) = 5.
+(2 + (5 min: 5)) = 7.
+(1 min: 2 max: 3) = 3.
+((1 min: 2) max: 3) = 3.
+(1 min: (2 max: 3)) = 1.
+} allSatisfy: #yourself
 
 "Boolean"
 
@@ -131,15 +137,15 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Object"
 
-| x | x := 'x' dup: 2 sending: #copy . {(x at: 1) == (x at: 2)} "duplicate by copying"
-| x | x := 'x' dup: 2 sending: #yourself . {(x at: 1) == (x at: 2)} "duplicate without copying"
-| x | x := 'x' dup: 2 sending: #value . {(x at: 1) == (x at: 2)} "duplicate by evaluating"
-| x | x := 'x' dup: 2 . {(x at: 1) == (x at: 2)} "at object duplicate by copying"
-| x | x := 'x' dup. {(x at: 1) == (x at: 2)} "duplicate by copying"
+| x | x := 'x' dup: 2 sending: #copy. (x at: 1) ~~ (x at: 2). "duplicate by copying"
+| x | x := 'x' dup: 2 sending: #yourself . (x at: 1) == (x at: 2). "duplicate without copying"
+| x | x := 'x' dup: 2 sending: #value . (x at: 1) == (x at: 2). "duplicate by evaluating"
+| x | x := 'x' dup: 2 . (x at: 1) ~~ (x at: 2). "at object duplicate by copying"
+| x | x := 'x' dup. (x at: 1) ~~ (x at: 2) "duplicate by copying"
 
 "Ordered Collection"
 
-(OrderedCollection with: #x) detect: [ :each | each isSymbol ]
+((OrderedCollection with: #x) detect: [ :each | each isSymbol ]) = #x.
 
 "Random - Float"
 
@@ -178,35 +184,37 @@ MessageNames openMessageNames. "open Message Names tool"
 "SequenceableCollection"
 
 #(1 2 3)
-#(1 2 3) , #(4 5 6) "=> #(1 2 3 4 5 6)"
+#(1 2 3) , #(4 5 6) = #(1 2 3 4 5 6)
 
 #() atWrap: 7 "=> error"
-#(1) atWrap: 7 "=> 1"
-#(1 2 3 4) atWrap: 7 "=> 3"
+(#(1) atWrap: 7) = 1.
+(#(1 2 3 4) atWrap: 7) = 3.
 
-#(#(1 2) #(3 4)) concatenation "=> #(1 2 3 4)"
+#(#(1 2) #(3 4)) concatenation = #(1 2 3 4).
 
-#(1 2 3 4 5) shuffle "=> error, array is read only (Gnu)"
+[ #(1 2 3 4 5) shuffle ] on: Error do: [ true ] "=> error, array is read only (Gnu)"
 x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 #(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
 
-#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ] "=> #((5 1) (4 2) (3 3) (2 4) (1 5))"
+(#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ]) = #((5 1) (4 2) (3 3) (2 4) (1 5))
 
 #(5 4 3 2 1) withIndexDo: [ :item :index | Transcript show: {item. index}; cr ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
 
-#() extendCyclically: 5 "=> error"
-#(1) extendCyclically: 5 "=> #(1 1 1 1 1)"
-#(1 2 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
-(1 to: 3) extendCyclically: 5 "=> #(1 2 3 1 2)"
-#(1 (2 3) (4 5 6)) extendToBeOfEqualSize = #((1 1 1) (2 3 2) (4 5 6))
-{1 to: 9. 1 to: 3} extendToBeOfEqualSize = #((1 2 3 4 5 6 7 8 9) (1 2 3 1 2 3 1 2 3))
-(1 to: 9) extendToBeOfEqualSize = #((1) (2) (3) (4) (5) (6) (7) (8) (9))
-(3 * (1 to: 3)) extendToBeOfEqualSize = #((3) (6) (9))
-#((1 2) (3 4 5)) extendToBeOfEqualSize = #((1 2 1 ) (3 4 5))
-#(() (1)) extendToBeOfEqualSize "=> error"
-#(1 2 3) withExtending: #(4 5) collect: [ :x :y| x + y ] "=> #(5 7 7) ; 1 + 4 and 2 + 5 and 3 + 4"
-#(#(1 2) #(3 4)) transpose "=> #((1 3) (2 4))"
-#(#(1 2) #(3 4)) transpose concatenation "=> #(1 3 2 4)"
+{
+[ #() extendCyclically: 5 ] on: Error do: [ true ].
+(#(1) extendCyclically: 5) = #(1 1 1 1 1).
+(#(1 2 3) extendCyclically: 5) = #(1 2 3 1 2).
+((1 to: 3) extendCyclically: 5) = #(1 2 3 1 2).
+#(1 (2 3) (4 5 6)) extendToBeOfEqualSize = #((1 1 1) (2 3 2) (4 5 6)).
+{1 to: 9. 1 to: 3} extendToBeOfEqualSize = #((1 2 3 4 5 6 7 8 9) (1 2 3 1 2 3 1 2 3)).
+(1 to: 9) extendToBeOfEqualSize = #((1) (2) (3) (4) (5) (6) (7) (8) (9)).
+(3 * (1 to: 3)) extendToBeOfEqualSize = #((3) (6) (9)).
+#((1 2) (3 4 5)) extendToBeOfEqualSize = #((1 2 1 ) (3 4 5)).
+[ #(() (1)) extendToBeOfEqualSize ] on: Error do: [ true ].
+(#(1 2 3) withExtending: #(4 5) collect: [ :x :y| x + y ]) = #(5 7 7). "1 + 4 and 2 + 5 and 3 + 4"
+#(#(1 2) #(3 4)) transpose = #((1 3) (2 4)).
+#(#(1 2) #(3 4)) transpose concatenation = #(1 3 2 4).
+} allSatisfy: #yourself
 
 "Array"
 
@@ -215,29 +223,29 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 #(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
 #(1 2 3 4 5) size = 5 "=> true"
 
-#(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}] "=> #((1 4) (2 5) (3 6))"
-1 dup: 6 "=> #(1 1 1 1 1 1) ; replicate by copying"
+(#(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}]) = #((1 4) (2 5) (3 6)).
+(1 dup: 6) = #(1 1 1 1 1 1) "replicate by copying"
 
-0 to: 4
-(0 to: 4 collect: [:x | x * x]) sum "=> 30"
-1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
-0 to: 4 collect: [:x | x * x] "=> #(0 1 4 9 16)"
+(0 to: 4) isInterval.
+(0 to: 4 collect: [:x | x * x]) sum = 30.
+(1 to: 5 collect: [:x | x * x]) = #(1 4 9 16 25).
+(0 to: 4 collect: [:x | x * x]) = #(0 1 4 9 16).
 
-#(1 2 3 4 5) groupsOf: 2 "=>  #((1 2 ) (3 4))"
-#(1 2 3 4 5 6) clump: 2 "=>  #((1 2 ) (3 4) (5 6))"
-#(1 2 3) ++ #(4 5) "=> #(1 2 3 4 5)"
-#(1 2 3) , #(4 5) "=> #(1 2 3 4 5)"
+(#(1 2 3 4 5) groupsOf: 2) = #((1 2 ) (3 4)).
+(#(1 2 3 4 5 6) clump: 2) = #((1 2 ) (3 4) (5 6)).
+#(1 2 3) ++ #(4 5) = #(1 2 3 4 5).
+#(1 2 3) , #(4 5) = #(1 2 3 4 5).
 
-(Array with: 1) = #(1)
-(Array with: 1 with: 2) = #(1 2)
-(Array with: 1 with: 2 with: 3) = #(1 2 3)
-(Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4)
-(Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5)
+(Array with: 1) = #(1).
+(Array with: 1 with: 2) = #(1 2).
+(Array with: 1 with: 2 with: 3) = #(1 2 3).
+(Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
+(Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
 
-(Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str')
+(Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str').
 
-Array series: 10 value: 0 value: 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
-Array geom: 5 value: 1 value: 3 "=> (1 3 9 27 81)"
+(Array series: 10 value: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}.
+(Array geom: 5 value: 1 value: 3) = #(1 3 9 27 81).
 Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 #(1 2 3 4 5) nth: 3 "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
@@ -245,39 +253,40 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 10 iota "=> 10 element array from 1 to 10"
 10 iota - 1 * 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
 
-10 from: 1 by: 1 "=> 10 element array from 1 to 10 by 1"
-3 from: 3 by: 6 "=> 3 element array from 3 to 15 by 6"
+10 from: 1 by: 1 "=> Interval equal to 10 element array from 1 to 10 by 1"
+3 from: 3 by: 6 "=> Interval equal to 3 element array from 3 to 15 by 6"
 
-({1. 2. 3} at: 2 put: -2) == -2              "=> true (at:put: returns the element put)"
+{
+({1. 2. 3} at: 2 put: -2) == -2.              "=> true (at:put: returns the element put)"
 
-#(1 2 3 4 5) rotateRight: 1 "=> (5 1 2 3 4)"
-#(1 2 3 4 5) rotateLeft: 1 "=> (2 3 4 5 1)"
-#(1 2 3 4 5) rotate: 1 "=> (5 1 2 3 4)"
+(#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
+(#(1 2 3 4 5) rotateLeft: 1) = #(2 3 4 5 1).
+(#(1 2 3 4 5) rotate: 1) = #(5 1 2 3 4).
 
-#(1 2 3 4) containsArray = false
-#(1 (2 3) 4) containsArray = true
+#(1 2 3 4) containsCollection = false.
+#(1 (2 3) 4) containsCollection = true.
 
-#(1 3 5 7) indexOf: 5
-#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]
+(#(1 3 5 7) indexOf: 5) = 3.
+(#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]) = '?'.
 
-#(1 3 5 7) detect: [ :item | item > 5] "=> 7"
-#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ] "=> '?'"
-#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ] "=> 49 (squeak)"
+(#(1 3 5 7) detect: [ :item | item > 5]) = 7.
+(#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]) = '?'.
+(#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ]) = 49. "squeak"
 
 "Array - Math"
 
-3 adaptToCollection: #(1 2 3) andSend: #*
+(3 adaptToCollection: #(1 2 3) andSend: #*) = #(3 6 9).
 #(1 2 3) * 3 "=> #(3 6 9)"
 3 * #(1 2 3) "=> #3 6 9)"
 #(1 2 3) exp
 
-#(1 2) + #(3 4 5) = #(4 6 6)
-#(1 2 3) + #(4 5) = #(5 7 7)
+#(1 2) + #(3 4 5) = #(4 6 6) "same size check?"
+#(1 2 3) + #(4 5) = #(5 7 7) "same size check?"
 
 | x | x := #(#(4 4.5) #(2 3 5 6)). x perform: #* crossedWith: x
 
-#(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4))
-#(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples
+#(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4)).
+#(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples size = 32
 
 "Array - Expressions"
 
@@ -299,10 +308,11 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 '
 x' "=> newline x"
 | x | x := 'x'. {x == x. x == x copy. x = x. x = x copy}
+3.141 printString = '3.141'.
+(3.141 printStringLimitedTo: 4) = '3.14...etc...'
+Array class printString = 'a Metaclass'
+
 'one {1} three' format: 'two'
-3.141 printString = '3.141'
-3.141 printStringLimitedTo: 4
-{Array class} printString
 
 "Symbols"
 
@@ -328,7 +338,6 @@ Association key: #x value: 1 "=> #x -> 1"
 
 d := Dictionary new. d at: 'select' put: 'x' ; at: 'from' put: 'y' ; at: 'list' put: 'z'
 d := Dictionary newFrom: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'}
-d := Dictionary newFromAssociations: {'select' -> 'x'. 'from' -> 'y'. 'list' -> 'z'} "=> newFrom: will do this courtesy Collection>>associationsDo:"
 d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 "Conditionals"
@@ -338,17 +347,21 @@ x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 
 "Collection"
 
-#(1 2 3 4 5) anySatisfy: [ :item | item = 3 ] "=> true"
-#(1 2 3 4 5) sum = 15 "=> true"
-#(1 2 3 4 5) product == (1 * 2 * 3 * 4 * 5) "=> true"
+{
+#(1 2 3 4 5) anySatisfy: [ :item | item = 3 ].
+#(1 2 3 4 5) sum = 15.
+#(1 2 3 4 5) product == (1 * 2 * 3 * 4 * 5).
+}
 
 "Class"
 
+{
 'x' class = String. "true"
 'x' class class = String class. "true"
 'x' class class class = Metaclass. "true"
 'x' class class class class = Metaclass class. "true"
 'x' class class class class class = Metaclass. "true"
+}
 
 SinOsc name = #SinOsc. "true"
 SinOsc class. "SinOsc class"
@@ -530,7 +543,7 @@ FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
 
 "Stream"
 
-String streamContents: [ :aStream | 'hello there!' printOn: aStream ]
+(String streamContents: [ :aStream | 'hello there!' printOn: aStream ]) = '''hello there!'''
 ByteArray streamContents: [ :aStream | aStream float32: 3.141 ] "Squeak"
 
 "Smalltalk"
@@ -543,9 +556,9 @@ Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
 
-69 midiCps = 440 "=> true"
+69 midiCps = 440. "=> true"
 440 cpsMidi = 69 "=> true"
--32 dbAmp = 0.025118864315095794 "=> true"
+-32 dbAmp = 0.025118864315095784 "=> true"
 -32 dbAmp ampDb rounded = -32 "=> true"
 0 raisedTo: 1 "=> 0"
 1 raisedTo: 0 "=> 1"
@@ -681,7 +694,7 @@ Sc3 reset.
 
 | factorial |
 factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
-(1 to: 10) collect: factorial "=> #(1 2 6 24 120 720 5040 40320 362880 3628800)"
+((1 to: 10) collect: factorial) = #(1 2 6 24 120 720 5040 40320 362880 3628800).
 [ 10 rand ] dup: 10 "=> at block duplicate by evaluating, ten random numbers between 1 and 10"
 [ 10 rand ] dup "=> two random numbers between 1 and 10"
 [] class = BlockClosure
@@ -695,10 +708,12 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 
 "Integer"
 
-5 iota asArray = #(1 2 3 4 5)
-(5 from: 3 by: 4) asArray = #(3 7 11 15 19) "Myself number of places from start by step"
-(5 from: 2 by: 0.5) = #(2 2.5 3 3.5 4)
-(1 to: 9 collect: [ :item | item * item ]) = #(1 4 9 16 25 36 49 64 81)
+{
+5 iota asArray = #(1 2 3 4 5).
+(5 from: 3 by: 4) asArray = #(3 7 11 15 19). "Myself number of places from start by step"
+(5 from: 2 by: 0.5) asArray = {2. 5/2. 3. 7/2. 4}.
+(1 to: 9 collect: [ :item | item * item ]) = #(1 4 9 16 25 36 49 64 81).
+}
 
 "Number"
 
@@ -740,7 +755,6 @@ FortranNumberParser parse: '1e6'
 FortranNumberParser parse: '-1e6'
 FortranNumberParser parse: '1e-1'
 FortranNumberParser parse: '-1e-1'
-
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

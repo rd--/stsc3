@@ -43,4 +43,12 @@ rate = (
     ^Rate ir
 )
 
+to: stop collect: aBlock = (
+    ^(self to: stop) collect: aBlock
+)
+
+to: stop by: step collect: aBlock = (
+    ^(self to: stop by: step) collect: aBlock
+)
+
 )
