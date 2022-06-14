@@ -1,10 +1,10 @@
 "https://sccode.org/1-590 (dm) ; this prints infinity somewhere (divide by zero)"
-| shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
-shift_register := [ :length :tr :in |
+| shiftRegister amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
+shiftRegister := [ :length :tr :in |
 	| buf count rd wr |
 	buf := BufAlloc numChannels: 1 numFrames: length.
 	count := PulseCount trig: tr reset: 0.
-	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse.
+	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: count + length iota loop: 1) reverse.
 	wr := DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1).
 	rd mrg: wr
 ].
@@ -15,7 +15,7 @@ trans := TChoose trig: pulse array: #(0 2 -2 7 -5).
 trig := Trig1 in: (CuspL freq: rate kr * 3 a: 1 b: 1.9 xi: 0) dur: 0.001.
 octave := DmdOn trig: (PulseDivider trig: trig div: 4 start: 0) reset: 0 demandUGens: (Choose repeats: Float infinity list: #(12 -12)).
 note := DmdOn trig: trig reset: 0 demandUGens: (Seq repeats: Float infinity list: #(42 46 51 54 59 63 66) shuffled + trans kr + octave).
-chord := shift_register value: 5 value: trig value: note midiCps.
+chord := shiftRegister value: 5 value: trig value: note midiCps.
 cf := Vibrato freq: chord rate: 6 depth: 0.02 delay: 0 onset: 0 rateVariation: 0.04 depthVariation: 0.1 iphase: 0 trig: 0.
 mf := chord * (LinLin in: (LFPulse freq: 1 / 8 iphase: 0 width: 0.5) srclo: -1 srchi: 1 dstlo: 1.01 dsthi: 2.01).
 sig := PMOsc carfreq: cf modfreq: mf pmindex: ((EnvSpec levels: #(3 3 0) times: #(0 0.2) curves: #(-4 -4)) asEnvGen: trig) modphase: 0.

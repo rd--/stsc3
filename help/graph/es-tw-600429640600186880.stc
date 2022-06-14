@@ -2,8 +2,8 @@
 var m = MouseX(0.925, 1, 0, 0.2);
 var l = LocalIn(2, 0) * m + (Dust2(#[1, 1]) * 9);
 var s = 2.to(6).collect({
-    arg n;
-    AllpassC(l, 0.6, LFNoise2(0.01) * 0.01 + (1 / n), 1)
+	arg n;
+	AllpassC(l, 0.6, LFNoise2(0.01) * 0.01 + (1 / n), 1)
 }).sum / 4.5;
 l.mrg(LocalOut(LeakDC(s, 0.995)))
 
