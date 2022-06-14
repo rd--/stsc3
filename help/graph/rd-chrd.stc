@@ -1,19 +1,19 @@
 // chrd (rd) ; graph rewrite
 OverlapTexture({
-    arg tr;
-    var chrd = {
-        arg m;
-        var ds = 3;
-        var d = #[5, 4, 5, 7, 4, 5] * ds;
-        var f = TXLine(m, m + TRand(0.05, 0.5, tr), d, tr).midiCps;
-        var e = EnvSine(d.max, TRand(0.005, 0.01, tr)).asEnvGen(tr);
-        var p = TXLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr);
-        var o = SinOsc(f, 0);
-        Pan2(o, p, e).sum
-    };
-    var scale = #[0, 2, 4, 5, 7, 9, 11];
-    var octaves = #[4, 5, 6, 7];
-    var mnn = scale.collect({ arg n; octaves.collect({ arg o; n + (o * 12) }) }).concatenation;
-    var chd = { TChoose(tr, mnn) }.dup(6);
-    { chrd.value(chd) }.dup(9).sum
+	arg tr;
+	var chrd = {
+		arg m;
+		var ds = 3;
+		var d = #[5, 4, 5, 7, 4, 5] * ds;
+		var f = TXLine(m, m + TRand(0.05, 0.5, tr), d, tr).midiCps;
+		var e = EnvSine(d.max, TRand(0.005, 0.01, tr)).asEnvGen(tr);
+		var p = TXLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr);
+		var o = SinOsc(f, 0);
+		Pan2(o, p, e).sum
+	};
+	var scale = #[0, 2, 4, 5, 7, 9, 11];
+	var octaves = #[4, 5, 6, 7];
+	var mnn = scale.collect({ arg n; octaves.collect({ arg o; n + (o * 12) }) }).concatenation;
+	var chd = { TChoose(tr, mnn) }.dup(6);
+	{ chrd.value(chd) }.dup(9).sum
 }, 21, 0, 3)

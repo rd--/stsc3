@@ -1,0 +1,207 @@
+SequenceableCollection = SequenceableCollection (
+
+++ otherCollection = (
+	"Myself with otherCollection appended.  Alias for ,"
+	^self , otherCollection
+)
+
++~ other = (
+	"Like + but cycles shorter collection"
+	^self withExtending: other collect: [ :lhs :rhs| lhs + rhs ]
+)
+
+< arg = (
+	^arg adaptToCollection: self andSend: #<
+)
+
+> arg = (
+	^arg adaptToCollection: self andSend: #>
+)
+
+allTuples = (
+	"Answer all of the possible n-tuples of each of my elements (I am an n-element sequence of any sized sequences)."
+	| answerSize |
+	answerSize := (self collect: [ :item | item size ]) product.
+	^(1 to: answerSize) collect: [ :i |
+		| k nextTuple |
+		k := i - 1.
+		nextTuple := self species new: self size.
+		(self size to: 1 by: -1) collect: [ :j |
+			| fromSequence |
+			fromSequence := self at: j.
+			nextTuple at: j put: (fromSequence at: (k \\ fromSequence size) + 1).
+			k := k // fromSequence size	].
+		nextTuple ]
+)
+
+asLocalBuf = (
+	| lhs rhs |
+	lhs := LocalBuf numChannels: 1 numFrames: self size.
+	rhs := SetBuf buf: lhs offset: 0 length: self size array: self.
+	^lhs mrg: rhs
+)
+
+bitAnd: arg = (
+	^arg adaptToCollection: self andSend: #bitAnd:
+)
+
+bitOr: arg = (
+	^arg adaptToCollection: self andSend: #bitOr:
+)
+
+choose = (
+	^self atRandom
+)
+
+clip2: arg = (
+	^arg adaptToCollection: self andSend: #clip2:
+)
+
+clump: groupSize = (
+	"Array of myself partitioned into adjacent sequences of groupSize elements.  It is an error if I cannot be equally partitioned."
+	| answerSize answer start |
+	answerSize := (self size / groupSize) ceiling.
+	answer := Array new: answerSize.
+	start := 1.
+	(1 to: answerSize) do: [ :i |
+		| end |
+		end := start + groupSize - 1.
+		answer at: i put: (self copyFrom: start to: end).
+		start := end + 1 ].
+	^answer
+)
+
+extendCyclically: answerSize = (
+	"Myself extended to answerSize places by cycling"
+	self isEmpty ifTrue: [ self error: 'extendCyclically: empty?' ].
+	^(1 to: answerSize) collect: [ :index | self atWrap: index ]
+)
+
+extendToBeOfEqualSize = (
+	"All of my elements extended to to be of the same size as my largest element."
+	| maximumSize |
+	maximumSize := (self collect: [ :item | item asArray size ]) max.
+	^self collect: [ :item | item asArray extendCyclically: maximumSize ]
+)
+
+findIndex: aBlock = (
+	(1 to: self size) do: [ :index | (aBlock value: (self at: index)) ifTrue: [ ^index ] ].
+	^nil
+)
+
+fisherYatesShuffle = (
+	(self size to: 2 by: -1) do: [ :item | self swap: item with: item atRandom ]
+)
+
+fold2: arg = (
+	^arg adaptToCollection: self andSend: #fold2:
+)
+
+gcd: arg = (
+	^arg adaptToCollection: self andSend: #gcd:
+)
+
+groupsOf: groupSize = (
+	"My elements taken groupSize at a time. Ignore any leftovers at the end."
+	^(groupSize to: self size by: groupSize) collect: [ :index | self copyFrom: index - groupSize + 1 to: index ]
+)
+
+lag2: arg = (
+	^arg adaptToCollection: self andSend: #lag2:
+)
+
+lag3: arg = (
+	^arg adaptToCollection: self andSend: #lag3:
+)
+
+lag: arg = (
+	^arg adaptToCollection: self andSend: #lag:
+)
+
+lcm: arg = (
+	^arg adaptToCollection: self andSend: #lcm:
+)
+
+max: arg = (
+	^arg adaptToCollection: self andSend: #max:
+)
+
+mceTransform = (
+	^self extendToBeOfEqualSize transpose
+)
+
+nth: index = (
+	"Alias for at:. For .stc, since at: in Sc is zero-indexed."
+	^self at: index
+)
+
+perform: aSelector crossedWith: aSequence = (
+	"Perform aSelector for each of my items with each of anArrays items in turn (p *.x q in Sc)"
+	| answer nextIndex |
+	answer := self species new: self size * aSequence size.
+	nextIndex := 1.
+	self do: [ :leftItem |
+		aSequence do: [ :rightItem |
+			answer at: nextIndex put: (leftItem perform: aSelector with: rightItem).
+			nextIndex := nextIndex + 1 ] ].
+	^answer
+)
+
+rotate: n = (
+	^self rotateRight: n
+)
+
+rotateLeft: n = (
+	^(1 + n to: self size + n) collect: [ :index | self atWrap: index ]
+)
+
+rotateRight: n = (
+	^(1 - n to: self size - n) collect: [ :index | self atWrap: index ]
+)
+
+roundTo: arg = (
+	^arg adaptToCollection: self andSend: #roundTo:
+)
+
+transpose = (
+	"Transpose my rows and columns (I am a two-dimensional array).
+	 My number of columns is inferred from the size of the my first element."
+	^(1 to: self first size) collect: [ :column | self collect: [ :row | row at: column ] ]
+)
+
+truncateTo: arg = (
+	^arg adaptToCollection: self andSend: #truncateTo:
+)
+
+withExtending: other collect: aBlock = (
+	"Like with:collect: but cycle shorter list."
+	| maximumSize |
+	maximumSize := self size max: other size.
+	^(1 to: maximumSize) collect: [ :index |
+		aBlock value: (self atWrap: index) value: (other atWrap: index) ]
+)
+
+----------------------------
+
+fill: size value: aBlock = (
+	"Generate an array evaluating a zero argument block to fill each slot."
+	^(1 to: size) collect: [ :unusedItem | aBlock value ]
+)
+
+geom: size value: start value: grow = (
+	"Generate a geometric series (curve) of size places from start by grow."
+	| accum |
+	accum := start.
+	^(1 to: size) collect: [ :unusedItem |
+		| entry |
+		entry := accum.
+		accum := grow * accum.
+		entry ]
+)
+
+series: size value: start value: step = (
+	"Generate an arithmetic series (ramp) of size places from start by step."
+	^(1 to: size) collect: [ :item | (step * (item - 1)) + start ]
+)
+
+)

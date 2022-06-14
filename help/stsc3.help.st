@@ -18,40 +18,46 @@ f0Tw1395878538297892865
 
 "Envelope"
 
-EnvSpec new curveNameDictionary "curve name dictionary"
+{
+(EnvSpec curveNameDictionary at: #exp) = 2. "curve name dictionary"
 (EnvSpec apply: #(#(0 1 0) #(0.1 0.9)  #lin nil nil 0)) asArray = #(0 2 -99 -99 1 0.1 1 0 0 0.9 1 0 ).
+} allSatisfy: #yourself
 
 "Ugen"
 
-SinOsc freq: 440 phase: 0 "freq:phase: is a class method"
-SinOsc freq: 440 phase: 0 mul: 0.1 "freq:phase:mul: is a class method"
-SinOsc freq: 440 phase: 0 mul: 0.1 add: 0 "freq:phase:mul: is a class method"
-SinOsc primaryFactoryMethod = #freq:phase: "objects may indicate a primary factory method"
-SinOsc apply: #(220 0.5) "perform:withArguments: at the primary factory method, in C-Smalltalk notation SinOsc(220, 0.5) translates to this"
-PinkNoise primaryFactoryMethod = #new "the primary factory method may be new"
-PinkNoise apply: #() "in C-Smalltalk notation PinkNoise() translates to this"
-SinOsc perform: #freq:phase: withArguments: #(220 1)
-SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)
+{
+(SinOsc freq: 440 phase: 0) isUgen. "freq:phase: is a class method"
+(SinOsc freq: 440 phase: 0 mul: 0.1) isUgen. "freq:phase:mul: is a class method"
+(SinOsc freq: 440 phase: 0 mul: 0.1 add: 0) isUgen. "freq:phase:mul: is a class method"
+SinOsc primaryFactoryMethod = #freq:phase:. "objects may indicate a primary factory method"
+(SinOsc apply: #(220 0.5)) isUgen. "perform:withArguments: at the primary factory method, in .stc notation SinOsc(220, 0.5) translates to this"
+PinkNoise primaryFactoryMethod = #new. "the primary factory method may be new"
+(PinkNoise apply: #()) isUgen. "in .stc notation PinkNoise() translates to this"
+(SinOsc perform: #freq:phase: withArguments: #(220 1)) isUgen.
+(SinOsc perform: #freq:phase:mul:add: withArguments: #(220 1 1 0)) isUgen.
+} allSatisfy: #yourself
 
 "UgenBuilder"
 
-UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(440 0)
+(UgenBuilder name: 'SinOsc' numChan: 1 rateSpec: 2 specialIndex: 0 inputArray: #(440 0)) isUgen.
 
 "Graph"
 
-u := SinOsc freq: 440 phase: Float pi mul: 0.1
+u := SinOsc freq: 440 phase: Float pi mul: 0.1.
 (ScGraph from: u withName: 'tmp') printString
 (Sc3 ugenSetOf: u) do: [ :item | item inspect ]
 Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Float pi mul: 0.1)) to: '/tmp/stsc3.scsyndef'
 
 "Scsynth"
 
-Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1)
-Sc3 play: (SinOsc freq: 440 phase: 0 mul: 0.1)
+Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 play: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 reset.
 
-(SinOsc freq: 440 phase: 0 mul: 0.1) draw
-(SinOsc freq: 440 phase: 0 mul: 0.1) play
-(SinOsc freq: #(440 441) phase: 0 mul: 0.1) play
+(SinOsc freq: 440 phase: 0 mul: 0.1) draw.
+(SinOsc freq: 440 phase: 0 mul: 0.1) play.
+(SinOsc freq: #(440 441) phase: 0 mul: 0.1) play.
+Sc3 reset.
 
 "Rate"
 
@@ -70,8 +76,11 @@ Rate ir = 0.
 
 "File I/O - Text - Squeak, Gnu, Cuis"
 
+{
 ('/tmp/str.text' writeTextFile: [ :fd | 5.0 asString putOn: fd ]) = '/tmp/str.text'.
 '/tmp/str.text' readTextFile = '5.0'.
+'/tmp/str.text' evalFile = 5.0.
+} allSatisfy: #yourself
 
 "File I/O - Directory - Squeak, Gnu, Cuis"
 
@@ -79,7 +88,7 @@ Rate ir = 0.
 
 "Evaluate - Squeak, Gnu, Cuis"
 
-'1 + 1' evalString = 2 "=> true ; evaluate string"
+'1 + 1' evalString = 2. "=> true ; evaluate string"
 '/home/rohan/sw/stsc3/help/graph/jmcc-why-supercollider.st' evalFile play "evaluate text file"
 
 "Sc3"
@@ -182,24 +191,13 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "SequenceableCollection"
 
-#(1 2 3)
-#(1 2 3) , #(4 5 6) = #(1 2 3 4 5 6)
-
-#() atWrap: 7 "=> error"
+{
+#(1 2 3) , #(4 5 6) = #(1 2 3 4 5 6).
 (#(1) atWrap: 7) = 1.
 (#(1 2 3 4) atWrap: 7) = 3.
-
 #(#(1 2) #(3 4)) concatenation = #(1 2 3 4).
-
-[ #(1 2 3 4 5) shuffle ] on: Error do: [ true ] "=> error, array is read only (Gnu)"
-x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
-#(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
-
-(#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ]) = #((5 1) (4 2) (3 3) (2 4) (1 5))
-
-#(5 4 3 2 1) withIndexDo: [ :item :index | Transcript show: {item. index}; cr ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
-
-{
+[ #(1 2 3 4 5) shuffle ] on: Error do: [ true ]. "=> error, array is read only (Gnu)"
+(#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ]) = #((5 1) (4 2) (3 3) (2 4) (1 5)).
 [ #() extendCyclically: 5 ] on: Error do: [ true ].
 (#(1) extendCyclically: 5) = #(1 1 1 1 1).
 (#(1 2 3) extendCyclically: 5) = #(1 2 3 1 2).
@@ -215,62 +213,60 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 #(#(1 2) #(3 4)) transpose concatenation = #(1 3 2 4).
 } allSatisfy: #yourself
 
+x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
+#(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
+
+#() atWrap: 7 "=> error"
+
+#(5 4 3 2 1) withIndexDo: [ :item :index | Transcript show: {item. index}; cr ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
+
 "Array"
 
 #(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"
 #(true false nil) "=> #(true false nil)"
 #(#(1 2) #(3 4)) "literal array syntax ; {{1. 2}. {3. 4}}"
-#(1 2 3 4 5) size = 5 "=> true"
 
+{
+#(1 2 3 4 5) size = 5. "=> true"
 (#(1 2 3) with: #(4 5 6) collect: [:i :j | {i. j}]) = #((1 4) (2 5) (3 6)).
-(1 dup: 6) = #(1 1 1 1 1 1) "replicate by copying"
-
+(1 dup: 6) = #(1 1 1 1 1 1). "replicate by copying"
 (0 to: 4) isInterval.
 (0 to: 4 collect: [:x | x * x]) sum = 30.
 (1 to: 5 collect: [:x | x * x]) = #(1 4 9 16 25).
 (0 to: 4 collect: [:x | x * x]) = #(0 1 4 9 16).
-
 (#(1 2 3 4 5) groupsOf: 2) = #((1 2 ) (3 4)).
 (#(1 2 3 4 5 6) clump: 2) = #((1 2 ) (3 4) (5 6)).
 #(1 2 3) ++ #(4 5) = #(1 2 3 4 5).
 #(1 2 3) , #(4 5) = #(1 2 3 4 5).
-
 (Array with: 1) = #(1).
 (Array with: 1 with: 2) = #(1 2).
 (Array with: 1 with: 2 with: 3) = #(1 2 3).
 (Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
 (Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
-
 (Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str').
-
 (Array series: 10 value: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}.
 (Array geom: 5 value: 1 value: 3) = #(1 3 9 27 81).
-Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
+(#(1 2 3 4 5) nth: 3) = 3. "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
+({1. 2. 3} at: 2 put: -2) == -2.              "=> true (at:put: returns the element put)"
+(#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
+(#(1 2 3 4 5) rotateLeft: 1) = #(2 3 4 5 1).
+(#(1 2 3 4 5) rotate: 1) = #(5 1 2 3 4).
+#(1 2 3 4) containsCollection = false.
+#(1 (2 3) 4) containsCollection = true.
+(#(1 3 5 7) indexOf: 5) = 3.
+(#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]) = '?'.
+(#(1 3 5 7) detect: [ :item | item > 5]) = 7.
+(#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]) = '?'.
+(#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ]) = 49. "squeak"
+} allSatisfy: #yourself
 
-#(1 2 3 4 5) nth: 3 "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
+Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 
 10 iota "=> 10 element array from 1 to 10"
 10 iota - 1 * 0.1 "=> (0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9)"
 
 10 from: 1 by: 1 "=> Interval equal to 10 element array from 1 to 10 by 1"
 3 from: 3 by: 6 "=> Interval equal to 3 element array from 3 to 15 by 6"
-
-{
-({1. 2. 3} at: 2 put: -2) == -2.              "=> true (at:put: returns the element put)"
-
-(#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
-(#(1 2 3 4 5) rotateLeft: 1) = #(2 3 4 5 1).
-(#(1 2 3 4 5) rotate: 1) = #(5 1 2 3 4).
-
-#(1 2 3 4) containsCollection = false.
-#(1 (2 3) 4) containsCollection = true.
-
-(#(1 3 5 7) indexOf: 5) = 3.
-(#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]) = '?'.
-
-(#(1 3 5 7) detect: [ :item | item > 5]) = 7.
-(#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]) = '?'.
-(#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ]) = 49. "squeak"
 
 "Array - Math"
 
@@ -281,58 +277,63 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(1 2 3) exp = #(2.718281828459045 7.38905609893065 20.085536923187668).
 #(1 2) + #(3 4 5) = #(4 6 6). "requires modification of squeak, which would raise an error (collections not same size)"
 #(1 2 3) + #(4 5) = #(5 7 7).
-} allSatisfy: #yourself
-
-| x | x := #(#(4 4.5) #(2 3 5 6)). x perform: #* crossedWith: x
-
 #(#(1 2) #(3 4)) allTuples = #((1 3) (1 4) (2 3) (2 4)).
 #(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples size = 32.
+} allSatisfy: #yourself
+
+| x | x := #(#(4 4.5) #(2 3 5 6)). (x perform: #* crossedWith: x) = #((16 20.25) (8 13.5 20 27) (8 13.5 20 27) (4 9 25 36))
 
 "Array - Expressions"
 
-{'a' copy. {'b' copy. {'c' copy. {'d' copy. {'e' copy. {'f' copy. {'g' copy}}}}}}}
+{'a' copy. {'b' copy. {'c' copy. {'d' copy. {'e' copy. {'f' copy. {'g' copy}}}}}}} = #('a' ('b' ('c' ('d' ('e' ('f' ('g'))))))).
 
 "Interval"
 
-(Interval from: 5 to: 9) asArray "=> #(5 6 7 8 9)"
-(Interval from: 5 to: 15 by: 2) asArray "=> #(5 7 9 11 13 15)"
-1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25)"
-1 to: 9 by: 2 collect: [:x | x * x] "=> #(1 9 25 49 81)"
+{
+(Interval from: 5 to: 9) asArray = #(5 6 7 8 9).
+(Interval from: 5 to: 15 by: 2) asArray = #(5 7 9 11 13 15).
+(1 to: 5 collect: [:x | x * x]) = #(1 4 9 16 25).
+(1 to: 9 by: 2 collect: [:x | x * x]) = #(1 9 25 49 81).
+} allSatisfy: #yourself
 
 "Strings"
 
-'file' , '.ext' = 'file.ext' "=> true"
+{
+'file' , '.ext' = 'file.ext'.
+3.141 printString = '3.141'.
+(3.141 printStringLimitedTo: 4) = '3.14...etc...'.
+Array class printString = 'a Metaclass'.
+} allSatisfy: #yourself
+
 '\n' "=> '\n'"
 '\\n' "=> '\\n'"
 '\0' "=> '\0'"
 '
 x' "=> newline x"
 | x | x := 'x'. {x == x. x == x copy. x = x. x = x copy}
-3.141 printString = '3.141'.
-(3.141 printStringLimitedTo: 4) = '3.14...etc...'
-Array class printString = 'a Metaclass'
 
 'one {1} three' format: 'two'
 
 "Symbols"
 
-#x isSymbol = true. "=> true"
+#x isSymbol.
 
 "Haskell - List"
 
-(1 to: 5) first = 1 "=> 1 ; head"
-(1 to: 5) last = 5 "=> 5"
-(1 to: 5) size = 5 "=> 5 ; length"
-1 to: 5 collect: [:x | x * x] "=> #(1 4 9 16 25) ; map"
-(1 to: 5) select: [:x | x > 3] "=> #(4 5) ; filter"
-(1 to: 5) copyFrom: 2 to: 5 "=> #(2 3 4 5) ; drop"
-(1 to: 5) at: 3 "=> 3 ; haskell=! ; one-indexed"
+{
+(1 to: 5) first = 1. "head"
+(1 to: 5) last = 5.
+(1 to: 5) size = 5. "length"
+(1 to: 5 collect: [:x | x * x]) = #(1 4 9 16 25). "map"
+(1 to: 5 select: [:x | x > 3]) = #(4 5). "filter"
+((1 to: 5) copyFrom: 2 to: 5) = #(2 3 4 5). "drop"
+((1 to: 5) at: 3) = 3. "haskell=! ; one-indexed"
+} allSatisfy: #yourself
 
 "Association"
 
-#x -> 1 "=> Association key: #x value: 1"
-Association key: #x value: 1 "=> #x -> 1"
-0.1 -> 0.9
+(Association key: #x value: 1) = (#x -> 1).
+(Association key: 0.1 value: 0.9) = (0.1 -> 0.9).
 
 "Dictionary"
 
@@ -342,8 +343,7 @@ d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 "Conditionals"
 
-x := nil
-x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
+(nil isNil ifTrue: ['x'] ifFalse: ['y']) = 'x'.
 
 "Collection"
 
@@ -351,7 +351,7 @@ x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 #(1 2 3 4 5) anySatisfy: [ :item | item = 3 ].
 #(1 2 3 4 5) sum = 15.
 #(1 2 3 4 5) product == (1 * 2 * 3 * 4 * 5).
-}
+} allSatisfy: #yourself
 
 "Class"
 
@@ -361,23 +361,21 @@ x isNil ifTrue: ['x'] ifFalse: ['y'] "=> x"
 'x' class class class = Metaclass. "true"
 'x' class class class class = Metaclass class. "true"
 'x' class class class class class = Metaclass. "true"
-}
+} allSatisfy: #yourself
 
+{
 SinOsc name = #SinOsc. "true"
-SinOsc class. "SinOsc class"
-SinOsc class name. "nil ; 'SinOsc class'"
+SinOsc class name = #'SinOsc class'.
 SinOsc new class name = #SinOsc. "true"
 SinOsc class class name = #Metaclass. "true"
-SinOsc class class class name. "nil ; 'Metaclass class'"
+SinOsc class class class name = #'Metaclass class'.
 SinOsc class class class class name = #Metaclass. "true"
-
-SinOsc superclass name = #Ugen. "true"
-SinOsc superclass superclass name = #AbstractUgen. "true"
-SinOsc superclass superclass superclass name = #Object. "true"
-SinOsc superclass superclass superclass superclass. "nil ; ProtoObject"
-
+SinOsc superclass name = #ScUgen. "true"
+SinOsc superclass superclass name = #Object. "true"
 SinOsc subclasses size = 0. "true"
-Ugen subclasses size = 153. "true"
+} allSatisfy: #yourself
+
+ScUgen subclasses size = 153. "true"
 
 SinOsc methodDict. "Squeak"
 SinOsc methodDictionary. "Gnu Smalltalk"
@@ -386,17 +384,18 @@ SinOsc inspect.
 SinOsc class inspect.
 SinOsc new inspect.
 
-True class superclass = True superclass class "=> true"
-Object superclass = nil                       "=> true ; GNU "
-Object class superclass = Class               "=> true ; GNU"
+True class superclass = True superclass class. "=> true"
+Object superclass = nil.                       "=> true ; GNU "
+Object class superclass = Class.               "=> true ; GNU"
+
 Object superclass = ProtoObject               "=> true ; Squeak"
 ProtoObject class superclass = Class          "=> true ; Squeak"
 
-$c class = Character                          "=> true"
+$c class = Character.                          "=> true"
 
-1 perform: #class withArguments: #() "=> SmallInteger"
-1 perform: #class withArguments: #() inSuperclass: SmallInteger "=> SmallInteger"
-1 perform: #class withArguments: #() inSuperclass: Integer "=> SmallInteger"
+(1 perform: #class withArguments: #()) = SmallInteger.
+(1 perform: #class withArguments: #() inSuperclass: SmallInteger) = SmallInteger
+(1 perform: #class withArguments: #() inSuperclass: Integer) = SmallInteger.
 
 "Time"
 
@@ -556,35 +555,39 @@ Smalltalk aboutThisSystem. "System Reporter"
 
 "Math"
 
-69 midiCps = 440. "=> true"
-440 cpsMidi = 69 "=> true"
--32 dbAmp = 0.025118864315095784 "=> true"
--32 dbAmp ampDb rounded = -32 "=> true"
-0 raisedTo: 1 "=> 0"
-1 raisedTo: 0 "=> 1"
-0 raisedTo: 0 "=> 1 (gst = error)"
-0.0 raisedTo: 1.0 "=> 0.0"
-1.0 raisedTo: 0.0 "=> 1.0"
-0.0 raisedTo: 0.0 "=> 1.0"
-1 / 0 "=> error"
-1.0 / 0.0 "=> Infinity"
-0.0 / 0.0 "=> NaN"
-Float pi "=> 3.141592653589793"
-Float pi * 2 "=> 6.283185307179586"
-[:x | x * x] value: Float pi * 2 "=> 39.47841760435743"
-Float infinity "=> Inf"
--1 raisedTo: (1 / 2). "=> ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
--1 raisedTo: (1 / 3). "=> -1 (Squeak)"
--1 raisedTo: 0.5. "=> ArithmeticError: Negative can't be raised to float powers."
-(0.5 linExpFrom: 1 to: 2) = 1.414213562373095
-(0.5 linExpFrom: 1 to: 2) = 1.414213562373095
+{
+69 midiCps = 440.
+440 cpsMidi = 69.
+-32 dbAmp = 0.025118864315095784.
+-32 dbAmp ampDb rounded = -32.
+(0 raisedTo: 1) = 0.
+(1 raisedTo: 0) = 1.
+(0 raisedTo: 0) = 1. "gst = error"
+(0.0 raisedTo: 1.0) = 0.0.
+(1.0 raisedTo: 0.0) = 1.0.
+(0.0 raisedTo: 0.0) = 1.0.
+(1.0 / 0.0) = Float infinity.
+(0.0 / 0.0) isNaN.
+Float pi = 3.141592653589793.
+Float pi * 2 = 6.283185307179586.
+([ :x | x * x ] value: Float pi * 2) = 39.47841760435743.
+Float infinity printString = 'Infinity'.
+(-1 raisedTo: (1 / 2)) isNaN. "ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
+(-1 raisedTo: (1 / 3)) isNaN. "=> -1 (Squeak)"
+(-1 raisedTo: 0.5) isNaN. "=> ArithmeticError: Negative can't be raised to float powers."
+(0.5 linExpFrom: 1 to: 2) = 1.414213562373095.
+(0.5 linExpFrom: 1 to: 2) = 1.414213562373095.
+13 \\ 12 = 1. "13 modulo 12"
+13 \\ 12.5 = 0.5. "13 modulo 12.5"
+13 % 12 = 1.
+13 % 12.5 = 0.5.
+((SinOsc freq: 440 phase: 0 mul: 13) % 12) isUgen.
+(13 % (SinOsc freq: 440 phase: 0 mul: 12)) isUgen.
+} allSatisfy: #yourself
+
 (0 to: 10) collect: [ :n | (n / 10) linExpFrom: 1 to: 2 ] "=> 10 point equally spaced points on exponential curve from 1 to 2"
-13 \\ 12 = 1 "13 modulo 12"
-13 \\ 12.5 = 0.5 "13 modulo 12.5"
-13 % 12 = 1
-13 % 12.5 = 0.5
-(SinOsc freq: 440 phase: 0 mul: 13) % 12
-13 % (SinOsc freq: 440 phase: 0 mul: 12)
+
+1 / 0 "=> error"
 
 "BinaryOpUgen"
 
@@ -685,6 +688,7 @@ Sc3 playHelpGraphFile: 'tw-tw-02.st' "<= multiple graphs"
 Sc3 reset.
 
 "Stc"
+
 Sc3 stcToSt: 'p.q(r)'.
 Sc3 stcFileToSt: (Sc3 stsc3HelpGraphFile: 'f0-tw-0456384156159574016.stc').
 Sc3 playHelpGraphFile: 'f0-tw-0456384156159574016.stc'.
@@ -773,6 +777,20 @@ TestRunner open "squeak"
 (FortranNumberParser parse: '1e-1') = 1e-1.
 (FortranNumberParser parse: '-1e-1') = -1e-1.
 } allSatisfy: #yourself
+
+"Set"
+
+s := Set new
+c := Color black
+s add: c
+(s scanFor: c) notNil.
+(s array at: (s scanFor: c)) = c.
+(s like: c) = c.
+s includes: c.
+
+"LocalBuf"
+
+#(0 2 4 5 7 9 10 12) asLocalBuf draw
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

@@ -12,11 +12,11 @@ FBSineC(LFNoise2(1) * 1000 + 1000, LFNoise2(1) * 16 + 17, 1, 1.005, 0.7, 0.1, 0.
 
 // FBSineC ; randomly modulate params
 FBSineC(
-    LFNoise2([1, 2]) * 1000 + 10000,
-    LFNoise2([1, 2]) * 32 + 33,
-    LFNoise2([1, 2]) * 0.5,
-    LFNoise2([1, 2]) * 0.05 + 1.05,
-    LFNoise2([1, 2]) * 0.3 + 0.3,
-    0.1,
-    0.1
+	LFNoise2([1, 2]) * 1000 + 10000,
+	LFNoise2([1, 2]) * 32 + 33,
+	LFNoise2([1, 2]) * 0.5,
+	LFNoise2([1, 2]) * 0.05 + 1.05,
+	LFNoise2([1, 2]) * 0.3 + 0.3,
+	0.1,
+	0.1
 ) * 0.05

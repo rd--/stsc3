@@ -1,18 +1,18 @@
 String = Object (
 
 oscTypeTag = (
-    ^$s
+	^$s
 )
 
 printOscOn: aStream = (
-    aStream << self << ' '
+	aStream << self << ' '
 )
 
 putOscOn: aStream = (
-    self isEmpty ifTrue: [ ^self error: 'String>>putOscOn: isEmpty' ].
-    aStream nextPutAll: self asByteArray.
-    aStream nextPut: 0. "i.e. Character null asInteger"
-    (self size + 1) oscAlign timesRepeat: [ aStream nextPut: 0 ]
+	self isEmpty ifTrue: [ ^self error: 'String>>putOscOn: isEmpty' ].
+	aStream nextPutAll: self asByteArray.
+	aStream nextPut: 0. "i.e. Character null asInteger"
+	(self size + 1) oscAlign timesRepeat: [ aStream nextPut: 0 ]
 )
 
 )

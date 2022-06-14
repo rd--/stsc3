@@ -1,17 +1,17 @@
 // oscillator cluster (rd)
 {
-    var np = 12;
-    var tr = Dust(0.075);
-    var prt = {
-        arg d, a;
-        {
-            arg cf;
-            var rln = { arg r, a, b; TLine(a + TRand(0, r, tr), b, d, tr) };
-            var f = [cf, TRand(cf, cf + 2, tr)] + (SinOsc(rln.value(1, 5, 0.01), 0) * rln.value(10, 20, 0));
-            SinOsc(f, 0) * Decay2(tr, TRand(0.1, 0.2, tr), d) * a
-        }
-    };
-    var fp = { TRand(220, 660, tr) }.dup(np);
-    fp.collect(prt.value(TRand(4, 7, tr), TRand(0.01, 0.05, tr))).sum
+	var np = 12;
+	var tr = Dust(0.075);
+	var prt = {
+		arg d, a;
+		{
+			arg cf;
+			var rln = { arg r, a, b; TLine(a + TRand(0, r, tr), b, d, tr) };
+			var f = [cf, TRand(cf, cf + 2, tr)] + (SinOsc(rln.value(1, 5, 0.01), 0) * rln.value(10, 20, 0));
+			SinOsc(f, 0) * Decay2(tr, TRand(0.1, 0.2, tr), d) * a
+		}
+	};
+	var fp = { TRand(220, 660, tr) }.dup(np);
+	fp.collect(prt.value(TRand(4, 7, tr), TRand(0.01, 0.05, tr))).sum
 }.dup(5).sum
 

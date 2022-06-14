@@ -1,0 +1,33 @@
+Rate = Object (
+
+----------------------------
+
+ar = (
+	"Audio rate"
+	^2
+)
+
+dr = (
+	"Demand rate"
+	^3
+)
+
+ir = (
+	"Initialization (scalar) rate"
+	^0
+)
+
+kr = (
+	"Control rate"
+	^1
+)
+
+symbol: anInteger = (
+	^#(#ir #kr #ar #dr) at: anInteger + 1 ifAbsent: [ self error: 'Rate class>>symbol: invalid rate integer' ]
+)
+
+comment = (
+	^'Ugen processing rate'
+)
+
+)

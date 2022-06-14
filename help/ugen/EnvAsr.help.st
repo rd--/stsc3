@@ -7,8 +7,8 @@ SinOsc freq: 440 phase: 0 mul: (e asEnvGen: g withDoneAction: 2) kr
 "Asr ; event control"
 | f |
 f := [ :e |
-  env := Asr gate: e w attackTime: 0.5 * e y releaseTime: e y * 4 curves: -4.
-  SinOsc freq: e p unitCps phase: 0 mul: env * 0.1
+	env := Asr gate: e w attackTime: 0.5 * e y releaseTime: e y * 4 curves: -4.
+	SinOsc freq: e p unitCps phase: 0 mul: env * 0.1
 ].
 (Voicer numVoices: 16 voiceFunc: f) splay2
 

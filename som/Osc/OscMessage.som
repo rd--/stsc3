@@ -3,27 +3,27 @@ OscMessage = Object (
 | address arguments |
 
 address = (
-    ^address
+	^address
 )
 
 address: aString = (
-     address := aString
+	 address := aString
 )
 
 arguments = (
-    ^arguments
+	^arguments
 )
 
 arguments: anArray = (
-    arguments := anArray
+	arguments := anArray
 )
 
 descriptor = (
-    ^',' , (String newFrom: (arguments collect: [ :item | item oscTypeTag ]))
+	^',' , (String newFrom: (arguments collect: [ :item | item oscTypeTag ]))
 )
 
 encodeOsc = (
-    ^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]
+	^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]
 )
 
 oscString = (
@@ -31,36 +31,38 @@ oscString = (
 )
 
 printOscOn: aStream = (
-    address printOscOn: aStream.
-    self descriptor printOscOn: aStream.
-    arguments do: [ :item | item printOscOn: aStream ]
+	"This message must be implemented for each type that can be placed into an OscMessage."
+	address printOscOn: aStream.
+	self descriptor printOscOn: aStream.
+	arguments do: [ :item | item printOscOn: aStream ]
 )
 
 putOscOn: aStream = (
-    address putOscOn: aStream.
-    self descriptor putOscOn: aStream.
-    arguments do: [ :item | item putOscOn: aStream ]
+	"This message must be implemented for each type that can be placed into an OscMessage."
+	address putOscOn: aStream.
+	self descriptor putOscOn: aStream.
+	arguments do: [ :item | item putOscOn: aStream ]
 )
 
 sendToHost: hostAddress atPort: portNumber = (
-    | socket |
-    socket := Socket newUDP.
-    socket sendUDPData: self encodeOsc toHost: hostAddress port: portNumber.
-    socket close
+	| socket |
+	socket := Socket newUDP.
+	socket sendUDPData: self encodeOsc toHost: hostAddress port: portNumber.
+	socket close
 )
 
 ----------------------------
 
 at: address with: arguments = (
-    ^self new address: address; arguments: arguments; yourself
+	^self new address: address; arguments: arguments; yourself
 )
 
 primaryFactoryMethod = (
-    ^#at:with:
+	^#at:with:
 )
 
 comment = (
-	^'No comment'
+	^'Open Sound Control Message'
 )
 
 )

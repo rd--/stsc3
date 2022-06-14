@@ -1,12 +1,12 @@
 // <https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters)
 var s = {
-    arg k;
-    var f = {
-        arg i;
-        SinOsc(i, SinOsc((i + k) ** i, 0)
-        /
-        (Decay(Impulse((0.5 ** i) / k, 0), [i, i + 1]) * k))
-    };
-    1.to(6).collect(f).sum
+	arg k;
+	var f = {
+		arg i;
+		SinOsc(i, SinOsc((i + k) ** i, 0)
+		/
+		(Decay(Impulse((0.5 ** i) / k, 0), [i, i + 1]) * k))
+	};
+	1.to(6).collect(f).sum
 };
 (GVerb(0.to(15).collect(s).sum, 1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 512).transpose.sum

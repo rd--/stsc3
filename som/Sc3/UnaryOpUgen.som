@@ -1,0 +1,13 @@
+UnaryOpUgen = ScUgen (
+
+----------------------------
+
+specialIndex: specialIndex a: a = (
+	^UgenBuilder name: 'UnaryOpUGen' numChan: 1 rateSpec: #(1) specialIndex: specialIndex inputArray: {a}
+)
+
+comment = (
+	^'Unary operator unit generator'
+)
+
+)

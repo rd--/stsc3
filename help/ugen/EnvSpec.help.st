@@ -16,14 +16,14 @@ Saw freq: freqEnv asEnvGen mul: ampEnv asEnvGen
 
 "EnvSpec"
 Saw
-  freq: (EnvSpec levels: #(1000 20) times: #(0.5)) asEnvGen kr
-  mul: (EnvSpec levels: #(0.1 0) times: #(2)) asEnvGen kr
+	freq: (EnvSpec levels: #(1000 20) times: #(0.5)) asEnvGen kr
+	mul: (EnvSpec levels: #(0.1 0) times: #(2)) asEnvGen kr
 
 "EnvSpec ; FM"
 SinOsc
-  freq: (SinOsc freq: 10 phase: 0) * 10 + 440
-  phase: 0
-  mul: ((EnvSpec levels: #(0.5 0) times: #(1)) asEnvGen: 1 withDoneAction: 2) kr
+	freq: (SinOsc freq: 10 phase: 0) * 10 + 440
+	phase: 0
+	mul: ((EnvSpec levels: #(0.5 0) times: #(1)) asEnvGen: 1 withDoneAction: 2) kr
 
 "EnvSpec ; as triangle wave oscillator"
 | f e |

@@ -1,19 +1,20 @@
 Integer = Object (
 
 oscAlign = (
-    ^((self + 3) bitAnd: 3 bitInvert) - self
+	"Osc data is aligned to 4-byte boundaries."
+	^((self + 3) bitAnd: 3 bitInvert) - self
 )
 
 oscTypeTag = (
-    ^$i
+	^$i
 )
 
 printOscOn: aStream = (
-    aStream << self asString << ' '
+	aStream << self asString << ' '
 )
 
 putOscOn: aStream = (
-    aStream int32: self
+	aStream int32: self
 )
 
 )

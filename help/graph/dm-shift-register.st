@@ -1,12 +1,12 @@
 "https://sccode.org/1-590 (dm) ; this prints infinity somewhere (divide by zero)"
 | shift_register amp pulse rate trans trig octave note chord cf mf sig cmp rvb |
 shift_register := [ :length :tr :in |
-  | buf count rd wr |
-  buf := BufAlloc numChannels: 1 numFrames: length.
-  count := PulseCount trig: tr reset: 0.
-  rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse.
-  wr := DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1).
-  rd mrg: wr
+	| buf count rd wr |
+	buf := BufAlloc numChannels: 1 numFrames: length.
+	count := PulseCount trig: tr reset: 0.
+	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: length iota + count loop: 1) reverse.
+	wr := DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1).
+	rd mrg: wr
 ].
 amp := 0.1.
 pulse := Impulse freq: 1 / 16 phase: 0.
@@ -20,6 +20,5 @@ cf := Vibrato freq: chord rate: 6 depth: 0.02 delay: 0 onset: 0 rateVariation: 0
 mf := chord * (LinLin in: (LFPulse freq: 1 / 8 iphase: 0 width: 0.5) srclo: -1 srchi: 1 dstlo: 1.01 dsthi: 2.01).
 sig := PMOsc carfreq: cf modfreq: mf pmindex: ((EnvSpec levels: #(3 3 0) times: #(0 0.2) curves: #(-4 -4)) asEnvGen: trig) modphase: 0.
 cmp := (sig * (AmpCompA freq: chord root: 0 minAmp: 0.32 rootAmp: 1) * amp) sum.
-rvb := GVerb in: (BPF in: cmp freq: 90 midiCps rq: 1)
-             roomsize: 50 revtime: 8 damping: 0.5 inputbw: 0.5 spread: 15 drylevel: 0 earlyreflevel: 0.7 taillevel: 0.5 maxroomsize: 300.
+rvb := GVerb in: (BPF in: cmp freq: 90 midiCps rq: 1) roomsize: 50 revtime: 8 damping: 0.5 inputbw: 0.5 spread: 15 drylevel: 0 earlyreflevel: 0.7 taillevel: 0.5 maxroomsize: 300.
 XFade2 inA: {cmp. cmp} inB: rvb pan: 0.2 level: 1

@@ -1,39 +1,39 @@
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html
 var n = 11;
 var f = {
-    var freq = Rand(50, 560.3);
-    var numcps = Rand(2, 20);
-    var knum = MulAdd(SinOsc(ExpRand(0.02, 0.2),  0), numcps / 2,  numcps / 2);
-    var osc = Gendy1(Rand(0, 6), Rand(0, 6), Rand(0, 1), Rand(0, 1), freq , freq,  Rand(0, 1),  Rand(0, 1),  numcps,  knum.kr);
-    Pan2(osc,  Rand(-1, 1), 0.5 / n.sqrt)
+	var freq = Rand(50, 560.3);
+	var numcps = Rand(2, 20);
+	var knum = MulAdd(SinOsc(ExpRand(0.02, 0.2),  0), numcps / 2,  numcps / 2);
+	var osc = Gendy1(Rand(0, 6), Rand(0, 6), Rand(0, 1), Rand(0, 1), freq , freq,  Rand(0, 1),  Rand(0, 1),  numcps,  knum.kr);
+	Pan2(osc,  Rand(-1, 1), 0.5 / n.sqrt)
 };
 Resonz(f.dup(n).sum, MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; sawtooth
 var n = 9;
 var f = {
-    arg i;
-    var mult = (-1 ** i) * (0.5 / (i + 1));
-    SinOsc(440 * (i + 1), 0) * mult
+	arg i;
+	var mult = (-1 ** i) * (0.5 / (i + 1));
+	SinOsc(440 * (i + 1), 0) * mult
 };
 Pan2(0.to(n).collect(f).sum, 0, 1 / n)
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; square
 var n = 9;
 var f = {
-    arg i;
-    var harmonicnumber = 2 * i + 1;
-    SinOsc(440 * harmonicnumber, 0) / harmonicnumber
+	arg i;
+	var harmonicnumber = 2 * i + 1;
+	SinOsc(440 * harmonicnumber, 0) / harmonicnumber
 };
 Pan2(0.to(n).collect(f).sum, 0, 1 / n)
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; triangle
 var n = 9;
 var f = {
-    arg i;
-    var harmonicnumber = 2 * i + 1;
-    var mult = (-1 ** (harmonicnumber - 1 / 2)) * (1 / (harmonicnumber * harmonicnumber));
-    SinOsc(440 * harmonicnumber, 0) * mult
+	arg i;
+	var harmonicnumber = 2 * i + 1;
+	var mult = (-1 ** (harmonicnumber - 1 / 2)) * (1 / (harmonicnumber * harmonicnumber));
+	SinOsc(440 * harmonicnumber, 0) * mult
 };
 Pan2(0.to(n).collect(f).sum, 0, 1 / n)
 
@@ -82,7 +82,7 @@ var modfreqs1 = { Rand(1, 5) }.dup(numpartials);
 var modfreqs2 = { Rand(0.1, 3) }.dup(numpartials);
 var decaytimes = 1.to(numpartials).collect({ arg i; Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials)))) });
 var partial = {
-    arg i;
+	arg i;
 	var freq = spectrum.at(i) + (SinOsc(modfreqs1.at(i), 0) * 0.005) * 500;
 	var amp = 0.1 * Line(1, 0, decaytimes.at(i), 0) * (SinOsc(modfreqs2.at(i), 0) * 0.1 + 0.9 * amplitudes.at(i));
 	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
@@ -119,7 +119,7 @@ Pan2(sound * env, 0, 1)
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 var t = MouseY(0, 1, 0, 0.2) * #[0, 128, 256, 128] / SampleRate();
-var e = EnvSpec(#[0, 0, 1, -1, 0], t.asMce, #[\lin], nil, nil, 0);
+var e = EnvSpec(#[0, 0, 1, -1, 0], t, #[\lin], nil, nil, 0);
 EnvGen(Impulse(MouseX(10, 300, 1, 0.2), 0), 1, 0, 1, 0, e.asArray) * 0.2
 
 // nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; portamento/glide

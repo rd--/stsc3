@@ -112,6 +112,7 @@ Array isVariable = true.                                     "array is indexable
 (#(1 2 3 4 5) any: 3) = #(1 2 3).                            "any three are first three"
 ((Array new: 2) fillFrom: #(3 4) with: [ :n | n * n ]) = #(9 16).
 ((Array new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4).
+#() == #(). "Empty array is canonical (identical to itself)"
 } allSatisfy: #yourself
 
 c := {'string'. #symbol. 42}.
@@ -213,7 +214,6 @@ Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at se
 [ 42 ] ~= 42.
 } allSatisfy: #yourself
 
-
 b := [ :x | x * 42 ].
 {
 b = b copy.
@@ -272,6 +272,7 @@ false asBit = 0.
 true asBit = 1.
 true asInteger > false asInteger.
 } allSatisfy: #yourself
+
 'ByteArray'
 
 {
@@ -289,6 +290,7 @@ true asInteger > false asInteger.
 (ByteArray readHexFrom: '737472696e67') asString = 'string'.
 ((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'.
 ((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64).
+ByteArray empty == ByteArray empty.
 } allSatisfy: #yourself
 
 'Cascade messages'
