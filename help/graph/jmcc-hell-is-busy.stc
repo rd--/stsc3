@@ -1,13 +1,13 @@
 // hell is busy (jmcc) #1 ; graph rewrite
 OverlapTexture({
-    arg tr;
-    var e = LFPulse(TRand(1, 11, tr), 0, TRand(0, 0.7, tr)) * 0.04;
-    Pan2(SinOsc(TRand(400, 2400, tr), 0), TRand(-1, 1, tr), e)
+	arg tr;
+	var e = LFPulse(TRand(1, 11, tr), 0, TRand(0, 0.7, tr)) * 0.04;
+	Pan2(SinOsc(TRand(400, 2400, tr), 0), TRand(-1, 1, tr), e)
 }, 4, 4, 8)
 
 //---- hell is busy (jmcc) #1 ; graph rewrite ; filtermethods
 OverlapTexture({
-    arg tr;
-    var e = LFPulse(tr.tRand(1, 11), 0, tr.tRand(0, 0.7)) * 0.04;
-    SinOsc(tr.tRand(400, 2400), 0).pan2(tr.tRand(-1, 1), e)
+	arg tr;
+	var e = LFPulse(tr.tRand(1, 11), 0, tr.tRand(0, 0.7)) * 0.04;
+	SinOsc(tr.tRand(400, 2400), 0).pan2(tr.tRand(-1, 1), e)
 }, 4, 4, 8)

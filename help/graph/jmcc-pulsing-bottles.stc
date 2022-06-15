@@ -6,4 +6,3 @@ var f = {
 	Pan2(Resonz(WhiteNoise(), 400 + LinRand(0, 7000, 0), 0.01), l, a)
 };
 f.dup(n).sum
-

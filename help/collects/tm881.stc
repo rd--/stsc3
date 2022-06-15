@@ -3,10 +3,10 @@
 
 // https://scsynth.org/t/5296 ; tm881
 {
-    var f = { Rand(33, 2000) }.dup(2) * TRand(0.125, 4, Impulse(1 / 10, 0));
-    var t = Impulse(1 / 2 * TRand(0.125, 4, Impulse(1 / 5, 0)), 0);
-    var a = EnvPerc(0.01, 1, 1, -4).asEnvGen(t);
-    FreeVerb(Saw(f) * a, 0.33, 0.5, 0.5)
+	var f = { Rand(33, 2000) }.dup(2) * TRand(0.125, 4, Impulse(1 / 10, 0));
+	var t = Impulse(1 / 2 * TRand(0.125, 4, Impulse(1 / 5, 0)), 0);
+	var a = EnvPerc(0.01, 1, 1, -4).asEnvGen(t);
+	FreeVerb(Saw(f) * a, 0.33, 0.5, 0.5)
 }.dup(32).sum * 0.1
 
 // https://scsynth.org/t/5296 ; tm881

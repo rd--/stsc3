@@ -1,0 +1,19 @@
+ByteArray = ByteArray (
+
+oscTypeTag = (
+	^$b
+)
+
+printOscOn: aStream = (
+	OscMessage errorWhenEmpty: self.
+	self do: [ :item | aStream << item printHexByte ]
+)
+
+putOscOn: aStream = (
+	OscMessage errorWhenEmpty: self.
+	self size putOscOn: aStream.
+	aStream nextPutAll: self.
+	self size oscAlign timesRepeat: [ aStream nextPut: 0 ]
+)
+
+)

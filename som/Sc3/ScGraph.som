@@ -8,6 +8,10 @@ constantIndex: aNumber = (
 	^answer - 1
 )
 
+encodeSyndef = (
+	^ByteArray streamContents: [ :aStream | self encodeSyndefOn: aStream ]
+)
+
 encodeSyndefOn: aStream = (
 	aStream int32: self scgf; int32: 2; int16: 1; pascalString: name; int32: constantSeq size.
 	constantSeq do: [ :item | aStream float32: item asFloat ].

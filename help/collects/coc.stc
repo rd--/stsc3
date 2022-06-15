@@ -23,49 +23,49 @@ var f = { arg c; Pan2(SinOsc(LFSaw((c * 0.2 + 1)/3, 0) * 500 + 700, 0), LFNoise0
 
 // use of dust with rising sounds ; https://github.com/cianoc/supercollider_fragments
 var f = {
-    var s = RingzBank(Dust(1 / 3) * 0.1, { 1000.exprand(10000) }.dup(3), #[1], { 1.0.rand(4.0) }.dup(15));
-    Pan2(s, LFTri(3.0.rand(10.0), 0), 0.1)
+	var s = RingzBank(Dust(1 / 3) * 0.1, { 1000.exprand(10000) }.dup(3), #[1], { 1.0.rand(4.0) }.dup(15));
+	Pan2(s, LFTri(3.0.rand(10.0), 0), 0.1)
 };
 f.dup(20).sum
 
 // use of dust with rising sounds ; https://github.com/cianoc/supercollider_fragments ; Rand
 var f = {
-    var s = RingzBank(Dust(1 / 3) * 0.1, { ExpRand(1000, 10000) }.dup(3), #[1], { Rand(1, 4) }.dup(15));
-    Pan2(s, LFTri(Rand(3, 10), 0), 0.1)
+	var s = RingzBank(Dust(1 / 3) * 0.1, { ExpRand(1000, 10000) }.dup(3), #[1], { Rand(1, 4) }.dup(15));
+	Pan2(s, LFTri(Rand(3, 10), 0), 0.1)
 };
 f.dup(20).sum
 
 // pretty ; nice, but inessential ; https://github.com/cianoc/supercollider_fragments
 var f = {
-    arg i;
-    var freq = MouseX(0.1.rand(5.0), 3.0.rand(20.0), 0, 0.2);
-    var amp = LFNoise0(MouseX(1.0.rand(6.0), 6.0.rand(1.0), 0, 0.2)).max(0);
-    var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + 200.0.rand(5000.0), 0) * amp;
-    Pan2(osc, 1.0.rand2, 0.03) };
+	arg i;
+	var freq = MouseX(0.1.rand(5.0), 3.0.rand(20.0), 0, 0.2);
+	var amp = LFNoise0(MouseX(1.0.rand(6.0), 6.0.rand(1.0), 0, 0.2)).max(0);
+	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + 200.0.rand(5000.0), 0) * amp;
+	Pan2(osc, 1.0.rand2, 0.03) };
 1.to(12).collect(f).sum
 
 // pretty ; nice, but inessential ; https://github.com/cianoc/supercollider_fragments ; Rand
 var f = {
-    arg i;
-    var freq = MouseX(Rand(0.1, 5), Rand(3, 20), 0, 0.2);
-    var amp = LFNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).max(0);
-    var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + Rand(200, 5000), 0) * amp;
-    Pan2(osc, Rand(-1, 1), 0.03) };
+	arg i;
+	var freq = MouseX(Rand(0.1, 5), Rand(3, 20), 0, 0.2);
+	var amp = LFNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).max(0);
+	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + Rand(200, 5000), 0) * amp;
+	Pan2(osc, Rand(-1, 1), 0.03) };
 1.to(12).collect(f).sum
 
 // random impulses ; https://github.com/cianoc/supercollider_fragments
 var f = {
-    var freq = 100.exprand(3000);
-    var amp = Decay2(Dust(1 / 5), 0.1, (freq ** -0.7) * 100);
-    Pan2(SinOsc(freq * (LFNoise1(1 / 6) * 0.4 + 1), 0) * amp, LFNoise1(1 / 8), 1) };
+	var freq = 100.exprand(3000);
+	var amp = Decay2(Dust(1 / 5), 0.1, (freq ** -0.7) * 100);
+	Pan2(SinOsc(freq * (LFNoise1(1 / 6) * 0.4 + 1), 0) * amp, LFNoise1(1 / 8), 1) };
 f.dup(15).sum * 0.1
 
 // random impulses ; https://github.com/cianoc/supercollider_fragments ; Decay2
 var f = {
-    var freq = ExpRand(100, 3000);
-    var t = Dust(1 / 5);
-    var amp = Decay2(t, 0.01, freq ** -0.7 * 100);
-    Pan2(SinOsc(freq * (LFNoise1(1 / 6) * 0.4 + 1), 0) * amp, LFNoise1(1 / 8), 1) };
+	var freq = ExpRand(100, 3000);
+	var t = Dust(1 / 5);
+	var amp = Decay2(t, 0.01, freq ** -0.7 * 100);
+	Pan2(SinOsc(freq * (LFNoise1(1 / 6) * 0.4 + 1), 0) * amp, LFNoise1(1 / 8), 1) };
 f.dup(15).sum * 0.1
 
 // angry birds ; https://github.com/cianoc/supercollider_fragments
@@ -84,25 +84,27 @@ SinOsc(lfo, 0) * 0.1
 
 // synched impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
-[SinOsc(100, 0) * Decay2(Impulse(3 / sync, 0), 0.01, 1),
- SinOsc(300, 0) * Decay2(Impulse(7 / sync, 0), 0.01, 1),
- SinOsc(500, 0) * Decay2(Impulse(5 / sync, 0), 0.01, 1),
- SinOsc(700, 0) * Decay2(Impulse(2 / sync, 0), 0.01, 1),
- SinOsc(900, 0) * Decay2(Impulse(9 / sync, 0), 0.01, 1),
- SinOsc(1100, 0) * Decay2(Impulse(6 / sync, 0), 0.01, 1),
- SinOsc(1300, 0) * Decay2(Impulse(1 / sync, 0), 0.01, 1)].sum * 0.1
+[
+	SinOsc(100, 0) * Decay2(Impulse(3 / sync, 0), 0.01, 1),
+	SinOsc(300, 0) * Decay2(Impulse(7 / sync, 0), 0.01, 1),
+	SinOsc(500, 0) * Decay2(Impulse(5 / sync, 0), 0.01, 1),
+	SinOsc(700, 0) * Decay2(Impulse(2 / sync, 0), 0.01, 1),
+	SinOsc(900, 0) * Decay2(Impulse(9 / sync, 0), 0.01, 1),
+	SinOsc(1100, 0) * Decay2(Impulse(6 / sync, 0), 0.01, 1),
+	SinOsc(1300, 0) * Decay2(Impulse(1 / sync, 0), 0.01, 1)
+].sum * 0.1
 
 // synched impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
 var f = { arg frq, num; SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1) };
-[f.value(100, 3), f.value(300, 7), f.value(500, 5), f.value(700, 2), f.value(900, 9), f.value(1100, 6), f.value(1300, 1)].splay2 * 0.1
+[f.value(100, 3), f.value(300, 7), f.value(500, 5), f.value(700, 2), f.value(900, 9), f.value(1100, 6), f.value(1300, 1)].splay2 * 0.5
 
 // synchronised impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
 var freq = [1, 3, 5, 7, 9, 11, 13];
 var numer = [3, 7, 5, 2, 9, 6, 1];
 var f = { arg i; SinOsc(freq.nth(i) * 100, 0) * Decay2(Impulse(numer.nth(i) / sync, 0), 0.01, 1) };
-1.to(freq.size).collect(f).splay2 * 0.1
+1.to(freq.size).collect(f).splay2 * 0.5
 
 // nice buzzing effect
 var speed = 14;
@@ -138,15 +140,15 @@ var amp = #[0.25, 0.11, 0.12, 0.04, 0.1, 0.15, 0.05, 0.01, 0.03, 0.02, 0.12];
 var k = 12;
 var tr = Dust(3 / 7);
 var f = {
-    SinOsc(Rand(50, 4000), 0) * Decay2(tr, 0.01, Rand(0.2, 3)) * Rand(0, 1)
+	SinOsc(Rand(50, 4000), 0) * Decay2(tr, 0.01, Rand(0.2, 3)) * Rand(0, 1)
 };
 f.dup(k).splay2 / k
 
 // shimmering harmonics ; https://github.com/cianoc/supercollider_fragments
 var harmonics = 16;
 var f = {
-    var amp = SinOsc(1 / Rand(3, 6), 0) * Rand(0.1, 0.9);
-    Pan2(SinOsc(ExpRand(100, 2000), 0), Rand(-1, 1), amp)
+	var amp = SinOsc(1 / Rand(3, 6), 0) * Rand(0.1, 0.9);
+	Pan2(SinOsc(ExpRand(100, 2000), 0), Rand(-1, 1), amp)
 };
 f.dup(harmonics).sum / (2 * harmonics)
 
@@ -154,10 +156,10 @@ f.dup(harmonics).sum / (2 * harmonics)
 var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
 var f = {
-    arg partial;
-    var env = Asr(tr, 0, 5, #[0]) / partial;
-    var amp = LFNoise1(Rand(5, 12)).max(0);
-    Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), env * amp)
+	arg partial;
+	var env = Asr(tr, 0, 5, #[0]) / partial;
+	var amp = LFNoise1(Rand(5, 12)).max(0);
+	Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), env * amp)
 };
 1.to(16).collect(f).sum * 0.5
 
@@ -165,8 +167,8 @@ var f = {
 var speeds = #[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] / 20;
 var f0 = (MouseX(0, 36, 0, 0.2).roundTo(7) + 24).midiCps;
 var f = {
-    arg partial;
-    Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), SinOsc(speeds.choose, 0).max(0))
+	arg partial;
+	Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), SinOsc(speeds.choose, 0).max(0))
 };
 var harmonics = 16;
 1.to(harmonics).collect(f).sum / harmonics * 0.5
@@ -185,20 +187,20 @@ RLPF(PinkNoise() * 0.3, { LFNoise0(12) }.dup(2) * 500 + 500, 0.2)
 // this one floats in and out ; https://github.com/cianoc/supercollider_fragments
 var totalPartials = 3;
 var f = {
-    var base = ExpRand(50, 100);
-    var freq = { Rand(1, 24) * base * Rand(1, 1.1) }.dup(totalPartials);
-    var amp = { Rand(0.1, 0.5) }.dup(10);
-    var res = RingzBank(GrayNoise() * Rand(0.03, 0.1), freq, amp, #[1]);
-    Pan2(res, LFNoise1(1), (SinOsc(10 / Rand(1, 5), 0) * 0.005).max(0));
+	var base = ExpRand(50, 100);
+	var freq = { Rand(1, 24) * base * Rand(1, 1.1) }.dup(totalPartials);
+	var amp = { Rand(0.1, 0.5) }.dup(10);
+	var res = RingzBank(GrayNoise() * Rand(0.03, 0.1), freq, amp, #[1]);
+	Pan2(res, LFNoise1(1), (SinOsc(10 / Rand(1, 5), 0) * 0.005).max(0));
 };
 f.dup(8).sum * LFNoise1(1 / 10).abs
 
 // phase modulation, all three ; https://github.com/cianoc/supercollider_fragments
 {
-    var car = LFNoise0(9) * 300 + 700;
-    var mod = LFNoise0(9) * 500 + 700;
-    var ix = LFNoise0(9) * 6 + 12;
-    PMOsc(car, mod, ix, 0) * 0.15
+	var car = LFNoise0(9) * 300 + 700;
+	var mod = LFNoise0(9) * 500 + 700;
+	var ix = LFNoise0(9) * 6 + 12;
+	PMOsc(car, mod, ix, 0) * 0.15
 }.dup
 
 // ping pong ; https://github.com/cianoc/supercollider_fragments
@@ -226,13 +228,13 @@ SinOsc(Latch(LFSaw(Line(0.1, 20, 60, 0), 0) * 500 + 600, Impulse(10, 0)), 0) * 0
 
 // risefallpad ; https://github.com/cianoc/supercollider_fragments
 var vc = {
-    arg e;
-    var freq = e.p.unitCps;
-    var gate = e.w;
-    var osc1 = Saw(freq + LFTri(0.3, 0));
-    var osc2 = Saw((freq.cpsMidi - 0.03).midiCps);
-    var filterEnv = Adsr(gate, 1, 1.4, 0.05, 0.2, 0);
-    var ampEnv = Adsr(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
-    Pan2(RLPF(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.o * 2 - 1, ampEnv)
+	arg e;
+	var freq = e.p.unitCps;
+	var gate = e.w;
+	var osc1 = Saw(freq + LFTri(0.3, 0));
+	var osc2 = Saw((freq.cpsMidi - 0.03).midiCps);
+	var filterEnv = Adsr(gate, 1, 1.4, 0.05, 0.2, 0);
+	var ampEnv = Adsr(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
+	Pan2(RLPF(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.o * 2 - 1, ampEnv)
 };
 Voicer(16, vc).sum

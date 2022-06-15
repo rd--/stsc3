@@ -57,6 +57,11 @@ at: address with: arguments = (
 	^self new address: address; arguments: arguments; yourself
 )
 
+errorWhenEmpty: aCollection = (
+	"Do not allow empty collections."
+	aCollection isEmpty ifTrue: [ aCollection error: 'empty collections are disallowed in Osc messages' ]
+)
+
 primaryFactoryMethod = (
 	^#at:with:
 )

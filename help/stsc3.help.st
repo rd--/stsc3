@@ -742,6 +742,8 @@ m oscString = '/n_set ,isisf -1 freq 440 amp 0.1 '.
 
 m printOscOn: Transcript
 
+(m encodeOsc) sendUdpToHost: '127.0.0.1' port: 57110
+
 m := OscMessage at: '/memset' with: #('addr' (0 1 15 16 255)).
 
 {

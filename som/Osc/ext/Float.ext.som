@@ -1,4 +1,4 @@
-Float = Object (
+Float = Float (
 
 oscTypeTag = (
 	^$f

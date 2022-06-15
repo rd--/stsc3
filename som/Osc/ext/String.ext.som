@@ -1,4 +1,4 @@
-String = Object (
+String = String (
 
 oscTypeTag = (
 	^$s

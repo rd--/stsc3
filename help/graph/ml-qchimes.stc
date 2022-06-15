@@ -14,7 +14,7 @@ var voiceFunc = {
 		64, 72, 80, 85.333, 96, 106.666, 120,
 		128, 144, 160, 170.666, 192, 213.333, 240,
 		256, 288, 320, 341.333
-    ];
+	];
 	var freq = { baseFreq * rat.at(60.rand) }.dup(numPartials);
 	var amp = { 0.1.rand(0.9) }.dup(numPartials);
 	var dcy = { 0.5.rand(9.0) }.dup(numPartials);

@@ -1,4 +1,4 @@
-Integer = Object (
+SmallInteger = SmallInteger (
 
 oscAlign = (
 	"Osc data is aligned to 4-byte boundaries."
@@ -6,6 +6,7 @@ oscAlign = (
 )
 
 oscTypeTag = (
+	"The type tag for 32-bit integers."
 	^$i
 )
 

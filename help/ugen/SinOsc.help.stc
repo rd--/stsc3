@@ -1,11 +1,11 @@
 // SinOsc
 var voiceFunc = {
-    var tr = Dust(1);
-    var freq = TRand(3785, 3800, tr);
-    var amp = SinOsc(TRand(10, 30, tr), 0) * 0.2;
-    var osc = SinOsc(freq, 0) * amp + SinOsc(freq * { TRand(2.91, 3.02, tr) }.dup, 0);
-    var env = Decay2(tr, 0.01, 1);
-    osc * env * 0.4
+	var tr = Dust(1);
+	var freq = TRand(3785, 3800, tr);
+	var amp = SinOsc(TRand(10, 30, tr), 0) * 0.2;
+	var osc = SinOsc(freq, 0) * amp + SinOsc(freq * { TRand(2.91, 3.02, tr) }.dup, 0);
+	var env = Decay2(tr, 0.01, 1);
+	osc * env * 0.4
 };
 voiceFunc.dup(12).splay2
 
@@ -16,16 +16,16 @@ sig * 0.1
 
 // SinOsc ; https://scsynth.org/t/5169/5 (dietcv)
 OverlapTexture({
-    arg tr;
-    var syncEgTop = TRand(8, 20, tr);
-    var syncRatio = 2;
-    var syncDcy = TRand(0.5, 2, tr);
-    var syncEnv = TXLine(syncEgTop / syncRatio, 1, syncDcy, tr);
-    var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
-    var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).midiCps }.dup(5);
-    var in = LFTri(freq, 0);
-    var phase = Sweep(in, freq * syncRatio * syncEnv);
-    var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
-    var sig = synced * in * gainEnv;
-    sig.splay2 * 0.2
+	arg tr;
+	var syncEgTop = TRand(8, 20, tr);
+	var syncRatio = 2;
+	var syncDcy = TRand(0.5, 2, tr);
+	var syncEnv = TXLine(syncEgTop / syncRatio, 1, syncDcy, tr);
+	var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
+	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).midiCps }.dup(5);
+	var in = LFTri(freq, 0);
+	var phase = Sweep(in, freq * syncRatio * syncEnv);
+	var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
+	var sig = synced * in * gainEnv;
+	sig.splay2 * 0.2
 }, 2, 0, 2)

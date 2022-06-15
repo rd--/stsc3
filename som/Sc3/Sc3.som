@@ -33,7 +33,7 @@ nextId = (
 )
 
 play: anObject = (
-	self playUsingBinarySyndef: anObject
+	self playUsingUdpWithTemporaryFile: anObject
 )
 
 playFile: fileName = (
@@ -61,7 +61,26 @@ playUsingTextSyndef: anObject = (
 	'hsc3-scsynth scsyndef play /tmp/stsc3.scsyndef.text' systemCommand
 )
 
+playUsingUdpDirectlyEncoded: anObject = (
+	| syndef msg |
+	syndef := (ScGraph from: (WrapOut bus: 0 channelsArray: anObject) withName: 'tmp') encodeSyndef.
+	msg := OscMessage at: '/d_recv' with: {syndef. (OscMessage at: '/s_new' with: #('tmp' -1 0 1)) encodeOsc}.
+	msg encodeOsc sendUdpToHost: '127.0.0.1' port: 57110
+)
+
+playUsingUdpWithTemporaryFile: anObject = (
+	| msg |
+	Sc3 writeTmpWrappedBinarySyndefOf: anObject.
+	msg := OscMessage at: '/d_load' with: {'/tmp/stsc3.scsyndef'. (OscMessage at: '/s_new' with: #('tmp' -1 0 1)) encodeOsc}.
+	msg encodeOsc sendUdpToHost: '127.0.0.1' port: 57110
+)
+
 reset = (
+	"Reset Sc synthesiser."
+	(OscMessage at: '/g_freeAll' with: #(1)) encodeOsc sendUdpToHost: '127.0.0.1' port: 57110
+)
+
+resetUsingExternalCommand = (
 	"Reset Sc synthesiser."
 	'hsc3-scsynth reset' systemCommand
 )
