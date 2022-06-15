@@ -9,6 +9,9 @@ Sc3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 Browser newOnClass: Sc3HelpGraph class.
 Sc3HelpGraph new f0Tw1395878538297892865 play.
 Sc3 reset.
+Sc3HelpGraph methodDict size = 81.
+(Sc3HelpGraph new perform: (Sc3HelpGraph methodDict keys atRandom)) play. "play random help graph"
+Sc3 reset.
 
 "(Cmd-b to browse, graphs are class methods)"
 Sc3HelpGraph

@@ -17,7 +17,6 @@ osc = Osc/Array.ext Osc/Float.ext Osc/Integer.ext Osc/String.ext Osc/OscMessage
 ui=Ui/String.ext Ui/Sc3Browser Ui/Sc3Editor
 
 all:
-	runhaskell ../hs/help.hs
 	runhaskell ../hs/pseudo.hs
 	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) Gnu/*.ext.st > Sc3-Filein-For-Gnu.st
 	cat $(common:=.st) $(autogen:=.st) $(osc:=.st) $(ui:=.st) Squeak/*.ext.st Squeak/*.mod.st > Sc3-Filein-For-Squeak.st

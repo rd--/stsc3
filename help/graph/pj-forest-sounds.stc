@@ -6,4 +6,3 @@ var insects = {
 	BPF(n1, o, 0.001) * 10
 };
 insects.dup(2)
-
