@@ -33,7 +33,7 @@ The notation _SinOsc(440, 0)_ is allowed in SuperCollider, where it has the mean
 In C-Smalltalk it has a related but distinct meaning, _SinOsc.apply([440, 0])_.
 
 _apply:_ is ordinarily defined as _perform:withArguments:_ at the _primaryFactoryMethod_ of the receiver. [1]
-(This terminology is from [Newspeak](https://newspeaklanguage.org/).)
+(This terminology is borrowed from [Newspeak](https://newspeaklanguage.org/) though the meaning is somewhat different.)
 
 The primaryFactoryMethod of _SinOsc_ is _freq:phase:_, and so on for all of the SuperCollider UGens.
 
@@ -54,7 +54,7 @@ If the number of parts of the message name is less than the number of arguments 
 
 _f.value(i, j)_ translates as _f value: i value: j_ and _c.put(i, j)_ translates as _c put: i value: j_.
 
-It is therefore possible to provide aliases for commonly used messages, i.e. _put:value:_ as an alias for _at:put:_.
+It is therefore possible to provide synonyms for commonly used messages, i.e. _put:value:_ as a synonym for _at:put:_.
 
 ## Keyword parameter notation
 
@@ -84,6 +84,8 @@ This can result in a perspicuous notation for chains of message sends.
 _c.reverse.at(n).sorted.collect(f).display_ translates to
 _((c reverse at: n) sorted collect: f) display_.
 
+The number of parentheses required is the same however their placement differs.
+
 ## Translation
 
 C-Smalltalk can be used as a notation for _Scheme-like_ languages.
@@ -96,15 +98,16 @@ Note also that trailing _value:_ elements of selectors are elided, _p.q(r, s)_ i
 
 In addition there may be a rule to translate selectors, for instance from _at:put_ to _atPut_.
 
-_stsc3_ includes a [translator](https://rohandrape.net/pub/stsc3/html/stc-to-js.html) from C-Smalltalk to Javascript.
+_stsc3_ includes a [translator](https://rohandrape.net/pub/stsc3/html/stc-to-js.html) from C-Smalltalk to a scheme-like subset of Javascript.
 
 ## Unary and binary message selectors
 
 In C-Smalltalk _p.q_ and _p.q(r)_ refer to two distinct selectors, _q_ in the first case and _q:_ in the second.
 When C-Smalltalk is translated into a _scheme-like_ notation and semantics this distinction is not made.
 The first case translates as _q(p)_ and the second as _q(p, r)_.
-This requires _q_ to have two arities, and while many scheme-like languages will allow this, it is an unnecessary complication.
-For this reason, if translation is desired, unary and binary message selectors should be named so that they translate distinctly.
+This requires _q_ to have two arities.
+While many scheme-like languages will allow this, it can make systems more complicated.
+If translation is desired, unary and binary message selectors can be named so that they translate distinctly.
 
 ## Notation for the _at:_ and _at:put:_ protocol
 
@@ -117,7 +120,7 @@ The _at:put:_ notation forms an _expression_, at the same syntax level as the _a
 In addition to the literal _Array_ notation _#(1 2 3)_ most Smalltalks allow the array notation _{p. q. r}_ meaning _Array with: p with: q with: r_.
 C-Smalltalk writes this as _[p, q, r]_.
 
-In addition C-Smalltalk has a notation for writing _Dictionary_ expressions,
+In addition C-Smalltalk has a notation for writing _Dictionary_ expressions.
 _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
 or _Dictionary newFromPairs: {#a. 1. #b. 2}_.
 This notation requires keys to be identifiers.

@@ -1,10 +1,8 @@
-stsc3 was initially stored here.  It is now a stored both here and at ../som.
+stsc3 was initially stored here.  It is now a stored at [../som](http://rohandrape.net/?t=stsc3&e=som/README.md).
 
-To use, [filein](http://wiki.squeak.org/squeak/1105) the below files to a Smalltalk image.
+To use run _make_ and then [filein](http://wiki.squeak.org/squeak/1105) the appropriate file to a Smalltalk image.
 
-The _Ui_ directory has user-interface classes and methods.
-
-The _Cuis_, _Gnu_ and _Squeak_ directories have methods that cannot be written to work under all of Squeak, Gnu-Smalltalk, Cuis.
+The generated files are not stored in version control and the build stage requires Haskell.
 
 ![](sw/stsc3/lib/png/squeak-mouse.png)
 
@@ -13,7 +11,6 @@ The _Cuis_, _Gnu_ and _Squeak_ directories have methods that cannot be written t
 Squeak:
 
 - MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess'
-- MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/CommandShell'
 
 Cuis:
 

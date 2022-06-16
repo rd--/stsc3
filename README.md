@@ -25,7 +25,6 @@ Requires:
 Tested with:
  [Squeak](http://squeak.org/) 6.0α & 5.3 ;
  [Gnu Smalltalk](http://www.gnu.org/software/smalltalk/) 3.2.92;
- [Cuis](http://cuis-smalltalk.org/) 5.0 ;
- [Pharo](http://pharo.org/) 9.0 & 8.0
+ [Cuis](http://cuis-smalltalk.org/) 5.0
 
 © [Rohan Drape](http://rohandrape.net/), 2019-2022, [Gpl](http://gnu.org/copyleft/)
