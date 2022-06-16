@@ -1,0 +1,56 @@
+Collection = Collection (
+
+* arg = (
+	^arg adaptToCollection: self andSend: #*
+)
+
++ arg = (
+	^arg adaptToCollection: self andSend: #+
+)
+
+- arg = (
+	^arg adaptToCollection: self andSend: #-
+)
+
+/ arg = (
+	^arg adaptToCollection: self andSend: #/
+)
+
+// arg = (
+	^arg adaptToCollection: self andSend: #//
+)
+
+adaptToCollection: rcvr andSend: selector = (
+	rcvr isSequenceable & self isSequenceable ifFalse: [self error: 'Only sequenceable collections may be combined arithmetically'].
+	^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]
+)
+
+adaptToNumber: rcvr andSend: selector = (
+	^ self collect: [:element | rcvr perform: selector with: element]
+)
+
+isCollection = (
+	^true
+)
+
+max  = (
+	^self inject: (self atRandom) into: [ :maximum :item | (maximum > item) ifTrue: [ maximum ] ifFalse: [ item ]]
+)
+
+raisedTo: arg = (
+	^arg adaptToCollection: self andSend: #raisedTo:
+)
+
+reciprocal = (
+	^self collect: [ :item | item reciprocal ]
+)
+
+sqrt = (
+	^self collect: [ :item | item sqrt ]
+)
+
+sum = (
+	^self inject: 0 into: [ :total :item | total + item ]
+)
+
+)

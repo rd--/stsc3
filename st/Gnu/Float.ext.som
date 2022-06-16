@@ -1,0 +1,13 @@
+Float = Float (
+
+adaptToInteger: rcvr andSend: selector = (
+	^ rcvr asFloat perform: selector with: self
+)
+
+----
+
+infinity = (
+	^FloatD infinity
+)
+
+)

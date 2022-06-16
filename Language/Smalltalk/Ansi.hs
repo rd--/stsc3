@@ -312,6 +312,10 @@ classDefinitionReplaceMethods cd mth =
 classDefinitionMethods :: ClassDefinition -> [MethodDefinition]
 classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
 
+-- | A class definition that extends or modifies an existing class should have its superclass set to itself.
+classDefinitionIsExtensionOrModification :: ClassDefinition -> Bool
+classDefinitionIsExtensionOrModification cd = Just (className cd) == superclassName cd
+
 -- * 3.3.3 Global Variable Definition
 
 -- | 3.3.3
@@ -471,6 +475,8 @@ duplicateNamesError dup = when (not (null dup)) (P.unexpected ("Name already use
 > p "* anObject ^self shallowCopy *= anObject"
 > p "p \"c\" ^q"
 > p "p |tmp| <primitive: 0> self continueAfterPrimitive"
+> p "p |tmp| <primitive: 'stringAsLabel'> ^nil"
+> p "p |tmp| <primitive: identifierAsLabel> ^nil"
 > p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail, instead it discards statements!
 > p "p: q | q | ^q" -- duplicate name error
 -}
@@ -1199,6 +1205,7 @@ integerLiteral = NumberLiteral . Int
 > p "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
 > p "#(-12 -7 -5 0 2 5)"
 > p "#(x y: #z: 1)"
+> p "x"
 -}
 literal :: P Literal
 literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayLiteral, P.try symbolLiteral, selectorLiteral] -- lexeme
@@ -1711,6 +1718,7 @@ separator = fmap concat (P.many1 (fmap return P.space  P.<|> comment) P.<?> "sep
 -- * Primitive
 
 {- | Parse Squeak/Gnu type Vm primitive. (Non-Ansi).
+Allow unquoted symbol, which will be printed back unquoted (as would a quoted symbol).
 
 stParse primitive "<primitive: 63>"
 stParse primitive "<primitive: VMpr_ByteString_at>"

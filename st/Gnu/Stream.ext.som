@@ -1,0 +1,8 @@
+Stream = Stream (
+
+<< items = (
+	items putOn: self.
+	^self
+)
+
+)

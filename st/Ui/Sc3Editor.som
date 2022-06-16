@@ -1,0 +1,63 @@
+Sc3Editor = SystemWindow (
+
+| fileName editor |
+
+createWindow = (
+	| t |
+	t := PluggableTextMorph on: self text: #text accept: nil readSelection: nil menu: #menu:shifted:.
+	t color: Color veryVeryLightGray.
+	self editor: t.
+	self addMorph: t frame: (0@0 corner: 1@1).
+	self setLabel: 'Sc3 Editor on: ' , self fileName
+)
+
+draw = (
+	| text |
+	text := editor textMorph selection asString.
+	(Sc3 evalText: text fromFile: fileName) draw
+)
+
+editor = (
+	^ editor
+)
+
+editor: aMorph = (
+	editor := aMorph
+)
+
+fileName = (
+	^ fileName
+)
+
+fileName: aString = (
+	fileName := aString
+)
+
+menu: m shifted: i = (
+	m add: 'play (p)' target: self selector: #play.
+	m add: 'stop (s)' target: Sc3 selector: #reset.
+	m add: 'draw (d)' target: self selector: #draw.
+	^m
+)
+
+play = (
+	| text |
+	text := editor textMorph selection asString.
+	(Sc3 evalText: text fromFile: fileName) play
+)
+
+text = (
+	^fileName readTextFile
+)
+
+----------------------------
+
+openOn: x = (
+	^self new fileName: x; createWindow; openInWorld; yourself
+)
+
+comment = (
+	^'Editor for Ugen graph fragments'
+)
+
+)

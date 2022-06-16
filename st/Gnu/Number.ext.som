@@ -1,0 +1,24 @@
+Number = Number (
+
+** aNumber = (
+	^BinaryOpUgen selector: #raisedTo: a: self b: aNumber
+)
+
+adaptToCollection: rcvr andSend: selector = (
+	^rcvr collect: [:element | element perform: selector with: self]
+)
+
+adaptToFloat: rcvr andSend: selector = (
+	^ rcvr perform: selector with: self asFloat
+)
+
+adaptToInteger: rcvr andSend: selector = (
+	^ self subclassResponsibility
+)
+
+isZero = (
+	^self = 0
+)
+
+)
+

@@ -1,0 +1,11 @@
+Symbol = Symbol (
+
+value: anObject = (
+	^anObject perform: self.
+)
+
+value: anObject value: anotherObject = (
+	^anObject perform: self with: anotherObject
+)
+
+)

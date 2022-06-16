@@ -109,7 +109,10 @@ returnStatement_pp :: ReturnStatement -> String
 returnStatement_pp (ReturnStatement e) = printf "^%s" (expression_pp e)
 
 primitive_pp :: Primitive -> String
-primitive_pp (Primitive l) = printf "<primitive: %s>" (literal_pp l)
+primitive_pp (Primitive l) =
+  case l of
+    SymbolLiteral txt -> printf "<primitive: %s>" txt
+    _ -> printf "<primitive: %s>" (literal_pp l)
 
 expression_pp :: Expression -> String
 expression_pp = expressionCase assignment_pp basicExpression_pp

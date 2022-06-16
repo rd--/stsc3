@@ -1,6 +1,0 @@
-!Magnitude methodsFor: 'stsc3'!
-min: aMin max: aMax
-    ^(self min: aMin) max: aMax!
-putOn: aStream
-    (aStream isBinary ifTrue: [ self asByteArray ] ifFalse: [ self asString ]) putOn: aStream!
-!

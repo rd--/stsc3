@@ -1,0 +1,7 @@
+SystemDictionary = SystemDictionary (
+
+quitPrimitive = (
+	^ObjectMemory quit
+)
+
+)

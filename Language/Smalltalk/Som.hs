@@ -260,13 +260,27 @@ somClassDefinitionFindFileFor recurse cp nm = do
 somLoadClassDefinitionFromFile :: FilePath -> IO St.ClassDefinition
 somLoadClassDefinitionFromFile fn = do
   txt <- readFile fn
-  let err = error ("somLoadClassDefinitionFromFile: empty file: " ++ fn)
-  if all isSpace txt then err else return (parseSomClassDefinition txt)
+  let cd = parseSomClassDefinition txt
+      emptyErr = error ("somLoadClassDefinitionFromFile: empty file: " ++ fn)
+  if all isSpace txt then emptyErr else return (cd)
+
+somLoadClassDefinitionFromClassFile :: FilePath -> IO St.ClassDefinition
+somLoadClassDefinitionFromClassFile fn = do
+  cd <- somLoadClassDefinitionFromFile fn
+  let scErr = error ("somLoadClassDefinitionFromClassFile: illegal superclass: " ++ fn)
+  if St.classDefinitionIsExtensionOrModification cd then scErr else return cd
+
+somLoadClassExtensionOfModificationFromFile :: FilePath -> IO [St.MethodDefinition]
+somLoadClassExtensionOfModificationFromFile fn = do
+  cd <- somLoadClassDefinitionFromFile fn
+  if St.classDefinitionIsExtensionOrModification cd
+    then return (St.classDefinitionMethods cd)
+    else error ("somLoadClassExtensionOfModificationFromFile: not extension or modification: " ++ fn)
 
 somLoadClassDefinition :: Bool -> [FilePath] -> St.Identifier -> IO (Maybe St.ClassDefinition)
 somLoadClassDefinition recurse cp nm = do
   fn <- somClassDefinitionFindFileFor recurse cp nm
-  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromFile) fn
+  maybe (return Nothing) (fmap Just . somLoadClassDefinitionFromClassFile) fn
 
 somLoadClassDefinitionOrError :: Bool -> [FilePath] -> St.Identifier -> IO St.ClassDefinition
 somLoadClassDefinitionOrError recurse cp nm =
@@ -304,12 +318,10 @@ somClassDefinitionFindFilesFor recurse cp nm = do
 
 somLoadClassDefinitionFromFiles :: SomDefinitionFiles -> IO St.ClassDefinition
 somLoadClassDefinitionFromFiles (c, e, m) = do
-  c' <- somLoadClassDefinitionFromFile c
-  e' <- mapM somLoadClassDefinitionFromFile e
-  m' <- mapM somLoadClassDefinitionFromFile m
-  let em = concatMap St.classDefinitionMethods e'
-      mm = concatMap St.classDefinitionMethods m'
-  return (St.classDefinitionReplaceMethods (St.classDefinitionExtendWithMethods c' em) mm)
+  c' <- somLoadClassDefinitionFromClassFile c
+  e' <- mapM somLoadClassExtensionOfModificationFromFile e
+  m' <- mapM somLoadClassExtensionOfModificationFromFile m
+  return (St.classDefinitionReplaceMethods (St.classDefinitionExtendWithMethods c' (concat e')) (concat m'))
 
 {- | Load class merging in .ext and .mod files.
 

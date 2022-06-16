@@ -1,0 +1,8 @@
+Character = Character (
+
+putOn: aStream = (
+	^aStream nextPut: self
+)
+
+)
+

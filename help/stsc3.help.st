@@ -54,7 +54,7 @@ PinkNoise primaryFactoryMethod = #new. "the primary factory method may be new"
 
 u := SinOsc freq: 440 phase: Float pi mul: 0.1.
 (ScGraph from: u withName: 'tmp') printString
-(Sc3 ugenSetOf: u) do: [ :item | item inspect ]
+(ScGraph ugenSetOf: u) do: [ :item | item inspect ]
 Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Float pi mul: 0.1)) to: '/tmp/stsc3.scsyndef'
 
 "Scsynth"

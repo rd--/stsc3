@@ -139,13 +139,13 @@ dir_som_to_fileout som_dir fileout_fn = do
   let ext_fn = filter (".ext." `isInfixOf`) all_fn
       mod_fn = filter (".mod." `isInfixOf`) all_fn
       cls_fn = sort (all_fn \\ (ext_fn ++ mod_fn))
-      readSom fn = print fn >> Som.somLoadClassDefinitionFromFile fn
-  cls_cd <- mapM readSom cls_fn
-  ext_cd <- mapM readSom ext_fn
-  mod_cd <- mapM readSom mod_fn
+      readCd fn = Som.somLoadClassDefinitionFromFile fn
+      readMd fn = Som.somLoadClassExtensionOfModificationFromFile fn
+  cls_cd <- mapM readCd cls_fn
+  ext_md <- mapM readMd ext_fn
+  mod_md <- mapM readMd mod_fn
   let cls_fo = unlines (map FileOut.fileOutClassDefinition cls_cd)
-      mth = concatMap St.classDefinitionMethods (ext_cd ++ mod_cd)
-      mth_fo = unlines (map FileOut.fileOutMethodDefinition mth)
+      mth_fo = unlines (map FileOut.fileOutMethodDefinition (concat ext_md ++ concat mod_md))
   writeFile fileout_fn (cls_fo ++ mth_fo)
 
 {-
