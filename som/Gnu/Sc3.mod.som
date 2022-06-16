@@ -1,5 +1,7 @@
 Sc3 = Sc3 (
 
+----
+
 play: anObject = (
 	Sc3 playUsingTextSyndef: anObject
 )

@@ -3,4 +3,3 @@ mk-help:
 
 clean:
 	rm -f Sc3HelpGraph.ext.som
-
