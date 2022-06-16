@@ -2,11 +2,13 @@ TDmdFor = PseudoUgen (
 ----------------------------
 
 dur: dur reset: reset level: level = (
-	^(TDuty apply: {dur. reset. 0. level. 0})
+
+^(TDuty apply: {dur. reset. 0. level. 0})
 )
 
 primaryFactoryMethod = (
-	^#'dur:reset:level:'
+
+^#'dur:reset:level:'
 )
 
 

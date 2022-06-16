@@ -1,16 +1,20 @@
 XLn = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'start:end:dur:'
-)
-
 start: start end: end dur: dur = (
-	^(XLine apply: {start. end. dur. 0})
+
+^(XLine apply: {start. end. dur. 0})
 )
 
-comment = (
-	^'Line generator'
+primaryFactoryMethod = (
+
+^#'start:end:dur:'
 )
+
+
+comment = (^'
+ Line generator *
+')
+
 
 )

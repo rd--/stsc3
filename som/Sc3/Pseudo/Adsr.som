@@ -2,11 +2,13 @@ Adsr = PseudoUgen (
 ----------------------------
 
 gate: gate attackTime: attackTime decayTime: decayTime sustainLevel: sustainLevel releaseTime: releaseTime curves: curves = (
-	^(EnvAdsr apply: {attackTime. decayTime. sustainLevel. releaseTime. 1. curves}) asEnvGen: gate
+
+^(EnvAdsr apply: {attackTime. decayTime. sustainLevel. releaseTime. 1. curves}) asEnvGen: gate
 )
 
 primaryFactoryMethod = (
-	^#'gate:attackTime:decayTime:sustainLevel:releaseTime:curves:'
+
+^#'gate:attackTime:decayTime:sustainLevel:releaseTime:curves:'
 )
 
 

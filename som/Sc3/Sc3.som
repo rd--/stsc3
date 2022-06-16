@@ -77,12 +77,15 @@ playUsingUdpWithTemporaryFile: anObject = (
 
 reset = (
 	"Reset Sc synthesiser."
-	(OscMessage at: '/g_freeAll' with: #(1)) encodeOsc sendUdpToHost: '127.0.0.1' port: 57110
+	Sc3 resetUsingUdp
 )
 
 resetUsingExternalCommand = (
-	"Reset Sc synthesiser."
 	'hsc3-scsynth reset' systemCommand
+)
+
+resetUsingUdp = (
+	(OscMessage at: '/g_freeAll' with: #(1)) encodeOsc sendUdpToHost: '127.0.0.1' port: 57110
 )
 
 stcFileToSt: fileName = (

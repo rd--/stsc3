@@ -2,11 +2,13 @@ PMOsc = PseudoUgen (
 ----------------------------
 
 carfreq: carfreq modfreq: modfreq pmindex: pmindex modphase: modphase = (
-	^(SinOsc apply: {carfreq. (SinOsc apply: {modfreq. modphase}) * pmindex})
+
+^(SinOsc apply: {carfreq. (SinOsc apply: {modfreq. modphase}) * pmindex})
 )
 
 primaryFactoryMethod = (
-	^#'carfreq:modfreq:pmindex:modphase:'
+
+^#'carfreq:modfreq:pmindex:modphase:'
 )
 
 

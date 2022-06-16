@@ -2,15 +2,19 @@ Tr = PseudoUgen (
 ----------------------------
 
 in: in = (
-	^(Trig apply: {in. (SampleDur apply: {})})
+
+^(Trig apply: {in. (SampleDur apply: {})})
 )
 
 primaryFactoryMethod = (
-	^#'in:'
+
+^#'in:'
 )
 
-comment = (
-	^'Trig with duration of one sample'
-)
+
+comment = (^'
+ Trig with duration of one sample *
+')
+
 
 )

@@ -2,11 +2,13 @@ Select2 = PseudoUgen (
 ----------------------------
 
 predicate: predicate ifTrue: ifTrue ifFalse: ifFalse = (
-	^(predicate * (ifTrue - ifFalse)) + ifFalse
+
+^(predicate * (ifTrue - ifFalse)) + ifFalse
 )
 
 primaryFactoryMethod = (
-	^#'predicate:ifTrue:ifFalse:'
+
+^#'predicate:ifTrue:ifFalse:'
 )
 
 

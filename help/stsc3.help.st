@@ -19,6 +19,12 @@ Sc3HelpGraph
 "(Ctl-m to graph name to select and see implemetors of it)"
 f0Tw1395878538297892865
 
+"Apply"
+
+SinOsc canUnderstand: #apply: "test if class can understand selector"
+
+(SinOsc apply: #(440 0)) * 0.1
+
 "Envelope"
 
 {

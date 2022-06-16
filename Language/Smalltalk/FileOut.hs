@@ -202,7 +202,7 @@ fileOutMethodDefinitionsForEntry s =
       in unlines
          [printf "!%s%s methodsFor: '%s'!" className (if isClassMethod then " class" else "") category
          ,unlines (map (\method -> St.methodDefinition_pp method ++ "!") selectedMethods) ++ "!"]
-    _ -> error "fileOutMethodDefinitionsForSection"
+    _ -> error "fileOutMethodDefinitionsForEntry"
 
 -- | Print the methodsFor: section of a FileOut for the class or instance methods for the named category.
 fileOutMethodDefinitionsFor :: Bool -> St.ClassDefinition -> St.MethodCategory -> String
@@ -213,6 +213,16 @@ fileOutMethodDefinitionsFor isClassMethod classDef category =
     isClassMethod
     category
     (if isClassMethod then St.classMethods classDef else St.instanceMethods classDef))
+
+-- | Print a methodsFor: section of a FileOut for a single method.
+fileOutMethodDefinition :: St.MethodDefinition -> String
+fileOutMethodDefinition md =
+  fileOutMethodDefinitionsForEntry
+  (FileOutMethodsFor
+    (St.methodClassName md)
+    (St.isClassMethod md)
+    (St.methodCategoryRequired md)
+    [md])
 
 -- | Print the fileout class instantiation section for a class definition.
 fileOutClassInstantiation :: St.ClassDefinition -> String

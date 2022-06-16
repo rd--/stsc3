@@ -6,6 +6,7 @@
 -}
 module Language.Smalltalk.Som where
 
+import Data.Char {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
 
@@ -56,6 +57,8 @@ parseSomClassDefinition = St.stParse classDefinition . rewriteSomQuotingToSmallt
      Note: fails if the first method definition is for '|' and there are no variables.
 
 > St.stParse classDefinition "Boolean = ( | aBoolean = ( ^self or: aBoolean ) )"
+> St.stParse classDefinition "Empty = ()"
+> St.stParse classDefinition "" -- error
 -}
 classDefinition :: St.P St.ClassDefinition
 classDefinition = do
@@ -255,7 +258,10 @@ somClassDefinitionFindFileFor recurse cp nm = do
   Music.Theory.Directory.path_scan cp' (nm <.> "som")
 
 somLoadClassDefinitionFromFile :: FilePath -> IO St.ClassDefinition
-somLoadClassDefinitionFromFile fn = readFile fn >>=  return . parseSomClassDefinition
+somLoadClassDefinitionFromFile fn = do
+  txt <- readFile fn
+  let err = error ("somLoadClassDefinitionFromFile: empty file: " ++ fn)
+  if all isSpace txt then err else return (parseSomClassDefinition txt)
 
 somLoadClassDefinition :: Bool -> [FilePath] -> St.Identifier -> IO (Maybe St.ClassDefinition)
 somLoadClassDefinition recurse cp nm = do

@@ -1,12 +1,14 @@
 Choose = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'repeats:list:'
+repeats: repeats list: list = (
+
+^(Drand apply: {repeats. list})
 )
 
-repeats: repeats list: list = (
-	^(Drand apply: {repeats. list})
+primaryFactoryMethod = (
+
+^#'repeats:list:'
 )
 
 

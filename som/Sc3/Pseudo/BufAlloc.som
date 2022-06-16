@@ -2,11 +2,13 @@ BufAlloc = PseudoUgen (
 ----------------------------
 
 numChannels: numChannels numFrames: numFrames = (
-	^(LocalBuf apply: {numChannels. numFrames})
+
+^(LocalBuf apply: {numChannels. numFrames})
 )
 
 primaryFactoryMethod = (
-	^#'numChannels:numFrames:'
+
+^#'numChannels:numFrames:'
 )
 
 

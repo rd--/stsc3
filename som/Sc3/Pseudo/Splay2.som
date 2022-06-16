@@ -2,11 +2,13 @@ Splay2 = PseudoUgen (
 ----------------------------
 
 inArray: inArray = (
-	^(Splay apply: {inArray. 1. 1. 0. true})
+
+^(Splay apply: {inArray. 1. 1. 0. true})
 )
 
 primaryFactoryMethod = (
-	^#'inArray:'
+
+^#'inArray:'
 )
 
 

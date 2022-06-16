@@ -1,12 +1,14 @@
 KeyPitch = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'voiceNumber:'
+voiceNumber: voiceNumber = (
+
+^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 7})
 )
 
-voiceNumber: voiceNumber = (
-	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 7})
+primaryFactoryMethod = (
+
+^#'voiceNumber:'
 )
 
 

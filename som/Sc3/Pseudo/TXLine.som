@@ -1,12 +1,14 @@
 TXLine = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'start:end:dur:trig:'
+start: start end: end dur: dur trig: trig = (
+
+^(EnvSpec apply: {{start. start. end}. {0. dur}. #(#'exp' #'exp'). -1. -1. 0}) asEnvGen: trig
 )
 
-start: start end: end dur: dur trig: trig = (
-	^(EnvSpec apply: {{start. start. end}. {0. dur}. #(#'exp' #'exp'). -1. -1. 0}) asEnvGen: trig
+primaryFactoryMethod = (
+
+^#'start:end:dur:trig:'
 )
 
 

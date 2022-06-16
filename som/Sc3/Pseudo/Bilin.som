@@ -2,16 +2,18 @@ Bilin = PseudoUgen (
 ----------------------------
 
 in: in lo: lo hi: hi = (
-	^(LinLin apply: {in. -1. 1. lo. hi})
+
+^(LinLin apply: {in. -1. 1. lo. hi})
 )
 
 primaryFactoryMethod = (
-	^#'in:lo:hi:'
+
+^#'in:lo:hi:'
 )
 
 
 comment = (^'
-
+ Bipolar linear to linear mapping *
 ')
 
 

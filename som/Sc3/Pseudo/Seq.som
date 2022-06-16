@@ -1,12 +1,14 @@
 Seq = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'repeats:list:'
+repeats: repeats list: list = (
+
+^(Dseq apply: {repeats. list})
 )
 
-repeats: repeats list: list = (
-	^(Dseq apply: {repeats. list})
+primaryFactoryMethod = (
+
+^#'repeats:list:'
 )
 
 

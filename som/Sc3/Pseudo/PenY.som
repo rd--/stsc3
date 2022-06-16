@@ -1,12 +1,14 @@
 PenY = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'voiceNumber:'
+voiceNumber: voiceNumber = (
+
+^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 2})
 )
 
-voiceNumber: voiceNumber = (
-	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 2})
+primaryFactoryMethod = (
+
+^#'voiceNumber:'
 )
 
 

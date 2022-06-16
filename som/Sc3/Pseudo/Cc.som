@@ -2,11 +2,13 @@ Cc = PseudoUgen (
 ----------------------------
 
 index: index = (
-	^(In apply: {1. 11000 + index}) kr
+
+^(In apply: {1. 11000 + index}) kr
 )
 
 primaryFactoryMethod = (
-	^#'index:'
+
+^#'index:'
 )
 
 

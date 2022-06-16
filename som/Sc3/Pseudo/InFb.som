@@ -2,11 +2,13 @@ InFb = PseudoUgen (
 ----------------------------
 
 numChan: numChan bus: bus = (
-	^(InFeedback apply: {numChan. bus})
+
+^(InFeedback apply: {numChan. bus})
 )
 
 primaryFactoryMethod = (
-	^#'numChan:bus:'
+
+^#'numChan:bus:'
 )
 
 

@@ -3,15 +3,17 @@ OverlapTexture = PseudoUgen (
 
 graphFunc: graphFunc sustainTime: sustainTime transitionTime: transitionTime overlap: overlap = (
 | voiceFunc |
- voiceFunc := [ :i | | t |
+
+voiceFunc := [ :i | | t |
  t := (Impulse apply: {1 / (sustainTime + (transitionTime * 2)). i / overlap}) kr .
  (graphFunc apply: {t}) * ((EnvLinen apply: {transitionTime. sustainTime. transitionTime. 1. #'sin'}) asEnvGen: t) .
  ] .
-	^(1 to: overlap collect: voiceFunc) sum
+ ^(1 to: overlap collect: voiceFunc) sum
 )
 
 primaryFactoryMethod = (
-	^#'graphFunc:sustainTime:transitionTime:overlap:'
+
+^#'graphFunc:sustainTime:transitionTime:overlap:'
 )
 
 

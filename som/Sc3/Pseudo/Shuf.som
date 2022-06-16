@@ -1,12 +1,14 @@
 Shuf = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'repeats:list:'
+repeats: repeats list: list = (
+
+^(Dshuf apply: {repeats. list})
 )
 
-repeats: repeats list: list = (
-	^(Dshuf apply: {repeats. list})
+primaryFactoryMethod = (
+
+^#'repeats:list:'
 )
 
 

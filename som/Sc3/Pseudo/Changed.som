@@ -2,11 +2,13 @@ Changed = PseudoUgen (
 ----------------------------
 
 input: input threshold: threshold = (
-	^(HPZ1 apply: {input}) abs > threshold
+
+^(HPZ1 apply: {input}) abs > threshold
 )
 
 primaryFactoryMethod = (
-	^#'input:threshold:'
+
+^#'input:threshold:'
 )
 
 

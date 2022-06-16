@@ -1,16 +1,20 @@
 TLine = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'start:end:dur:trig:'
-)
-
 start: start end: end dur: dur trig: trig = (
-	^(EnvSpec apply: {{start. start. end}. {0. dur}. #(#'lin' #'lin'). -1. -1. 0}) asEnvGen: trig
+
+^(EnvSpec apply: {{start. start. end}. {0. dur}. #(#'lin' #'lin'). -1. -1. 0}) asEnvGen: trig
 )
 
-comment = (
-	^'Triggered Line'
+primaryFactoryMethod = (
+
+^#'start:end:dur:trig:'
 )
+
+
+comment = (^'
+ Triggered Line *
+')
+
 
 )

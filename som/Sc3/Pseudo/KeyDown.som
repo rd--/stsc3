@@ -1,12 +1,14 @@
 KeyDown = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'voiceNumber:'
+voiceNumber: voiceNumber = (
+
+^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 0})
 )
 
-voiceNumber: voiceNumber = (
-	^(ControlIn apply: {1. (Voicer voiceAddr: voiceNumber) + 0})
+primaryFactoryMethod = (
+
+^#'voiceNumber:'
 )
 
 

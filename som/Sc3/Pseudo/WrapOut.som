@@ -2,18 +2,21 @@ WrapOut = PseudoUgen (
 ----------------------------
 
 bus: bus channelsArray: channelsArray = (
-	((channelsArray isArray not and: [ channelsArray isOutUgen ])) ifTrue: [
-		^channelsArray ] ifFalse: [
-		^(Out apply: {bus. channelsArray})
-	]
+
+((channelsArray isArray not and: [ channelsArray isOutUgen .
+ ])) ifTrue: [ ^channelsArray ] ifFalse: [ ^(Out apply: {bus. channelsArray}) ] .
+
 )
 
 primaryFactoryMethod = (
-	^#'bus:channelsArray:'
+
+^#'bus:channelsArray:'
 )
 
-comment = (
-	^''
-)
+
+comment = (^'
+ Wrap signal in an Out Ugen if required *
+')
+
 
 )

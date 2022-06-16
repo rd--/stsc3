@@ -1,7 +1,7 @@
 {-
-read .st graphs (initial fragment) from files at help/graph and write Sc3-Help-Graphs.st.
-to avoid pretty printing this just copies the help text, prepending a return mark to the last line.
-this means the last line must be a simple expression.
+Read .st graphs (initial fragment) from files at help/graph and write Sc3HelpGraph.ext.som.
+To avoid pretty printing this just copies the help text, prepending a return mark to the last line.
+This means the last line of each help graph _must_ be a simple expression.
 -}
 
 import Data.Char {- base -}

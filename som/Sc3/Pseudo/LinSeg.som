@@ -2,16 +2,18 @@ LinSeg = PseudoUgen (
 ----------------------------
 
 gate: gate coord: coord = (
- | levels times |
- levels := (1 to: (coord size) by: 2) collect: [ :i | coord at: i .
+| levels times |
+
+levels := (1 to: (coord size) by: 2) collect: [ :i | coord at: i .
  ] .
  times := (2 to: (coord size) by: 2) collect: [ :i | coord at: i .
  ] .
-	^(EnvSpec apply: {levels. times. #(#'lin'). nil. nil. 0}) asEnvGen: gate
+ ^(EnvSpec apply: {levels. times. #(#'lin'). nil. nil. 0}) asEnvGen: gate
 )
 
 primaryFactoryMethod = (
-	^#'gate:coord:'
+
+^#'gate:coord:'
 )
 
 

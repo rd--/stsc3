@@ -1,4 +1,4 @@
-ScGraph = Object (
+ScGraph = (
 
 | name ugenSeq constantSeq |
 

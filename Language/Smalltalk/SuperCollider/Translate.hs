@@ -241,7 +241,7 @@ stPrimaryFactoryMethod cl nm =
 
 {- | Translate Sc method to St.
 Rewrites temporaries and for precedence.
-The class method "cons" is special.
+The class method "constructor" is special.
 It's pattern is derived from it's arguments names, and it generates a primary factory method.
 -}
 scMethodDefinitionToSt :: St.Identifier -> ScMethodDefinition -> [St.MethodDefinition]
@@ -251,8 +251,8 @@ scMethodDefinitionToSt cl_nm md =
       blk = Rewrite.scBlockBodyRewrite (methodBody md)
       blk_args = maybe [] (map fst) (blockArguments blk)
       md_nm = methodName md
-      is_star_cons = is_cl && md_nm == "cons"
-      pat = if is_star_cons
+      is_constructor = is_cl && md_nm == "constructor"
+      pat = if is_constructor
             then case blk_args of
                    [] -> St.UnaryPattern "new"
                    args -> St.KeywordPattern (zip (map (++ ":") args) args)
@@ -265,7 +265,7 @@ scMethodDefinitionToSt cl_nm md =
       tmp = fmap scTemporariesSt (blockTemporaries blk)
       stm = fmap scStatementsSt (blockStatements blk)
       st_md = St.MethodDefinition (st_cl_nm, is_cl) Nothing pat tmp stm Nothing Nothing Nothing
-  in if is_star_cons
+  in if is_constructor
      then [st_md, stPrimaryFactoryMethod (st_cl_nm, is_cl) (if null blk_args then "new" else concatMap (++ ":") blk_args)]
      else [st_md]
 

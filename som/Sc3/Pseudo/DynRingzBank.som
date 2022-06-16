@@ -2,11 +2,13 @@ DynRingzBank = PseudoUgen (
 ----------------------------
 
 input: input freq: freq amp: amp time: time = (
-	^(DynKlank apply: {input. 1. 0. 1. {freq. amp. time} asKlankSpec})
+
+^(DynKlank apply: {input. 1. 0. 1. {freq. amp. time} asKlankSpec})
 )
 
 primaryFactoryMethod = (
-	^#'input:freq:amp:time:'
+
+^#'input:freq:amp:time:'
 )
 
 

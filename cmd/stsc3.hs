@@ -1,3 +1,6 @@
+import Data.List {- base -}
+
+import qualified Music.Theory.Directory.Find {- hmt-base -}
 import qualified Music.Theory.IO {- hmt-base -}
 import qualified Music.Theory.Opt as Opt {- hmt-base -}
 import qualified Music.Theory.String as String {- hmt-base -}
@@ -130,6 +133,21 @@ lib_fileout_to_som opt fileout_fn som_dir = do
   lib <- FileOut.fileOutLoadPartial fileout_fn
   writeAllSomClassDef opt som_dir lib
 
+dir_som_to_fileout :: FilePath -> FilePath -> IO ()
+dir_som_to_fileout som_dir fileout_fn = do
+  all_fn <- Music.Theory.Directory.Find.dir_find_ext ".som" som_dir
+  let ext_fn = filter (".ext." `isInfixOf`) all_fn
+      mod_fn = filter (".mod." `isInfixOf`) all_fn
+      cls_fn = sort (all_fn \\ (ext_fn ++ mod_fn))
+      readSom fn = print fn >> Som.somLoadClassDefinitionFromFile fn
+  cls_cd <- mapM readSom cls_fn
+  ext_cd <- mapM readSom ext_fn
+  mod_cd <- mapM readSom mod_fn
+  let cls_fo = unlines (map FileOut.fileOutClassDefinition cls_cd)
+      mth = concatMap St.classDefinitionMethods (ext_cd ++ mod_cd)
+      mth_fo = unlines (map FileOut.fileOutMethodDefinition mth)
+  writeFile fileout_fn (cls_fo ++ mth_fo)
+
 {-
 -- | Fragment input file and run stcToJs at each fragment.
 stc_to_js :: FilePath -> IO ()
@@ -152,6 +170,7 @@ help =
     ," stc cat { fragment | library | extensions } <supercollider-file...>"
     ," st cat { parsec | happy } <smalltalk-file...>"
     ," translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
+    ," translate directory som fileout <input-directory> <output-file>"
     ," translate library [opt] fileout som <input-file> <output-directory>"
     ," translate [ stream ] stc { js | sc | scm | st } [ <input-file> <output-file> ]"
     ]
@@ -173,12 +192,13 @@ main = do
     "stc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_library fn) fn_seq
     "stc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_extensions fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
-    ["translate",in_ty,out_ty] -> interact (trs in_ty out_ty)
-    ["translate",in_ty,out_ty,inFile,outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
-    ["translate","class", "fileout","som",fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
-    ["translate","class", "som","fileout",som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
-    ["translate","class", "som","som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
-    ["translate","extensions", "fileout","som",fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
-    ["translate","library", "fileout","som",fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
-    ["translate","stream",in_ty,out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
+    ["translate", in_ty, out_ty] -> interact (trs in_ty out_ty)
+    ["translate", in_ty, out_ty, inFile, outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
+    ["translate", "class", "fileout", "som", fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate", "class", "som", "fileout", som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
+    ["translate", "class", "som", "som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
+    ["translate", "directory", "som", "fileout", som_dir, fileout_fn] -> dir_som_to_fileout som_dir fileout_fn
+    ["translate", "extensions", "fileout", "som", fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate", "library", "fileout", "som", fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
+    ["translate", "stream", in_ty, out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)

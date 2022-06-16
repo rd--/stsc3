@@ -2,15 +2,19 @@ Asr = PseudoUgen (
 ----------------------------
 
 gate: gate attackTime: attackTime releaseTime: releaseTime curves: curves = (
-	^(EnvAsr apply: {attackTime. 1. releaseTime. curves}) asEnvGen: gate
+
+^(EnvAsr apply: {attackTime. 1. releaseTime. curves}) asEnvGen: gate
 )
 
 primaryFactoryMethod = (
-	^#'gate:attackTime:releaseTime:curves:'
+
+^#'gate:attackTime:releaseTime:curves:'
 )
 
-comment = (
-	^'EnvGen of simplified EnvAsr'
-)
+
+comment = (^'
+ EnvGen of simplified EnvAsr *
+')
+
 
 )

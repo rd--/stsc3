@@ -1,12 +1,14 @@
 Ser = PseudoUgen (
 ----------------------------
 
-primaryFactoryMethod = (
-	^#'repeats:list:'
+repeats: repeats list: list = (
+
+^(Dser apply: {repeats. list})
 )
 
-repeats: repeats list: list = (
-	^(Dser apply: {repeats. list})
+primaryFactoryMethod = (
+
+^#'repeats:list:'
 )
 
 

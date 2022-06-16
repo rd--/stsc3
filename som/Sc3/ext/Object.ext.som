@@ -1,5 +1,9 @@
 Object = Object (
 
+apply: argumentsArray = (
+	^self perform: (self primaryFactoryMethod) withArguments: argumentsArray
+)
+
 asArray = (
 	^Array with: self
 )
@@ -22,12 +26,6 @@ dup: anInteger sending: aSelector = (
 
 isUgen = (
 	^false
-)
-
-----------------------------
-
-apply: argumentsArray = (
-	^self perform: (self primaryFactoryMethod) withArguments: argumentsArray
 )
 
 )

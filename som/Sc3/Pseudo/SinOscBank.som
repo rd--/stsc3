@@ -2,11 +2,13 @@ SinOscBank = PseudoUgen (
 ----------------------------
 
 freq: freq amp: amp phase: phase = (
-	^(Klang apply: {1. 0. {freq. amp. phase} asKlangSpec})
+
+^(Klang apply: {1. 0. {freq. amp. phase} asKlangSpec})
 )
 
 primaryFactoryMethod = (
-	^#'freq:amp:phase:'
+
+^#'freq:amp:phase:'
 )
 
 
