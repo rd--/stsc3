@@ -1,37 +1,5 @@
 "Note: these should, but do not, write data in network order"
 FileStream = FileStream (
 
-int8: anInteger = (
-	self nextPutByte: anInteger
-)
-
-int16: anInteger = (
-	self nextPutShort: anInteger
-)
-
-int32: anInteger = (
-	self nextPutLong: anInteger
-)
-
-int64: anInteger = (
-	self nextPutInt64: anInteger
-)
-
-float32: aFloat = (
-	self nextPutFloat: aFloat
-)
-
-float64: aFloat = (
-	self nextPutDouble: aFloat
-)
-
-pascalString: aString = (
-	self uint8: aString size.
-	aString do: [ :item | self nextPutByte: item asciiValue ]
-)
-
-uint8: anInteger = (
-	self nextPutByte: anInteger
-)
 
 )

@@ -1,0 +1,11 @@
+ByteArray = ByteArray (
+
+sendUdpToHost: hostAddress port: portNumber = (
+	| socket datagram |
+	socket := Sockets.DatagramSocket remote: hostAddress port: portNumber local: nil port: 0.
+	datagram := Sockets.Datagram data: self.
+	socket nextPut: datagram; flush.
+	socket close.
+)
+
+)

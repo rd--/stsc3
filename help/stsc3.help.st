@@ -13,6 +13,8 @@ Sc3HelpGraph methodDict size = 81.
 (Sc3HelpGraph new perform: (Sc3HelpGraph methodDict keys atRandom)) play. "play random help graph"
 Sc3 reset.
 
+Sc3 reset.
+
 "(Cmd-b to browse, graphs are class methods)"
 Sc3HelpGraph
 
@@ -61,6 +63,8 @@ Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Flo
 
 Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 play: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 playUsingTextSyndef: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 playUsingBinarySyndef: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 reset.
 
 (SinOsc freq: 440 phase: 0 mul: 0.1) draw.
@@ -749,8 +753,8 @@ m descriptor = ',isisf'.
 m oscString = '/n_set ,isisf -1 freq 440 amp 0.1 '.
 } allSatisfy: #yourself
 
+m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
 m printOscOn: Transcript
-
 (m encodeOsc) sendUdpToHost: '127.0.0.1' port: 57110
 
 m := OscMessage at: '/memset' with: #('addr' (0 1 15 16 255)).
@@ -802,6 +806,21 @@ s includes: c.
 "LocalBuf"
 
 #(0 2 4 5 7 9 10 12) asLocalBuf draw
+
+"Socket - Squeak"
+
+| s m |
+s := Socket udpCreateIfFail: [ self error: 'failed to create Udp socket' ].
+m := (OscMessage at: '/g_freeAll' with: #(1)) encodeOsc.
+s sendUDPData: m toHost: '127.0.0.1' port: 57110.
+
+"Socket - Gnu"
+
+| s m |
+s := Sockets.DatagramSocket remote: '127.0.0.1' port: 57110 local: nil port: 0.
+m := (OscMessage at: '/g_freeAll' with: #(1)) encodeOsc.
+s nextPut: (Sockets.Datagram data: m); flush.
+s close.
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

@@ -1,0 +1,10 @@
+ByteArray = ByteArray (
+
+sendUdpToHost: hostAddress port: portNumber = (
+	| socket |
+	socket := Socket udpCreateIfFail: [ self error: 'failed to create Udp socket' ].
+	socket sendUDPData: self toHost: hostAddress port: portNumber.
+	socket close.
+)
+
+)

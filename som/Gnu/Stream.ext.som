@@ -5,4 +5,46 @@ Stream = Stream (
 	^self
 )
 
+int8: anInteger = (
+	self nextPutByte: anInteger
+)
+
+int16: anInteger = (
+	self nextPutBytesNetworkOrder: 2 of: anInteger
+)
+
+int32: anInteger = (
+	self nextPutBytesNetworkOrder: 4 of: anInteger
+)
+
+int64: anInteger = (
+	self nextPutBytesNetworkOrder: 8 of: anInteger
+)
+
+float32: aFloat = (
+	| f |
+	f := aFloat asFloatE.
+	self nextPutByte: (f at: 4).
+	self nextPutByte: (f at: 3).
+	self nextPutByte: (f at: 2).
+	self nextPutByte: (f at: 1)
+)
+
+nextPutByte: anInteger = (
+	self nextPut: anInteger
+)
+
+nextPutBytesNetworkOrder: n of: anInteger = (
+	(n to: 1 by: -1) do: [ : index | self nextPutByte: (anInteger digitAt: index) ]
+)
+
+pascalString: aString = (
+	self uint8: aString size.
+	aString do: [ :item | self nextPutByte: item asciiValue ]
+)
+
+uint8: anInteger = (
+	self nextPutByte: anInteger
+)
+
 )
