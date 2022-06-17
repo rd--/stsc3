@@ -160,7 +160,7 @@ Association key: #x value: 1                                "associate key with 
 
 Bag isVariable not
 Bag withAll: #(1 2 2 3 3 3)
-Bag withAll: #(x y y z)
+Bag withAll: #('x' 'y' 'y' 'z')
 Bag newFrom: {#x -> 2 . #y -> 3 . #y -> 4. #z -> 2 }
 {#x -> 2 . #y -> 3 . #y -> 4. #z -> 2 } as: Bag
 #(1 2 2) asBag = #(1 2 2) asBag

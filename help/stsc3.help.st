@@ -9,10 +9,8 @@ Sc3Browser openOn: '/home/rohan/sw/hsc3-graphs/db/' "open ugen graph browser on 
 Browser newOnClass: Sc3HelpGraph class.
 Sc3HelpGraph new f0Tw1395878538297892865 play.
 Sc3 reset.
-Sc3HelpGraph methodDict size = 81.
-(Sc3HelpGraph new perform: (Sc3HelpGraph methodDict keys atRandom)) play. "play random help graph"
-Sc3 reset.
-
+Sc3HelpGraph methodDictionary size = 81.
+(Sc3HelpGraph new perform: (Sc3HelpGraph methodDictionary keys atRandom)) play. "play random help graph"
 Sc3 reset.
 
 "(Cmd-b to browse, graphs are class methods)"
@@ -24,7 +22,6 @@ f0Tw1395878538297892865
 "Apply"
 
 SinOsc canUnderstand: #apply: "test if class can understand selector"
-
 (SinOsc apply: #(440 0)) * 0.1
 
 "Envelope"
@@ -114,7 +111,7 @@ Rate ir = 0.
 Sc3 reset "C-c C-."
 [ Sc3 nextId ] dup: 9
 
-"UI"
+"Ui"
 
 '/home/rohan/sw/stsc3/lib/png/smalltalk-balloon.png' viewImageFile. "viewer for image file"
 '/home/rohan/sw/stsc3/lib/png/squeak-mouse.png' viewImageFile. "viewer for image file"
@@ -214,7 +211,6 @@ MessageNames openMessageNames. "open Message Names tool"
 (#(1) atWrap: 7) = 1.
 (#(1 2 3 4) atWrap: 7) = 3.
 #(#(1 2) #(3 4)) concatenation = #(1 2 3 4).
-[ #(1 2 3 4 5) shuffle ] on: Error do: [ true ]. "=> error, array is read only (Gnu)"
 (#(5 4 3 2 1) withIndexCollect: [ :item :index | {item. index} ]) = #((5 1) (4 2) (3 3) (2 4) (1 5)).
 [ #() extendCyclically: 5 ] on: Error do: [ true ].
 (#(1) extendCyclically: 5) = #(1 1 1 1 1).
@@ -231,6 +227,7 @@ MessageNames openMessageNames. "open Message Names tool"
 #(#(1 2) #(3 4)) transpose concatenation = #(1 3 2 4).
 } allSatisfy: #yourself
 
+[ #(1 2 3 4 5) shuffle ] on: Error do: [ true ]. "=> error, array is read only (Gnu)"
 x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 #(1 2 3 4 5) shuffled "=> i.e. copy shuffle"
 
@@ -262,10 +259,10 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 (Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
 (Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
 (Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str').
-(Array series: 10 value: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}.
+(Array series: 10 value: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}. "Gnu..."
 (Array geom: 5 value: 1 value: 3) = #(1 3 9 27 81).
 (#(1 2 3 4 5) nth: 3) = 3. "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
-({1. 2. 3} at: 2 put: -2) == -2.              "=> true (at:put: returns the element put)"
+({1. 2. 3} at: 2 put: -2) == -2. "=> true (at:put: returns the element put)"
 (#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
 (#(1 2 3 4 5) rotateLeft: 1) = #(2 3 4 5 1).
 (#(1 2 3 4 5) rotate: 1) = #(5 1 2 3 4).
@@ -275,7 +272,7 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 (#(1 3 5 7) indexOf: 9 ifAbsent: [ '?' ]) = '?'.
 (#(1 3 5 7) detect: [ :item | item > 5]) = 7.
 (#(1 3 5 7) detect: [ :item | item > 7] ifNone: [ '?' ]) = '?'.
-(#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ]) = 49. "squeak"
+(#(1 3 5 7) detect: [ :item | item > 5] ifFound: [ :item | item * item ] ifNone: [ '?' ]) = 49. "squeak; Gnu: dnu"
 } allSatisfy: #yourself
 
 Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
@@ -319,8 +316,8 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 {
 'file' , '.ext' = 'file.ext'.
 3.141 printString = '3.141'.
-(3.141 printStringLimitedTo: 4) = '3.14...etc...'.
-Array class printString = 'a Metaclass'.
+(3.141 printStringLimitedTo: 4) = '3.14...etc...'. "Gnu: dnu"
+Array class printString = 'Array class'. "stsc3-st: broken"
 } allSatisfy: #yourself
 
 '\n' "=> '\n'"
@@ -383,17 +380,17 @@ d := Dictionary newFromPairs: {'select'. 'x'. 'from'. 'y'. 'list'. 'z'}
 
 {
 SinOsc name = #SinOsc. "true"
-SinOsc class name = #'SinOsc class'.
+SinOsc class name = #'SinOsc class'. "Gnu: nil"
 SinOsc new class name = #SinOsc. "true"
 SinOsc class class name = #Metaclass. "true"
-SinOsc class class class name = #'Metaclass class'.
+SinOsc class class class name = #'Metaclass class'. "Gnu: nil"
 SinOsc class class class class name = #Metaclass. "true"
 SinOsc superclass name = #ScUgen. "true"
 SinOsc superclass superclass name = #Object. "true"
 SinOsc subclasses size = 0. "true"
 } allSatisfy: #yourself
 
-ScUgen subclasses size = 153. "true"
+ScUgen subclasses size = 236. "true"
 
 SinOsc methodDict. "Squeak"
 SinOsc methodDictionary. "Gnu Smalltalk"
@@ -403,17 +400,17 @@ SinOsc class inspect.
 SinOsc new inspect.
 
 True class superclass = True superclass class. "=> true"
-Object superclass = nil.                       "=> true ; GNU "
-Object class superclass = Class.               "=> true ; GNU"
+Object superclass = nil.                       "=> true ; Gnu "
+Object class superclass = Class.               "=> true ; Gnu"
 
 Object superclass = ProtoObject               "=> true ; Squeak"
-ProtoObject class superclass = Class          "=> true ; Squeak"
+ProtoObject class superclass = Class          "=> true ; Squeak; Gnu = Object"
 
 $c class = Character.                          "=> true"
 
 (1 perform: #class withArguments: #()) = SmallInteger.
-(1 perform: #class withArguments: #() inSuperclass: SmallInteger) = SmallInteger
-(1 perform: #class withArguments: #() inSuperclass: Integer) = SmallInteger.
+(1 perform: #class withArguments: #() inSuperclass: SmallInteger) = SmallInteger. "Gnu: dnu"
+(1 perform: #class withArguments: #() inSuperclass: Integer) = SmallInteger. "Gnu: dnu"
 
 "Time"
 
@@ -553,16 +550,18 @@ Form fromUser asMorph openInWorld. "squeak ; screenshot selection"
 
 "File I/O - Object"
 
-d := {'a'->1. 'b'->2. 'c'->'3'} as: Dictionary.
+d := {'a'->1. 'b'->2. 'c'->'3'} as: Dictionary. "Gnu: dnu"
 FileStream forceNewFileNamed: '/tmp/dict.st' do: [:out | d storeOn: out]. "store"
 FileStream oldFileNamed: '/tmp/dict.st' do:  [:in | Object readFrom: in]. "read"
 FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
 
 "Stream"
 
+{
 (String streamContents: [ :aStream | 'hello there!' printOn: aStream ]) = '''hello there!'''.
 (ByteArray streamContents: [ :aStream | aStream int32: ScGraph scgf ]) asArray = #(83 67 103 102).
 (ByteArray streamContents: [ :aStream | aStream float32: 3.141 ]) asArray = #(64 73 6 37).
+} allSatisfy: #yourself
 
 "Smalltalk"
 
@@ -577,11 +576,10 @@ Smalltalk aboutThisSystem. "System Reporter"
 {
 69 midiCps = 440.
 440 cpsMidi = 69.
--32 dbAmp = 0.025118864315095784.
+-32 dbAmp closeTo: 0.025118864315095784.
 -32 dbAmp ampDb rounded = -32.
 (0 raisedTo: 1) = 0.
 (1 raisedTo: 0) = 1.
-(0 raisedTo: 0) = 1. "gst = error"
 (0.0 raisedTo: 1.0) = 0.0.
 (1.0 raisedTo: 0.0) = 1.0.
 (0.0 raisedTo: 0.0) = 1.0.
@@ -590,10 +588,6 @@ Smalltalk aboutThisSystem. "System Reporter"
 Float pi = 3.141592653589793.
 Float pi * 2 = 6.283185307179586.
 ([ :x | x * x ] value: Float pi * 2) = 39.47841760435743.
-Float infinity printString = 'Infinity'.
-(-1 raisedTo: (1 / 2)) isNaN. "ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
-(-1 raisedTo: (1 / 3)) isNaN. "=> -1 (Squeak)"
-(-1 raisedTo: 0.5) isNaN. "=> ArithmeticError: Negative can't be raised to float powers."
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095.
 (0.5 linExpFrom: 1 to: 2) = 1.414213562373095.
 13 \\ 12 = 1. "13 modulo 12"
@@ -604,6 +598,11 @@ Float infinity printString = 'Infinity'.
 (13 % (SinOsc freq: 440 phase: 0 mul: 12)) isUgen.
 } allSatisfy: #yourself
 
+(-1 raisedTo: (1 / 3)) isNaN. "=> -1 (Squeak) ; Gnu: error"
+(-1 raisedTo: 0.5) isNaN. "=> ArithmeticError: Negative can't be raised to float powers."
+(-1 raisedTo: (1 / 2)) isNaN. "Gnu: ArithmeticError: Negative numbers don't have even roots. c.f. nthRoot:"
+Float infinity printString = 'Infinity'. "gst Inf"
+(0 raisedTo: 0) = 1. "gst = error"
 (0 to: 10) collect: [ :n | (n / 10) linExpFrom: 1 to: 2 ] "=> 10 point equally spaced points on exponential curve from 1 to 2"
 
 1 / 0 "=> error"
@@ -613,7 +612,7 @@ Float infinity printString = 'Infinity'.
 (BinaryOpUgen selector: #* a: 0.1 b: (SinOsc freq: 440 phase: 0)) draw
 (BinaryOpUgen selector: #% a: 0.1 b: (SinOsc freq: 440 phase: 0)) draw
 
-"GNU Smalltalk"
+"Gnu Smalltalk"
 
 Smalltalk system: 'ls /home/rohan/sw/stsc3/README.md'.
 Smalltalk getenv: 'HOME'. "/home/rohan"
@@ -756,26 +755,26 @@ m encode asArray = #(47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 25
 
 | new load |
 new := OscMessage at: '/s_new' with: #('tmp' -1 0 1).
-load := OscMessage at: '/d_load' with: { '/tmp/tmp.scsyndef'. new encodeOsc}.
-load encodeOsc size = 68
+load := OscMessage at: '/d_load' with: { '/tmp/tmp.scsyndef'. new encode}.
+load encode size = 68
 
 {
 m address = '/n_set'.
 m arguments = #(-1 'freq' 440 'amp' 0.1).
 (m arguments collect: #oscTypeTag) = #($i $s $i $s $f).
 m descriptor = ',isisf'.
-m oscString = '/n_set ,isisf -1 freq 440 amp 0.1 '.
+m asString = '/n_set ,isisf -1 freq 440 amp 0.1 '.
 } allSatisfy: #yourself
 
 m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
 m printOscOn: Transcript
-(m encodeOsc) sendUdpToHost: '127.0.0.1' port: 57110
+(m encode) sendUdpToHost: '127.0.0.1' port: 57110
 
 m := OscMessage at: '/memset' with: #('addr' (0 1 15 16 255)).
 
 {
 m descriptor = ',sb'.
-m oscString = '/memset ,sb addr 00010F10FF'.
+m asString = '/memset ,sb addr 00010F10FF'.
 } allSatisfy: #yourself
 
 m printOscOn: Transcript
@@ -785,7 +784,7 @@ s := WriteStream on: (ByteArray new: 20)
 3.14 putOscOn: s "must be in network byte order"
 'rq' putOscOn: s "must be 4-byte aligned and nul terminated"
 #(1 2 3) putOscOn: s "must be length prefixed in network order and 4-byte aligned"
-s contents
+s contents asArray = #(0 0 4 210 64 72 245 195 114 113 0 0 0 0 0 3 1 2 3 0 )
 
 "Testing"
 
@@ -838,7 +837,7 @@ s close.
 
 "Float"
 
-3.141 asIEEE32BitWord = 1078527525
+3.141 asIEEE32BitWord = 1078527525.
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

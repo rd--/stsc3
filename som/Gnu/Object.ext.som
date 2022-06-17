@@ -16,6 +16,10 @@ isCollection = (
 	^false
 )
 
+isInterval = (
+	^false
+)
+
 value = (
 	^self
 )
