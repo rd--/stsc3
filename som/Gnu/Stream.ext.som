@@ -30,6 +30,10 @@ float32: aFloat = (
 	self nextPutByte: (f at: 1)
 )
 
+nextNumber: n put: anInteger = (
+	self nextPutBytesNetworkOrder: n of: anInteger
+)
+
 nextPutByte: anInteger = (
 	self nextPut: anInteger
 )

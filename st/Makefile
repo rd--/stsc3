@@ -7,7 +7,7 @@ all:
 	stsc3 translate directory som fileout ../som/Cuis Cuis.st
 	stsc3 translate directory som fileout ../som/Ui Ui.st
 	cat Osc.st Sc3.st Squeak.st Ui.st > Sc3-Filein-For-Squeak.st
-	cat Sc3.st Gnu.st > Sc3-Filein-For-Gnu.st
+	cat Osc.st Sc3.st Gnu.st Gnu/*.st > Sc3-Filein-For-Gnu.st
 	cat Sc3.st Cuis.st > Sc3-Filein-For-Cuis.st
 
 clean:

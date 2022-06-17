@@ -58,6 +58,9 @@ u := SinOsc freq: 440 phase: Float pi mul: 0.1.
 (ScGraph from: u withName: 'tmp') printString
 (ScGraph ugenSetOf: u) do: [ :item | item inspect ]
 Sc3 writeBinarySyndefOf: (Out bus: 0 channelsArray: (SinOsc freq: 440 phase: Float pi mul: 0.1)) to: '/tmp/stsc3.scsyndef'
+ScGraph scgf = 1396926310.
+((ScGraph scgf) digitAt: 4) = 83. "$S asInteger = 83"
+((4 to: 1 by: -1) collect: [ :index | Character value: ((ScGraph scgf) digitAt: index) ]) = #($S $C $g $f).
 
 "Scsynth"
 
@@ -65,6 +68,8 @@ Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 play: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 playUsingTextSyndef: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 playUsingBinarySyndef: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 playUsingUdpDirectlyEncoded: (SinOsc freq: 440 phase: 0 mul: 0.1).
+Sc3 playUsingUdpWithTemporaryFile: (SinOsc freq: 440 phase: 0 mul: 0.1).
 Sc3 reset.
 
 (SinOsc freq: 440 phase: 0 mul: 0.1) draw.
@@ -555,8 +560,9 @@ FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
 
 "Stream"
 
-(String streamContents: [ :aStream | 'hello there!' printOn: aStream ]) = '''hello there!'''
-ByteArray streamContents: [ :aStream | aStream float32: 3.141 ] "Squeak"
+(String streamContents: [ :aStream | 'hello there!' printOn: aStream ]) = '''hello there!'''.
+(ByteArray streamContents: [ :aStream | aStream int32: ScGraph scgf ]) asArray = #(83 67 103 102).
+(ByteArray streamContents: [ :aStream | aStream float32: 3.141 ]) asArray = #(64 73 6 37).
 
 "Smalltalk"
 
@@ -619,6 +625,7 @@ ObjectMemory scavenge. "garbage collection (minor)"
 ObjectMemory current inspect. "vm memory statistics"
 File image asString. "location of image file"
 
+"gst-load Sockets"
 FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Filein-For-Gnu.st'.
 
 "Help Graphs"
@@ -744,6 +751,13 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 "Open Sound Control"
 
 m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
+m encode = m asByteArray
+m encode asArray = #(47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205)
+
+| new load |
+new := OscMessage at: '/s_new' with: #('tmp' -1 0 1).
+load := OscMessage at: '/d_load' with: { '/tmp/tmp.scsyndef'. new encodeOsc}.
+load encodeOsc size = 68
 
 {
 m address = '/n_set'.
@@ -821,6 +835,10 @@ s := Sockets.DatagramSocket remote: '127.0.0.1' port: 57110 local: nil port: 0.
 m := (OscMessage at: '/g_freeAll' with: #(1)) encodeOsc.
 s nextPut: (Sockets.Datagram data: m); flush.
 s close.
+
+"Float"
+
+3.141 asIEEE32BitWord = 1078527525
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

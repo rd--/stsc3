@@ -2,18 +2,22 @@ ScGraph = (
 
 | name ugenSeq constantSeq |
 
+asByteArray = (
+	^ByteArray streamContents: [ :aStream | self encodeOn: aStream ]
+)
+
 constantIndex: aNumber = (
 	| answer |
 	answer := constantSeq indexOf: (aNumber asFloat) ifAbsent: [ self error: ('cannot find index for number: ' , aNumber asString) ].
 	^answer - 1
 )
 
-encodeSyndef = (
-	^ByteArray streamContents: [ :aStream | self encodeSyndefOn: aStream ]
+encode = (
+	^self asByteArray
 )
 
-encodeSyndefOn: aStream = (
-	aStream int32: self scgf; int32: 2; int16: 1; pascalString: name; int32: constantSeq size.
+encodeOn: aStream = (
+	aStream int32: ScGraph scgf; int32: 2; int16: 1; pascalString: name; int32: constantSeq size.
 	constantSeq do: [ :item | aStream float32: item asFloat ].
 	aStream int32: 0; int32: 0; int32: ugenSeq size.
 	ugenSeq do: [ :item | item encodeForSyndef: self on: aStream ].
@@ -29,15 +33,11 @@ printOn: aStream = (
 )
 
 printSyndefOn: aStream = (
-	aStream << self scgf << ' ' << 2 << ' ' << 1 << ' ' << name << ' ' << constantSeq size << ' '.
+	aStream << ScGraph scgf << ' ' << 2 << ' ' << 1 << ' ' << name << ' ' << constantSeq size << ' '.
 	constantSeq do: [ :item | aStream << item asFloat << ' ' ].
 	aStream << 0 << ' ' << 0 << ' ' << ugenSeq size << ' '.
 	ugenSeq do: [ :item | item printForSyndef: self on: aStream ].
 	aStream << 0
-)
-
-scgf = (
-	^1396926310
 )
 
 ugenIndex: aNumber = (
@@ -64,6 +64,11 @@ from: anObject withName: aString = (
 	ugenSeq := {maxLocalBufs scUgen} , ugens.
 	constantSeq := ({numLocalBufs} , constants) asSet asArray sorted collect: [ :item | item asFloat ].
 	^ScGraph new name: aString ugenSeq: ugenSeq constantSeq: constantSeq
+)
+
+scgf = (
+	"Encodes as the bytes SCgf"
+	^1396926310
 )
 
 ugenSetOf: anObject = (
