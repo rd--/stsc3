@@ -22,6 +22,7 @@ import qualified Data.Functor.Identity as Identity {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
 
+--import qualified Data.Graph as Graph {- containers -}
 import qualified Data.List.Split as Split {- split -}
 
 import qualified Text.Parsec as P {- parsec -}
@@ -161,8 +162,8 @@ noInstanceState = InstanceState NonIndexable []
 
 {- | A class definition defines the behavior and encapsulated state of objects.
 
-The super class is empty (Nothing) if the class is base class (i.e. Object or ProtoObject) else it is the name of the super class,
-an empty super class does not indicate that a "default" superclass should be selected.
+superclassName is empty (Nothing) if the class is the base class (i.e. Object or ProtoObject) else it is the name of the super class.
+An empty superclassName does not indicate that a "default" superclass should be selected.
 -}
 data ClassDefinition =
   ClassDefinition
@@ -251,6 +252,9 @@ classCategoryParts = fmap categoryParts . classCategory
 
 classCategoryPartsOrError :: ClassDefinition -> ClassCategoryParts
 classCategoryPartsOrError = categoryParts . classCategoryOrError
+
+classDefinitionSetCategory :: Maybe String -> ClassDefinition -> ClassDefinition
+classDefinitionSetCategory cat cd = cd { classCategory = cat }
 
 -- | Apply f to both class and instance methods.
 classDefinitionEditMethods :: ([MethodDefinition] -> [MethodDefinition]) -> ClassDefinition -> ClassDefinition

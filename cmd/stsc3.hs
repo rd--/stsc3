@@ -133,8 +133,8 @@ lib_fileout_to_som opt fileout_fn som_dir = do
   lib <- FileOut.fileOutLoadPartial fileout_fn
   writeAllSomClassDef opt som_dir lib
 
-dir_som_to_fileout :: FilePath -> FilePath -> IO ()
-dir_som_to_fileout som_dir fileout_fn = do
+dir_som_to_fileout :: String -> FilePath -> FilePath -> IO ()
+dir_som_to_fileout cat som_dir fileout_fn = do
   all_fn <- Music.Theory.Directory.Find.dir_find_ext ".som" som_dir
   let ext_fn = filter (".ext." `isInfixOf`) all_fn
       mod_fn = filter (".mod." `isInfixOf`) all_fn
@@ -144,7 +144,7 @@ dir_som_to_fileout som_dir fileout_fn = do
   cls_cd <- mapM readCd cls_fn
   ext_md <- mapM readMd ext_fn
   mod_md <- mapM readMd mod_fn
-  let cls_fo = unlines (map FileOut.fileOutClassDefinition cls_cd)
+  let cls_fo = unlines (map FileOut.fileOutClassDefinition (map (St.classDefinitionSetCategory (Just cat)) cls_cd))
       mth_fo = unlines (map FileOut.fileOutMethodDefinition (concat ext_md ++ concat mod_md))
   writeFile fileout_fn (cls_fo ++ mth_fo)
 
@@ -158,7 +158,8 @@ stc_to_js fn = do
 
 opt_def :: [Opt.OptUsr]
 opt_def =
-  [("sort","False","bool","sort methods in class")
+  [("category","Uncategorised","string","set class category")
+  ,("sort","False","bool","sort methods in class")
   ,("tidy","False","bool","tidy method source")
   ]
 
@@ -170,7 +171,7 @@ help =
     ," stc cat { fragment | library | extensions } <supercollider-file...>"
     ," st cat { parsec | happy } <smalltalk-file...>"
     ," translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
-    ," translate directory som fileout <input-directory> <output-file>"
+    ," translate directory [opt] som fileout <input-directory> <output-file>"
     ," translate library [opt] fileout som <input-file> <output-directory>"
     ," translate [ stream ] stc { js | sc | scm | st } [ <input-file> <output-file> ]"
     ]
@@ -197,7 +198,7 @@ main = do
     ["translate", "class", "fileout", "som", fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate", "class", "som", "fileout", som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
     ["translate", "class", "som", "som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
-    ["translate", "directory", "som", "fileout", som_dir, fileout_fn] -> dir_som_to_fileout som_dir fileout_fn
+    ["translate", "directory", "som", "fileout", som_dir, fileout_fn] -> dir_som_to_fileout (Opt.opt_get o "category") som_dir fileout_fn
     ["translate", "extensions", "fileout", "som", fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate", "library", "fileout", "som", fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
     ["translate", "stream", in_ty, out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)

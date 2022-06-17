@@ -318,7 +318,7 @@ Seq : PseudoUgen {
 Ser : PseudoUgen {
 	*constructor {
 		arg repeats, list;
-		^Dser(repeats, list)
+		^Dseries(repeats, list)
 	}
 }
 
