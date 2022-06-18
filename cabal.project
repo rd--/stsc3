@@ -11,23 +11,3 @@ source-repository-package
 source-repository-package
     type: git
     location: https://gitlab.com/rd--/hsc3.git
-
-source-repository-package
-    type: git
-    location: https://gitlab.com/rd--/hsc3-db.git
-
-source-repository-package
-    type: git
-    location: https://gitlab.com/rd--/hsc3-dot.git
-
-source-repository-package
-    type: git
-    location: https://gitlab.com/rd--/hsc3-lang.git
-
-source-repository-package
-    type: git
-    location: https://gitlab.com/rd--/hsc3-lisp.git
-
-source-repository-package
-    type: git
-    location: https://gitlab.com/rd--/hsc3-rw.git
