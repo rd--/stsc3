@@ -22,5 +22,5 @@ main = do
   stc_text <- readFile (stsc3_file "stc/Pseudo.lib.stc")
   let sccd = stc_parse_class_definition_seq stc_text
       stcd = map Sc.scClassDefinitionToSt sccd
-      wr = St.writeSomClassDefinition (stsc3_file "som/Sc3-Pseudo")
+      wr = St.writeSomClassDefinition (stsc3_file "som/Sc3/Pseudo")
   mapM_ wr stcd

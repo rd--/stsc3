@@ -59,5 +59,5 @@ main = do
   st_mth <- mapM (proc_file True) fn_list
   som_mth <- mapM (proc_file False) fn_list
   let endWith e = unlines . map (++ e)
-  writeFile (stsc3_dir ++ "som/Sc3-Help/Sc3HelpGraph.ext.som") (unlines [som_methods_preamble, endWith ")" som_mth, som_methods_postamble])
+  writeFile (stsc3_dir ++ "som/Sc3/Help/Sc3HelpGraph.ext.som") (unlines [som_methods_preamble, endWith ")" som_mth, som_methods_postamble])
   writeFile (stsc3_dir ++ "st/Sc3-Help.st") (unlines [st_methods_prefix, endWith "!" st_mth, "!"])

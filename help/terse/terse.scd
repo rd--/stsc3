@@ -375,8 +375,10 @@ context.class == Frame                                      // context
 'Interval'
 
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
-Interval.new( 0, 12, 3).size == 5                           // number of elements in interval
+Interval.new(0, 12, 3).size == 5                            // number of elements in interval
 2.to(14, 4).collect({ arg x; x * x }) == [4, 36, 100, 196]  // to method at Integer
+Interval.new(-1, 1, 1e-9).size == 2e9                       // 2000000000 places between -1 and 1
+Interval.new(-1, 1, 1e-9).at(1e9) == 0		            // access value at 1000000001th place
 
 'Iteration'
 
