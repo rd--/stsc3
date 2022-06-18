@@ -108,4 +108,10 @@ tanh = (
 	^self collect: [ :item | item tanh ]
 )
 
+----
+
+apply: anArray = (
+	^ self newFrom: anArray
+)
+
 )

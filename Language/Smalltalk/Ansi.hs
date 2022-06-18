@@ -22,7 +22,7 @@ import qualified Data.Functor.Identity as Identity {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
 
---import qualified Data.Graph as Graph {- containers -}
+import qualified Data.Graph as Graph {- containers -}
 import qualified Data.List.Split as Split {- split -}
 
 import qualified Text.Parsec as P {- parsec -}
@@ -319,6 +319,20 @@ classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
 -- | A class definition that extends or modifies an existing class should have its superclass set to itself.
 classDefinitionIsExtensionOrModification :: ClassDefinition -> Bool
 classDefinitionIsExtensionOrModification cd = Just (className cd) == superclassName cd
+
+type ClassDefinitionGraph = (Graph.Graph, Graph.Vertex -> (ClassDefinition, Identifier, [Identifier]), Identifier -> Maybe Graph.Vertex)
+
+-- | Graph where each class definition is connected to it's superclass, iff that class is also in the list of definitions.
+classDefinitionsInheritanceGraph :: [ClassDefinition] -> ClassDefinitionGraph
+classDefinitionsInheritanceGraph l =
+  let nd = map className l
+      e cd = case superclassName cd of
+               Nothing -> []
+               Just sc -> if sc `elem` nd then [sc] else []
+  in Graph.graphFromEdges (zip3 l nd (map e l))
+
+classDefinitionGraphSort :: ClassDefinitionGraph -> [ClassDefinition]
+classDefinitionGraphSort (g, f, _) = reverse (map ((\(cd, _, _) -> cd) . f) (Graph.topSort g)) -- 0.6.4 has reverseTopSort
 
 -- * 3.3.3 Global Variable Definition
 

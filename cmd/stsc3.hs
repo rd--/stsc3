@@ -133,6 +133,11 @@ lib_fileout_to_som opt fileout_fn som_dir = do
   lib <- FileOut.fileOutLoadPartial fileout_fn
   writeAllSomClassDef opt som_dir lib
 
+cd_sort :: [St.ClassDefinition] -> [St.ClassDefinition]
+cd_sort l =
+  let g = St.classDefinitionsInheritanceGraph l
+  in St.classDefinitionGraphSort g
+
 dir_som_to_fileout :: String -> FilePath -> FilePath -> IO ()
 dir_som_to_fileout cat som_dir fileout_fn = do
   all_fn <- Music.Theory.Directory.Find.dir_find_ext ".som" som_dir
@@ -144,7 +149,7 @@ dir_som_to_fileout cat som_dir fileout_fn = do
   cls_cd <- mapM readCd cls_fn
   ext_md <- mapM readMd ext_fn
   mod_md <- mapM readMd mod_fn
-  let cls_fo = unlines (map FileOut.fileOutClassDefinition (map (St.classDefinitionSetCategory (Just cat)) cls_cd))
+  let cls_fo = unlines (map FileOut.fileOutClassDefinition (map (St.classDefinitionSetCategory (Just cat)) (cd_sort cls_cd)))
       mth_fo = unlines (map FileOut.fileOutMethodDefinition (concat ext_md ++ concat mod_md))
   writeFile fileout_fn (cls_fo ++ mth_fo)
 

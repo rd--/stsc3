@@ -18,6 +18,7 @@ Data-files:         README.md
 library
   build-depends:        array,
                         base >= 4.7 && < 5,
+                        containers,
                         filepath,
                         hmt-base == 0.20.*,
                         parsec,

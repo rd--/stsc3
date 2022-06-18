@@ -48,6 +48,9 @@ If _BlockClosure_ has an instance definition of _apply:_ defined as _valueWithAr
 then the notation _f(p, q)_ where _f_ is a block has the meaning _f value: p value: q_.
 This is not, however, compatible with SuperCollider notation, where _f(p, q)_ has the meaning _p.f(q)_.
 
+If _Collection_ defines _apply:_ as _newFrom:_
+then the notation _C(p, q, ...)_ where _C_ is a collection class has the meaning _C newFrom: {p. q. ...}_.
+
 ## Implicit keyword message names
 
 If the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts.
