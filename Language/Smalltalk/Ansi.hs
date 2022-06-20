@@ -1441,19 +1441,19 @@ type OrdinaryIdentifier = String
 -}
 ordinaryIdentifier :: P OrdinaryIdentifier
 ordinaryIdentifier = Token.identifier stLexer
+--  if token `elem` stReservedIdentifiers then P.unexpected ("reservedIdentifier: " ++ token) else return token
 
 {- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
 
-> p = stParse ordinaryIdentifierNonLexeme
+> p = stParse identifierNonLexemeForKeyword
 > p "x" == "x"
-> p "self" -- error
+> p "super" == "super" -- super: as part of a keyword is allowed, &etc.
 -}
-ordinaryIdentifierNonLexeme :: P OrdinaryIdentifier
-ordinaryIdentifierNonLexeme = do
+identifierNonLexemeForKeyword :: P OrdinaryIdentifier
+identifierNonLexemeForKeyword = do
   c0 <- P.letter
   cN <- P.many (P.letter P.<|> P.digit)
-  let token = c0 : cN
-  if token `elem` stReservedIdentifiers then P.unexpected "reserverdIdentifier" else return (c0 : cN)
+  return (c0 : cN)
 
 type Identifier = String
 
@@ -1488,7 +1488,7 @@ type Keyword = Identifier
 -- | A keyword parser that is not a lexeme.  A keyword selector is a sequence of non-lexeme keywords.
 keywordNotLexeme :: P Keyword
 keywordNotLexeme = do
-  cs <- P.label ordinaryIdentifierNonLexeme "keyword"
+  cs <- P.label identifierNonLexemeForKeyword "keyword"
   c <- P.label (P.char ':') "keyword"
   return (cs ++ [c])
 
