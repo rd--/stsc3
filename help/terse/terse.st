@@ -819,6 +819,21 @@ s reset
 ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (ReadWriteStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
 
+'Regular Expressions'
+
+{
+'car' matchesRegex: 'c(a|d)+r'.
+'cdr' matchesRegex: 'c(a|d)+r'.
+'caar' matchesRegex: 'c(a|d)+r'.
+'cadr' matchesRegex: 'c(a|d)+r'.
+'caddar' matchesRegex: 'c(a|d)+r'.
+} allSatisfy: #yourself
+
+('aabbcc' matchesRegex: 'a+') not.
+('aabbcc' matchesRegex: 'b+c+') not.
+'aabbcc' matchesRegex: 'a+b+c+'.
+'aabbcc' prefixMatchesRegex: 'a+'.
+
 'SequenceableCollection'
 
 #(1 2 3 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
@@ -982,6 +997,7 @@ String new species = String new species.
 'string' includes: $i.           "true"
 ('string' includes: nil) = false.
 String initializedInstance = ''.
+('antidisestablishmentarianism' contractTo: 10) = 'anti...ism'.
 } allSatisfy: #yourself
 
 s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
