@@ -17,11 +17,14 @@ Requires:
 
 - [SuperCollider](http://audiosynth.com/)
 
+For .stc translation:
+
+- Squeak/Cuis:[OSProcess](http://wiki.squeak.org/squeak/708)
+
 For graph drawing:
 
 - [hsc3-dot](http://rohandrape.net/?t=hsc3-dot)
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)
-- Squeak/Cuis:[OSProcess](http://wiki.squeak.org/squeak/708)
 
 Tested with:
  [Squeak](http://squeak.org/) 6.0α & 5.3 ;
