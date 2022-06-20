@@ -1,0 +1,7 @@
+Character = Character (
+
+putOn: fd = (
+	^ fd nextPut: self
+)
+
+)

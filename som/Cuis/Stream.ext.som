@@ -1,0 +1,16 @@
+Stream = Stream (
+
+<< items = (
+	 items putOn: self.
+	 ^self
+)
+
+int16: aNumber = (
+	self nextSignedInt16Put: aNumber bigEndian: true
+)
+
+int32: aNumber = (
+	self nextSignedInt32Put: aNumber bigEndian: true
+)
+
+)

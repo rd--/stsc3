@@ -779,6 +779,10 @@ OrderedCollection new add:true ; add: true ; add: true ;add: false ; add: false;
 
 (SmallInteger methodDict at: #*) primitive = 9 "squeak"
 
+'Random'
+
+(Random seed: 123456789) next: 3 "=> 0.7673278600230706. 0.8482561706965248. 0.9266139789138809"
+
 'ReadStream'
 
 (ReadStream on: 'Hello read stream') contents               "contents of ReadStream on String"

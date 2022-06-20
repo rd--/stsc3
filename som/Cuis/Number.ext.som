@@ -1,0 +1,12 @@
+Number = Number (
+
+putOn: aStream = (
+	self printOn: aStream
+)
+
+** aNumber = (
+	^self raisedTo: aNumber
+)
+
+)
+

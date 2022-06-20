@@ -1,2 +1,2 @@
 clean:
-	(cd Sc3-Help ; make clean)
+	(cd Sc3/Help ; make clean)

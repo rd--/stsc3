@@ -1,0 +1,8 @@
+SequenceableCollection = SequenceableCollection (
+
+adaptToCollection: rcvr andSend: selector = (
+	^rcvr withExtending: self collect: [ :rcvrElement :myElement | rcvrElement perform: selector with: myElement ]
+)
+
+)
+

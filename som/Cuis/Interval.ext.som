@@ -1,0 +1,11 @@
+Interval = Interval (
+
++ arg = (
+	^self asArray + arg
+)
+
+- arg = (
+	^self asArray - arg
+)
+
+)
