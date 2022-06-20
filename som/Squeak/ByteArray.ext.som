@@ -1,9 +1,10 @@
 ByteArray = ByteArray (
 
-sendUdpToHost: hostAddress port: portNumber = (
+sendUdpToHost: hostName port: portNumber = (
+	"Send myself as a Udp packet to hostName:portNumber.  hostName is a String, portNumber is an Integer."
 	| socket |
 	socket := Socket udpCreateIfFail: [ self error: 'failed to create Udp socket' ].
-	socket sendUDPData: self toHost: hostAddress port: portNumber.
+	socket sendUDPData: self toHost: (NetNameResolver addressForName: hostName) port: portNumber.
 	socket close.
 )
 

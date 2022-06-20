@@ -51,7 +51,7 @@ programInitializerDefinition_pp = initializerDefinition_pp
 {- | Print method definition.
      If the method source has been stored return that, else a plain pretty print of the definition.
 
-> let rw = methodDefinition_pp . stParse (methodDefinition Nothing "")
+> let rw = methodDefinition_pp . stParse (methodDefinition Nothing ("", False))
 > let src = "midicps ^440 * (2 ** ((self - 69) * (1 / 12)))"
 > rw src == src
 -}

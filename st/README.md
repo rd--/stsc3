@@ -10,6 +10,8 @@ The generated files are not stored in version control and the build stage requir
 
 Squeak:
 
+Graph drawing isn't implemented directly, it requires:
+
 - MCMcmUpdater updateFromRepository: 'http://www.squeaksource.com/OSProcess'
 
 Cuis:
