@@ -985,7 +985,7 @@ String initializedInstance = ''.
 } allSatisfy: #yourself
 
 s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
- s = 'strung'. "=> strung, string literals are mutable"
+s = 'strung'. "=> strung, string literals are mutable"
 'string' hash ~= #'string' hash "strings and symbols hash unequally"
 'foo {1} bar' format: #(3.141)
 

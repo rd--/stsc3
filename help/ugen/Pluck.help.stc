@@ -16,3 +16,4 @@ Voicer(16, {
 	var sig = Pluck(WhiteNoise() * e.z, e.w, dm, dl, 10, e.y / 3);
 	Pan2(sig, e. o * 2 - 1, 1)
 }).sum
+

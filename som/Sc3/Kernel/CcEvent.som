@@ -1,0 +1,82 @@
+CcEvent = Object (
+
+| voice data |
+
+voice: anInteger = (
+	voice := anInteger
+)
+
+data: anArray = (
+	data := anArray
+)
+
+v = (
+	^voice
+)
+
+w = (
+	"Typically a gate control"
+	^data at: 1
+)
+
+x = (
+	"Typically left-right position control"
+	^data at: 2
+)
+
+y = (
+	"Typically near-far position control"
+	^data at: 3
+)
+
+z = (
+	"Typically pressure control"
+	^data at: 4
+)
+
+o = (
+	"Typically orientation control"
+	^data at: 5
+)
+
+rx = (
+	^data at: 6
+)
+
+ry = (
+	^data at: 7
+)
+
+p = (
+	"Typically computed pitch control"
+	^data at: 8
+)
+
+px = (
+	^data at: 9
+)
+
+i = (
+	^data at: 5
+)
+
+ii = (
+	^data at: 6
+)
+
+iii = (
+	^data at: 7
+)
+
+----------------------------
+
+voice: anInteger from: aCollection = (
+	"Create continuous controller event object from sequence of control signals"
+	^self new voice: anInteger; data: (Array newFrom: aCollection); yourself
+)
+
+comment = (
+	^'Continuous Controller Event'
+)
+
+)

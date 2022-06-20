@@ -3,13 +3,11 @@ Voicer = Object (
 ----------------------------
 
 k0: k0 stp: stp c0: c0 numVoices: numVoices voiceFunc: voiceFunc = (
-	| v |
-	v := 0 to: numVoices - 1.
-	^v collect: [ :c | voiceFunc value: (self k0: k0 stp: stp c: (c0 + c))]
+	^(0 to: numVoices - 1) collect: [ :c | voiceFunc value: (self k0: k0 stp: stp c: (c0 + c))]
 )
 
 k0: k0 stp: stp c: c = (
-	^EventParam voice: c fromUgen: (ControlIn numChan: 9 bus: (k0 + (c * stp)))
+	^CcEvent voice: c from: (ControlIn numChan: 9 bus: (k0 + (c * stp)))
 )
 
 numVoices: numVoices voiceFunc: voiceFunc = (
@@ -33,7 +31,7 @@ voiceAddr: voiceNumber = (
 )
 
 comment = (
-	^'Event Control Input'
+	^'Continuous controller event voicer'
 )
 
 )
