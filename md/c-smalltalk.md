@@ -35,9 +35,9 @@ In C-Smalltalk it has a related but distinct meaning, _SinOsc.apply([440, 0])_.
 _apply:_ is ordinarily defined as _perform:withArguments:_ at the _primaryFactoryMethod_ of the receiver. [1]
 (This terminology is borrowed from [Newspeak](https://newspeaklanguage.org/) though the meaning is somewhat different.)
 
-The primaryFactoryMethod of _SinOsc_ is _freq:phase:_, and so on for all of the SuperCollider UGens.
+The primaryFactoryMethod of _SinOsc_ is _freq:phase:_, and so on for all of the SuperCollider unit generators.
 
-UGens that have no parameters, such as PinkNoise, have _new_ as their primaryFactoryMethod, and can be instantiated as _PinkNoise()_.
+Ugens that have no parameters, such as _PinkNoise_, have _new_ as their primaryFactoryMethod, and can be instantiated as _PinkNoise()_.
 
 This translation is uniform for all primary identifiers. [2]
 
@@ -126,7 +126,7 @@ C-Smalltalk writes this as _[p, q, r]_.
 In addition C-Smalltalk has a notation for writing _Dictionary_ expressions.
 _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
 or _Dictionary newFromPairs: {#a. 1. #b. 2}_.
-This notation requires keys to be identifiers.
+This notation requires keys to be symbols.
 
 # Notation for class definitions
 

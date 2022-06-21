@@ -377,8 +377,8 @@ context.class == Frame                                      // context
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
 Interval.new(0, 12, 3).size == 5                            // number of elements in interval
 2.to(14, 4).collect({ arg x; x * x }) == [4, 36, 100, 196]  // to method at Integer
-Interval.new(-1, 1, 1e-9).size == 2e9                       // 2000000000 places between -1 and 1
-Interval.new(-1, 1, 1e-9).at(1e9) == 0		            // access value at 1000000001th place
+Interval.new(-1, 1, 0.000001).size == 2000001               // 2000001 places between -1 and 1
+Interval.new(-1, 1, 0.000001).at(1000000) == 0		    // access value at 1000001st place
 
 'Iteration'
 
@@ -658,10 +658,8 @@ Class.allClasses.printAll                                   // print all class n
 
 'Collection access and mutation syntax'
 
-collection[key]                                             // c.k is syntax for c.at(k)
-collection[key] = value                                     // c.k = v is syntax for c.put(k, v)
-"text".copy[2].toUpper == $X                                // lookup char in string
-x = "text".copy; x[2] = $s; x == "test"                     // set char in mutable string
+"text".copy[2].toUpper == $X                                // c[k] is syntax for c.at(k), lookup char in string
+x = "text".copy; x[2] = $s; x == "test"                     // c[k] = v is syntax for c.put(k, v), set char in mutable string
 x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutable array
 
 'Event (Dictionary) syntax'
@@ -676,4 +674,4 @@ x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutab
 
 'Setter Syntax'
 
-Point.new.x_(9)                                             // p.x = y is syntax for p.x_(y)
+Point.new.x_(9).x == 9                                      // p.x = y is syntax for p.x_(y)

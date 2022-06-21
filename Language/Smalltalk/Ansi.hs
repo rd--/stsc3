@@ -21,6 +21,7 @@ import Data.Char {- base -}
 import qualified Data.Functor.Identity as Identity {- base -}
 import Data.List {- base -}
 import Data.Maybe {- base -}
+import Numeric {- base -}
 
 import qualified Data.Graph as Graph {- containers -}
 import qualified Data.List.Split as Split {- split -}
@@ -1543,9 +1544,47 @@ assignmentOperator = lexeme (P.string ":=")
 
 -- * 3.5.6
 
--- | integer ::= decimalInteger | radixInteger
+{- | integer ::= decimalInteger | radixInteger
+
+> p = stParse integer
+> map p (words "63 8r77 99 10r99 255 16rFF") == [63,63,99,99,255,255]
+-}
 integer :: P Integer
-integer = decimalInteger
+integer = P.try radixInteger P.<|> decimalInteger
+
+{- | radixInteger ::= radixSpecifier 'r' radixDigits
+
+> p = stParse radixInteger
+> map p (words "8r77 10r99 16rFF") == [63, 99, 255]
+-}
+radixInteger :: P Integer
+radixInteger = fmap (fromMaybe (error "radixInteger?")) radixIntegerMaybe
+
+radixIntegerMaybe :: P (Maybe Integer)
+radixIntegerMaybe = do
+  rs <- radixSpecifier
+  _ <- P.char 'r'
+  rd <- lexeme radixDigits
+  let get x =
+        case x of
+          [(answer, "")] -> Just answer
+          _ -> Nothing
+      n =
+        case rs of
+          --2 -> get (readBin rd) -- base=4.16.1
+          8 -> get (readOct rd)
+          10 -> get (readDec rd)
+          16 -> get (readHex rd)
+          _ -> Nothing
+  return n
+
+-- | radixSpecifier := digits
+radixSpecifier :: P Integer
+radixSpecifier = fmap read digits
+
+-- | radixDigits ::= (digit | uppercaseAlphabetic)+
+radixDigits :: P String
+radixDigits = P.many1 (digit P.<|> uppercaseAlphabetic)
 
 -- | decimalInteger ::= digits
 decimalInteger :: P Integer

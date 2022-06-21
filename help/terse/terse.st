@@ -522,6 +522,8 @@ d keys asBag = #(a b c) asBag
 (Smalltalk includesKey: #DoesNotExist) = false.              "see if key exists in dictionary"
 } allSatisfy: #yourself
 
+1 unknownMessage "does not understand"
+
 Smalltalk keys size                                         "get set of all known keys "
 Smalltalk halt
 
@@ -660,7 +662,15 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 123456789 asStringWithCommas = '123,456,789'.
 -123456789 asStringWithCommas = '-123,456,789'.
 4 / 2 = 2.                      "integer division with integer result"
+255 printString = '255'.
+255 printStringHex = 'FF'.
+8r77 = 63.
+10r99 = 99.
+16rFF = 255.
 } allSatisfy: #yourself
+
+1 to: 63 collect: [:i | ((-1 bitShift: i) bitShift: i negated) = -1 ]
+1 to: 62 collect: [:i | ((1 bitShift: i) bitShift: i negated) = 1 ]
 
 'Interval'
 
@@ -696,6 +706,19 @@ Interval from: 5 to: 10 by: 2                               "create interval obj
 (1 to: 2 by: 1/2) = ({1. 3/2. 2} as: Interval)
 (1 to: 2 by: 1/5) = ({1. 6/5. 7/5. 8/5. 9/5. 2} as: Interval)
 (2 to: 1) anyOne
+
+'Json'
+
+obj := JsonObject fromAssociations: {#'x' -> 1}
+obj x
+
+'Message'
+
+m := Message selector: #x: arguments: #(3.141)
+m selector = #x:.
+m argument = 3.141.
+m arguments = #(3.141).
+m selector precedence = 3
 
 'Message sends'
 
@@ -998,12 +1021,19 @@ String new species = String new species.
 ('string' includes: nil) = false.
 String initializedInstance = ''.
 ('antidisestablishmentarianism' contractTo: 10) = 'anti...ism'.
+('foo {1} bar' format: #(3.141)) = 'foo 3.141 bar'.
+('string' at: 3) := $r.
+('string' basicAt: 3) := $r.
+'string with "comment" characters' size = 32
+'string with "unbalanced" comment " characters' size = 45.
 } allSatisfy: #yourself
 
 s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
 s = 'strung'. "=> strung, string literals are mutable"
 'string' hash ~= #'string' hash "strings and symbols hash unequally"
-'foo {1} bar' format: #(3.141)
+String formatCharacterSet asArray = {${. $\} "the characters used in format string templates"
+('foo {1} bar' indexOfAnyOf: String formatCharacterSet startingAt: 1) = 5
+'verstehe' translated = 'verstehe' "no translation"
 
 'Symbol'
 
@@ -1194,3 +1224,7 @@ Time millisecondsToRun: [ 28 benchFib ]
 
 Smalltalk tinyBenchmarks
 Smalltalk keys
+
+"Emacs"
+(setq stsc3-interpreter (list "stsc3-st"))
+(setq stsc3-interpreter (list "gst"))
