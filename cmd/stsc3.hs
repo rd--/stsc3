@@ -5,7 +5,7 @@ import qualified Music.Theory.IO {- hmt-base -}
 import qualified Music.Theory.Opt as Opt {- hmt-base -}
 import qualified Music.Theory.String as String {- hmt-base -}
 
-import qualified Sound.SC3.Common.Help as Help {- hsc3 -}
+import qualified Sound.Sc3.Common.Help as Help {- hsc3 -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
