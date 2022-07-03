@@ -12,5 +12,5 @@ SinOsc freq: 440 phase: 0 mul: (EnvGen gate: g levelScale: 0.1 levelBias: 0 time
 
 "---- ; coordinates"
 | env |
-env := EnvAdsr attackTime: 0.01 decayTime: 0.25 sustainLevel: 0.15 releaseTime: 0.75 peakLevel: 1 curve: -4.
+env := EnvAdsr attackTime: 0.01 decayTime: 0.25 sustainLevel: 0.15 releaseTime: 0.75 peakLevel: 1 curves: -4.
 env asArray = #(0 3 2 -99 1 0.01 5 -4 0.15 0.25 5 -4 0 0.75 5 -4)

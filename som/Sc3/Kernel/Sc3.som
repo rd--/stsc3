@@ -121,24 +121,24 @@ stsc3HelpGraphFile: graphFileName = (
 	^Sc3 stsc3File: 'help/graph/' , graphFileName
 )
 
-writeBinarySyndefOf: anObject to: aFileName = (
+writeBinarySyndef: aName of: anObject to: aFileName = (
 	aFileName writeBinaryFile: [ :stream |
-	    (ScGraph from: anObject withName: 'tmp') encodeOn: stream
+	    (ScGraph from: anObject withName: aName) encodeOn: stream
 	]
 )
 
-writeTextSyndefOf: anObject to: aFileName = (
+writeTextSyndef: aName of: anObject to: aFileName = (
 	aFileName writeTextFile: [ :stream |
-	    (ScGraph from: anObject withName: 'tmp') printSyndefOn: stream
+	    (ScGraph from: anObject withName: aName) printSyndefOn: stream
 	]
 )
 
 writeTmpWrappedBinarySyndefOf: anObject = (
-	Sc3 writeBinarySyndefOf: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef'
+	Sc3 writeBinarySyndef: 'tmp' of: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef'
 )
 
 writeTmpWrappedTextSyndefOf: anObject = (
-	Sc3 writeTextSyndefOf: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef.text'
+	Sc3 writeTextSyndef: 'tmp' of: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef.text'
 )
 
 comment = (
