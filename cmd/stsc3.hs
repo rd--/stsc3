@@ -1,7 +1,7 @@
 import Data.List {- base -}
 
 import qualified Music.Theory.Directory.Find {- hmt-base -}
-import qualified Music.Theory.IO {- hmt-base -}
+import qualified Music.Theory.Io {- hmt-base -}
 import qualified Music.Theory.Opt as Opt {- hmt-base -}
 import qualified Music.Theory.String as String {- hmt-base -}
 
@@ -199,12 +199,12 @@ main = do
     "stc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_extensions fn) fn_seq
     "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
     ["translate", in_ty, out_ty] -> interact (trs in_ty out_ty)
-    ["translate", in_ty, out_ty, inFile, outFile] -> Music.Theory.IO.interactWithFiles inFile outFile (trs in_ty out_ty)
+    ["translate", in_ty, out_ty, inFile, outFile] -> Music.Theory.Io.interactWithFiles inFile outFile (trs in_ty out_ty)
     ["translate", "class", "fileout", "som", fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate", "class", "som", "fileout", som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
     ["translate", "class", "som", "som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
     ["translate", "directory", "som", "fileout", som_dir, fileout_fn] -> dir_som_to_fileout (Opt.opt_get o "category") som_dir fileout_fn
     ["translate", "extensions", "fileout", "som", fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate", "library", "fileout", "som", fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
-    ["translate", "stream", in_ty, out_ty] -> Music.Theory.IO.interactWithStdio (trs in_ty out_ty)
+    ["translate", "stream", in_ty, out_ty] -> Music.Theory.Io.interactWithStdio (trs in_ty out_ty)
     _ -> putStrLn (unlines help)
