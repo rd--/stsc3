@@ -342,12 +342,14 @@ reader = P.char '!' >> nonEmptyChunk
 fileOutEvalSegment :: St.P FileOutSegment
 fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
 
-{- | The reader segments allowed consiste of identifiers, keywords and literal strings.
+{- | The reader segments allowed consist of identifiers, keywords, literal strings and integers.
+The integer (at commentStamp:prior:) is converted to a string.
 
 > St.stParse readerQuotedWords "reader methodsFor: 'a category'"
+> St.stParse readerQuotedWords "reader commentStamp: 'a comment' prior: 0"
 -}
 readerQuotedWords :: St.P [String]
-readerQuotedWords = P.many1 (P.choice [P.try St.quotedString, P.try St.keyword, St.identifier])
+readerQuotedWords = P.many1 (P.choice [P.try St.quotedString, P.try St.keyword, St.identifier, fmap show St.integer])
 
 -- | Run readerQuotedWords parser.
 readerWords :: String -> [String]
@@ -357,9 +359,11 @@ readerWords = St.stParse readerQuotedWords
 
 > p = St.stParse fileOutReaderSegment
 > p "!reader methodsFor: 'a category'! chunk! !"
+> p "!reader methodsFor: 'a category' stamp: 'initials and time'! chunk! !"
 > p "!reader class methodsFor: 'a category'! chunk! !"
+> p "!reader class methodsFor: 'a category' stamp: ''! chunk! !"
 > p "!reader class methodsFor: 'a category'! !" -- allow empty methods sequence
-> p "!reader commentStamp: 'a comment'! chunk!"
+> p "!reader commentStamp: 'a comment' prior: 0 ! chunk!"
 > p "!p! q! !" -- fail on p
 > p "!Z z! c! !" -- fail on Z
 -}
@@ -367,10 +371,12 @@ fileOutReaderSegment :: St.P FileOutSegment
 fileOutReaderSegment = do
   r <- reader
   s <- case readerWords r of
-         _:"commentStamp:":_:[] -> fmap return nonEmptyChunk
+         _:"commentStamp:":_:"prior:":_:[] -> fmap return nonEmptyChunk
          _:"class":"methodsFor:":_:[] -> chunkSequence
+         _:"class":"methodsFor:":_:"stamp:":_:[] -> chunkSequence
          _:"methodsFor:":_:[] -> chunkSequence
-         _ -> P.unexpected ("fileOutReaderSegment: " ++ r)
+         _:"methodsFor:":_:"stamp:":_:[] -> chunkSequence
+         w -> P.unexpected ("fileOutReaderSegment: " ++ show w)
   return (FileOutReaderSegment r s)
 
 {- | Parser for FileOut segment.
@@ -389,7 +395,7 @@ fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
 > p = St.stParse fileOut
 > p "x! y! !"
 > p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'!"
-> p "ArrayedCollection class instanceVariableNames: ''!"
+> p "ArrayedCollection class instanceVariableNames: ''! !ArrayedCollection class methodsFor: '' stamp: ''! m ^ nil! !"
 > p "!C methodsFor: 'some category name text'!\naUnaryMethod ^nil! !"
 > p "!p ! q ! ! x ! !" -- fail on p
 > p "x ! y ! !p ! q ! ! z ! !" -- fail on p
@@ -514,7 +520,8 @@ parseMethodsForMethod isClassMethod classname category txt =
   {St.methodCategory = Just category}
 
 {- | Parse a methodsFor: message send.
-     The receiver is either the name of a class, the class of such.
+The receiver is either the name of a class, the class of such.
+Allow but ignore trailing stamp: keyword.
 
 > readerSegmentMethodDefinitions (St.stParse fileOutSegment "!C methodsFor: 'the category text'!\nm ^nil! !")
 -}
@@ -523,9 +530,9 @@ readerSegmentMethodDefinitions fo =
   case fo of
     FileOutReaderSegment r c ->
       case readerWords r of
-        classname:"methodsFor:":category:[] ->
+        classname:"methodsFor:":category:_ ->
           Just (FileOutMethodsFor classname False category (map (parseMethodsForMethod False classname category) c))
-        classname:"class":"methodsFor:":category:[] ->
+        classname:"class":"methodsFor:":category:_ ->
           Just (FileOutMethodsFor classname True category (map (parseMethodsForMethod True classname category) c))
         _ -> Nothing
     _ -> Nothing

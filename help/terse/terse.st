@@ -305,7 +305,14 @@ Set new add: 1; add: 2; yourself
 $ = Character space.
 $	 = Character tab.
 Character newLine = Character nl.
+Character lineFeed = Character lf.
+Character tab asInteger = 9.
+Character newLine asInteger = 10.
+Character lineFeed asInteger = 10.
 Character newPage asInteger = 12.
+Character cr asInteger = 13.
+$' asInteger = 39.
+$\ asInteger = 92.
 (Character value: 97) = $a.
 $a asInteger = 97.
 $A asInteger = 65.
@@ -339,6 +346,9 @@ $\ = $\.
 $/ = $/.
 ${ asciiValue = 123.
 $} asciiValue = 125.
+$" = ('"' at: 1).
+$' = ('''' at: 1).
+'\"' = (String newFrom: #($\ $")).
 } allSatisfy: #yourself
 
 'CharacterSet'
@@ -518,9 +528,13 @@ d keys asBag = #(a b c) asBag
 
 {
 (Smalltalk at: #Array) = Array.                             "lookup value in Smalltalk dictionary"
+(Smalltalk at: #Array ifPresent: [ :class | class ]) = Array.
 (Smalltalk at: #DoesNotExist ifAbsent: [ nil ]) = nil.       "lookup value with clause for absent values "
 (Smalltalk includesKey: #DoesNotExist) = false.              "see if key exists in dictionary"
 } allSatisfy: #yourself
+
+(Smalltalk globals at: #Array ifPresent: [ :class | class]) = Array
+(Smalltalk globals at: #Array) = Array
 
 1 unknownMessage "does not understand"
 
@@ -877,7 +891,10 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (#(1 2 2 3 3) asSet any: 2) = #(1 2) asSet.
 ((Set new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4) asSet.
 (Set with: 1) printString = 'a Set(1)'.
+(#(1 2 3 4) asSet remove: 4; yourself) = #(1 2 3) asSet.
 } allSatisfy: #yourself
+
+(#(1 2 3) asSet remove: 4) on: NotFound do: [ true ].
 
 'SetElement (Set with nil)'
 
@@ -1022,12 +1039,18 @@ String new species = String new species.
 String initializedInstance = ''.
 ('antidisestablishmentarianism' contractTo: 10) = 'anti...ism'.
 ('foo {1} bar' format: #(3.141)) = 'foo 3.141 bar'.
-('string' at: 3) := $r.
-('string' basicAt: 3) := $r.
-'string with "comment" characters' size = 32
+('string' at: 3) = $r.
+('string' basicAt: 3) = $r.
+'string with "comment" characters' size = 32.
 'string with "unbalanced" comment " characters' size = 45.
+'\"' size = 2.
+('\"' at: 1) = $\.
+('\"' at: 2) = $".
 } allSatisfy: #yourself
 
+(#('\b' '\t' '\n' '\f' '\r' '\''' '\\') collect: #size) = #(2 2 2 2 2 2 2)
+
+#(8 '\b' 9 '\t' 10 '\n' 12 '\f' 13 '\r' 39 '\''' 92 '\\' )
 s := 'string' copy. s at: 4 put: $u. s = 'strung'. "=> strung, string literals are mutable"
 s = 'strung'. "=> strung, string literals are mutable"
 'string' hash ~= #'string' hash "strings and symbols hash unequally"

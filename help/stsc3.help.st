@@ -839,6 +839,35 @@ s close.
 
 3.141 asIEEE32BitWord = 1078527525.
 
+"Tracing"
+
+MessageTally tallySends: [3.14159 printString] "Squeak"
+
+"Ston"
+
+{
+(STON toString: (3.141 @ 0)) = 'Point[3.141,0]'. "Point{#x:3.141,#y:0}"
+(STON toString: (#key -> 'value')) =  '#key:''value'''.
+(STON toString: {1 to: 10 by: 2. 3 days}) =  '[Interval{#start:1,#stop:10,#step:2},Duration{#nanos:0,#seconds:259200}]'.
+(STON toString: {1. 3.141. 2 / 5}) = '[1,3.141,2/5]'.
+(STON toString: {$x. 'y'. #z}) = '[Character[''x''],''y'',#z]'.
+(STON toString: (ByteArray newFrom: #(0 1 255))) = 'ByteArray[''0001ff'']'.
+(STON toString: true) = 'true'.
+(STON toString: #(true false)) =  '[true,false]'.
+(STON toString: (Dictionary newFrom: {#true -> true. #false -> false})) = '{#true:true,#false:false}'.
+} allSatisfy: #yourself
+
+{
+(STON fromString: '1') = 1.
+(STON fromString: '[3.141]') = {3.141}.
+(STON fromString: '#x') = #x.
+(STON fromString: '[3.141,0]') = #(3.141 0).
+(STON fromString: '[true,false]') = #(true false).
+(STON fromString:'{#true:true,#false:false}') = (Dictionary newFrom: {#true -> true. #false -> false}).
+(STON fromString: 'ByteArray[''0001ff'']') = (ByteArray newFrom: #(0 1 255)). "class must be loaded"
+(STON fromString: 'Character[''x'']') = $x.
+} allSatisfy: #yourself
+
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))
 (setq stsc3-interpreter (list "gst"))

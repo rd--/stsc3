@@ -27,7 +27,7 @@ For graph drawing:
 - [hsc3-graphs](http://rohandrape.net/?t=hsc3-graphs)
 
 Tested with:
- [Squeak](http://squeak.org/) 6.0α & 5.3 ;
+ [Squeak](http://squeak.org/) 6.0 & 5.3 ;
  [Gnu Smalltalk](http://www.gnu.org/software/smalltalk/) 3.2.92;
  [Cuis](http://cuis-smalltalk.org/) 5.0
 
