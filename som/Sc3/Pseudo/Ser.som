@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Demand rate arithmetic series Ugen *
+ Demand rate sequence generator. *
 ')
 
 

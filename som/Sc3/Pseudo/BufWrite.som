@@ -1,0 +1,20 @@
+BufWrite = PseudoUgen (
+----------------------------
+
+bufnum: bufnum phase: phase loop: loop inputArray: inputArray = (
+
+^(BufWr apply: {bufnum. phase. loop. inputArray})
+)
+
+primaryFactoryMethod = (
+
+^#'bufnum:phase:loop:inputArray:'
+)
+
+
+comment = (^'
+ Buffer writing oscillator *
+')
+
+
+)

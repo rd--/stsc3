@@ -54,6 +54,14 @@ BufRec : PseudoUgen {
 	}
 }
 
+/* Buffer writing oscillator */
+BufWrite : PseudoUgen {
+	*constructor {
+		arg bufnum, phase, loop, inputArray;
+		^BufWr(bufnum, phase, loop, inputArray)
+	}
+}
+
 /* Continuous controller input */
 Cc : PseudoUgen {
 	*constructor {
@@ -314,11 +322,11 @@ Seq : PseudoUgen {
 	}
 }
 
-/* Demand rate arithmetic series Ugen */
+/* Demand rate sequence generator. */
 Ser : PseudoUgen {
 	*constructor {
 		arg repeats, list;
-		^Dseries(repeats, list)
+		^Dser(repeats, list)
 	}
 }
 

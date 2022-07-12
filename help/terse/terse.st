@@ -796,6 +796,8 @@ Object class class = Metaclass.
 ([ :a :b :c :d :e | { a. b. c. d. e } ] perform: #value:value:value:value:value: withArguments: #(1 2 3 4 5)) = #(1 2 3 4 5).
 } allSatisfy: #yourself
 
+(3.141 @ 0) longPrintString
+
 'OrderedCollection'
 
 OrderedCollection isVariable                                "St-80 = true, Squeak = false"
@@ -811,6 +813,17 @@ OrderedCollection new add:true ; add: true ; add: true ;add: false ; add: false;
 
 (OrderedDictionary new: 7) instVarNamed: #tally
 (OrderedDictionary new: 7) instVarNamed: #order
+
+'Point'
+
+{
+(3.141 @ 0) class allInstVarNames = #(x y).
+((3.141 @ 0) instVarAt: 1) = 3.141.
+((3.141 @ 0) instVarAt: 2) = 0.
+(3.141 @ 0) printString =  '3.141@0'.
+} allSatisfy: #yourself
+
+Transcript show:(3.141 @ 0) longPrintString
 
 'Primitive'
 
@@ -879,6 +892,7 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 #(1 9 2 8 3 7 4 6) pairsDo: [ :i :j | Transcript show: i + j; cr ]
 #(1 9 2 8 3 7 4 6) groupsDo: [ :i :j | Transcript show: i + j; cr ]
 #(1 9 2 8 3 7 4 6) reverseDo: [ :each | Transcript show: each printString ] "64738291"
+'string' withIndexDo: [ :each :index | Transcript show: (each asString , index printString) ] "s1t2r3i4n5g6"
 
 'Set'
 
@@ -1046,6 +1060,7 @@ String initializedInstance = ''.
 '\"' size = 2.
 ('\"' at: 1) = $\.
 ('\"' at: 2) = $".
+String cr = Character cr asString.
 } allSatisfy: #yourself
 
 (#('\b' '\t' '\n' '\f' '\r' '\''' '\\') collect: #size) = #(2 2 2 2 2 2 2)
