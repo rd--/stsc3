@@ -2,11 +2,11 @@ import Data.List {- base -}
 import Data.Maybe {- base -}
 import Text.Printf {- base -}
 
-import Sound.SC3.UGen.DB as Db {- hsc3-db -}
-import qualified Sound.SC3.UGen.DB.Bindings.Js as Js {- hsc3-db -}
-import qualified Sound.SC3.UGen.DB.Bindings.SuperCollider as Sc {- hsc3-db -}
-import qualified Sound.SC3.UGen.DB.Bindings.Smalltalk as St {- hsc3-db -}
-import qualified Sound.SC3.UGen.DB.Record as Record {- hsc3-db -}
+import Sound.Sc3.Ugen.Db as Db {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Bindings.Js as Js {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Bindings.SuperCollider as Sc {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Bindings.Smalltalk as St {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Record as Record {- hsc3-db -}
 
 {- | Unary operators
 
@@ -72,7 +72,7 @@ ugen =
   ,"QuadL","QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax","RunningSum"
   ,"Rotate2"
-  ,"SampleDur","SampleRate","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Stepper","Sweep","SyncSaw"
+  ,"SampleDur","SampleRate","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","StandardL","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","VBJonVerb", "Vibrato"
   ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"
@@ -120,6 +120,7 @@ sc_wr = do
 
 {-
 -- * Som
-import Sound.SC3.UGen.Db.Bindings.SOM {- hsc3-db -}
+import Sound.Sc3.Ugen.Db.Bindings.Som {- hsc3-db -}
+som_sc3_gen_bindings_wr "/tmp/" ugen
 som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/lib/som/ugen" ugen
 -}
