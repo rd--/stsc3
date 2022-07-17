@@ -1,26 +1,20 @@
 FreeVerb2 = ScUgen (
-----------------------------
+----
+comment = (
+	^'A two-channel reverb'
+)
 
 in: in in2: in2 mix: mix room: room damp: damp = (
-    ^UgenBuilder name: 'FreeVerb2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. in2. mix. room. damp}
+	^UgenBuilder name: 'FreeVerb2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. in2. mix. room. damp}
 )
-
-in: in in2: in2 mix: mix room: room damp: damp mul: mul = (
-    ^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul
-)
-
-in: in in2: in2 mix: mix room: room damp: damp mul: mul add: add = (
-    ^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:in2:mix:room:damp:
+	^#in:in2:mix:room:damp:
 )
-
-
-comment = (^'
-A two-channel reverb
-')
-
+in: in in2: in2 mix: mix room: room damp: damp mul: mul = (
+	^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul
+)
+in: in in2: in2 mix: mix room: room damp: damp mul: mul add: add = (
+	^(FreeVerb2 in: in in2: in2 mix: mix room: room damp: damp) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 Normalizer = ScUgen (
-----------------------------
+----
+comment = (
+	^'Flattens dynamics.'
+)
 
 in: in level: level dur: dur = (
-    ^UgenBuilder name: 'Normalizer' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. level. dur}
+	^UgenBuilder name: 'Normalizer' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. level. dur}
 )
-
-in: in level: level dur: dur mul: mul = (
-    ^(Normalizer in: in level: level dur: dur) * mul
-)
-
-in: in level: level dur: dur mul: mul add: add = (
-    ^(Normalizer in: in level: level dur: dur) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:level:dur:
+	^#in:level:dur:
 )
-
-
-comment = (^'
-Flattens dynamics.
-')
-
+in: in level: level dur: dur mul: mul = (
+	^(Normalizer in: in level: level dur: dur) * mul
+)
+in: in level: level dur: dur mul: mul add: add = (
+	^(Normalizer in: in level: level dur: dur) * mul + add
+)
 
 )

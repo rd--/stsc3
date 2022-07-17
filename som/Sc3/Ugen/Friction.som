@@ -1,26 +1,20 @@
 Friction = ScUgen (
-----------------------------
+----
+comment = (
+	^'A physical model of a system with dry-friction. A chaotic filter.'
+)
 
 in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass = (
-    ^UgenBuilder name: 'Friction' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. friction. spring. damp. mass. beltmass}
+	^UgenBuilder name: 'Friction' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. friction. spring. damp. mass. beltmass}
 )
-
-in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul = (
-    ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul
-)
-
-in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul add: add = (
-    ^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:friction:spring:damp:mass:beltmass:
+	^#in:friction:spring:damp:mass:beltmass:
 )
-
-
-comment = (^'
-A physical model of a system with dry-friction. A chaotic filter.
-')
-
+in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul = (
+	^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul
+)
+in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass mul: mul add: add = (
+	^(Friction in: in friction: friction spring: spring damp: damp mass: mass beltmass: beltmass) * mul + add
+)
 
 )

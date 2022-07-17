@@ -1,26 +1,20 @@
 BBandStop = ScUgen (
-----------------------------
+----
+comment = (
+	^'Band reject filter'
+)
 
 in: in freq: freq bw: bw = (
-    ^UgenBuilder name: 'BBandStop' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. bw}
+	^UgenBuilder name: 'BBandStop' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. bw}
 )
-
-in: in freq: freq bw: bw mul: mul = (
-    ^(BBandStop in: in freq: freq bw: bw) * mul
-)
-
-in: in freq: freq bw: bw mul: mul add: add = (
-    ^(BBandStop in: in freq: freq bw: bw) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:bw:
+	^#in:freq:bw:
 )
-
-
-comment = (^'
-Band reject filter
-')
-
+in: in freq: freq bw: bw mul: mul = (
+	^(BBandStop in: in freq: freq bw: bw) * mul
+)
+in: in freq: freq bw: bw mul: mul add: add = (
+	^(BBandStop in: in freq: freq bw: bw) * mul + add
+)
 
 )

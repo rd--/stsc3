@@ -1,26 +1,20 @@
 LocalOut = ScUgen (
-----------------------------
+----
+comment = (
+	^'Write to buses local to a synth.'
+)
 
 channelsArray: channelsArray = (
-    ^UgenBuilder name: 'LocalOut' numChan: 0 rateSpec: #(1) specialIndex: 0 inputArray: ({} , (channelsArray asArray))
+	^UgenBuilder name: 'LocalOut' numChan: 0 rateSpec: #(1) specialIndex: 0 inputArray: ({} , (channelsArray asArray))
 )
-
-channelsArray: channelsArray mul: mul = (
-    ^(LocalOut channelsArray: channelsArray) * mul
-)
-
-channelsArray: channelsArray mul: mul add: add = (
-    ^(LocalOut channelsArray: channelsArray) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#channelsArray:
+	^#channelsArray:
 )
-
-
-comment = (^'
-Write to buses local to a synth.
-')
-
+channelsArray: channelsArray mul: mul = (
+	^(LocalOut channelsArray: channelsArray) * mul
+)
+channelsArray: channelsArray mul: mul add: add = (
+	^(LocalOut channelsArray: channelsArray) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 Pan2 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Two channel equal power pan.'
+)
 
 in: in pos: pos level: level = (
-    ^UgenBuilder name: 'Pan2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level}
+	^UgenBuilder name: 'Pan2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level}
 )
-
-in: in pos: pos level: level mul: mul = (
-    ^(Pan2 in: in pos: pos level: level) * mul
-)
-
-in: in pos: pos level: level mul: mul add: add = (
-    ^(Pan2 in: in pos: pos level: level) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:pos:level:
+	^#in:pos:level:
 )
-
-
-comment = (^'
-Two channel equal power pan.
-')
-
+in: in pos: pos level: level mul: mul = (
+	^(Pan2 in: in pos: pos level: level) * mul
+)
+in: in pos: pos level: level mul: mul add: add = (
+	^(Pan2 in: in pos: pos level: level) * mul + add
+)
 
 )

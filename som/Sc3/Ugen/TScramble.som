@@ -1,26 +1,20 @@
 TScramble = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#trigger:inputs:
+----
+comment = (
+	^'(Undocumented class)'
 )
 
 trigger: trigger inputs: inputs = (
-    ^UgenBuilder name: 'TScramble' numChan: inputs asArray size rateSpec: #(1) specialIndex: 0 inputArray: ({trigger} , (inputs asArray))
+	^UgenBuilder name: 'TScramble' numChan: inputs asArray size rateSpec: #(1) specialIndex: 0 inputArray: ({trigger} , (inputs asArray))
 )
-
+primaryFactoryMethod = (
+	^#trigger:inputs:
+)
 trigger: trigger inputs: inputs mul: mul = (
-    ^(TScramble trigger: trigger inputs: inputs) * mul
+	^(TScramble trigger: trigger inputs: inputs) * mul
 )
-
 trigger: trigger inputs: inputs mul: mul add: add = (
-    ^(TScramble trigger: trigger inputs: inputs) * mul + add
+	^(TScramble trigger: trigger inputs: inputs) * mul + add
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
 
 )

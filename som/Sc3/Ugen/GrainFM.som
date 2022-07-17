@@ -1,26 +1,20 @@
 GrainFM = ScUgen (
-----------------------------
+----
+comment = (
+	^'Granular synthesis with frequency modulated sine tones'
+)
 
 numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains = (
-    ^UgenBuilder name: 'GrainFM' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. carfreq. modfreq. index. pan. envbufnum. maxGrains}
+	^UgenBuilder name: 'GrainFM' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. carfreq. modfreq. index. pan. envbufnum. maxGrains}
 )
-
-numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
-    ^(GrainFM numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
-)
-
-numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
-    ^(GrainFM numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:
+	^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:
 )
-
-
-comment = (^'
-Granular synthesis with frequency modulated sine tones
-')
-
+numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
+	^(GrainFM numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
+)
+numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
+	^(GrainFM numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
+)
 
 )

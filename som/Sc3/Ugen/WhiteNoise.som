@@ -1,26 +1,20 @@
 WhiteNoise = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(WhiteNoise new) * mul
-)
-
-mul: mul add: add = (
-    ^(WhiteNoise new) * mul + add
+----
+comment = (
+	^'White noise.'
 )
 
 new = (
-    ^UgenBuilder name: 'WhiteNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'WhiteNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-White noise.
-')
-
+mul: mul = (
+	^(WhiteNoise new) * mul
+)
+mul: mul add: add = (
+	^(WhiteNoise new) * mul + add
+)
 
 )

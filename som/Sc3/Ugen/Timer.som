@@ -1,26 +1,20 @@
 Timer = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#trig:
+----
+comment = (
+	^'Returns time since last triggered.'
 )
 
 trig: trig = (
-    ^UgenBuilder name: 'Timer' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig}
+	^UgenBuilder name: 'Timer' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig}
 )
-
+primaryFactoryMethod = (
+	^#trig:
+)
 trig: trig mul: mul = (
-    ^(Timer trig: trig) * mul
+	^(Timer trig: trig) * mul
 )
-
 trig: trig mul: mul add: add = (
-    ^(Timer trig: trig) * mul + add
+	^(Timer trig: trig) * mul + add
 )
-
-
-comment = (^'
-Returns time since last triggered.
-')
-
 
 )

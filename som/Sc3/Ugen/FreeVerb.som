@@ -1,26 +1,20 @@
 FreeVerb = ScUgen (
-----------------------------
+----
+comment = (
+	^'A reverb'
+)
 
 in: in mix: mix room: room damp: damp = (
-    ^UgenBuilder name: 'FreeVerb' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. mix. room. damp}
+	^UgenBuilder name: 'FreeVerb' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. mix. room. damp}
 )
-
-in: in mix: mix room: room damp: damp mul: mul = (
-    ^(FreeVerb in: in mix: mix room: room damp: damp) * mul
-)
-
-in: in mix: mix room: room damp: damp mul: mul add: add = (
-    ^(FreeVerb in: in mix: mix room: room damp: damp) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:mix:room:damp:
+	^#in:mix:room:damp:
 )
-
-
-comment = (^'
-A reverb
-')
-
+in: in mix: mix room: room damp: damp mul: mul = (
+	^(FreeVerb in: in mix: mix room: room damp: damp) * mul
+)
+in: in mix: mix room: room damp: damp mul: mul add: add = (
+	^(FreeVerb in: in mix: mix room: room damp: damp) * mul + add
+)
 
 )

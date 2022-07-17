@@ -1,26 +1,20 @@
 Index = ScUgen (
-----------------------------
+----
+comment = (
+	^'Index into a table with a signal'
+)
 
 bufnum: bufnum in: in = (
-    ^UgenBuilder name: 'Index' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
+	^UgenBuilder name: 'Index' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
 )
-
-bufnum: bufnum in: in mul: mul = (
-    ^(Index bufnum: bufnum in: in) * mul
-)
-
-bufnum: bufnum in: in mul: mul add: add = (
-    ^(Index bufnum: bufnum in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:in:
+	^#bufnum:in:
 )
-
-
-comment = (^'
-Index into a table with a signal
-')
-
+bufnum: bufnum in: in mul: mul = (
+	^(Index bufnum: bufnum in: in) * mul
+)
+bufnum: bufnum in: in mul: mul add: add = (
+	^(Index bufnum: bufnum in: in) * mul + add
+)
 
 )

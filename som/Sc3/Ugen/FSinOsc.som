@@ -1,26 +1,20 @@
 FSinOsc = ScUgen (
-----------------------------
+----
+comment = (
+	^'Fast sine oscillator.'
+)
 
 freq: freq iphase: iphase = (
-    ^UgenBuilder name: 'FSinOsc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
+	^UgenBuilder name: 'FSinOsc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
 )
-
-freq: freq iphase: iphase mul: mul = (
-    ^(FSinOsc freq: freq iphase: iphase) * mul
-)
-
-freq: freq iphase: iphase mul: mul add: add = (
-    ^(FSinOsc freq: freq iphase: iphase) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:iphase:
+	^#freq:iphase:
 )
-
-
-comment = (^'
-Fast sine oscillator.
-')
-
+freq: freq iphase: iphase mul: mul = (
+	^(FSinOsc freq: freq iphase: iphase) * mul
+)
+freq: freq iphase: iphase mul: mul add: add = (
+	^(FSinOsc freq: freq iphase: iphase) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 MaxLocalBufs = ScUgen (
-----------------------------
+----
+comment = (
+	^'LocalBuf count'
+)
 
 count: count = (
-    ^UgenBuilder name: 'MaxLocalBufs' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {count}
+	^UgenBuilder name: 'MaxLocalBufs' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {count}
 )
-
-count: count mul: mul = (
-    ^(MaxLocalBufs count: count) * mul
-)
-
-count: count mul: mul add: add = (
-    ^(MaxLocalBufs count: count) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#count:
+	^#count:
 )
-
-
-comment = (^'
-LocalBuf count
-')
-
+count: count mul: mul = (
+	^(MaxLocalBufs count: count) * mul
+)
+count: count mul: mul add: add = (
+	^(MaxLocalBufs count: count) * mul + add
+)
 
 )

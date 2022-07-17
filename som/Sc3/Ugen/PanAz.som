@@ -1,26 +1,20 @@
 PanAz = ScUgen (
-----------------------------
+----
+comment = (
+	^'Azimuth panner'
+)
 
 numChan: numChan in: in pos: pos level: level width: width orientation: orientation = (
-    ^UgenBuilder name: 'PanAz' numChan: numChan rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level. width. orientation}
+	^UgenBuilder name: 'PanAz' numChan: numChan rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level. width. orientation}
 )
-
-numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul = (
-    ^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul
-)
-
-numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul add: add = (
-    ^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:in:pos:level:width:orientation:
+	^#numChan:in:pos:level:width:orientation:
 )
-
-
-comment = (^'
-Azimuth panner
-')
-
+numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul = (
+	^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul
+)
+numChan: numChan in: in pos: pos level: level width: width orientation: orientation mul: mul add: add = (
+	^(PanAz numChan: numChan in: in pos: pos level: level width: width orientation: orientation) * mul + add
+)
 
 )

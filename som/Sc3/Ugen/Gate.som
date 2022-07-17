@@ -1,26 +1,20 @@
 Gate = ScUgen (
-----------------------------
+----
+comment = (
+	^'Gate or hold.'
+)
 
 in: in trig: trig = (
-    ^UgenBuilder name: 'Gate' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig}
+	^UgenBuilder name: 'Gate' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig}
 )
-
-in: in trig: trig mul: mul = (
-    ^(Gate in: in trig: trig) * mul
-)
-
-in: in trig: trig mul: mul add: add = (
-    ^(Gate in: in trig: trig) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:trig:
+	^#in:trig:
 )
-
-
-comment = (^'
-Gate or hold.
-')
-
+in: in trig: trig mul: mul = (
+	^(Gate in: in trig: trig) * mul
+)
+in: in trig: trig mul: mul add: add = (
+	^(Gate in: in trig: trig) * mul + add
+)
 
 )

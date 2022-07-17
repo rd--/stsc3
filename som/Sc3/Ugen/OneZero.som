@@ -1,26 +1,20 @@
 OneZero = ScUgen (
-----------------------------
+----
+comment = (
+	^'One zero filter.'
+)
 
 in: in coef: coef = (
-    ^UgenBuilder name: 'OneZero' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. coef}
+	^UgenBuilder name: 'OneZero' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. coef}
 )
-
-in: in coef: coef mul: mul = (
-    ^(OneZero in: in coef: coef) * mul
-)
-
-in: in coef: coef mul: mul add: add = (
-    ^(OneZero in: in coef: coef) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:coef:
+	^#in:coef:
 )
-
-
-comment = (^'
-One zero filter.
-')
-
+in: in coef: coef mul: mul = (
+	^(OneZero in: in coef: coef) * mul
+)
+in: in coef: coef mul: mul add: add = (
+	^(OneZero in: in coef: coef) * mul + add
+)
 
 )

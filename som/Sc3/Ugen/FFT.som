@@ -1,26 +1,20 @@
 FFT = ScUgen (
-----------------------------
+----
+comment = (
+	^'Fast Fourier Transform'
+)
 
 buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize = (
-    ^UgenBuilder name: 'FFT' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {buffer. in. hop. wintype. active. winsize}
+	^UgenBuilder name: 'FFT' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {buffer. in. hop. wintype. active. winsize}
 )
-
-buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul = (
-    ^(FFT buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize) * mul
-)
-
-buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul add: add = (
-    ^(FFT buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#buffer:in:hop:wintype:active:winsize:
+	^#buffer:in:hop:wintype:active:winsize:
 )
-
-
-comment = (^'
-Fast Fourier Transform
-')
-
+buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul = (
+	^(FFT buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize) * mul
+)
+buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize mul: mul add: add = (
+	^(FFT buffer: buffer in: in hop: hop wintype: wintype active: active winsize: winsize) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 ClearBuf = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 buf: buf = (
-    ^UgenBuilder name: 'ClearBuf' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {buf}
+	^UgenBuilder name: 'ClearBuf' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {buf}
 )
-
-buf: buf mul: mul = (
-    ^(ClearBuf buf: buf) * mul
-)
-
-buf: buf mul: mul add: add = (
-    ^(ClearBuf buf: buf) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#buf:
+	^#buf:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+buf: buf mul: mul = (
+	^(ClearBuf buf: buf) * mul
+)
+buf: buf mul: mul add: add = (
+	^(ClearBuf buf: buf) * mul + add
+)
 
 )

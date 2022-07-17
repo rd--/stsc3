@@ -1,26 +1,20 @@
 Duty = ScUgen (
-----------------------------
+----
+comment = (
+	^'Demand results from demand rate UGens.'
+)
 
 dur: dur reset: reset doneAction: doneAction level: level = (
-    ^UgenBuilder name: 'Duty' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {dur. reset. doneAction. level}
+	^UgenBuilder name: 'Duty' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {dur. reset. doneAction. level}
 )
-
-dur: dur reset: reset doneAction: doneAction level: level mul: mul = (
-    ^(Duty dur: dur reset: reset doneAction: doneAction level: level) * mul
-)
-
-dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add = (
-    ^(Duty dur: dur reset: reset doneAction: doneAction level: level) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#dur:reset:doneAction:level:
+	^#dur:reset:doneAction:level:
 )
-
-
-comment = (^'
-Demand results from demand rate UGens.
-')
-
+dur: dur reset: reset doneAction: doneAction level: level mul: mul = (
+	^(Duty dur: dur reset: reset doneAction: doneAction level: level) * mul
+)
+dur: dur reset: reset doneAction: doneAction level: level mul: mul add: add = (
+	^(Duty dur: dur reset: reset doneAction: doneAction level: level) * mul + add
+)
 
 )

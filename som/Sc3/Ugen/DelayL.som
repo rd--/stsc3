@@ -1,26 +1,20 @@
 DelayL = ScUgen (
-----------------------------
+----
+comment = (
+	^'Simple delay line with linear interpolation.'
+)
 
 in: in maxdelaytime: maxdelaytime delaytime: delaytime = (
-    ^UgenBuilder name: 'DelayL' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. maxdelaytime. delaytime}
+	^UgenBuilder name: 'DelayL' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. maxdelaytime. delaytime}
 )
-
-in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul = (
-    ^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul
-)
-
-in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add = (
-    ^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:maxdelaytime:delaytime:
+	^#in:maxdelaytime:delaytime:
 )
-
-
-comment = (^'
-Simple delay line with linear interpolation.
-')
-
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul = (
+	^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul
+)
+in: in maxdelaytime: maxdelaytime delaytime: delaytime mul: mul add: add = (
+	^(DelayL in: in maxdelaytime: maxdelaytime delaytime: delaytime) * mul + add
+)
 
 )

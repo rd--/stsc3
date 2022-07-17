@@ -1,26 +1,20 @@
 LinXFade2 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Two channel linear crossfade.'
+)
 
 inA: inA inB: inB pan: pan = (
-    ^UgenBuilder name: 'LinXFade2' numChan: 1 rateSpec: #(1 2) specialIndex: 0 inputArray: {inA. inB. pan}
+	^UgenBuilder name: 'LinXFade2' numChan: 1 rateSpec: #(1 2) specialIndex: 0 inputArray: {inA. inB. pan}
 )
-
-inA: inA inB: inB pan: pan mul: mul = (
-    ^(LinXFade2 inA: inA inB: inB pan: pan) * mul
-)
-
-inA: inA inB: inB pan: pan mul: mul add: add = (
-    ^(LinXFade2 inA: inA inB: inB pan: pan) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#inA:inB:pan:
+	^#inA:inB:pan:
 )
-
-
-comment = (^'
-Two channel linear crossfade.
-')
-
+inA: inA inB: inB pan: pan mul: mul = (
+	^(LinXFade2 inA: inA inB: inB pan: pan) * mul
+)
+inA: inA inB: inB pan: pan mul: mul add: add = (
+	^(LinXFade2 inA: inA inB: inB pan: pan) * mul + add
+)
 
 )

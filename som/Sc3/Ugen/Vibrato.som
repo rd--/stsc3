@@ -1,26 +1,20 @@
 Vibrato = ScUgen (
-----------------------------
+----
+comment = (
+	^'The Vibrato oscillator models a slow frequency modulation.'
+)
 
 freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig = (
-    ^UgenBuilder name: 'Vibrato' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. rate. depth. delay. onset. rateVariation. depthVariation. iphase. trig}
+	^UgenBuilder name: 'Vibrato' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. rate. depth. delay. onset. rateVariation. depthVariation. iphase. trig}
 )
-
-freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul = (
-    ^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul
-)
-
-freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul add: add = (
-    ^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:rate:depth:delay:onset:rateVariation:depthVariation:iphase:trig:
+	^#freq:rate:depth:delay:onset:rateVariation:depthVariation:iphase:trig:
 )
-
-
-comment = (^'
-The Vibrato oscillator models a slow frequency modulation.
-')
-
+freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul = (
+	^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul
+)
+freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig mul: mul add: add = (
+	^(Vibrato freq: freq rate: rate depth: depth delay: delay onset: onset rateVariation: rateVariation depthVariation: depthVariation iphase: iphase trig: trig) * mul + add
+)
 
 )

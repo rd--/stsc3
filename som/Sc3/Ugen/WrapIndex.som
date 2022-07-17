@@ -1,26 +1,20 @@
 WrapIndex = ScUgen (
-----------------------------
+----
+comment = (
+	^'Index into a table with a signal.'
+)
 
 bufnum: bufnum in: in = (
-    ^UgenBuilder name: 'WrapIndex' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
+	^UgenBuilder name: 'WrapIndex' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
 )
-
-bufnum: bufnum in: in mul: mul = (
-    ^(WrapIndex bufnum: bufnum in: in) * mul
-)
-
-bufnum: bufnum in: in mul: mul add: add = (
-    ^(WrapIndex bufnum: bufnum in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:in:
+	^#bufnum:in:
 )
-
-
-comment = (^'
-Index into a table with a signal.
-')
-
+bufnum: bufnum in: in mul: mul = (
+	^(WrapIndex bufnum: bufnum in: in) * mul
+)
+bufnum: bufnum in: in mul: mul add: add = (
+	^(WrapIndex bufnum: bufnum in: in) * mul + add
+)
 
 )

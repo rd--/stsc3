@@ -1,26 +1,20 @@
 Klank = ScUgen (
-----------------------------
+----
+comment = (
+	^'Bank of resonators'
+)
 
 input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef = (
-    ^UgenBuilder name: 'Klank' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: ({input. freqscale. freqoffset. decayscale} , (specificationsArrayRef asArray))
+	^UgenBuilder name: 'Klank' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: ({input. freqscale. freqoffset. decayscale} , (specificationsArrayRef asArray))
 )
-
-input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul = (
-    ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul
-)
-
-input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add = (
-    ^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:
+	^#input:freqscale:freqoffset:decayscale:specificationsArrayRef:
 )
-
-
-comment = (^'
-Bank of resonators
-')
-
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul = (
+	^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul
+)
+input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef mul: mul add: add = (
+	^(Klank input: input freqscale: freqscale freqoffset: freqoffset decayscale: decayscale specificationsArrayRef: specificationsArrayRef) * mul + add
+)
 
 )

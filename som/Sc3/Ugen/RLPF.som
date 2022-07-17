@@ -1,26 +1,20 @@
 RLPF = ScUgen (
-----------------------------
+----
+comment = (
+	^'A resonant low pass filter.'
+)
 
 in: in freq: freq rq: rq = (
-    ^UgenBuilder name: 'RLPF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq}
+	^UgenBuilder name: 'RLPF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq}
 )
-
-in: in freq: freq rq: rq mul: mul = (
-    ^(RLPF in: in freq: freq rq: rq) * mul
-)
-
-in: in freq: freq rq: rq mul: mul add: add = (
-    ^(RLPF in: in freq: freq rq: rq) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:rq:
+	^#in:freq:rq:
 )
-
-
-comment = (^'
-A resonant low pass filter.
-')
-
+in: in freq: freq rq: rq mul: mul = (
+	^(RLPF in: in freq: freq rq: rq) * mul
+)
+in: in freq: freq rq: rq mul: mul add: add = (
+	^(RLPF in: in freq: freq rq: rq) * mul + add
+)
 
 )

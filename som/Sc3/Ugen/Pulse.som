@@ -1,26 +1,20 @@
 Pulse = ScUgen (
-----------------------------
+----
+comment = (
+	^'Band limited pulse wave.'
+)
 
 freq: freq width: width = (
-    ^UgenBuilder name: 'Pulse' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. width}
+	^UgenBuilder name: 'Pulse' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. width}
 )
-
-freq: freq width: width mul: mul = (
-    ^(Pulse freq: freq width: width) * mul
-)
-
-freq: freq width: width mul: mul add: add = (
-    ^(Pulse freq: freq width: width) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:width:
+	^#freq:width:
 )
-
-
-comment = (^'
-Band limited pulse wave.
-')
-
+freq: freq width: width mul: mul = (
+	^(Pulse freq: freq width: width) * mul
+)
+freq: freq width: width mul: mul add: add = (
+	^(Pulse freq: freq width: width) * mul + add
+)
 
 )

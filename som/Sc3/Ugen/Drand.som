@@ -1,26 +1,20 @@
 Drand = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#repeats:list:
+----
+comment = (
+	^'Demand rate random sequence generator.'
 )
 
 repeats: repeats list: list = (
-    ^UgenBuilder name: 'Drand' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
+	^UgenBuilder name: 'Drand' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
 )
-
+primaryFactoryMethod = (
+	^#repeats:list:
+)
 repeats: repeats list: list mul: mul = (
-    ^(Drand repeats: repeats list: list) * mul
+	^(Drand repeats: repeats list: list) * mul
 )
-
 repeats: repeats list: list mul: mul add: add = (
-    ^(Drand repeats: repeats list: list) * mul + add
+	^(Drand repeats: repeats list: list) * mul + add
 )
-
-
-comment = (^'
-Demand rate random sequence generator.
-')
-
 
 )

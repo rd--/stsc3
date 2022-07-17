@@ -1,26 +1,20 @@
 LPF = ScUgen (
-----------------------------
+----
+comment = (
+	^'2nd order Butterworth lowpass filter'
+)
 
 in: in freq: freq = (
-    ^UgenBuilder name: 'LPF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq}
+	^UgenBuilder name: 'LPF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq}
 )
-
-in: in freq: freq mul: mul = (
-    ^(LPF in: in freq: freq) * mul
-)
-
-in: in freq: freq mul: mul add: add = (
-    ^(LPF in: in freq: freq) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:
+	^#in:freq:
 )
-
-
-comment = (^'
-2nd order Butterworth lowpass filter
-')
-
+in: in freq: freq mul: mul = (
+	^(LPF in: in freq: freq) * mul
+)
+in: in freq: freq mul: mul add: add = (
+	^(LPF in: in freq: freq) * mul + add
+)
 
 )

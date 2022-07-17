@@ -1,26 +1,20 @@
 MoogLadder = ScUgen (
-----------------------------
+----
+comment = (
+	^'Moog Filter Emulation'
+)
 
 in: in ffreq: ffreq res: res = (
-    ^UgenBuilder name: 'MoogLadder' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. ffreq. res}
+	^UgenBuilder name: 'MoogLadder' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. ffreq. res}
 )
-
-in: in ffreq: ffreq res: res mul: mul = (
-    ^(MoogLadder in: in ffreq: ffreq res: res) * mul
-)
-
-in: in ffreq: ffreq res: res mul: mul add: add = (
-    ^(MoogLadder in: in ffreq: ffreq res: res) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:ffreq:res:
+	^#in:ffreq:res:
 )
-
-
-comment = (^'
-Moog Filter Emulation
-')
-
+in: in ffreq: ffreq res: res mul: mul = (
+	^(MoogLadder in: in ffreq: ffreq res: res) * mul
+)
+in: in ffreq: ffreq res: res mul: mul add: add = (
+	^(MoogLadder in: in ffreq: ffreq res: res) * mul + add
+)
 
 )

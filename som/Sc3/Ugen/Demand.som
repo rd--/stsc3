@@ -1,26 +1,20 @@
 Demand = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#trig:reset:demandUGens:
+----
+comment = (
+	^'Demand results from demand rate UGens.'
 )
 
 trig: trig reset: reset demandUGens: demandUGens = (
-    ^UgenBuilder name: 'Demand' numChan: demandUGens asArray size rateSpec: #(1) specialIndex: 0 inputArray: ({trig. reset} , (demandUGens asArray))
+	^UgenBuilder name: 'Demand' numChan: demandUGens asArray size rateSpec: #(1) specialIndex: 0 inputArray: ({trig. reset} , (demandUGens asArray))
 )
-
+primaryFactoryMethod = (
+	^#trig:reset:demandUGens:
+)
 trig: trig reset: reset demandUGens: demandUGens mul: mul = (
-    ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul
+	^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul
 )
-
 trig: trig reset: reset demandUGens: demandUGens mul: mul add: add = (
-    ^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul + add
+	^(Demand trig: trig reset: reset demandUGens: demandUGens) * mul + add
 )
-
-
-comment = (^'
-Demand results from demand rate UGens.
-')
-
 
 )

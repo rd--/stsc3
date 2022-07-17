@@ -1,26 +1,20 @@
 BufRd = ScUgen (
-----------------------------
+----
+comment = (
+	^'Buffer reading oscillator.'
+)
 
 numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation = (
-    ^UgenBuilder name: 'BufRd' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. phase. loop. interpolation}
+	^UgenBuilder name: 'BufRd' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. phase. loop. interpolation}
 )
-
-numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul = (
-    ^(BufRd numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation) * mul
-)
-
-numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul add: add = (
-    ^(BufRd numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:bufnum:phase:loop:interpolation:
+	^#numChan:bufnum:phase:loop:interpolation:
 )
-
-
-comment = (^'
-Buffer reading oscillator.
-')
-
+numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul = (
+	^(BufRd numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation) * mul
+)
+numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation mul: mul add: add = (
+	^(BufRd numChan: numChan bufnum: bufnum phase: phase loop: loop interpolation: interpolation) * mul + add
+)
 
 )

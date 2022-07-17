@@ -1,26 +1,20 @@
 Delay1 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Single sample delay.'
+)
 
 in: in = (
-    ^UgenBuilder name: 'Delay1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+	^UgenBuilder name: 'Delay1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
 )
-
-in: in mul: mul = (
-    ^(Delay1 in: in) * mul
-)
-
-in: in mul: mul add: add = (
-    ^(Delay1 in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:
+	^#in:
 )
-
-
-comment = (^'
-Single sample delay.
-')
-
+in: in mul: mul = (
+	^(Delay1 in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(Delay1 in: in) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 Dseries = ScUgen (
-----------------------------
+----
+comment = (
+	^'Demand rate arithmetic series UGen.'
+)
 
 length: length start: start step: step = (
-    ^UgenBuilder name: 'Dseries' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: {length. start. step}
+	^UgenBuilder name: 'Dseries' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: {length. start. step}
 )
-
-length: length start: start step: step mul: mul = (
-    ^(Dseries length: length start: start step: step) * mul
-)
-
-length: length start: start step: step mul: mul add: add = (
-    ^(Dseries length: length start: start step: step) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#length:start:step:
+	^#length:start:step:
 )
-
-
-comment = (^'
-Demand rate arithmetic series UGen.
-')
-
+length: length start: start step: step mul: mul = (
+	^(Dseries length: length start: start step: step) * mul
+)
+length: length start: start step: step mul: mul add: add = (
+	^(Dseries length: length start: start step: step) * mul + add
+)
 
 )

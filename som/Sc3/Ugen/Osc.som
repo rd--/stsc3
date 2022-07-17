@@ -1,26 +1,20 @@
 Osc = ScUgen (
-----------------------------
+----
+comment = (
+	^'Interpolating wavetable oscillator.'
+)
 
 bufnum: bufnum freq: freq phase: phase = (
-    ^UgenBuilder name: 'Osc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. freq. phase}
+	^UgenBuilder name: 'Osc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. freq. phase}
 )
-
-bufnum: bufnum freq: freq phase: phase mul: mul = (
-    ^(Osc bufnum: bufnum freq: freq phase: phase) * mul
-)
-
-bufnum: bufnum freq: freq phase: phase mul: mul add: add = (
-    ^(Osc bufnum: bufnum freq: freq phase: phase) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:freq:phase:
+	^#bufnum:freq:phase:
 )
-
-
-comment = (^'
-Interpolating wavetable oscillator.
-')
-
+bufnum: bufnum freq: freq phase: phase mul: mul = (
+	^(Osc bufnum: bufnum freq: freq phase: phase) * mul
+)
+bufnum: bufnum freq: freq phase: phase mul: mul add: add = (
+	^(Osc bufnum: bufnum freq: freq phase: phase) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 Crackle = ScUgen (
-----------------------------
+----
+comment = (
+	^'Chaotic noise function.'
+)
 
 chaosParam: chaosParam = (
-    ^UgenBuilder name: 'Crackle' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {chaosParam}
+	^UgenBuilder name: 'Crackle' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {chaosParam}
 )
-
-chaosParam: chaosParam mul: mul = (
-    ^(Crackle chaosParam: chaosParam) * mul
-)
-
-chaosParam: chaosParam mul: mul add: add = (
-    ^(Crackle chaosParam: chaosParam) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#chaosParam:
+	^#chaosParam:
 )
-
-
-comment = (^'
-Chaotic noise function.
-')
-
+chaosParam: chaosParam mul: mul = (
+	^(Crackle chaosParam: chaosParam) * mul
+)
+chaosParam: chaosParam mul: mul add: add = (
+	^(Crackle chaosParam: chaosParam) * mul + add
+)
 
 )

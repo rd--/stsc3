@@ -1,26 +1,20 @@
 AnalogFoldOsc = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 freq: freq amp: amp = (
-    ^UgenBuilder name: 'AnalogFoldOsc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. amp}
+	^UgenBuilder name: 'AnalogFoldOsc' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. amp}
 )
-
-freq: freq amp: amp mul: mul = (
-    ^(AnalogFoldOsc freq: freq amp: amp) * mul
-)
-
-freq: freq amp: amp mul: mul add: add = (
-    ^(AnalogFoldOsc freq: freq amp: amp) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:amp:
+	^#freq:amp:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+freq: freq amp: amp mul: mul = (
+	^(AnalogFoldOsc freq: freq amp: amp) * mul
+)
+freq: freq amp: amp mul: mul add: add = (
+	^(AnalogFoldOsc freq: freq amp: amp) * mul + add
+)
 
 )

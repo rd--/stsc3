@@ -1,26 +1,20 @@
 Impulse = ScUgen (
-----------------------------
+----
+comment = (
+	^'Impulse oscillator.'
+)
 
 freq: freq phase: phase = (
-    ^UgenBuilder name: 'Impulse' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. phase}
+	^UgenBuilder name: 'Impulse' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. phase}
 )
-
-freq: freq phase: phase mul: mul = (
-    ^(Impulse freq: freq phase: phase) * mul
-)
-
-freq: freq phase: phase mul: mul add: add = (
-    ^(Impulse freq: freq phase: phase) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:phase:
+	^#freq:phase:
 )
-
-
-comment = (^'
-Impulse oscillator.
-')
-
+freq: freq phase: phase mul: mul = (
+	^(Impulse freq: freq phase: phase) * mul
+)
+freq: freq phase: phase mul: mul add: add = (
+	^(Impulse freq: freq phase: phase) * mul + add
+)
 
 )

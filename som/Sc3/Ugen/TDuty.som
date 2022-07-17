@@ -1,26 +1,20 @@
 TDuty = ScUgen (
-----------------------------
+----
+comment = (
+	^'Demand results as trigger from demand rate UGens.'
+)
 
 dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst = (
-    ^UgenBuilder name: 'TDuty' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {dur. reset. doneAction. level. gapFirst}
+	^UgenBuilder name: 'TDuty' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {dur. reset. doneAction. level. gapFirst}
 )
-
-dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul = (
-    ^(TDuty dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst) * mul
-)
-
-dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add = (
-    ^(TDuty dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#dur:reset:doneAction:level:gapFirst:
+	^#dur:reset:doneAction:level:gapFirst:
 )
-
-
-comment = (^'
-Demand results as trigger from demand rate UGens.
-')
-
+dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul = (
+	^(TDuty dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst) * mul
+)
+dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst mul: mul add: add = (
+	^(TDuty dur: dur reset: reset doneAction: doneAction level: level gapFirst: gapFirst) * mul + add
+)
 
 )

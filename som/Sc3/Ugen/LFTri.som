@@ -1,26 +1,20 @@
 LFTri = ScUgen (
-----------------------------
+----
+comment = (
+	^'Triangle oscillator'
+)
 
 freq: freq iphase: iphase = (
-    ^UgenBuilder name: 'LFTri' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
+	^UgenBuilder name: 'LFTri' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
 )
-
-freq: freq iphase: iphase mul: mul = (
-    ^(LFTri freq: freq iphase: iphase) * mul
-)
-
-freq: freq iphase: iphase mul: mul add: add = (
-    ^(LFTri freq: freq iphase: iphase) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:iphase:
+	^#freq:iphase:
 )
-
-
-comment = (^'
-Triangle oscillator
-')
-
+freq: freq iphase: iphase mul: mul = (
+	^(LFTri freq: freq iphase: iphase) * mul
+)
+freq: freq iphase: iphase mul: mul add: add = (
+	^(LFTri freq: freq iphase: iphase) * mul + add
+)
 
 )

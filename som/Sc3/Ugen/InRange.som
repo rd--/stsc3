@@ -1,26 +1,20 @@
 InRange = ScUgen (
-----------------------------
+----
+comment = (
+	^'Tests if a signal is within a given range.'
+)
 
 in: in lo: lo hi: hi = (
-    ^UgenBuilder name: 'InRange' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lo. hi}
+	^UgenBuilder name: 'InRange' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lo. hi}
 )
-
-in: in lo: lo hi: hi mul: mul = (
-    ^(InRange in: in lo: lo hi: hi) * mul
-)
-
-in: in lo: lo hi: hi mul: mul add: add = (
-    ^(InRange in: in lo: lo hi: hi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:lo:hi:
+	^#in:lo:hi:
 )
-
-
-comment = (^'
-Tests if a signal is within a given range.
-')
-
+in: in lo: lo hi: hi mul: mul = (
+	^(InRange in: in lo: lo hi: hi) * mul
+)
+in: in lo: lo hi: hi mul: mul add: add = (
+	^(InRange in: in lo: lo hi: hi) * mul + add
+)
 
 )

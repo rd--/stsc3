@@ -1,26 +1,20 @@
 PulseDivider = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#trig:div:start:
+----
+comment = (
+	^'Pulse divider.'
 )
 
 trig: trig div: div start: start = (
-    ^UgenBuilder name: 'PulseDivider' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. div. start}
+	^UgenBuilder name: 'PulseDivider' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. div. start}
 )
-
+primaryFactoryMethod = (
+	^#trig:div:start:
+)
 trig: trig div: div start: start mul: mul = (
-    ^(PulseDivider trig: trig div: div start: start) * mul
+	^(PulseDivider trig: trig div: div start: start) * mul
 )
-
 trig: trig div: div start: start mul: mul add: add = (
-    ^(PulseDivider trig: trig div: div start: start) * mul + add
+	^(PulseDivider trig: trig div: div start: start) * mul + add
 )
-
-
-comment = (^'
-Pulse divider.
-')
-
 
 )

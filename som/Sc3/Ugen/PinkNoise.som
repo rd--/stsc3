@@ -1,26 +1,20 @@
 PinkNoise = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(PinkNoise new) * mul
-)
-
-mul: mul add: add = (
-    ^(PinkNoise new) * mul + add
+----
+comment = (
+	^'Pink Noise.'
 )
 
 new = (
-    ^UgenBuilder name: 'PinkNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'PinkNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-Pink Noise.
-')
-
+mul: mul = (
+	^(PinkNoise new) * mul
+)
+mul: mul add: add = (
+	^(PinkNoise new) * mul + add
+)
 
 )

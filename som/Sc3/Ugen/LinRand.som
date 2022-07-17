@@ -1,26 +1,20 @@
 LinRand = ScUgen (
-----------------------------
+----
+comment = (
+	^'Skewed random number generator.'
+)
 
 lo: lo hi: hi minmax: minmax = (
-    ^UgenBuilder name: 'LinRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi. minmax}
+	^UgenBuilder name: 'LinRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi. minmax}
 )
-
-lo: lo hi: hi minmax: minmax mul: mul = (
-    ^(LinRand lo: lo hi: hi minmax: minmax) * mul
-)
-
-lo: lo hi: hi minmax: minmax mul: mul add: add = (
-    ^(LinRand lo: lo hi: hi minmax: minmax) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#lo:hi:minmax:
+	^#lo:hi:minmax:
 )
-
-
-comment = (^'
-Skewed random number generator.
-')
-
+lo: lo hi: hi minmax: minmax mul: mul = (
+	^(LinRand lo: lo hi: hi minmax: minmax) * mul
+)
+lo: lo hi: hi minmax: minmax mul: mul add: add = (
+	^(LinRand lo: lo hi: hi minmax: minmax) * mul + add
+)
 
 )

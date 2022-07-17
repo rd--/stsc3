@@ -1,26 +1,20 @@
 ModDif = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#x:y:mod:
+----
+comment = (
+	^'Minimum difference of two values in modulo arithmetics'
 )
 
 x: x y: y mod: mod = (
-    ^UgenBuilder name: 'ModDif' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {x. y. mod}
+	^UgenBuilder name: 'ModDif' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {x. y. mod}
 )
-
+primaryFactoryMethod = (
+	^#x:y:mod:
+)
 x: x y: y mod: mod mul: mul = (
-    ^(ModDif x: x y: y mod: mod) * mul
+	^(ModDif x: x y: y mod: mod) * mul
 )
-
 x: x y: y mod: mod mul: mul add: add = (
-    ^(ModDif x: x y: y mod: mod) * mul + add
+	^(ModDif x: x y: y mod: mod) * mul + add
 )
-
-
-comment = (^'
-Minimum difference of two values in modulo arithmetics
-')
-
 
 )

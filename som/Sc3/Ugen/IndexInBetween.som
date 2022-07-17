@@ -1,26 +1,20 @@
 IndexInBetween = ScUgen (
-----------------------------
+----
+comment = (
+	^'Finds the (lowest) point in the Buffer at which the input signal lies in-between the two values'
+)
 
 bufnum: bufnum in: in = (
-    ^UgenBuilder name: 'IndexInBetween' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
+	^UgenBuilder name: 'IndexInBetween' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in}
 )
-
-bufnum: bufnum in: in mul: mul = (
-    ^(IndexInBetween bufnum: bufnum in: in) * mul
-)
-
-bufnum: bufnum in: in mul: mul add: add = (
-    ^(IndexInBetween bufnum: bufnum in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:in:
+	^#bufnum:in:
 )
-
-
-comment = (^'
-Finds the (lowest) point in the Buffer at which the input signal lies in-between the two values
-')
-
+bufnum: bufnum in: in mul: mul = (
+	^(IndexInBetween bufnum: bufnum in: in) * mul
+)
+bufnum: bufnum in: in mul: mul add: add = (
+	^(IndexInBetween bufnum: bufnum in: in) * mul + add
+)
 
 )

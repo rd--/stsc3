@@ -1,26 +1,20 @@
 DetectSilence = ScUgen (
-----------------------------
+----
+comment = (
+	^'Detect when input falls below an amplitude threshold'
+)
 
 in: in amp: amp time: time doneAction: doneAction = (
-    ^UgenBuilder name: 'DetectSilence' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. amp. time. doneAction}
+	^UgenBuilder name: 'DetectSilence' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. amp. time. doneAction}
 )
-
-in: in amp: amp time: time doneAction: doneAction mul: mul = (
-    ^(DetectSilence in: in amp: amp time: time doneAction: doneAction) * mul
-)
-
-in: in amp: amp time: time doneAction: doneAction mul: mul add: add = (
-    ^(DetectSilence in: in amp: amp time: time doneAction: doneAction) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:amp:time:doneAction:
+	^#in:amp:time:doneAction:
 )
-
-
-comment = (^'
-Detect when input falls below an amplitude threshold
-')
-
+in: in amp: amp time: time doneAction: doneAction mul: mul = (
+	^(DetectSilence in: in amp: amp time: time doneAction: doneAction) * mul
+)
+in: in amp: amp time: time doneAction: doneAction mul: mul add: add = (
+	^(DetectSilence in: in amp: amp time: time doneAction: doneAction) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 SyncSaw = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#syncFreq:sawFreq:
+----
+comment = (
+	^'Hard sync sawtooth wave.'
 )
 
 syncFreq: syncFreq sawFreq: sawFreq = (
-    ^UgenBuilder name: 'SyncSaw' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {syncFreq. sawFreq}
+	^UgenBuilder name: 'SyncSaw' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {syncFreq. sawFreq}
 )
-
+primaryFactoryMethod = (
+	^#syncFreq:sawFreq:
+)
 syncFreq: syncFreq sawFreq: sawFreq mul: mul = (
-    ^(SyncSaw syncFreq: syncFreq sawFreq: sawFreq) * mul
+	^(SyncSaw syncFreq: syncFreq sawFreq: sawFreq) * mul
 )
-
 syncFreq: syncFreq sawFreq: sawFreq mul: mul add: add = (
-    ^(SyncSaw syncFreq: syncFreq sawFreq: sawFreq) * mul + add
+	^(SyncSaw syncFreq: syncFreq sawFreq: sawFreq) * mul + add
 )
-
-
-comment = (^'
-Hard sync sawtooth wave.
-')
-
 
 )

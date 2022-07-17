@@ -1,26 +1,20 @@
 GrainSin = ScUgen (
-----------------------------
+----
+comment = (
+	^'Granular synthesis with sine tones'
+)
 
 numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains = (
-    ^UgenBuilder name: 'GrainSin' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. freq. pan. envbufnum. maxGrains}
+	^UgenBuilder name: 'GrainSin' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. freq. pan. envbufnum. maxGrains}
 )
-
-numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
-    ^(GrainSin numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
-)
-
-numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
-    ^(GrainSin numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:trigger:dur:freq:pan:envbufnum:maxGrains:
+	^#numChan:trigger:dur:freq:pan:envbufnum:maxGrains:
 )
-
-
-comment = (^'
-Granular synthesis with sine tones
-')
-
+numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
+	^(GrainSin numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
+)
+numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
+	^(GrainSin numChan: numChan trigger: trigger dur: dur freq: freq pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
+)
 
 )

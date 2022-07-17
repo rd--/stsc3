@@ -1,26 +1,20 @@
 LinPan2 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Two channel linear pan.'
+)
 
 in: in pos: pos level: level = (
-    ^UgenBuilder name: 'LinPan2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level}
+	^UgenBuilder name: 'LinPan2' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. pos. level}
 )
-
-in: in pos: pos level: level mul: mul = (
-    ^(LinPan2 in: in pos: pos level: level) * mul
-)
-
-in: in pos: pos level: level mul: mul add: add = (
-    ^(LinPan2 in: in pos: pos level: level) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:pos:level:
+	^#in:pos:level:
 )
-
-
-comment = (^'
-Two channel linear pan.
-')
-
+in: in pos: pos level: level mul: mul = (
+	^(LinPan2 in: in pos: pos level: level) * mul
+)
+in: in pos: pos level: level mul: mul add: add = (
+	^(LinPan2 in: in pos: pos level: level) * mul + add
+)
 
 )

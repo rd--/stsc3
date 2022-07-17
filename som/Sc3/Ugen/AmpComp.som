@@ -1,26 +1,20 @@
 AmpComp = ScUgen (
-----------------------------
+----
+comment = (
+	^'Basic psychoacoustic amplitude compensation.'
+)
 
 freq: freq root: root exp: exp = (
-    ^UgenBuilder name: 'AmpComp' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. root. exp}
+	^UgenBuilder name: 'AmpComp' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. root. exp}
 )
-
-freq: freq root: root exp: exp mul: mul = (
-    ^(AmpComp freq: freq root: root exp: exp) * mul
-)
-
-freq: freq root: root exp: exp mul: mul add: add = (
-    ^(AmpComp freq: freq root: root exp: exp) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:root:exp:
+	^#freq:root:exp:
 )
-
-
-comment = (^'
-Basic psychoacoustic amplitude compensation.
-')
-
+freq: freq root: root exp: exp mul: mul = (
+	^(AmpComp freq: freq root: root exp: exp) * mul
+)
+freq: freq root: root exp: exp mul: mul add: add = (
+	^(AmpComp freq: freq root: root exp: exp) * mul + add
+)
 
 )

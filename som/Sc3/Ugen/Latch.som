@@ -1,26 +1,20 @@
 Latch = ScUgen (
-----------------------------
+----
+comment = (
+	^'Sample and hold'
+)
 
 in: in trig: trig = (
-    ^UgenBuilder name: 'Latch' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig}
+	^UgenBuilder name: 'Latch' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. trig}
 )
-
-in: in trig: trig mul: mul = (
-    ^(Latch in: in trig: trig) * mul
-)
-
-in: in trig: trig mul: mul add: add = (
-    ^(Latch in: in trig: trig) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:trig:
+	^#in:trig:
 )
-
-
-comment = (^'
-Sample and hold
-')
-
+in: in trig: trig mul: mul = (
+	^(Latch in: in trig: trig) * mul
+)
+in: in trig: trig mul: mul add: add = (
+	^(Latch in: in trig: trig) * mul + add
+)
 
 )

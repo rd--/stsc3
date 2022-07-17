@@ -1,26 +1,20 @@
 ExpRand = ScUgen (
-----------------------------
+----
+comment = (
+	^'Exponential single random number generator.'
+)
 
 lo: lo hi: hi = (
-    ^UgenBuilder name: 'ExpRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
+	^UgenBuilder name: 'ExpRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
 )
-
-lo: lo hi: hi mul: mul = (
-    ^(ExpRand lo: lo hi: hi) * mul
-)
-
-lo: lo hi: hi mul: mul add: add = (
-    ^(ExpRand lo: lo hi: hi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#lo:hi:
+	^#lo:hi:
 )
-
-
-comment = (^'
-Exponential single random number generator.
-')
-
+lo: lo hi: hi mul: mul = (
+	^(ExpRand lo: lo hi: hi) * mul
+)
+lo: lo hi: hi mul: mul add: add = (
+	^(ExpRand lo: lo hi: hi) * mul + add
+)
 
 )

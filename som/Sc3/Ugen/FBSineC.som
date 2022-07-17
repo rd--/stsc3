@@ -1,26 +1,20 @@
 FBSineC = ScUgen (
-----------------------------
+----
+comment = (
+	^'Feedback sine with chaotic phase indexing'
+)
 
 freq: freq im: im fb: fb a: a c: c xi: xi yi: yi = (
-    ^UgenBuilder name: 'FBSineC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. im. fb. a. c. xi. yi}
+	^UgenBuilder name: 'FBSineC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. im. fb. a. c. xi. yi}
 )
-
-freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul = (
-    ^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul
-)
-
-freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add = (
-    ^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:im:fb:a:c:xi:yi:
+	^#freq:im:fb:a:c:xi:yi:
 )
-
-
-comment = (^'
-Feedback sine with chaotic phase indexing
-')
-
+freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul = (
+	^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul
+)
+freq: freq im: im fb: fb a: a c: c xi: xi yi: yi mul: mul add: add = (
+	^(FBSineC freq: freq im: im fb: fb a: a c: c xi: xi yi: yi) * mul + add
+)
 
 )

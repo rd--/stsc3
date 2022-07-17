@@ -1,26 +1,20 @@
 Dseq = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#repeats:list:
+----
+comment = (
+	^'Demand rate sequence generator.'
 )
 
 repeats: repeats list: list = (
-    ^UgenBuilder name: 'Dseq' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
+	^UgenBuilder name: 'Dseq' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
 )
-
+primaryFactoryMethod = (
+	^#repeats:list:
+)
 repeats: repeats list: list mul: mul = (
-    ^(Dseq repeats: repeats list: list) * mul
+	^(Dseq repeats: repeats list: list) * mul
 )
-
 repeats: repeats list: list mul: mul add: add = (
-    ^(Dseq repeats: repeats list: list) * mul + add
+	^(Dseq repeats: repeats list: list) * mul + add
 )
-
-
-comment = (^'
-Demand rate sequence generator.
-')
-
 
 )

@@ -1,26 +1,20 @@
 Schmidt = ScUgen (
-----------------------------
+----
+comment = (
+	^'Schmidt trigger.'
+)
 
 in: in lo: lo hi: hi = (
-    ^UgenBuilder name: 'Schmidt' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lo. hi}
+	^UgenBuilder name: 'Schmidt' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lo. hi}
 )
-
-in: in lo: lo hi: hi mul: mul = (
-    ^(Schmidt in: in lo: lo hi: hi) * mul
-)
-
-in: in lo: lo hi: hi mul: mul add: add = (
-    ^(Schmidt in: in lo: lo hi: hi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:lo:hi:
+	^#in:lo:hi:
 )
-
-
-comment = (^'
-Schmidt trigger.
-')
-
+in: in lo: lo hi: hi mul: mul = (
+	^(Schmidt in: in lo: lo hi: hi) * mul
+)
+in: in lo: lo hi: hi mul: mul add: add = (
+	^(Schmidt in: in lo: lo hi: hi) * mul + add
+)
 
 )

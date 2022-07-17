@@ -1,26 +1,20 @@
 ObxdFilter = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole = (
-    ^UgenBuilder name: 'ObxdFilter' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. cutoff. resonance. multimode. bandpass. fourpole}
+	^UgenBuilder name: 'ObxdFilter' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. cutoff. resonance. multimode. bandpass. fourpole}
 )
-
-in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul = (
-    ^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul
-)
-
-in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul add: add = (
-    ^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:cutoff:resonance:multimode:bandpass:fourpole:
+	^#in:cutoff:resonance:multimode:bandpass:fourpole:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul = (
+	^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul
+)
+in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole mul: mul add: add = (
+	^(ObxdFilter in: in cutoff: cutoff resonance: resonance multimode: multimode bandpass: bandpass fourpole: fourpole) * mul + add
+)
 
 )

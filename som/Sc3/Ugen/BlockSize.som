@@ -1,26 +1,20 @@
 BlockSize = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(BlockSize new) * mul
-)
-
-mul: mul add: add = (
-    ^(BlockSize new) * mul + add
+----
+comment = (
+	^'(Undocumented class)'
 )
 
 new = (
-    ^UgenBuilder name: 'BlockSize' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'BlockSize' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+mul: mul = (
+	^(BlockSize new) * mul
+)
+mul: mul add: add = (
+	^(BlockSize new) * mul + add
+)
 
 )

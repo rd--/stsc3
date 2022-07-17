@@ -1,26 +1,20 @@
 PanB = ScUgen (
-----------------------------
+----
+comment = (
+	^'Ambisonic B-format panner.'
+)
 
 in: in azimuth: azimuth elevation: elevation gain: gain = (
-    ^UgenBuilder name: 'PanB' numChan: 4 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. azimuth. elevation. gain}
+	^UgenBuilder name: 'PanB' numChan: 4 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. azimuth. elevation. gain}
 )
-
-in: in azimuth: azimuth elevation: elevation gain: gain mul: mul = (
-    ^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul
-)
-
-in: in azimuth: azimuth elevation: elevation gain: gain mul: mul add: add = (
-    ^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:azimuth:elevation:gain:
+	^#in:azimuth:elevation:gain:
 )
-
-
-comment = (^'
-Ambisonic B-format panner.
-')
-
+in: in azimuth: azimuth elevation: elevation gain: gain mul: mul = (
+	^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul
+)
+in: in azimuth: azimuth elevation: elevation gain: gain mul: mul add: add = (
+	^(PanB in: in azimuth: azimuth elevation: elevation gain: gain) * mul + add
+)
 
 )

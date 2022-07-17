@@ -1,26 +1,20 @@
 BufSampleRate = ScUgen (
-----------------------------
+----
+comment = (
+	^'Buffer sample rate.'
+)
 
 bufnum: bufnum = (
-    ^UgenBuilder name: 'BufSampleRate' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {bufnum}
+	^UgenBuilder name: 'BufSampleRate' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {bufnum}
 )
-
-bufnum: bufnum mul: mul = (
-    ^(BufSampleRate bufnum: bufnum) * mul
-)
-
-bufnum: bufnum mul: mul add: add = (
-    ^(BufSampleRate bufnum: bufnum) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:
+	^#bufnum:
 )
-
-
-comment = (^'
-Buffer sample rate.
-')
-
+bufnum: bufnum mul: mul = (
+	^(BufSampleRate bufnum: bufnum) * mul
+)
+bufnum: bufnum mul: mul add: add = (
+	^(BufSampleRate bufnum: bufnum) * mul + add
+)
 
 )

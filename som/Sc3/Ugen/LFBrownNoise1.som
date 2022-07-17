@@ -1,26 +1,20 @@
 LFBrownNoise1 = ScUgen (
-----------------------------
+----
+comment = (
+	^'random walk linear interp'
+)
 
 freq: freq dev: dev dist: dist = (
-    ^UgenBuilder name: 'LFBrownNoise1' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. dev. dist}
+	^UgenBuilder name: 'LFBrownNoise1' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. dev. dist}
 )
-
-freq: freq dev: dev dist: dist mul: mul = (
-    ^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul
-)
-
-freq: freq dev: dev dist: dist mul: mul add: add = (
-    ^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:dev:dist:
+	^#freq:dev:dist:
 )
-
-
-comment = (^'
-random walk linear interp
-')
-
+freq: freq dev: dev dist: dist mul: mul = (
+	^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul
+)
+freq: freq dev: dev dist: dist mul: mul add: add = (
+	^(LFBrownNoise1 freq: freq dev: dev dist: dist) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 PlayBuf = ScUgen (
-----------------------------
+----
+comment = (
+	^'Sample playback oscillator.'
+)
 
 numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction = (
-    ^UgenBuilder name: 'PlayBuf' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. rate. trigger. startPos. loop. doneAction}
+	^UgenBuilder name: 'PlayBuf' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. rate. trigger. startPos. loop. doneAction}
 )
-
-numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul = (
-    ^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul
-)
-
-numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul add: add = (
-    ^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:bufnum:rate:trigger:startPos:loop:doneAction:
+	^#numChan:bufnum:rate:trigger:startPos:loop:doneAction:
 )
-
-
-comment = (^'
-Sample playback oscillator.
-')
-
+numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul = (
+	^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul
+)
+numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction mul: mul add: add = (
+	^(PlayBuf numChan: numChan bufnum: bufnum rate: rate trigger: trigger startPos: startPos loop: loop doneAction: doneAction) * mul + add
+)
 
 )

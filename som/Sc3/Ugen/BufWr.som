@@ -1,26 +1,20 @@
 BufWr = ScUgen (
-----------------------------
+----
+comment = (
+	^'Buffer writing oscillator.'
+)
 
 bufnum: bufnum phase: phase loop: loop inputArray: inputArray = (
-    ^UgenBuilder name: 'BufWr' numChan: 1 rateSpec: #(4) specialIndex: 0 inputArray: ({bufnum. phase. loop} , (inputArray asArray))
+	^UgenBuilder name: 'BufWr' numChan: 1 rateSpec: #(4) specialIndex: 0 inputArray: ({bufnum. phase. loop} , (inputArray asArray))
 )
-
-bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul = (
-    ^(BufWr bufnum: bufnum phase: phase loop: loop inputArray: inputArray) * mul
-)
-
-bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul add: add = (
-    ^(BufWr bufnum: bufnum phase: phase loop: loop inputArray: inputArray) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:phase:loop:inputArray:
+	^#bufnum:phase:loop:inputArray:
 )
-
-
-comment = (^'
-Buffer writing oscillator.
-')
-
+bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul = (
+	^(BufWr bufnum: bufnum phase: phase loop: loop inputArray: inputArray) * mul
+)
+bufnum: bufnum phase: phase loop: loop inputArray: inputArray mul: mul add: add = (
+	^(BufWr bufnum: bufnum phase: phase loop: loop inputArray: inputArray) * mul + add
+)
 
 )

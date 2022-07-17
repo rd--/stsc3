@@ -1,26 +1,20 @@
 Trig1 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Timed trigger.'
+)
 
 in: in dur: dur = (
-    ^UgenBuilder name: 'Trig1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. dur}
+	^UgenBuilder name: 'Trig1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. dur}
 )
-
-in: in dur: dur mul: mul = (
-    ^(Trig1 in: in dur: dur) * mul
-)
-
-in: in dur: dur mul: mul add: add = (
-    ^(Trig1 in: in dur: dur) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:dur:
+	^#in:dur:
 )
-
-
-comment = (^'
-Timed trigger.
-')
-
+in: in dur: dur mul: mul = (
+	^(Trig1 in: in dur: dur) * mul
+)
+in: in dur: dur mul: mul add: add = (
+	^(Trig1 in: in dur: dur) * mul + add
+)
 
 )

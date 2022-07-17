@@ -1,26 +1,20 @@
 RandN = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 numChan: numChan lo: lo hi: hi = (
-    ^UgenBuilder name: 'RandN' numChan: numChan rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
+	^UgenBuilder name: 'RandN' numChan: numChan rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
 )
-
-numChan: numChan lo: lo hi: hi mul: mul = (
-    ^(RandN numChan: numChan lo: lo hi: hi) * mul
-)
-
-numChan: numChan lo: lo hi: hi mul: mul add: add = (
-    ^(RandN numChan: numChan lo: lo hi: hi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:lo:hi:
+	^#numChan:lo:hi:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+numChan: numChan lo: lo hi: hi mul: mul = (
+	^(RandN numChan: numChan lo: lo hi: hi) * mul
+)
+numChan: numChan lo: lo hi: hi mul: mul add: add = (
+	^(RandN numChan: numChan lo: lo hi: hi) * mul + add
+)
 
 )

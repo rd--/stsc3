@@ -1,26 +1,20 @@
 Sweep = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#trig:rate:
+----
+comment = (
+	^'Triggered linear ramp'
 )
 
 trig: trig rate: rate = (
-    ^UgenBuilder name: 'Sweep' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. rate}
+	^UgenBuilder name: 'Sweep' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. rate}
 )
-
+primaryFactoryMethod = (
+	^#trig:rate:
+)
 trig: trig rate: rate mul: mul = (
-    ^(Sweep trig: trig rate: rate) * mul
+	^(Sweep trig: trig rate: rate) * mul
 )
-
 trig: trig rate: rate mul: mul add: add = (
-    ^(Sweep trig: trig rate: rate) * mul + add
+	^(Sweep trig: trig rate: rate) * mul + add
 )
-
-
-comment = (^'
-Triggered linear ramp
-')
-
 
 )

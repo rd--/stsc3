@@ -1,26 +1,20 @@
 Perlin3 = ScUgen (
-----------------------------
-
-primaryFactoryMethod = (
-    ^#x:y:z:
+----
+comment = (
+	^'3D Perlin Noise'
 )
 
 x: x y: y z: z = (
-    ^UgenBuilder name: 'Perlin3' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {x. y. z}
+	^UgenBuilder name: 'Perlin3' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {x. y. z}
 )
-
+primaryFactoryMethod = (
+	^#x:y:z:
+)
 x: x y: y z: z mul: mul = (
-    ^(Perlin3 x: x y: y z: z) * mul
+	^(Perlin3 x: x y: y z: z) * mul
 )
-
 x: x y: y z: z mul: mul add: add = (
-    ^(Perlin3 x: x y: y z: z) * mul + add
+	^(Perlin3 x: x y: y z: z) * mul + add
 )
-
-
-comment = (^'
-3D Perlin Noise
-')
-
 
 )

@@ -1,26 +1,20 @@
 Slew = ScUgen (
-----------------------------
+----
+comment = (
+	^'Slew rate limiter.'
+)
 
 in: in up: up dn: dn = (
-    ^UgenBuilder name: 'Slew' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. up. dn}
+	^UgenBuilder name: 'Slew' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. up. dn}
 )
-
-in: in up: up dn: dn mul: mul = (
-    ^(Slew in: in up: up dn: dn) * mul
-)
-
-in: in up: up dn: dn mul: mul add: add = (
-    ^(Slew in: in up: up dn: dn) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:up:dn:
+	^#in:up:dn:
 )
-
-
-comment = (^'
-Slew rate limiter.
-')
-
+in: in up: up dn: dn mul: mul = (
+	^(Slew in: in up: up dn: dn) * mul
+)
+in: in up: up dn: dn mul: mul add: add = (
+	^(Slew in: in up: up dn: dn) * mul + add
+)
 
 )

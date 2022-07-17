@@ -1,26 +1,20 @@
 IRand = ScUgen (
-----------------------------
+----
+comment = (
+	^'Single integer random number generator.'
+)
 
 lo: lo hi: hi = (
-    ^UgenBuilder name: 'IRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
+	^UgenBuilder name: 'IRand' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi}
 )
-
-lo: lo hi: hi mul: mul = (
-    ^(IRand lo: lo hi: hi) * mul
-)
-
-lo: lo hi: hi mul: mul add: add = (
-    ^(IRand lo: lo hi: hi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#lo:hi:
+	^#lo:hi:
 )
-
-
-comment = (^'
-Single integer random number generator.
-')
-
+lo: lo hi: hi mul: mul = (
+	^(IRand lo: lo hi: hi) * mul
+)
+lo: lo hi: hi mul: mul add: add = (
+	^(IRand lo: lo hi: hi) * mul + add
+)
 
 )

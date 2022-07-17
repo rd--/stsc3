@@ -144,7 +144,8 @@ Method naming in Sc and St is in general incompatible.
 In Sc there is both _Array>>put(index: anIndex, item: anItem)_  and _Dictionary>>put(key: aKey, value: aValue)_.
 The method name and the names of the parameters together form the selector.
 
-In St there is only _collection at: aKey put: aValue_, written in Stc as _collection.at(aKey, put: aValue)_.
+In St there is only _collection at: aKey put: aValue_,
+written in Stc as either _collection.at(aKey, put: aValue)_ or _collection(at: aKey, put: aValue)_.
 The names of the paramters are not part of the name of the selector.
 
 The Stc notation for defining this method is _at:put: { arg aKey, aValue; ... }_.

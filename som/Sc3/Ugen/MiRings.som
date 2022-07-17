@@ -1,18 +1,20 @@
 MiRings = ScUgen (
-
 ----
+comment = (
+	^'a resonator'
+)
 
 in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass = (
-    ^UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. internExciter. easteregg. bypass}
+	^UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. internExciter. easteregg. bypass}
 )
-
+primaryFactoryMethod = (
+	^#in:trig:pit:struct:bright:damp:pos:model:poly:internExciter:easteregg:bypass:
+)
 in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass mul: mul = (
-    ^(UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. internExciter. easteregg. bypass}) * mul
+	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass) * mul
 )
-
 in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass mul: mul add: add = (
-    ^(UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. internExciter. easteregg. bypass}) * mul + add
+	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass) * mul + add
 )
 
 )
-

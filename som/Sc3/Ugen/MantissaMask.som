@@ -1,26 +1,20 @@
 MantissaMask = ScUgen (
-----------------------------
+----
+comment = (
+	^'Reduce precision.'
+)
 
 in: in bits: bits = (
-    ^UgenBuilder name: 'MantissaMask' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. bits}
+	^UgenBuilder name: 'MantissaMask' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. bits}
 )
-
-in: in bits: bits mul: mul = (
-    ^(MantissaMask in: in bits: bits) * mul
-)
-
-in: in bits: bits mul: mul add: add = (
-    ^(MantissaMask in: in bits: bits) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:bits:
+	^#in:bits:
 )
-
-
-comment = (^'
-Reduce precision.
-')
-
+in: in bits: bits mul: mul = (
+	^(MantissaMask in: in bits: bits) * mul
+)
+in: in bits: bits mul: mul add: add = (
+	^(MantissaMask in: in bits: bits) * mul + add
+)
 
 )

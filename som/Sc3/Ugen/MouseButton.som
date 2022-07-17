@@ -1,26 +1,20 @@
 MouseButton = ScUgen (
-----------------------------
+----
+comment = (
+	^'Mouse button UGen.'
+)
 
 minval: minval maxval: maxval lag: lag = (
-    ^UgenBuilder name: 'MouseButton' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {minval. maxval. lag}
+	^UgenBuilder name: 'MouseButton' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {minval. maxval. lag}
 )
-
-minval: minval maxval: maxval lag: lag mul: mul = (
-    ^(MouseButton minval: minval maxval: maxval lag: lag) * mul
-)
-
-minval: minval maxval: maxval lag: lag mul: mul add: add = (
-    ^(MouseButton minval: minval maxval: maxval lag: lag) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#minval:maxval:lag:
+	^#minval:maxval:lag:
 )
-
-
-comment = (^'
-Mouse button UGen.
-')
-
+minval: minval maxval: maxval lag: lag mul: mul = (
+	^(MouseButton minval: minval maxval: maxval lag: lag) * mul
+)
+minval: minval maxval: maxval lag: lag mul: mul add: add = (
+	^(MouseButton minval: minval maxval: maxval lag: lag) * mul + add
+)
 
 )

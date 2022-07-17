@@ -1,26 +1,20 @@
 LocalBuf = ScUgen (
-----------------------------
+----
+comment = (
+	^'Allocate a buffer local to the synth'
+)
 
 numChannels: numChannels numFrames: numFrames = (
-    ^UgenBuilder name: 'LocalBuf' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {numChannels. numFrames}
+	^UgenBuilder name: 'LocalBuf' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {numChannels. numFrames}
 )
-
-numChannels: numChannels numFrames: numFrames mul: mul = (
-    ^(LocalBuf numChannels: numChannels numFrames: numFrames) * mul
-)
-
-numChannels: numChannels numFrames: numFrames mul: mul add: add = (
-    ^(LocalBuf numChannels: numChannels numFrames: numFrames) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChannels:numFrames:
+	^#numChannels:numFrames:
 )
-
-
-comment = (^'
-Allocate a buffer local to the synth
-')
-
+numChannels: numChannels numFrames: numFrames mul: mul = (
+	^(LocalBuf numChannels: numChannels numFrames: numFrames) * mul
+)
+numChannels: numChannels numFrames: numFrames mul: mul add: add = (
+	^(LocalBuf numChannels: numChannels numFrames: numFrames) * mul + add
+)
 
 )

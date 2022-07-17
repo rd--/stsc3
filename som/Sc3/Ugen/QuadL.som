@@ -1,26 +1,20 @@
 QuadL = ScUgen (
-----------------------------
+----
+comment = (
+	^'General quadratic map chaotic generator'
+)
 
 freq: freq a: a b: b c: c xi: xi = (
-    ^UgenBuilder name: 'QuadL' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. c. xi}
+	^UgenBuilder name: 'QuadL' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. c. xi}
 )
-
-freq: freq a: a b: b c: c xi: xi mul: mul = (
-    ^(QuadL freq: freq a: a b: b c: c xi: xi) * mul
-)
-
-freq: freq a: a b: b c: c xi: xi mul: mul add: add = (
-    ^(QuadL freq: freq a: a b: b c: c xi: xi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:a:b:c:xi:
+	^#freq:a:b:c:xi:
 )
-
-
-comment = (^'
-General quadratic map chaotic generator
-')
-
+freq: freq a: a b: b c: c xi: xi mul: mul = (
+	^(QuadL freq: freq a: a b: b c: c xi: xi) * mul
+)
+freq: freq a: a b: b c: c xi: xi mul: mul add: add = (
+	^(QuadL freq: freq a: a b: b c: c xi: xi) * mul + add
+)
 
 )

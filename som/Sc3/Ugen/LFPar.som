@@ -1,26 +1,20 @@
 LFPar = ScUgen (
-----------------------------
+----
+comment = (
+	^'Parabolic oscillator'
+)
 
 freq: freq iphase: iphase = (
-    ^UgenBuilder name: 'LFPar' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
+	^UgenBuilder name: 'LFPar' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. iphase}
 )
-
-freq: freq iphase: iphase mul: mul = (
-    ^(LFPar freq: freq iphase: iphase) * mul
-)
-
-freq: freq iphase: iphase mul: mul add: add = (
-    ^(LFPar freq: freq iphase: iphase) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:iphase:
+	^#freq:iphase:
 )
-
-
-comment = (^'
-Parabolic oscillator
-')
-
+freq: freq iphase: iphase mul: mul = (
+	^(LFPar freq: freq iphase: iphase) * mul
+)
+freq: freq iphase: iphase mul: mul add: add = (
+	^(LFPar freq: freq iphase: iphase) * mul + add
+)
 
 )

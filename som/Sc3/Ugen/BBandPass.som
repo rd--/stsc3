@@ -1,26 +1,20 @@
 BBandPass = ScUgen (
-----------------------------
+----
+comment = (
+	^'Band Pass Filter'
+)
 
 in: in freq: freq bw: bw = (
-    ^UgenBuilder name: 'BBandPass' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. bw}
+	^UgenBuilder name: 'BBandPass' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. bw}
 )
-
-in: in freq: freq bw: bw mul: mul = (
-    ^(BBandPass in: in freq: freq bw: bw) * mul
-)
-
-in: in freq: freq bw: bw mul: mul add: add = (
-    ^(BBandPass in: in freq: freq bw: bw) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:bw:
+	^#in:freq:bw:
 )
-
-
-comment = (^'
-Band Pass Filter
-')
-
+in: in freq: freq bw: bw mul: mul = (
+	^(BBandPass in: in freq: freq bw: bw) * mul
+)
+in: in freq: freq bw: bw mul: mul add: add = (
+	^(BBandPass in: in freq: freq bw: bw) * mul + add
+)
 
 )

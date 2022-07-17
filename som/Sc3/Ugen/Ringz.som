@@ -1,26 +1,20 @@
 Ringz = ScUgen (
-----------------------------
+----
+comment = (
+	^'Ringing filter.'
+)
 
 in: in freq: freq decaytime: decaytime = (
-    ^UgenBuilder name: 'Ringz' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. decaytime}
+	^UgenBuilder name: 'Ringz' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. decaytime}
 )
-
-in: in freq: freq decaytime: decaytime mul: mul = (
-    ^(Ringz in: in freq: freq decaytime: decaytime) * mul
-)
-
-in: in freq: freq decaytime: decaytime mul: mul add: add = (
-    ^(Ringz in: in freq: freq decaytime: decaytime) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:decaytime:
+	^#in:freq:decaytime:
 )
-
-
-comment = (^'
-Ringing filter.
-')
-
+in: in freq: freq decaytime: decaytime mul: mul = (
+	^(Ringz in: in freq: freq decaytime: decaytime) * mul
+)
+in: in freq: freq decaytime: decaytime mul: mul add: add = (
+	^(Ringz in: in freq: freq decaytime: decaytime) * mul + add
+)
 
 )

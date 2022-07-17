@@ -1,26 +1,20 @@
 ZeroCrossing = ScUgen (
-----------------------------
+----
+comment = (
+	^'Zero crossing frequency follower'
+)
 
 in: in = (
-    ^UgenBuilder name: 'ZeroCrossing' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+	^UgenBuilder name: 'ZeroCrossing' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
 )
-
-in: in mul: mul = (
-    ^(ZeroCrossing in: in) * mul
-)
-
-in: in mul: mul add: add = (
-    ^(ZeroCrossing in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:
+	^#in:
 )
-
-
-comment = (^'
-Zero crossing frequency follower
-')
-
+in: in mul: mul = (
+	^(ZeroCrossing in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(ZeroCrossing in: in) * mul + add
+)
 
 )

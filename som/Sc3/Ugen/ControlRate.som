@@ -1,26 +1,20 @@
 ControlRate = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(ControlRate new) * mul
-)
-
-mul: mul add: add = (
-    ^(ControlRate new) * mul + add
+----
+comment = (
+	^'Server control rate.'
 )
 
 new = (
-    ^UgenBuilder name: 'ControlRate' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'ControlRate' numChan: 1 rateSpec: (Rate ir) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-Server control rate.
-')
-
+mul: mul = (
+	^(ControlRate new) * mul
+)
+mul: mul add: add = (
+	^(ControlRate new) * mul + add
+)
 
 )

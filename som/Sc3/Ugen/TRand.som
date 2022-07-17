@@ -1,26 +1,20 @@
 TRand = ScUgen (
-----------------------------
+----
+comment = (
+	^'Triggered random number generator.'
+)
 
 lo: lo hi: hi trig: trig = (
-    ^UgenBuilder name: 'TRand' numChan: 1 rateSpec: #(3) specialIndex: 0 inputArray: {lo. hi. trig}
+	^UgenBuilder name: 'TRand' numChan: 1 rateSpec: #(3) specialIndex: 0 inputArray: {lo. hi. trig}
 )
-
-lo: lo hi: hi trig: trig mul: mul = (
-    ^(TRand lo: lo hi: hi trig: trig) * mul
-)
-
-lo: lo hi: hi trig: trig mul: mul add: add = (
-    ^(TRand lo: lo hi: hi trig: trig) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#lo:hi:trig:
+	^#lo:hi:trig:
 )
-
-
-comment = (^'
-Triggered random number generator.
-')
-
+lo: lo hi: hi trig: trig mul: mul = (
+	^(TRand lo: lo hi: hi trig: trig) * mul
+)
+lo: lo hi: hi trig: trig mul: mul add: add = (
+	^(TRand lo: lo hi: hi trig: trig) * mul + add
+)
 
 )

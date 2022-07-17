@@ -1,26 +1,20 @@
 DustRange = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 iotMin: iotMin iotMax: iotMax = (
-    ^UgenBuilder name: 'DustRange' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {iotMin. iotMax}
+	^UgenBuilder name: 'DustRange' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {iotMin. iotMax}
 )
-
-iotMin: iotMin iotMax: iotMax mul: mul = (
-    ^(DustRange iotMin: iotMin iotMax: iotMax) * mul
-)
-
-iotMin: iotMin iotMax: iotMax mul: mul add: add = (
-    ^(DustRange iotMin: iotMin iotMax: iotMax) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#iotMin:iotMax:
+	^#iotMin:iotMax:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+iotMin: iotMin iotMax: iotMax mul: mul = (
+	^(DustRange iotMin: iotMin iotMax: iotMax) * mul
+)
+iotMin: iotMin iotMax: iotMax mul: mul add: add = (
+	^(DustRange iotMin: iotMin iotMax: iotMax) * mul + add
+)
 
 )

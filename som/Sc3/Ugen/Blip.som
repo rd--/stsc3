@@ -1,26 +1,20 @@
 Blip = ScUgen (
-----------------------------
+----
+comment = (
+	^'Band limited impulse oscillator.'
+)
 
 freq: freq numharm: numharm = (
-    ^UgenBuilder name: 'Blip' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. numharm}
+	^UgenBuilder name: 'Blip' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. numharm}
 )
-
-freq: freq numharm: numharm mul: mul = (
-    ^(Blip freq: freq numharm: numharm) * mul
-)
-
-freq: freq numharm: numharm mul: mul add: add = (
-    ^(Blip freq: freq numharm: numharm) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:numharm:
+	^#freq:numharm:
 )
-
-
-comment = (^'
-Band limited impulse oscillator.
-')
-
+freq: freq numharm: numharm mul: mul = (
+	^(Blip freq: freq numharm: numharm) * mul
+)
+freq: freq numharm: numharm mul: mul add: add = (
+	^(Blip freq: freq numharm: numharm) * mul + add
+)
 
 )

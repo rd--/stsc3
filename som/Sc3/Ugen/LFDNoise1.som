@@ -1,26 +1,20 @@
 LFDNoise1 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Dynamic ramp noise'
+)
 
 freq: freq = (
-    ^UgenBuilder name: 'LFDNoise1' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
+	^UgenBuilder name: 'LFDNoise1' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
 )
-
-freq: freq mul: mul = (
-    ^(LFDNoise1 freq: freq) * mul
-)
-
-freq: freq mul: mul add: add = (
-    ^(LFDNoise1 freq: freq) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:
+	^#freq:
 )
-
-
-comment = (^'
-Dynamic ramp noise
-')
-
+freq: freq mul: mul = (
+	^(LFDNoise1 freq: freq) * mul
+)
+freq: freq mul: mul add: add = (
+	^(LFDNoise1 freq: freq) * mul + add
+)
 
 )

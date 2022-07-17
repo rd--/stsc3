@@ -1,26 +1,20 @@
 BRF = ScUgen (
-----------------------------
+----
+comment = (
+	^'2nd order Butterworth band reject filter.'
+)
 
 in: in freq: freq rq: rq = (
-    ^UgenBuilder name: 'BRF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq}
+	^UgenBuilder name: 'BRF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq}
 )
-
-in: in freq: freq rq: rq mul: mul = (
-    ^(BRF in: in freq: freq rq: rq) * mul
-)
-
-in: in freq: freq rq: rq mul: mul add: add = (
-    ^(BRF in: in freq: freq rq: rq) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:rq:
+	^#in:freq:rq:
 )
-
-
-comment = (^'
-2nd order Butterworth band reject filter.
-')
-
+in: in freq: freq rq: rq mul: mul = (
+	^(BRF in: in freq: freq rq: rq) * mul
+)
+in: in freq: freq rq: rq mul: mul add: add = (
+	^(BRF in: in freq: freq rq: rq) * mul + add
+)
 
 )

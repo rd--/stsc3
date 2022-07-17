@@ -1,26 +1,20 @@
 LatoocarfianC = ScUgen (
-----------------------------
+----
+comment = (
+	^'Latoocarfian chaotic generator'
+)
 
 freq: freq a: a b: b c: c d: d xi: xi yi: yi = (
-    ^UgenBuilder name: 'LatoocarfianC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. c. d. xi. yi}
+	^UgenBuilder name: 'LatoocarfianC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. a. b. c. d. xi. yi}
 )
-
-freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul = (
-    ^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul
-)
-
-freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul add: add = (
-    ^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#freq:a:b:c:d:xi:yi:
+	^#freq:a:b:c:d:xi:yi:
 )
-
-
-comment = (^'
-Latoocarfian chaotic generator
-')
-
+freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul = (
+	^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul
+)
+freq: freq a: a b: b c: c d: d xi: xi yi: yi mul: mul add: add = (
+	^(LatoocarfianC freq: freq a: a b: b c: c d: d xi: xi yi: yi) * mul + add
+)
 
 )

@@ -1,26 +1,20 @@
 LPZ2 = ScUgen (
-----------------------------
+----
+comment = (
+	^'Two zero fixed lowpass'
+)
 
 in: in = (
-    ^UgenBuilder name: 'LPZ2' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+	^UgenBuilder name: 'LPZ2' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
 )
-
-in: in mul: mul = (
-    ^(LPZ2 in: in) * mul
-)
-
-in: in mul: mul add: add = (
-    ^(LPZ2 in: in) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:
+	^#in:
 )
-
-
-comment = (^'
-Two zero fixed lowpass
-')
-
+in: in mul: mul = (
+	^(LPZ2 in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(LPZ2 in: in) * mul + add
+)
 
 )

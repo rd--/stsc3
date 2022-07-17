@@ -1,26 +1,20 @@
 DegreeToKey = ScUgen (
-----------------------------
+----
+comment = (
+	^'Convert signal to modal pitch.'
+)
 
 bufnum: bufnum in: in octave: octave = (
-    ^UgenBuilder name: 'DegreeToKey' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in. octave}
+	^UgenBuilder name: 'DegreeToKey' numChan: 1 rateSpec: #(2) specialIndex: 0 inputArray: {bufnum. in. octave}
 )
-
-bufnum: bufnum in: in octave: octave mul: mul = (
-    ^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul
-)
-
-bufnum: bufnum in: in octave: octave mul: mul add: add = (
-    ^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bufnum:in:octave:
+	^#bufnum:in:octave:
 )
-
-
-comment = (^'
-Convert signal to modal pitch.
-')
-
+bufnum: bufnum in: in octave: octave mul: mul = (
+	^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul
+)
+bufnum: bufnum in: in octave: octave mul: mul add: add = (
+	^(DegreeToKey bufnum: bufnum in: in octave: octave) * mul + add
+)
 
 )

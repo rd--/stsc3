@@ -1,26 +1,20 @@
 ReplaceOut = ScUgen (
-----------------------------
+----
+comment = (
+	^'Send signal to a bus, overwriting previous contents.'
+)
 
 bus: bus channelsArray: channelsArray = (
-    ^UgenBuilder name: 'ReplaceOut' numChan: 0 rateSpec: #(2) specialIndex: 0 inputArray: ({bus} , (channelsArray asArray))
+	^UgenBuilder name: 'ReplaceOut' numChan: 0 rateSpec: #(2) specialIndex: 0 inputArray: ({bus} , (channelsArray asArray))
 )
-
-bus: bus channelsArray: channelsArray mul: mul = (
-    ^(ReplaceOut bus: bus channelsArray: channelsArray) * mul
-)
-
-bus: bus channelsArray: channelsArray mul: mul add: add = (
-    ^(ReplaceOut bus: bus channelsArray: channelsArray) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#bus:channelsArray:
+	^#bus:channelsArray:
 )
-
-
-comment = (^'
-Send signal to a bus, overwriting previous contents.
-')
-
+bus: bus channelsArray: channelsArray mul: mul = (
+	^(ReplaceOut bus: bus channelsArray: channelsArray) * mul
+)
+bus: bus channelsArray: channelsArray mul: mul add: add = (
+	^(ReplaceOut bus: bus channelsArray: channelsArray) * mul + add
+)
 
 )

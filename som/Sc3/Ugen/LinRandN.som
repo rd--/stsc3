@@ -1,26 +1,20 @@
 LinRandN = ScUgen (
-----------------------------
+----
+comment = (
+	^'(Undocumented class)'
+)
 
 numChan: numChan lo: lo hi: hi minmax: minmax = (
-    ^UgenBuilder name: 'LinRandN' numChan: numChan rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi. minmax}
+	^UgenBuilder name: 'LinRandN' numChan: numChan rateSpec: (Rate ir) specialIndex: 0 inputArray: {lo. hi. minmax}
 )
-
-numChan: numChan lo: lo hi: hi minmax: minmax mul: mul = (
-    ^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul
-)
-
-numChan: numChan lo: lo hi: hi minmax: minmax mul: mul add: add = (
-    ^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#numChan:lo:hi:minmax:
+	^#numChan:lo:hi:minmax:
 )
-
-
-comment = (^'
-(Undocumented class)
-')
-
+numChan: numChan lo: lo hi: hi minmax: minmax mul: mul = (
+	^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul
+)
+numChan: numChan lo: lo hi: hi minmax: minmax mul: mul add: add = (
+	^(LinRandN numChan: numChan lo: lo hi: hi minmax: minmax) * mul + add
+)
 
 )

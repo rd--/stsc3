@@ -1,26 +1,20 @@
 ClipNoise = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(ClipNoise new) * mul
-)
-
-mul: mul add: add = (
-    ^(ClipNoise new) * mul + add
+----
+comment = (
+	^'Clip Noise.'
 )
 
 new = (
-    ^UgenBuilder name: 'ClipNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'ClipNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-Clip Noise.
-')
-
+mul: mul = (
+	^(ClipNoise new) * mul
+)
+mul: mul add: add = (
+	^(ClipNoise new) * mul + add
+)
 
 )

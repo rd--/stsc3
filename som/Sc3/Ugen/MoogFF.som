@@ -1,26 +1,20 @@
 MoogFF = ScUgen (
-----------------------------
+----
+comment = (
+	^'Moog VCF implementation, designed by Federico Fontana'
+)
 
 in: in freq: freq gain: gain reset: reset = (
-    ^UgenBuilder name: 'MoogFF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. gain. reset}
+	^UgenBuilder name: 'MoogFF' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. gain. reset}
 )
-
-in: in freq: freq gain: gain reset: reset mul: mul = (
-    ^(MoogFF in: in freq: freq gain: gain reset: reset) * mul
-)
-
-in: in freq: freq gain: gain reset: reset mul: mul add: add = (
-    ^(MoogFF in: in freq: freq gain: gain reset: reset) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:freq:gain:reset:
+	^#in:freq:gain:reset:
 )
-
-
-comment = (^'
-Moog VCF implementation, designed by Federico Fontana
-')
-
+in: in freq: freq gain: gain reset: reset mul: mul = (
+	^(MoogFF in: in freq: freq gain: gain reset: reset) * mul
+)
+in: in freq: freq gain: gain reset: reset mul: mul add: add = (
+	^(MoogFF in: in freq: freq gain: gain reset: reset) * mul + add
+)
 
 )

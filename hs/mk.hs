@@ -121,6 +121,5 @@ sc_wr = do
 {-
 -- * Som
 import Sound.Sc3.Ugen.Db.Bindings.Som {- hsc3-db -}
-som_sc3_gen_bindings_wr "/tmp/" ugen
-som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/lib/som/ugen" ugen
+som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/som/Sc3/Ugen/" ugen
 -}

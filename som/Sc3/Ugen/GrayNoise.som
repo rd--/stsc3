@@ -1,26 +1,20 @@
 GrayNoise = ScUgen (
-----------------------------
-
-mul: mul = (
-    ^(GrayNoise new) * mul
-)
-
-mul: mul add: add = (
-    ^(GrayNoise new) * mul + add
+----
+comment = (
+	^'Gray Noise.'
 )
 
 new = (
-    ^UgenBuilder name: 'GrayNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
+	^UgenBuilder name: 'GrayNoise' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {}
 )
-
 primaryFactoryMethod = (
-    ^#new
+	^#new
 )
-
-
-comment = (^'
-Gray Noise.
-')
-
+mul: mul = (
+	^(GrayNoise new) * mul
+)
+mul: mul add: add = (
+	^(GrayNoise new) * mul + add
+)
 
 )

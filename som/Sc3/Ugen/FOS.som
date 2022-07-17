@@ -1,26 +1,20 @@
 FOS = ScUgen (
-----------------------------
+----
+comment = (
+	^'First order filter section.'
+)
 
 in: in a0: a0 a1: a1 b1: b1 = (
-    ^UgenBuilder name: 'FOS' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. a0. a1. b1}
+	^UgenBuilder name: 'FOS' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. a0. a1. b1}
 )
-
-in: in a0: a0 a1: a1 b1: b1 mul: mul = (
-    ^(FOS in: in a0: a0 a1: a1 b1: b1) * mul
-)
-
-in: in a0: a0 a1: a1 b1: b1 mul: mul add: add = (
-    ^(FOS in: in a0: a0 a1: a1 b1: b1) * mul + add
-)
-
 primaryFactoryMethod = (
-    ^#in:a0:a1:b1:
+	^#in:a0:a1:b1:
 )
-
-
-comment = (^'
-First order filter section.
-')
-
+in: in a0: a0 a1: a1 b1: b1 mul: mul = (
+	^(FOS in: in a0: a0 a1: a1 b1: b1) * mul
+)
+in: in a0: a0 a1: a1 b1: b1 mul: mul add: add = (
+	^(FOS in: in a0: a0 a1: a1 b1: b1) * mul + add
+)
 
 )
