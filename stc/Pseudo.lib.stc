@@ -22,19 +22,13 @@ AudioIn : PseudoUgen {
 	}
 }
 
-/* Bipolar linear to exponential mapping */
-Biexp : PseudoUgen {
-	*constructor {
-		arg in, lo, hi;
-		^LinExp(in, -1, 1, lo, hi)
-	}
-}
-
 /* Bipolar linear to linear mapping */
 Bilin : PseudoUgen {
 	*constructor {
-		arg in, lo, hi;
-		^LinLin(in, -1, 1, lo, hi)
+		arg in, inCenter, inMin, inMax, outCenter, outMin, outMax;
+		var below = LinLin(in, inMin, inCenter, outMin, outCenter);
+		var above = LinLin(in, inCenter, inMax, outCenter, outMax);
+		^Select2(in < inCenter, below, above)
 	}
 }
 

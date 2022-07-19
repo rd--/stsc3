@@ -29,3 +29,23 @@ OverlapTexture({
 	var sig = synced * in * gainEnv;
 	sig.splay2 * 0.2
 }, 2, 0, 2)
+
+// https://scsynth.org/t/6264/2
+var numPartials = 64;
+var spectrum = 1.to(numPartials).asArray;
+var inharmonic = MouseX(0.002, 0.008, 0, 0.2);
+var tension = (1 + (spectrum * spectrum * inharmonic)).sqrt;
+var tilt = MouseY(-5, -1, 0, 0.2);
+var ampArray = (spectrum.log2 * tilt).dbAmp;
+var freq0 = 110;
+var freq = freq0 * spectrum * tension;
+var sig = SinOsc(freq, { Rand(0, 2 * pi) }.dup(numPartials));
+(sig * ampArray).sum / numPartials
+
+// SinOsc ; https://scsynth.org/t/6256/5 ; bipolar version
+var freq = 130;
+var squeezeStretch = LFTri(0.1, 0) * 5; // from -5 to 5
+var tri = LFTri(freq, 1) * 0.5 + 0.5;
+var pulse = LFPulse(freq, 0, 0.5) * 2 - 1;
+var outPhase = pulse * (tri ** (2 ** squeezeStretch));
+SinOsc(0, outPhase * pi) * 0.1;

@@ -1,14 +1,17 @@
 Bilin = PseudoUgen (
 ----------------------------
 
-in: in lo: lo hi: hi = (
+in: in inCenter: inCenter inMin: inMin inMax: inMax outCenter: outCenter outMin: outMin outMax: outMax = (
+| below above |
 
-^(LinLin apply: {in. -1. 1. lo. hi})
+below := (LinLin apply: {in. inMin. inCenter. outMin. outCenter}) .
+ above := (LinLin apply: {in. inCenter. inMax. outCenter. outMax}) .
+ ^(Select2 apply: {in < inCenter. below. above})
 )
 
 primaryFactoryMethod = (
 
-^#'in:lo:hi:'
+^#'in:inCenter:inMin:inMax:outCenter:outMin:outMax:'
 )
 
 
