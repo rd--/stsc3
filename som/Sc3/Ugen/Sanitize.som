@@ -1,0 +1,20 @@
+Sanitize = ScUgen (
+----
+comment = (
+	^'Remove infinity, NaN, and denormals'
+)
+
+in: in replace: replace = (
+	^UgenBuilder name: 'Sanitize' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. replace}
+)
+primaryFactoryMethod = (
+	^#in:replace:
+)
+in: in replace: replace mul: mul = (
+	^(Sanitize in: in replace: replace) * mul
+)
+in: in replace: replace mul: mul add: add = (
+	^(Sanitize in: in replace: replace) * mul + add
+)
+
+)

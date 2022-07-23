@@ -98,6 +98,7 @@ Array isVariable = true.                                     "array is indexable
 #(1 (2 (3 4))) = #(1 #(2 #(3 4))).                           "in st-80 sub-arrays do not require # prefix"
 #(x x: nil) = #(#x #x: nil).                                 "in st-80 symbols do not require #prefix"
 (#(5 4 3 2 1) detect: [ :i | i < 3 ]) = 2.                   "detect element (not index), so 2"
+(#(1 2 3 4 5) first: 3) = #(1 2 3).
 (#(1 2 3 4 5) take: 2) = #(1 2).
 (#(1 2) take: 5) = #(1 2).
 (#(1 2) readStream take: 5) = #(1 2).
