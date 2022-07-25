@@ -1,4 +1,4 @@
-"MiRings ; 0=MODAL_RESONATOR ; event control ; i.e. hsc3-sensel-ll -v -m 16"
+"MiRings ; 0=modal_resonator ; event control ; i.e. hsc3-sensel-ll -v -m 16"
 | f |
 f := [ :e |
 	| tr |
@@ -13,7 +13,7 @@ f := [ :e |
 		pos: (Latch in: e ry trig: tr) + 0.25
 		model: 0
 		poly: 1
-		internExciter: 0
+		intern_exciter: 0
 		easteregg: 0
 		bypass: 0
 		mul: e z

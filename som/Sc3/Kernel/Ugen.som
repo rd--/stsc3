@@ -64,6 +64,10 @@ lag: lagTime = (
 	^Lag in: self lagTime: lagTime
 )
 
+linLinFrom: lo to: hi = (
+	^LinLin in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
+)
+
 mrg: rhs = (
 	scUgen mrg: rhs.
 	^self
@@ -87,6 +91,13 @@ port = (
 
 printUgens = (
 	Sc3 printUgens: self
+)
+
+range: lo value: hi = (
+	"Allow .stc notation p.range(q, r).
+	This is a very common idiom.
+	In Sc this also adjusts for some unipolar inputs, which doesn't seem like a very good idea in general."
+	^self linLinFrom: lo to: hi
 )
 
 rate = (

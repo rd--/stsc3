@@ -1444,25 +1444,32 @@ ordinaryIdentifier :: P OrdinaryIdentifier
 ordinaryIdentifier = Token.identifier stLexer
 --  if token `elem` stReservedIdentifiers then P.unexpected ("reservedIdentifier: " ++ token) else return token
 
+underscore :: P Char
+underscore = P.char '_'
+
 {- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
 
 > p = stParse identifierNonLexemeForKeyword
 > p "x" == "x"
+> p "x_1" == "x_1"
 > p "super" == "super" -- super: as part of a keyword is allowed, &etc.
 -}
 identifierNonLexemeForKeyword :: P OrdinaryIdentifier
 identifierNonLexemeForKeyword = do
   c0 <- P.letter
-  cN <- P.many (P.letter P.<|> P.digit)
+  cN <- P.many (P.letter P.<|> underscore P.<|> P.digit)
   return (c0 : cN)
 
 type Identifier = String
 
 {- | identifier ::= letter (letter | digit)*
 
+Ansi doesn't allow underscore but Squeak does, also some Sc Ugens have underscores in bot the class (PV_) and parameter names.
+
 > p = stParse identifier
 > p "x1" == "x1"
 > p "X1" == "X1"
+> p "x_1" == "x_1"
 > p "1x" -- FAIL
 > p "" -- FAIL
 > p "true" == "true"

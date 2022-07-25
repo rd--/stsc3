@@ -13,6 +13,3 @@ t := Impulse freq: 10 phase: 0.
 f := DmdOn trig: t reset: 0 demandUGens: n midiCps.
 o := SinOsc freq: {f. f + 0.7} phase: 0.
 o cubed cubed * 0.1
-
-"----"
-(DmdOn trig: 0 reset: 1 demandUGens: 2) inspect

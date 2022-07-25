@@ -1,0 +1,20 @@
+MiClouds = ScUgen (
+----
+comment = (
+	^'granular audio processor and texture synthesizer'
+)
+
+pit: pit pos: pos size: size dens: dens tex: tex drywet: drywet in_gain: in_gain spread: spread rvb: rvb fb: fb freeze: freeze mode: mode lofi: lofi trig: trig inputArray: inputArray = (
+	^UgenBuilder name: 'MiClouds' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: ({pit. pos. size. dens. tex. drywet. in_gain. spread. rvb. fb. freeze. mode. lofi. trig} , (inputArray asArray))
+)
+primaryFactoryMethod = (
+	^#pit:pos:size:dens:tex:drywet:in_gain:spread:rvb:fb:freeze:mode:lofi:trig:inputArray:
+)
+pit: pit pos: pos size: size dens: dens tex: tex drywet: drywet in_gain: in_gain spread: spread rvb: rvb fb: fb freeze: freeze mode: mode lofi: lofi trig: trig inputArray: inputArray mul: mul = (
+	^(MiClouds pit: pit pos: pos size: size dens: dens tex: tex drywet: drywet in_gain: in_gain spread: spread rvb: rvb fb: fb freeze: freeze mode: mode lofi: lofi trig: trig inputArray: inputArray) * mul
+)
+pit: pit pos: pos size: size dens: dens tex: tex drywet: drywet in_gain: in_gain spread: spread rvb: rvb fb: fb freeze: freeze mode: mode lofi: lofi trig: trig inputArray: inputArray mul: mul add: add = (
+	^(MiClouds pit: pit pos: pos size: size dens: dens tex: tex drywet: drywet in_gain: in_gain spread: spread rvb: rvb fb: fb freeze: freeze mode: mode lofi: lofi trig: trig inputArray: inputArray) * mul + add
+)
+
+)

@@ -6,5 +6,4 @@ freqArray.collect({
 	arg item;
 	var freq = LFNoise2(1.3) * 100 + 230 * randomFreq + EnvSpec([0, 0, item], [8, 6], [0, -3], 0, 0, 0).asEnvGen;
 	Pan2(Saw(freq), LFNoise2(1.3), 1)
-}).sum * ampEnv
-
+}).sum * ampEnv * 0.25

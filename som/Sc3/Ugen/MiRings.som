@@ -4,17 +4,17 @@ comment = (
 	^'a resonator'
 )
 
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass = (
-	^UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. internExciter. easteregg. bypass}
+in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass = (
+	^UgenBuilder name: 'MiRings' numChan: 2 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. trig. pit. struct. bright. damp. pos. model. poly. intern_exciter. easteregg. bypass}
 )
 primaryFactoryMethod = (
-	^#in:trig:pit:struct:bright:damp:pos:model:poly:internExciter:easteregg:bypass:
+	^#in:trig:pit:struct:bright:damp:pos:model:poly:intern_exciter:easteregg:bypass:
 )
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass mul: mul = (
-	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass) * mul
+in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul = (
+	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul
 )
-in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass mul: mul add: add = (
-	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly internExciter: internExciter easteregg: easteregg bypass: bypass) * mul + add
+in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass mul: mul add: add = (
+	^(MiRings in: in trig: trig pit: pit struct: struct bright: bright damp: damp pos: pos model: model poly: poly intern_exciter: intern_exciter easteregg: easteregg bypass: bypass) * mul + add
 )
 
 )

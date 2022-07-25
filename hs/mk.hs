@@ -4,6 +4,7 @@ import Text.Printf {- base -}
 
 import Sound.Sc3.Ugen.Db as Db {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.Js as Js {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Bindings.Som as Som {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.SuperCollider as Sc {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.Smalltalk as St {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Record as Record {- hsc3-db -}
@@ -84,7 +85,7 @@ ugen =
   ,"Friction" -- sc3-plugins/MCLD
   ,"MembraneCircle" -- sc3-plugins/Membrane
   ,"VOSIM" -- sc3-plugins/VOSIM
-  ,"MiRings" -- mi-UGens
+  ,"MiBraids", "MiClouds", "MiRings" -- mi-UGens
   ,"AnalogFoldOsc" -- portedplugins
   ,"RCD","SCM" -- vb_UGens
   ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
@@ -98,6 +99,7 @@ is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)
 
 main :: IO ()
 main = do
+  Som.som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/som/Sc3/Ugen/" ugen
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/Sc3-Ugen-Bindings.st" uop binop ugen
   Js.js_sc3_gen_bindings_wr True "/home/rohan/sw/jssc3/js/sc3-bindings.ts" Js.js_sc3_uop Js.js_sc3_binop ugen
   let col = map u_lookup_cs_err ugen
@@ -119,7 +121,4 @@ sc_wr = do
   writeFile "/home/rohan/sw/stsc3/sc/ImplicitRateConstructors.sc" (Sc.sc_implicit_rate_constructors (filter (isNothing . Record.ugen_filter) u_ir))
 
 {-
--- * Som
-import Sound.Sc3.Ugen.Db.Bindings.Som {- hsc3-db -}
-som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/som/Sc3/Ugen/" ugen
 -}

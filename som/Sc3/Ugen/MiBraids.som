@@ -1,0 +1,20 @@
+MiBraids = ScUgen (
+----
+comment = (
+	^'a macro oscillator'
+)
+
+pitch: pitch timbre: timbre color: color model: model trig: trig resamp: resamp decim: decim bits: bits ws: ws = (
+	^UgenBuilder name: 'MiBraids' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {pitch. timbre. color. model. trig. resamp. decim. bits. ws}
+)
+primaryFactoryMethod = (
+	^#pitch:timbre:color:model:trig:resamp:decim:bits:ws:
+)
+pitch: pitch timbre: timbre color: color model: model trig: trig resamp: resamp decim: decim bits: bits ws: ws mul: mul = (
+	^(MiBraids pitch: pitch timbre: timbre color: color model: model trig: trig resamp: resamp decim: decim bits: bits ws: ws) * mul
+)
+pitch: pitch timbre: timbre color: color model: model trig: trig resamp: resamp decim: decim bits: bits ws: ws mul: mul add: add = (
+	^(MiBraids pitch: pitch timbre: timbre color: color model: model trig: trig resamp: resamp decim: decim bits: bits ws: ws) * mul + add
+)
+
+)

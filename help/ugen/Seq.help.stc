@@ -1,3 +1,16 @@
+// Seq ; shared seq, different patterns
+var a = Seq(inf, [1, 3, 2, 7, 8]);
+var t = Impulse(5, 0);
+var f = Demand(t, 0, [a, a]) * 30 + 340;
+SinOsc(f,  0) * 0.1
+
+// Seq ; distinct seq, equal patterns
+var a = Seq(inf, [1, 3, 2, 7, 8]);
+var b = Seq(inf, [1, 3, 2, 7, 8]);
+var t = Impulse(5, 0);
+var f = Demand(t, 0, [a, b]) * 30 + 340;
+SinOsc(f,  0) * 0.1
+
 // Seq ; at audio rate
 var n = Seq(inf, #[1, 3, 2, 7, 8, 32, 16, 18, 12, 24]);
 x = MouseX(1, 10000, 1, 0.1);
