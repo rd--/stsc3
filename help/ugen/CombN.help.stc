@@ -1,0 +1,3 @@
+// CombN
+var m = LFNoise1(3) * 24 + (LFSaw(#[5, 5.123], 0) * 3 + 80);
+CombN(SinOsc(m.midiCps, 0) * 0.4, 1, 0.3, 2)
