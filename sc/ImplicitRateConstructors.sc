@@ -94,8 +94,8 @@
 + ExpRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^ExpRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
 + LinRandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0, minmax = 0.0; ^LinRandN.performList('scalar'.rateToSelector, [numChannels, lo, hi, minmax]) } }
 + RandN { *new { arg numChannels = 1.0, lo = 0.0, hi = 1.0; ^RandN.performList('scalar'.rateToSelector, [numChannels, lo, hi]) } }
-+ DX7 { *new { arg bufnum = 0.0, on = 0.0, off = 0.0, data = 0.0, vc = 0.0, mnn = 60.0, vel = 99.0, pw = 0.0, mw = 0.0, bc = 0.0, fc = 0.0; ^DX7.performList('audio'.rateToSelector, [bufnum, on, off, data, vc, mnn, vel, pw, mw, bc, fc]) } }
-+ RDX7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^RDX7Env.performList('audio'.rateToSelector, [gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol]) } }
++ Dx7 { *new { arg bufnum = 0.0, on = 0.0, off = 0.0, data = 0.0, vc = 0.0, mnn = 60.0, vel = 99.0, pw = 0.0, mw = 0.0, bc = 0.0, fc = 0.0; ^Dx7.performList('audio'.rateToSelector, [bufnum, on, off, data, vc, mnn, vel, pw, mw, bc, fc]) } }
++ Dx7Env { *new { arg gate = 0.0, data = 0.0, r1 = 0.0, r2 = 0.0, r3 = 0.0, r4 = 0.0, l1 = 0.0, l2 = 0.0, l3 = 0.0, l4 = 0.0, ol = 0.0; ^Dx7Env.performList('audio'.rateToSelector, [gate, data, r1, r2, r3, r4, l1, l2, l3, l4, ol]) } }
 + SvfBp { *new { arg in = 0.0, freq = 440.0, q = 0.0; ^SvfBp.performList('audio'.rateToSelector, [in, freq, q]) } }
 + SvfLp { *new { arg in = 0.0, freq = 440.0, q = 0.0; ^SvfLp.performList('audio'.rateToSelector, [in, freq, q]) } }
 + Bezier { *new { arg haltAfter = 100.0, dx = 1.0e-4, freq = 440.0, phase = 0.0, param = 0.0; ^Bezier.performList('audio'.rateToSelector, [haltAfter, dx, freq, phase, param]) } }

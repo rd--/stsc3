@@ -78,3 +78,40 @@ var index = LinLin(SinOsc(1 / 10, 3 * pi / 2), -1, 1, 1, indexLimit);
 var phase = index * LocalIn(1, 1);
 var sig = SinOsc(freq, phase) + SinOsc(freq * 0.001, index * LocalIn(1, 1)).softClip;
 sig.mrg(LocalOut(sig)) * 0.1
+
+// SinOsc
+SinOsc(440, 0) * 0.1
+
+// SinOsc ; used as both oscillator and lfo
+var f = SinOsc(4, 0);
+SinOsc(f * 200 + 400, 0) * 0.1
+
+// SinOsc ; cancellation (silence)
+var o1 = SinOsc(440, 0);
+var o2 = SinOsc(440, pi);
+o1 + o2
+
+// SinOsc ; modulate freq
+var f1 = XLn(1, 1000, 9);
+var f2 = SinOsc(f1, 0) * 200 + 800;
+SinOsc(f2, 0) * 0.25
+
+// SinOsc ; modulate phase
+var ph = SinOsc(XLn(20, 8000, 10), 0) * 2 * pi;
+SinOsc(800, ph) * 0.1
+
+// SinOsc ; phase input only
+var ph = SinOsc(XLn(20, 8000, 10), 0) * 2 * pi;
+SinOsc(0, ph) * 0.1
+
+// SinOsc ; multiple channel expansion
+SinOsc([220, 221], 0) * 0.1
+
+// SinOsc ; mix to two channel
+SinOsc([220, 221, 440, 441], 0).splay2 * 0.1
+
+// SinOsc ; nested mce
+SinOsc([[220, 221], [440, 441]], 0).sum * 0.1
+
+// mce ; two out ; each single channel ; hence mono
+SinOsc([[440], [441]], 0).sum * 0.1

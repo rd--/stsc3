@@ -90,8 +90,8 @@ ugen =
   ,"RCD","SCM" -- vb_UGens
   ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
   ,"TScramble" -- sc3-rdu
-  ,"DX7","RDX7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
-  ,"Bezier","Freezer" -- ,"ShufflerB"
+  ,"Dx7","Dx7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
+  ,"Bezier","Freezer" -- sc3-rdu ,"ShufflerB"
   ]
 
 is_osc :: Record.U -> Bool

@@ -1,0 +1,11 @@
+// WhiteNoise
+WhiteNoise() * 0.05
+
+// WhiteNoise ; silence
+var n = WhiteNoise() * 0.05;
+n - n
+
+// WhiteNoise ; noise
+var n = WhiteNoise () * 0.05;
+var m = WhiteNoise () * 0.05;
+n - m
