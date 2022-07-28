@@ -4,6 +4,11 @@ oscTypeTag = (
 	^$f
 )
 
+ntprToNtpi = (
+	"Convert an NtpReal timestamp to an Ntp64 timestamp."
+	^(self * 4294967296) rounded "2 raisedTo: 32 = 4294967296"
+)
+
 printOscOn: aStream = (
 	aStream << self asString << ' '
 )

@@ -1,0 +1,54 @@
+OscBundle = OscValue (
+
+| time messages |
+
+messages = (
+	^messages
+)
+
+messages: anArray = (
+	messages := anArray
+)
+
+printOscOn: aStream = (
+	'#bundle' printOscOn: aStream.
+	time ntprToNtpi printOscOn: aStream.
+	messages size printOscOn: aStream.
+	messages do: [ :each | each printOscOn: aStream ]
+)
+
+putOscOn: aStream = (
+	| encodedMessages |
+	'#bundle' putOscOn: aStream.
+	time ntprToNtpi putNtpiOn: aStream.
+	encodedMessages := messages collect: [ :each | each asByteArray ].
+	(encodedMessages collect: [ :each | each size ]) sum putOscOn: aStream.
+	encodedMessages do: [ :each | aStream nextPutAll: each ]
+)
+
+time = (
+	^time
+)
+
+time: aFloat = (
+	time := aFloat
+)
+
+--------
+
+at: time with: messages = (
+	^self new time: time; messages: messages; yourself
+)
+
+primaryFactoryMethod = (
+	^#at:with:
+)
+
+comment = (
+	^'Open Sound Control Bundle.
+Do not allow recursion, all contents are messages.
+The time value is real valued.
+Time is Ntp for real-time bundles are zero-offset for non-real-time bundles.'
+)
+
+)

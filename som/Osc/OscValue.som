@@ -1,0 +1,46 @@
+OscValue = Object (
+
+asByteArray = (
+	"Return my binary encoding as a ByteArray."
+	^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]
+)
+
+asString = (
+	"Return my text encoding as a String."
+	^String streamContents: [ :str | self printOscOn: str ]
+)
+
+encode = (
+	^ self asByteArray
+)
+
+printOscOn: aStream = (
+	"Write my text format.  This message must be implemented at each object that can be placed into an OscMessage."
+	^ self subclassResponsibility
+)
+
+putOscOn: aStream = (
+	"Write my binary format.  This message must be implemented at each object that can be placed into an OscMessage."
+	^ self subclassResponsibility
+)
+
+sendToHost: hostAddress atPort: portNumber = (
+	"Send my binary encoding over Udp."
+	| socket |
+	socket := Socket newUDP.
+	socket sendUDPData: self encode toHost: hostAddress port: portNumber.
+	socket close
+)
+
+--------
+
+comment = (
+	^'Abstract Osc value type.  See OscMessage and OscBundle.'
+)
+
+errorWhenEmpty: aCollection = (
+	"Do not allow empty collections."
+	aCollection isEmpty ifTrue: [ aCollection error: 'empty collections are disallowed in Osc values' ]
+)
+
+)

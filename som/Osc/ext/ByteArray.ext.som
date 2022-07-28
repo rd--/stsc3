@@ -5,11 +5,13 @@ oscTypeTag = (
 )
 
 printOscOn: aStream = (
+	"I am an Osc Blob.  I print as a hex string."
 	OscMessage errorWhenEmpty: self.
 	self do: [ :item | aStream << item printHexByte ]
 )
 
 putOscOn: aStream = (
+	"I am an Osc Blob.  I store four-byte alligned, length prefixed and zero-padded ."
 	OscMessage errorWhenEmpty: self.
 	self size putOscOn: aStream.
 	aStream nextPutAll: self.

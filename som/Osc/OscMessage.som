@@ -1,4 +1,4 @@
-OscMessage = Object (
+OscMessage = OscValue (
 
 | address arguments |
 
@@ -7,7 +7,7 @@ address = (
 )
 
 address: aString = (
-	 address := aString
+	address := aString
 )
 
 arguments = (
@@ -18,52 +18,26 @@ arguments: anArray = (
 	arguments := anArray
 )
 
-asByteArray = (
-	^ByteArray streamContents: [ :aStream | self putOscOn: aStream ]
-)
-
-asString = (
-	^String streamContents: [ :str | self printOscOn: str ]
-)
-
 descriptor = (
 	^',' , (String newFrom: (arguments collect: [ :item | item oscTypeTag ]))
 )
 
-encode = (
-	^ self asByteArray
-)
-
 printOscOn: aStream = (
-	"This message must be implemented for each type that can be placed into an OscMessage."
 	address printOscOn: aStream.
 	self descriptor printOscOn: aStream.
 	arguments do: [ :item | item printOscOn: aStream ]
 )
 
 putOscOn: aStream = (
-	"This message must be implemented for each type that can be placed into an OscMessage."
 	address putOscOn: aStream.
 	self descriptor putOscOn: aStream.
 	arguments do: [ :item | item putOscOn: aStream ]
-)
-
-sendToHost: hostAddress atPort: portNumber = (
-	| socket |
-	socket := Socket newUDP.
-	socket sendUDPData: self encode toHost: hostAddress port: portNumber.
-	socket close
 )
 
 ----------------------------
 
 at: address with: arguments = (
 	^self new address: address; arguments: arguments; yourself
-)
-
-errorWhenEmpty: aCollection = (
-	"Do not allow empty collections."
-	aCollection isEmpty ifTrue: [ aCollection error: 'empty collections are disallowed in Osc messages' ]
 )
 
 primaryFactoryMethod = (

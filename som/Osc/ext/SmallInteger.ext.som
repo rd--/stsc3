@@ -1,5 +1,10 @@
 SmallInteger = SmallInteger (
 
+ntpiToNtpr = (
+	"Convert an Ntp64 timestamp to a real-valued Ntp timestamp."
+	^(self / 4294967296) "2 raisedTo: 32 = 4294967296"
+)
+
 oscAlign = (
 	"Osc data is aligned to 4-byte boundaries."
 	^((self + 3) bitAnd: 3 bitInvert) - self
@@ -8,6 +13,10 @@ oscAlign = (
 oscTypeTag = (
 	"The type tag for 32-bit integers."
 	^$i
+)
+
+putNtpiOn: aStream = (
+	aStream int64: self
 )
 
 printOscOn: aStream = (

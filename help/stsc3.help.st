@@ -749,9 +749,16 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 
 "Open Sound Control"
 
-m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1)
-m encode = m asByteArray
-m encode asArray = #(47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205)
+m := OscMessage at: '/n_set' with: #(-1 'freq' 440 'amp' 0.1).
+e := m encode asArray.
+e size = 40.
+e = #(47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205)
+m asString = '/n_set ,isisf -1 freq 440 amp 0.1 '
+b := OscBundle at: 0.0 with: {m}
+b asString
+e := b encode asArray.
+e size == 60
+e = #(35 98 117 110 100 108 101 0 0 0 0 0 0 0 0 0 0 0 0 40 47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205 )
 
 | new load |
 new := OscMessage at: '/s_new' with: #('tmp' -1 0 1).
