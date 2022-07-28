@@ -1,0 +1,20 @@
+FM7 = ScUgen (
+----
+comment = (
+	^'Phase modulation oscillator matrix.'
+)
+
+ctlMatrix: ctlMatrix modMatrix: modMatrix = (
+	'FM7?' error
+)
+primaryFactoryMethod = (
+	^#ctlMatrix:modMatrix:
+)
+ctlMatrix: ctlMatrix modMatrix: modMatrix mul: mul = (
+	^(FM7 ctlMatrix: ctlMatrix modMatrix: modMatrix) * mul
+)
+ctlMatrix: ctlMatrix modMatrix: modMatrix mul: mul add: add = (
+	^(FM7 ctlMatrix: ctlMatrix modMatrix: modMatrix) * mul + add
+)
+
+)

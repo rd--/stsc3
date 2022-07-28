@@ -754,11 +754,12 @@ e := m encode asArray.
 e size = 40.
 e = #(47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205)
 m asString = '/n_set ,isisf -1 freq 440 amp 0.1 '
-b := OscBundle at: 0.0 with: {m}
-b asString
+b := OscBundle at: 0 with: {m}
+b asString = '#bundle 0 1 /n_set ,isisf -1 freq 440 amp 0.1 '
 e := b encode asArray.
 e size == 60
 e = #(35 98 117 110 100 108 101 0 0 0 0 0 0 0 0 0 0 0 0 40 47 110 95 115 101 116 0 0 44 105 115 105 115 102 0 0 255 255 255 255 102 114 101 113 0 0 0 0 0 0 1 184 97 109 112 0 61 204 204 205 )
+{b} writeNrt: '/tmp/nrt.osc'
 
 | new load |
 new := OscMessage at: '/s_new' with: #('tmp' -1 0 1).

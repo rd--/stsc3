@@ -58,7 +58,7 @@ ugen =
   ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","ControlDur","ControlRate","Convolution","Crackle","CuspL"
   ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff"
   ,"EnvGen","ExpRand"
-  ,"FBSineL","FBSineC","FFT","Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
+  ,"FBSineL","FBSineC","FFT","FM7", "Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gate","Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"
   ,"Hasher","HenonL","HenonC","HPF","HPZ1","HPZ2"
   ,"IFFT","Impulse","In","Index","IndexInBetween","InFeedback","InRange","IRand","Integrator"

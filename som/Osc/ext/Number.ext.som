@@ -1,0 +1,13 @@
+Number = Number (
+
+ntpiToNtpr = (
+	"Convert an Ntp64 timestamp to a real-valued Ntp timestamp."
+	^(self / 4294967296) "2 raisedTo: 32 = 4294967296"
+)
+
+ntprToNtpi = (
+	"Convert an NtpReal timestamp to an Ntp64 timestamp."
+	^(self * 4294967296) rounded "2 raisedTo: 32 = 4294967296"
+)
+
+)

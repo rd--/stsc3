@@ -1,20 +1,20 @@
-DX7 = ScUgen (
+Dx7 = ScUgen (
 ----
 comment = (
 	^'(Undocumented class)'
 )
 
 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc = (
-	^UgenBuilder name: 'DX7' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. on. off. data. vc. mnn. vel. pw. mw. bc. fc}
+	^UgenBuilder name: 'Dx7' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. on. off. data. vc. mnn. vel. pw. mw. bc. fc}
 )
 primaryFactoryMethod = (
 	^#bufnum:on:off:data:vc:mnn:vel:pw:mw:bc:fc:
 )
 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul = (
-	^(DX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul
+	^(Dx7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul
 )
 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc mul: mul add: add = (
-	^(DX7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add
+	^(Dx7 bufnum: bufnum on: on off: off data: data vc: vc mnn: mnn vel: vel pw: pw mw: mw bc: bc fc: fc) * mul + add
 )
 
 )
