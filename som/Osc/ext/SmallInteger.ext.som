@@ -11,11 +11,13 @@ oscAlign = (
 )
 
 oscTypeTag = (
-	"The type tag for 32-bit integers."
+	"The type tag for 32-bit integers.
+	64-bit integers are supported as as non-standard type with a h type tag, but for the moment assume 32-bit."
 	^$i
 )
 
 putNtpiOn: aStream = (
+	"Ntpi values are 64-bit."
 	aStream int64: self
 )
 
