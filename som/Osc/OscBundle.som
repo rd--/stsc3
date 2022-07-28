@@ -1,4 +1,4 @@
-OscBundle = OscValue (
+OscBundle = OscPacket (
 
 | time messages |
 
@@ -15,6 +15,14 @@ printOscOn: aStream = (
 	time ntprToNtpi printOscOn: aStream.
 	messages size printOscOn: aStream.
 	messages do: [ :each | each printOscOn: aStream ]
+)
+
+putNrtOn: aStream = (
+	"An Sc3 Nrt file is a sequence of Osc bundles.  My encoding for an Nrt score is 32-bit length prefixed."
+	| encoded |
+	encoded := self encode.
+	encoded size putOscOn: aStream.
+	aStream nextPutAll: encoded
 )
 
 putOscOn: aStream = (

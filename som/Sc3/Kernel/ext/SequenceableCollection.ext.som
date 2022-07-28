@@ -147,6 +147,11 @@ perform: aSelector crossedWith: aSequence = (
 	^answer
 )
 
+putNrtOn: aStream = (
+	"I am a sequence of OscBundles."
+	self do: [ :each | each putNrtOn: aStream ]
+)
+
 rotate: n = (
 	^self rotateRight: n
 )
@@ -179,6 +184,11 @@ withExtending: other collect: aBlock = (
 	maximumSize := self size max: other size.
 	^(1 to: maximumSize) collect: [ :index |
 		aBlock value: (self atWrap: index) value: (other atWrap: index) ]
+)
+
+writeNrt: fileName = (
+	"I am a sequence of OscBundles, write my Nrt encoding."
+	fileName writeBinaryFile: [ :aStream | self putNrtOn: aStream ]
 )
 
 ----------------------------

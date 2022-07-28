@@ -1,4 +1,4 @@
-OscMessage = OscValue (
+OscMessage = OscPacket (
 
 | address arguments |
 

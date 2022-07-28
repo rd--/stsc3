@@ -1,4 +1,4 @@
-OscValue = Object (
+OscPacket = Object (
 
 asByteArray = (
 	"Return my binary encoding as a ByteArray."
@@ -35,12 +35,12 @@ sendToHost: hostAddress atPort: portNumber = (
 --------
 
 comment = (
-	^'Abstract Osc value type.  See OscMessage and OscBundle.'
+	^'Abstract Osc packet type.  See OscMessage and OscBundle.'
 )
 
 errorWhenEmpty: aCollection = (
 	"Do not allow empty collections."
-	aCollection isEmpty ifTrue: [ aCollection error: 'empty collections are disallowed in Osc values' ]
+	aCollection isEmpty ifTrue: [ aCollection error: 'empty collections are disallowed in Osc packets' ]
 )
 
 )
