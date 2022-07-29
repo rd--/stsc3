@@ -8,7 +8,7 @@ levels := (1 to: (coord size) by: 2) collect: [ :i | coord at: i .
  ] .
  times := (2 to: (coord size) by: 2) collect: [ :i | coord at: i .
  ] .
- ^(EnvSpec apply: {levels. times. #(#'lin'). nil. nil. 0}) asEnvGen: gate
+ ^(LinGen apply: {gate. levels. times})
 )
 
 primaryFactoryMethod = (

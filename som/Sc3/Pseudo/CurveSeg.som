@@ -1,0 +1,27 @@
+CurveSeg = PseudoUgen (
+----------------------------
+
+gate: gate coord: coord = (
+| levels times curves |
+
+levels := (1 to: (coord size) by: 3) collect: [ :i | coord at: i .
+ ] .
+ times := (2 to: (coord size) by: 3) collect: [ :i | coord at: i .
+ ] .
+ curves := (3 to: (coord size) by: 3) collect: [ :i | coord at: i .
+ ] .
+ ^(CurveGen apply: {gate. levels. times. curves})
+)
+
+primaryFactoryMethod = (
+
+^#'gate:coord:'
+)
+
+
+comment = (^'
+ Curve Segment Envelope *
+')
+
+
+)

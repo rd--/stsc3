@@ -113,5 +113,9 @@ SinOsc([220, 221, 440, 441], 0).splay2 * 0.1
 // SinOsc ; nested mce
 SinOsc([[220, 221], [440, 441]], 0).sum * 0.1
 
-// mce ; two out ; each single channel ; hence mono
+// SinOsc ; mce ; two out ; each single channel ; hence mono
 SinOsc([[440], [441]], 0).sum * 0.1
+
+// SinOsc ; http://earslap.com/article/combination-tones-and-the-nonlinearities-of-the-human-ear.html
+var freqSweep = Ln(4000, 1000, 10);
+SinOsc([freqSweep, freqSweep + 400], 0).mean

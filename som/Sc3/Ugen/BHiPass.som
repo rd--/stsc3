@@ -1,0 +1,20 @@
+BHiPass = ScUgen (
+----
+comment = (
+	^'12db/oct rolloff - 2nd order resonant  Hi Pass Filter'
+)
+
+in: in freq: freq rq: rq = (
+	^UgenBuilder name: 'BHiPass' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq}
+)
+primaryFactoryMethod = (
+	^#in:freq:rq:
+)
+in: in freq: freq rq: rq mul: mul = (
+	^(BHiPass in: in freq: freq rq: rq) * mul
+)
+in: in freq: freq rq: rq mul: mul add: add = (
+	^(BHiPass in: in freq: freq rq: rq) * mul + add
+)
+
+)

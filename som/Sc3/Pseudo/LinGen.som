@@ -1,0 +1,20 @@
+LinGen = PseudoUgen (
+----------------------------
+
+gate: gate levels: levels times: times = (
+
+^(CurveSeg apply: {gate. levels. times. #(#'lin')})
+)
+
+primaryFactoryMethod = (
+
+^#'gate:levels:times:'
+)
+
+
+comment = (^'
+ Line Segment Envelope *
+')
+
+
+)

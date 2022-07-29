@@ -1,0 +1,20 @@
+CurveGen = PseudoUgen (
+----------------------------
+
+gate: gate levels: levels times: times curves: curves = (
+
+^(EnvSpec apply: {levels. times. curves. nil. nil. 0}) asEnvGen: gate
+)
+
+primaryFactoryMethod = (
+
+^#'gate:levels:times:curves:'
+)
+
+
+comment = (^'
+ Curve Segment Envelope *
+')
+
+
+)

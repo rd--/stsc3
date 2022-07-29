@@ -2,6 +2,7 @@ Seq { *new { arg repeats, list; ^Dseq.dr(list, repeats) } }
 Ser { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
 Shuf { *new { arg repeats, list; ^Dshuf.dr(list, repeats) } }
 Choose { *new { arg repeats, list; ^Drand.dr(list, repeats) } }
+Xchoose { *new { arg repeats, list; ^Dxrand.dr(list, repeats) } }
 DmdOn { *new { arg trig, reset, demandUGens; ^Demand.multiNewList([trig.rate, trig, reset] ++ demandUGens.asArray) } }
 DmdFor { *new { arg dur, reset, level; ^Duty.ar(dur, reset, level, 0) } }
 TDmdFor { *new { arg dur, reset, level; ^TDuty.ar(dur, reset, level, 0, 0) } }

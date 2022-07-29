@@ -1,0 +1,20 @@
+MidEQ = ScUgen (
+----
+comment = (
+	^'Parametric filter.'
+)
+
+in: in freq: freq rq: rq db: db = (
+	^UgenBuilder name: 'MidEQ' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. rq. db}
+)
+primaryFactoryMethod = (
+	^#in:freq:rq:db:
+)
+in: in freq: freq rq: rq db: db mul: mul = (
+	^(MidEQ in: in freq: freq rq: rq db: db) * mul
+)
+in: in freq: freq rq: rq db: db mul: mul add: add = (
+	^(MidEQ in: in freq: freq rq: rq db: db) * mul + add
+)
+
+)

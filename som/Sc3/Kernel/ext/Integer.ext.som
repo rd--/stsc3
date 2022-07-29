@@ -1,6 +1,6 @@
 Integer = Integer (
 
-exprand: upperBound = (
+expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.
 )

@@ -1,0 +1,20 @@
+Xchoose = PseudoUgen (
+----------------------------
+
+repeats: repeats list: list = (
+
+^(Dxrand apply: {repeats. list})
+)
+
+primaryFactoryMethod = (
+
+^#'repeats:list:'
+)
+
+
+comment = (^'
+ Random sequence generator *
+')
+
+
+)

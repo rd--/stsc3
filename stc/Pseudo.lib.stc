@@ -88,6 +88,25 @@ ControlIn : PseudoUgen {
 	}
 }
 
+/* Curve Segment Envelope */
+CurveGen : PseudoUgen {
+	*constructor {
+		arg gate, levels, times, curves;
+		^EnvSpec(levels, times, curves, nil, nil, 0).asEnvGen(gate)
+	}
+}
+
+/* Curve Segment Envelope */
+CurveSeg : PseudoUgen {
+	*constructor {
+		arg gate, coord;
+		var levels = 1.to(coord.size, by: 3).collect({ arg i; coord.at(i) });
+		var times = 2.to(coord.size, by: 3).collect({ arg i; coord.at(i) });
+		var curves = 3.to(coord.size, by: 3).collect({ arg i; coord.at(i) });
+		^CurveGen(gate, levels, times, curves)
+	}
+}
+
 /* EnvGen of simple cutoff envelope */
 Cutoff : PseudoUgen {
 	*constructor {
@@ -176,6 +195,14 @@ KeyVelocity : PseudoUgen {
 	}
 }
 
+/* Line Segment Envelope */
+LinGen : PseudoUgen {
+	*constructor {
+		arg gate, levels, times;
+		^CurveSeg(gate, levels, times, #['lin'])
+	}
+}
+
 /* Map a linear range to a linear range */
 LinLin : PseudoUgen {
 	*constructor {
@@ -190,7 +217,7 @@ LinSeg : PseudoUgen {
 		arg gate, coord;
 		var levels = 1.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
 		var times = 2.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
-		^EnvSpec(levels, times, #['lin'], nil, nil, 0).asEnvGen(gate)
+		^LinGen(gate, levels, times)
 	}
 }
 
@@ -429,6 +456,88 @@ WrapOut : PseudoUgen {
 		}, ifFalse: {
 		    ^Out(bus, channelsArray)
 		})
+	}
+}
+
+/* EnvGen of simplified EnvAdsr */
+Adsr : PseudoUgen {
+	*constructor {
+		arg gate = 1, attackTime = 0.01, decayTime = 0.3, sustainLevel = 0.5, releaseTime = 1, curves = -4;
+		^EnvAdsr(attackTime, decayTime, sustainLevel, releaseTime, 1, curves).asEnvGen(gate)
+	}
+}
+
+/* EnvGen of simplified EnvAsr */
+Asr : PseudoUgen {
+	*constructor {
+		arg gate = 1, attackTime = 0.01, releaseTime = 1, curves = -4;
+		^EnvAsr(attackTime, 1, releaseTime, curves).asEnvGen(gate)
+	}
+}
+
+/* Audio input */
+AudioIn : PseudoUgen {
+	*constructor {
+		arg channels;
+		^In(1, NumOutputBuses() + channels - 1)
+	}
+}
+
+/* Bipolar linear to linear mapping */
+Bilin : PseudoUgen {
+	*constructor {
+		arg in, inCenter, inMin, inMax, outCenter, outMin, outMax;
+		var below = LinLin(in, inMin, inCenter, outMin, outCenter);
+		var above = LinLin(in, inCenter, inMax, outCenter, outMax);
+		^Select2(in < inCenter, below, above)
+	}
+}
+
+/* Allocate a buffer local to the synth */
+BufAlloc : PseudoUgen {
+	*constructor {
+		arg numChannels, numFrames;
+		^LocalBuf(numChannels, numFrames)
+	}
+}
+
+/* Record signal into a Buffer */
+BufRec : PseudoUgen {
+	*constructor {
+		arg bufnum, reset, inputArray;
+		^RecordBuf(bufnum, 0, 1, 0, 1, 1, reset, 0, inputArray)
+	}
+}
+
+/* Buffer writing oscillator */
+BufWrite : PseudoUgen {
+	*constructor {
+		arg bufnum, phase, loop, inputArray;
+		^BufWr(bufnum, phase, loop, inputArray)
+	}
+}
+
+/* Continuous controller input */
+Cc : PseudoUgen {
+	*constructor {
+		arg index;
+		^In(1, 11000 + index).kr
+	}
+}
+
+/* Triggers when a value changes */
+Changed : PseudoUgen {
+	*constructor {
+		arg input, threshold;
+		^HPZ1(input).abs > threshold
+	}
+}
+
+/* Random sequence generator */
+Xchoose : PseudoUgen {
+	*constructor {
+		arg repeats, list;
+		^Dxrand(repeats, list)
 	}
 }
 
