@@ -60,7 +60,7 @@ Array.new(4).maxSize == 4                                   // Array has both si
 Array.new.add(1) == [1]                                     // add element to array, return array
 Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
 Array.new(3).add(1).addAll([2, 3]) == [1, 2, 3]             // add all elements of collection to end of array
-{ Array.new.addAll("string").at[4] }.try({ "error!" })      // ArrayedCollection is maybe-copying
+var x = Array.new; x.addAll("string"); x.at(5) == nil       // ArrayedCollection is maybe-copying
 var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element from array (in place)
 [1, 2, 3, 4].removeAll([3, 4]) == [1, 2]                    // remove all elements of collection from array
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
@@ -378,7 +378,7 @@ Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of inter
 Interval.new(0, 12, 3).size == 5                            // number of elements in interval
 2.to(14, 4).collect({ arg x; x * x }) == [4, 36, 100, 196]  // to method at Integer
 Interval.new(-1, 1, 0.000001).size == 2000001               // 2000001 places between -1 and 1
-Interval.new(-1, 1, 0.000001).at(1000000) == 0		    // access value at 1000001st place
+Interval.new(-1, 1, 0.000001).at(1000000) == 0              // access value at 1000001st place
 
 'Iteration'
 
@@ -571,6 +571,8 @@ var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place 
 List.rand(4, 1, 9)                                          // list of random numbers (uniform distribution)
 List.linrand(4, 1, 9)                                       // list of random numbers (linear distribution)
 List.exprand(4, 1, 9)                                       // list of random numbers (exponential distribution)
+[1, 2, 3].wrapAt(3) == 1                                    // index with wrap-around
+[1, 2, 3].foldAt(3) == 2                                    // index with fold-around
 
 'Set'
 

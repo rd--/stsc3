@@ -92,7 +92,7 @@ ControlIn : PseudoUgen {
 CurveGen : PseudoUgen {
 	*constructor {
 		arg gate, levels, times, curves;
-		^EnvSpec(levels, times, curves, nil, nil, 0).asEnvGen(gate)
+		^EnvSpec([levels.first] ++ levels, [0] ++ times, [0] ++ curves.extendCyclically(times.size), nil, nil, 0).asEnvGen(gate)
 	}
 }
 
@@ -199,7 +199,7 @@ KeyVelocity : PseudoUgen {
 LinGen : PseudoUgen {
 	*constructor {
 		arg gate, levels, times;
-		^CurveSeg(gate, levels, times, #['lin'])
+		^CurveGen(gate, levels, times, #['lin'])
 	}
 }
 

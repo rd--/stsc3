@@ -3,7 +3,7 @@ CurveGen = PseudoUgen (
 
 gate: gate levels: levels times: times curves: curves = (
 
-^(EnvSpec apply: {levels. times. curves. nil. nil. 0}) asEnvGen: gate
+^(EnvSpec apply: {{levels first} ++ levels. {0} ++ times. {0} ++ (curves extendCyclically: (times size)). nil. nil. 0}) asEnvGen: gate
 )
 
 primaryFactoryMethod = (

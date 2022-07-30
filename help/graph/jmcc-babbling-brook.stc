@@ -3,7 +3,7 @@ var b = {
 	arg f, m, a, g;
 	RHPF(OnePole(BrownNoise(), 0.99), LPF(BrownNoise(), f) * m + a, 0.03) * g
 };
-{ b.value(14, 400, 500, 0.06) }.dup(2) + { b.value(20, 800, 1000, 0.10) }.dup
+{ b.value(14, 400, 500, 0.06) }.dup(2) + { b.value(20, 800, 1000, 0.10) }.dup(2)
 
 //---- babbling brook (jmcc) #SC3 ; filtermethods
 var b = {

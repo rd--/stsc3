@@ -56,7 +56,7 @@ ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Balance2","BBandPass","BBandStop","BHiPass","Blip","BlockSize","BLowPass","BPeakEQ","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
   ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","ControlDur","ControlRate","Convolution","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dxrand"
+  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","DFM1", "Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dxrand"
   ,"EnvGen","ExpRand"
   ,"FBSineL","FBSineC","FFT","FM7", "Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2"
   ,"Gate","Gendy1","GrainFM","GrainSin","GrayNoise","GVerb"
