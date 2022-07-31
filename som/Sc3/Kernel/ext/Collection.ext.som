@@ -61,10 +61,6 @@ log = (
 	^self collect: [ :item | item log ]
 )
 
-log2 = (
-	^self collect: [ :item | item log2 ]
-)
-
 mean = (
 	"Sum of myself divided by my size."
 	^self sum / self size

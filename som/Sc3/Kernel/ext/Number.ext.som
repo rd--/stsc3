@@ -34,10 +34,6 @@ linExpFrom: lo to: hi = (
 	^lo * ((hi / lo) ln * self) exp
 )
 
-log2 = (
-	^self log: 2
-)
-
 midiCps = (
 	"Convert from fractional midi note number to frequency (in hertz)"
 	^440 * (2 raisedTo: ((self - 69) * (1 / 12)))
