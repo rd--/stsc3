@@ -27,3 +27,16 @@ var o1 = SinOsc(f + [0, 0.7], 0);
 var o2 = LFSaw (f + [0, 0.7], 0) * 0.3;
 var o3 = o1 + o2;
 o3.distort.distort.cubed * 0.5
+
+// LFSaw ; https://scsynth.org/t/6320/2 (nh)
+var voiceFunc = {
+	arg e;
+	var freq = e.p.unitCps;
+	var auto = SinOsc(e.z * 2, 0).range(1, 1 + e.y);
+	var formatTable = [[400, 1600, 2700], [830, 1200, 4000]].asLocalBuf;
+	var formants = BufRd(3, formatTable, e.y * 3, 1, 2).kr  * [1 / auto, auto, auto ** 0.5];
+	var phase = LFSaw(freq, 0).range(0, 1);
+	var snd = (phase * formants / freq * 2 * pi).sin;
+	(snd[1] + (snd[2].sign * 0.25)) * e.z * 2 * e.w
+};
+Voicer(16, voiceFunc).splay2

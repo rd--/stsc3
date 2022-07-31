@@ -1,0 +1,14 @@
+ArrayedCollection = ArrayedCollection (
+
+	rank = (
+		"Rank is the number of dimensions in a multidimensional array.
+		See also Object>>rank.  Assume every element has the same rank."
+		^1 + self first rank
+	)
+
+	shape = (
+		"Assume every element has the same shape."
+		^{self size} ++ self first shape
+	)
+
+)

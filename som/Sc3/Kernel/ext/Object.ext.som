@@ -28,4 +28,12 @@ isUgen = (
 	^false
 )
 
+rank = (
+	^0
+)
+
+shape = (
+	^nil
+)
+
 )

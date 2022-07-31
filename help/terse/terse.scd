@@ -106,6 +106,10 @@ Array.exprand(4, 1, 9)                                      // array of random n
 var c = [1, 2]; c.reverse; c == [1, 2]                      // reverse is not in place
 var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in place
 [1, 3, 7, 9].rand                                           // collect with .rand
+[[1], [[2]], [[[3]]]].collect('rank') == [1, 2, 3]	    // rank
+[[1, 2, 3], [4, 5, 6]].shape == [2, 3]                      // size of shape is rank
+[[1, 2], [3, 4], [5, 6]].shape == [3, 2]		    // size of each element is size at depth
+[[[1], [2]], [[3], [4]], [[5], [6]]].shape == [3, 2, 1]	    // rank and shape both assume regularity
 
 'Assignment'
 
