@@ -305,11 +305,10 @@ Set new add: 1; add: 2; yourself
 {
 $ = Character space.
 $	 = Character tab.
-Character newLine = Character nl.
-Character lineFeed = Character lf.
+Character linefeed = Character lf.
 Character tab asInteger = 9.
-Character newLine asInteger = 10.
-Character lineFeed asInteger = 10.
+Character nl asInteger = 10.
+Character linefeed asInteger = 10.
 Character newPage asInteger = 12.
 Character cr asInteger = 13.
 $' asInteger = 39.
@@ -461,13 +460,13 @@ Date today printString "30 May 2022"
 DateAndTime unixEpoch asSeconds = 2177452800.
 DateAndTime epoch printString = '1901-01-01T00:00:00+00:00'.
 DateAndTime unixEpoch printString = '1970-01-01T00:00:00+00:00'.
-(DateAndTime unixEpoch - (Duration days: Time daysFromSmalltalkEpochToPosixEpoch)) = DateAndTime epoch.
 (DateAndTime year: 1970 day: 1) printString = '1970-01-01T00:00:00+10:00'.
 (DateAndTime year: 2003 month: 03 day: 22 hour: 12 minute: 0) makeUTC printString = '2003-03-22T12:00:00+00:00'.
 (TimeStamp readFrom: '1-01-2005 0:00 am' readStream) printString = '1 January 2005 12:00 am'.
 (DateAndTime year: 2005 month: 1 day: 1) dayOfWeek = 7.
 } allSatisfy: #yourself
 
+(DateAndTime unixEpoch - (Duration days: ChronologyConstants daysFromSmalltalkEpochToPosixEpoch)) = DateAndTime epoch.
 DateAndTime now printString "2022-05-30T01:44:29.492936+10:00"
 DateAndTime localTimeZone printString "a TimeZone(UTC)"
 t := DateAndTime year: 2000 month: 1 day: 3 hour: 4 minute: 5 second: 6 nanoSecond: 7 offset: 8 hours
@@ -490,7 +489,7 @@ d := Delay forSeconds: 5.
 d delayDuration = 5000.
 d beingWaitedOn = false.
 d resumptionTime = nil.
-}
+} allSatisfy: #yourself
 
 (Delay forSeconds: 0.5) wait. Transcript nextPutAll: 'delayed'; cr.
 (Delay forSeconds: 2/3) wait. Transcript nextPutAll: 'delayed'; cr.
@@ -547,8 +546,9 @@ Smalltalk halt
 {
 Duration zero seconds = 0.
 Duration oneDay days = 1.
-(Duration days: Time daysFromSmalltalkEpochToPosixEpoch) days = 25202.
-}
+} allSatisfy: #yourself
+
+(Duration days: ChronologyConstants daysFromSmalltalkEpochToPosixEpoch) days = 25202.
 
 'Error'
 
@@ -1112,14 +1112,14 @@ Symbol initializedInstance = #''.
 'Time'
 
 {
-Time epochOffset = 2177452800.
-Time epochOffsetMicros = 2177452800000000.
 (Time readFrom: (ReadStream on: '2:23:09 pm')) printString = '2:23:09 pm'.
 (Time readFromString: '12:34:57') printString = '12:34:57 pm'.
 (Time readFromString: '4:02:47.42 am') printString = '4:02:47.42 am'.
 (Time readFrom: '0:00 am' readStream) printString = '12:00 am'.
 } allSatisfy: #yourself
 
+Time epochOffset = 2177452800.
+Time epochOffsetMicros = 2177452800000000.
 Time posixMicrosecondClockWithOffset "{1653874256296392. 36000}"
 Time utcMicrosecondClock "3831326473237958"
 Time dateAndTimeNow first printString "30 May 2022"
