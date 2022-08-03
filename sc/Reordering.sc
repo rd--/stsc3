@@ -1,5 +1,6 @@
 Seq { *new { arg repeats, list; ^Dseq.dr(list, repeats) } }
-Ser { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
+Ser { *new { arg repeats, list; ^Dser.dr(list, repeats) } }
+Series { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
 Shuf { *new { arg repeats, list; ^Dshuf.dr(list, repeats) } }
 Choose { *new { arg repeats, list; ^Drand.dr(list, repeats) } }
 Xchoose { *new { arg repeats, list; ^Dxrand.dr(list, repeats) } }

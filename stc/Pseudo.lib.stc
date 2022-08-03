@@ -351,6 +351,13 @@ Ser : PseudoUgen {
 	}
 }
 
+Series : PseudoUgen {
+	*constructor {
+		arg start, step, length;
+		^Dseries(start, step, length)
+	}
+}
+
 /* Demand rate random sequence generator */
 Shuf : PseudoUgen {
 	*constructor {

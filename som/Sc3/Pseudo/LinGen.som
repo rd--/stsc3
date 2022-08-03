@@ -3,7 +3,7 @@ LinGen = PseudoUgen (
 
 gate: gate levels: levels times: times = (
 
-^(CurveSeg apply: {gate. levels. times. #(#'lin')})
+^(CurveGen apply: {gate. levels. times. #(#'lin')})
 )
 
 primaryFactoryMethod = (

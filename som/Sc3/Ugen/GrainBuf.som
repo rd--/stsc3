@@ -1,0 +1,20 @@
+GrainBuf = ScUgen (
+----
+comment = (
+	^'Granular synthesis with sound stored in a buffer'
+)
+
+numChan: numChan trigger: trigger dur: dur sndbuf: sndbuf rate: rate pos: pos interp: interp pan: pan envbufnum: envbufnum maxGrains: maxGrains = (
+	^UgenBuilder name: 'GrainBuf' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. sndbuf. rate. pos. interp. pan. envbufnum. maxGrains}
+)
+primaryFactoryMethod = (
+	^#numChan:trigger:dur:sndbuf:rate:pos:interp:pan:envbufnum:maxGrains:
+)
+numChan: numChan trigger: trigger dur: dur sndbuf: sndbuf rate: rate pos: pos interp: interp pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
+	^(GrainBuf numChan: numChan trigger: trigger dur: dur sndbuf: sndbuf rate: rate pos: pos interp: interp pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
+)
+numChan: numChan trigger: trigger dur: dur sndbuf: sndbuf rate: rate pos: pos interp: interp pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
+	^(GrainBuf numChan: numChan trigger: trigger dur: dur sndbuf: sndbuf rate: rate pos: pos interp: interp pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
+)
+
+)
