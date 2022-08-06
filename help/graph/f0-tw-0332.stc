@@ -1,0 +1,4 @@
+// https://sccode.org/1-4Qy ; f0 ; 0332
+var f = 2 ** (SinOscFB([4, 3], 0) > 0) * (SinOscFB(1 / 16, 0) > 0 + 2 * (SinOscFB(1 / [32, 48], 0) > 0 * 20 + 99));
+var o = SinOscFB(f, SinOscFB(1 / 63.9, 0) + 2 / 3);
+AllpassN(o, 3, 3, 60) / 3

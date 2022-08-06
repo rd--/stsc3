@@ -1,0 +1,4 @@
+// https://sccode.org/1-4Qy ; f0 ; 0298
+var c =SinOscFB([2, 3], 0) % 1;
+var f = XFade2(SinOscFB(1, 0).ceil * 36, SinOscFB(2, 0).rounded * 2 + 4 * 12, SinOscFB(1 / [4, 12], 0), 1) + 8 * 4;
+SinOscFB(f, c) * c * SinOscFB(1, 1 / 3)

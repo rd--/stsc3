@@ -1,0 +1,20 @@
+Spring = ScUgen (
+----
+comment = (
+	^'physical model of resonating spring'
+)
+
+in: in spring: spring damp: damp = (
+	^UgenBuilder name: 'Spring' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in. spring. damp}
+)
+primaryFactoryMethod = (
+	^#in:spring:damp:
+)
+in: in spring: spring damp: damp mul: mul = (
+	^(Spring in: in spring: spring damp: damp) * mul
+)
+in: in spring: spring damp: damp mul: mul add: add = (
+	^(Spring in: in spring: spring damp: damp) * mul + add
+)
+
+)

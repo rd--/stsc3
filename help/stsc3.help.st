@@ -59,6 +59,14 @@ ScGraph scgf = 1396926310.
 ((ScGraph scgf) digitAt: 4) = 83. "$S asInteger = 83"
 ((4 to: 1 by: -1) collect: [ :index | Character value: ((ScGraph scgf) digitAt: index) ]) = #($S $C $g $f).
 
+"Splay2"
+
+#(1 2 3) + 1 = #(2 3 4)
+#(1 2 3) * 2 = #(2 4 6)
+#(1 2 3) - 1 = #(0 1 2)
+1 - #(1 2 3) = #(0 -1 -2)
+#(1 2 3) / 2 = #(0.5 1 1.5)
+
 "Scsynth"
 
 Sc3 draw: (SinOsc freq: 440 phase: 0 mul: 0.1).
@@ -206,6 +214,10 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "SequenceableCollection"
 
+(#(1 2 3 4) pyramid: 1) = #(1 1 2 1 2 3 1 2 3 4).
+((1 to: 9) pyramid: 1) size = 45.
+((' #SuperCollider ' asArray collect: #asciiValue) pyramid: 1) size = 136.
+
 {
 #(1 2 3) , #(4 5 6) = #(1 2 3 4 5 6).
 (#(1) atWrap: 7) = 1.
@@ -318,6 +330,7 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 3.141 printString = '3.141'.
 (3.141 printStringLimitedTo: 4) = '3.14...etc...'. "Gnu: dnu"
 Array class printString = 'Array class'. "stsc3-st: broken"
+('aString' asArray collect: #asciiValue) = #(97 83 116 114 105 110 103).
 } allSatisfy: #yourself
 
 '\n' "=> '\n'"

@@ -5,8 +5,8 @@ Shuf { *new { arg repeats, list; ^Dshuf.dr(list, repeats) } }
 Choose { *new { arg repeats, list; ^Drand.dr(list, repeats) } }
 Xchoose { *new { arg repeats, list; ^Dxrand.dr(list, repeats) } }
 DmdOn { *new { arg trig, reset, demandUGens; ^Demand.multiNewList([trig.rate, trig, reset] ++ demandUGens.asArray) } }
-DmdFor { *new { arg dur, reset, level; ^Duty.ar(dur, reset, level, 0) } }
-TDmdFor { *new { arg dur, reset, level; ^TDuty.ar(dur, reset, level, 0, 0) } }
+DmdFor { *new { arg dur=1, reset=0, level=1; ^Duty.ar(dur, reset, level, 0) } }
+TDmdFor { *new { arg dur=1, reset=0, level=1; ^TDuty.ar(dur, reset, level, 0, 0) } }
 
 BufRec { *new { arg bufnum, reset, inputArray; ^RecordBuf.ar(inputArray, bufnum, 0, 1, 0, 1, 1, reset, 0) } }
 BufAlloc { *new { arg numChannels, numFrames; ^LocalBuf.ir(numFrames, numChannels) } } // .clearBuf?

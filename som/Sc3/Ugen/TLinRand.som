@@ -5,7 +5,7 @@ comment = (
 )
 
 lo: lo hi: hi minmax: minmax trigger: trigger = (
-	^UgenBuilder name: 'TLinRand' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {lo. hi. minmax. trigger}
+	^UgenBuilder name: 'TLinRand' numChan: 2 rateSpec: (Rate kr) specialIndex: 0 inputArray: {lo. hi. minmax. trigger}
 )
 primaryFactoryMethod = (
 	^#lo:hi:minmax:trigger:

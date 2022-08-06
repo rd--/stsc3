@@ -7,7 +7,7 @@ SmallInteger = SmallInteger (
 )
 
 - aNumber = (
-	<primitive: VMpr_SmallInteger_plus>
+	<primitive: VMpr_SmallInteger_minus>
 	aNumber isSmallInteger ifTrue: [ ^(LargeInteger fromInteger: self) - (LargeInteger fromInteger: aNumber) ].
 	^ aNumber adaptToInteger: self andSend: #-
 )

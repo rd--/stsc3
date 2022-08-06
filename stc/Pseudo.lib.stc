@@ -393,7 +393,7 @@ SinOscBank : PseudoUgen {
 /* Pan an array of channels across the stereo field */
 Splay : PseudoUgen {
 	*constructor {
-		arg inArray, spread, level, center, levelComp;
+		arg inArray, spread = 1, level = 1, center = 0, levelComp = true;
 		var n = 2.max(inArray.size);
 		var n1 = n - 1;
 		var pos = (0.to(n1) * (2 / n1) - 1) * spread + center;

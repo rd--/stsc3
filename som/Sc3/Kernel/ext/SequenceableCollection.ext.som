@@ -46,12 +46,12 @@ asKlankSpec = (
 )
 
 asLocalBuf = (
-	| shape lhs rhs |
+	| shape array lhs rhs |
 	shape := self shape.
-	(shape size == 1) ifTrue: [ shape := {1, self size} ].
+	(shape size = 1) ifTrue: [ shape := {1 . self size}. array := self ] ifFalse: [ array := self transpose concatenation ].
 	(shape size > 2) ifTrue: [ 'LocalBuf: list has not the right shape' error ].
 	lhs := LocalBuf numChannels: shape first numFrames: shape second.
-	rhs := SetBuf buf: lhs offset: 0 length: shape product array: self transpose concatenation.
+	rhs := SetBuf buf: lhs offset: 0 length: shape product array: array.
 	^lhs mrg: rhs
 )
 
@@ -149,6 +149,10 @@ mceTransform = (
 	^self extendToBeOfEqualSize transpose
 )
 
+min: arg = (
+	^arg adaptToCollection: self andSend: #min:
+)
+
 nth: index = (
 	"Alias for at:. For .stc, since at: in Sc is zero-indexed."
 	^self at: index
@@ -169,6 +173,26 @@ perform: aSelector crossedWith: aSequence = (
 putNrtOn: aStream = (
 	"I am a sequence of OscBundles."
 	self do: [ :each | each putNrtOn: aStream ]
+)
+
+pyramidRuleOne = (
+	| size answerSize answer k |
+	size := self size.
+	answerSize := (size * size + size) / 2.
+        answer := self species new: answerSize.
+	k := 1.
+        1 to: size do: [ :i |
+		1 to: i do: [ :j |
+			answer at: k put: (self at: j).
+			k := k + 1.
+		]
+	].
+        ^answer
+)
+
+pyramid: patternNumber = (
+	(patternNumber = 1) ifTrue: [ ^self pyramidRuleOne ].
+	self error: 'pyramid: unimplemented rule'
 )
 
 rotate: n = (
