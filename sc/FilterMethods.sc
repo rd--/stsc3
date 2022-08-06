@@ -258,10 +258,6 @@
     arg reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;
     ^Stepper.performList(this.rate.rateToSelector, [this, reset, min, max, step, resetval])
   }
-  sweep {
-    arg rate = 1.0;
-    ^Sweep.performList(this.rate.rateToSelector, [this, rate])
-  }
   tExpRand {
     arg lo = 1.0e-2, hi = 1.0;
     ^TExpRand.performList(this.rate.rateToSelector, [lo, hi, this])
@@ -564,10 +560,6 @@
   stepper {
     arg reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;
     ^Stepper.performList(this.rate.rateToSelector, [this, reset, min, max, step, resetval])
-  }
-  sweep {
-    arg rate = 1.0;
-    ^Sweep.performList(this.rate.rateToSelector, [this, rate])
   }
   tExpRand {
     arg lo = 1.0e-2, hi = 1.0;

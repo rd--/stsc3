@@ -1,0 +1,7 @@
+// https://sccode.org/1-4Qy ; tweet0005 ; texture variant (rd)
+OverlapTexture({
+	arg tr;
+	var z = TRand(1, 60, tr);
+	var y = LFTri(z, 0).abs / z;
+	(RLPF(TDmdFor(y, 0, y), z * 99 + y, 0.01) * (6 + y)).dup(2)
+}, 1, 25, 4)

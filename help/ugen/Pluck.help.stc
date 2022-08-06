@@ -1,4 +1,4 @@
-// Pluck ; https://scsynth.org/t/what-kind-of-synthesis-is-this/4318/17
+// Pluck ; https://scsynth.org/t/4318/17
 var freq, trig, snd, freqs;
 freq = LFNoise2(1);
 trig = Impulse(LinExp(freq, -1, 1, 1, 100), 0);

@@ -1,0 +1,5 @@
+// https://sccode.org/1-4Qy ;  tweet0016 ; error...
+var b = LocalBuf(90000, 2).clearBuf;
+var i = Sweep(BufRd(2, b, Saw(12) * 30000 + 40000, 1, 2), 90000);
+var w = BufWrite(b, i, 1, Saw([8, 9]));
+BufRd(2, b.mrg(w), i, 1, 2) / 2

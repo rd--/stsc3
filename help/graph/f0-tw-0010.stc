@@ -1,0 +1,9 @@
+// https://sccode.org/1-4Qy ; tweet0010
+var o = SinOsc(
+	SinOsc(0.31, 0),
+	SinOsc(SinOsc(0.21, 0), SinOsc(SinOsc(0.11, SinOsc(0.01, 0)), 0) * SinOsc([2, 3], 0) * 400)
+) * SinOsc([0.3, 0.21], 0);
+LeakDC(o, 0.995)
+
+//--tweet0010
+a=SinOsc;LeakDC.ar(a.ar(a.ar(0.31),a.ar(a.ar(0.21),a.ar(a.ar(0.11,a.ar(0.01)),0,a.ar([2,3],0,400))),a.ar([0.3,0.21])))

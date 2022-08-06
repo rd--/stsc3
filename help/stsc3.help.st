@@ -625,6 +625,7 @@ ObjectMemory current inspect. "vm memory statistics"
 File image asString. "location of image file"
 
 "gst-load Sockets"
+PackageLoader fileInPackage: 'Sockets'.
 FileStream fileIn: '/home/rohan/sw/stsc3/st/Sc3-Filein-For-Gnu.st'.
 
 "Help Graphs"

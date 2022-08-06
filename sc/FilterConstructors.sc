@@ -86,7 +86,6 @@
 + Slope { *new { arg in = 0.0;^Slope.performList(in.rate.rateToSelector, [in]) } }
 + SOS { *new { arg in = 0.0, a0 = 0.0, a1 = 0.0, a2 = 0.0, b1 = 0.0, b2 = 0.0;^SOS.performList(in.rate.rateToSelector, [in, a0, a1, a2, b1, b2]) } }
 + Stepper { *new { arg trig = 0.0, reset = 0.0, min = 0.0, max = 7.0, step = 1.0, resetval = 0.0;^Stepper.performList(trig.rate.rateToSelector, [trig, reset, min, max, step, resetval]) } }
-+ Sweep { *new { arg trig = 0.0, rate = 1.0;^Sweep.performList(trig.rate.rateToSelector, [trig, rate]) } }
 + TExpRand { *new { arg lo = 1.0e-2, hi = 1.0, trig = 0.0;^TExpRand.performList(trig.rate.rateToSelector, [lo, hi, trig]) } }
 + Timer { *new { arg trig = 0.0;^Timer.performList(trig.rate.rateToSelector, [trig]) } }
 + TIRand { *new { arg lo = 0.0, hi = 127.0, trig = 0.0;^TIRand.performList(trig.rate.rateToSelector, [lo, hi, trig]) } }

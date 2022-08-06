@@ -25,6 +25,10 @@ dbAmp = (
 	^10 raisedTo: (self * 0.05)
 )
 
+div: aNumber = (
+	^self // aNumber
+)
+
 kr = (
 	^self
 )
