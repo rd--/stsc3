@@ -1,0 +1,22 @@
+BLowPass4 = PseudoUgen (
+----------------------------
+
+in: in freq: freq rq: rq = (
+| rqSqrt |
+
+rqSqrt := rq sqrt .
+ ^(BLowPass apply: {(BLowPass apply: {in. freq. rqSqrt}). freq. rqSqrt})
+)
+
+primaryFactoryMethod = (
+
+^#'in:freq:rq:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

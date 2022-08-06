@@ -17,7 +17,7 @@ var grains = [
 ] * amp;
 var diffused = grains.collect({
 	arg item;
-	var c1 = FFT(LocalBuf(fftSize, 1), item, 1, -1, 1, 0);
+	var c1 = FFT(BufAlloc(1, fftSize), item, 1, -1, 1, 0);
 	var c2 = PV_Diffuser(c1, 1 - trig);
 	IFFT(c2, -1, 0)
 });

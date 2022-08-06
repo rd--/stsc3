@@ -17,7 +17,7 @@ import qualified Sound.Sc3.Ugen.Db.Record as Record {- hsc3-db -}
 -}
 uop :: [(String, Int)]
 uop =
-  [("negated",0),("abs",5),("ceil",8),("floor",9)
+  [("negated",0),("abs",5),("ceiling",8),("floor",9)
   ,("frac",10), ("sign", 11), ("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16)
   ,("midiCps",17),("cpsMidi",18), ("midiRatio", 19), ("ratioMidi", 20)
   ,("dbAmp", 21), ("ampDb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
@@ -89,7 +89,7 @@ ugen =
   ,"AnalogFoldOsc" -- portedplugins
   ,"RCD","SCM" -- vb_UGens
   ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
-  ,"TScramble" -- sc3-rdu
+  ,"TLinRand","TScramble" -- sc3-rdu
   ,"Dx7","Dx7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
   ,"Bezier","Freezer" -- sc3-rdu ,"ShufflerB"
   ]

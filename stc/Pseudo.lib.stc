@@ -32,6 +32,22 @@ Bilin : PseudoUgen {
 	}
 }
 
+BHiPass4 : PseudoUgen {
+	*constructor {
+		arg in, freq = 1200.0, rq = 1.0;
+		var rqSqrt = rq.sqrt;
+		^BHiPass(BHiPass(in, freq, rqSqrt), freq, rqSqrt)
+	}
+}
+
+BLowPass4 : PseudoUgen {
+	*constructor {
+		arg in, freq = 1200.0, rq = 1.0;
+		var rqSqrt = rq.sqrt;
+		^BLowPass(BLowPass(in, freq, rqSqrt), freq, rqSqrt)
+	}
+}
+
 /* Allocate a buffer local to the synth */
 BufAlloc : PseudoUgen {
 	*constructor {

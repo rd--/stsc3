@@ -33,6 +33,10 @@ isCollection = (
 	^true
 )
 
+ceiling = (
+	^self collect: [ :each | each ceiling ]
+)
+
 log2 = (
 	^self collect: [ :each | each log2 ]
 )

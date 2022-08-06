@@ -1,0 +1,7 @@
+// https://sccode.org/1-4Qy ; f0 ; 0333
+0.to(7).collect({
+	arg i;
+	var b = i + 2 * 99;
+	var f = SinOscFB(i + 1 / 150, 0).rounded + 1 + i * 99 + SinOscFB([3, 2], 0);
+	(Formant(f, b, b) * SinOscFB(i + 1 / 130, 0).max(0)).tanh
+}).splay2 / 3

@@ -1,0 +1,6 @@
+// https://sccode.org/1-4Qy ; f0 ; 0339
+var b = 1 / 1.to(12);
+var f1 = 2 ** LFSaw(b, 0).roundTo(LFSaw(8, b) < 0 / 4 + 1);
+var f2 = 4 ** LFSaw(b / 12, 0) + 2;
+var f3 = 3 ** LFSaw(b / 4, 0) * 3;
+Splay2(Formant(f1 * 99, f2 * 99, f3 * 99) / 2).tanh

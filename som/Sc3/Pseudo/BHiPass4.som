@@ -1,0 +1,22 @@
+BHiPass4 = PseudoUgen (
+----------------------------
+
+in: in freq: freq rq: rq = (
+| rqSqrt |
+
+rqSqrt := rq sqrt .
+ ^(BHiPass apply: {(BHiPass apply: {in. freq. rqSqrt}). freq. rqSqrt})
+)
+
+primaryFactoryMethod = (
+
+^#'in:freq:rq:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

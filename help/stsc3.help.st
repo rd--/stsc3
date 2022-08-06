@@ -825,7 +825,7 @@ s add: c
 (s like: c) = c.
 s includes: c.
 
-"LocalBuf"
+"LocalBuf ; BufAlloc"
 
 #(0 2 4 5 7 9 10 12) asLocalBuf draw
 

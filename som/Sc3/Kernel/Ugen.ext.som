@@ -28,7 +28,7 @@ fold2: b = ( ^ BinaryOpUgen specialIndex: 44 a: self b: b )
 
 negated = ( ^ UnaryOpUgen specialIndex: 0 a: self )
 abs = ( ^ UnaryOpUgen specialIndex: 5 a: self )
-ceil = ( ^ UnaryOpUgen specialIndex: 8 a: self )
+ceiling = ( ^ UnaryOpUgen specialIndex: 8 a: self )
 floor = ( ^ UnaryOpUgen specialIndex: 9 a: self )
 frac = ( ^ UnaryOpUgen specialIndex: 10 a: self )
 sign = ( ^ UnaryOpUgen specialIndex: 11 a: self )

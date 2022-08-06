@@ -5,7 +5,7 @@ comment = (
 )
 
 trig: trig rate: rate = (
-	^UgenBuilder name: 'Sweep' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {trig. rate}
+	^UgenBuilder name: 'Sweep' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {trig. rate}
 )
 primaryFactoryMethod = (
 	^#trig:rate:

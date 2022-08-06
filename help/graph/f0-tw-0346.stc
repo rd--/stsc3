@@ -1,0 +1,3 @@
+// https://sccode.org/1-4Qy ; f0 ; 0346
+var c = SinOscFB(1 - SinOscFB(1 / [3, 2], 0).roundTo(0.5) + InFb(2, 0), 0);
+(SinOscFB(2 ** SinOscFB(1 - c, 0).roundTo(1 - c) * 400, c.abs) * Lag(c, 0.1) * c).tanh

@@ -16,10 +16,6 @@ addToUgenSet: c protectedBy: w = (
 	self do: [ :item | item addToUgenSet: c protectedBy: w]
 )
 
-ceil = (
-	^self collect: [ :item | item ceil ]
-)
-
 containsCollection = (
 	^self anySatisfy: [ :item | item isCollection ]
 )
