@@ -5,6 +5,10 @@ expRand: upperBound = (
 	^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.
 )
 
+fib = (
+	^Array fib: self
+)
+
 from: start by: step = (
 	^(start to: self - 1 * step + start by: step)
 )

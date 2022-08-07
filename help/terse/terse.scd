@@ -304,6 +304,7 @@ d = Dictionary.new(4)                                       // new empty diction
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence of adjacent key value pairs
 d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations ; c.f. Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])
+d.asArray == [2, 1]					    // values (not keys or associations) as array
 d.associationsDo({ arg x; x.postln })                       // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
@@ -352,6 +353,7 @@ h.value == 9                                                // => 3 * 3 = 9
 
 IdentityDictionary.superclass == Dictionary                 // identity dictionaries are dictionaries
 d = IdentityDictionary.newFrom(['i', 1, 'j', 2])            // new dictionary from array
+d.asArray == [2, 1]					    // values as array
 d.size == 2                                                 // number of entries
 c = IdentityDictionary.new                                  // new empty dictionary
 c.proto_(d)                                                 // there is a proto variable
@@ -417,7 +419,6 @@ x = { }                                                     // blocks are object
 { arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
 ({ arg x; x * 2 } <> { arg x; x + 3 }).value(4) == 14       // function composition
 { arg x; x = nil }.value(42).isNil                          // arguments are mutable
-
 
 'List'
 
@@ -510,6 +511,7 @@ nil.isNil == true                                           // is nil
 200 @ 100 - (50 @ 25)                                       // subtract points
 200 @ 100 * (3 @ 4)                                         // multiply points
 200 @ 100 / (3 @ 4)                                         // divide points
+(200 @ 100).asArray == [200, 100]			    // array of x and y
 
 'Post'
 
@@ -577,6 +579,7 @@ List.linrand(4, 1, 9)                                       // list of random nu
 List.exprand(4, 1, 9)                                       // list of random numbers (exponential distribution)
 [1, 2, 3].wrapAt(3) == 1                                    // index with wrap-around
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
+List.rand(4, 1, 9).asArray.class == Array		    // as array
 
 'Set'
 
@@ -594,7 +597,8 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 [1, 2, 3].asSet.difference([2, 3, 4].asSet) == [1].asSet    // set difference (p - q)
 [1].asSet.symmetricDifference([2].asSet) == [1, 2].asSet    // symmetric difference ((p - q) + (q - p))
 [2, 3].asSet.isSubsetOf([1, 2, 3, 4].asSet) == true         // subset of
-[1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array
+[1, 1, 2, 2, 3, 3].asSet.asArray.size == 3		    // remove duplicates from array
+[1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array and sort
 
 'String'
 
@@ -627,6 +631,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 { "string".add($!) }.try({ "oh oh..." }) == "oh oh..."      // literal strings are immutable arrayed collections
 ["", "string"].collect('maxSize') == [16, 64]               // of minimum maxSize 16
 var s = "string".copy; s.add($!); s.at(6) == $!             // copied string literals inherit maxSize
+"String".asArray.class != Array				    // https://github.com/supercollider/supercollider/issues/5658
 
 'Symbol'
 
@@ -636,6 +641,7 @@ Symbol.superclass == Object                                 // Symbol is not a s
 'x y'.asCompileString == "'x y'"                            // convert to quoted string
 'a' ++ 'b' == "ab"                                          // Symbol -> Symbol -> String, c.f. (#a , #b) = 'ab'
 'a' < 'b' == true                                           // symbol ordering
+'Symbol'.asArray.class == Array
 
 'Temporaries'
 

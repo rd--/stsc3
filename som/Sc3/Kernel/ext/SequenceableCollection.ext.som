@@ -258,6 +258,29 @@ writeNrt: fileName = (
 
 ----------------------------
 
+fib: size = (
+	"Fill with fibonacci series"
+	^ self fib: size by: 0 from: 1
+)
+
+fib: size by: by from: from = (
+	"Fill with fibonacci series"
+	| a b i answer |
+	a := by.
+	b := from.
+	i := 1.
+	answer := self new: size.
+	[ i <= size ] whileTrue: [
+		| tmp |
+		answer at: i put: b.
+		tmp := b.
+		b := a + b.
+		a := tmp.
+		i := i + 1
+	].
+	^answer
+)
+
 fill: size value: aBlock = (
 	"Generate an array evaluating a zero argument block to fill each slot."
 	^(1 to: size) collect: [ :unusedItem | aBlock value ]

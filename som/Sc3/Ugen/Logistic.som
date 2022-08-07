@@ -1,0 +1,20 @@
+Logistic = ScUgen (
+----
+comment = (
+	^'Chaotic noise function'
+)
+
+chaosParam: chaosParam freq: freq init: init = (
+	^UgenBuilder name: 'Logistic' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {chaosParam. freq. init}
+)
+primaryFactoryMethod = (
+	^#chaosParam:freq:init:
+)
+chaosParam: chaosParam freq: freq init: init mul: mul = (
+	^(Logistic chaosParam: chaosParam freq: freq init: init) * mul
+)
+chaosParam: chaosParam freq: freq init: init mul: mul add: add = (
+	^(Logistic chaosParam: chaosParam freq: freq init: init) * mul + add
+)
+
+)

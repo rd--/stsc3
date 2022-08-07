@@ -7,7 +7,7 @@
 6 - 3 = 3.                                                   "subtraction"
 6 * 3 = 18.                                                  "multiplication"
 1 + 2 * 3 = 9.                                               "evaluation always left to right (1 + 2) * 3"
-6 / 3 = 2.                                    "integer division with integer result"
+6 / 3 = 2.                                                   "integer division with integer result"
 (5 / 3) class = Fraction.                                    "integer division with non-integer result"
 ((5 / 3) asFloat) closeTo: 1.666666.                         "fraction as float"
 5.0 / 2.0 = 2.5.                                             "division with float result (operand float)"
@@ -292,6 +292,7 @@ true asInteger > false asInteger.
 ((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'.
 ((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64).
 ByteArray empty == ByteArray empty.
+'string' asByteArray asArray = #(115 116 114 105 110 103).
 } allSatisfy: #yourself
 
 'Cascade messages'
@@ -304,7 +305,7 @@ Set new add: 1; add: 2; yourself
 
 {
 $ = Character space.
-$	 = Character tab.
+$        = Character tab.
 Character linefeed = Character lf.
 Character tab asInteger = 9.
 Character nl asInteger = 10.
@@ -591,8 +592,8 @@ Float nan ~= Float nan.
 (Fraction numerator: 2 denominator: 3) reduced = (2/3).
 2 / (3/4) = (8/3).
 (2/3) + (2/3) = (4/3).
-((2/3) + (1/2)) = (7/6).		"case showing reduction to common denominator"
-((2/3) + (4/3)) = 2.		"case where result is reduced to an Integer"
+((2/3) + (1/2)) = (7/6).                "case showing reduction to common denominator"
+((2/3) + (4/3)) = 2.            "case where result is reduced to an Integer"
 (3 / 2) ceiling = 2.
 (-3 / 2) ceiling = -1.
 (4/3) denominator = 3.
@@ -601,7 +602,7 @@ Float nan ~= Float nan.
 (4/3) negated = (-4/3).
 (4/3) negative not. "is negative?"
 (4/3) numerator = 4.
-((2/3) raisedToInteger: 5) = (32/243).		 "fractions also can be exponentiated"
+((2/3) raisedToInteger: 5) = (32/243).           "fractions also can be exponentiated"
 (9 / 5) reciprocal = (5/9).
 (7 / 5) squared = (49/25).
 (3 / 2) truncated = 1.
@@ -689,38 +690,41 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 
 'Interval'
 
-Interval from: 5 to: 10                                     "create interval object"
-5 to: 10                                                    "interval from 5 to 10"
-Interval from: 5 to: 10 by: 2                               "create interval object with specified increment"
-5 to: 10 by: 2                                              "interval from 5 to 10 by 2"
-(1 to: 5) isEmpty not                                       "test if empty"
-(1 to: 5) size = 5                                          "number of elements"
-(1 to: 9) includes: 9                                       "test if element is in collection"
-(1 to: 9) do: [ :item | Transcript show: item; cr ]         "iterate over interval"
-(1 to: 9) select: [ :item | item > 7 ]                      "return elements that pass test"
-(1 to: 9) reject: [ :item | item < 2 ]                      "return elements that fail test"
-(1 to: 9) collect: [ :item | item + item ]                  "transform each element"
-(1 to: 9) detect: [ :item | item > 3 ] ifNone: []           "find position of first element that passes test"
-(1 to: 9) inject: 0 into: [ :state :item | state + item ]   "sum elements"
-(1 to: 9) asArray                                           "convert to array"
-(1 to: 9) hash
+{
+(Interval from: 5 to: 10) class = Interval.                 "create interval object"
+(Interval from: 5 to: 10) = (5 to: 10).                     "interval from 5 to 10"
+(Interval from: 5 to: 10 by: 2) last = 9.                   "create interval object with specified increment"
+(5 to: 10 by: 2) last = 9.                                  "interval from 5 to 10 by 2"
+(1 to: 5) isEmpty not.                                      "test if empty"
+(1 to: 5) size = 5.                                         "number of elements"
+(1 to: 9) includes: 9.                                      "test if element is in collection"
+((1 to: 9) select: [ :item | item > 7 ]) = #(8 9).          "return elements that pass test"
+((1 to: 9) reject: [ :item | item < 7 ]) = #(7 8 9).        "return elements that fail test"
+((1 to: 9) collect: [ :item | item + item ]) last = 18.     "transform each element"
+((1 to: 9) detect: [ :item | item > 3 ] ifNone: []) = 4.    "find position of first element that passes test"
+((1 to: 9) inject: 0 into: [ :sum :item | sum + item ]) = 45. "sum elements"
+(1 to: 9) asArray = #(1 2 3 4 5 6 7 8 9).                   "convert to array"
+(1 to: 9) ~= ((1 to: 9) asArray).                           "intervals are not equal to arrays"
+(1.0 to: 3.0 by: 1.0) includes: 3.0.
+((1.0 to: 3.0 by: 1.0 successor) includes: 3.0) not.
+(0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10).
+} allSatisfy #yourself
+
 (Interval newFrom: #(1 2 3)) = (1 to: 3)
 (#(33 5 -23) as: Interval) = (33 to: -23 by: -28)
 (-4 to: -12 by: -1) as: Interval
 (#(2 4 6) as: Interval) = (2 to: 6 by: 2)
 (1 to: 10) + 5 = (6 to: 15)
 (6 to: 15) - 5 = (1 to: 10)
-(1 to: 9) hash
-(1 to: 9) ~= ((1 to: 9) asArray) "intervals are not equal to arrays"
 (1 to: 9) hasEqualElements: ((1 to: 9) asArray) "intervals and arrays may have equal elements"
-(1.0 to: 3.0 by: 1.0) includes: 3.0             "true"
-(1.0 to: 3.0 by: 1.0 successor) includes: 3.0   "false"
-(0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10)
 (1 to: 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
 (10 to: 20 by: 3) reverseDo: [ :each | Transcript show: each printString; cr ]
 (1 to: 2 by: 1/2) = ({1. 3/2. 2} as: Interval)
 (1 to: 2 by: 1/5) = ({1. 6/5. 7/5. 8/5. 9/5. 2} as: Interval)
 (2 to: 1) anyOne
+
+(1 to: 9) hash = 19.
+(1 to: 9) do: [ :item | Transcript show: item; cr ]         "iterate over interval"
 
 'Json'
 
@@ -1062,6 +1066,7 @@ String initializedInstance = ''.
 ('\"' at: 1) = $\.
 ('\"' at: 2) = $".
 String cr = Character cr asString.
+'string' asArray = #($s $t $r $i $n $g).
 } allSatisfy: #yourself
 
 (#('\b' '\t' '\n' '\f' '\r' '\''' '\\') collect: #size) = #(2 2 2 2 2 2 2)
@@ -1107,6 +1112,7 @@ String formatCharacterSet asArray = {${. $\} "the characters used in format stri
 #symbol capitalized = #Symbol.
 Symbol initializedInstance = #''.
 #four printString = '#four'.
+#'symbol' asArray = #($s $y $m $b $o $l).
 } allSatisfy: #yourself
 
 'Time'
