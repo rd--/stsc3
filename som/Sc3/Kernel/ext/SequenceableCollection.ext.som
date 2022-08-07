@@ -175,7 +175,7 @@ putNrtOn: aStream = (
 	self do: [ :each | each putNrtOn: aStream ]
 )
 
-pyramidRuleOne = (
+pyramidPatternOne = (
 	| size answerSize answer k |
 	size := self size.
 	answerSize := (size * size + size) / 2.
@@ -190,8 +190,30 @@ pyramidRuleOne = (
         ^answer
 )
 
-pyramid: patternNumber = (
-	(patternNumber = 1) ifTrue: [ ^self pyramidRuleOne ].
+pyramidPatternSix = (
+	| size answerSize answer k |
+	size := self size.
+	answerSize := size * size.
+        answer := self species new: answerSize.
+	k := 1.
+        1 to: size do: [ :i |
+		(size - i + 1) to: size do: [ :j |
+			answer at: k put: (self at: j).
+			k := k + 1.
+		]
+	].
+        1 to: size do: [ :i |
+		(i + 1) to: size do: [ :j |
+			answer at: k put: (self at: j).
+			k := k + 1.
+		]
+	].
+        ^answer
+)
+
+pyramid: patternType = (
+	(patternType = 1) ifTrue: [ ^self pyramidPatternOne ].
+	(patternType = 6) ifTrue: [ ^self pyramidPatternSix ].
 	self error: 'pyramid: unimplemented rule'
 )
 

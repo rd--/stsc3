@@ -217,6 +217,8 @@ MessageNames openMessageNames. "open Message Names tool"
 (#(1 2 3 4) pyramid: 1) = #(1 1 2 1 2 3 1 2 3 4).
 ((1 to: 9) pyramid: 1) size = 45.
 ((' #SuperCollider ' asArray collect: #asciiValue) pyramid: 1) size = 136.
+(#(1 2 3 4) pyramid: 6) = #(4 3 4 2 3 4 1 2 3 4 2 3 4 3 4 4)
+((' #SuperCollider ' asArray collect: #asciiValue) pyramid: 6) size = 256
 
 {
 #(1 2 3) , #(4 5 6) = #(1 2 3 4 5 6).

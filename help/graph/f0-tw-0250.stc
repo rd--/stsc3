@@ -1,0 +1,4 @@
+// https://sccode.org/1-4Qy ; f0 ; 0250
+var f = Latch(LFSaw(1.50055, [0, 0.0005].dup(2)), LFSaw([15, 4, 2], 0)) * [999, 400, 150];
+var o = LFSaw(f, 0).sum;
+AllpassC(o / 4, 3, 2 - LFSaw(0.1, [0, 1]), 1)
