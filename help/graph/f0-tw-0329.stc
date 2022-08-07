@@ -1,0 +1,4 @@
+// https://sccode.org/1-4Qy ; f0 ; 0329
+var e = SinOsc(97 / Lag((SinOsc(1 / 32, 0) + 2.2).rounded, 0.1), 0) * pi;
+var c = SinOsc(99, LocalIn(9, 0) * SinOsc(1.to(9) / 99 - 98, 0) * e);
+Splay2(c / 2).mrg(LocalOut(c))

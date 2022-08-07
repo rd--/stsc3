@@ -1,0 +1,14 @@
+// https://sccode.org/1-4Qy ; f0 ; 0360
+var t = SinOsc([7.992, 8], 0);
+var e = EnvPerc(0.005, 0.2, 1, -4).asEnvGen(t);
+var f = [1, 2].collect({
+	arg i;
+	var q = [
+		Seq(240, '@BGIJB@IGBJI'.ascii),
+		Seq(120, '@LEGJLEG'.ascii),
+		Seq(60, 'EGJL'.ascii)
+	];
+	DmdOn(t[i], 0, Dseq(1, q)).midiCps
+});
+var x = SinOsc(f, SinOsc(1 / [12, 9], 0) / 4 + 1 * SinOsc(f, e * pi)) * e / 2;
+FreeVerb2(x[1], x[2], 0.1, 1, 0)
