@@ -110,6 +110,7 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 [[1, 2, 3], [4, 5, 6]].shape == [2, 3]                      // size of shape is rank
 [[1, 2], [3, 4], [5, 6]].shape == [3, 2]		    // size of each element is size at depth
 [[[1], [2]], [[3], [4]], [[5], [6]]].shape == [3, 2, 1]	    // rank and shape both assume regularity
+[1, 2, 3, 4].pyramid(1) == [1, 1, 2, 1, 2, 3, 1, 2, 3, 4]   // pattern generator (ten rules)
 
 'Assignment'
 

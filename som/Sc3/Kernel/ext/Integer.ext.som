@@ -1,5 +1,14 @@
 Integer = Integer (
 
+asBinaryDigits: numDigits = (
+	| array |
+	array := Array new: numDigits.
+	1 to: numDigits do: [ :i |
+		array at: (numDigits - i + 1) put: ((self bitShift: (1 - i)) bitAnd: 1)
+	].
+	^array
+)
+
 expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.

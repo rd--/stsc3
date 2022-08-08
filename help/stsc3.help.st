@@ -214,13 +214,31 @@ MessageNames openMessageNames. "open Message Names tool"
 [ (1 to: 9) atRandom ] dup: 9 "=> array of 9 integers between 1 and 9"
 [ (1 to: 9) choose ] dup: 9 "synonym for atRandom"
 
+"Integer"
+
+(0 to: 255) collect: [ :each | each asBinaryDigits: 8 ]
+
 "SequenceableCollection"
 
-(#(1 2 3 4) pyramid: 1) = #(1 1 2 1 2 3 1 2 3 4).
 ((1 to: 9) pyramid: 1) size = 45.
 ((' #SuperCollider ' asArray collect: #asciiValue) pyramid: 1) size = 136.
-(#(1 2 3 4) pyramid: 6) = #(4 3 4 2 3 4 1 2 3 4 2 3 4 3 4 4).
 ((' #SuperCollider ' asArray collect: #asciiValue) pyramid: 6) size = 256.
+
+{
+(#(1 2 3 4) pyramid: 1) = #(1 1 2 1 2 3 1 2 3 4).
+(#(1 2 3 4) pyramid: 2) = #(4 3 4 2 3 4 1 2 3 4).
+(#(1 2 3 4) pyramid: 3) = #(1 2 3 4 1 2 3 1 2 1).
+(#(1 2 3 4) pyramid: 4) = #(1 2 3 4 2 3 4 3 4 4).
+(#(1 2 3 4) pyramid: 5) = #(1 1 2 1 2 3 1 2 3 4 1 2 3 1 2 1).
+(#(1 2 3 4) pyramid: 6) = #(4 3 4 2 3 4 1 2 3 4 2 3 4 3 4 4).
+(#(1 2 3 4) pyramid: 7) = #(1 2 3 4 1 2 3 1 2 1 1 2 1 2 3 1 2 3 4).
+(#(1 2 3 4) pyramid: 8) =  #(1 2 3 4 2 3 4 3 4 4 3 4 2 3 4 1 2 3 4).
+(#(1 2 3 4) pyramid: 9) = #(1 1 2 1 2 3 1 2 3 4 2 3 4 3 4 4).
+(#(1 2 3 4) pyramid: 10) = #(4 3 4 2 3 4 1 2 3 4 1 2 3 1 2 1).
+(#(1 2 3 4) pyramidLinear: 1) = (#(1 2 3 4) pyramid: 1).
+(#(1 2 3 4) pyramidLinear: 6) = (#(1 2 3 4) pyramid: 6).
+} allSatisfy: #yourself
+
 9 fib = (Array fib: 9).
 #(1 2 3 4 5) sputter: 0.5 maxlen: 16
 

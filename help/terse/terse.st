@@ -709,6 +709,7 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 (1.0 to: 3.0 by: 1.0) includes: 3.0.
 ((1.0 to: 3.0 by: 1.0 successor) includes: 3.0) not.
 (0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10).
+(9 to: 1 by: -1) asArray = #(9 8 7 6 5 4 3 2 1).
 } allSatisfy #yourself
 
 (Interval newFrom: #(1 2 3)) = (1 to: 3)

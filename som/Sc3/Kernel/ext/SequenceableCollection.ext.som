@@ -179,7 +179,66 @@ putNrtOn: aStream = (
 	self do: [ :each | each putNrtOn: aStream ]
 )
 
-pyramidPatternOne = (
+pyramid: patternType = (
+	| answer lastIndex |
+	answer := OrderedCollection new.
+	lastIndex := self size.
+	(patternType = 1) ifTrue: [
+		(1 to: lastIndex) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		^self species newFrom: answer
+	].
+	(patternType = 2) ifTrue: [
+		(0 to: lastIndex - 1) do: [ :i | answer addAll: (self copyFrom: lastIndex - i to: lastIndex) ].
+		^self species newFrom: answer
+	].
+	(patternType = 3) ifTrue: [
+		(lastIndex to: 1 by: -1) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		^self species newFrom: answer
+	].
+	(patternType = 4) ifTrue: [
+		(1 to: lastIndex) do: [ :i | answer addAll: (self copyFrom: i to: lastIndex) ].
+		^self species newFrom: answer
+	].
+	(patternType = 5) ifTrue: [
+		(1 to: lastIndex) do:  [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		(lastIndex - 1 to: 1 by: -1) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		^self species newFrom: answer
+	].
+	(patternType = 6) ifTrue: [
+		(0 to: lastIndex - 1) do:  [ :i | answer addAll: (self copyFrom: lastIndex - i to: lastIndex) ].
+		(lastIndex - 2 to: 0 by: -1) do: [ :i | answer addAll: (self copyFrom: lastIndex - i to: lastIndex) ].
+		^self species newFrom: answer
+	].
+	(patternType = 7) ifTrue: [
+		(lastIndex to: 1 by: -1) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		(2 to: lastIndex) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		^self species newFrom: answer
+	].
+	(patternType = 8) ifTrue: [
+		(1 to: lastIndex) do:  [ :i | answer addAll: (self copyFrom: i to: lastIndex) ].
+		(lastIndex - 1 to: 1 by: -1) do: [ :i | answer addAll: (self copyFrom: i to: lastIndex) ].
+		^self species newFrom: answer
+	].
+	(patternType = 9) ifTrue: [
+		(1 to: lastIndex) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		(2 to: lastIndex) do: [ :i | answer addAll: (self copyFrom: i to: lastIndex) ].
+		^self species newFrom: answer
+	].
+	(patternType = 10) ifTrue: [
+		(0 to: lastIndex - 1) do:  [ :i | answer addAll: (self copyFrom: lastIndex - i to: lastIndex) ].
+		(lastIndex - 1 to: 1 by: -1) do: [ :i | answer addAll: (self copyFrom: 1 to: i) ].
+		^self species newFrom: answer
+	]
+)
+
+pyramidLinear: patternType = (
+	"Linear (optimised) form of pyramid."
+	(patternType = 1) ifTrue: [ ^self pyramidLinearOne ].
+	(patternType = 6) ifTrue: [ ^self pyramidLinearSix ].
+	self error: 'pyramidLinear: unimplemented rule'
+)
+
+pyramidLinearOne = (
 	| size answerSize answer k |
 	size := self size.
 	answerSize := (size * size + size) / 2.
@@ -194,7 +253,7 @@ pyramidPatternOne = (
         ^answer
 )
 
-pyramidPatternSix = (
+pyramidLinearSix = (
 	| size answerSize answer k |
 	size := self size.
 	answerSize := size * size.
@@ -213,12 +272,6 @@ pyramidPatternSix = (
 		]
 	].
         ^answer
-)
-
-pyramid: patternType = (
-	(patternType = 1) ifTrue: [ ^self pyramidPatternOne ].
-	(patternType = 6) ifTrue: [ ^self pyramidPatternSix ].
-	self error: 'pyramid: unimplemented rule'
 )
 
 rotate: n = (
