@@ -95,6 +95,7 @@ Array isVariable = true.                                     "array is indexable
 (Array withAll: #(1 2 3 4)) = #(1 2 3 4).                    "array from collection"
 (#(4 5 6 7) atAll: #(2 3)) = #(5 6).                         "at: for each index of array of indices"
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4).                 "copy range"
+(#(1 2 3 4 5) copyFrom: 1 to: 5) = #(1 2 3 4 5).             "copy range"
 #(1 (2 (3 4))) = #(1 #(2 #(3 4))).                           "in st-80 sub-arrays do not require # prefix"
 #(x x: nil) = #(#x #x: nil).                                 "in st-80 symbols do not require #prefix"
 (#(5 4 3 2 1) detect: [ :i | i < 3 ]) = 2.                   "detect element (not index), so 2"

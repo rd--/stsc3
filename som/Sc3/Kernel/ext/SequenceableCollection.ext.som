@@ -233,6 +233,19 @@ roundTo: arg = (
 	^arg adaptToCollection: self andSend: #roundTo:
 )
 
+sputter: probability maxlen: maxlen = (
+	| readIndex writeIndex answer |
+	readIndex := 1.
+	writeIndex := 1.
+	answer := self species new: maxlen.
+	[ (readIndex <= self size) and: [ writeIndex <= maxlen ] ] whileTrue: [
+		answer at: writeIndex put: (self at: readIndex).
+		writeIndex := writeIndex + 1.
+		(1 - probability) coin ifTrue: [ readIndex := readIndex + 1 ]
+	].
+	(writeIndex > maxlen) ifTrue: [ ^answer ] ifFalse: [ ^answer copyFrom: 1 to: (writeIndex - 1) ]
+)
+
 stutter: repeatCount = (
 	^ (self collect: [ :each | each dup: repeatCount ]) concatenation
 )
