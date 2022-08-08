@@ -510,6 +510,25 @@ FileList openOn: '/home/rohan/sw/stsc3/help/'. "pharo"
 
 ProcessBrowser open. "open process browser ; MVC"
 
+"Process"
+
+[ (Delay forSeconds: 3) wait. 1 inspect ] fork. 0 inspect. "Start a process that waits for three seconds then inspects 1.  While waiting inspect 0."
+
+"Sensor"
+
+Sensor class = EventSensor
+Sensor anyButtonPressed
+Sensor blueButtonPressed "Third (right) button"
+Sensor commandKeyPressed
+Sensor controlKeyPressed
+Sensor cursorPoint
+Sensor mouseButtons
+Sensor redButtonPressed "First (left) button"
+Sensor shiftPressed
+Sensor waitButton "Return location of button press"
+Sensor waitClickButton "Return location of button release"
+Sensor yellowButtonPressed "Second (middle) button"
+
 "Workspace"
 
 Workspace open. "opens workspace ; Squeak ; MVC"

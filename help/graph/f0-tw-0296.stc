@@ -1,0 +1,8 @@
+// https://sccode.org/1-4Qy ; f0 ; 0296
+var f = 0.to(7).collect({
+	arg i;
+	var p = SinOscFB(2 ** (1 / 8) ** i, i / 8) * SinOscFB(i + 8 / 8, 0);
+	var q = SinOscFB(i + [2, 3] / 88, 0);
+	p > q
+}).sum * 88;
+HPF(CombN(SinOscFB(f, SinOscFB(1 / 18, 1)), 0.2, 0.2, 1), 8) / 3

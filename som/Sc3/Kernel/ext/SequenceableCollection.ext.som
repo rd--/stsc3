@@ -233,6 +233,10 @@ roundTo: arg = (
 	^arg adaptToCollection: self andSend: #roundTo:
 )
 
+stutter: repeatCount = (
+	^ (self collect: [ :each | each dup: repeatCount ]) concatenation
+)
+
 transpose = (
 	"Transpose my rows and columns (I am a two-dimensional array).
 	 My number of columns is inferred from the size of the my first element."

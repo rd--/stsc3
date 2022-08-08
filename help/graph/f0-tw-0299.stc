@@ -1,0 +1,5 @@
+// https://sccode.org/1-4Qy ; f0 ; 0299
+var c = 3 ** LFSaw([2, 3], [0, 1]);
+var p = Formant(LFSaw(1 / 16, 0).roundTo(c) + 3 * 33 * c.ceil, 3 ** Lag(c, 0.1) * 66, 3 ** c * 99);
+var q = Formant(c + 3, 1 - c * 3000, 880);
+p * q / 3

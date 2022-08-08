@@ -1,0 +1,5 @@
+// Saw ; https://sccode.org/1-4Qy ; f0 ; 0287
+var c = ':>AEH.'.ascii; // i.e. 58 62 65 69 72 46
+var m = c - (2 ** LFSaw(1.to(5) / 32, 0)).ceil;
+var o = Saw(m.midiCps);
+Splay2(o) / 2

@@ -1,0 +1,20 @@
+ControlOut = PseudoUgen (
+----------------------------
+
+bus: bus channelsArray: channelsArray = (
+
+^(Out apply: {bus. channelsArray}) kr
+)
+
+primaryFactoryMethod = (
+
+^#'bus:channelsArray:'
+)
+
+
+comment = (^'
+ Control ouput *
+')
+
+
+)

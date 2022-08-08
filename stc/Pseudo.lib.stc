@@ -104,6 +104,14 @@ ControlIn : PseudoUgen {
 	}
 }
 
+/* Control ouput */
+ControlOut : PseudoUgen {
+	*constructor {
+		arg bus, channelsArray;
+		^Out(bus, channelsArray).kr
+	}
+}
+
 /* Curve Segment Envelope */
 CurveGen : PseudoUgen {
 	*constructor {
@@ -393,7 +401,7 @@ SinOscBank : PseudoUgen {
 /* Pan an array of channels across the stereo field */
 Splay : PseudoUgen {
 	*constructor {
-		arg inArray, spread = 1, level = 1, center = 0, levelComp = true;
+		arg inArray, spread = 1, level = 1, center = 0, levelComp;
 		var n = 2.max(inArray.size);
 		var n1 = n - 1;
 		var pos = (0.to(n1) * (2 / n1) - 1) * spread + center;

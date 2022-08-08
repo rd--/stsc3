@@ -1,0 +1,4 @@
+// https://sccode.org/1-4Qy ; f0 ; 0287
+var o = Saw((':>AEH.'.ascii - (2 ** LFSaw(1.to(5) / 32, 0)).ceil).midiCps);
+var e = o % LFSaw([1, 1, 6], 0) % (LFSaw(2, [1, 2] / 8) * 2);
+HPF(Splay2(e), 9) / 2

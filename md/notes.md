@@ -1,5 +1,6 @@
 # Remainder
 
+- operator gen is still for .st, needs translating to .som
 - broken:
   + f0-tw-0054
   + help/ugen/max.help.stc

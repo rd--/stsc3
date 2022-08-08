@@ -1,0 +1,6 @@
+// https://sccode.org/1-4Qy ; f0 ; 0306
+var f = {
+	arg i;
+	SinOsc(DmdFor(i + 1 / 9, 0, Seq(inf, 1.to(8).stutter(32)) * Dseq(inf, 8.fib) * 99), 0)
+};
+HPF(FreeVerb([0, 1].collect(f), 0.2, 1, 0.2), 9) / 3
