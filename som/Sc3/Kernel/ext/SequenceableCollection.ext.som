@@ -107,6 +107,10 @@ fisherYatesShuffle = (
 	(self size to: 2 by: -1) do: [ :item | self swap: item with: item atRandom ]
 )
 
+flop = (
+	^self mceTransform
+)
+
 fold2: arg = (
 	^arg adaptToCollection: self andSend: #fold2:
 )

@@ -167,6 +167,8 @@ MessageNames openMessageNames. "open Message Names tool"
 "Boolean"
 
 [ 0.5 coin ifTrue: [ $p ] ifFalse: [ $q ]  ] dup: 9 "=> p or q with equal probability"
+1 coin = true "always true"
+0 coin = false "always false"
 
 "Object"
 
@@ -912,6 +914,18 @@ MessageTally tallySends: [3.14159 printString] "Squeak"
 (STON fromString: 'ByteArray[''0001ff'']') = (ByteArray newFrom: #(0 1 255)). "class must be loaded"
 (STON fromString: 'Character[''x'']') = $x.
 } allSatisfy: #yourself
+
+"MappedCollection"
+
+d := Dictionary new.
+d at: 'dog' put: 'hundo'; at: 'cat' put: 'kato'; at: 'snake' put: 'serpento'.
+m := MappedCollection collection: d map: d keys asArray sorted.
+((1 to: m size) collect: [ :index | m at: index]) = #('kato' 'hundo' 'serpento')
+
+a := Array withAll: (1 to: 100).
+i := (1 to: 100) select: [ :index | (a at: index) even ].
+m := MappedCollection collection: a map: i.
+((1 to: 10) collect: [ :index | m at: index ]) =  #(2 4 6 8 10 12 14 16 18 20)
 
 "Emacs"
 (setq stsc3-interpreter (list "stsc3-st"))

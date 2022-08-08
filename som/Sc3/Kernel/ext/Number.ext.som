@@ -15,6 +15,11 @@ ampDb = (
 	^(self log: 10) * 20
 )
 
+coin = (
+	"With probability of myself return true, with probability of 1 - myself return false."
+	^1.0 rand < self
+)
+
 cpsMidi = (
 	"Cycles per second to fractional midi note number."
 	^(((self * (1 / 440)) log: 2) * 12) + 69

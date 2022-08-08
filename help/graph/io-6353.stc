@@ -19,7 +19,7 @@ var oscArray = 1.to(segments).collect({
 	var x = xMinor + (rMinor * (index * 2 * pi / segments).sin);
 	var y = yMinor + (rMinor * (index * 2 * pi / segments).cos);
 	var grey = shuheiKawachi.value(x, y, 2 * pi, 0.5);
-	var amp = Wrap(grey, 0, 1) / segments;
+	var amp = Lag(Wrap(grey, 0, 1), 0.01) / segments;
 	SinOsc(freqArray[index], 0) * amp
 });
 Splay2(oscArray) * 5

@@ -1,10 +1,5 @@
 Float = Float (
 
-coin = (
-	"With probability of myself return true, with probability of 1 - myself return false."
-	^1.0 rand < self
-)
-
 expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 rand linExpFrom: self to: upperBound
