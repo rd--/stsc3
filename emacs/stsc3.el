@@ -111,6 +111,11 @@
   (interactive)
   (stsc3-send-region-msg "printUgens"))
 
+(defun stsc3-fork-region ()
+  "Fork region."
+  (interactive)
+  (stsc3-send-region-msg "fork"))
+
 (defun stsc3-reset-scsynth ()
   "Send Sc3 reset instruction to Smalltalk."
   (interactive)

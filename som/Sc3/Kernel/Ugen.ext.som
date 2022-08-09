@@ -4,6 +4,7 @@ Ugen = Ugen (
 + b = ( ^ BinaryOpUgen specialIndex: 0 a: self b: b )
 - b = ( ^ BinaryOpUgen specialIndex: 1 a: self b: b )
 * b = ( ^ BinaryOpUgen specialIndex: 2 a: self b: b )
+// b = ( ^ BinaryOpUgen specialIndex: 3 a: self b: b )
 / b = ( ^ BinaryOpUgen specialIndex: 4 a: self b: b )
 % b = ( ^ BinaryOpUgen specialIndex: 5 a: self b: b )
 /= b = ( ^ BinaryOpUgen specialIndex: 7 a: self b: b )

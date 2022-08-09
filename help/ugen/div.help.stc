@@ -1,0 +1,3 @@
+// div ; integer division
+var d = (SinOsc(0.25, 0) * 200 + 500).div(17);
+SinOsc((d * 3).midiCps, 0) * 0.1

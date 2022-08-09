@@ -533,9 +533,38 @@ ProcessBrowser open. "open process browser ; MVC"
 
 "Process"
 
-[ (Delay forSeconds: 3) wait. 1 inspect ] fork. 0 inspect. "Start a process that waits for three seconds then inspects 1.  While waiting inspect 0."
+p := [ (Delay forSeconds: 3) wait. Transcript show: 'after delay'; cr ] fork. "Start a process that waits for three seconds then prints a message."
+Transcript show: 'during delay'; cr.
+p
 
-[ 9 timesRepeat: [ (SinOsc freq: (Rand lo: 220 hi: 440) phase: 0 mul: 0.1) play. (Delay forSeconds: 3 / 2) wait ]. Sc3 reset ] fork
+p := [ 5 timesRepeat: [ (Delay forSeconds: 1) wait. Transcript show: 'after delay'; cr ] ] fork.
+Transcript show: 'during delay'; cr.
+p priority: Processor activePriority
+
+Processor timeSlice = 40
+Processor highestPriority = 9
+Processor timingPriority = 8
+
+[ 9 timesRepeat: [ (SinOsc freq: (Rand lo: 220 hi: 440) phase: 0 mul: 0.1) play. (3 / 2) seconds wait ]. Sc3 reset ] fork
+
+[
+	99 timesRepeat: [
+		(Pan2 in: (SinOsc freq: (Rand lo: 220 hi: 440) phase: 0) pos: (Rand lo: -1 hi: 1) level: (Line start: 0.1 end: 0 dur: 7 doneAction: 2)) play.
+		2 seconds wait
+	]
+] fork
+
+t := Timer every: 1000 do: [ Transcript show: 'timer'; cr ] stopWhen: [ false ].
+t stop
+
+g := Generator on: [ :gen | 1 to: 23 do: [ :each |each even ifTrue: [ gen yield: each ] ] ]
+g next
+
+"stsc3-fork-region (emacs)"
+99 timesRepeat: [
+	(Pan2 apply: {(SinOsc apply: {(Rand apply: {220. 440}). 0}). (Rand apply: {-1. 1}). (Line apply: {0.1. 0. 7. 2})}) play .
+	2 seconds wait
+]
 
 "Sensor"
 

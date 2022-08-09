@@ -40,6 +40,11 @@
   (interactive)
   (stc-send-region-msg "draw"))
 
+(defun stc-fork-region ()
+  "Fork region."
+  (interactive)
+  (stc-send-region-msg "fork"))
+
 (defvar stc-mode-map nil
   "Keymap for stc mode.")
 

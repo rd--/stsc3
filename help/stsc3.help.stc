@@ -12,3 +12,8 @@ SinOsc(440 + SinOsc(#[1, 2], 0), 0) * 0.1 // (Int + [UGen]) * Float
 
 SinOsc(440, 0).mrg(Saw(1)) * 0.1
 
+// Process ; c.f. stc-fork-region (Emacs)
+99.timesRepeat({
+	Pan2(SinOsc(Rand(220, 440), 0), Rand(-1, 1), Line(0.1, 0, 7, 2)).play;
+	2.seconds.wait
+})

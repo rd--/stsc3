@@ -1,0 +1,19 @@
+// https://sccode.org/1-4Qy ; f0 ; 0001
+0.to(98).do({
+	arg i;
+	var p = SinOsc((i % 9).div(3) * 100 + (i % 9) + 500, 0);
+	var e = Line(start: 1, end: 0, dur: 27, doneAction: 2);
+	Pan2(SinOsc(i + 1, p) * 0.03, Rand(-1, 1), e).play;
+	2.seconds.wait;
+})
+
+// https://sccode.org/1-4Qy ; f0 ; 0001
+0.to(98).do({
+	arg i;
+	{
+		var p = SinOsc((i % 9).div(3) * 100 + (i % 9) + 500, 0);
+		var e = Line(start: 1, end: 0, dur: 27, doneAction: 2);
+		Pan2(SinOsc(i + 1, p) * 0.03, Rand(-1, 1), e)
+	}.play;
+	2.seconds.wait;
+})

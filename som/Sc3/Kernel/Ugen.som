@@ -43,6 +43,10 @@ clearBuf = (
 	^self mrg: (ClearBuf buf: self)
 )
 
+div: arg = (
+	^self // arg
+)
+
 draw = (
 	Sc3 draw: self
 )
