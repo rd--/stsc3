@@ -535,6 +535,8 @@ ProcessBrowser open. "open process browser ; MVC"
 
 [ (Delay forSeconds: 3) wait. 1 inspect ] fork. 0 inspect. "Start a process that waits for three seconds then inspects 1.  While waiting inspect 0."
 
+[ 9 timesRepeat: [ (SinOsc freq: (Rand lo: 220 hi: 440) phase: 0 mul: 0.1) play. (Delay forSeconds: 3 / 2) wait ]. Sc3 reset ] fork
+
 "Sensor"
 
 Sensor class = EventSensor
@@ -799,6 +801,9 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 } allSatisfy: #yourself
 
 "Number"
+
+(-20 to: 30) collect: [ :each | each wrap: 0 hi: 10 ]
+(-20 to: 20) collect: [ :each | each wrap: -10 hi: 10 ]
 
 "Delay"
 

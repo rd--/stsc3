@@ -68,4 +68,25 @@ to: stop by: step select: aBlock = (
 	^(self to: stop by: step) select: aBlock
 )
 
+wrap: lo hi: hi = (
+	"Wrap myself between lo and hi.  Avoid divide if possible."
+	| in range |
+	in := self.
+	(in >= hi) ifTrue: [
+		range := hi - lo.
+		in := in - range.
+		(in < hi) ifTrue: [ ^ in ]
+	] ifFalse: [
+		(in < lo) ifTrue: [
+			range := hi - lo.
+			in := in + range.
+			(in >= lo) ifTrue: [ ^ in ]
+		] ifFalse: [
+			^ in
+		]
+	].
+	(hi == lo) ifTrue: [ ^ lo ].
+	^ in - (range * ((in - lo) / range) floor)
+)
+
 )
