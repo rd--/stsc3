@@ -1,0 +1,20 @@
+Perc = PseudoUgen (
+----------------------------
+
+trig: trig attackTime: attackTime releaseTime: releaseTime level: level curve: curve = (
+
+^(EnvPerc apply: {attackTime. releaseTime. level. curve}) asEnvGen: trig
+)
+
+primaryFactoryMethod = (
+
+^#'trig:attackTime:releaseTime:level:curve:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

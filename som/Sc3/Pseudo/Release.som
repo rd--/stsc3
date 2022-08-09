@@ -1,0 +1,20 @@
+Release = Object (
+----------------------------
+
+in: in attackTime: attackTime dur: dur releaseTime: releaseTime = (
+
+^in * (EnvRelease apply: {attackTime. dur. releaseTime})
+)
+
+primaryFactoryMethod = (
+
+^#'in:attackTime:dur:releaseTime:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

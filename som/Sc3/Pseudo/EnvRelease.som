@@ -1,0 +1,22 @@
+EnvRelease = Object (
+----------------------------
+
+attackTime: attackTime dur: dur releaseTime: releaseTime = (
+| e |
+
+e := (EnvSpec apply: {{0. 1. 1. 0}. {attackTime. dur. releaseTime}. {#'lin'}. nil. nil. 0}) .
+ ^(EnvGen apply: {1. 1. 0. 1. 2. e coordinateArrayForEnvGen})
+)
+
+primaryFactoryMethod = (
+
+^#'attackTime:dur:releaseTime:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

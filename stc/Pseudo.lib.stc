@@ -179,6 +179,14 @@ DynRingzBank : PseudoUgen {
 	}
 }
 
+EnvRelease {
+	*constructor {
+		arg attackTime = 0.02, dur = 5, releaseTime = 0.02;
+		var e = EnvSpec([0, 1, 1, 0], [attackTime, dur, releaseTime], ['lin'], nil, nil, 0);
+		^EnvGen(1, 1, 0, 1, 2, e.coordinateArrayForEnvGen)
+	}
+}
+
 /* Read signal from a bus with a current or one cycle old timestamp */
 InFb : PseudoUgen {
 	*constructor {
@@ -323,11 +331,25 @@ PenZ : PseudoUgen {
 	}
 }
 
+Perc : PseudoUgen {
+	*constructor {
+		arg trig, attackTime = 0.01, releaseTime = 1, level = 1, curve = -4;
+		^EnvPerc(attackTime, releaseTime, level, curve).asEnvGen(trig)
+	}
+}
+
 /* Phase modulation sine oscillator pair */
 PMOsc : PseudoUgen {
 	*constructor {
 		arg carfreq, modfreq, pmindex, modphase;
 		^SinOsc(carfreq, SinOsc(modfreq, modphase) * pmindex)
+	}
+}
+
+Release {
+	*constructor {
+		arg in, attackTime = 0.02, dur = 5, releaseTime = 0.02;
+		^in * EnvRelease(attackTime, dur, releaseTime)
 	}
 }
 

@@ -552,6 +552,11 @@ Duration zero seconds = 0.
 Duration oneDay days = 1.
 } allSatisfy: #yourself
 
+(Duration seconds: 2) seconds = 2.
+(Duration seconds: 2) wait
+(Duration seconds: 2.5) seconds = 2.5.
+(Duration seconds: 2.5) wait
+(Duration milliSeconds: 2500)
 (Duration days: ChronologyConstants daysFromSmalltalkEpochToPosixEpoch) days = 25202.
 
 'Error'

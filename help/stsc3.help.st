@@ -549,10 +549,16 @@ Processor timingPriority = 8
 
 [
 	99 timesRepeat: [
-		(Pan2 in: (SinOsc freq: (Rand lo: 220 hi: 440) phase: 0) pos: (Rand lo: -1 hi: 1) level: (Line start: 0.1 end: 0 dur: 7 doneAction: 2)) play.
+		| o e s |
+		o := SinOsc freq: (Rand lo: 220 hi: 440) phase: 0.
+		e := Line start: 0.1 end: 0 dur: 7 doneAction: 2.
+		s := Pan2 in: o pos: (Rand lo: -1 hi: 1) level: e.
+		s draw.
+		s play.
 		2 seconds wait
 	]
-] fork
+] fork.
+100 seconds wait
 
 t := Timer every: 1000 do: [ Transcript show: 'timer'; cr ] stopWhen: [ false ].
 t stop

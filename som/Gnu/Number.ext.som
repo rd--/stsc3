@@ -26,5 +26,17 @@ log2 = (
 	^self log: 2
 )
 
+microSeconds = (
+	^ Duration microSeconds: self
+)
+
+milliSeconds = (
+	^ Duration milliSeconds: self
+)
+
+seconds = (
+	^ Duration seconds: self
+)
+
 )
 

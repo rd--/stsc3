@@ -15,6 +15,10 @@ ampDb = (
 	^(self log: 10) * 20
 )
 
+centiSeconds = (
+	^ Duration seconds: (self / 100)
+)
+
 coin = (
 	"With probability of myself return true, with probability of 1 - myself return false."
 	^1.0 rand < self
