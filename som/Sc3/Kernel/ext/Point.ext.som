@@ -1,0 +1,9 @@
+Point = Point (
+
+----
+
+primaryFactoryMethod = (
+	^#x:y:
+)
+
+)

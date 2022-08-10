@@ -1,0 +1,20 @@
+DelayTap = PseudoUgen (
+----------------------------
+
+bufnum: bufnum delayTime: delayTime = (
+
+^(PlayBuf apply: {1. bufnum. 1. 1. (BufDur apply: {bufnum}) - delayTime * (SampleRate apply: {}). 1. 0})
+)
+
+primaryFactoryMethod = (
+
+^#'bufnum:delayTime:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

@@ -49,10 +49,14 @@
   "Keymap for stc mode.")
 
 (defun stc-mode-keybindings (map)
-  "Install stc keybindings into MAP."
-  (define-key map (kbd "C-c C-e") 'stc-eval-region)
+  "Install stc keybindings into MAP.
+
+The mnemonics are: a = audition (play), e = evaluate, g = graph (draw), s = stop.
+"
   (define-key map (kbd "C-c C-a") 'stc-play-region)
-  (define-key map (kbd "C-c C-g") 'stc-draw-region))
+  (define-key map (kbd "C-c C-e") 'stc-eval-region)
+  (define-key map (kbd "C-c C-g") 'stc-draw-region)
+  (define-key map (kbd "C-c C-s") 'stc-stop))
 
 (if stc-mode-map
     ()

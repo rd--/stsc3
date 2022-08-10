@@ -28,6 +28,10 @@ isUgen = (
 	^false
 )
 
+postln = (
+	Transcript show: self asString; cr
+)
+
 rank = (
 	^0
 )

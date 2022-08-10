@@ -1,14 +1,14 @@
 AudioIn = PseudoUgen (
 ----------------------------
 
-channels: channels = (
+channelsArray: channelsArray = (
 
-^(In apply: {1. (NumOutputBuses apply: {}) + channels - 1})
+^(In apply: {1. (NumOutputBuses apply: {}) + channelsArray - 1})
 )
 
 primaryFactoryMethod = (
 
-^#'channels:'
+^#'channelsArray:'
 )
 
 

@@ -142,6 +142,7 @@ Browser newOnClass: AbstractUgen selector: #kr. "open Browser on Method of Class
 Transcript open. "=> opens Transcript ; MVC"
 1 to: 5 do: [ :x | Transcript show: x; cr ]. "=> prints to Transcript"
 Transcript << 'string' << ' ' << 'string' copy
+(2 + 3) postln
 
 "Method Finder"
 

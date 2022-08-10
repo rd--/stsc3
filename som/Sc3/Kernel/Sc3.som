@@ -63,7 +63,7 @@ playUsingTextSyndef: anObject = (
 
 playUsingUdpDirectlyEncoded: anObject = (
 	| syndef msg |
-	syndef := (ScGraph from: (WrapOut bus: 0 channelsArray: anObject) withName: 'tmp') encode.
+	syndef := (ScGraph from: (Sc3 prepareInput: anObject) withName: 'tmp') encode.
 	msg := OscMessage at: '/d_recv' with: {syndef. (OscMessage at: '/s_new' with: #('tmp' -1 0 1)) encode}.
 	msg encode sendUdpToHost: '127.0.0.1' port: 57110
 )
@@ -73,6 +73,10 @@ playUsingUdpWithTemporaryFile: anObject = (
 	Sc3 writeTmpWrappedBinarySyndefOf: anObject.
 	msg := OscMessage at: '/d_load' with: {'/tmp/stsc3.scsyndef'. (OscMessage at: '/s_new' with: #('tmp' -1 0 1)) encode}.
 	msg encode sendUdpToHost: '127.0.0.1' port: 57110
+)
+
+prepareInput: anObject = (
+	^WrapOut bus: 0 channelsArray: anObject value
 )
 
 reset = (
@@ -134,11 +138,11 @@ writeTextSyndef: aName of: anObject to: aFileName = (
 )
 
 writeTmpWrappedBinarySyndefOf: anObject = (
-	Sc3 writeBinarySyndef: 'tmp' of: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef'
+	Sc3 writeBinarySyndef: 'tmp' of: (Sc3 prepareInput: anObject) to: '/tmp/stsc3.scsyndef'
 )
 
 writeTmpWrappedTextSyndefOf: anObject = (
-	Sc3 writeTextSyndef: 'tmp' of: (WrapOut bus: 0 channelsArray: anObject) to: '/tmp/stsc3.scsyndef.text'
+	Sc3 writeTextSyndef: 'tmp' of: (Sc3 prepareInput: anObject) to: '/tmp/stsc3.scsyndef.text'
 )
 
 comment = (

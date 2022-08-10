@@ -168,19 +168,24 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
   "Smalltalk SuperCollider keymap.")
 
 (defun stsc3-mode-keybindings (map)
-  "Add Smalltalk SuperCollider keybindings to MAP."
+  "Add Smalltalk SuperCollider keybindings to MAP.
+
+
+The key mnemonics are:
+a = audition (play), e = evaluate, g = graph (draw), h = help, q = quit, s = stop.
+"
   (define-key map (kbd "C-c <") 'stsc3-filein-current-file)
   (define-key map (kbd "C-c >") 'stsc3-see-smalltalk)
-  (define-key map (kbd "C-c C-c") 'stsc3-send-current-line)
-  (define-key map (kbd "C-c C-h") 'stsc3-help)
-  (define-key map (kbd "C-c C-u") 'stsc3-ugen-exemplar)
-  (define-key map (kbd "C-c C-d") 'stsc3-send-region)
   (define-key map (kbd "C-c C-a") 'stsc3-play-region)
+  (define-key map (kbd "C-c C-c") 'stsc3-send-current-line)
+  (define-key map (kbd "C-c C-d") 'stsc3-send-region)
   (define-key map (kbd "C-c C-g") 'stsc3-draw-region)
+  (define-key map (kbd "C-c C-h") 'stsc3-help)
   (define-key map (kbd "C-c C-i") 'stsc3-interrupt-smalltalk)
   (define-key map (kbd "C-c C-k") 'stsc3-reset-scsynth)
   (define-key map (kbd "C-c C-q") 'stsc3-send-quit)
-  (define-key map (kbd "C-c C-.") 'stsc3-stop))
+  (define-key map (kbd "C-c C-s") 'stsc3-stop)
+  (define-key map (kbd "C-c C-u") 'stsc3-ugen-exemplar))
 
 (defun stsc3-mode-menu (map)
   "Add Smalltalk SuperCollider Menu to MAP."

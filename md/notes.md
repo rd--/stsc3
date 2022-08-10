@@ -9,6 +9,8 @@
 - .stc to .sc translator writing f(x) as f.apply(x)
 - ui with help graphs in list view with menu to play, draw, visit entries
 - add 'play it!' and 'reset supercollider' menu items to workspace menu?
+- allow filein of .som files
+- proper .som mode
 
 # Form
 

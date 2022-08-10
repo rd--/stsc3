@@ -531,8 +531,8 @@ Asr : PseudoUgen {
 /* Audio input */
 AudioIn : PseudoUgen {
 	*constructor {
-		arg channels;
-		^In(1, NumOutputBuses() + channels - 1)
+		arg channelsArray;
+		^In(1, NumOutputBuses() + channelsArray - 1)
 	}
 }
 
@@ -565,7 +565,7 @@ BufRec : PseudoUgen {
 /* Buffer writing oscillator */
 BufWrite : PseudoUgen {
 	*constructor {
-		arg bufnum, phase, loop, inputArray;
+		arg bufnum = 0, phase = 0, loop = 1, inputArray;
 		^BufWr(bufnum, phase, loop, inputArray)
 	}
 }
@@ -589,7 +589,7 @@ Changed : PseudoUgen {
 /* Random sequence generator */
 Xchoose : PseudoUgen {
 	*constructor {
-		arg repeats, list;
+		arg repeats = 1, list;
 		^Dxrand(repeats, list)
 	}
 }
@@ -597,7 +597,21 @@ Xchoose : PseudoUgen {
 /* Line generator */
 XLn : PseudoUgen {
 	*constructor {
-		arg start, end, dur;
+		arg start = 1, end = 2, dur = 1;
 		^XLine(start, end, dur, 0)
+	}
+}
+
+DelayWrite : PseudoUgen {
+	*constructor {
+		arg bufnum, in;
+		^RecordBuf(bufnum, 0, 1, 0, 1, 1, 1, 0, [in])
+	}
+}
+
+DelayTap : PseudoUgen {
+	*constructor {
+		arg bufnum, delayTime;
+		^PlayBuf(1, bufnum, 1, 1, BufDur(bufnum) - delayTime * SampleRate(), 1, 0)
 	}
 }
