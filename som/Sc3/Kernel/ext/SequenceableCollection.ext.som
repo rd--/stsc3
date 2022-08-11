@@ -290,6 +290,10 @@ roundTo: arg = (
 	^arg adaptToCollection: self andSend: #roundTo:
 )
 
+scramble = (
+	^ self shuffled
+)
+
 sputter: probability maxlen: maxlen = (
 	| readIndex writeIndex answer |
 	readIndex := 1.

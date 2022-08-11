@@ -29,7 +29,7 @@ isUgen = (
 )
 
 postln = (
-	Transcript show: self asString; cr
+	Transcript show: self printString; cr
 )
 
 rank = (

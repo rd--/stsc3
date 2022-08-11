@@ -29,6 +29,11 @@ as: aSimilarClass = (
 	^ aSimilarClass newFrom: self
 )
 
+asString = (
+	"Answer a string that represents the receiver."
+	^self printString
+)
+
 isCollection = (
 	^false
 )
