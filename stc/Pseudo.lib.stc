@@ -331,10 +331,11 @@ PenZ : PseudoUgen {
 	}
 }
 
+/* EnvGen of EnvPerc without level input */
 Perc : PseudoUgen {
 	*constructor {
-		arg trig, attackTime = 0.01, releaseTime = 1, level = 1, curve = -4;
-		^EnvPerc(attackTime, releaseTime, level, curve).asEnvGen(trig)
+		arg trig, attackTime = 0.01, releaseTime = 1, curve = -4;
+		^EnvPerc(attackTime, releaseTime, 1, curve).asEnvGen(trig)
 	}
 }
 

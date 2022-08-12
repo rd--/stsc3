@@ -11,7 +11,7 @@ OverlapTexture({
 	var detuneArray = #[0, 1, 0, 1.7, 0, 0, 0, 0, 0, 0, 0];
 	var src = 1.to(11).collect({
 		arg i;
-		var env = EnvPerc(0.005, dur * durArray.at(i), ampArray.at(i), -4.5).asEnvGen(tr);
+		var env = Perc(tr, 0.005, dur * durArray.at(i), -4.5) * ampArray.at(i);
 		SinOsc(freq * freqArray.at(i) + detuneArray.at(i), 0) * amp * env;
 	}).sum;
 	Pan2(src, pan, 0.1)
