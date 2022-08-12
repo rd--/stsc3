@@ -168,7 +168,8 @@ exprPrintLisp expr =
 -- * Js
 
 {- | Js operators are not extensible, therefore .stc operators, which are, must be re-written as functions.
-     Logical operators however cannot be written as functions.
+Logical operators however cannot be written as functions.
+This table gives names to standard operators, however it is not generic, c.f. jsCharRenamingTable.
 -}
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
@@ -176,6 +177,36 @@ jsDefaultRenamingTable =
   ,(">", "gt"), ("<", "lt"), (">=", "ge"), ("<=", "le"), ("==", "eq"), ("!=", "neq")
   ,("&", "bitAnd"), ("|", "bitOr"), ("<<", "shiftLeft"), (">>", "shiftLeft")
   ,("++", "append")]
+
+-- | Table giving generic names to operator characters.
+jsCharNameTable :: [(Char, String)]
+jsCharNameTable =
+  [('~', "tilde"), ('`', "graveaccent")
+  ,('!', "exclamation"), ('@', "atsign"), ('#', "numbersign"), ('$', "dollar"), ('%', "percent"), ('^', "caret"), ('&', "ampersand"), ('*', "asterisk")
+  ,('_', "underscore"), ('-', "hypen"), ('+', "plus"), ('=', "equals")
+  ,('|', "verticalline"), ('\\', "backslash")
+  ,(':', "colon"), (';', "semicolon"), ('"', "quotationmark"), ('\'', "apostrophe")
+  ,('<', "lessthan"), (',', "comma"), ('>', "greaterthan"), ('.', "fullstop"), ('?', "questionmark"), ('/', "slash")
+  ]
+
+{- | A generic renamer.
+
+> mapMaybe (jsOperatorGenericRename . fst) jsDefaultRenamingTable
+-}
+jsOperatorGenericRename :: String -> Maybe String
+jsOperatorGenericRename operator =
+  let f aChar = lookup aChar jsCharNameTable
+      answer = map f operator
+  in if any isNothing answer
+     then Nothing
+     else Just (concatMap fromJust answer)
+
+-- | Generic renaming of the entries in the jsDefaultRenamingTable.
+jsCharRenamingTable :: [(String, String)]
+jsCharRenamingTable =
+  let lhs = map fst jsDefaultRenamingTable
+      f aString = fromMaybe aString (jsOperatorGenericRename aString)
+  in zip lhs (map f lhs)
 
 jsRenamerFromTable :: [(String, String)] -> String -> String
 jsRenamerFromTable tbl nm = fromMaybe nm (lookup nm tbl)
