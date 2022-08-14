@@ -1,3 +1,6 @@
+// scratchy ; jmcc
+RHPF(({ BrownNoise() }.dup(2) * 0.5 - 0.49).max(0) * 20, 5000, 1)
+
 // scratchy (jmcc) #1
 var n = { BrownNoise() }.dup(2) * 0.5 - 0.49;
 var f = n.max(0) * 20;

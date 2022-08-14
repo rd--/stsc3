@@ -6,11 +6,11 @@ The AudioIn unit generator gets a channel of audio from the currently active sou
 
 To prevent feedback you may want to use headphones.  Play audio from channel 1.
 
-	{ AudioIn(1) }.play
+	AudioIn(1)
 
 Play audio from channels 1 & 2.  The array [1, 2] causes multichannel expansion resulting in an array of two AudioIn ugens.
 
-	{ AudioIn([1, 2]) }.play
+	AudioIn([1, 2])
 
 ## 6.2 How to play audio files from disk.
 

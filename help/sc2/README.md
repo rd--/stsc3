@@ -27,8 +27,6 @@ From the SuperCollider 2.2.16 [archive](http://www.audiosynth.com/files/SC2.2.16
 - [05 Parallel & Series](?t=stsc3&e=help/sc2/tutorials/Audio-05-Parallel-and-Series.md)
 - [06 Accessing Audio](?t=stsc3&e=help/sc2/tutorials/Audio-06-Accessing-Audio.md)
 
-
-
 <!--
 - [Internal Snooping](?t=stsc3&e=help/sc2/documentation/other-topics/Internal-Snooping.md)
 -->

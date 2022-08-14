@@ -1,7 +1,7 @@
 // DynRingzBank
 var tr = Dust(25);
 var rand = { arg lhs, rhs; Lag(TRand(lhs, rhs, tr), 0.01) };
-var k = DynRingzBank(Trig(tr, SampleDur()), 1.to(5) * 2700, { rand(0.025, 0.04) }.dup(5), [0.1]);
-var n = k + (BrownNoise() * 0.075 * Trig(tr, rand(0.01, 0.03)));
-var f = LPF(HPF(n, rand(6000, 750)), rand(4000, 5500));
-Pan2(f, rand(-0.5, 0.5), 1)
+var k = DynRingzBank(Trig(tr, SampleDur()), 1.to(5) * 2700, { rand.value(0.025, 0.04) }.dup(5), [0.1]);
+var n = k + (BrownNoise() * 0.075 * Trig(tr, rand.value(0.01, 0.03)));
+var f = LPF(HPF(n, rand.value(6000, 750)), rand.value(4000, 5500));
+Pan2(f, rand.value(-0.5, 0.5), 1)
