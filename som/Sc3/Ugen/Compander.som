@@ -1,0 +1,20 @@
+Compander = ScUgen (
+----
+comment = (
+	^'Compressor, expander, limiter, gate, ducker'
+)
+
+in: in control: control thresh: thresh slopeBelow: slopeBelow slopeAbove: slopeAbove clampTime: clampTime relaxTime: relaxTime = (
+	^UgenBuilder name: 'Compander' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. control. thresh. slopeBelow. slopeAbove. clampTime. relaxTime}
+)
+primaryFactoryMethod = (
+	^#in:control:thresh:slopeBelow:slopeAbove:clampTime:relaxTime:
+)
+in: in control: control thresh: thresh slopeBelow: slopeBelow slopeAbove: slopeAbove clampTime: clampTime relaxTime: relaxTime mul: mul = (
+	^(Compander in: in control: control thresh: thresh slopeBelow: slopeBelow slopeAbove: slopeAbove clampTime: clampTime relaxTime: relaxTime) * mul
+)
+in: in control: control thresh: thresh slopeBelow: slopeBelow slopeAbove: slopeAbove clampTime: clampTime relaxTime: relaxTime mul: mul add: add = (
+	^(Compander in: in control: control thresh: thresh slopeBelow: slopeBelow slopeAbove: slopeAbove clampTime: clampTime relaxTime: relaxTime) * mul + add
+)
+
+)
