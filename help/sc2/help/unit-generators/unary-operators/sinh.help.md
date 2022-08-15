@@ -1,0 +1,4 @@
+# sinh
+
+Hyperbolic sine
+

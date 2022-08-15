@@ -1,0 +1,4 @@
+# cubed
+
+Cubed value
+
