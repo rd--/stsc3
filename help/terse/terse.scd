@@ -491,6 +491,23 @@ pi.raddeg == 180                                            // radiansToDegrees
 6561.sqrt.sqrt.sqrt == 3                                    // unary method chaining
 1.min(2).max(3) == 3                                        // n-ary method chaining
 
+'MultiLevelIdentityDictionary'
+
+m = MultiLevelIdentityDictionary.new                        // Tree structure, dictionary of dictionaries
+m.put('a', 'b', 'c', 1) == m                                // Put value at path (path as variable arguments)
+m.putAtPath(['a', 'b', 'd'], 2) == m                        // Put value at path (path as array)
+m.at('a', 'b', 'd') == (m.atPath(['a', 'b', 'c']) + 1)      // Get value at path
+m.atPathFail(['a', 'b', 'e'], { "absent" }) == "absent"     // Get value at path with ifAbsent handler
+m.at('a').keys == ['b'].asSet                               // Get sub-dictionary at path
+m.leaves == [[[2, 1]]]                                      // Get all leaves as nested array
+m.leaves.flat.sort == [1, 2]                                // Get all leaves in flat sorted array
+m.leafDo({ arg path; (path -> m.atPath(path)).post }) == m  // Apply function at path to every leaf node
+m.treeDo({ arg path; path.post }) == []                     // Apply function at path to every non-leaf node
+m.postTree == m                                             // Print pretty tree
+m.removeAt('a', 'b', 'c') == 1				    // Remove value at path
+m.at('a', 'b', 'c') == nil				    // Nil indicates path exists
+m.removeEmptyAt('a', 'b', 'd') == 2	                    // Remove value at path, and all empty nodes along path
+m.dictionary.size == 0					    // Get root dictionary
 
 'Nil'
 
