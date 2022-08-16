@@ -498,7 +498,7 @@ m.put('a', 'b', 'c', 1) == m                                // Put value at path
 m.putAtPath(['a', 'b', 'd'], 2) == m                        // Put value at path (path as array)
 m.at('a', 'b', 'd') == (m.atPath(['a', 'b', 'c']) + 1)      // Get value at path
 m.atPathFail(['a', 'b', 'e'], { "absent" }) == "absent"     // Get value at path with ifAbsent handler
-m.at('a').keys == ['b'].asSet                               // Get sub-dictionary at path
+m.at('a', 'b').keys == ['c', 'd'].asSet                     // Get sub-dictionary at path
 m.leaves == [[[2, 1]]]                                      // Get all leaves as nested array
 m.leaves.flat.sort == [1, 2]                                // Get all leaves in flat sorted array
 m.leafDo({ arg path; (path -> m.atPath(path)).post }) == m  // Apply function at path to every leaf node

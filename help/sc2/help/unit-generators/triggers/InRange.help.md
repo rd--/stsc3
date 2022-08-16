@@ -10,5 +10,5 @@ If in is >= lo and <= hi output 1.0, otherwise output 0.0. Output is initially z
 
 Trigger noise burst:
 
-	InRange(SinOsc(1, 0) *  0.2, [-0.15, -0.1], [0.15, 0.2]) * PinkNoise() * 0.1
+	InRange(SinOsc(1, 0) * 0.2, [-0.15, -0.1], [0.15, 0.2]) * PinkNoise() * 0.1
 
