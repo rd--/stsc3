@@ -36,7 +36,7 @@ binop =
   ,("lcm:",17),("gcd:",18),("roundTo:",19)
   ,("truncateTo:",21), ("hypot:", 23), ("raisedTo:",25)
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
-  ,("amClip:",40),("clip2:",42),("fold2:",44)]
+  ,("amClip:",40),("scaleNeg:", 41),("clip2:",42),("fold2:",44)]
 
 {-
 > selectorToSpecialIndex uop
@@ -56,7 +56,7 @@ ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Balance2","BBandPass","BBandStop","BHiPass","Blip","BlockSize","BLowPass","BPeakEQ","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
   ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","Compander","ControlDur","ControlRate","Convolution","Crackle","CuspL"
-  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","DFM1", "Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dxrand"
+  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","DFM1", "Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dwhite","Dxrand"
   ,"EnvGen","ExpRand"
   ,"FBSineL","FBSineC","FFT","Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2" -- "FM7",
   ,"Gate","Gendy1","GrainBuf","GrainFM","GrainSin","GrayNoise","GVerb"

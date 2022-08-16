@@ -12,3 +12,11 @@ RLPF(LFSaw(200, 0) * 0.1, f, 0.2)
 // RLPF
 var ctl = RLPF(LFSaw(5, 0) * 0.1, 25, 0.03);
 SinOsc(ctl * 200 + 400, 0) * 0.1
+
+// RLPF
+var freq = DmdOn(
+	Impulse(0.25, 0),
+	0,
+	Seq(inf, [27, 24, 22, 24] + 2)
+).midiCps + [0, 0.3];
+RLPF(LFPulse(freq, 0, 0.2) * 0.4 - 0.2, 300, 0.5)

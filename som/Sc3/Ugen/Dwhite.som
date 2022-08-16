@@ -1,0 +1,20 @@
+Dwhite = ScUgen (
+----
+comment = (
+	^'Demand rate white noise random generator.'
+)
+
+length: length lo: lo hi: hi = (
+	^UgenBuilder name: 'Dwhite' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: {length. lo. hi}
+)
+primaryFactoryMethod = (
+	^#length:lo:hi:
+)
+length: length lo: lo hi: hi mul: mul = (
+	^(Dwhite length: length lo: lo hi: hi) * mul
+)
+length: length lo: lo hi: hi mul: mul add: add = (
+	^(Dwhite length: length lo: lo hi: hi) * mul + add
+)
+
+)

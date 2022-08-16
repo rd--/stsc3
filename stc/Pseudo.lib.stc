@@ -623,3 +623,25 @@ DelayTap : PseudoUgen {
 		^PlayBuf(1, bufnum, 1, 1, BufDur(bufnum) - delayTime * SampleRate(), 1, 0)
 	}
 }
+
+Sequencer : PseudoUgen {
+	*constructor {
+		arg valueArray, trig;
+		^DmdOn(trig, 0, Seq(inf, valueArray))
+	}
+}
+
+ImpulseSequencer : PseudoUgen {
+	*constructor {
+		arg valueArray, trig;
+		^Sequencer(valueArray, trig) * trig
+	}
+}
+
+/* Random sequence generator */
+White : PseudoUgen {
+	*constructor {
+		arg length, lo = 0, hi = 1;
+		^Dwhite(length, lo, hi)
+	}
+}

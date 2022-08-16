@@ -4,6 +4,7 @@ Series { *new { arg length, start, step; ^Dseries.dr(start, step, length) } }
 Shuf { *new { arg repeats, list; ^Dshuf.dr(list, repeats) } }
 Choose { *new { arg repeats, list; ^Drand.dr(list, repeats) } }
 Xchoose { *new { arg repeats, list; ^Dxrand.dr(list, repeats) } }
+White { *new { arg length = inf, lo = 0, hi = 1; ^Dwhite.dr(lo, hi, length) } }
 
 DmdOn { *new { arg trig, reset, demandUGens; ^Demand.multiNewList([trig.rate, trig, reset] ++ demandUGens.asArray) } }
 DmdFor { *new { arg dur=1, reset=0, level=1; ^Duty.ar(dur, reset, level, 0) } }

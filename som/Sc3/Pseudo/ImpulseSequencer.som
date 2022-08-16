@@ -1,0 +1,20 @@
+ImpulseSequencer = PseudoUgen (
+----------------------------
+
+valueArray: valueArray trig: trig = (
+
+^(Sequencer apply: {valueArray. trig}) * trig
+)
+
+primaryFactoryMethod = (
+
+^#'valueArray:trig:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

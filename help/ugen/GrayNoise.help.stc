@@ -1,0 +1,7 @@
+// GrayNoise
+OverlapTexture({
+	arg tr;
+	var amp = LFPulse(4, 0, 0.1) * 0.002;
+	var exc = LPZ1({ GrayNoise() }.dup(2) * amp);
+	DynRingzBank(exc, { TRand(80, 400, tr) }.dup(4), nil, nil)
+}, 4, 4, 2)

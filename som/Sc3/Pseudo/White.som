@@ -1,0 +1,20 @@
+White = PseudoUgen (
+----------------------------
+
+length: length lo: lo hi: hi = (
+
+^(Dwhite apply: {length. lo. hi})
+)
+
+primaryFactoryMethod = (
+
+^#'length:lo:hi:'
+)
+
+
+comment = (^'
+ Random sequence generator *
+')
+
+
+)

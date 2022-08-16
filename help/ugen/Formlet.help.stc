@@ -22,3 +22,11 @@ Formlet(i, TRand(30, 50, i), TRand(0.01, 0.2, i), 2)
 // Formlet ; parameters randomised on trigger ; stereo
 var i = Impulse(LFNoise2([0.15, 0.6]) * 15 + 15, 0.5);
 Formlet(i, TRand(30, [150, 600], i), TRand(0.01, [0.15, 0.6], i), TRand(0.05, [0.15, 0.6], i)) * 0.25
+
+// Formlet
+var amp = LFPulse(0.5, 0, 0.5);
+var my = MouseY(400, 3200, 0, 0.2);
+Mix({
+	var x = Formlet({ Dust(12) }.dup(2) * 0.05 * amp, my * ExpRand(0.5, 2), 0.005, 0.1);
+	AllpassN(x, 0.05, 0.05.rand, 8);
+}.dup(8))

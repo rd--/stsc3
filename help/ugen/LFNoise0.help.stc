@@ -1,2 +1,10 @@
 // LFNoise0
 SinOsc(LFNoise0(12) * 600 + 1000, 0) * 0.1
+
+// LFNoise0
+CombN(
+	LPF(LFNoise0(MouseX(300, 2200, 0, 0.2) * [1, 1.1]) * LFPulse(1, 0, 0.3) * 0.1, 800).abs,
+	0.2,
+	[0.2, 0.17],
+	5
+)

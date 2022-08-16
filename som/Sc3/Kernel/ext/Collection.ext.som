@@ -88,6 +88,10 @@ rounded = (
 	^self collect: [ :item | item rounded ]
 )
 
+scaleNeg: arg = (
+	^arg adaptToCollection: self andSend: #scaleNeg:
+)
+
 sin = (
 	^self collect: [ :item | item sin ]
 )

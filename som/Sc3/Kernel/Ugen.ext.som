@@ -25,6 +25,7 @@ raisedTo: b = ( ^ BinaryOpUgen specialIndex: 25 a: self b: b )
 bitShiftLeft: b = ( ^ BinaryOpUgen specialIndex: 26 a: self b: b )
 bitShiftRight: b = ( ^ BinaryOpUgen specialIndex: 27 a: self b: b )
 amClip: b = ( ^ BinaryOpUgen specialIndex: 40 a: self b: b )
+scaleNeg: b = ( ^ BinaryOpUgen specialIndex: 41 a: self b: b )
 clip2: b = ( ^ BinaryOpUgen specialIndex: 42 a: self b: b )
 fold2: b = ( ^ BinaryOpUgen specialIndex: 44 a: self b: b )
 
