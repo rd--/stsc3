@@ -1,0 +1,20 @@
+Mix = PseudoUgen (
+----------------------------
+
+inputArray: inputArray = (
+
+^inputArray sum
+)
+
+primaryFactoryMethod = (
+
+^#'inputArray:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

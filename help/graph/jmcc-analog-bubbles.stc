@@ -5,7 +5,7 @@ CombN(SinOsc(f, 0) * 0.04, 0.2, 0.2, 4) // echoing sine wave
 // analog bubbles (jmcc) #1
 var o = LFSaw(#[8, 7.23], 0) * 3 + 80;
 var m = LFSaw(0.4, 0) * 24 + o;
-CombN(SinOsc(m.midiCps, 0) * 0.04, 0.2, 0.2, 4) * 0.1
+CombN(SinOsc(m.midiCps, 0) * 0.04, 0.2, 0.2, 4)
 
 // analog bubbles (jmcc) #1 ; keywords
 var o = LFSaw(freq: #[8, 7.23], iphase: 0) * 3 + 80;
@@ -14,18 +14,18 @@ var s = SinOsc(freq: m.midiCps, phase: 0) * 0.04;
 CombN(in: s, maxdelaytime: 0.2, delaytime: 0.2, decaytime: 4) * 0.1 // echoing sine wave
 
 // analog bubbles (jmcc) ; applicative order
-MulAdd(CombN(MulAdd(SinOsc(MulAdd(LFSaw(0.4, 0), 24, MulAdd(LFSaw([8, 7.23], 0), 3, 80)).midiCps, 0), 0.04, 0), 0.2, 0.2, 4), 0.1, 0)
+CombN(MulAdd(SinOsc(MulAdd(LFSaw(0.4, 0), 24, MulAdd(LFSaw([8, 7.23], 0), 3, 80)).midiCps, 0), 0.04, 0), 0.2, 0.2, 4)
 
 //---- analog bubbles (jmcc) ; the .stc initializer definition form does not require var syntax qualifiers
 o = LFSaw([8, 7.23], 0) * 3 + 80;
 m = LFSaw(0.4, 0) * 24 + o;
 s = SinOsc(m.midiCps, 0) * 0.04;
-CombN(s, 0.2, 0.2, 4) * 0.1
+CombN(s, 0.2, 0.2, 4)
 
 //---- analog bubbles (jmcc) #1 ; filtermethods
 var o = LFSaw(#[8, 7.23], 0).mulAdd(3, 80);
 var m = LFSaw(0.4, 0).mulAdd(24, o);
-SinOsc(m.midiCps, 0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
+SinOsc(m.midiCps, 0).mul(0.04).combN(0.2, 0.2, 4)
 
 //---- analog bubbles (jmcc) #1 ; filtermethods ; left to right
-0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4).mul(0.1)
+0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4)

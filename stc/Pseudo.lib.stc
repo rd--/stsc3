@@ -261,6 +261,13 @@ Ln : PseudoUgen {
 	}
 }
 
+Mix : PseudoUgen {
+	*constructor {
+		arg inputArray;
+		^inputArray.sum
+	}
+}
+
 /* An oscillator that reads through a table once */
 Osc1 : PseudoUgen {
 	*constructor {
