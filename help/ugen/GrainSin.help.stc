@@ -6,8 +6,8 @@ var a = GrainSin(2, t, overlap / f, 440, 0, -1, 512);
 LeakDC(a, 0.995) * 0.1
 
 // GrainSin ; f0 https://www.listarc.bham.ac.uk/lists/sc-users/msg66911.html
- k = 16
-    t = impulse ar (mouseY kr 1 999 Linear 0.2) 0
-    f i = ((fromIntegral i ** range_hs (0.3,0.7) (lfNoise0Id i kr 1)) + 1) * 99
-    l = mce (map f [0::Int .. k - 1])
-in grainSin 2 t (mouseX kr 0.001 0.5 Exponential 0.2) (tChooseId 'α' t l) 0 (-1) 512 * 0.1
+var k = 16;
+var t = Impulse(MouseY(1, 999, 0, 0.2), 0);
+var f = { arg i; i ** LFNoise0(1).range(0.3, 0.7) + 1 * 99 };
+var l = 0.to(k - 1).collect(f);
+GrainSin(2, t, MouseX(0.001, 0.5, 1, 0.2), TChoose(t, l.kr), 0, -1, 512) * 0.1
