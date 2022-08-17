@@ -1,7 +1,7 @@
 //---- rocks on rails ; jmcc
 var p = 20; // number of partials
 var n = 4; // number of overlapping events
-Texture.overlap({
+{
 	Pan2(
 		RingzBank( // p resonant modes
 			Resonz(
@@ -9,11 +9,11 @@ Texture.overlap({
 				XLn(3000, 300, 8), // sweep filter down
 				0.2 // band width ratio
 			),
-			{ 200 + 3000.0.linrand }.dup(p), // resonant frequencies
+			{ 200 + LinRand(0, 3000, 0) }.dup(p), // resonant frequencies
 			nil, // amplitudes default to 1.0
-			{ 0.2 + 1.0.rand }.dup(p) // ring times
+			{ 0.2 + Rand(0, 1) }.dup(p) // ring times
 		),
-		Ln(1.0.rand2, 1.0.rand2, 8), // sweep pan
+		Ln(Rand(-1, 1), Rand(-1, 1), 8), // sweep pan
 		1
 	)
-}, 2, 3, n, 2)
+}.overlap(2, 3, n)
