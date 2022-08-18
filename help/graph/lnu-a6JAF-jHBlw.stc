@@ -1,0 +1,20 @@
+// https://www.youtube.com/watch?v=a6JAF-jHBlw ; lnu
+var m = { LFTri(0.005.rand, 0) * 0.0003 + 0.5 };
+var v = LFTri(m.value, 0) * 0.001 + 0.6;
+var c = { TChoose(CuspN(120 * m.value.hypot(v.tan) ** v, 1, 1.9, 0), [0, 5.1, -4.7, -12, 7]).kr };
+var f = {
+	arg a;
+	Mix(
+		FM7(
+			v * [(c.value + a).midiCps, 0, MulAdd(SinOsc(13 * v, 0), 0.2, (2 * v) .exp * v) / 8].dup(6),
+			m.value.dup(6).dup(6)
+		).softClip
+	)
+};
+Splay(
+	[0, 3.1, 7.05, 10, -9, 17].collect({
+		arg n;
+		Pan2(f.value(c.value + 52 + n) * (12 * m.value.negated).dbAmp, LFNoise2(500), 1)
+	}),
+	0.5, 1, 0, true
+).transpose.sum

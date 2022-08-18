@@ -20,7 +20,7 @@ uop =
   [("negated",0),("abs",5),("ceiling",8),("floor",9)
   ,("frac",10), ("sign", 11), ("squared",12),("cubed",13),("sqrt",14),("exp",15),("reciprocal",16)
   ,("midiCps",17),("cpsMidi",18), ("midiRatio", 19), ("ratioMidi", 20)
-  ,("dbAmp", 21), ("ampDb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tanh",36)
+  ,("dbAmp", 21), ("ampDb", 22), ("ln",25),("log2",26),("log",27),("sin",28),("cos",29),("tan", 30),("tanh",36)
   ,("distort",42),("softClip",43)]
 
 {- | Binary operators.
@@ -55,12 +55,12 @@ ugen :: [String]
 ugen =
   ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
   ,"Balance2","BBandPass","BBandStop","BHiPass","Blip","BlockSize","BLowPass","BPeakEQ","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
-  ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","Compander","ControlDur","ControlRate","Convolution","Crackle","CuspL"
+  ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","Compander","ControlDur","ControlRate","Convolution","Crackle","CuspL","CuspN"
   ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","DFM1", "Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dwhite","Dxrand"
   ,"EnvGen","ExpRand"
   ,"FBSineL","FBSineC","FFT","Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2" -- "FM7",
   ,"Gate","Gendy1","GrainBuf","GrainFM","GrainSin","GrayNoise","GVerb"
-  ,"Hasher","HenonL","HenonC","HPF","HPZ1","HPZ2"
+  ,"Hasher","HenonC","HenonL","HenonN","HPF","HPZ1","HPZ2"
   ,"IFFT","Impulse","In","Index","IndexInBetween","InFeedback","InRange","IRand","Integrator"
   ,"K2A","KeyState","Klang","Klank"
   ,"LFBrownNoise1","LFClipNoise","LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
@@ -73,7 +73,7 @@ ugen =
   ,"QuadL","QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax","RunningSum"
   ,"Rotate2"
-  ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Spring","StandardL","Stepper","Sweep","SyncSaw"
+  ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Spring","StandardL","StandardN","Stepper","Sweep","SyncSaw"
   ,"TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","VBJonVerb", "Vibrato"
   ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"

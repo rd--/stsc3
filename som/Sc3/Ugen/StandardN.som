@@ -1,0 +1,20 @@
+StandardN = ScUgen (
+----
+comment = (
+	^'Standard map chaotic generator'
+)
+
+freq: freq k: k xi: xi yi: yi = (
+	^UgenBuilder name: 'StandardN' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq. k. xi. yi}
+)
+primaryFactoryMethod = (
+	^#freq:k:xi:yi:
+)
+freq: freq k: k xi: xi yi: yi mul: mul = (
+	^(StandardN freq: freq k: k xi: xi yi: yi) * mul
+)
+freq: freq k: k xi: xi yi: yi mul: mul add: add = (
+	^(StandardN freq: freq k: k xi: xi yi: yi) * mul + add
+)
+
+)
