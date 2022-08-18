@@ -504,10 +504,10 @@ m.leaves.flat.sort == [1, 2]                                // Get all leaves in
 m.leafDo({ arg path; (path -> m.atPath(path)).post }) == m  // Apply function at path to every leaf node
 m.treeDo({ arg path; path.post }) == []                     // Apply function at path to every non-leaf node
 m.postTree == m                                             // Print pretty tree
-m.removeAt('a', 'b', 'c') == 1				    // Remove value at path
-m.at('a', 'b', 'c') == nil				    // Nil indicates path exists
-m.removeEmptyAt('a', 'b', 'd') == 2	                    // Remove value at path, and all empty nodes along path
-m.dictionary.size == 0					    // Get root dictionary
+m.removeAt('a', 'b', 'c') == 1                              // Remove value at path
+m.at('a', 'b', 'c') == nil                                  // Nil indicates path exists
+m.removeEmptyAt('a', 'b', 'd') == 2                         // Remove value at path, and all empty nodes along path
+m.dictionary.size == 0                                      // Get root dictionary
 
 'Nil'
 
@@ -563,6 +563,9 @@ true.class == True                                          // constant (instanc
 #[1, 2, 3, 4, 5].wchoose(#[1, 2, 3, 4, 5] / 15)             // weighted random element of collection (weights sum to 1)
 { 3.rrand(9) }.dup(9)                                       // random integer in range
 { 0.3.rrand(0.9) }.dup(3)                                   // random float in range
+{ 99.0.rand }.dup(9999).histo.plot                          // uniform distribution between zero and n
+{ 99.0.linrand }.dup(9999).histo.plot                       // linear distribution between zero and n biased to zero
+{ 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero
 
 'Routine'
 
@@ -676,9 +679,9 @@ var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be mult
 Env.sine.plot(size: 400)                                    // Env ; plot
 Env.sine.asSignal(400).plot                                 // Env as discrete array ; plot
 1.to(9).asArray.mirror.plot                                 // Array ; plot
-[1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot		    // Array ; plot
+[1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
 1.to(99).collect({ arg n; n.asBinaryDigits(8) }).flat.plot  // Array ; plot
-{ SinOsc.ar(100, 0) }.plot(1 / 100)			    // Synthesis function ; plot
+{ SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
 { arg x; x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)     // Unary function ; plot
 
 'Debugging'
