@@ -1,0 +1,20 @@
+Sine = PseudoUgen (
+----------------------------
+
+trig: trig dur: dur = (
+
+^(Env apply: {{0. 0. 1. 0}. {0. dur / 2. dur / 2}. #'sine'. nil. 1. 0}) asEnvGen: trig
+)
+
+primaryFactoryMethod = (
+
+^#'trig:dur:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

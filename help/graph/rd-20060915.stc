@@ -1,4 +1,4 @@
-// oscillator cluster (rd)
+// 20060915 ; rd
 {
 	var np = 12;
 	var tr = Dust(0.075);
@@ -14,4 +14,3 @@
 	var fp = { TRand(220, 660, tr) }.dup(np);
 	fp.collect(prt.value(TRand(4, 7, tr), TRand(0.01, 0.05, tr))).sum
 }.dup(5).sum
-

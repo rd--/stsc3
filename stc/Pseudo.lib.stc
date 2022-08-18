@@ -420,6 +420,20 @@ Shuf : PseudoUgen {
 	}
 }
 
+Sine : PseudoUgen {
+	*constructor {
+		arg trig, dur = 1;
+		^ Env(
+			[0, 0, 1, 0],
+			[0, dur / 2, dur / 2],
+			'sine',
+			nil,
+			1,
+			0
+		).asEnvGen(trig)
+	}
+}
+
 /* Parallel bank of SinOsc */
 SinOscBank : PseudoUgen {
 	*constructor {

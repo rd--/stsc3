@@ -57,6 +57,11 @@ log = (
 	^self collect: [ :item | item log ]
 )
 
+maxItem = (
+	"Sc synonym"
+	^self max
+)
+
 mean = (
 	"Sum of myself divided by my size."
 	^self sum / self size

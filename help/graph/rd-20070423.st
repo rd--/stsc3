@@ -1,4 +1,4 @@
-"eggcrate ; rd"
+"20070423 ; rd ; requires=kr"
 | eggcrate p x y t f0 f1 f a |
 eggcrate := [ :u :v| (u * Float pi) cos * (v * Float pi) sin ].
 p := #(64 72 96 128 256 6400 7200 8400 9600).

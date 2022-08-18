@@ -1,4 +1,4 @@
-// ccomb (rd)
+// 20061007 ; rd
 var lwr = 48;
 var tr = { Dust(0.65) }.dup(2);
 var fn = {
