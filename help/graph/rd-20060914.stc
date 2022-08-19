@@ -10,7 +10,7 @@ OverlapTexture({
 		var e = Sine(tr, du.maxItem * ds) * TRand(0.005, 0.01, tr);
 		var p = TXLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr);
 		var o = SinOsc(f, 0);
-		Pan2(o, p, e).sum
+		Pan2(o * e, p, 1).sum
 	};
 	var scale = #[0, 2, 4, 5, 7, 9, 11];
 	var octaves = #[4, 5, 6, 7];

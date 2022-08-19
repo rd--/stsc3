@@ -8,7 +8,7 @@ var z = OverlapTexture({
 	1.to(n).collect({
 		arg i;
 		var m = (SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.1 - 0.05).max(0);
-		Pan2(SinOsc(f * i + f, 0), TRand(-1, 1, tr), m * (1 / (i + 1)))
+		Pan2(SinOsc(f * i + f, 0) * m, TRand(-1, 1, tr), 1 / (i + 1))
 	}).sum * p
 }, 12.8, 6.4, 6);
 { CombN(z, 0.3, { Rand(0.1, 0.3) }.dup, 8) }.dup(5).sum * 0.25

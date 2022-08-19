@@ -1,0 +1,6 @@
+// coolant (jmcc) #2
+{
+	var p = 10;
+	var exc = OnePole({ BrownNoise() }.dup(2) * 0.002, 0.95);
+	{ RingzBank(exc, { 40 + 2000.0.rand }.dup(p), 1, 1) }.dup(2)
+}.overlap(4, 4, 2)

@@ -11,7 +11,7 @@ gen := [ :tr |
 		e := (Sine trig: tr dur: du maxItem * ds) * (TRand lo: 0.005 hi: 0.01 trig: tr).
 		p := TXLine start: (TRand lo: -1 hi: 1 trig: tr) end: (TRand lo: -1 hi: 1 trig: tr) dur: d trig: tr.
 		o := SinOsc freq: f kr phase: 0.
-		(Pan2 in: o pos: p level: e) sum
+		(Pan2 in: o * e pos: p level: 1) sum
 	].
 	scale := #(0 2 4 5 7 9 11).
 	octaves := #(4 5 6 7).
