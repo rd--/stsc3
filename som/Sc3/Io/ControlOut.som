@@ -1,0 +1,20 @@
+ControlOut = ScUgen (
+
+----
+
+comment = (
+	^'Write a signal to a control bus.'
+)
+
+bus: bus channelsArray: channelsArray = (
+	(channelsArray rate = Rate kr) ifTrue: [
+		^UgenBuilder name: 'Out' numChan: 0 rateSpec: #(2) specialIndex: 0 inputArray: ({bus} , (channelsArray asArray))
+	].
+	'ControlOut: input not control rate' error
+)
+
+primaryFactoryMethod = (
+	^#bus:channelsArray:
+)
+
+)

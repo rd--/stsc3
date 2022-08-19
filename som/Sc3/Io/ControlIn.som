@@ -1,0 +1,17 @@
+ControlIn = ScUgen (
+
+----
+
+comment = (
+	^'Read a signal from a control bus.'
+)
+
+numChan: numChan bus: bus = (
+	^UgenBuilder name: 'In' numChan: numChan rateSpec: (Rate kr) specialIndex: 0 inputArray: {bus}
+)
+
+primaryFactoryMethod = (
+	^#numChan:bus:
+)
+
+)

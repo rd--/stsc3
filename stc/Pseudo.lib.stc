@@ -96,22 +96,6 @@ Choose : PseudoUgen {
 	}
 }
 
-/* Control input */
-ControlIn : PseudoUgen {
-	*constructor {
-		arg numChan, bus;
-		^In(numChan, bus).kr
-	}
-}
-
-/* Control ouput */
-ControlOut : PseudoUgen {
-	*constructor {
-		arg bus, channelsArray;
-		^Out(bus, channelsArray).kr
-	}
-}
-
 /* Curve Segment Envelope */
 CurveGen : PseudoUgen {
 	*constructor {
