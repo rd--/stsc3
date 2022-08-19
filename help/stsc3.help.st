@@ -272,6 +272,9 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 
 #(5 4 3 2 1) withIndexDo: [ :item :index | Transcript show: {item. index}; cr ] "=> prints (5 1) (4 2) (3 3) (2 4) (1 5)"
 
+#(1 3 5 7 9) integrate = #(1 4 9 16 25) "incremental sum"
+#(1 4 9 16 25) differentiate = #(1 3 5 7 9) "pairwise difference"
+
 "Array"
 
 #(1 2 3 4 5) "literal array syntax ; {1. 2. 3. 4. 5}"

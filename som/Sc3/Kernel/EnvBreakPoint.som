@@ -1,0 +1,36 @@
+EnvBreakPoint = EnvBuilder (
+
+| breakPointArray curves |
+
+asEnvSpec = (
+	| n |
+	n := breakPointArray size.
+	^EnvSpec
+		levels: ((1 to: n by: 2) collect: [ :index | breakPointArray at: index ])
+		times: ((2 to: n - 1 by: 2) collect: [ :index | breakPointArray at: index ]) differentiate
+		curves: curves
+		releaseNode: nil
+		loopNode: nil
+		offset: 0
+)
+
+breakPointArray: p1 curves: p2 = (
+	breakPointArray := p1.
+	curves := p2
+)
+
+----------------------------
+
+breakPointArray: p1 curves: p2 = (
+	^self new breakPointArray: p1 curves: p2
+)
+
+primaryFactoryMethod = (
+	^#breakPointArray:curves:
+)
+
+comment = (
+	^'Break Point Envelope'
+)
+
+)

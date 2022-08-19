@@ -1,0 +1,20 @@
+TDelay = ScUgen (
+----
+comment = (
+	^'Trigger delay.'
+)
+
+in: in dur: dur = (
+	^UgenBuilder name: 'TDelay' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. dur}
+)
+primaryFactoryMethod = (
+	^#in:dur:
+)
+in: in dur: dur mul: mul = (
+	^(TDelay in: in dur: dur) * mul
+)
+in: in dur: dur mul: mul add: add = (
+	^(TDelay in: in dur: dur) * mul + add
+)
+
+)

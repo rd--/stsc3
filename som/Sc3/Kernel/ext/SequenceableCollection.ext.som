@@ -85,6 +85,17 @@ clump: groupSize = (
 	^answer
 )
 
+differentiate = (
+	| answer prev |
+	answer := self species new: self size.
+	prev := 0.
+	self withIndexCollect: [ :item :index |
+		answer at: index put: (item - prev).
+		prev := item
+	].
+	^answer
+)
+
 extendCyclically: answerSize = (
 	"Myself extended to answerSize places by cycling"
 	self isEmpty ifTrue: [ self error: 'extendCyclically: empty?' ].
@@ -122,6 +133,17 @@ gcd: arg = (
 groupsOf: groupSize = (
 	"My elements taken groupSize at a time. Ignore any leftovers at the end."
 	^(groupSize to: self size by: groupSize) collect: [ :index | self copyFrom: index - groupSize + 1 to: index ]
+)
+
+integrate = (
+	| answer sum |
+	answer := self species new: self size.
+	sum := 0.
+	self withIndexCollect: [ :item :index |
+		sum := sum + item.
+		answer at: index put: sum
+	].
+	^answer
 )
 
 keep: n = (
