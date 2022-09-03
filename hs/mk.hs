@@ -73,7 +73,7 @@ ugen =
   ,"QuadL","QuadC"
   ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax","RunningSum"
   ,"Rotate2"
-  ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinOscFB","Slew","Slope","SOS","Spring","StandardL","StandardN","Stepper","Sweep","SyncSaw"
+  ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinGrain","SinOscFB","Slew","Slope","SOS","Spring","StandardL","StandardN","Stepper","Sweep","SyncSaw"
   ,"TDelay", "TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","VBJonVerb", "Vibrato"
   ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"

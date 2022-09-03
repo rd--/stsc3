@@ -1,0 +1,20 @@
+SinGrain = ScUgen (
+----
+comment = (
+	^'Granular synthesis with sinusoidal grains'
+)
+
+trigger: trigger dur: dur freq: freq = (
+	^UgenBuilder name: 'SinGrain' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. freq}
+)
+primaryFactoryMethod = (
+	^#trigger:dur:freq:
+)
+trigger: trigger dur: dur freq: freq mul: mul = (
+	^(SinGrain trigger: trigger dur: dur freq: freq) * mul
+)
+trigger: trigger dur: dur freq: freq mul: mul add: add = (
+	^(SinGrain trigger: trigger dur: dur freq: freq) * mul + add
+)
+
+)
