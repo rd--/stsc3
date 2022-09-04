@@ -53,7 +53,7 @@ then the notation _C(p, q, ...)_ where _C_ is a collection class has the meaning
 
 ## Implicit keyword message names
 
-If the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts.
+If the number of parts of the message name is less than the number of arguments to the message, the message name is extended with implicit _value_ parts. [3]
 
 _f.value(i, j)_ translates as _f value: i value: j_ and _c.put(i, j)_ translates as _c put: i value: j_.
 
@@ -165,7 +165,7 @@ apply: arg
     ^self perform: (self primaryFactoryMethod) withArguments: arg
 ````
 
-3: This is in distinction to SuperCollider where
+2: This is in distinction to SuperCollider where
    _X(i, j, k)_ translates as _X.new(i, j, k)_ and
    _x(i, j, k)_ translates as _i.x(j, k)_.
 
@@ -177,5 +177,5 @@ Rand(0,9) // a Rand
 It is not as common for non _Class_ objects to understand _primaryFactoryMethod_,
 however _arg c; c(...);_ is a common idiom where c is a class object.
 
-4: Implicit keyword message names are not a form of variable arity messages.
+3: Implicit keyword message names are not a form of variable arity messages.
 _r.m(i)_ and _r.m(i, j)_ are distinct messages, _m:_ and _m:value:_.

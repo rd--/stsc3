@@ -5,7 +5,7 @@ Command line stsc3.
 ## som cat
 
 ~~~~
-$ stsc3 som cat ~/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Object.som
+$ stsc3 som cat ~/opt/src/SOM-st/SOM/Smalltalk/Object.som
 Object = nil (
 class = primitive
 objectSize = primitive
