@@ -20,6 +20,10 @@ Collection = Collection (
 	^arg adaptToCollection: self andSend: #//
 )
 
+\\ arg = (
+	^arg adaptToCollection: self andSend: #\\
+)
+
 adaptToCollection: rcvr andSend: selector = (
 	rcvr isSequenceable & self isSequenceable ifFalse: [self error: 'Only sequenceable collections may be combined arithmetically'].
 	^rcvr withExtending: self collect: [:rcvrElement :myElement | rcvrElement perform: selector with: myElement]

@@ -16,6 +16,10 @@ dup: anInteger = (
 	^self dup: anInteger sending: #value
 )
 
+loop = (
+	[ true ] whileTrue: [ self value ]
+)
+
 overlapTexture: sustainTime value: transitionTime value: overlap = (
 	^OverlapTexture graphFunc: self sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
 )

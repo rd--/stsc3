@@ -24,6 +24,18 @@ SmallInteger = SmallInteger (
  	^ self asFloat / aNumber
 )
 
+// aNumber = (
+	<primitive: VMpr_SmallInteger_intDiv>
+	aNumber = 0 ifTrue: [^self zeroDivide].
+	^ aNumber adaptToInteger: self andSend: #//
+)
+
+\\ aNumber = (
+	<primitive: VMpr_SmallInteger_modulo>
+	aNumber = 0 ifTrue: [^self zeroDivide].
+	^ aNumber adaptToInteger: self andSend: #\\
+)
+
 printHexByte = (
 	(self > 255 or: self < 0) ifTrue: [ self error: 'SmallInteger>>printHexByte' ].
 	^self printPaddedWith: $0 to: 2 base: 16

@@ -9,6 +9,13 @@ asBinaryDigits: numDigits = (
 	^array
 )
 
+do: aBlock = (
+	"Iterates function from 1 to self."
+	| counter |
+	counter := 1.
+	^ [ counter <= self ] whileTrue: [ aBlock value: counter. counter := counter + 1 ]
+)
+
 expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.

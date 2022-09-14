@@ -31,11 +31,11 @@ microSeconds = (
 )
 
 milliSeconds = (
-	^ Duration milliSeconds: self
+	^ Delay forMilliseconds: self
 )
 
 seconds = (
-	^ Duration seconds: self
+	^ Delay forMilliseconds: (self * 1000) rounded
 )
 
 )

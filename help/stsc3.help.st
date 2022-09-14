@@ -218,6 +218,7 @@ MessageNames openMessageNames. "open Message Names tool"
 "Integer"
 
 (0 to: 255) collect: [ :each | each asBinaryDigits: 8 ]
+9 do: [ :each | each postln ]
 
 "SequenceableCollection"
 
@@ -947,6 +948,7 @@ s close.
 "Float"
 
 3.141 asIEEE32BitWord = 1078527525.
+9.0 do: [ :each | each postln ]
 
 "Tracing"
 
