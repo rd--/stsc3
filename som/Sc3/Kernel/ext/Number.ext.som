@@ -53,7 +53,7 @@ midiCps = (
 )
 
 midiRatio = (
-	"Convert from fractional midi note number to frequency (in hertz)"
+	"Convert from fractional midi interval to ratio"
 	^2 raisedTo: (self * (1 / 12))
 )
 
