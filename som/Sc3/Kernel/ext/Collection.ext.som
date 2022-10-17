@@ -71,6 +71,10 @@ midiCps = (
 	^self collect: [ :item | item midiCps ]
 )
 
+midiRatio = (
+	^self collect: [ :item | item midiRatio ]
+)
+
 mrg: rhs = (
 	(self detect: [ :item | item isUgen] ifNone: [ self error: 'mrg?' ]) mrg: rhs.
 	^self

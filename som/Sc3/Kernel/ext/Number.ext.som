@@ -52,6 +52,11 @@ midiCps = (
 	^440 * (2 raisedTo: ((self - 69) * (1 / 12)))
 )
 
+midiRatio = (
+	"Convert from fractional midi note number to frequency (in hertz)"
+	^2 raisedTo: (self * (1 / 12))
+)
+
 rate = (
 	^Rate ir
 )

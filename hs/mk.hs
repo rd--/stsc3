@@ -76,7 +76,7 @@ ugen =
   ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinGrain","SinOscFB","Slew","Slope","SOS","Spring","StandardL","StandardN","Stepper","Sweep","SyncSaw"
   ,"TDelay", "TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
   ,"VarSaw","VBJonVerb", "Vibrato"
-  ,"WaveLoss","WhiteNoise","Wrap","WrapIndex"
+  ,"Warp1","WaveLoss","WhiteNoise","Wrap","WrapIndex"
   ,"XFade2","XLine"
   ,"ZeroCrossing"
   ,"MoogLadder" -- sc3-plugins/Bhob
