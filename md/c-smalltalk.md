@@ -10,7 +10,7 @@ It supports:
 - a concise notation for performing a primary message at an object
 - a concise and uniform notation for chaining both unary and n-ary messages
 - a two-level precedence model (unary and n-ary messages bind equally and more closely than binary messages)
-- implicit grouping of message argument expressions
+- implicit grouping of message argument expressions, due to required parentheses and commas
 - a notation for binding variables when they are declared
 - a notation for writing class definitions and for extending existing classes
 
@@ -153,7 +153,7 @@ Since the arity of the method is known from the argument list, any non-initial p
 The notation _put { arg aKey, aValue; ... }_ means _put:value: { arg aKey, aValue; ... }_.
 
 The notation _dup { arg count; ... }_ defines the selector _dup:_ since there is one argument,
-the notation _dup { self.dup(2) }_ defines the selector is _dup_ since there are no arguments.
+the notation _dup { self.dup(2) }_ defines the selector _dup_ since there are no arguments.
 In general it is clearest to write the selector out in full.
 
 * * *
