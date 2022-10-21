@@ -158,3 +158,11 @@ var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);
 var delaySignal = (fmSignal + (delayReturn * delayMix)).mrg(LocalOut(delayReturn * delayFeedback));
 var reverbMix = 0.5;
 FreeVerb(delaySignal, reverbMix, 0.8, 0.5);
+
+// SinOsc
+SinOsc(
+	LFNoise2(
+		SinOsc([3, 5], 0).range([2, 7], 35)
+	).range(100, [200, 300]),
+	0
+) * 0.1

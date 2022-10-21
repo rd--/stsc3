@@ -8,12 +8,24 @@ draw = (
 	Sc3 draw: self
 )
 
+linExpFrom: lo to: hi = (
+	^LinExp in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
+)
+
+linLinFrom: lo to: hi = (
+	^LinLin in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
+)
+
 play = (
 	Sc3 play: self
 )
 
 printUgens = (
 	Sc3 printUgens: self
+)
+
+range: lo value: hi = (
+	^self linLinFrom: lo to: hi
 )
 
 splay2 = (
