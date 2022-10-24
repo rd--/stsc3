@@ -1,4 +1,4 @@
--- | Rewriter for a simple class of UGen graphs as Ndef graphs.
+-- | Rewriter for a simple class of Ugen graphs as Ndef graphs.
 module Language.Smalltalk.SuperCollider.Ndef where
 
 import Data.Char {- base -}

@@ -1,0 +1,20 @@
+Warp1 = ScUgen (
+----
+comment = (
+	^'Warp a buffer with a time pointer'
+)
+
+numChan: numChan bufnum: bufnum pointer: pointer freqScale: freqScale windowSize: windowSize envbufnum: envbufnum overlaps: overlaps windowRandRatio: windowRandRatio interp: interp = (
+	^UgenBuilder name: 'Warp1' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {bufnum. pointer. freqScale. windowSize. envbufnum. overlaps. windowRandRatio. interp}
+)
+primaryFactoryMethod = (
+	^#numChan:bufnum:pointer:freqScale:windowSize:envbufnum:overlaps:windowRandRatio:interp:
+)
+numChan: numChan bufnum: bufnum pointer: pointer freqScale: freqScale windowSize: windowSize envbufnum: envbufnum overlaps: overlaps windowRandRatio: windowRandRatio interp: interp mul: mul = (
+	^(Warp1 numChan: numChan bufnum: bufnum pointer: pointer freqScale: freqScale windowSize: windowSize envbufnum: envbufnum overlaps: overlaps windowRandRatio: windowRandRatio interp: interp) * mul
+)
+numChan: numChan bufnum: bufnum pointer: pointer freqScale: freqScale windowSize: windowSize envbufnum: envbufnum overlaps: overlaps windowRandRatio: windowRandRatio interp: interp mul: mul add: add = (
+	^(Warp1 numChan: numChan bufnum: bufnum pointer: pointer freqScale: freqScale windowSize: windowSize envbufnum: envbufnum overlaps: overlaps windowRandRatio: windowRandRatio interp: interp) * mul + add
+)
+
+)

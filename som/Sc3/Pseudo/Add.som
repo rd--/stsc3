@@ -1,0 +1,20 @@
+Add = PseudoUgen (
+----------------------------
+
+in: in add: add = (
+
+^in + add
+)
+
+primaryFactoryMethod = (
+
+^#'in:add:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

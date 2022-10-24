@@ -128,7 +128,7 @@ _(a: 1, b: 2)_ means _Dictionary new add: #a -> 1 ; add: #b -> 2 ; yourself_,
 or _Dictionary newFromPairs: {#a. 1. #b. 2}_.
 This notation requires keys to be symbols.
 
-# Notation for class definitions
+## Notation for class definitions
 
 The notation _c : p { classvar cv...; var iv...; *cm { }... im { }... }_ defines
 a class _c_, which is a subclass of _p_,

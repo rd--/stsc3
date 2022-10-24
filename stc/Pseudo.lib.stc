@@ -643,3 +643,17 @@ White : PseudoUgen {
 		^Dwhite(length, lo, hi)
 	}
 }
+
+Mul : PseudoUgen {
+	*constructor {
+		arg in, mul = 1;
+		^in * mul
+	}
+}
+
+Add : PseudoUgen {
+	*constructor {
+		arg in, add = 0;
+		^in + add
+	}
+}

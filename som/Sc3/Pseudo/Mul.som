@@ -1,0 +1,20 @@
+Mul = PseudoUgen (
+----------------------------
+
+in: in mul: mul = (
+
+^in * mul
+)
+
+primaryFactoryMethod = (
+
+^#'in:mul:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

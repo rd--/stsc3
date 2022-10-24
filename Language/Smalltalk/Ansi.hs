@@ -141,21 +141,28 @@ data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable 
 
 data InstanceState = InstanceState Indexable [Identifier] deriving (Eq,Show)
 
+{- | Smalltalk has conventions regarding identifier case, but not strict rules.
+In .stc it would be nice to allow p.Q to mean Q(p), ie. distinguishing between q and Q.
+The types here are used to indicate where there is an ordinary case for a particular identifier.
+-}
+type LowercaseIdentifier = Identifier
+type UppercaseIdentifier = Identifier
+
 -- | Table relating subclass kind identifiers to Indexable values.
-subclassKindTable :: [(Identifier, Indexable)]
+subclassKindTable :: [(LowercaseIdentifier, Indexable)]
 subclassKindTable =
   [("subclass:", NonIndexable)
   ,("variableSubclass:", ObjectIndexable)
   ,("variableByteSubclass:", ByteIndexable)
   ,("variableWordSubclass:", WordIndexable)]
 
-subclassKindToIndexable :: Identifier -> Indexable
+subclassKindToIndexable :: LowercaseIdentifier -> Indexable
 subclassKindToIndexable = maybe (error "subclassKindToIndexable") id . flip lookup subclassKindTable
 
-indexableToSubclassKind :: Indexable -> Identifier
+indexableToSubclassKind :: Indexable -> LowercaseIdentifier
 indexableToSubclassKind = maybe (error "indexableToSubclassKind") id . flip lookup (map (\(p, q) -> (q, p)) subclassKindTable)
 
-instanceStateToSubclassKind :: InstanceState -> Identifier
+instanceStateToSubclassKind :: InstanceState -> LowercaseIdentifier
 instanceStateToSubclassKind (InstanceState ix _) = indexableToSubclassKind ix
 
 noInstanceState :: InstanceState
@@ -168,12 +175,12 @@ An empty superclassName does not indicate that a "default" superclass should be 
 -}
 data ClassDefinition =
   ClassDefinition
-  {className :: Identifier
-  ,superclassName :: Maybe Identifier
+  {className :: UppercaseIdentifier
+  ,superclassName :: Maybe UppercaseIdentifier
   ,instanceState :: InstanceState
-  ,classInstanceVariableNames :: [Identifier]
-  ,classVariableNames :: [Identifier]
-  ,importedPoolNames :: [Identifier]
+  ,classInstanceVariableNames :: [LowercaseIdentifier]
+  ,classVariableNames :: [UppercaseIdentifier]
+  ,importedPoolNames :: [UppercaseIdentifier]
   ,instanceMethods :: [MethodDefinition]
   ,classMethods :: [MethodDefinition]
   ,classInitializer :: Maybe InitializerDefinition
@@ -185,17 +192,17 @@ data ClassDefinition =
 type ClassLibrary = [ClassDefinition]
 
 -- | A Metaclass name is the class name with ' class' appended.
-metaclassName :: Identifier -> Identifier
+metaclassName :: UppercaseIdentifier -> UppercaseIdentifier
 metaclassName x = x ++ " class"
 
-isMetaclassName :: Identifier -> Bool
+isMetaclassName :: UppercaseIdentifier -> Bool
 isMetaclassName x = " class" `isSuffixOf` x
 
 {- | Remove the ' class' suffix from a Metaclass name.
 
 > metaclassNameClassName "Array class" == "Array"
 -}
-metaclassNameClassName :: Identifier -> Identifier
+metaclassNameClassName :: UppercaseIdentifier -> UppercaseIdentifier
 metaclassNameClassName x =
   if isMetaclassName x
   then take (length x - 6) x
@@ -207,12 +214,12 @@ metaclassNameClassName x =
      This includes the class of "Metaclass class", forming a cycle.
      This does not arise here since "Metaclass class" does not have a ClassDefinition.
 -}
-classMetaclassName :: ClassDefinition -> Identifier
+classMetaclassName :: ClassDefinition -> UppercaseIdentifier
 classMetaclassName = metaclassName . className
 
 -- | "Smalltalk implementations have traditionally open-coded certain
 -- messages including those with the following selectors."
-restrictedSelectors :: [Identifier]
+restrictedSelectors :: [LowercaseIdentifier]
 restrictedSelectors =
   ["ifTrue:","ifTrue:ifFalse:","ifFalse:","ifFalse:ifTrue:"
   ,"to:do:","to:by:do:"
@@ -273,7 +280,7 @@ classDefinitionEditMethodSources :: (String -> String) -> ClassDefinition -> Cla
 classDefinitionEditMethodSources f = classDefinitionEditMethods (map (methodDefinitionEditSource f))
 
 -- | Generate a class definition from a list of methods definitions.
-classDefinitionFromMethods :: (Identifier, Maybe String, Maybe String) -> [MethodDefinition] -> ClassDefinition
+classDefinitionFromMethods :: (UppercaseIdentifier, Maybe String, Maybe String) -> [MethodDefinition] -> ClassDefinition
 classDefinitionFromMethods (nm, cat, cmt) mth =
   let (cm, im) = partition isClassMethod mth
   in if nub (map methodClassName mth) == [nm]
@@ -321,7 +328,10 @@ classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
 classDefinitionIsExtensionOrModification :: ClassDefinition -> Bool
 classDefinitionIsExtensionOrModification cd = Just (className cd) == superclassName cd
 
-type ClassDefinitionGraph = (Graph.Graph, Graph.Vertex -> (ClassDefinition, Identifier, [Identifier]), Identifier -> Maybe Graph.Vertex)
+type ClassDefinitionGraph =
+  (Graph.Graph
+  ,Graph.Vertex -> (ClassDefinition, UppercaseIdentifier, [UppercaseIdentifier])
+  ,UppercaseIdentifier -> Maybe Graph.Vertex)
 
 -- | Graph where each class definition is connected to it's superclass, iff that class is also in the list of definitions.
 classDefinitionsInheritanceGraph :: [ClassDefinition] -> ClassDefinitionGraph
@@ -343,7 +353,7 @@ data GlobalDefinition =
   deriving (Eq, Show)
 
 -- | <<global name>> ::= identifier
-type GlobalName = Identifier
+type GlobalName = UppercaseIdentifier
 
 -- | <<variable initializer>> ::= <initializer definition>
 type VariableInitializer = InitializerDefinition
@@ -399,7 +409,7 @@ type MethodCategory = String
 -}
 data MethodDefinition =
   MethodDefinition
-  {methodClass :: (Identifier, Bool) -- ^ Holder
+  {methodClass :: (UppercaseIdentifier, Bool) -- ^ Holder
   ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
   ,methodPattern :: Pattern
   ,methodTemporaries :: Maybe Temporaries
@@ -416,7 +426,7 @@ isMethodFor :: MethodDescriptor -> MethodDefinition -> Bool
 isMethodFor (classSide, selector) m = (classSide == isClassMethod m) && (selector == methodSelector m)
 
 -- | Class name method is for, without the " class" suffix for class methods.
-methodClassName :: MethodDefinition -> Identifier
+methodClassName :: MethodDefinition -> UppercaseIdentifier
 methodClassName m =
   case methodClass m of
     (nm, False) -> nm
@@ -461,19 +471,19 @@ methodDefinitionEditSource f md =
   let src = methodSource md
   in md { methodSource = fmap f src }
 
-methodDefinitionArguments :: MethodDefinition -> [Identifier]
+methodDefinitionArguments :: MethodDefinition -> [LowercaseIdentifier]
 methodDefinitionArguments = patternArguments . methodPattern
 
-methodDefinitionTemporaries :: MethodDefinition -> [Identifier]
+methodDefinitionTemporaries :: MethodDefinition -> [LowercaseIdentifier]
 methodDefinitionTemporaries = maybe [] temporariesIdentifiers . methodTemporaries
 
-methodDefinitionDuplicateTemporaries :: MethodDefinition -> [Identifier]
+methodDefinitionDuplicateTemporaries :: MethodDefinition -> [LowercaseIdentifier]
 methodDefinitionDuplicateTemporaries m =
   let a = methodDefinitionArguments m
       t = methodDefinitionTemporaries m
   in (a ++ t) \\ nub (a ++ t)
 
-duplicateNamesError :: [Identifier] -> P ()
+duplicateNamesError :: [LowercaseIdentifier] -> P ()
 duplicateNamesError dup = when (not (null dup)) (P.unexpected ("Name already used: " ++ show dup))
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
@@ -499,7 +509,7 @@ duplicateNamesError dup = when (not (null dup)) (P.unexpected ("Name already use
 > p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail, instead it discards statements!
 > p "p: q | q | ^q" -- duplicate name error
 -}
-methodDefinition :: Maybe String -> (Identifier, Bool) -> P MethodDefinition
+methodDefinition :: Maybe String -> (UppercaseIdentifier, Bool) -> P MethodDefinition
 methodDefinition src cl = do
   pat <- messagePattern -- messagePattern is a token and consumes trailing comments
   cmt <- P.optionMaybe comment -- this is always Nothing
@@ -512,9 +522,9 @@ methodDefinition src cl = do
   return def
 
 data Pattern
-  = UnaryPattern Identifier
-  | BinaryPattern BinaryIdentifier Identifier
-  | KeywordPattern [(Keyword,Identifier)]
+  = UnaryPattern LowercaseIdentifier
+  | BinaryPattern BinaryIdentifier LowercaseIdentifier
+  | KeywordPattern [(Keyword, LowercaseIdentifier)]
   deriving (Eq, Show)
 
 {- | Derive method selector from Pattern.
@@ -538,7 +548,7 @@ patternSelector pat =
 
 > map patternArguments [UnaryPattern "x",BinaryPattern "+" "x",KeywordPattern [("x:","p"),("y:","q")]]
 -}
-patternArguments :: Pattern -> [Identifier]
+patternArguments :: Pattern -> [LowercaseIdentifier]
 patternArguments pat =
   case pat of
     UnaryPattern _ -> []
@@ -546,7 +556,7 @@ patternArguments pat =
     KeywordPattern kp -> map snd kp
 
 -- | Method argument list.
-methodArguments :: MethodDefinition -> [Identifier]
+methodArguments :: MethodDefinition -> [LowercaseIdentifier]
 methodArguments = patternArguments . methodPattern
 
 -- | Method selector.
@@ -557,18 +567,18 @@ methodDescriptor :: MethodDefinition -> MethodDescriptor
 methodDescriptor m = (isClassMethod m, methodSelector m)
 
 -- | Untyped identifier for method selector.
-methodSignature :: MethodDefinition -> Identifier
+methodSignature :: MethodDefinition -> LowercaseIdentifier
 methodSignature = selectorIdentifier . methodSelector
 
 -- | A method name is a (className,methodSignature)
-type MethodName = (Identifier,Identifier)
+type MethodName = (UppercaseIdentifier,LowercaseIdentifier)
 
 -- | Calculate MethodName from MethodDefinition.
 methodName :: MethodDefinition -> MethodName
 methodName m = (fst (methodClass m),methodSignature m)
 
 -- | Method name in traditional Smalltalk form, ie. ClassName>>methodSignature.
-methodNameIdentifier :: MethodName -> Identifier
+methodNameIdentifier :: MethodName -> String
 methodNameIdentifier (cl,sg) = cl ++ ">>" ++ sg
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
@@ -618,7 +628,7 @@ keywordPattern = do
   fmap KeywordPattern (P.many1 (P.try f))
 
 -- | 3.4.2
-data Temporaries = Temporaries {temporariesIdentifiers :: [Identifier]} deriving (Eq, Show)
+data Temporaries = Temporaries {temporariesIdentifiers :: [LowercaseIdentifier]} deriving (Eq, Show)
 
 -- | Number of temporaries.
 temporariesLength :: Temporaries -> Int
@@ -632,7 +642,7 @@ emptyTemporaries = Temporaries []
 verticalBar :: P Char
 verticalBar = lexeme (P.char '|')
 
-temporariesIdentifierSequence :: P [Identifier]
+temporariesIdentifierSequence :: P [LowercaseIdentifier]
 temporariesIdentifierSequence = P.between verticalBar verticalBar temporary_variable_list
 
 {- | <temporaries> ::= '|' <temporary variable list> '|'
@@ -654,7 +664,7 @@ temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporar
 > p "p q"
 > p "p q r" == p "p q r +"
 -}
-temporary_variable_list :: P [Identifier]
+temporary_variable_list :: P [LowercaseIdentifier]
 temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 
 -- * 3.4.3
@@ -674,7 +684,7 @@ data InitializerDefinition =
 
 > standardClassInitializerDefinition "ClassName"
 -}
-standardClassInitializerDefinition :: Identifier -> InitializerDefinition
+standardClassInitializerDefinition :: UppercaseIdentifier -> InitializerDefinition
 standardClassInitializerDefinition nm =
   let e = ExprBasic (simpleUnaryMessageSend (PrimaryIdentifier nm) "initialize")
   in InitializerDefinition Nothing Nothing (Just (StatementsExpression e Nothing))
@@ -739,13 +749,13 @@ data BlockBody =
 blockBodyEndsWithReturn :: BlockBody -> Bool
 blockBodyEndsWithReturn = maybe False statementsEndsWithReturn . blockStatements
 
-blockBodyArguments :: BlockBody -> [Identifier]
+blockBodyArguments :: BlockBody -> [LowercaseIdentifier]
 blockBodyArguments = fromMaybe [] . blockArguments
 
-blockBodyTemporaries :: BlockBody -> [Identifier]
+blockBodyTemporaries :: BlockBody -> [LowercaseIdentifier]
 blockBodyTemporaries = maybe [] temporariesIdentifiers . blockTemporaries
 
-blockBodyDuplicateTemporaries :: BlockBody -> [Identifier]
+blockBodyDuplicateTemporaries :: BlockBody -> [LowercaseIdentifier]
 blockBodyDuplicateTemporaries m =
   let a = blockBodyArguments m
       t = blockBodyTemporaries m
@@ -777,7 +787,7 @@ blockBody = do
   return blk
 
 -- | An identifier for a block argument.  Written with a ':' prefix.
-type BlockArgument = Identifier
+type BlockArgument = LowercaseIdentifier
 
 {- | <block argument> ::= ':' identifier
 
@@ -900,8 +910,10 @@ expressionCase f g e =
 expression :: P Expression
 expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
 
--- | 3.4.5.2 (Expressions)
-data Assignment = Assignment Identifier Expression deriving (Eq,Show)
+{- | 3.4.5.2 (Expressions)
+Class variables may be assigned to, and they are upper case.
+-}
+data Assignment = Assignment Identifier Expression deriving (Eq, Show)
 
 {- | <assignment> ::= <assignment target> assignmentOperator <expression>
 
@@ -930,7 +942,7 @@ data BasicExpression =
 
 > simpleUnaryMessageSend (PrimaryIdentifier "Array") "new"
 -}
-simpleUnaryMessageSend :: Primary -> Identifier -> BasicExpression
+simpleUnaryMessageSend :: Primary -> LowercaseIdentifier -> BasicExpression
 simpleUnaryMessageSend rcv msg =
   BasicExpression rcv (Just (MessagesUnary [UnaryMessage msg] Nothing Nothing)) Nothing
 
@@ -1073,13 +1085,13 @@ binaryMessages = do
 messages :: P Messages
 messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
 
-data UnaryMessage = UnaryMessage Identifier deriving (Eq,Show)
+data UnaryMessage = UnaryMessage LowercaseIdentifier deriving (Eq,Show)
 
 unaryMessageSelector :: UnaryMessage -> Selector
 unaryMessageSelector (UnaryMessage u) = UnarySelector u
 
 data BinaryMessage =
-  BinaryMessage Identifier BinaryArgument
+  BinaryMessage BinaryIdentifier BinaryArgument
   deriving (Eq,Show)
 
 binaryMessageSelector :: BinaryMessage -> Selector
@@ -1491,7 +1503,7 @@ follows an unadorned identifier, with no intervening white space, then
 the token is to be parsed as an identifier followed by an
 assignmentOperator not as an keyword followed by an '='.
 -}
-type Keyword = Identifier
+type Keyword = LowercaseIdentifier
 
 -- | A keyword parser that is not a lexeme.  A keyword selector is a sequence of non-lexeme keywords.
 keywordNotLexeme :: P Keyword
@@ -1693,9 +1705,9 @@ unarySelector =
   P.<?> "unarySelector"
 
 data Selector
-  = UnarySelector Identifier
+  = UnarySelector LowercaseIdentifier
   | BinarySelector BinaryIdentifier
-  | KeywordSelector Identifier
+  | KeywordSelector LowercaseIdentifier
   deriving (Eq, Ord, Show)
 
 -- | Is Selector an infix binary operator.
@@ -1719,7 +1731,7 @@ selectorIdentifier s =
 > keywordSelectorElements "freq:phase:" == ["freq:","phase:"]
 > keywordSelectorElements "" == []
 -}
-keywordSelectorElements :: Identifier -> [Identifier]
+keywordSelectorElements :: LowercaseIdentifier -> [LowercaseIdentifier]
 keywordSelectorElements = takeWhile (not . null) . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
 
 {- | Determine arity of selector

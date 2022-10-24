@@ -32,13 +32,13 @@ import Data.List {- base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | Identifier with perhaps an initializer expression.
-type ScTemporary = (St.Identifier,Maybe ScBasicExpression)
+type ScTemporary = (St.LowercaseIdentifier,Maybe ScBasicExpression)
 
 -- | Comments are text strings.
 type ScComment = String
 
 -- | Variable with optional default value, which must be a literal.
-type ScVariable = (St.Identifier, Maybe St.Literal)
+type ScVariable = (St.LowercaseIdentifier, Maybe St.Literal)
 
 {- | 3.3.2
 
@@ -50,8 +50,8 @@ These instructions would be given in the Ast as booleans attached to the variabl
 -}
 data ScClassDefinition =
   ScClassDefinition
-  {className :: St.Identifier
-  ,superclassName :: Maybe St.Identifier
+  {className :: St.UppercaseIdentifier
+  ,superclassName :: Maybe St.UppercaseIdentifier
   ,classInstanceVariableNames :: Maybe [ScVariable]
   ,classVariableNames :: Maybe [ScVariable]
   ,methods :: [ScMethodDefinition]
@@ -64,12 +64,12 @@ scClassDefinitionPartitionMethods :: ScClassDefinition -> ([ScMethodDefinition],
 scClassDefinitionPartitionMethods = partition isClassMethod . methods
 
 -- | Lookup names instance method.
-scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.Identifier -> Maybe ScMethodDefinition
+scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.LowercaseIdentifier -> Maybe ScMethodDefinition
 scClassDefinitionLookupInstanceMethod cd nm = find (\m -> not (isClassMethod m) && methodName m == nm) (methods cd)
 
 data ScClassExtension =
   ScClassExtension
-  {extendClass :: St.Identifier
+  {extendClass :: St.UppercaseIdentifier
   ,withMethods :: [ScMethodDefinition]}
   deriving (Eq,Show)
 
@@ -77,7 +77,7 @@ data ScClassExtension =
 data ScMethodDefinition =
   ScMethodDefinition
   {isClassMethod :: Bool
-  ,methodName :: St.Identifier
+  ,methodName :: St.LowercaseIdentifier
   ,methodBody :: ScBlockBody
   ,methodCategory :: Maybe String
   ,methodComment :: Maybe ScComment}
@@ -128,7 +128,7 @@ scExpressionSequenceToStatements stm =
 
 -- | 3.4.5.2 Expressions
 data ScExpression =
-    ScExprAssignment St.Identifier ScExpression
+    ScExprAssignment St.LowercaseIdentifier ScExpression
   | ScExprBasic ScBasicExpression
   deriving (Eq, Show)
 
@@ -163,20 +163,20 @@ scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
 
 > scConstructDotMessage "at:" [ScBasicExpression (ScPrimaryIdentifier "key") Nothing]
 -}
-scConstructDotMessage :: St.Identifier -> [ScBasicExpression] -> ScMessages
+scConstructDotMessage :: St.LowercaseIdentifier -> [ScBasicExpression] -> ScMessages
 scConstructDotMessage selector arguments = ScMessagesDot [ScDotMessage selector arguments] Nothing
 
-scConstructDotMessageSend :: ScPrimary -> St.Identifier -> [ScBasicExpression]  -> ScBasicExpression
+scConstructDotMessageSend :: ScPrimary -> St.LowercaseIdentifier -> [ScBasicExpression]  -> ScBasicExpression
 scConstructDotMessageSend receiver selector arguments =
   ScBasicExpression receiver (Just (scConstructDotMessage selector arguments))
 
-scDictionaryToBasicExpression :: [(St.Identifier, ScBasicExpression)] -> ScBasicExpression
+scDictionaryToBasicExpression :: [(St.LowercaseIdentifier, ScBasicExpression)] -> ScBasicExpression
 scDictionaryToBasicExpression associationsArray =
   let f (key, value) = [scIdentifierToBasicExpression key, value]
       arrayExpression = ScPrimaryArrayExpression (concatMap f associationsArray)
   in scConstructDotMessageSend (ScPrimaryIdentifier "Dictionary") "newFromPairs" [ScBasicExpression arrayExpression Nothing]
 
-scPrimaryKeywordMessageSend :: St.Identifier -> [(St.Identifier, ScBasicExpression)] -> ScPrimary
+scPrimaryKeywordMessageSend :: St.Identifier -> [(St.LowercaseIdentifier, ScBasicExpression)] -> ScPrimary
 scPrimaryKeywordMessageSend receiver parameters =
   let selector = intercalate ":" (map fst parameters)
       arguments = map snd parameters
@@ -191,7 +191,7 @@ data ScPrimary
   | ScPrimaryBlock ScBlockBody
   | ScPrimaryExpression ScExpression
   | ScPrimaryArrayExpression [ScBasicExpression]
-  | ScPrimaryDictionaryExpression [(St.Identifier, ScBasicExpression)]
+  | ScPrimaryDictionaryExpression [(St.LowercaseIdentifier, ScBasicExpression)]
   | ScPrimaryImplicitMessageSend St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
 
@@ -206,7 +206,7 @@ data ScMessages
      Ie. an empty parameter list here indicates a unary message.
 -}
 data ScDotMessage =
-  ScDotMessage St.Identifier [ScBasicExpression]
+  ScDotMessage St.LowercaseIdentifier [ScBasicExpression]
   deriving (Eq, Show)
 
 -- | Does message have parameters, i.e. written as .q()
@@ -217,10 +217,10 @@ scDotMessageIsNary (ScDotMessage _ m) = not (null m)
 scDotMessagesHaveNary :: [ScDotMessage] -> Bool
 scDotMessagesHaveNary = any scDotMessageIsNary
 
-scDotMessageFromKeywordParam :: St.Identifier -> (ScBasicExpression, [(St.Identifier, ScBasicExpression)]) -> ScDotMessage
-scDotMessageFromKeywordParam initialSelector (initalParam, keywordParam) =
+scDotMessageFromKeywordParam :: St.LowercaseIdentifier -> (ScBasicExpression, [(St.LowercaseIdentifier, ScBasicExpression)]) -> ScDotMessage
+scDotMessageFromKeywordParam initialSelector (initialParam, keywordParam) =
   let selector = concat [initialSelector, ":", concatMap fst keywordParam]
-      param = initalParam : map snd keywordParam
+      param = initialParam : map snd keywordParam
   in ScDotMessage selector param
 
 data ScBinaryMessage =
@@ -232,5 +232,5 @@ data ScBinaryArgument =
   deriving (Eq, Show)
 
 -- | List of Sc pseudo variables.  In addition to the St set it has, pi and inf.
-scPseudoVariables :: [St.Identifier]
+scPseudoVariables :: [St.LowercaseIdentifier]
 scPseudoVariables = words "nil true false inf pi self super"
