@@ -40,6 +40,7 @@ stc.semantics.addAttribute('asStc', {
     literal(lit) { return lit.asStc; },
     stringLiteral(_l, _s, _r) { return this.sourceString; },
     symbolLiteral(_l, _s, _r) { return this.sourceString; },
+    primitive(_l, _s, _r) { return this.sourceString; },
     numberLiteral(n) { return n.asStc; },
     integerLiteral(s,i) { return s.sourceString + i.sourceString; },
     floatLiteral(s,i,_,f) { return s.sourceString + i.sourceString + '.' + f.sourceString; },

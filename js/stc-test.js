@@ -6,6 +6,7 @@ stc.test = {};
 stc.test.expr = [
 	'5', '2.3',
 	'"string"', "'symbol'",
+	'<primitive: 63>',
 	'true', 'nil',
 	'p', 'sqrt', 'SinOsc',
 	'(5)', '("x")','(1 + 2)',

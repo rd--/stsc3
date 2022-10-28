@@ -88,6 +88,7 @@ Stc {
       | reservedIdentifier
       | identifier
       | literal
+      | primitive
 
     literal (a literal)
       = numberLiteral
@@ -137,6 +138,12 @@ Stc {
 
     symbolCharacter
       = ~(singleQuoteChar | lineTerminator) sourceCharacter
+
+    primitive
+      = "<primitive: " primitiveCharacter* ">"
+
+    primitiveCharacter
+      = ~(">" | lineTerminator) sourceCharacter
 
     sourceCharacter
       = any
