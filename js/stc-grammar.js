@@ -6,7 +6,10 @@ stc.grammar = ohm.grammar(String.raw`
 Stc {
 
     InitializerDefinition
-      = Temporaries* Statements?
+      = Temporaries* ExpressionSequence
+
+    ExpressionSequence
+      = ListOf<Expression, ";">
 
     ParameterList
       =  "(" NonemptyListOf<Expression, ","> ")"
@@ -60,21 +63,21 @@ Stc {
       = literal
       | Block
       | ImplicitMessage
+      | DotExpression
       | identifier
       | reservedIdentifier
       | ParenthesisedExpression
       | ArrayExpression
-      | Assignment
 
     BinaryExpression
-      = Expression (binaryOperator Expression)+
+      = Expression (binaryOperator Primary)+
 
     DotExpression
-      = Expression ("." identifier ParameterList?)+
+      = Primary ("." identifier ParameterList?)+
 
     Expression
-      = BinaryExpression
-      | DotExpression
+      = Assignment
+      | BinaryExpression
       | Primary
 
     literal

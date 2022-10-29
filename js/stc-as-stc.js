@@ -21,6 +21,8 @@ stc.semantics.addAttribute('asStc', {
     FinalExpression(e, _) { return e.asStc; },
     ReturnStatement(_l, e, _r) { return '^ ' + e.asStc; },
     Statements(stm) { return stm.asStc; },
+    ExpressionSequence(exp) { return exp.asStc; },
+    NonemptyListOf(first, _sep, rest) { return first.asStc + rest.children.map(c => c.asStc); },
     Block(_l, blk, _r) { return blk.asStc; },
     BlockBody(arg, tmp, prm, stm) { return '{ ' + arg.asStc + tmp.asStc + prm.asStc + stm.asStc + ' }'; },
     BlockArguments(_l, arg, _r) { return 'arg ' + stc_comma_list(arg) + '; '; },
@@ -43,7 +45,7 @@ function makeBinary(left, ops, rights) {
 	while (ops.length > 0) {
 		const op = ops.shift();
 		const right = rights.shift();
-		left = `${left} ${op} ${right}`;
+		left = `(${left} ${op} ${right})`;
 	}
 	return left;
 }
