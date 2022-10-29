@@ -21,7 +21,8 @@ stc.test.expr = [
 	'{ Rand(0, 1) }', '{ var x, y; x = Rand(0, 1); y = [x, x]; y }',
 	'{ arg x; x * x }', '{ arg x, y; x + y * x }', '{ arg x, y; (x.squared + y.squared).sqrt }',
 	'{ <primitive: 63> }',
-	'var x; x = 9; x.sqrt.postln', 'var x = 9; x.sqrt.postln'
+	'var x; x = 9; x.sqrt.postln', 'var x = 9; x.sqrt.postln',
+	'C { var i, j; p { arg x; ^ i + x * j } q { arg y, z; y - z } }'
 ];
 
 stc.test.asStc = function() {

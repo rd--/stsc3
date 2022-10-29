@@ -5,6 +5,10 @@ import { stc } from './stc-common.js';
 stc.grammar = ohm.grammar(String.raw`
 Stc {
 
+    TopLevel
+      = ClassDefinition
+      | InitializerDefinition
+
     InitializerDefinition
       = Temporaries* ExpressionSequence
 
@@ -47,6 +51,9 @@ Stc {
     BlockArguments
       = "arg" NonemptyListOf<identifier, ","> ";"
 
+    Primitive
+      = "<primitive: " primitiveCharacter* ">"
+
     ArrayExpression
       = "[" ListOf<Expression, ","> "]"
 
@@ -79,6 +86,9 @@ Stc {
       = Assignment
       | BinaryExpression
       | Primary
+
+    ClassDefinition
+      = identifier "{" Temporaries* (identifier Block)* "}"
 
     literal
       = numberLiteral
@@ -128,9 +138,6 @@ Stc {
 
     symbolCharacter
       = ~(singleQuoteChar | lineTerminator) sourceCharacter
-
-    Primitive
-      = "<primitive: " primitiveCharacter* ">"
 
     primitiveCharacter
       = ~(">" | lineTerminator) sourceCharacter
