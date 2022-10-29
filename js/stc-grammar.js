@@ -1,4 +1,5 @@
 import ohm from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
+import { extras } from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 
 import { stc } from './stc-common.js';
 
@@ -88,7 +89,7 @@ Stc {
       | Primary
 
     ClassDefinition
-      = identifier "{" Temporaries* (identifier Block)* "}"
+      = identifier "{" Temporaries (identifier Block)* "}"
 
     literal
       = numberLiteral
@@ -153,6 +154,11 @@ Stc {
 
 stc.semantics = stc.grammar.createSemantics();
 
-stc.parse = function(str) {
-	return stc.semantics(stc.grammar.match(str));
-}
+stc.match = function(str) { return stc.grammar.match(str); }
+stc.parse = function(str) { return stc.semantics(stc.grammar.match(str)); }
+stc.parseAst = function(str) { return extras.toAST(stc.grammar.match(str)); }
+stc.temporariesNames = function(m) { return extras.toAST(m)[0][0] };
+stc.blockArgumentNames = function(m) { return extras.toAST(m)[1][0][0] };
+
+// stc.temporariesNames(stc.match('var i, j;'))
+// stc.blockArgumentNames(stc.match('{ arg i, j; i + 1 * j }'))
