@@ -157,8 +157,9 @@ stc.semantics = stc.grammar.createSemantics();
 stc.match = function(str) { return stc.grammar.match(str); }
 stc.parse = function(str) { return stc.semantics(stc.grammar.match(str)); }
 stc.parseAst = function(str) { return extras.toAST(stc.grammar.match(str)); }
-stc.temporariesNames = function(m) { return extras.toAST(m)[0][0] };
-stc.blockArgumentNames = function(m) { return extras.toAST(m)[1][0][0] };
+stc.temporariesNames = function(str) { return extras.toAST(stc.grammar.match(str))[0][0].map(item => `'${item}'`) };
+stc.blockArity = function(str) { return extras.toAST(stc.grammar.match(str))[1][0][0].length };
+stc.blockArgumentNames = function(str) { return extras.toAST(stc.grammar.match(str))[1][0][0].map(item => `'${item}'`) };
 
-// stc.temporariesNames(stc.match('var i, j;'))
-// stc.blockArgumentNames(stc.match('{ arg i, j; i + 1 * j }'))
+// stc.temporariesNames('var i, j;')
+// stc.blockArity('{ arg i, j; i + 1 * j }')
