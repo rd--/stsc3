@@ -7,7 +7,7 @@ stc.grammar = ohm.grammar(String.raw`
 Stc {
 
     TopLevel
-      = ClassDefinition
+      = ClassExpression+
       | InitializerDefinition
 
     InitializerDefinition
@@ -68,12 +68,12 @@ Stc {
       = identifier "=" Expression
 
     Primary
-      = literal
+      = DotExpression
       | Block
       | ImplicitMessage
-      | DotExpression
-      | identifier
       | reservedIdentifier
+      | identifier
+      | literal
       | ParenthesisedExpression
       | ArrayExpression
 
@@ -88,8 +88,19 @@ Stc {
       | BinaryExpression
       | Primary
 
+    ClassExpression
+      = ClassExtension
+      | ClassDefinition
+
     ClassDefinition
-      = identifier "{" Temporaries (identifier Block)* "}"
+      = identifier "{" Temporaries? (methodName Block)* "}"
+
+    ClassExtension
+      = "+" identifier "{" (methodName Block)* "}"
+
+    methodName
+      = identifier
+      | binaryOperator
 
     literal
       = numberLiteral
@@ -112,12 +123,13 @@ Stc {
     floatLiteral
       = "-"? digit+ "." digit+
 
-    letterOrDigit
+    letterOrDigitOrUnderscore
       = letter
       | digit
+      | "_"
 
     identifier
-      = letter letterOrDigit*
+      = letter letterOrDigitOrUnderscore*
 
     reservedIdentifier
       = "nil" | "true" | "false" | "this"
@@ -158,8 +170,12 @@ stc.match = function(str) { return stc.grammar.match(str); }
 stc.parse = function(str) { return stc.semantics(stc.grammar.match(str)); }
 stc.parseAst = function(str) { return extras.toAST(stc.grammar.match(str)); }
 stc.temporariesNames = function(str) { return extras.toAST(stc.grammar.match(str))[0][0].map(item => `'${item}'`) };
-stc.blockArity = function(str) { return extras.toAST(stc.grammar.match(str))[1][0][0].length };
-stc.blockArgumentNames = function(str) { return extras.toAST(stc.grammar.match(str))[1][0][0].map(item => `'${item}'`) };
+
+stc.blockArity = function(str) {
+	const arg = extras.toAST(stc.grammar.match(str))[1][0][0];
+	return arg === null ? 0 : arg.length;
+};
+
 
 // stc.temporariesNames('var i, j;')
 // stc.blockArity('{ arg i, j; i + 1 * j }')

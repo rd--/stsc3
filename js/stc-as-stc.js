@@ -31,6 +31,8 @@ stc.semantics.addAttribute('asStc', {
     ArrayExpression(_l, array, _r) { return '[' + stc_comma_list(array) + ']'; },
     ImplicitMessage(rcv, _l, arg, _r) { return rcv.asStc + '(' + stc_comma_list(arg) + ')'; },
     ClassDefinition(clsNm, _l, tmp, mthNm, mthBlk, _r) { return makeClassDefinition(clsNm.asStc, tmp.asStc, mthNm.children.map(c => c.asStc), mthBlk.children.map(c => c.asStc)); },
+    ClassExtension(_e, clsNm, _l, mthNm, mthBlk, _r) { return makeClassExtension(clsNm.asStc, mthNm.children.map(c => c.asStc), mthBlk.children.map(c => c.asStc)); },
+	methodName(name) { return name.asStc },
     literal(lit) { return lit.asStc; },
     stringLiteral(_l, _s, _r) { return this.sourceString; },
     symbolLiteral(_l, _s, _r) { return this.sourceString; },
@@ -61,13 +63,20 @@ function makeDotExpression(rcv, nms, args) {
 	return rcv;
 }
 
-function makeClassDefinition(clsNm, tmp, mthNms, mthBlks) {
+function makeMethodList(mthNms, mthBlks) {
 	var mth = '';
 	while (mthNms.length > 0) {
 		const nm = mthNms.shift();
 		const blk = mthBlks.shift();
 		mth += ` ${nm} ${blk}`;
 	}
-	return `${clsNm} { ${tmp}${mth} }`;
+	return mth;
 }
 
+function makeClassDefinition(clsNm, tmp, mthNms, mthBlks) {
+	return `${clsNm} { ${tmp}${makeMethodList(mthNms, mthBlks)} }`;
+}
+
+function makeClassExtension(clsNm, mthNms, mthBlks) {
+	return `+ ${clsNm} { ${makeMethodList(mthNms, mthBlks)} }`;
+}
