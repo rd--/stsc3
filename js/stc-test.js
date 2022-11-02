@@ -1,6 +1,5 @@
 import { stc } from './stc-common.js'
 import { } from './stc-as-stc.js'
-import { } from './stc-as-stc-st.js'
 
 stc.test = {};
 
@@ -31,10 +30,6 @@ stc.test.expr = [
 
 stc.test.asStc = function() {
 	stc.test.expr.forEach(str => console.log(str, '=>', stc.parse(str).asStc));
-};
-
-stc.test.asStcSt = function() {
-	stc.test.expr.forEach(str => console.log(str, '=>', stc.parseSt(str).asStc));
 };
 
 export { stc } from './stc-common.js'

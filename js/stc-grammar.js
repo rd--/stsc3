@@ -169,13 +169,12 @@ stc.semantics = stc.grammar.createSemantics();
 stc.match = function(str) { return stc.grammar.match(str); }
 stc.parse = function(str) { return stc.semantics(stc.grammar.match(str)); }
 stc.parseAst = function(str) { return extras.toAST(stc.grammar.match(str)); }
-stc.temporariesNames = function(str) { return extras.toAST(stc.grammar.match(str))[0][0].map(item => `'${item}'`) };
+stc.temporariesNames = function(str) { return extras.toAST(stc.grammar.match(str))[0][0] };
 
 stc.blockArity = function(str) {
 	const arg = extras.toAST(stc.grammar.match(str))[1][0][0];
 	return arg === null ? 0 : arg.length;
 };
-
 
 // stc.temporariesNames('var i, j;')
 // stc.blockArity('{ arg i, j; i + 1 * j }')
