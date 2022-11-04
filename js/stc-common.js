@@ -1,4 +1,4 @@
-export var stc = {};
+export const stc = {};
 
 stc.iter_map = function(iter, proc) {
     return iter.children.map(proc);

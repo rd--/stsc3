@@ -20,16 +20,19 @@ stc.test.expr = [
 	'SinOsc(440, 0)', 'Point(x, y).isPoint', 'Float.e',
 	'{ Rand(0, 1) }', '{ var x, y; x = Rand(0, 1); y = [x, x]; y }',
 	'{ arg x; x * x }', '{ arg x, y; x + y * x }', '{ arg x, y; (x.squared + y.squared).sqrt }',
-	'{ arg x; x * x}.value(3)',
+	'{ arg x; x * x }.value(3)',
 	'{ <primitive: 63> }',
-	'var x; x = 9; x.sqrt.postln', 'var x = 9; x.sqrt.postln',
+	'var x; x = 9; x.sqrt.postln', 'var x = 9; x.sqrt.postln', 'var x = 3, y = 4; x + y',
 	'C { }', 'C { m { } }', 'C { + { } }', '+ C { x { } }',
 	'C { var i, j; p { arg x; ^ i + x * j } q { arg y, z; y - z } }',
 	'Void { random { <primitive: 0> } }',
 ];
 
 stc.test.asStc = function() {
-	stc.test.expr.forEach(str => console.log(str, '=>', stc.parse(str).asStc));
+	stc.test.expr.forEach(function(str) {
+		const rw = stc.parse(str).asStc;
+		console.log(str, '=>', rw, '==', str == rw)
+	});
 };
 
 export { stc } from './stc-common.js'

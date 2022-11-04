@@ -64,7 +64,7 @@ function makeDotExpression(rcv, nms, args) {
 }
 
 function makeMethodList(mthNms, mthBlks) {
-	var mth = '';
+	let mth = '';
 	while (mthNms.length > 0) {
 		const nm = mthNms.shift();
 		const blk = mthBlks.shift();
