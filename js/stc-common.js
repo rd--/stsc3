@@ -1,9 +1,7 @@
-export const stc = {};
-
-stc.iter_map = function(iter, proc) {
+export function iter_map(iter, proc) {
     return iter.children.map(proc);
 }
 
-stc.as_iter_map = function(node, proc) {
+export function as_iter_map(node, proc) {
     return stc.iter_map(node.asIteration(), proc);
 }

@@ -1,9 +1,7 @@
-import { stc } from './stc-common.js'
+import * as stc from './stc-grammar.js'
 import { } from './stc-as-stc.js'
 
-stc.test = {};
-
-stc.test.expr = [
+export const testExpr = [
 	'5', '2.3',
 	'"string"', "'symbol'",
 	'true', 'nil',
@@ -17,7 +15,9 @@ stc.test.expr = [
 	'(i + j).m', 'i + j.m', 'i.j + m', 'i.j + k.l',
 	'f(p) + q', 'p + f(q)',
 	'3.sqrt', '9.sqrt.squared',
-	'SinOsc(440, 0)', 'Point(x, y).isPoint', 'Float.e',
+	'PinkNoise()', 'SinOsc(440, 0)', 'Point(x, y).isPoint',
+	'if(p) { q } { r }', 'while { p } { q }',
+	'Float.e',
 	'{ Rand(0, 1) }', '{ var x, y; x = Rand(0, 1); y = [x, x]; y }',
 	'{ arg x; x * x }', '{ arg x, y; x + y * x }', '{ arg x, y; (x.squared + y.squared).sqrt }',
 	'{ arg x; x * x }.value(3)',
@@ -28,11 +28,14 @@ stc.test.expr = [
 	'Void { random { <primitive: 0> } }',
 ];
 
-stc.test.asStc = function() {
-	stc.test.expr.forEach(function(str) {
+export function testAsStc() {
+	testExpr.forEach(function(str) {
 		const rw = stc.parse(str).asStc;
 		console.log(str, '=>', rw, '==', str == rw)
 	});
 };
 
-export { stc } from './stc-common.js'
+/*
+import { testAsStc } from './stc-test.js'
+testAsStc()
+*/

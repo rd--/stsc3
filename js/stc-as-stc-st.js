@@ -1,3 +1,5 @@
+// obsolete
+
 import { stc } from './stc-common.js'
 import { } from './stc-grammar-st.js'
 

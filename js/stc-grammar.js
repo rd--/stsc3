@@ -1,9 +1,7 @@
 import ohm from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 import { extras } from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 
-import { stc } from './stc-common.js';
-
-stc.grammar = ohm.grammar(String.raw`
+export const grammar = ohm.grammar(String.raw`
 Stc {
 
     TopLevel
@@ -15,9 +13,6 @@ Stc {
 
     ExpressionSequence
       = ListOf<Expression, ";">
-
-    ParameterList
-      =  "(" NonemptyListOf<Expression, ","> ")"
 
     Temporaries
       = "var" NonemptyListOf<Temporary, ","> ";"
@@ -58,8 +53,14 @@ Stc {
     ArrayExpression
       = "[" ListOf<Expression, ","> "]"
 
+    ParameterList
+      =  "(" ListOf<Expression, ","> ")"
+
     ImplicitMessage
-      = identifier "(" ListOf<Expression, ","> ")"
+      = identifier ParameterList
+
+    ImplicitMessageWithTrailingClosures
+      = identifier NonEmptyParameterList? Block+
 
     ParenthesisedExpression
       = "(" Expression ")"
@@ -70,6 +71,7 @@ Stc {
     Primary
       = DotExpression
       | Block
+      | ImplicitMessageWithTrailingClosures
       | ImplicitMessage
       | reservedIdentifier
       | identifier
@@ -80,8 +82,11 @@ Stc {
     BinaryExpression
       = Expression (binaryOperator Primary)+
 
+    NonEmptyParameterList
+      =  "(" NonemptyListOf<Expression, ","> ")"
+
     DotExpression
-      = Primary ("." identifier ParameterList?)+
+      = Primary ("." identifier NonEmptyParameterList?)+
 
     Expression
       = Assignment
@@ -164,17 +169,27 @@ Stc {
 }
 `);
 
-stc.semantics = stc.grammar.createSemantics();
+export const semantics = grammar.createSemantics();
 
-stc.match = function(str) { return stc.grammar.match(str); }
-stc.parse = function(str) { return stc.semantics(stc.grammar.match(str)); }
-stc.parseAst = function(str) { return extras.toAST(stc.grammar.match(str)); }
-stc.temporariesNames = function(str) { return extras.toAST(stc.grammar.match(str))[0][0] };
+export function parse(str) {
+	return semantics(grammar.match(str));
+}
 
-stc.blockArity = function(str) {
-	const arg = extras.toAST(stc.grammar.match(str))[1][0][0];
+export function parseAst(str) {
+	return extras.toAST(grammar.match(str));
+}
+
+export function temporariesNames(str) {
+	return extras.toAST(grammar.match(str))[0][0];
+}
+
+export function blockArity(str) {
+	const arg = extras.toAST(grammar.match(str))[1][0][0];
 	return arg === null ? 0 : arg.length;
-};
+}
 
-// stc.temporariesNames('var i, j;')
-// stc.blockArity('{ arg i, j; i + 1 * j }')
+/*
+import * as stc from './stc-grammar.js'
+stc.temporariesNames('var i, j;') //= ['i', 'j']
+stc.blockArity('{ arg i, j; i + 1 * j }') === 2
+*/

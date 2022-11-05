@@ -1,9 +1,4 @@
-import { stc } from './stc-common.js'
-import { } from './stc-grammar.js'
-
-function stc_comma_list(node) {
-    return stc.as_iter_map(node, e => e.asStc).join(', ');
-}
+import * as stc from './stc-grammar.js'
 
 stc.semantics.addAttribute('asStc', {
     TopLevel(e) { return e.asStc; },
@@ -12,10 +7,10 @@ stc.semantics.addAttribute('asStc', {
     Primary(e) { return e.asStc; },
     ParenthesisedExpression(_l, e, _r) { return '(' + e.asStc + ')'; },
     Assignment(lhs, _, rhs) { return lhs.asStc + ' = ' + rhs.asStc; },
-    ParameterList(_l, sq, _r) { return '(' + stc_comma_list(sq) + ')'; },
+    NonEmptyParameterList(_l, sq, _r) { return '(' + commaList(sq) + ')'; },
     BinaryExpression(lhs, ops, rest) { return makeBinaryExpression(lhs.asStc, ops.children.map(c => c.asStc), rest.children.map(c => c.asStc)); },
     DotExpression(lhs, _dots, nms, args) { return makeDotExpression(lhs.asStc, nms.children.map(c => c.asStc), args.children.map(c => c.asStc)); },
-    Temporaries(_l, tmp, _r) { return 'var ' + stc_comma_list(tmp) + '; '; },
+    Temporaries(_l, tmp, _r) { return 'var ' + commaList(tmp) + '; '; },
     TemporaryWithInitializer(nm, _, e) { return nm.asStc + ' = ' + e.asStc; },
     Temporary(tmp) { return tmp.asStc; },
     NonFinalExpression(e, _, stm) { return e.asStc + '; ' + stm.asStc; },
@@ -26,10 +21,12 @@ stc.semantics.addAttribute('asStc', {
     NonemptyListOf(first, _sep, rest) { return first.asStc + rest.children.map(c => c.asStc); },
     Block(_l, blk, _r) { return blk.asStc; },
     BlockBody(arg, tmp, prm, stm) { return '{ ' + arg.asStc + tmp.asStc + prm.asStc + stm.asStc + ' }'; },
-    BlockArguments(_l, arg, _r) { return 'arg ' + stc_comma_list(arg) + '; '; },
+    BlockArguments(_l, arg, _r) { return 'arg ' + commaList(arg) + '; '; },
     Primitive(_l, _s, _r) { return this.sourceString; },
-    ArrayExpression(_l, array, _r) { return '[' + stc_comma_list(array) + ']'; },
-    ImplicitMessage(rcv, _l, arg, _r) { return rcv.asStc + '(' + stc_comma_list(arg) + ')'; },
+    ArrayExpression(_l, array, _r) { return '[' + commaList(array) + ']'; },
+    ParameterList(_l, sq, _r) { return '(' + commaList(sq) + ')'; },
+    ImplicitMessage(rcv, arg) { return rcv.asStc + arg.asStc; },
+    ImplicitMessageWithTrailingClosures(rcv, arg, tc) { return rcv.asStc + arg.asStc + tc.children.map(c => c.asStc); },
     ClassDefinition(clsNm, _l, tmp, mthNm, mthBlk, _r) { return makeClassDefinition(clsNm.asStc, tmp.asStc, mthNm.children.map(c => c.asStc), mthBlk.children.map(c => c.asStc)); },
     ClassExtension(_e, clsNm, _l, mthNm, mthBlk, _r) { return makeClassExtension(clsNm.asStc, mthNm.children.map(c => c.asStc), mthBlk.children.map(c => c.asStc)); },
 	methodName(name) { return name.asStc },
@@ -44,6 +41,10 @@ stc.semantics.addAttribute('asStc', {
     _iter(...children) { return children.map(c => c.asStc).join(''); },
     _terminal() { return this.sourceString; }
 });
+
+function commaList(node) {
+    return node.asIteration().children.map(e => e.asStc).join(', ');
+}
 
 function makeBinaryExpression(left, ops, rights) {
 	while (ops.length > 0) {
