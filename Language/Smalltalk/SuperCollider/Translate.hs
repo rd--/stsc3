@@ -200,12 +200,15 @@ stcToExpr =
   stcParseInitializerDefinition
 
 -- | exprPrintJs of stcToExpr
-stcToJs :: String -> String
-stcToJs =  Expr.exprPrintJs (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
+stcToJs :: Maybe String -> String -> String
+stcToJs maybePrefix =  Expr.exprPrintJs (Expr.jsRenamerFromTable maybePrefix Expr.jsDefaultRenamingTable) . stcToExpr
 
 -- | exprPrintScheme of stcToExpr
 stcToScheme :: String -> String
-stcToScheme =  Expr.exprPrintScheme (Expr.jsRenamerFromTable Expr.jsDefaultRenamingTable) . stcToExpr
+stcToScheme =  Expr.exprPrintScheme (Expr.jsRenamerFromTable Nothing Expr.jsDefaultRenamingTable) . stcToExpr
+
+stcToAst :: String -> String
+stcToAst =  show . stcToExpr
 
 -- | Statements list of .stc Init Expr.
 stcToExprStm :: String -> [Expr.Expr]

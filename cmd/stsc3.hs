@@ -178,7 +178,7 @@ help =
     ," translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
     ," translate directory [opt] som fileout <input-directory> <output-file>"
     ," translate library [opt] fileout som <input-file> <output-directory>"
-    ," translate [ stream ] stc { js | sc | scm | st } [ <input-file> <output-file> ]"
+    ," translate [ stream ] stc { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
     ]
 
 main :: IO ()
@@ -187,9 +187,10 @@ main = do
   let trs in_ty out_ty =
         case (in_ty, out_ty) of
           ("stc", "st") -> Sc.stcToSt
-          ("stc", "js") -> Sc.stcToJs
+          ("stc", "js") -> Sc.stcToJs (Just "sc.") -- Nothing
           ("stc", "sc") -> Sc.stcToSc
           ("stc", "scm") -> Sc.stcToScheme
+          ("stc", "ast") -> Sc.stcToAst
           _ -> error "stsc3: unknown translation"
   case a of
     ["rewrite","ndef"] -> interact Sc.stcUgenToNdef

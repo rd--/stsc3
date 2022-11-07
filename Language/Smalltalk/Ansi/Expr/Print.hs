@@ -208,8 +208,8 @@ jsCharRenamingTable =
       f aString = fromMaybe aString (jsOperatorGenericRename aString)
   in zip lhs (map f lhs)
 
-jsRenamerFromTable :: [(String, String)] -> String -> String
-jsRenamerFromTable tbl nm = fromMaybe nm (lookup nm tbl)
+jsRenamerFromTable :: Maybe String -> [(String, String)] -> String -> String
+jsRenamerFromTable maybePrefix tbl nm = fromMaybe "" maybePrefix ++ fromMaybe nm (lookup nm tbl)
 
 {- | Checks that the arity agrees (which should be correct by construction)
      and that all subsequent keyword parts are "value".
@@ -240,7 +240,7 @@ literalPrintJs l =
 {- | Print Js notation of Expr.
 
 import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
-rw = exprPrintJs (jsRenamerFromTable jsDefaultRenamingTable) . stcToExpr
+rw = exprPrintJs (jsRenamerFromTable (Just "sc.") jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]
 map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
@@ -260,19 +260,26 @@ exprPrintJs rw expr =
     Literal x -> literalPrintJs x
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Send rcv (Message sel arg) ->
-      case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
-        (_, "apply", [Array p]) -> printf "%s(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) p))
+      case (rcv, stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg), arg) of
+        (_, "apply", [Array p]) ->
+          let rcv' = case rcv of
+                       Identifier msg -> Identifier (rw msg)
+                       _ -> rcv
+          in printf "%s(%s)" (exprPrintJs rw rcv') (intercalate ", " (map (exprPrintJs rw) p))
         (_, "value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
-        (Identifier "Float", "pi", []) -> "pi"
-        (Identifier "Float", "infinity", _) -> "inf"
-        (_, msg, _) -> printf "%s(%s)" msg (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
-    Lambda _ arg tmp (stm, ret) ->
-      let ret' = maybe [] (return . printf "return %s;" . exprPrintJs rw) ret
+        (Identifier "Float", "pi", []) -> (rw "pi")
+        (Identifier "Float", "infinity", _) -> (rw "inf")
+        (_, msg, _) -> printf "%s(%s)" (rw msg) (intercalate ", " (map (exprPrintJs rw) (rcv : arg)))
+    Lambda _ arg tmp (stm, Nothing) ->
+      let numStm = length stm
+          (stm', ret) = if null stm then ([], Nothing) else (take (numStm - 1) stm, Just (last stm))
+          ret' = maybe [] (return . printf "return %s;" . exprPrintJs rw) ret
       in printf
          "function(%s) { %s %s }"
          (intercalate ", " arg)
          (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
-         (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm ++ ret'))
+         (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm' ++ ret'))
+    Lambda {} -> error "exprPrintJs: nonLocalReturn"
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
     Init c tmp e ->
       let x = intercalate "; "  (map (exprPrintJs rw) e)
@@ -304,7 +311,7 @@ exprTmpStmScheme rw tmp (stm, ret) =
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
 import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
-rw = exprPrintScheme (jsRenamerFromTable jsDefaultRenamingTable) . stcToExpr
+rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]
 map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
