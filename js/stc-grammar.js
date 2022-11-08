@@ -9,13 +9,24 @@ Stc {
       | InitializerDefinition
 
     InitializerDefinition
-      = Temporaries* ExpressionSequence
+      = Temporaries? ExpressionSequence
 
     ExpressionSequence
       = ListOf<Expression, ";">
 
     Temporaries
+      = TemporariesKeyword+
+      | TemporariesWithInitializerSyntax
+      | TemporariesSyntax
+
+    TemporariesKeyword
       = "var" NonemptyListOf<Temporary, ","> ";"
+
+    TemporariesSyntax
+      = "|" identifier+ "|"
+
+    TemporariesWithInitializerSyntax
+      = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
 
     TemporaryWithInitializer
       = identifier "=" Expression
@@ -42,9 +53,19 @@ Stc {
       = "{" BlockBody "}"
 
     BlockBody
-      = BlockArguments? Temporaries* Primitive? Statements?
+      = BlockArguments? Temporaries? Primitive? Statements?
 
     BlockArguments
+      = BlockArgumentsSyntax
+      | BlockArgumentsKeyword
+
+    ArgumentName
+      = ":" identifier
+
+    BlockArgumentsSyntax
+      = ArgumentName+ "|"
+
+    BlockArgumentsKeyword
       = "arg" NonemptyListOf<identifier, ","> ";"
 
     Primitive
@@ -52,6 +73,24 @@ Stc {
 
     ArrayExpression
       = "[" ListOf<Expression, ","> "]"
+
+    AssociationExpression
+      = identifier ":" Expression
+
+    DictionaryExpression
+      = "(" ListOf<AssociationExpression, ","> ")"
+
+    AtSyntax
+      = Expression "[" Expression "]"
+
+    PutSyntax
+      = Expression "[" Expression "]" "=" Expression
+
+    AtQuotedSyntax
+      = Expression ":" identifier
+
+    PutQuotedSyntax
+      = Expression ":" identifier "=" Expression
 
     ParameterList
       =  "(" ListOf<Expression, ","> ")"
@@ -77,6 +116,7 @@ Stc {
       | identifier
       | literal
       | ParenthesisedExpression
+      | DictionaryExpression
       | ArrayExpression
 
     BinaryExpression
@@ -89,7 +129,11 @@ Stc {
       = Primary ("." identifier NonEmptyParameterList?)+
 
     Expression
-      = Assignment
+      = PutSyntax
+      | AtSyntax
+      | PutQuotedSyntax
+      | AtQuotedSyntax
+      | Assignment
       | BinaryExpression
       | Primary
 
@@ -98,7 +142,7 @@ Stc {
       | ClassDefinition
 
     ClassDefinition
-      = identifier "{" Temporaries? (methodName Block)* "}"
+      = identifier "{" TemporariesKeyword? (methodName Block)* "}"
 
     ClassExtension
       = "+" identifier "{" (methodName Block)* "}"
