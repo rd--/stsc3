@@ -69,7 +69,7 @@ Stc {
       = "arg" NonemptyListOf<identifier, ","> ";"
 
     Primitive
-      = "<primitive: " primitiveCharacter* ">"
+      = "<primitive:" primitiveCharacter* ">"
 
     ArrayExpression
       = "[" ListOf<Expression, ","> "]"
@@ -142,7 +142,7 @@ Stc {
       | ClassDefinition
 
     ClassDefinition
-      = identifier "{" TemporariesKeyword? (methodName Block)* "}"
+      = identifier "{" Temporaries? (methodName Block)* "}"
 
     ClassExtension
       = "+" identifier "{" (methodName Block)* "}"
@@ -236,8 +236,12 @@ export function parseAst(str) {
 	return extras.toAST(grammar.match(str));
 }
 
-export function temporariesNames(str) {
+export function temporariesKeywordNames(str) {
 	return extras.toAST(grammar.match(str))[0][0];
+}
+
+export function temporariesSyntaxNames(str) {
+	return extras.toAST(grammar.match(str))[0];
 }
 
 export function blockArity(str) {
@@ -247,6 +251,7 @@ export function blockArity(str) {
 
 /*
 import * as stc from './stc-grammar.js'
-stc.temporariesNames('var i, j;') //= ['i', 'j']
+stc.temporariesKeywordNames('var i, j;') //= ['i', 'j']
+stc.temporariesSyntaxNames('| i j |') //= ['i', 'j']
 stc.blockArity('{ arg i, j; i + 1 * j }') === 2
 */
