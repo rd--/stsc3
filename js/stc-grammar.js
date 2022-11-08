@@ -81,16 +81,16 @@ Stc {
       = "(" ListOf<AssociationExpression, ","> ")"
 
     AtSyntax
-      = Expression "[" Expression "]"
+      = Primary "[" Expression "]"
 
     PutSyntax
-      = Expression "[" Expression "]" "=" Expression
+      = Primary "[" Expression "]" "=" Expression
 
     AtQuotedSyntax
-      = Expression ":" identifier
+      = Primary ":" identifier
 
     PutQuotedSyntax
-      = Expression ":" identifier "=" Expression
+      = Primary ":" identifier "=" Expression
 
     ParameterList
       =  "(" ListOf<Expression, ","> ")"
@@ -108,7 +108,11 @@ Stc {
       = identifier "=" Expression
 
     Primary
-      = DotExpression
+      = PutSyntax
+      | PutQuotedSyntax
+      | AtSyntax
+      | AtQuotedSyntax
+      | DotExpression
       | Block
       | ImplicitMessageWithTrailingClosures
       | ImplicitMessage
@@ -129,11 +133,7 @@ Stc {
       = Primary ("." identifier NonEmptyParameterList?)+
 
     Expression
-      = PutSyntax
-      | AtSyntax
-      | PutQuotedSyntax
-      | AtQuotedSyntax
-      | Assignment
+      = Assignment
       | BinaryExpression
       | Primary
 

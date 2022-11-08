@@ -1,5 +1,7 @@
 import * as stc from './stc-grammar.js'
 
+const desugar = false;
+
 stc.semantics.addAttribute('asStc', {
     TopLevel(e) { return e.asStc; },
     InitializerDefinition(tmp, stm) { return tmp.asStc + stm.asStc; },
@@ -32,10 +34,10 @@ stc.semantics.addAttribute('asStc', {
     ArrayExpression(_l, array, _r) { return '[' + commaList(array) + ']'; },
     AssociationExpression(lhs, _arrow, rhs) { return lhs.asStc + ': ' + rhs.asStc; },
     DictionaryExpression(_l, dict, _r) { return '(' + commaList(dict) + ')'; },
-	AtSyntax(col, _l, key, _r) { return `${col.asStc}[${key.asStc}]`; },
-	PutSyntax(col, _l, key, _r, _e, val) { return `${col.asStc}[${key.asStc}] = ${val.asStc}`; },
-	AtQuotedSyntax(col, _c, key) { return `${col.asStc}:${key.asStc}`; },
-	PutQuotedSyntax(col, _c, key, _e, val) { return `${col.asStc}:${key.asStc} = ${val.asStc}`; },
+	AtSyntax(col, _l, key, _r) { return desugar ? `${col.asStc}.at(${key.asStc})` : `${col.asStc}[${key.asStc}]`; },
+	PutSyntax(col, _l, key, _r, _e, val) { return desugar ? `${col.asStc}.put(${key.asStc}, ${val.asStc})` : `${col.asStc}[${key.asStc}] = ${val.asStc}`; },
+	AtQuotedSyntax(col, _c, key) { return desugar ? `${col.asStc}.at('${key.asStc}')` : `${col.asStc}:${key.asStc}`; },
+	PutQuotedSyntax(col, _c, key, _e, val) { return desugar ? `${col.asStc}.put('${key.asStc}', ${val.asStc})` : `${col.asStc}:${key.asStc} = ${val.asStc}`; },
     ParameterList(_l, sq, _r) { return '(' + commaList(sq) + ')'; },
     ImplicitMessage(rcv, arg) { return rcv.asStc + arg.asStc; },
     ImplicitMessageWithTrailingClosures(rcv, arg, tc) { return rcv.asStc + arg.asStc + tc.children.map(c => c.asStc).join(' '); },
