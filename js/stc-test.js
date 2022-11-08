@@ -44,8 +44,3 @@ export function testAsStc() {
 		console.log(rw, '==', str == rw)
 	});
 };
-
-/*
-import { testAsStc } from './stc-test.js'
-testAsStc()
-*/

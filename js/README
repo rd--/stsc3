@@ -1,2 +1,2 @@
-import { stc } from './stc-test.js'
-stc.test.asStc()
+import { testAsStc } from './stc-test.js'
+testAsStc()

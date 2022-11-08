@@ -204,6 +204,19 @@ Stc {
     primitiveCharacter
       = ~(">" | lineTerminator) sourceCharacter
 
+    comment
+      = multiLineComment
+      | singleLineComment
+
+    multiLineComment
+       = "/*" (~"*/" sourceCharacter)* "*/"
+
+    singleLineComment
+      = "//" (~lineTerminator sourceCharacter)*
+
+    space
+      += comment
+
     sourceCharacter
       = any
 
