@@ -29,7 +29,14 @@ Stc {
       = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
 
     TemporaryWithInitializer
+      = TemporaryWithIdentifierInitializer
+      | TemporaryWithPatternInitializer
+
+    TemporaryWithIdentifierInitializer
       = identifier "=" Expression
+
+    TemporaryWithPatternInitializer
+      = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
 
     Temporary
       = TemporaryWithInitializer
@@ -115,6 +122,7 @@ Stc {
       | PutQuotedSyntax
       | AtSyntax
       | AtQuotedSyntax
+      | DotExpressionWithTrailingClosures
       | DotExpression
       | Block
       | ImplicitMessageWithTrailingClosures
@@ -134,7 +142,10 @@ Stc {
       =  "(" NonemptyListOf<Expression, ","> ")"
 
     DotExpression
-      = Primary ("." identifier NonEmptyParameterList?)+
+      = Primary ("." identifier ~"{" NonEmptyParameterList?)+
+
+    DotExpressionWithTrailingClosures
+      = Primary "." identifier NonEmptyParameterList? Block+
 
     Expression
       = Assignment
