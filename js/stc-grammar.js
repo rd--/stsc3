@@ -74,6 +74,9 @@ Stc {
     ArrayExpression
       = "[" ListOf<Expression, ","> "]"
 
+    ArrayRangeSyntax
+      = "[" Expression ".." Expression "]"
+
     AssociationExpression
       = identifier ":" Expression
 
@@ -84,13 +87,13 @@ Stc {
       = Primary "[" Expression "]"
 
     PutSyntax
-      = Primary "[" Expression "]" "=" Expression
+      = Primary "[" Expression "]" ":=" Expression
 
     AtQuotedSyntax
       = Primary ":" identifier
 
     PutQuotedSyntax
-      = Primary ":" identifier "=" Expression
+      = Primary ":" identifier ":=" Expression
 
     ParameterList
       =  "(" ListOf<Expression, ","> ")"
@@ -105,7 +108,7 @@ Stc {
       = "(" Expression ")"
 
     Assignment
-      = identifier "=" Expression
+      = identifier ":=" Expression
 
     Primary
       = PutSyntax
@@ -122,6 +125,7 @@ Stc {
       | ParenthesisedExpression
       | DictionaryExpression
       | ArrayExpression
+      | ArrayRangeSyntax
 
     BinaryExpression
       = Expression (binaryOperator Primary)+
