@@ -1,4 +1,4 @@
-// tw 0014 (f0) ; https://twitter.com/redFrik/status/24193534033
+// tw 0014 (f0) ; https://twitter.com/redFrik/status/24193534033 ; spl
 var f = {
 	arg i;
 	var a0 = SinOscFB(i + 1, 1 / 9) * 999;

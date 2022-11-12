@@ -1,4 +1,4 @@
-// reso-pulse ; jmcc #1
+// reso-pulse ; jmcc #1 ; spl
 var lfoFreq = 6;
 var lfo = LFNoise0(lfoFreq) * 1000 + 1200;
 var left = RLPF(

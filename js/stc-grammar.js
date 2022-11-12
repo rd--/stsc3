@@ -1,7 +1,7 @@
 import ohm from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 import { extras } from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 
-export const grammar = ohm.grammar(String.raw`
+export const stcGrammar = ohm.grammar(String.raw`
 Stc {
 
     TopLevel
@@ -241,26 +241,26 @@ Stc {
 }
 `);
 
-export const semantics = grammar.createSemantics();
+export const stcSemantics = stcGrammar.createSemantics();
 
-export function parse(str) {
-	return semantics(grammar.match(str));
+export function stcParse(str) {
+	return stcSemantics(stcGrammar.match(str));
 }
 
-export function parseAst(str) {
-	return extras.toAST(grammar.match(str));
+export function stcParseToAst(str) {
+	return extras.toAST(stcGrammar.match(str));
 }
 
-export function temporariesKeywordNames(str) {
-	return extras.toAST(grammar.match(str))[0][0];
+export function stcTemporariesKeywordNames(str) {
+	return stcParseToAst(str)[0][0];
 }
 
-export function temporariesSyntaxNames(str) {
-	return extras.toAST(grammar.match(str))[0];
+export function stcTemporariesSyntaxNames(str) {
+	return stcParseToAst(str)[0];
 }
 
-export function blockArity(str) {
-	const arg = extras.toAST(grammar.match(str))[1][0][0];
+export function stcBlockArity(str) {
+	const arg = stcParseToAst(str)[1][0][0];
 	return arg === null ? 0 : arg.length;
 }
 

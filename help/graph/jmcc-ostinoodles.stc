@@ -1,18 +1,18 @@
-// jmcc - ostinoodles
+// jmcc ; ostinoodles
 var z = OverlapTexture({
 	arg tr;
 	var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };
 	var root = 81 + TRand(-6, 6, tr);
-	var major = #[0, 2, 4, 5, 7, 9, 11].asLocalBuf;
+	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
 	var offset = TRand(-16, 16, tr);
-	var sequence = DegreeToKey(major, TScramble(tr, #[0, 1, 2, 3] + offset), 12) + root;
+	var sequence = DegreeToKey(major, TScramble(tr, [0, 1, 2, 3] + offset), 12) + root;
 	var f = TXLine(TExpRand(4, 24, tr), TExpRand(4, 24, tr), 12, tr);
 	var trig = Impulse(f, 0);
 	var freq = sequ.value(sequence.midiCps, trig);
 	var sig = LFTri(freq.kr, 0) * Decay2(trig, 0.004, 0.3).kr * 0.1;
 	Pan2(sig, TRand(-1, 1, tr), 1)
 }, 6, 3, 6);
-6.timesRepeat({ z = AllpassN(z, 0.04, { Rand(0, 0.04) }.dup(2), 16) });
+6.timesRepeat({ z := AllpassN(z, 0.04, { Rand(0, 0.04) }.dup(2), 16) });
 z
 
 // jmcc - ostinoodles ; keywords
@@ -20,9 +20,9 @@ var z = OverlapTexture({
 	arg tr;
 	var sequ = { arg s, tr; DmdOn(trig: tr, reset: 0, demandUGens: Seq(repeats: inf, list: s)) };
 	var root = 81 + TRand(lo: -6, hi: 6, trig: tr);
-	var major = #[0, 2, 4, 5, 7, 9, 11].asLocalBuf;
+	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
 	var offset = TRand(lo: -16, hi: 16, trig: tr);
-	var sequence = DegreeToKey(bufnum: major, in: TScramble(trigger: tr, inputs: #[0, 1, 2, 3] + offset), octave: 12) + root;
+	var sequence = DegreeToKey(bufnum: major, in: TScramble(trigger: tr, inputs: [0, 1, 2, 3] + offset), octave: 12) + root;
 	var f = TXLine(start: TExpRand(lo: 4, hi: 24, trig: tr), end: TExpRand(lo: 4, hi: 24, trig: tr), dur: 12, trig: tr);
 	var trig = Impulse(freq: f, phase: 0);
 	var freq = sequ(value: sequence.midiCps, value: trig);

@@ -1,14 +1,14 @@
-// analog bubbles ; jmcc
+// analog bubbles ; jmcc ; spl
 var f = MulAdd(LFSaw(0.4, 0), 24, MulAdd(LFSaw([8, 7.23], 0), 3, 80)).midiCps; // glissando function
 CombN(SinOsc(f, 0) * 0.04, 0.2, 0.2, 4) // echoing sine wave
 
-// analog bubbles (jmcc) #1
-var o = LFSaw(#[8, 7.23], 0) * 3 + 80;
+// analog bubbles (jmcc) #1 ; spl
+var o = LFSaw([8, 7.23], 0) * 3 + 80;
 var m = LFSaw(0.4, 0) * 24 + o;
 CombN(SinOsc(m.midiCps, 0) * 0.04, 0.2, 0.2, 4)
 
 // analog bubbles (jmcc) #1 ; keywords
-var o = LFSaw(freq: #[8, 7.23], iphase: 0) * 3 + 80;
+var o = LFSaw(freq: [8, 7.23], iphase: 0) * 3 + 80;
 var m = LFSaw(freq: 0.4, iphase: 0) * 24 + o; // glissando function
 var s = SinOsc(freq: m.midiCps, phase: 0) * 0.04;
 CombN(in: s, maxdelaytime: 0.2, delaytime: 0.2, decaytime: 4) * 0.1 // echoing sine wave
@@ -23,9 +23,9 @@ s = SinOsc(m.midiCps, 0) * 0.04;
 CombN(s, 0.2, 0.2, 4)
 
 //---- analog bubbles (jmcc) #1 ; filtermethods
-var o = LFSaw(#[8, 7.23], 0).mulAdd(3, 80);
+var o = LFSaw([8, 7.23], 0).mulAdd(3, 80);
 var m = LFSaw(0.4, 0).mulAdd(24, o);
 SinOsc(m.midiCps, 0).mul(0.04).combN(0.2, 0.2, 4)
 
 //---- analog bubbles (jmcc) #1 ; filtermethods ; left to right
-0.4.lfSaw(0).mul(24).add(#[8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4)
+0.4.lfSaw(0).mul(24).add([8, 7.23].lfSaw(0).mulAdd(3, 80)).midiCps.sinOsc(0).mul(0.04).combN(0.2, 0.2, 4)

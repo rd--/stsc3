@@ -25,7 +25,7 @@ fundamentals.withIndexCollect({
 
 // http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks
 var numVoices = 30;
-var fundamentals = { 200.0.rand(400.0) }.dup(numVoices).sorted.reverse;
+var fundamentals = { 200.0.rand(400.0) }.dup(numVoices).sorted.reversed;
 var finalPitches = (1.to(numVoices).collect({ arg each; (each / (numVoices / 6)).rounded * 12 }) + 14.5 ).midiCps;
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
 var ampEnvelope = CurveGen(1, [0, 1, 1, 0], [3, 21, 3], [2, 0, -4]);

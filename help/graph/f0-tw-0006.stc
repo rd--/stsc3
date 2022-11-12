@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; tweet0006 ; texture variant (rd)
+// https://sccode.org/1-4Qy ; tweet0006 ; texture variant (rd) ; spl
 OverlapTexture({
 	arg tr;
 	var n = MoogFF(ClipNoise() * 0.4, LFPar({ TRand(0, 0.3, tr) }.dup(2), 0) * 600 + 990, 2, 0);

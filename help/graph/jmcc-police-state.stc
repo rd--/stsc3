@@ -1,4 +1,4 @@
-// police state ; jmcc
+// police state ; jmcc ; spl
 var n = 4; // number of sirens
 CombL(
 	{
@@ -14,6 +14,14 @@ CombL(
 	+ MulAdd(LFNoise2(MulAdd(LFNoise2([0.4, 0.4]), 90, 620)), MulAdd(LFNoise2([0.3, 0.3]), 0.15, 0.18), 0),
 	0.3, 0.3, 3
 ) * 0.5
+
+// police state (jmcc) #2 ; spl
+var node = {
+	var f = SinOsc(Rand(0.02, 0.12), Rand(0, 2 * pi)) * Rand(0, 600) + 1000 + Rand(-300, 300);
+	Pan2(SinOsc(f, 0) * LFNoise2(100 + Rand(-20, 20)) * 0.1, Rand(-1, 1), 1)
+};
+var e = LFNoise2(LFNoise2([0.4, 0.4]) * 90 + 620) * (LFNoise2([0.3, 0.3]) * 0.15 + 0.18);
+CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5
 
 // police state ; jmcc ; keywords
 var n = 4; // number of sirens
@@ -31,11 +39,3 @@ CombL(
 	+ LFNoise2(freq: LFNoise2(freq: [0.4, 0.4], mul: 90, add: 620), mul: LFNoise2(freq: [0.3, 0.3], mul: 0.15, add: 0.18)),
 	maxdelaytime: 0.3, delaytime: 0.3, decaytime: 3
 ) * 0.5
-
-// police state (jmcc) #2
-var node = {
-	var f = SinOsc(Rand(0.02, 0.12), Rand(0, 2 * pi)) * Rand(0, 600) + 1000 + Rand(-300, 300);
-	Pan2(SinOsc(f, 0) * LFNoise2(100 + Rand(-20, 20)) * 0.1, Rand(-1, 1), 1)
-};
-var e = LFNoise2(LFNoise2(#[0.4, 0.4]) * 90 + 620) * (LFNoise2(#[0.3, 0.3]) * 0.15 + 0.18);
-CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5

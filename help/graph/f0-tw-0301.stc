@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; f0 ; 0301
+// https://sccode.org/1-4Qy ; f0 ; 0301 ; requires=kr
 var b = 0.to(3).collect({
 	arg i;
 	DmdFor(i + 1 / 9, 0, ControlIn(1, i + 1 % 4) + Seq(inf, 8.fib) % 9).kr

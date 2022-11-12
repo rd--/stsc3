@@ -7,4 +7,4 @@ var z = OverlapTexture({
 	var z = { { Ringz(t, TExpRand(100, 6000, tr), TRand(2, 6, tr)) }.dup(p).sum };
 	z.dup(2) * 0.1
 }, 4, 4, 6);
-CombN(z, 0.6, Rand(0.1, 0.6), 8) + z.reverse
+CombN(z, 0.6, Rand(0.1, 0.6), 8) + z.reversed

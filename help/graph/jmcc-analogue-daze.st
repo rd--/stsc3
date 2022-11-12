@@ -13,4 +13,4 @@ f := [ :octave :clockRate :pwmrate :fltrate |
 a := [ LFNoise0 freq: (LFNoise1 freq: 0.3 mul: 6000 add: 8000) kr ] dup * 0.07.
 x := Decay in: (Impulse freq: 2 phase: 0) decayTime: 0.15 mul: a.
 g := x + { f valueWithArguments: #(1 8 0.31 0.2). f valueWithArguments: #(0 2 0.13 0.11) }.
-(CombN in: g maxdelaytime: 0.375 delaytime: 0.375 decaytime: 5) + g reverse * 0.4.
+(CombN in: g maxdelaytime: 0.375 delaytime: 0.375 decaytime: 5) + g reversed * 0.4.

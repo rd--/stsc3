@@ -1,4 +1,4 @@
-// fast lfos with slow beats
+// fast lfos with slow beats ; spl
 OverlapTexture({
 	arg tr;
 	var a0 = TRand(40, 240, tr);

@@ -1,6 +1,6 @@
-// tw 600429640600186880 (es)
+// tw 600429640600186880 (es) ; spl
 var m = MouseX(0.925, 1, 0, 0.2);
-var l = LocalIn(2, 0) * m + (Dust2(#[1, 1]) * 9);
+var l = LocalIn(2, 0) * m + (Dust2([1, 1]) * 9);
 var s = 2.to(6).collect({
 	arg n;
 	AllpassC(l, 0.6, LFNoise2(0.01) * 0.01 + (1 / n), 1)

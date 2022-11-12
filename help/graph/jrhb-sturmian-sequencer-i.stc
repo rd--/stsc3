@@ -3,7 +3,7 @@ var rules = [[0, 1], [0]];
 var rewrite = {
 	arg n;
 	var r = [0];
-	n.timesRepeat({ r = r.collect({ arg e; rules.nth(e + 1) }).concatenation });
+	n.timesRepeat({ r := r.collect({ arg e; rules[e + 1] }).concatenation });
 	r
 };
 var strFunc = {

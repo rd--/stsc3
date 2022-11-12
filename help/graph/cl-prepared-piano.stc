@@ -19,7 +19,7 @@ OverlapTexture({
 		)
 	}.dup(c).sum;
 	a.timesRepeat({
-		y = AllpassN(y, 0.040, { TRand(0, 0.040, tr) }.dup(2), 8)
+		y := AllpassN(y, 0.040, { TRand(0, 0.040, tr) }.dup(2), 8)
 	});
 	y
 }, 5, 3, v)

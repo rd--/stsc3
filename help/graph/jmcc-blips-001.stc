@@ -1,4 +1,4 @@
-// blips 001 (jmcc) #SC3d1.5 ; graph rewrite
+// blips 001 (jmcc) #SC3d1.5 ; graph rewrite ; spl
 var z = OverlapTexture({
 	arg tr;
 	var blips = {
@@ -8,6 +8,6 @@ var z = OverlapTexture({
 	};
 	Pan2(blips.value * blips.value, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), 4, tr), 0.3)
 }, 2, 1, 12);
-z = z.distort;
-6.timesRepeat({ z = AllpassN(z, 0.05, { Rand(0, 0.05) }.dup, 4) });
+z := z.Distort;
+6.timesRepeat({ z := AllpassN(z, 0.05, { Rand(0, 0.05) }.dup, 4) });
 z

@@ -4,7 +4,7 @@ shiftRegister := [ :length :tr :in |
 	| buf count rd wr |
 	buf := BufAlloc numChannels: 1 numFrames: length.
 	count := PulseCount trig: tr reset: 0.
-	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: count + length iota loop: 1) reverse.
+	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: count + length iota loop: 1) reversed.
 	wr := DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1).
 	rd mrg: wr
 ].

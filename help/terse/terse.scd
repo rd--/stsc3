@@ -28,6 +28,7 @@
 3.99.trunc == 3                                             // truncate
 3.99.round(1) == 4.0                                        // round to specified decimal places ; c.f. roundTo:
 3.99.trunc(1) == 3.0                                        // truncate to specified decimal places
+12345.trunc(600) == 12000                                   // truncate to integer
 3.99.floor == 3                                             // round down
 3.99.ceil == 4                                              // round up
 5.factorial == 120                                          // factorial

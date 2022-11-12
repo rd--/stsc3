@@ -1,4 +1,4 @@
-// hell is busy (jmcc) #1 ; graph rewrite
+// hell is busy (jmcc) #1 ; graph rewrite ; spl
 OverlapTexture({
 	arg tr;
 	var e = LFPulse(TRand(1, 11, tr), 0, TRand(0, 0.7, tr)) * 0.04;

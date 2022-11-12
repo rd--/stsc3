@@ -1,4 +1,4 @@
-// alien meadow (jmcc) #6
+// alien meadow (jmcc) #6 ; spl
 OverlapTexture({
 	arg tr;
 	var z = TRand(0, 5000, tr);
