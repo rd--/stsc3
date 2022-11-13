@@ -1,4 +1,4 @@
-// 20061008 ; s-chirp ; rd
+// 20061008 ; s-chirp ; rd ; requires=kr
 var t = Dust(9).kr;
 var u = PulseDivider(t, 9, 0);
 var d = TIRand(MouseX(15, 0, 0, 0.1), MouseY(15, 27, 0, 0.1), t);

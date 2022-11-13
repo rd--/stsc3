@@ -1,4 +1,4 @@
-// sawed cymbals (jmcc) ; #10 ; graph rewrite
+// sawed cymbals (jmcc) ; #10 ; graph rewrite ; spl
 var p = 15;
 OverlapTexture({
 	arg tr;

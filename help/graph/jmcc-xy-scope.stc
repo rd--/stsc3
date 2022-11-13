@@ -1,10 +1,10 @@
-// mouse x controls phase relation ;  / shape = in-phase ; \ shape = out-of-phase ;  O shape = 90 degree phase relation ; jmcc
+// mouse x controls phase relation ;  / shape = in-phase ; \ shape = out-of-phase ;  O shape = 90 degree phase relation ; jmcc ; spl
 SinOsc(80, [0, MouseX(0, 2 * pi, 0, 0.2)]) / 3
 
-// harmonic relations ; jmcc
+// harmonic relations ; jmcc ; spl
 SinOsc([MouseX(60, 300, 0, 30) + 0.04, MouseY(60, 300, 1 , 30)], 0) * 0.1
 
-// harmonic relations ; jmcc
+// harmonic relations ; jmcc ; spl
 RLPF(
 	LFPulse(
 		[MouseX(60, 300, 0, 30) + 0.04, MouseY(60, 300, 0, 30)],
@@ -15,16 +15,16 @@ RLPF(
 	1
 )
 
-// panning a mono signal ; x = left channel, y = right channel ; jmcc
+// panning a mono signal ; x = left channel, y = right channel ; jmcc ; spl
 Pan2(BrownNoise(), MouseX(-1, 1, 0, 0.2), 0.1)
 
-// uncorrelated channels ; jmcc
+// uncorrelated channels ; jmcc ; spl
 { BrownNoise() }.dup(2) * 0.1
 
-// uncorrelated channels ; jmcc
+// uncorrelated channels ; jmcc ; spl
 { PinkNoise() }.dup(2) * 0.1
 
-// waveform ; jmcc
+// waveform ; jmcc ; spl
 [
 	LFTri(80, 0) * 0.2,
 	CombN(
@@ -35,7 +35,7 @@ Pan2(BrownNoise(), MouseX(-1, 1, 0, 0.2), 0.1)
 	) * SinOsc(80.04, 0.5 * pi).abs
 ]
 
-// waveform ; jmcc
+// waveform ; jmcc ; spl
 [
 	LFTri(80, 0) * 0.2,
 	CombN(
@@ -54,7 +54,7 @@ CombN(
 	0.3
 )
 
-// quad ; eye ; jmcc
+// quad ; eye ; jmcc ; spl
 var m = MouseX(0.5, 1, 0, 0.2);
 var a = LFPulse(200, 0, 0.3) * 0.05;
 var b = OnePole(a, m);

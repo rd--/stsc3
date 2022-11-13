@@ -1,4 +1,4 @@
-// 20060916 ; rd
+// 20060916 ; rd ; spl
 var mkRead = {
 	arg l, t;
 	BufRd(1, l.asLocalBuf, TRand(0, 6, t), 0, 1)

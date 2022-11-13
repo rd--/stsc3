@@ -1,4 +1,4 @@
-// jmcc ; ostinoodles
+// jmcc ; ostinoodles ; requires=TScramble
 var z = OverlapTexture({
 	arg tr;
 	var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };

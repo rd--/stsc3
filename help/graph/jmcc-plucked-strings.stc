@@ -1,4 +1,4 @@
-// plucked strings (jmcc)
+// plucked strings (jmcc) ; spl
 var i = {
 	var s0 = Impulse(Rand(2, 2.2), 0) * 0.3;
 	var s1 = Dust(0.5) * 0.3;

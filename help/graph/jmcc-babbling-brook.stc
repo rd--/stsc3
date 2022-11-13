@@ -5,9 +5,9 @@ var b = {
 };
 { b(14, 400, 500, 0.06) }.dup(2) + { b(20, 800, 1000, 0.10) }.dup(2)
 
-//---- babbling brook (jmcc) #SC3 ; filtermethods
+//---- babbling brook (jmcc) #SC3 ; left-to-right ; spl
 var b = {
 	arg f, m, a, g;
-	BrownNoise().onePole(0.99).rhpf(BrownNoise().lpf(f).mulAdd(m, a), 0.03).mul(g)
+	BrownNoise().OnePole(0.99).RHPF(BrownNoise().LPF(f).MulAdd(m, a), 0.03).Mul(g)
 };
 { b(14, 400, 500, 0.06) }.dup(2) + { b(20, 800, 1000, 0.10) }.dup(2)

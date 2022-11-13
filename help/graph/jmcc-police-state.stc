@@ -23,7 +23,7 @@ var node = {
 var e = LFNoise2(LFNoise2([0.4, 0.4]) * 90 + 620) * (LFNoise2([0.3, 0.3]) * 0.15 + 0.18);
 CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5
 
-// police state ; jmcc ; keywords
+//---- police state ; jmcc ; keywords
 var n = 4; // number of sirens
 CombL(
 	in: {

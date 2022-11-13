@@ -1,4 +1,4 @@
-// https://twitter.com/rukano/status/98315246548172800 ; texture variant
+// https://twitter.com/rukano/status/98315246548172800 ; texture variant ; spl
 OverlapTexture({
 	arg tr;
 	var h = TChoose(tr, [100, 800, 3000]);

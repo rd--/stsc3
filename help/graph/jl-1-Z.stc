@@ -1,4 +1,4 @@
-// http://sccode.org/1-Z (jl)
+// http://sccode.org/1-Z (jl) ; requires=kr
 var a = Lag(Impulse(8, 0), 0.1).kr;
 var b = Crackle(Lag(LFSaw(3, 0).abs, 0.1).kr * 1.8);
 var c = a * b;

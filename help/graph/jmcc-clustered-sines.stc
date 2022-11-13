@@ -1,4 +1,4 @@
-// clustered sines ; jmcc #2 ; graph rewrite
+// clustered sines ; jmcc #2 ; graph rewrite ; spl
 var n = 80;
 OverlapTexture({
 	arg tr;

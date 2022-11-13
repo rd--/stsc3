@@ -7,7 +7,7 @@ OverlapTexture({
 	{ RingzBank(s, { f * TRand(1, 13, tr) }.dup(p), [1], { TRand(0.4, 3.4, tr) }.dup(p)) }.dup
 }, 8, 2, 4)
 
-// repeating harmonic klank (jmcc) ; Klank
+//---- repeating harmonic klank (jmcc) ; Klank
 OverlapTexture({
 	arg tr;
 	var p = 8;

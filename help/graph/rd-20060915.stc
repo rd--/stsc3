@@ -1,6 +1,6 @@
-// 20060915 ; rd
+// 20060915 ; rd ; spl
 {
-	var np = 12;
+	var np = 11; // 12
 	var tr = Dust(0.075);
 	var prt = {
 		arg d, a;

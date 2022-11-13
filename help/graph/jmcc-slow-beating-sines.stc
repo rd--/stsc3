@@ -1,4 +1,4 @@
-// slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
+// slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf ; spl
 var n = 20;
 var d = 5.0;
 var p = List();

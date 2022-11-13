@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Q6 ; f0 ; risset
+// https://sccode.org/1-4Q6 ; f0 ; risset ; requires=TLinRand
 OverlapTexture({
 	arg tr;
 	var pan = TRand(-1, 1, tr);

@@ -1,16 +1,16 @@
-// coolant (jmcc)
+// coolant (jmcc) ; spl
 { RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { Rand(40, 2040) }.dup(10), [0.1], [1]) }.dup(2)
 
-// coolant (jmcc) ; default values
+// coolant (jmcc) ; default values ; spl
 { RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { Rand(40, 2040) }.dup(10), nil, nil) }.dup(2) * 0.1
 
-// coolant (jmcc) ; Rand->rand
+// coolant (jmcc) ; Rand->rand ; spl
 { RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { 40 + 2000.0.rand }.dup(10), [0.1], [1]) }.dup(2)
 
-// coolant (jmcc) ; Ringz
+// coolant (jmcc) ; Ringz ; spl
 var o = OnePole(BrownNoise() * 0.002, 0.95);
 var f = { Ringz(o, Rand(40, 2040), 1) * 0.1 };
-f.dup(10).splay2
+f.dup(10).Splay2
 
-//---- coolant (jmcc) ; filtermethods
-{ BrownNoise().mul(0.002).onePole(0.95).ringzBank({ 40 + 2000.0.rand }.dup(10), nil, nil) }.dup(2)
+//---- coolant (jmcc) ; filtermethods ; spl
+{ BrownNoise().Mul(0.002).OnePole(0.95).RingzBank({ 40 + 2000.0.rand }.dup(10), [0.1], [1]) }.dup(2)

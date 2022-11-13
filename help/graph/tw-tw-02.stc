@@ -1,4 +1,4 @@
-// https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; tw (tim walters)
+// https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; tw (tim walters) ; spl
 var nd = {
 	arg k;
 	var x = {

@@ -5,9 +5,9 @@ OverlapTexture({
 	Pan2(SinOsc(TRand(400, 2400, tr), 0), TRand(-1, 1, tr), e)
 }, 4, 4, 8)
 
-//---- hell is busy (jmcc) #1 ; graph rewrite ; filtermethods
+//---- hell is busy (jmcc) #1 ; graph rewrite ; lefttoright ; spl
 OverlapTexture({
 	arg tr;
-	var e = LFPulse(tr.tRand(1, 11), 0, tr.tRand(0, 0.7)) * 0.04;
-	SinOsc(tr.tRand(400, 2400), 0).pan2(tr.tRand(-1, 1), e)
+	var e = LFPulse(tr.TrRand(1, 11), 0, tr.TrRand(0, 0.7)) * 0.04;
+	SinOsc(tr.TrRand(400, 2400), 0).Pan2(tr.TrRand(-1, 1), e)
 }, 4, 4, 8)

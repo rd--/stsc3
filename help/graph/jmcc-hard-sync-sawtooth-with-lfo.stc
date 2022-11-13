@@ -6,10 +6,10 @@ var txt = OverlapTexture({
 }, 4, 4, 4);
 CombN(txt, 0.3, 0.3, 4) + txt.reversed
 
-//---- hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; filtermethods
+//---- hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; left-to-right ; spl
 var txt = OverlapTexture({
 	arg tr;
-	var f = tr.tRand(0, 50).mulAdd(1, 30).midiCps;
-	SyncSaw([f, f + 0.2], SinOsc(0.2, { tr.tRand(0, pi).mul(2) }.dup).mul(2).mulAdd(f, f * 3)).mul(0.05)
+	var f = tr.TrRand(0, 50).MulAdd(1, 30).MidiCps;
+	SyncSaw([f, f + 0.2], SinOsc(0.2, { tr.TrRand(0, pi).Mul(2) }.dup).Mul(2).MulAdd(f, f * 3)).Mul(0.05)
 }, 4, 4, 4);
-txt.combN(0.3, 0.3, 4) + txt.reversed
+txt.CombN(0.3, 0.3, 4) + txt.reversed

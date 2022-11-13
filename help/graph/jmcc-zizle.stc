@@ -1,4 +1,4 @@
-// zizle (jmcc) #SC3d1.5 ; graph rewrite
+// zizle (jmcc) #SC3d1.5 ; graph rewrite ; spl
 OverlapTexture({
 	arg tr;
 	var a = { arg f; (SinOsc(f * [TRand(0.7, 1.3, tr), 1], { TRand(0, 2 * pi, tr) }.dup) * 0.1).sum };
@@ -7,7 +7,7 @@ OverlapTexture({
 	Pan2(s, TRand(-1, 1, tr), 1)
 }, 4, 4, 12)
 
-// zizle (jmcc) #SC3d1.5 ; texture=overlap,4,4,12,inf
+// zizle (jmcc) #SC3d1.5 ; texture=overlap,4,4,12,inf ; spl
 var a = { arg f; (SinOsc(f * [Rand(0.7, 1.3), 1], { Rand(0, 2 * pi) }.dup) * 0.1).sum };
 var o = SinOsc(Rand(24, 108).midiCps, Rand(0, 2 * pi));
 var s = o * a.value(ExpRand(0.3, 8)).max(0) * a.value(ExpRand(6, 24)).abs;

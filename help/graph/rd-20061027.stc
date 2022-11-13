@@ -1,4 +1,4 @@
-// 20061027 ; rd
+// 20061027 ; rd ; spl
 var h0 = {
 	var n = LFNoise0(1) * 5 + 5;
 	var a = LFNoise0(1) * 0.2 + 1.2;

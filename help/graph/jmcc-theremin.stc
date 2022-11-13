@@ -1,4 +1,4 @@
-// theremin (jmcc)
+// theremin (jmcc) ; spl
 var mod = 7;
 var detune = 0;
 var x = MouseX(0, 0.9, 0, 0.2);

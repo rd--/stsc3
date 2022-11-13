@@ -1,4 +1,4 @@
-// tremulate (jmcc) ;  graph rewrite
+// tremulate (jmcc) ;  graph rewrite ; spl
 var voiceFunc = {
 	arg tr;
 	var f = TRand(400, 900, tr);

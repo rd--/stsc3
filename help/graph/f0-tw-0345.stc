@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; f0 ; 0345
+// https://sccode.org/1-4Qy ; f0 ; 0345 ; spl
 var f = {
 	arg i;
 	var c = SinOsc(8 - i / 8, 0);
