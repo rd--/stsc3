@@ -56,6 +56,12 @@ Stc {
       | FinalExpression
       | ReturnStatement
 
+    Routine
+      = "{!" RoutineBody "}"
+
+    RoutineBody
+      = BlockArguments? Temporaries? Primitive? Statements?
+
     Block
       = "{" BlockBody "}"
 
@@ -124,6 +130,7 @@ Stc {
       | AtQuotedSyntax
       | DotExpressionWithTrailingClosures
       | DotExpression
+      | Routine
       | Block
       | ImplicitMessageWithTrailingClosures
       | ImplicitMessage
