@@ -155,9 +155,20 @@ Stc {
     ClassExpression
       = ClassExtension
       | ClassDefinition
+      | TraitExtension
+      | TraitDefinition
+
+    TraitList
+      = ":" "[" NonemptyListOf<identifier, ","> "]"
+
+    TraitDefinition
+      = "@" identifier "{" (methodName Block)* "}"
+
+    TraitExtension
+      = "+" "@" identifier "{" (methodName Block)* "}"
 
     ClassDefinition
-      = identifier "{" Temporaries? (methodName Block)* "}"
+      = identifier TraitList? "{" Temporaries? (methodName Block)* "}"
 
     ClassExtension
       = "+" identifier "{" (methodName Block)* "}"
