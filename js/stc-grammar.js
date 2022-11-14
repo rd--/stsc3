@@ -4,124 +4,28 @@ import { extras } from 'https://unpkg.com/ohm-js@16/dist/ohm.esm.js';
 export const stcGrammar = ohm.grammar(String.raw`
 Stc {
 
-    TopLevel
-      = ClassExpression+
-      | InitializerDefinition
-
-    InitializerDefinition
-      = Temporaries? ExpressionSequence
-
-    ExpressionSequence
-      = ListOf<Expression, ";">
-
-    Temporaries
-      = TemporariesKeyword+
-      | TemporariesWithInitializerSyntax
-      | TemporariesSyntax
-
-    TemporariesKeyword
-      = "var" NonemptyListOf<Temporary, ","> ";"
-
-    TemporariesSyntax
-      = "|" identifier+ "|"
-
-    TemporariesWithInitializerSyntax
-      = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
-
-    TemporaryWithInitializer
-      = TemporaryWithIdentifierInitializer
-      | TemporaryWithPatternInitializer
-
-    TemporaryWithIdentifierInitializer
-      = identifier "=" Expression
-
-    TemporaryWithPatternInitializer
-      = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
-
-    Temporary
-      = TemporaryWithInitializer
-      | identifier
-
-    NonFinalExpression
-      = Expression ";" Statements
-
-    FinalExpression
-      = Expression ";"?
-
-    ReturnStatement
-      = "^" Expression ";"?
-
-    Statements
-      = NonFinalExpression
-      | FinalExpression
-      | ReturnStatement
-
-    Routine
-      = "{!" RoutineBody "}"
-
-    RoutineBody
-      = BlockArguments? Temporaries? Primitive? Statements?
-
-    Block
-      = "{" BlockBody "}"
-
-    BlockBody
-      = BlockArguments? Temporaries? Primitive? Statements?
-
-    BlockArguments
-      = BlockArgumentsSyntax
-      | BlockArgumentsKeyword
-
-    ArgumentName
-      = ":" identifier
-
-    BlockArgumentsSyntax
-      = ArgumentName+ "|"
-
-    BlockArgumentsKeyword
-      = "arg" NonemptyListOf<identifier, ","> ";"
-
-    Primitive
-      = "<primitive:" primitiveCharacter* ">"
-
-    ArrayExpression
-      = "[" ListOf<Expression, ","> "]"
-
-    ArrayRangeSyntax
-      = "[" Expression ".." Expression "]"
-
-    AssociationExpression
-      = identifier ":" Expression
-
-    DictionaryExpression
-      = "(" ListOf<AssociationExpression, ","> ")"
-
-    AtSyntax
-      = Primary "[" Expression "]"
-
-    PutSyntax
-      = Primary "[" Expression "]" ":=" Expression
-
-    AtQuotedSyntax
-      = Primary ":" identifier
-
-    PutQuotedSyntax
-      = Primary ":" identifier ":=" Expression
-
-    ParameterList
-      =  "(" ListOf<Expression, ","> ")"
-
-    ImplicitMessage
-      = identifier ParameterList
-
-    ImplicitMessageWithTrailingClosures
-      = identifier NonEmptyParameterList? Block+
-
-    ParenthesisedExpression
-      = "(" Expression ")"
-
-    Assignment
-      = identifier ":=" Expression
+    TopLevel = LibraryExpression+ | Program
+    LibraryExpression = ClassExpression | TraitExpression
+    ClassExpression = ClassExtension | ClassDefinition
+    ClassExtension = "+" identifier "{" (methodName Block)* "}"
+    ClassDefinition = identifier TraitList? "{" Temporaries? (methodName Block)* "}"
+    TraitList = ":" "[" NonemptyListOf<identifier, ","> "]"
+    TraitExpression = TraitExtension | TraitDefinition
+    TraitExtension = "+" "@" identifier "{" (methodName Block)* "}"
+    TraitDefinition = "@" identifier "{" (methodName Block)* "}"
+    Program = Temporaries? ExpressionSequence
+    Temporaries = TemporariesKeyword+ | TemporariesWithInitializerSyntax | TemporariesSyntax
+    TemporariesKeyword = "var" NonemptyListOf<Temporary, ","> ";"
+    Temporary = TemporaryWithInitializer | identifier
+    TemporaryWithInitializer = TemporaryWithIdentifierInitializer | TemporaryWithPatternInitializer
+    TemporaryWithIdentifierInitializer = identifier "=" Expression
+    TemporaryWithPatternInitializer = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
+    TemporariesWithInitializerSyntax = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
+    TemporariesSyntax = "|" identifier+ "|"
+    ExpressionSequence = ListOf<Expression, ";">
+    Expression = Assignment | BinaryExpression | Primary
+    Assignment = identifier ":=" Expression
+    BinaryExpression = Expression (binaryOperator Primary)+
 
     Primary
       = PutSyntax
@@ -130,7 +34,6 @@ Stc {
       | AtQuotedSyntax
       | DotExpressionWithTrailingClosures
       | DotExpression
-      | Routine
       | Block
       | ImplicitMessageWithTrailingClosures
       | ImplicitMessage
@@ -142,120 +45,63 @@ Stc {
       | ArrayExpression
       | ArrayRangeSyntax
 
-    BinaryExpression
-      = Expression (binaryOperator Primary)+
+    PutSyntax = Primary "[" Expression "]" ":=" Expression
+    PutQuotedSyntax = Primary ":" identifier ":=" Expression
+    AtSyntax = Primary "[" Expression "]"
+    AtQuotedSyntax = Primary ":" identifier
 
-    NonEmptyParameterList
-      =  "(" NonemptyListOf<Expression, ","> ")"
+    DotExpressionWithTrailingClosures = Primary "." identifier NonEmptyParameterList? Block+
+    NonEmptyParameterList =  "(" NonemptyListOf<Expression, ","> ")"
+    DotExpression = Primary ("." identifier ~"{" NonEmptyParameterList?)+
 
-    DotExpression
-      = Primary ("." identifier ~"{" NonEmptyParameterList?)+
+    Block = "{" BlockBody "}"
+    BlockBody = BlockArguments? Temporaries? Primitive? Statements?
+    BlockArguments = BlockArgumentsSyntax | BlockArgumentsKeyword
+    BlockArgumentsSyntax = ArgumentName+ "|"
+    ArgumentName = ":" identifier
+    BlockArgumentsKeyword = "arg" NonemptyListOf<identifier, ","> ";"
+    Primitive = "<primitive:" primitiveCharacter* ">"
+    Statements = NonFinalExpression | FinalExpression | ReturnStatement
+    NonFinalExpression = Expression ";" Statements
+    FinalExpression = Expression ";"?
+    ReturnStatement = "^" Expression ";"?
 
-    DotExpressionWithTrailingClosures
-      = Primary "." identifier NonEmptyParameterList? Block+
+    ImplicitMessageWithTrailingClosures = identifier NonEmptyParameterList? Block+
+    ImplicitMessage = identifier ParameterList
+    ParameterList =  "(" ListOf<Expression, ","> ")"
+    ParenthesisedExpression = "(" Expression ")"
+    DictionaryExpression = "(" ListOf<AssociationExpression, ","> ")"
+    AssociationExpression = identifier ":" Expression
+    ArrayExpression = "[" ListOf<Expression, ","> "]"
+    ArrayRangeSyntax = "[" Expression ".." Expression "]"
 
-    Expression
-      = Assignment
-      | BinaryExpression
-      | Primary
+    methodName = identifier | binaryOperator
+    identifier = letter letterOrDigitOrUnderscore*
+    letterOrDigitOrUnderscore = letter | digit | "_"
+    reservedIdentifier = "nil" | "true" | "false"
+    binaryOperator = binaryChar+
+    binaryChar = "!" | "%" | "&" | "*" | "+" | "/" | "<" | "=" | ">" | "?" | "@" | "~" | "|" | "-"
 
-    ClassExpression
-      = ClassExtension
-      | ClassDefinition
-      | TraitExtension
-      | TraitDefinition
+    literal = numberLiteral | stringLiteral | symbolLiteral
+    numberLiteral = floatLiteral | integerLiteral
+    floatLiteral = "-"? digit+ "." digit+
+    integerLiteral = "-"? digit+
+    stringLiteral = doubleQuoteChar stringCharacter* doubleQuoteChar
+    doubleQuoteChar = "\""
+    stringCharacter = ~(doubleQuoteChar | lineTerminator) sourceCharacter
+    lineTerminator = "\n" | "\r"
+    sourceCharacter = any
+    symbolLiteral = singleQuoteChar symbolCharacter* singleQuoteChar
+    singleQuoteChar = "\'"
+    symbolCharacter = ~(singleQuoteChar | lineTerminator) sourceCharacter
 
-    TraitList
-      = ":" "[" NonemptyListOf<identifier, ","> "]"
+    primitiveCharacter = ~(">" | lineTerminator) sourceCharacter
 
-    TraitDefinition
-      = "@" identifier "{" (methodName Block)* "}"
+    comment = multiLineComment | singleLineComment
+    multiLineComment = "/*" (~"*/" sourceCharacter)* "*/"
+    singleLineComment = "//" (~lineTerminator sourceCharacter)*
+    space += comment
 
-    TraitExtension
-      = "+" "@" identifier "{" (methodName Block)* "}"
-
-    ClassDefinition
-      = identifier TraitList? "{" Temporaries? (methodName Block)* "}"
-
-    ClassExtension
-      = "+" identifier "{" (methodName Block)* "}"
-
-    methodName
-      = identifier
-      | binaryOperator
-
-    literal
-      = numberLiteral
-      | stringLiteral
-      | symbolLiteral
-
-    binaryChar
-      = "!" | "%" | "&" | "*" | "+" | "/" | "<" | "=" | ">" | "?" | "@" | "~" | "|" | "-"
-
-    binaryOperator
-      = binaryChar+
-
-    numberLiteral
-      = floatLiteral
-      | integerLiteral
-
-    integerLiteral
-      = "-"? digit+
-
-    floatLiteral
-      = "-"? digit+ "." digit+
-
-    letterOrDigitOrUnderscore
-      = letter
-      | digit
-      | "_"
-
-    identifier
-      = letter letterOrDigitOrUnderscore*
-
-    reservedIdentifier
-      = "nil" | "true" | "false" | "this"
-
-    doubleQuoteChar
-      = "\""
-
-    stringLiteral
-      = doubleQuoteChar stringCharacter* doubleQuoteChar
-
-    stringCharacter
-      = ~(doubleQuoteChar | lineTerminator) sourceCharacter
-
-    singleQuoteChar
-      = "\'"
-
-    symbolLiteral
-       = singleQuoteChar symbolCharacter* singleQuoteChar
-
-    symbolCharacter
-      = ~(singleQuoteChar | lineTerminator) sourceCharacter
-
-    primitiveCharacter
-      = ~(">" | lineTerminator) sourceCharacter
-
-    comment
-      = multiLineComment
-      | singleLineComment
-
-    multiLineComment
-       = "/*" (~"*/" sourceCharacter)* "*/"
-
-    singleLineComment
-      = "//" (~lineTerminator sourceCharacter)*
-
-    space
-      += comment
-
-    sourceCharacter
-      = any
-
-    lineTerminator
-      = "\n"
-      | "\r"
 }
 `);
 
