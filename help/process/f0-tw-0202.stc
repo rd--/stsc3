@@ -8,3 +8,14 @@ inf.do({
 	}.play;
 	(i % 5 + 1).seconds.wait
 })
+
+// https://sccode.org/1-4Qy ; f0 ; 0202 ; spl
+{
+	arg i;
+	{
+		var b = 0.1;
+		var p = SinOsc(DmdFor(b, 0, Seq(9, [0, i % 9, 2, 3, 4, 0, 2, 1] * 150)), 0);
+		Pan2(SinOsc(i, p), i % 3 - 1, b)
+	}.play;
+	(delay: (i % 5 + 1).seconds, next: i + 1)
+}.temporalRecursion(1)

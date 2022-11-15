@@ -12,3 +12,16 @@ var f = {
 	f.value(a + 3 / d % 9)
 };
 f.value(4.to(12))
+
+// https://sccode.org/1-4Qy ; f0 ; 0293 ; spl
+{
+	arg a;
+	var d;
+	{
+		var i = a[1];
+		var b = Saw(i);
+		d := 1 / i;
+		Release(Pan2(SinOscFB(DmdFor(d, 0, Seq(1, a * 99 / 2)), b), b, 1 / 5), 0.02, 8, 0.02)
+	}.play;
+	(delay: 2.seconds, next: a + 3 / d % 9)
+}.temporalRecursion([4 .. 12])

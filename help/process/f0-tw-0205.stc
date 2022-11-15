@@ -7,3 +7,13 @@ var a = [1, 3, 5, 7, 9] * 99;
 	}.play;
 	2.seconds.wait
 }.loop
+
+// https://sccode.org/1-4Qy ; f0 ; 0205 ; spl
+{
+	arg i;
+	var a = Wrap(i * 9, 99, 8000);
+	{
+		Release(SinOsc(DmdFor(1 / [8, 9], 0, Seq(99, a)), 0) * 0.1, 0, 0, 9)
+	}.play;
+	(delay: 2.seconds, next: a)
+}.temporalRecursion([1, 3, 5, 7, 9] * 99)
