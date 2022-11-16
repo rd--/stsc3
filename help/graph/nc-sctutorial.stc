@@ -1,4 +1,4 @@
-// https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1
+// https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1 ; spl
 var n = 11;
 var mk = {
 	var freq = Rand(50, 560.3);

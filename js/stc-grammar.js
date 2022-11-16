@@ -33,10 +33,11 @@ Stc {
       | PutQuotedSyntax
       | AtSyntax
       | AtQuotedSyntax
-      | DotExpressionWithTrailingClosures
+      | DotExpressionWithTrailingClosuresSyntax
+      | DotExpressionWithAssignmentSyntax
       | DotExpression
       | Block
-      | ApplyWithTrailingClosures
+      | ApplyWithTrailingClosuresSyntax
       | Apply
       | reservedIdentifier
       | identifier
@@ -52,8 +53,9 @@ Stc {
     AtSyntax = Primary "[" Expression "]"
     AtQuotedSyntax = Primary ":" identifier
 
-    DotExpressionWithTrailingClosures = Primary "." identifier NonEmptyParameterList? Block+
+    DotExpressionWithTrailingClosuresSyntax = Primary "." identifier NonEmptyParameterList? Block+
     NonEmptyParameterList =  "(" NonemptyListOf<Expression, ","> ")"
+    DotExpressionWithAssignmentSyntax = Primary "." identifier ":=" Expression
     DotExpression = Primary ("." identifier ~"{" NonEmptyParameterList?)+
 
     Block = "{" BlockBody "}"
@@ -68,7 +70,7 @@ Stc {
     FinalExpression = Expression ";"?
     ReturnStatement = "^" Expression ";"?
 
-    ApplyWithTrailingClosures = identifier NonEmptyParameterList? Block+
+    ApplyWithTrailingClosuresSyntax = identifier NonEmptyParameterList? Block+
     Apply = identifier ParameterList
     ParameterList =  "(" ListOf<Expression, ","> ")"
     ParenthesisedExpression = "(" Expression ")"

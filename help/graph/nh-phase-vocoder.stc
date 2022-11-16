@@ -1,4 +1,4 @@
-// phase vocoder (nh) ; https://scsynth.org/t/old-school-vocoders/5198/6 ; warning: AudioIn
+// phase vocoder (nh) ; https://scsynth.org/t/old-school-vocoders/5198/6 ; warning: AudioIn ; requires=kr
 var src = AudioIn([1]);
 var freq = { TChoose(Dust(0.5).kr, 60 + [-9, -7, -5, -3, -2, 0, 2, 3, 5, 7, 9, 10]) }.dup(3).midiCps;
 var numBands = 32;

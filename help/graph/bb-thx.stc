@@ -1,4 +1,4 @@
-// http://earslap.com/article/recreating-the-thx-deep-note.html ; 30 oscillators together, distributed across the stereo field
+// http://earslap.com/article/recreating-the-thx-deep-note.html ; 30 oscillators together, distributed across the stereo field ; spl
 var numVoices = 30;
 var fundamentals = { Rand(200, 400) }.dup(numVoices);
 fundamentals.collect({
@@ -10,9 +10,9 @@ fundamentals.collect({
 	)
 }).sum
 
-// http://earslap.com/article/recreating-the-thx-deep-note.html ; adding random wobbling to freqs, sorting randoms, lowpassing ; fundamentals are sorted, so higher frequencies drift more.
+// http://earslap.com/article/recreating-the-thx-deep-note.html ; adding random wobbling to freqs, sorting randoms, lowpassing ; fundamentals are sorted, so higher frequencies drift more ; spl
 var numVoices = 30;
-var fundamentals = { 200.0.rand(400) }.dup(numVoices).sorted;
+var fundamentals = { 200.0.Rand(400) }.dup(numVoices).sorted;
 fundamentals.withIndexCollect({
 	arg freq0, index;
 	var freq = freq0 + (LFNoise2(0.5) * 3 * index);
