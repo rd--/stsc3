@@ -17,9 +17,10 @@ Stc {
     Temporaries = TemporariesKeyword+ | TemporariesWithInitializerSyntax | TemporariesSyntax
     TemporariesKeyword = "var" NonemptyListOf<Temporary, ","> ";"
     Temporary = TemporaryWithInitializer | identifier
-    TemporaryWithInitializer = TemporaryWithIdentifierInitializer | TemporaryWithPatternInitializer
+    TemporaryWithInitializer = TemporaryWithIdentifierInitializer | TemporaryWithDictionaryInitializer | TemporaryWithArrayInitializer
     TemporaryWithIdentifierInitializer = identifier "=" Expression
-    TemporaryWithPatternInitializer = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
+    TemporaryWithDictionaryInitializer = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
+    TemporaryWithArrayInitializer = "["  NonemptyListOf<identifier, ","> "]" "=" identifier
     TemporariesWithInitializerSyntax = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
     TemporariesSyntax = "|" identifier+ "|"
     ExpressionSequence = ListOf<Expression, ";">
@@ -35,8 +36,8 @@ Stc {
       | DotExpressionWithTrailingClosures
       | DotExpression
       | Block
-      | ImplicitMessageWithTrailingClosures
-      | ImplicitMessage
+      | ApplyWithTrailingClosures
+      | Apply
       | reservedIdentifier
       | identifier
       | literal
@@ -44,6 +45,7 @@ Stc {
       | DictionaryExpression
       | ArrayExpression
       | ArrayRangeSyntax
+      | IntervalSyntax
 
     PutSyntax = Primary "[" Expression "]" ":=" Expression
     PutQuotedSyntax = Primary ":" identifier ":=" Expression
@@ -66,14 +68,15 @@ Stc {
     FinalExpression = Expression ";"?
     ReturnStatement = "^" Expression ";"?
 
-    ImplicitMessageWithTrailingClosures = identifier NonEmptyParameterList? Block+
-    ImplicitMessage = identifier ParameterList
+    ApplyWithTrailingClosures = identifier NonEmptyParameterList? Block+
+    Apply = identifier ParameterList
     ParameterList =  "(" ListOf<Expression, ","> ")"
     ParenthesisedExpression = "(" Expression ")"
     DictionaryExpression = "(" ListOf<AssociationExpression, ","> ")"
     AssociationExpression = identifier ":" Expression
     ArrayExpression = "[" ListOf<Expression, ","> "]"
     ArrayRangeSyntax = "[" Expression ".." Expression "]"
+    IntervalSyntax = "(" Expression ".." Expression ")"
 
     methodName = identifier | binaryOperator
     identifier = letter letterOrDigitOrUnderscore*
