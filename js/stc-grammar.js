@@ -19,8 +19,8 @@ Stc {
     Temporary = TemporaryWithInitializer | identifier
     TemporaryWithInitializer = TemporaryWithIdentifierInitializer | TemporaryWithDictionaryInitializer | TemporaryWithArrayInitializer
     TemporaryWithIdentifierInitializer = identifier "=" Expression
-    TemporaryWithDictionaryInitializer = "("  NonemptyListOf<identifier, ","> ")" "=" identifier
-    TemporaryWithArrayInitializer = "["  NonemptyListOf<identifier, ","> "]" "=" identifier
+    TemporaryWithDictionaryInitializer = "("  NonemptyListOf<identifier, ","> ")" "=" Expression
+    TemporaryWithArrayInitializer = "["  NonemptyListOf<identifier, ","> "]" "=" Expression
     TemporariesWithInitializerSyntax = "|" NonemptyListOf<TemporaryWithInitializer, ","> ";" "|"
     TemporariesSyntax = "|" identifier+ "|"
     ExpressionSequence = ListOf<Expression, ";">
@@ -31,8 +31,10 @@ Stc {
     Primary
       = PutSyntax
       | PutQuotedSyntax
+      | ImplicitDictionaryPutSyntax
       | AtSyntax
       | AtQuotedSyntax
+      | ImplicitDictionaryAtSyntax
       | DotExpressionWithTrailingClosuresSyntax
       | DotExpressionWithAssignmentSyntax
       | DotExpression
@@ -48,8 +50,10 @@ Stc {
       | ArrayRangeSyntax
       | IntervalSyntax
 
+    ImplicitDictionaryPutSyntax = ":" identifier ":=" Expression
     PutSyntax = Primary "[" Expression "]" ":=" Expression
     PutQuotedSyntax = Primary ":" identifier ":=" Expression
+    ImplicitDictionaryAtSyntax = ":" identifier
     AtSyntax = Primary "[" Expression "]"
     AtQuotedSyntax = Primary ":" identifier
 
@@ -65,10 +69,9 @@ Stc {
     ArgumentName = ":" identifier
     BlockArgumentsKeyword = "arg" NonemptyListOf<identifier, ","> ";"
     Primitive = "<primitive:" primitiveCharacter* ">"
-    Statements = NonFinalExpression | FinalExpression | ReturnStatement
+    Statements = NonFinalExpression | FinalExpression
     NonFinalExpression = Expression ";" Statements
     FinalExpression = Expression ";"?
-    ReturnStatement = "^" Expression ";"?
 
     ApplyWithTrailingClosuresSyntax = identifier NonEmptyParameterList? Block+
     Apply = identifier ParameterList
@@ -85,26 +88,24 @@ Stc {
     letterOrDigitOrUnderscore = letter | digit | "_"
     reservedIdentifier = "nil" | "true" | "false"
     binaryOperator = binaryChar+
-    binaryChar = "!" | "%" | "&" | "*" | "+" | "/" | "<" | "=" | ">" | "?" | "@" | "~" | "|" | "-"
+    binaryChar = "!" | "%" | "&" | "*" | "+" | "/" | "<" | "=" | ">" | "?" | "@" | "~" | "|" | "-" | "^" | "#" | "$"
 
-    literal = numberLiteral | stringLiteral | symbolLiteral
+    literal = numberLiteral | singleQuotedStringLiteral | doubleQuotedStringLiteral | backtickQuotedStringLiteral
     numberLiteral = floatLiteral | integerLiteral
     floatLiteral = "-"? digit+ "." digit+
     integerLiteral = "-"? digit+
-    stringLiteral = doubleQuoteChar stringCharacter* doubleQuoteChar
-    doubleQuoteChar = "\""
-    stringCharacter = ~(doubleQuoteChar | lineTerminator) sourceCharacter
-    lineTerminator = "\n" | "\r"
+    singleQuotedStringLiteral = "\'" (~"\'" sourceCharacter)* "\'"
+    doubleQuotedStringLiteral = "\"" (~"\"" sourceCharacter)* "\""
+    backtickQuotedStringLiteral = backtickCharacter (~backtickCharacter sourceCharacter)* backtickCharacter
+    backtickCharacter = "${String.fromCodePoint(96)}"
     sourceCharacter = any
-    symbolLiteral = singleQuoteChar symbolCharacter* singleQuoteChar
-    singleQuoteChar = "\'"
-    symbolCharacter = ~(singleQuoteChar | lineTerminator) sourceCharacter
 
-    primitiveCharacter = ~(">" | lineTerminator) sourceCharacter
+    primitiveCharacter = ~">" sourceCharacter
 
     comment = multiLineComment | singleLineComment
     multiLineComment = "/*" (~"*/" sourceCharacter)* "*/"
     singleLineComment = "//" (~lineTerminator sourceCharacter)*
+    lineTerminator = "\n" | "\r"
     space += comment
 
 }
