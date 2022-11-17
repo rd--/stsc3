@@ -48,7 +48,9 @@ Stc {
       | DictionaryExpression
       | ArrayExpression
       | ArrayRangeSyntax
+      | ArrayRangeThenSyntax
       | IntervalSyntax
+      | IntervalThenSyntax
 
     ImplicitDictionaryPutSyntax = ":" identifier ":=" Expression
     PutSyntax = Primary "[" Expression "]" ":=" Expression
@@ -81,7 +83,9 @@ Stc {
     AssociationExpression = identifier ":" Expression
     ArrayExpression = "[" ListOf<Expression, ","> "]"
     ArrayRangeSyntax = "[" Expression ".." Expression "]"
+    ArrayRangeThenSyntax = "[" Expression "," Expression ".." Expression "]"
     IntervalSyntax = "(" Expression ".." Expression ")"
+    IntervalThenSyntax = "(" Expression "," Expression ".." Expression ")"
 
     methodName = identifier | binaryOperator
     identifier = letter letterOrDigitOrUnderscore*
