@@ -73,8 +73,8 @@ Stc {
     NonFinalExpression = Expression ";" Statements
     FinalExpression = Expression ";"?
 
-    ApplyWithTrailingClosuresSyntax = identifier NonEmptyParameterList? Block+
-    Apply = identifier ParameterList
+    ApplyWithTrailingClosuresSyntax = Primary NonEmptyParameterList? Block+
+    Apply = Primary ParameterList
     ParameterList =  "(" ListOf<Expression, ","> ")"
     ParenthesisedExpression = "(" Expression ")"
     DictionaryExpression = "(" ListOf<AssociationExpression, ","> ")"
