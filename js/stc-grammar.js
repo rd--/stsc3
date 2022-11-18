@@ -31,13 +31,13 @@ Stc {
     Primary
       = PutSyntax
       | PutQuotedSyntax
-      | ImplicitDictionaryPutSyntax
       | AtSyntax
       | AtQuotedSyntax
-      | ImplicitDictionaryAtSyntax
       | DotExpressionWithTrailingClosuresSyntax
       | DotExpressionWithAssignmentSyntax
       | DotExpression
+      | ImplicitDictionaryPutSyntax
+      | ImplicitDictionaryAtSyntax
       | Block
       | ApplyWithTrailingClosuresSyntax
       | Apply
@@ -62,7 +62,7 @@ Stc {
     DotExpressionWithTrailingClosuresSyntax = Primary "." identifier NonEmptyParameterList? Block+
     NonEmptyParameterList =  "(" NonemptyListOf<Expression, ","> ")"
     DotExpressionWithAssignmentSyntax = Primary "." identifier ":=" Expression
-    DotExpression = Primary ("." identifier ~"{" NonEmptyParameterList?)+
+    DotExpression = Primary ("." identifier ~("{" | ":=") NonEmptyParameterList?)+
 
     Block = "{" BlockBody "}"
     BlockBody = BlockArguments? Temporaries? Primitive? Statements?
