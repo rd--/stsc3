@@ -106,9 +106,11 @@ Stc {
 
     primitiveCharacter = ~">" sourceCharacter
 
-    comment = multiLineComment | singleLineComment
-    multiLineComment = "/*" (~"*/" sourceCharacter)* "*/"
-    singleLineComment = "//" (~lineTerminator sourceCharacter)*
+    comment = multiLineCComment | singleLineCppComment
+    multiLineMlComment = "(*" (~"*)" sourceCharacter)* "*)"
+    singleLineLispComment = ";;" (~lineTerminator sourceCharacter)*
+    multiLineCComment = "/*" (~"*/" sourceCharacter)* "*/"
+    singleLineCppComment = "//" (~lineTerminator sourceCharacter)*
     lineTerminator = "\n" | "\r"
     space += comment
 
