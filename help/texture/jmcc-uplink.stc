@@ -1,4 +1,4 @@
-// uplink (jmcc) #2
+// uplink (jmcc) #2 ; spl
 {
 	var osc = {
 		var e = LFPulse(4.0.rand, 0, 1.0.rand) * 8000.rand + 2000.rand;

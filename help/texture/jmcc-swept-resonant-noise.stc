@@ -1,4 +1,4 @@
-// swept resonant noise (jmcc) #2
+// swept resonant noise (jmcc) #2 ; spl
 {
 	var p = 10; // number of partials
 	var n = WhiteNoise() * 0.007;
@@ -6,7 +6,7 @@
 	var sweep = Resonz(n, f, 0.1);
 	{ RingzBank(
 		sweep,
-		{ 80 + 10000.0.linRand0 }.dup(p),
+		{ 80 + LinRand(0, 10000, 0) }.dup(p),
 		nil,
 		{ 0.5 + 2.0.rand }.dup(p)
 	) }.dup(2)

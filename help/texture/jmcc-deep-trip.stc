@@ -1,4 +1,4 @@
-// deep trip (jmcc) #9
+// deep trip (jmcc) #9 ; spl
 {
 	var f = (LFNoise1(0.3.rand) * 60 + 70).midiCps;
 	var a = LFNoise2(f * 0.5.rand) * (LFNoise1(8.0.rand) * SinOsc(40.0.rand, 0) * 0.1).max(0);

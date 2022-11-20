@@ -1,4 +1,4 @@
-// sawed cymbals (jmcc) #9
+// sawed cymbals (jmcc) #9 ; spl
 var sustainTime = 4;
 var transitionTime = 4;
 var dur = transitionTime * 2 + sustainTime;

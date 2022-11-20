@@ -1,4 +1,4 @@
-// clustered sines (jmcc) #2
+// clustered sines (jmcc) #2 ; spl
 {
 	var n = 80;
 	var f1 = 100 + 1000.0.rand;

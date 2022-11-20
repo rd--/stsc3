@@ -866,6 +866,8 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 (ReadStream on: ascii from: $a asInteger + 1 to: $z asInteger + 1) contents = ($a to: $z)
 $ isSeparator = true
 ' string' readStream skipSeparators upToEnd = 'string'
+s := 'two?words' readStream. {s upTo: $?. s upToEnd} = #('two' 'words') "upTo consumes token"
+s := 'two?words' readStream. {s upToPosition: 3. s upToEnd} = #('two' '?words') "upToPosition does not consume token"
 
 'ReadWriteStream'
 
