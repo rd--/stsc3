@@ -12,7 +12,7 @@ inf.do({
 })
 
 // https://sccode.org/1-4Qy ; f0 ; 0112 ; spl
-(1 .. 37).collectTexture(system:clock) {
+(1 .. 37).collectTexture {
 	arg i;
 	{
 		var lvl = Seq(1, [12 .. 0] * (i % 63 + 99));

@@ -33,6 +33,7 @@ Stc {
       | PutQuotedSyntax
       | AtSyntax
       | AtQuotedSyntax
+      | ValueSyntax
       | DotExpressionWithTrailingClosuresSyntax
       | DotExpressionWithAssignmentSyntax
       | DotExpression
@@ -52,17 +53,19 @@ Stc {
       | IntervalSyntax
       | IntervalThenSyntax
 
-    ImplicitDictionaryPutSyntax = ":" identifier ":=" Expression
     PutSyntax = Primary "[" Expression "]" ":=" Expression
-    PutQuotedSyntax = Primary ":" identifier ":=" Expression
-    ImplicitDictionaryAtSyntax = ":" identifier
+    PutQuotedSyntax = Primary "::" identifier ":=" Expression
     AtSyntax = Primary "[" Expression "]"
-    AtQuotedSyntax = Primary ":" identifier
+    AtQuotedSyntax = Primary "::" identifier
+    ValueSyntax = Primary "." NonEmptyParameterList
+    NonEmptyParameterList =  "(" NonemptyListOf<Expression, ","> ")"
 
     DotExpressionWithTrailingClosuresSyntax = Primary "." identifier NonEmptyParameterList? Block+
-    NonEmptyParameterList =  "(" NonemptyListOf<Expression, ","> ")"
     DotExpressionWithAssignmentSyntax = Primary "." identifier ":=" Expression
     DotExpression = Primary ("." identifier ~("{" | ":=") NonEmptyParameterList?)+
+
+    ImplicitDictionaryPutSyntax = "::" identifier ":=" Expression
+    ImplicitDictionaryAtSyntax = "::" identifier
 
     Block = "{" BlockBody "}"
     BlockBody = BlockArguments? Temporaries? Primitive? Statements?

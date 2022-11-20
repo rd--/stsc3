@@ -9,7 +9,7 @@
 })
 
 // https://sccode.org/1-4Qy ; f0 ; 0247 ; spl
-(0 .. 137).collectTexture(system:clock) {
+(0 .. 137).collectTexture {
 	arg i;
 	var j = i.div(100) + 1;
 	Release(Splay2(Blip(i * j % [99, 98, 97, 96] + 1, i * j % [98, 97, 96, 95] + 1)) * 0.05, 0.12, 0, 8)

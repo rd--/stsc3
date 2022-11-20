@@ -10,7 +10,7 @@
 }.loop
 
 // https://sccode.org/1-4Qy ; f0 ; 0005 ; spl
-system:clock.schedule(0) {
+{
 	var z = 60.rand + 1;
 	var d = z / 3;
 	{
@@ -18,4 +18,4 @@ system:clock.schedule(0) {
 		Release(Pan2(RLPF(TDmdFor(y, 0, y), z * 99 + y, 0.01) * (6 + y), 0, 1 / 3), d, 0, z)
 	}.play;
 	d
-}
+}.schedule
