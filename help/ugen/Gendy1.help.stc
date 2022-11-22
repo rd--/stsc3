@@ -1,4 +1,4 @@
-// Gendy1 ; texture
+// Gendy1 ; texture ; spl
 var f = {
 	Pan2(
 		SinOsc(
@@ -21,7 +21,7 @@ var f = {
 };
 f.dup(10).sum
 
-// Gendy1 ; texture ; mouse control
+// Gendy1 ; texture ; mouse control ; requires=kr
 var n = 11;
 var f = {
 	var freq = Rand(50, 560.3);

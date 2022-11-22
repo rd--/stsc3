@@ -1,4 +1,4 @@
-// DelayWrite ; karplus-strong (adc)
+// DelayWrite ; karplus-strong (adc) ; spl
 var freq = 100;
 var repeatFreq = 0.3;
 var feedbackCoef = 0.997;

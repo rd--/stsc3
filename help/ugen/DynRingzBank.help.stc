@@ -1,4 +1,4 @@
-// DynRingzBank
+// DynRingzBank ; spl
 var tr = Dust(25);
 var rand = { arg lhs, rhs; Lag(TRand(lhs, rhs, tr), 0.01) };
 var k = DynRingzBank(Trig(tr, SampleDur()), 1.to(5) * 2700, { rand.value(0.025, 0.04) }.dup(5), [0.1]);

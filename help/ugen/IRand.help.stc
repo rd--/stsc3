@@ -1,4 +1,4 @@
-// IRand
+// IRand ; spl
 var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
 {
 	var degree = IRand(0, 7);
@@ -7,4 +7,4 @@ var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
 	var mnn = (octave * 12) + pitchClass;
 	var numHarm = IRand(1, 4);
 	Blip(mnn.midiCps, numHarm) * 0.1
-}.dup(7).splay2
+}.dup(7).Splay2

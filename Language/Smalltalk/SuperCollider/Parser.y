@@ -34,7 +34,8 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       var             { Var }
       classvar        { ClassVar }
 
-      '='             { AssignmentOperator }
+      ':='            { AssignmentOperator }
+      '='             { EqualsOperator }
       '^'             { ReturnOperator }
       '+'             { ClassExtensionOperator }
       '*'             { ClassMethodOperator }
@@ -121,13 +122,13 @@ variables :: { [ScVariable] }
         : var defaultvar_seq ';'               { $2 }
 
 expression :: { ScExpression }
-        : identifier '=' expression            { ScExprAssignment $1 $3 }
+        : identifier ':=' expression           { ScExprAssignment $1 $3 }
         | syntax_atput                         { ScExprBasic $1 }
         | basicexpression                      { ScExprBasic $1 }
 
 syntax_atput :: { ScBasicExpression }
         : primary '[' basicexpression ']'
-          '=' basicexpression                  { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
+          ':=' basicexpression                 { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
 
 basicexpression :: { ScBasicExpression }
         : primary maybe_messages               { ScBasicExpression $1 $2 }

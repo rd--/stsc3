@@ -46,7 +46,8 @@ tokens :-
   "classvar"                             { \_ -> ClassVar }
 
   "^"                                    { \_ -> ReturnOperator }
-  "="                                    { \_ -> AssignmentOperator }
+  "="                                    { \_ -> EqualsOperator }
+  ":="                                   { \_ -> AssignmentOperator }
   "*"                                    { \_ -> ClassMethodOperator }
   "+"                                    { \_ -> ClassExtensionOperator }
 

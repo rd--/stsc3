@@ -24,6 +24,7 @@ data Token =
   | BinarySelector String
   | KeywordSelector String
   | ReturnOperator
+  | EqualsOperator
   | AssignmentOperator
   | ClassExtensionOperator
   | ClassMethodOperator
