@@ -1,4 +1,4 @@
-// tarmac ; jmcc #10 ; graph rewrite ; requires=TScramble
+// tarmac ; jmcc #10 ; graph rewrite ; requires=TScramble ; spl
 var a = [
 	[1, 0, 0],
 	[1, 1, 0],

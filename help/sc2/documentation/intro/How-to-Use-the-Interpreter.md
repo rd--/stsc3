@@ -2,7 +2,7 @@
 
 You can execute any single line expression by clicking anywhere in that line and pressing the 'Enter' key, which is the shortcut for the Evaluate Selection menu item.  Note that the 'enter' key is not the same key as 'return'.
 
-	{ FSinOsc(800, 0) * 0.1 }.play;
+	{ FSinOsc(800, 0) * 0.1 }.play
 
 In the help files all executable fragments are written in the Monaco font.
 
@@ -17,8 +17,7 @@ However, most examples in the manual have parentheses around the code which allo
 		{ Impulse(SinOsc(0.05 + 0.1.rand, 2 * pi.rand) * 5 + 5.2, 0) * 0.3 } // races
 	].choose; // choose one at random to use for all voices
 	{ // n strings tuned randomly to MIDI keys 60-90
-		var delayTime;
-		delayTime = 1 / (60 + 30.rand).midiCps; // calculate delay based on a random note
+		var delayTime = 1 / (60 + 30.rand).midiCps; // calculate delay based on a random note
 		Pan2(
 			CombL( // used as a string resonator
 				Decay( // decaying envelope for noise

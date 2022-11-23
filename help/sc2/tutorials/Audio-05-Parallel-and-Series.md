@@ -45,11 +45,11 @@ Another structure used in reverbs is a series of allpass delays.  A series or ch
 		Impulse(0.5, 0), // impulse to trigger the decay
 		0.01, // attack time
 		0.20 // decay time
-	) * PinkNoise() * 0.1;	// multiply envelope by pink noise
+	) * PinkNoise() * 0.1; // multiply envelope by pink noise
 	// z begins as the input and gets reassigned each time through the loop
 	n.timesRepeat({ // do n times
 		// function to create allpass delays with random delay times
-		z = AllpassN(
+		z := AllpassN(
 			z, // input to this allpass
 			0.05, // maximum delay time
 			Rand(0, 0.05), // random delay time

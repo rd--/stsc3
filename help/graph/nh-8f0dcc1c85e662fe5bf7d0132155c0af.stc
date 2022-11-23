@@ -14,7 +14,7 @@ snd := Sanitize(snd, 0);
 4.timesRepeat({
 	snd := snd + SinOsc(ExpRand(10, 800) * freq + LPF(snd * index, 100), 0);
 });
-snd := snd.mrg(LocalOut(snd));
+snd := snd <! LocalOut(snd);
 snd := snd.Splay2;
 snd.Clip2(1) * -5.dbAmp
 
@@ -29,6 +29,6 @@ snd := Select(PulseDivider(BPF(snd, 0.1, 0.1), 1000, 0), [
 ]);
 snd := LeakDC(Sanitize(snd, 0).Clip2(1), 0.995);
 snd := [2, 3, 4, 1].collect({ arg index; snd[index] });
-snd := snd.mrg(LocalOut(snd.Clip2(1)));
+snd := snd <! LocalOut(snd.Clip2(1));
 snd := Splay(snd, 0.5, 1, 0, true);
 snd.Clip2(1) * -5.dbAmp

@@ -12,16 +12,16 @@ Track sine oscillator:
 	var y = MouseY(0.01, 0.1, 0, 0.1);
 	var s = SinOsc(x, 0) * y;
 	var f = Pitch(s, 440, 60, 4000, 100, 16, 7, 0.02, 0.5, 1, 0);
-	[s, SinOsc(f.nth(1) / 2, 0) * 0.1]
+	[s, SinOsc(f.first / 2, 0) * 0.1]
 
 Track audio input, **use headphones**:
 
 	var input = AudioIn([1, 2]).sum;
-	var freq = Pitch(input, 440, 60, 4000, 100, 16, 7, 0.02, 0.5, 1, 0).nth(1);
+	var freq = Pitch(input, 440, 60, 4000, 100, 16, 7, 0.02, 0.5, 1, 0).first;
 	var s = VarSaw(freq * [0.5, 1, 2], 0, LFNoise1(0.3) * 0.1 + 0.1) * 0.1;
-	6.timesRepeat({
-		s = AllpassN(s, 0.040, { Rand(0, 0.04) }.dup(2), 2)
-	});
+	6.timesRepeat {
+		s := AllpassN(s, 0.040, { Rand(0, 0.04) }.dup(2), 2)
+	};
 	s
 
 ## How it works

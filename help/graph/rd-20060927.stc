@@ -7,7 +7,7 @@ OverlapTexture({
 	SinOsc(r4, 0) * f * 0.15
 }, 2, 4, 2)
 
-// 200060927 ; rd ; requires=kr
+// 200060927 ; rd ; requires=kr ; spl
 var e = Decay2(Impulse({ Rand(10, 13) }.dup(2), 0), 0.001, 0.005);
 var f = SinOsc({ Rand(10, 13) }.dup(2), 0) * e * { Rand(4, 7) }.dup(2);
 var r4 = { TRand(2220, 2227, Impulse(0.7, 0)) }.dup(2);

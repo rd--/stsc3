@@ -8,4 +8,4 @@ var filterFreq = MouseY(20000, 2000, 1, 0.2);
 var delayedSignal = DelayTap(buffer, 1 / freq);
 var filteredSignal = LPF(delayedSignal, filterFreq);
 var mixedSignal = (filteredSignal * feedbackCoef) + exciter;
-mixedSignal.mrg(DelayWrite(buffer, mixedSignal))
+mixedSignal <! DelayWrite(buffer, mixedSignal)

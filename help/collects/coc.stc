@@ -72,10 +72,7 @@ f.dup(15).sum * 0.1
 var lfo = LFNoise1([28, 27]) * 400 + 2000;
 SinOsc(lfo, 0) * 0.1
 
-// lasers ; https://github.com/cianoc/supercollider_fragments ; requires=kr
-SinOsc(EnvAdsr(0.1, 0.4, 0.8, 0.5, 1, [-4]).asEnvGen(Dust(1)).kr * 10000, 0) * 0.1
-
-// lasers ; https://github.com/cianoc/supercollider_fragments ; requires=kr
+// lasers ; https://github.com/cianoc/supercollider_fragments ; requires=kr ; spl
 SinOsc(Adsr(Dust(1), 0.1, 0.4, 0.8, 0.5, [-4]).kr * 10000, 0) * 0.1
 
 // saw as an lfo ; https://github.com/cianoc/supercollider_fragments ; spl

@@ -5,7 +5,7 @@ Splay(Integrator((LFNoise0(5.dup(3)) * k).roundTo(k / 10), 1).sin.sqrt.tanh, 0.3
 // http://earslap.com/weblog/music-release-laconicism.html ; wait ; spl
 var x = LFNoise1(0.5 * LocalIn(1, 0) + 0.1) * 0.5 + 0.5;
 var s = PitchShift(PitchShift(Pulse([90, 90.01], x), 10, x * 4, x, 0), 10, 4 - (x * 4), 1 - x, 0);
-s.mrg(LocalOut(x))
+s <! LocalOut(x)
 
 // http://earslap.com/weblog/music-release-laconicism.html ; wait ; spl
 var q = [0, 3, 5, 7, 10];
@@ -20,7 +20,7 @@ HPF(MidEQ(Limiter(GVerb(snd, [[1, 5 / 4], [1.5, 2]], 99, 0.5, 0.5, 15, 1, 0,7, 0
 // http://earslap.com/weblog/music-release-laconicism.html ; wait ; spl
 var f = LocalIn(2, 0).tanh;
 var k = Latch(f.first.abs, Impulse(0.5, 0));
-f.mrg(LocalOut(f + AllpassN(Pulse([2, 3], k * 0.01 + 0.000001) * 0.9, 1, k * 0.3, 100 * k)))
+f <! LocalOut(f + AllpassN(Pulse([2, 3], k * 0.01 + 0.000001) * 0.9, 1, k * 0.3, 100 * k))
 
 // http://earslap.com/weblog/music-release-laconicism.html ; spl
 var a = BPF(Saw([40, 40.001]), LFNoise0(128) + 1 * 4000 + 146, LFNoise1(1) + 1 * 0.05 + 0.01).tanh;
@@ -29,7 +29,7 @@ CombC(a, 9, a.abs.Lag(2) * 9, a.abs.Lag(1) * 100)
 // http://earslap.com/weblog/music-release-laconicism.html ; spl
 var f = LocalIn(2, 0).tanh;
 var k = Latch(f.first.abs, Impulse(1 / 4, 0));
-f.mrg(LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f)))
+f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 
 // http://earslap.com/weblog/music-release-laconicism.html ; spl
 var t = Impulse(8, 0) * LFNoise1(2);
@@ -78,7 +78,7 @@ var v = Blip([20000, 20000 - 9], 1) * (n.value(16) * 0.5 + 0.5 ** 9);
 // http://earslap.com/weblog/music-release-laconicism.html ; spl
 (HPF(LFNoise1(2), [10, 10.1]) * 100).tanh
 
-// http://earslap.com/weblog/music-release-laconicism.html ; requires=kr
+// http://earslap.com/weblog/music-release-laconicism.html ; requires=kr ; spl
 var x = DmdFor(1/8, 0, Choose(inf, [0, Choose(1, [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])]));
 LeakDC(BRF(Saw(8) * Decay2(x, 0.01, 0.3).kr ** 1.5, x * 20 + [45.1, 45], 0.1), 0.995).tanh
 

@@ -1,4 +1,4 @@
-// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html ; requires=kr
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html ; requires=kr ; splx
 var n = 11;
 var f = {
 	var freq = Rand(50, 560.3);
@@ -74,7 +74,7 @@ var src = Saw([440, 443, 437] + (SinOsc(100, 0) * 100));
 var amp = LFSaw(Line(3, 17, 3, 0),0) * 0.5 + 0.5 * Line(1, 0, 10, 0);
 Resonz(src, XLine(10000, 10, 10, 0), Line(1, 0.05, 10, 0)).sum * amp
 
-// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; bell patch ; requires=kr
+// nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; bell patch ; requires=kr ; spl
 var spectrum = [0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
 var amplitudes = [0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1];
 var numpartials = spectrum.size;

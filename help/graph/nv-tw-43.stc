@@ -8,7 +8,7 @@ var f = {
 };
 0.to(9).collect(f).mean * 0.1
 
-// https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43 ; keyword arguments
+//---- https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43 ; keyword arguments ; ?
 var f = {
 	  arg i;
 	  var x = Impulse(freq: 1, phase: i / 10) + Impulse(freq: 0, phase: 0);

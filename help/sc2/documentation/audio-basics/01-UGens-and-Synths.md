@@ -10,7 +10,7 @@ A unit generator is created by sending the 'ar' or 'kr' message to the unit gene
 
 The input parameters for a unit generator are given in the documentation for that class.
 
-	FSinOsc(800, 0) * 0.1; // create a sine oscillator at 800 Hz, amplitude 0.1
+	FSinOsc(800, 0) * 0.1 // create a sine oscillator at 800 Hz, amplitude 0.1
 
 A unit generator's signal inputs can be other unit generators, scalars, or arrays of unit generators and scalars.
 
@@ -20,7 +20,7 @@ In order to play a unit generator one needs to install it in a Synth object. A S
 
 The 'play' method of class Function will create and play a synth using the function for you:
 
-	{ FSinOsc(800, 0) * 0.1 }.play;
+	{ FSinOsc(800, 0) * 0.1 }.play
 
 ## Building Patches
 

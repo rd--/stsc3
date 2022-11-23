@@ -37,17 +37,17 @@ revTime := 3;
 revBalance := 0.5;
 tapScale := revBalance / tapData.size;
 combScale := revBalance / combs.size;
-input := 0.5.coin.ifTrue({
+input := 0.5.coin.if {
 	Impulse(0.2, 2)
-}, ifFalse: {
+} {
 	Decay2(Impulse(0.2, 2), 0.001, 0.2) * PinkNoise()
-});
+};
 buffer := BufAlloc(1, 48000 * 0.1).clearBuf;
-revMonoInput := input.isKindOf(Array).ifTrue({
+revMonoInput := input.isKindOf(Array).if {
 	input.sum / input.size
-}, ifFalse:	{
+} {
 	input
-});
+};
 delayWriter := DelayWrite(buffer, revMonoInput);
 tapsOut := 0;
 tapData.do ({
@@ -77,4 +77,4 @@ allPassIo := combsOut;
 [
 	[ input * (1 - revBalance), input * (1 - revBalance)],
 	((tapsOut + allPassIo) * revBalance)
-].sum.mrg(delayWriter)
+].sum <! delayWriter

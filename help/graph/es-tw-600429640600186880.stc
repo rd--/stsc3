@@ -5,7 +5,7 @@ var s = 2.to(6).collect({
 	arg n;
 	AllpassC(l, 0.6, LFNoise2(0.01) * 0.01 + (1 / n), 1)
 }).sum / 4.5;
-l.mrg(LocalOut(LeakDC(s, 0.995)))
+l <! LocalOut(LeakDC(s, 0.995))
 
 //---- notes.md
 [status/600429640600186880](https://twitter.com/sluyterrific_sc/status/600429640600186880)

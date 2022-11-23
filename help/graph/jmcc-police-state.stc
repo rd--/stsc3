@@ -23,19 +23,25 @@ var node = {
 var e = LFNoise2(LFNoise2([0.4, 0.4]) * 90 + 620) * (LFNoise2([0.3, 0.3]) * 0.15 + 0.18);
 CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5
 
-//---- police state ; jmcc ; keywords
+// police state ; jmcc ; keywords; spl
 var n = 4; // number of sirens
+var node = {
+	Pan2(
+		in: SinOsc(
+			freq: SinOsc(
+				freq: 0.1.rand + 0.02,
+				phase: 2 * pi.rand
+			) * 600.rand + 1000 + 300.rand2,
+			phase: 0
+		),
+		pos: 1.0.rand2,
+		level: LFNoise2(freq: 100 + 20.0.rand2) * 0.1
+	)
+};
+var e = LFNoise2(freq: LFNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LFNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);
 CombL(
-	in: {
-		Pan2(
-			in: SinOsc(
-				freq: SinOsc(freq: 0.1.rand + 0.02, phase: 2 * pi.rand, mul: 600.rand, add: 1000 + 300.rand2),
-				phase: 0
-			),
-			pos: 1.0.rand2,
-			level: LFNoise2(freq: 100 + 20.0.rand2) * 0.1
-		)
-	}.dup(4).sum
-	+ LFNoise2(freq: LFNoise2(freq: [0.4, 0.4], mul: 90, add: 620), mul: LFNoise2(freq: [0.3, 0.3], mul: 0.15, add: 0.18)),
-	maxdelaytime: 0.3, delaytime: 0.3, decaytime: 3
+	in: node.dup(4).sum + e,
+	maxdelaytime: 0.3,
+	delaytime: 0.3,
+	decaytime: 3
 ) * 0.5

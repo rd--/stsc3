@@ -1,4 +1,4 @@
-// 20061008 ; s-chirp ; rd ; requires=kr
+// 20061008 ; s-chirp ; rd ; requires=kr ; spl
 var t = Dust(9).kr;
 var u = PulseDivider(t, 9, 0);
 var d = TIRand(MouseX(15, 0, 0, 0.1), MouseY(15, 27, 0, 0.1), t);
@@ -7,7 +7,7 @@ var m = LFNoise1([3,  3.05]) * 0.04 + TChoose(t, [36, 48, 60, 72]) + k;
 var o = SinOsc(m.midiCps, 0) * Decay2(t, 0.005, TRand(0.02, 0.15, t)) * 0.2;
 o * 0.5 + AllpassC(o, 0.15, TRand(0.0075, 0.125, u), TRand(0.05, 0.15, u))
 
-// 20061008 ; s-chirp ; rd
+// 20061008 ; s-chirp ; rd ; spl
 var x = MouseX(15, 0, 0, 0.1);
 var y = MouseY(15, 27, 0, 0.1);
 var t = Dust(9).kr;

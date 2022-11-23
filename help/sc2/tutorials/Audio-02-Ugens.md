@@ -11,7 +11,7 @@ All of the UGen classes are listed in the help file [UGen_Ref_Sheet].  From ther
 A unit generator is created by sending the 'ar' or 'kr' message to the unit generator's class object. The 'ar' message creates a unit generator that runs at audio rate. The 'kr' message creates a unit generator that runs at control rate. Control rate unit generators are used for low frequency or slowly changing control signals. Control rate unit generators produce only a single sample per block and therefore use less processing power than audio rate unit generators. Since block sizes are typically 64 samples, a control rate unit generator could theoretically be 1/64 the cost, however the savings is not quite that great due to setup overhead. The savings is significant though, so anytime a control rate ugen will serve, it should be used.
 
 	SinOsc(800, 0) * 0.1 // create an audio rate sine oscillator
-	SinOsc(800, 0) * SinOsc(2, 0).kr * 0.1; // create a control rate sine oscillator
+	SinOsc(800, 0) * SinOsc(2, 0).kr * 0.1 // create a control rate sine oscillator
 
 The input parameters for a unit generator are given in the documentation for that class.
 
@@ -89,7 +89,7 @@ In the following example the frequency modulator is changed from a line to a sin
 	SinOsc( // create a sine oscillator
 		SinOsc( // modulate the frequency with another sine oscillator
 			0.5, // the modulating sine freq is 1 cycle per 2 seconds
-			0, // zero phase
+			0 // zero phase
 		) * 300 // mul = 300
 		+ 700, // add = 700
 		// These settings of mul and add will cause the
@@ -121,12 +121,12 @@ Now we'll modulate the modulator to cause the frequency modulation to speed up o
 The nested style used above can become hard to read, so often it is preferable to use variables to make it more readable.
 
 	var lfofreq, freq; // declare the variables we will use in this function.
-	lfofreq = XLn( // make an exponential line generator
+	lfofreq := XLn( // make an exponential line generator
 		0.5, // begin at 0.5 Hz
 		100, // end at 100 Hz
 		30 // in 30 seconds
 	);
-	freq = SinOsc( // modulate the frequency with another sine oscillator
+	freq := SinOsc( // modulate the frequency with another sine oscillator
 		lfofreq, // use exponential line to modulate the lfo freq
 		0) // zero phase
 	* 300 // mul = 300
