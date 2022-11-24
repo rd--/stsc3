@@ -11,7 +11,7 @@ var compose = { arg f, g; { arg x; f(g(x)) } };
 var g = {
 	arg func, n;
 	var r = func;
-	n.timesRepeat({ r := compose(r, r) });
+	n.timesRepeat { r := compose(r, r) };
 	r
 };
 var freq = LinExp(g(f, 4).value(LFSaw(0.2 * [1, 1.1], 0)), -1, 1, 6, 11000);

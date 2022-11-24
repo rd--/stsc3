@@ -11,7 +11,7 @@ var p = {
 };
 var q = {
 	var n = LFNoise0(128);
-	CombN(p.value, 0.2, (n * 0.1) + 0.1, 3)
+	CombN(p(), 0.2, (n * 0.1) + 0.1, 3)
 };
 var r = {
 	var x1 = MouseX(0.75, 1.25, 1, 0.1);
@@ -23,4 +23,4 @@ var r = {
 	};
 	{ f.dup(16).sum }.dup(2)
 };
-p.value + q.value + r.value
+p() + q() + r()

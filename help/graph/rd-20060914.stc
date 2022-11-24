@@ -16,5 +16,5 @@ OverlapTexture({
 	var octaves = [4, 5, 6, 7];
 	var mnn = scale.collect({ arg n; octaves.collect({ arg o; n + (o * 12) }) }).concatenation;
 	var chd = { TChoose(tr, mnn) }.dup(6);
-	{ chrd.value(chd) }.dup(9).sum
+	{ chrd(chd) }.dup(9).sum
 }, 21, 0, 3)

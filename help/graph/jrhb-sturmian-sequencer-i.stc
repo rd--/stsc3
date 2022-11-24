@@ -8,7 +8,7 @@ var rewrite = {
 };
 var strFunc = {
 	arg i;
-	var str = rewrite.value(i + 6);
+	var str = rewrite(i + 6);
 	var dt = 2 ** i.negated * 10;
 	var trig = TDmdFor(dt, 0, Seq(1, str));
 	var freq = ExpRand(200, i + 1 / 7 * 10100);

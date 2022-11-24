@@ -6,6 +6,6 @@
 		var e = LFPulse(m.rand, 0, 1.0.rand) * 8000.rand + 2000.rand;
 		LFPulse(n.rand, 0, 1.0.rand) * e
 	};
-	var freq = osc.value(200.0, 40.0) + osc.value(20.0, 4.0) + osc.value(20.0, 4.0);
+	var freq = osc(200.0, 40.0) + osc(20.0, 4.0) + osc(20.0, 4.0);
 	CombL(Pan2(LFPulse(freq, 0, 0.5), LFNoise0(3.0.rand) * 0.8, 0.04), dt, dt, 3)
 }.overlap(6, 1, 4)

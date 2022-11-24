@@ -6,8 +6,8 @@ var i = {
 	[s0, s1, s2].choose
 };
 var s = {
-	var dt = { 1 / Rand(60, 90).floor.midiCps }.value;
-	var t = Decay(i.value, 0.1) * PinkNoise() * 0.1;
+	var dt = 1 / Rand(60, 90).Floor.MidiCps;
+	var t = Decay(i(), 0.1) * PinkNoise() * 0.1;
 	Pan2(CombL(t, dt, dt, 4), Rand(-1, 1), 1)
 };
 s.dup(5).sum

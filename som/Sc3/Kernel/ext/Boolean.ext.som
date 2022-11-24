@@ -1,0 +1,8 @@
+Boolean = Boolean (
+
+if: whenTrue value: whenFalse = (
+	self ifTrue: [ ^ whenTrue value ] ifFalse: [ ^ whenFalse value ]
+)
+
+)
+

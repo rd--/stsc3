@@ -1,19 +1,5 @@
-// adc ; 8.1 ; http://www.audiosynth.com/files/SC2.2.16.sea.hqx
-var input,			// audio input signal
-	revMonoInput,		// reverb input must be mono for this version.
-	buffer,			// a buffer for the early reflections delay line
-	tapData,		// Early reflection tap data (times, levels)
-	tapsOut, 		// sound output from the delay taps
-	combData,	 	// Table of comb data (times, levels)
-	combs,			// List of comb objects
-	combsOut,		// their sound output
-	allPassIo, 		// allPass chain sound input/output variable
-	revTime,		// Global decay (time in seconds)
-	revBalance,		// Dry/wet balance (ratio).
-	tapScale,		// Tap amplitude scaling factor.
-	combScale,		// Comb amplitude scaling factor.
-	delayWriter;
-tapData := [
+// adc ; 8.1 ; http://www.audiosynth.com/files/SC2.2.16.sea.hqx ; spl
+var tapData = [ // Early reflection tap data (times, levels)
 	[0.0043,	0.841],
 	[0.0215,	0.504],
 	[0.0268,	0.379],
@@ -25,7 +11,7 @@ tapData := [
 	[0.0741,	0.142],
 	[0.0797,	0.134]
 ];
-combData := [
+var combData = [ // Table of comb data (times, levels)
 	[0.050,	0.46],
 	[0.056,	0.48],
 	[0.061,	0.50],
@@ -33,29 +19,28 @@ combData := [
 	[0.072,	0.53],
 	[0.078,	0.55]
 ];
-revTime := 3;
-revBalance := 0.5;
-tapScale := revBalance / tapData.size;
-combScale := revBalance / combs.size;
-input := 0.5.coin.if {
+var revTime = 3; // Global decay (time in seconds)
+var revBalance = 0.5; // Dry/wet balance (ratio)
+var tapScale = revBalance / tapData.size; // Tap amplitude scaling factor
+var combScale = revBalance / combData.size; // Comb amplitude scaling factor
+var input = 0.5.coin.if { // audio input signal
 	Impulse(0.2, 2)
 } {
 	Decay2(Impulse(0.2, 2), 0.001, 0.2) * PinkNoise()
 };
-buffer := BufAlloc(1, 48000 * 0.1).clearBuf;
-revMonoInput := input.isKindOf(Array).if {
-	input.sum / input.size
+var buffer = BufAlloc(1, 48000 * 0.1).clearBuf; // a buffer for the early reflections delay line
+var revMonoInput = input.isArray.if {
+	input.sum / input.size // reverb input must be mono
 } {
 	input
 };
-delayWriter := DelayWrite(buffer, revMonoInput);
-tapsOut := 0;
-tapData.do ({
+var delayWriter = DelayWrite(buffer, revMonoInput);
+var tapsOut = 0, combsOut = 0, allPassIo = 0;
+tapData.do {
 	arg params;
 	tapsOut := tapsOut + (DelayTap(buffer, params.first) * params.second);
-});
-combsOut := 0;
-1.to(6).do({
+};
+1.to(6).do {
 	arg index;
 	combsOut := combsOut + (
 		CombC(
@@ -63,17 +48,18 @@ combsOut := 0;
 			0.1,
 			combData[index].first,
 			revTime
-		) * combData.[index].second
+		) * combData[index].second
 	)
-});
+};
 allPassIo := combsOut;
-4.timesRepeat({
+4.timesRepeat {
 	allPassIo := AllpassN(
 		allPassIo,
 		0.050,
 		[0.050.rand, 0.050.rand],
 		1
-)});
+	)
+};
 [
 	[ input * (1 - revBalance), input * (1 - revBalance)],
 	((tapsOut + allPassIo) * revBalance)

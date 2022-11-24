@@ -26,4 +26,4 @@ var c = {
 	m.CombN(0.31, 0.31, 2) + m
 };
 var n = LFNoise1([3, 3]);
-c.value(n, 48) + c.value(n, 72) * 0.25
+c(n, 48) + c(n, 72) * 0.25

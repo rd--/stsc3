@@ -11,9 +11,9 @@ snd := LPF(snd, 440);
 snd := Select(LPF(snd.reversed, 10 * cutoff) * 3, [Pulse(440 * freq + (snd * index), 0.5), SinOsc(100 * freq + (snd * index), 0)]);
 snd := RLPF(snd, 440 + (1000 * Clip(LPF(LPF(snd, 1), 1), 0, 1)), 0.1);
 snd := Sanitize(snd, 0);
-4.timesRepeat({
+4.timesRepeat {
 	snd := snd + SinOsc(ExpRand(10, 800) * freq + LPF(snd * index, 100), 0);
-});
+};
 snd := snd <! LocalOut(snd);
 snd := snd.Splay2;
 snd.Clip2(1) * -5.dbAmp

@@ -9,7 +9,7 @@ var x = {
 };
 99.timesRepeat({
 	var t = 9.rand / 8 + 33.rand + 8;
-	{ Release(x.value, 9, t, 24) }.play;
+	{ Release(x(), 9, t, 24) }.play;
 	t.seconds.wait
 })
 

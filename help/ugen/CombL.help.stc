@@ -1,10 +1,10 @@
-// CombC ; https://sccode.org/1-5fc ; note: audio in (feedback) ; spl
+// CombC ; https://sccode.org/1-5fc ; warning=feedback ; spl
 var reverb = {
 	arg input;
 	var c = CombL(input, 0.1, SinOsc(0.01, 0) * 0.03 + 0.07, 5) * 0.7;
 	XFade2(LPF(c, 4800), input, -0.5, 0.3)
 };
-reverb.value(AudioIn([1, 2]) * 0.1)
+reverb(AudioIn([1, 2]) * 0.1)
 
 // CombL ; simplistic karplus-strong synthesis (adc) ; spl
 var freq = 440;

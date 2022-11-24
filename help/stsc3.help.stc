@@ -22,6 +22,8 @@ SinOsc({ Rand(100, 900) } ! 12, 0).Splay2 * { Rand(0.01, 0.1) }.dup(12)
 
 // Trailing closures, if:value:
 0.5.coin.if { 't'.postln } { 'f'.postln }
+true.if { 't' } { 'f' } = 't'
+false.if { 't' } { 'f' } = 'f'
 
 // Interval Range
 (1 .. 5) = 1.to(5)

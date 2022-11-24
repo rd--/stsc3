@@ -3,7 +3,7 @@ var f = 80; // fundamental frequency
 var p = 10; // number of partials per channel
 var z = 0.0; // start of oscil daisy chain
 var trig = XLn([10, 10], 0.1, 60); // trigger probability decreases over time
-1.to(p).do({
+1.to(p).do {
 	arg i;
 	z := MulAdd(
 		FSinOsc(
@@ -19,7 +19,7 @@ var trig = XLn([10, 10], 0.1, 60); // trigger probability decreases over time
 		),
 		z
 	)
-});
+};
 z
 
 // harmonic tumbling (jmcc) #1 ; spl
