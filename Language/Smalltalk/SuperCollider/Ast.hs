@@ -176,11 +176,20 @@ scDictionaryToBasicExpression associationsArray =
       arrayExpression = ScPrimaryArrayExpression (concatMap f associationsArray)
   in scConstructDotMessageSend (ScPrimaryIdentifier "Dictionary") "newFromPairs" [ScBasicExpression arrayExpression Nothing]
 
-scPrimaryKeywordMessageSend :: St.Identifier -> [(St.LowercaseIdentifier, ScBasicExpression)] -> ScPrimary
+scPrimaryKeywordMessageSend :: ScPrimary -> [(St.LowercaseIdentifier, ScBasicExpression)] -> ScPrimary
 scPrimaryKeywordMessageSend receiver parameters =
   let selector = intercalate ":" (map fst parameters)
       arguments = map snd parameters
-  in scBasicExpressionToPrimary (scConstructDotMessageSend (ScPrimaryIdentifier receiver) selector arguments)
+  in scBasicExpressionToPrimary (scConstructDotMessageSend receiver selector arguments)
+
+scIntervalRange :: ScExpression -> ScExpression -> ScPrimary
+scIntervalRange from to =
+  scPrimaryKeywordMessageSend
+  (ScPrimaryExpression from)
+  [("to", ScBasicExpression (ScPrimaryExpression to) Nothing)]
+
+scArrayRange :: ScExpression -> ScExpression -> ScPrimary
+scArrayRange from to = scBasicExpressionToPrimary (scConstructDotMessageSend (scIntervalRange from to) "asArray" [])
 
 {- | 3.4.5.2 Reuse the Smalltalk Literal type.
      The Sc notation "x(...)" is an implicit message send.

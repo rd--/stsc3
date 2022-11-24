@@ -43,7 +43,7 @@ rand2 = (
 	^(self negated) rand: self
 )
 
-rand: upperBound = (
+rrand: upperBound = (
 	"Generate a random integer between myself and upperBound (inclusive)."
 	^(upperBound - self + 1) atRandom + self - 1
 )

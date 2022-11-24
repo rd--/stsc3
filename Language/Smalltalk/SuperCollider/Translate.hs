@@ -5,6 +5,7 @@
 module Language.Smalltalk.SuperCollider.Translate where
 
 import Data.Bifunctor {- base -}
+import Data.Char {- base -}
 import Data.List {- base -}
 
 import qualified Data.List.Split as Split {- split -}
@@ -182,11 +183,37 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 stcLeadingComment :: String -> (String, String)
 stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
 
+{- | In Spl f(x, y) and x.f(y) are interchangeable.
+In particular f may be a "constructor" procedure.
+Stc implements methods for the required cases, following the usual St case rule.
+To translate Spl, all dot expressions where the selector is capitalised are rewritten.
+
+> splRewriteDotExpressions "m.MidiCps" == "m.midiCps"
+-}
+splRewriteDotExpressions :: String -> String
+splRewriteDotExpressions txt =
+  case txt of
+    [] -> []
+    '.' : c : txt' -> if isUpper c then '.' : toLower c : splRewriteDotExpressions txt' else '.' : c : splRewriteDotExpressions txt'
+    c : txt' -> c : splRewriteDotExpressions txt'
+
+{- | Spl allows binary operator characters not allowed by St(/c).
+These are re-written to allowed operators.
+-}
+splRewriteBinaryOperators :: String -> String
+splRewriteBinaryOperators txt =
+  case txt of
+    [] -> []
+    ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '|' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
+    c : txt' -> c : splRewriteBinaryOperators txt'
+
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
   let (c, p) = stcLeadingComment s
-      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p))
+      p' = splRewriteBinaryOperators (splRewriteDotExpressions p)
+      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p'))
   in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite eSc)
 
 -- | Translate C-Smalltalk program text to Smalltalk.

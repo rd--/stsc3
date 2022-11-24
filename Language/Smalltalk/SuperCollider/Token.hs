@@ -5,6 +5,7 @@ data Token =
     LeftBracket
   | RightBracket
   | Dot
+  | DotDot
   | Comma
   | SemiColon
   | Colon

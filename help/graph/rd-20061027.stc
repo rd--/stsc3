@@ -20,4 +20,4 @@ var h1 = {
 	var o = Blip(HenonN(f, a, b, 0, 0).range(p, p * 2), h);
 	Pan2(o, l, g) * 0.35
  };
-h0.value + h1.value
+h0() + h1()

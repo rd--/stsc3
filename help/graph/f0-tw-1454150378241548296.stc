@@ -1,7 +1,7 @@
 // https://twitter.com/redFrik/status/1454150378241548296 ; f0 ; spl
 var a = {
 	arg r, i, n, q, p;
-	RLPF(Impulse(r, p), Select(i % 5, [0, 3, 5, 7, 10] + n).midiCps, q)
+	RLPF(Impulse(r, p), Select(i % 5, [0, 3, 5, 7, 10] + n).MidiCps, q)
 };
 var x = 0.001;
 var b = [1, 2, 3, 4, 5, 6, 7, 8] / 8;

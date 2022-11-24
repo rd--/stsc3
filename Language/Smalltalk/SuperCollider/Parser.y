@@ -17,6 +17,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       '['             { LeftBracket }
       ']'             { RightBracket }
       '.'             { Dot }
+      '..'            { DotDot }
       ','             { Comma }
       ';'             { SemiColon }
       ':'             { Colon }
@@ -94,6 +95,7 @@ binaryoperator :: { String }
         : binaryselector                        { $1 }
         | '+'                                   { "+" }
         | '*'                                   { "*" }
+        | '='                                   { "=" }
 
 methoddefinition :: { ScMethodDefinition }
         : '*' identifier '{'
@@ -168,9 +170,18 @@ dotmessage_seq :: { [ScDotMessage] }
 
 dotmessage :: { ScDotMessage }
         : '.' identifier                       { ScDotMessage $2 []}
+        | '.' identifier blockexpression_seq   { ScDotMessage $2 $3}
         | '.' identifier message_param         { ScDotMessage $2 $3}
+        | '.' identifier message_param blockexpression_seq { ScDotMessage $2 ($3 ++ $4) }
         | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
         | syntax_at                            { $1 }
+
+blockexpression :: { ScBasicExpression }
+        : '{' blockbody '}'                    { ScBasicExpression (ScPrimaryBlock $2) Nothing }
+
+blockexpression_seq :: { [ScBasicExpression] }
+        : blockexpression                         { [$1] }
+        | blockexpression blockexpression_seq     { $1 : $2 }
 
 syntax_at :: { ScDotMessage }
         : '[' basicexpression ']'              { ScDotMessage "at" [$2] }
@@ -210,9 +221,11 @@ primary :: { ScPrimary }
         | '{' blockbody '}'                    { ScPrimaryBlock $2 }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
+	| '(' expression '..' expression ')'   { scIntervalRange $2 $4 }
+	| '[' expression '..' expression ']'   { scArrayRange $2 $4 }
         | identifier '(' arrayexpression ')'   { ScPrimaryImplicitMessageSend $1 $3 }
         | identifier
-          '(' nonemptykeywordexpression_seq ')' { scPrimaryKeywordMessageSend $1 $3 }
+          '(' nonemptykeywordexpression_seq ')' { scPrimaryKeywordMessageSend (ScPrimaryIdentifier $1) $3 }
 
 reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }
@@ -229,7 +242,6 @@ blockbody :: { ScBlockBody }
         : maybe_arguments
           maybe_temporaries_seq
           maybe_statements                     { ScBlockBody $1 $2 $3 }
-
 
 maybe_arguments :: { Maybe [ScBlockArgument] }
         : {- empty -}                          { Nothing }

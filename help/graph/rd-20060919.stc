@@ -17,8 +17,8 @@ var fwalk = {
 		40, 59, 45, 47, 52
 	].asLocalBuf;
 	var f = BufRd(1, [b0, b1], r1, 0, 2);
-	var o1 = Blip((r + f).midiCps, 12);
-	var o2 = Blip((r + f + r2).midiCps, 12);
+	var o1 = Blip((r + f).MidiCps, 12);
+	var o2 = Blip((r + f + r2).MidiCps, 12);
         o1 + o2 * Decay2(t, 0.3, 1.2) * 0.1
 };
-fwalk.value(24) + fwalk.value(36)
+fwalk(24) + fwalk(36)

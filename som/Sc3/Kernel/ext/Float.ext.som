@@ -22,7 +22,7 @@ rand2 = (
 	^(self negated) rand: self
 )
 
-rand: upperBound = (
+rrand: upperBound = (
 	"Generate a random float between myself and upperBound (inclusive)"
 	^(100000000 atRandom / 100000000.0) * (upperBound - self) + self
 )

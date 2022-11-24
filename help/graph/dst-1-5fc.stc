@@ -16,7 +16,7 @@ Voicer(16, {
 	var index = LinLin(LFSaw(samp, 0), -1, 1, bottom, top) * BufFrames(buf);
 	var tonic = DegreeToKey(buf, index, 12) + root;
 	var env = Decay2(tr, atk, decay) * 0.35;
-	var sig = BPF(SyncSaw(root.midiCps, tonic.midiCps) * env, cfreq, rq) * amp;
+	var sig = BPF(SyncSaw(root.MidiCps, tonic.MidiCps) * env, cfreq, rq) * amp;
 	var loc = Pan2(sig, SinOsc(rate * 0.9 + Rand(-0.6, 0.6), 0), 1);
 	var cmb = CombL(loc, 0.1, SinOsc(0.01, 0) * 0.03 + 0.07, 5) * 0.7;
 	XFade2(LPF(cmb, 4800), loc, -0.5, 0.3)

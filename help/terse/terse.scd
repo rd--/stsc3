@@ -69,7 +69,8 @@ var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element fr
 #[]                                                         // empty literal array
 #[1, 3.14, 'x', \x, "x"]                                    // heterogenous literal array
 [1, 2, 3, 4].at(0) == 1                                     // indexing (access element in slot at index)
-[1, 2, 3, 4].collect({ arg x; x * x }) == [1, 4, 9, 16]     // map function over elements
+[1, 2, 3, 4].collect({ arg x; x * x }) == [1, 4, 9, 16]     // Map function over elements
+[1, 2, 3, 4].collect { arg x; x * x } == [1, 4, 9, 16]      // map function over elements
 [1, 2, 3, 4].detect({ arg x; x > 2 }) == 3                  // find first element for which predicate holds
 [1, 2, 3, 4].detectIndex({ arg x; x > 2 }) == 2             // find index of first element for which predicate holds
 [1, 2, 3, 4].do({ arg x; x.postln }) == [1, 2, 3, 4]        // iterate over array (run function at each element)

@@ -1,3 +1,5 @@
+The Stc parser should directly generate an Expr Ast.
+
 The comment rule is:
 
 Line (//) comments are discarded

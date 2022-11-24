@@ -4,7 +4,7 @@ var d = CombN(o, 3.0, [1.35, 0.7], 6);
 Pan2(o, 0, 1) + d
 
 // random sine waves ; https://github.com/cianoc/supercollider_fragments ; spl
-var f = { Pan2(SinOsc(SinOsc(1 / 10, rrand(0, 6)) * 200 + 600, 0), rrand(0, 1), 0.05) };
+var f = { Pan2(SinOsc(SinOsc(1 / 10, 0.rrand(6)) * 200 + 600, 0), 0.rrand(1), 0.05) };
 f.dup(15).Splay2
 
 // random sine waves ; https://github.com/cianoc/supercollider_fragments ; Rand ; spl
@@ -13,7 +13,7 @@ f.dup(15).Splay2
 
 // nice use of blip ; https://github.com/cianoc/supercollider_fragments ; spl
 var t = Impulse(6, 0);
-var o = Blip(TRand(48, 72, t).midiCps, TRand(1, 12, t)) * TRand(-0.5, 0.4, t).max(0);
+var o = Blip(TRand(48, 72, t).MidiCps, TRand(1, 12, t)) * TRand(-0.5, 0.4, t).max(0);
 var p = Pan2(o, TRand(-1.0, 1.0, t), Decay2(t, 0.1, 3) * 0.5);
 p + CombL(p, 2.0, 4/6, 6)
 
@@ -121,10 +121,10 @@ var v = { arg n; SinOsc(f * n, 0) * Decay2(t, 0.01, dt.at(n)) / n };
 var t = Impulse(1 / 3, 0);
 var m = Rand(1, 3).dup(2);
 var env = Decay2(t, 0.01 * m, 1 * m) / 1.to(6);
-SinOsc([60, 64, 67, 71, 74, 78].midiCps, 0).sum * env * 0.1
+SinOsc([60, 64, 67, 71, 74, 78].MidiCps, 0).sum * env * 0.1
 
 // interesting drone ; https://github.com/cianoc/supercollider_fragments ; spl
-var freq = [40, 42, 43, 45, 47, 48, 41, 42].midiCps;
+var freq = [40, 42, 43, 45, 47, 48, 41, 42].MidiCps;
 var amp = LFNoise1({ Rand(0.1, 0.5) }.dup(8)) * 0.5 + 0.5;
 Pan2(SinOsc(freq, 0), { Rand(-1, 1) }.dup(8), amp).sum * 0.1
 
@@ -162,7 +162,7 @@ var f = {
 
 // multiple sines ; https://github.com/cianoc/supercollider_fragments ; spl
 var speeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] / 20;
-var f0 = (MouseX(0, 36, 0, 0.2).roundTo(7) + 24).midiCps;
+var f0 = (MouseX(0, 36, 0, 0.2).roundTo(7) + 24).MidiCps;
 var f = {
 	arg partial;
 	Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), SinOsc(speeds.choose, 0).max(0))
@@ -203,7 +203,7 @@ f.dup(8).sum * LFNoise1(1 / 10).abs
 // ping pong ; https://github.com/cianoc/supercollider_fragments ; spl
 var rate = 5;
 var trig = Impulse(5, 0);
-var freq = TRand([36, 60], [72, 86], trig).midiCps;
+var freq = TRand([36, 60], [72, 86], trig).MidiCps;
 var ratio = 2;
 var env = Decay2(trig, 0, 1.25 / rate);
 PMOsc(freq, freq * ratio, 3 + env * 4, 0) * env * 0.25
@@ -229,7 +229,7 @@ var vc = {
 	var freq = e.p.unitCps;
 	var gate = e.w;
 	var osc1 = Saw(freq + LFTri(0.3, 0));
-	var osc2 = Saw((freq.cpsMidi - 0.03).midiCps);
+	var osc2 = Saw((freq.CpsMidi - 0.03).MidiCps);
 	var filterEnv = Adsr(gate, 1, 1.4, 0.05, 0.2, 0);
 	var ampEnv = Adsr(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
 	Pan2(RLPF(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.o * 2 - 1, ampEnv)

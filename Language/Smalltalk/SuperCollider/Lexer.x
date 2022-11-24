@@ -28,6 +28,7 @@ tokens :-
   "["                                    { \_ -> LeftBracket }
   "]"                                    { \_ -> RightBracket }
   "."                                    { \_ -> Dot }
+  ".."                                    { \_ -> DotDot }
   ":"                                    { \_ -> Colon }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }

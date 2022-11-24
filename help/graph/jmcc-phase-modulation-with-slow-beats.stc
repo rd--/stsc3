@@ -6,10 +6,10 @@ OverlapTexture({
 	arg tr;
 	var a = 0;
 	var f1 = TRand(0, x, tr);
-	3.timesRepeat({
+	3.timesRepeat {
 		var f2 = TRand(0, x, tr);
 		a := SinOsc([f2, f2 + TRand(-1, 1, tr)], 0) * y + a;
-	});
+	};
 	SinOsc([f1, f1 + TRand(-1, 1, tr)], a) * 0.1
 }, 4, 4, n) * 0.25
 

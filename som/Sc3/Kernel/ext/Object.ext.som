@@ -1,5 +1,13 @@
 Object = Object (
 
+<| rhs = (
+	^self mrg: rhs
+)
+
+%% anInteger = (
+	^self dup: anInteger
+)
+
 apply: argumentsArray = (
 	^self perform: (self primaryFactoryMethod) withArguments: argumentsArray
 )
