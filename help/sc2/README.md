@@ -6,19 +6,19 @@ From the SuperCollider 2.2.16 [archive](http://www.audiosynth.com/files/SC2.2.16
 
 ## Introduction
 
-- [01 Why SuperCollider?](?t=stsc3&e=help/sc2/documentation/01-Why-SuperCollider.help.sl)
-- [02 What's New](?t=stsc3&e=help/sc2/documentation/02-Whats-New.help.sl)
-- [Getting Help](?t=stsc3&e=help/sc2/documentation/Getting-Help.help.sl)
-- [How to Use the Interpreter](?t=stsc3&e=help/sc2/documentation/How-to-Use-the-Interpreter.help.sl)
+- [Why SuperCollider?](<?t=stsc3&e=help/sc2/documentation/Why SuperCollider%3F.help.sl>)
+- [What's New](<?t=stsc3&e=help/sc2/documentation/What's New.help.sl>)
+- [Getting Help](<?t=stsc3&e=help/sc2/documentation/Getting Help.help.sl>)
+- [How to Use the Interpreter](<?t=stsc3&e=help/sc2/documentation/How to Use the Interpreter.help.sl>)
 
 ## Audio Basics
 
-- [01 UGens and Synths](?t=stsc3&e=help/sc2/documentation/01-UGens-and-Synths.help.sl)
-- [02 Multi Channel](?t=stsc3&e=help/sc2/documentation/02-Multi-Channel.help.sl)
+- [UGens and Synths](<?t=stsc3&e=help/sc2/documentation/UGens and Synths.help.sl>)
+- [Multi Channel](<?t=stsc3&e=help/sc2/documentation/Multi Channel.help.sl>)
 
 ## Other Topics
 
-- [LF vs Band Limited Oscils](?t=stsc3&e=help/sc2/documentation/LF-vs-Band-Limited-Oscils.help.sl)
+- [LF vs Band Limited Oscils](<?t=stsc3&e=help/sc2/documentation/LF vs Band Limited Oscils.help.sl>)
 
 <!--
 - [Internal Snooping](?t=stsc3&e=help/sc2/documentation/other-topics/Internal-Snooping.sl)
