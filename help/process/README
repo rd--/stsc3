@@ -4,3 +4,5 @@ Simple _program_ files require an editor command to bracket the program text as 
 
 Sclang requires synthesis graphs to be written in enclosing functions, stsc3 does not.
 If programs are to be compatible they should follow the sclang rule.
+
+There are _texture_ forms of these graphs at _../texture_.
