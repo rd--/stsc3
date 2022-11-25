@@ -5,10 +5,11 @@ _LFSaw(freq, phase)_
 A non-band-limited sawtooth oscillator. Output ranges from -1 to +1.
 
 - freq: frequency in Hertz
+- iphase: initial phase offset. For efficiency reasons this is a value ranging from 0 to 2.
 
-Fixed frequency:
+ConstantFixed frequency:
 
-	LFSaw(500, 0) * 0.1
+	LFSaw(500, 1) * 0.1
 
 Used as both Oscillator and LFO:
 

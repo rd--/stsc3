@@ -5,7 +5,7 @@ _Impulse(freq, phase)_
 Outputs non band limited single sample impulses.
 
 - freq: frequency in Hertz
-- phase: initial phase
+- phase: phase offset in cycles (0..1)
 
 Constant frequency:
 
@@ -15,3 +15,6 @@ Modulate frequency:
 
 	Impulse(XLn(800, 100, 5), 0) * 0.2
 
+Modulate phase:
+
+	Impulse(4, [0, MouseX(0, 1, 0, 0.2)]) * 0.2
