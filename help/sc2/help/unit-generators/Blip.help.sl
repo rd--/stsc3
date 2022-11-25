@@ -1,6 +1,6 @@
 # Blip - band limited impulse oscillator
 
-_Blip.ar(freq, numharm)_
+_Blip(freq, numharm)_
 
 Band Limited ImPulse generator. All harmonics have equal amplitude.  This is the equivalent of 'buzz' in MusicN languages. _Warning_: This waveform in its raw form could be damaging to your ears at high amplitudes or for long periods.
 

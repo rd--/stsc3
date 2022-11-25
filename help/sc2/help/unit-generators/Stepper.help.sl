@@ -34,7 +34,7 @@ Using Stepper and BufRd for sequencing, mouse controls clock rate:
 	var clock = Impulse(rate, 0);
 	var env = Decay2(clock, 0.002, 2.5);
 	var index = Stepper(clock, 0, 0, 15, 1, 0);
-	var freq = Lag2(BufRd(1, b, index, 1, 1).midiCps, 0.1) + [0, 0.3];
+	var freq = Lag2(BufRd(1, b, index, 1, 1).MidiCps, 0.1) + [0, 0.3];
 	var ffreq = Lag2(freq, 0.1) + [0, 0.3];
 	var out, rev, lfo;
 	out = LFPulse(freq * [1, 3/2, 2], 0, 0.3).sum;

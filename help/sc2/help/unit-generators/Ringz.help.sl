@@ -32,13 +32,13 @@ Modulate ring time opposite direction:
 Parallel filters with frequency ramps:
 
 	var exciter = WhiteNoise() * 0.001;
-	{ Ringz(exciter, XLn(ExpRand(100, 5000), ExpRand(100, 5000), 20), 0.5) }.dup(10).splay2
+	{ Ringz(exciter, XLn(ExpRand(100, 5000), ExpRand(100, 5000), 20), 0.5) }.dup(10).Splay2
 
 Texture of above:
 
 	OverlapTexture({
 		arg tr;
 		var exciter = WhiteNoise() * 0.001;
-		{ Ringz(exciter, TXLine(TExpRand(100, 5000, tr), TExpRand(100, 5000, tr), 20, tr), 0.5) }.dup(10).splay2
+		{ Ringz(exciter, TXLine(TExpRand(100, 5000, tr), TExpRand(100, 5000, tr), 20, tr), 0.5) }.dup(10).Splay2
 	}, 5, 10, 3)
 

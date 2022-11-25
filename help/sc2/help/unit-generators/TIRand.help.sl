@@ -23,7 +23,7 @@ Random degree, octave and number of harmonics:
 			var pitchClass = Index(scale, degree);
 			var mnn = (octave * 12) + pitchClass;
 			var numHarm = TIRand(1, 4, tr);
-			Blip(mnn.midiCps, numHarm) * 0.05
-		}.dup(7).splay2
+			Blip(mnn.MidiCps, numHarm) * 0.05
+		}.dup(7).Splay2
 	}, 4, 0.05, 2)
 

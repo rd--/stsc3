@@ -16,7 +16,7 @@ There are many examples of OverlapTexture in the examples files.
 	var left = RLPF(
 		OverlapTexture({
 			arg tr;
-			var f = TChoose(tr, [25, 30, 34, 37, 41, 42, 46, 49, 53, 54, 58, 61, 63, 66]).midiCps;
+			var f = TChoose(tr, [25, 30, 34, 37, 41, 42, 46, 49, 53, 54, 58, 61, 63, 66]).MidiCps;
 			LFPulse(f, 0, 0.2) + LFPulse(2 * f + TRand(-0.5, 0.5, tr), 0, 0.2)
 		}, 4, 2, 4) * 0.02,
 		lfo, // cutoff freq

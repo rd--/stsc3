@@ -11,6 +11,6 @@ Generates a single random integer value in uniform distribution from lo to hi
 		var pitchClass = Index(scale, degree);
 		var mnn = (octave * 12) + pitchClass;
 		var numHarm = IRand(1, 4);
-		Blip(mnn.midiCps, numHarm) * 0.1
-	}.dup(7).splay2
+		Blip(mnn.MidiCps, numHarm) * 0.1
+	}.dup(7).Splay2
 

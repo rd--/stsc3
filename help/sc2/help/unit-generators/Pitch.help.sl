@@ -44,5 +44,5 @@ Until Pitch finds a pitch for the first time, it will output initFreq.
 
 None of these settings are time variable.
 
-Default Argument values: initFreq = 440.0 minFreq = 60.0 maxFreq = 4000.0 execFreq = 100.0 maxBinsPerOctave = 16 median = 1 ampThreshold = 0.01 peakThreshold = 0.5 downSample = 1
+Default Argument values: _initFreq_ = 440.0 _minFreq_ = 60.0 _maxFreq_ = 4000.0 _execFreq_ = 100.0 _maxBinsPerOctave_ = 16 _median_ = 1 _ampThreshold_ = 0.01 _peakThreshold_ = 0.5 _downSample_ = 1
 
