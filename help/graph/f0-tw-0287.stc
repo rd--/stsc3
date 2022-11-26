@@ -1,7 +1,7 @@
-// https://sccode.org/1-4Qy ; f0 ; 0287 ; spl
+;; https://sccode.org/1-4Qy ; f0 ; 0287 ; spl
 var o = Saw(([58, 62, 65, 69, 72, 46] - (2 ** LFSaw(1.to(5) / 32, 0)).ceiling).MidiCps);
 var e = o % LFSaw([1, 1, 6], 0) % (LFSaw(2, [1, 2] / 8) * 2);
 HPF(Splay2(e), 9) / 2
 
-//---- calculations
+;;---- calculations
 ':>AEH.'.ascii

@@ -1,7 +1,6 @@
-// pkt 26 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490 ; spl
+;; pkt 26 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490
 var n = 8;
-var x = {
-	arg i;
+var x = { :i |
 	var t = i / n;
 	var a = VarSaw(0.02, t, 0.5) * 7.5;
 	var b = VarSaw(0.16, t, 2/3) * a.abs + 300;
@@ -15,4 +14,4 @@ var x = {
 	var z = LeakDC(VarSaw(o, t, 0.5), 0.995);
 	Pan2(z, VarSaw(0.02, t, 0.5), 1 / n)
 };
-1.to(n).collect(x).sum * 0.25
+(1 .. n).collect(x).sum * 0.25
