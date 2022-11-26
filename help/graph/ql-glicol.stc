@@ -1,4 +1,4 @@
-// https://glicol.org/demo#ontherun ; requires=VBJonVerb ; spl
+;; https://glicol.org/demo#ontherun ; requires=VBJonVerb
 var tr = Impulse(12, 0);
 var seq = DmdOn(tr, 0, Seq(inf, [40, 43, 45, 43, 50, 48, 50, 52]));
 var osc = Pulse(seq.midiCps, 0.5);

@@ -1,6 +1,5 @@
-// pm-crotale (dmc) #1.7 ; graph rewrite ; spl
-OverlapTexture({
-	arg tr;
+;; pm-crotale (dmc) #1.7 ; graph rewrite
+OverlapTexture({ :tr |
 	var midi = TIRand(48, 72, tr);
 	var tone = TRand(1, 6, tr);
 	var art = TRand(2, 6, tr) * 3;

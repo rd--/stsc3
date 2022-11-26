@@ -1,4 +1,4 @@
-// string wander-cluster (jmcc) #6 ; spl
+;; string wander-cluster (jmcc) #6
 {
 	var note1 = 50 + 50.rand;
 	var note2 = Fold(note1 + 15.rand - 7, 50, 120);
@@ -6,7 +6,7 @@
 	Pan2(CombC(WhiteNoise() * 0.008, 0.01, delay, delay * 1000), 1.0.rand2, 1)
 }.overlap(4 / 3, 4 / 3, 6)
 
-// string wander-cluster (jmcc) #6 ; with vibrato ; spl
+;; string wander-cluster (jmcc) #6 ; with vibrato
 {
 	var note1 = 50 + 50.rand;
 	var note2 = Fold(note1 + 15.rand - 7, 50, 120);

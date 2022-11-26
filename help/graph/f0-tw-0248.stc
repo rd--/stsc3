@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; f0 ; 0248 ; spl
+;; https://sccode.org/1-4Qy ; f0 ; 0248
 var d = LFTri(0.1, 0) < 0;
 var b = d + [2 .. 8] / (d + 2);
 var o = LFTri(b * 99, 0);

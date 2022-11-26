@@ -1,4 +1,4 @@
-// https://scsynth.org/t/5487 ; mv ; spl
+;; https://scsynth.org/t/5487 ; mv
 var prime = LFNoise0(1 / 19) * 8 + 300;
 var diff = LFNoise0(1 / 29) + 10;
 var fade = 10;

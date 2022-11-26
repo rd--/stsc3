@@ -1,7 +1,6 @@
-// cfstring1 (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ ; spl
+;; cfstring1 (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/
 var nc = 2;
-OverlapTexture({
-	arg tr;
+OverlapTexture({ :tr |
 	var dgr = DegreeToKey([0, 2, 4, 5, 7, 9, 11].asLocalBuf, TRand(0, 12, tr), 12);
 	var freq = (60 + dgr).midiCps;
 	var pan = TRand(-0.25, 0.25, tr);

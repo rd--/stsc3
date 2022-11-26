@@ -1,4 +1,4 @@
-// 2006-09-17 ; rd ; requires=DustRange ; spl
+;; 2006-09-17 ; rd ; requires=DustRange
 var b0 = [60, 71, 89, 65, 36, 57, 92, 97, 92, 97].asLocalBuf;
 var b1 = [71, 89, 60, 57, 65, 36, 95, 92, 93, 97].asLocalBuf;
 var clk = DustRange(0.2, 0.9);

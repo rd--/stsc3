@@ -1,4 +1,4 @@
-// jmcc ;  https://soundcloud.com/soundaspureform/bach-prelude ; spl
+;; jmcc ;  https://soundcloud.com/soundaspureform/bach-prelude
 var p1 = [
 	[60,64,67,72,76],[60,62,69,74,77],[59,62,67,74,77],[60,64,67,72,76],
 	[60,64,69,76,81],[60,62,66,69,74],[59,62,67,74,79],[59,60,64,67,72],
@@ -12,11 +12,10 @@ var p1 = [
 var p2 = [
 	[36,48,53,57,60,65,60,57,60,57,53,57,53,50,53,50],
 	[36,47,67,71,74,77,74,71,74,71,67,71,62,65,64,62],
-	{ 60 }.dup(16)
+	{ 60 } ! 16
 ];
-var p = p1.collect({
-	arg x;
-	var y = x ++ 3.to(5).collect({ arg i; x[i] });
+var p = p1.collect({ :x |
+	var y = x ++ (3 .. 5).collect { :i | x[i] };
 	[y, y].concatenation
 }).concatenation ++ p2.concatenation;
 var tr = Impulse(5, 0);

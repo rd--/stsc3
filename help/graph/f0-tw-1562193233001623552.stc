@@ -1,7 +1,6 @@
-// https://twitter.com/redFrik/status/1562193233001623552 ; f0 ; spl
+;; https://twitter.com/redFrik/status/1562193233001623552 ; f0
 var c = SinOscFB(1 / 64, 0).rounded * 10 + 50;
-var f = {
-	arg i;
+var f = { :i |
 	var p = SinOscFB(
 		(i + 1 * c) + (SinOscFB(2.02, 1) * 2),
 		SinOscFB(i + 1 / 24, 1) + 1 / 2
@@ -14,4 +13,4 @@ var f = {
 };
 var p = SinOscFB((SinOscFB([1 .. 5], 1) * 3).rounded + 5 * c, 1) * SinOscFB(12, 1).max(1) * 3;
 var q = SinOscFB(c, 0.7) * (SinOscFB(3, 1).min(0) / 3);
-0.to(11).collect(f).mean.tanh + Splay2(p.tanh / 9) + q
+(0 .. 11).collect(f).mean.tanh + Splay2(p.tanh / 9) + q

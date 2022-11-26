@@ -1,6 +1,5 @@
-// noise modulated sawtooths (jmcc) #6 ; spl
-var a = OverlapTexture({
-	arg tr;
+;; noise modulated sawtooths (jmcc) #6
+var a = OverlapTexture({ :tr |
 	var f = TRand(60, 100, tr).MidiCps;
 	LFSaw([f, f + 0.2], 0) * LFNoise2(f * [0.15, 0.16]) * 0.05
 }, 4, 4, 4);

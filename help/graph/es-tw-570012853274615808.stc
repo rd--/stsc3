@@ -1,4 +1,4 @@
-// https://twitter.com/sluyterrific_sc/status/570012853274615808 (es) ; requires=GreyholeRaw
+;; https://twitter.com/sluyterrific_sc/status/570012853274615808 (es) ; requires=GreyholeRaw
 var t = Dust2([9, 9]);
 var o = 0.1;
 var a = LFNoise2(o) * 9 + 9;

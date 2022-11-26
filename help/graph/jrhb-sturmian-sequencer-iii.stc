@@ -1,14 +1,12 @@
-// sturmian sequencer iii (jrhb) ; spl
+;; sturmian sequencer iii (jrhb)
 var rules = [[0, 1], [0]];
-var rewrite = {
-	arg c, n;
+var rewrite = { :c :n |
 	var r = c;
-	n.timesRepeat { r := r.collect({ arg e; rules[e + 1] }).concatenation };
+	n.timesRepeat { r := r.collect({ :e | rules[e + 1] }).concatenation };
 	r
 };
 var n = 9;
-var strFunc = {
-	arg i;
+var strFunc = { :i |
 	var str = rewrite([0], i + 6);
 	var dt = 1 / SampleRate() / (n - i + 2) * MouseX(1, SampleRate(), 2, 0.2);
 	TDmdFor(dt, 0, Seq(inf, str - 0.5))

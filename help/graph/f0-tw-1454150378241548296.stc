@@ -1,6 +1,5 @@
-// https://twitter.com/redFrik/status/1454150378241548296 ; f0 ; spl
-var a = {
-	arg r, i, n, q, p;
+;; https://twitter.com/redFrik/status/1454150378241548296 ; f0
+var a = { :r :i :n :q :p |
 	RLPF(Impulse(r, p), Select(i % 5, [0, 3, 5, 7, 10] + n).MidiCps, q)
 };
 var x = 0.001;

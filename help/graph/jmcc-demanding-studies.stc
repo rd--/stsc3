@@ -1,4 +1,4 @@
-// demanding studies (jmcc) ; spl
+;; demanding studies (jmcc)
 var s1 = Choose(inf, [72, 75, 79, 82]);
 var s2 = Choose(1, [82, 84, 86]);
 var s3 = Seq(inf, [72, 75, 79, s2]);

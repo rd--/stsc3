@@ -1,7 +1,6 @@
-// jmcc ; ostinoodles ; requires=TScramble ; spl
-var z = OverlapTexture({
-	arg tr;
-	var sequ = { arg s, tr; DmdOn(tr, 0, Seq(inf, s)) };
+;; jmcc ; ostinoodles ; requires=TScramble
+var z = OverlapTexture({ :tr |
+	var sequ = { :s :tr | DmdOn(tr, 0, Seq(inf, s)) };
 	var root = 81 + TRand(-6, 6, tr);
 	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
 	var offset = TRand(-16, 16, tr);
@@ -15,10 +14,9 @@ var z = OverlapTexture({
 6.timesRepeat { z := AllpassN(z, 0.04, { Rand(0, 0.04) }.dup(2), 16) };
 z
 
-//---- jmcc - ostinoodles ; keywords
-var z = OverlapTexture({
-	arg tr;
-	var sequ = { arg s, tr; DmdOn(trig: tr, reset: 0, demandUGens: Seq(repeats: inf, list: s)) };
+;; jmcc - ostinoodles ; keywords
+var z = OverlapTexture({ :tr |
+	var sequ = { :s :tr | DmdOn(trig: tr, reset: 0, demandUGens: Seq(repeats: inf, list: s)) };
 	var root = 81 + TRand(lo: -6, hi: 6, trig: tr);
 	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
 	var offset = TRand(lo: -16, hi: 16, trig: tr);

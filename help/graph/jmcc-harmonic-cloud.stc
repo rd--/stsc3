@@ -1,10 +1,9 @@
-// <https://soundcloud.com/soundaspureform/harmonic-cloud-1> jmcc ; roughguess ; spl
-var n = 36; // 48
-OverlapTexture({
-	arg tr;
+;; <https://soundcloud.com/soundaspureform/harmonic-cloud-1> jmcc ; roughguess
+var n = 36; (* 48 ; udp *)
+OverlapTexture({ :tr |
 	var vc = {
 		var f = TExpRand(64, 4000, tr).roundTo(64);
-		LPF(Saw(f + { TRand(-1, 1, tr) }.dup(2)), TRand(1, 6, tr) * f) * 0.04
+		LPF(Saw({ TRand(-1, 1, tr) } ! 2 + f), TRand(1, 6, tr) * f) * 0.04
 	};
-	vc.dup(n).Splay2
+	Splay2(vc ! n)
 }, 0.4, 1, 2)

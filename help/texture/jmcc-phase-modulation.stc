@@ -1,7 +1,7 @@
-// phase modulation with slow beats (jmcc) #6 ; spl
+;; phase modulation with slow beats (jmcc) #6
 {
-	var x = MouseX(100, 6000, 1, 0.2); // random frequency of new events
-	var y = MouseY(0, 2, 0, 0.2); // modulation index
+	var x = MouseX(100, 6000, 1, 0.2); (* random frequency of new events *)
+	var y = MouseY(0, 2, 0, 0.2); (* modulation index *)
 	var f1 = Rand(0, x);
 	var ph = 0;
 	3.timesRepeat({

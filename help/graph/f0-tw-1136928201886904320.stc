@@ -1,6 +1,5 @@
-// f0 ; https://twitter.com/redFrik/status/1136928201886904320 ; spl
-var f = {
-	arg a;
+;; f0 ; https://twitter.com/redFrik/status/1136928201886904320
+var f = { :a |
 	var ix = a.key;
 	var osc = a.value;
 	var b = [4, 2, 1, 3, 5];

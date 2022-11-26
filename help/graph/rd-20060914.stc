@@ -1,8 +1,6 @@
-// 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
-OverlapTexture({
-	arg tr;
-	var chrd = {
-		arg m;
+;; 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
+OverlapTexture({ :tr |
+	var chrd = { :m |
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
@@ -14,7 +12,7 @@ OverlapTexture({
 	};
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octaves = [4, 5, 6, 7];
-	var mnn = scale.collect({ arg n; octaves.collect({ arg o; n + (o * 12) }) }).concatenation;
-	var chd = { TChoose(tr, mnn) }.dup(6);
+	var mnn = scale.collect({ :n | octaves.collect({ :o | n + (o * 12) }) }).concatenation;
+	var chd = { TChoose(tr, mnn) } ! 6;
 	{ chrd(chd) }.dup(9).sum
 }, 21, 0, 3)

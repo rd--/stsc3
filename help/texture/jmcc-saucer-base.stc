@@ -1,4 +1,4 @@
-// saucer base (jmcc) #6 ; spl
+;; saucer base (jmcc) #6
 {
 	var b = 1000.0.rand;
 	var c = 5000.0.rand;

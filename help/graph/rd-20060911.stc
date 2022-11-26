@@ -1,4 +1,4 @@
-// 20060911 ; rd ; spl
+;; 20060911 ; rd
 var t = Impulse(22, 0) * (SinOsc(0.5, 0) + 1);
 var x = MouseX(0.005, 0.12, 1, 0.1);
 var y = MouseY(0.01, 0.52, 1, 0.1);

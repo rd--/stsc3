@@ -1,6 +1,5 @@
-// https://scsynth.org/t/phaseshaping-osc-algorithms/3926/4 ; sp ; event control ; https://core.ac.uk/download/pdf/297014559.pdf
-var voiceFunc =  {
-	arg e;
+;; https://scsynth.org/t/phaseshaping-osc-algorithms/3926/4 ; sp ; event control ; https://core.ac.uk/download/pdf/297014559.pdf
+var voiceFunc =  { :e |
 	var width = Clip(e.x, 0.05, 0.95);
 	var freq = e.y * 800 + 200;
 	var saw = LinLin(LFSaw(freq / 2, 1), -1, 1, width.negated, 1 - width);

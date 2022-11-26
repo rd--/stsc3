@@ -1,4 +1,4 @@
-// monastic resonance ; jmcc #5 ; mouse controls size and reverb time ; requires=AudioIn ; spl
+;; monastic resonance ; jmcc #5 ; mouse controls size and reverb time ; requires=AudioIn
 var decayTime = MouseX(0, 16, 0, 0.2);
 var delayScale = MouseY(0.01, 1, 0, 0.2);
 var s = AudioIn([1, 2]) * 0.005;

@@ -23,7 +23,7 @@ $graphic               = $printable # $white
 tokens :-
 
   $white+                                ;
-  "//" $printable+                       ;
+  ";;" $printable+                       ;
 
   "["                                    { \_ -> LeftBracket }
   "]"                                    { \_ -> RightBracket }
@@ -62,7 +62,7 @@ tokens :-
   \" ($printable # \")* \"               { \s -> QuotedString (removeOuter 1 s) }
   \' ($printable # \')* \'               { \s -> HashedString (removeOuter 1 s) }
   \\ $letter $letterordigit*             { \s -> HashedString (tail s) }
-  "/*" ($printable # \*)* "*/"           { \s -> Comment (removeOuter 2 s) }
+  "(*" ($printable # \*)* "*)"           { \s -> Comment (removeOuter 2 s) }
 
 {
 removeOuter :: Int -> [t] -> [t]

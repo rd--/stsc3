@@ -1,4 +1,4 @@
-// tarmac ; jmcc #10 ; graph rewrite ; requires=TScramble ; spl
+;; tarmac ; jmcc #10 ; graph rewrite ; requires=TScramble
 var a = [
 	[1, 0, 0],
 	[1, 1, 0],
@@ -9,8 +9,7 @@ var a = [
 	[1, 1, 1, 1, 1, 0, 0, 0],
 	[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
-OverlapTexture({
-	arg tr;
+OverlapTexture({ :tr |
 	var t = Impulse(8, 0);
 	var i = DmdOn(t, 0, Seq(inf, TScramble(tr, TChoose(tr, a)))) * t;
 	var d = TRand(0.05, 0.5, tr);

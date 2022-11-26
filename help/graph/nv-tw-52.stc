@@ -1,4 +1,4 @@
-// nv 52 https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; requires=crossedWith
+;; nv 52 https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; requires=crossedWith
 var x = [[4, 4.5], [2, 3, 5, 6]];
 var z = x.perform('*', crossedWith: x.perform('*', crossedWith: x).allTuples);
 var y = (z * 4).concatenation.clump(2) ++ [0];

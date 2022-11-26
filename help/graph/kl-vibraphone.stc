@@ -1,6 +1,5 @@
-// vibraphone simulation ; Kevin Larke ; Real Time Vibraphone Pitch and Timbre Classification
-var voiceFunc = {
-	arg e;
+;; vibraphone simulation ; Kevin Larke ; Real Time Vibraphone Pitch and Timbre Classification ; requires=voicer
+var voiceFunc = { :e |
 	var freq = e.p.unitCps;
 	var detune = e.y * 15;
 	var freqs = freq * [1, 4, 10, 13.75 + detune];
@@ -14,7 +13,7 @@ var voiceFunc = {
 	var decays = [1, 0.7 * (-1 * decay).exp, 0.5 * (-1 * decay).exp, 0.4 * (-1 * decay).exp];
 	var zero = 0.000001;
 	var soundMain = TXLine(zero, 1, 1 / freqs, e.w) * TXLine(1, zero, decays * 4, e.w) * sound * mod;
-	var soundHigh = TXLine(0.3 * (velocity + zero), zero, 0.02, e.w) * SinOsc(hifreqs, 0); // hi frequency onset
+	var soundHigh = TXLine(0.3 * (velocity + zero), zero, 0.02, e.w) * SinOsc(hifreqs, 0); ;; hi frequency onset
 	var pan = e.o * 2 - 1;
 	Pan2(soundMain.sum + soundHigh.sum, pan, LagUD(e.w, 0.01, 4))
 };

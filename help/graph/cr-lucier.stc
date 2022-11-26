@@ -1,17 +1,16 @@
-// lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html ; spl
+;; lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html
 var bus = 20;
-OverlapTexture({
-	arg tr;
+OverlapTexture({ :tr |
 	var freq = TRand(56, 64, tr);
 	var blocksize = 1 / ControlRate();
-	var mkDt = { arg f; 1 / f - blocksize };
+	var mkDt = { :f | 1 / f - blocksize };
 	var stringDelay = mkDt(freq);
 	var pk1Pos = 0.1;
 	var srcPos = 0.3;
 	var pk2Pos = 0.9;
 	var maxDelay = 1;
-	var mkDelay = { arg i, r; LPZ1(DelayC(i, maxDelay, r * stringDelay)) };
-	var mkAllpass = { arg i, r, dt; LPZ1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
+	var mkDelay = { :i :r | LPZ1(DelayC(i, maxDelay, r * stringDelay)) };
+	var mkAllpass = { :i :r :dt | LPZ1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
 	var drv = InFb(1, bus);
 	var pk1R = mkDelay(drv, srcPos - pk1Pos);
 	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2,  TRand(0.001, 0.11, tr));
@@ -34,5 +33,6 @@ OverlapTexture({
 	[outL, outR] <! lOut <! drv
 }, 1, 5, 3) * 0.25
 
-//---- notes.md
+(* ---- notes.md
 The OverlapTexture variant cannot use LocalIn & LocalOut since there can only be one pair per graph.
+*)

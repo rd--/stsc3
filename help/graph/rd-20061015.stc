@@ -1,6 +1,5 @@
-// 20061015 ; discretion ; rd ; requires=EnvBreakPoint
-var mkls = {
-	arg ts, bp;
+;; 20061015 ; discretion ; rd ; requires=EnvBreakPoint
+var mkls = { :ts :bp |
 	EnvGen(1, 1, 0, ts, 2, EnvBreakPoint(bp, 'linear'))
 };
 var part = {

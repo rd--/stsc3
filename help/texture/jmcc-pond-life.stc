@@ -1,4 +1,4 @@
-// pond life ; jmcc ; #1 ; spl
+;; pond life ; jmcc ; #1
 {
 	var f = SinOsc(20 + 30.0.rand, 0) * (100 + 300.0.rand) + 500 + LinRand(0.0, 2000.0, 0);
 	var o = SinOsc(f, 0) * LFPulse(3 / (1 + 8.0.rand), 0, 0.2 + 0.3.rand);

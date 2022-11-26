@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; f0 ; 0289 ; spl
+;; https://sccode.org/1-4Qy ; f0 ; 0289
 var b = [1 .. 50];
 var t = Impulse(b / 49, 0);
 var o = SinOscFB(33 * b, LagUD(t, 0.005, 0.2) * 99) * LagUD(t, 0.007, 1);

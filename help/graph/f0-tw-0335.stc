@@ -1,4 +1,4 @@
-// https://sccode.org/1-4Qy ; f0 ; 0335 ; spl
+;; https://sccode.org/1-4Qy ; f0 ; 0335
 var o = GrainFM(
 	1,
 	LFSaw([0.5, 0.6], 0),
@@ -12,7 +12,7 @@ var o = GrainFM(
 );
 (o / 2).tanh
 
-// https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords ; spl
+;; https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords
 var o = GrainFM(
 	numChan: 1,
 	trigger: LFSaw([0.5, 0.6], 0),

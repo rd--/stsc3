@@ -1,7 +1,6 @@
-// chrd (rd) ; spl
+;; chrd (rd)
 {
-	var chrd = {
-		arg m;
+	var chrd = { :m |
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
@@ -13,7 +12,7 @@
 	};
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octaves = [4, 5, 6, 7];
-	var mnn = scale.collect({ arg n; octaves.collect({ arg o; n + (o * 12) }) }).concatenation;
-	var chd = { mnn.choose }.dup(6);
+	var mnn = scale.collect({ :n | octaves.collect({ :o | n + (o * 12) }) }).concatenation;
+	var chd = { mnn.atRandom } ! 6;
 	{ chrd(chd) }.dup(9).sum
 }.overlap(21, 0, 3)

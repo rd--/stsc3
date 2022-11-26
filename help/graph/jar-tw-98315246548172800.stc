@@ -1,7 +1,6 @@
-// https://twitter.com/rukano/status/98315246548172800 ; texture variant ; spl
-OverlapTexture({
-	arg tr;
+;; https://twitter.com/rukano/status/98315246548172800 ; texture variant
+OverlapTexture({ :tr |
 	var h = TChoose(tr, [100, 800, 3000]);
 	var o = { SinOsc(TExpRand(60, h, tr), 0) * 0.1 };
-	Splay2(o.dup(40))
+	Splay2(o ! 40)
 }, 5, 7, 2)

@@ -1,6 +1,5 @@
-// wuxia5 (jmcc) ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ ; graph rewrite ; spl
-OverlapTexture({
-	arg tr;
+;; wuxia5 (jmcc) ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ ; graph rewrite
+OverlapTexture({ :tr |
 	var amp = 0.1;
 	var eg = LinSeg(tr, [0, 0.03, 1, 4, 1, 2, 0]);
 	var noise = WhiteNoise() * 0.1 * eg;

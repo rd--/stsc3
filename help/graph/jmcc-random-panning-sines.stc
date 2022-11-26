@@ -1,6 +1,5 @@
-// random panning sines (jmcc) #4 ; spl
-OverlapTexture({
-	arg tr;
+;; random panning sines (jmcc) #4
+OverlapTexture({ :tr |
 	var n = 8;
 	{
 		var osc = SinOsc(80 + TRand(0, 2000, tr), 0);

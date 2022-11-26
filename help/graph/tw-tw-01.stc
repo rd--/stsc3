@@ -1,8 +1,6 @@
-// <https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters) ; spl
-var s = {
-	arg k;
-	var f = {
-		arg i;
+;; <https://swiki.hfbk-hamburg.de/MusicTechnology/899> (tw ; tim walters)
+var s = { :k |
+	var f = { :i |
 		SinOsc(i, SinOsc((i + k) ** i, 0)
 		/
 		(Decay(Impulse((0.5 ** i) / k, 0), [i, i + 1]) * k))
