@@ -1,121 +1,121 @@
-// ascension ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #1 ; spl
-Pan2(RLPF(PinkNoise(), Phasor(1, 1.to(8) / 200, 20, 20000, 0), 0.05).sum, 0, 0.1)
+;; ascension ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #1
+Pan2(RLPF(PinkNoise(), Phasor(1, (1 .. 8) / 200, 20, 20000, 0), 0.05).sum, 0, 0.1)
 
-// nostalgic sci-fi music ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #2 ; spl
+;; nostalgic sci-fi music ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #2
 CombC(SinOsc(LFNoise2([1, 1, 1, 1] * 0.1) * 440 + ([1, 2] * 440), 0).sum * 0.01, 0.2, [0.13, 0.2], 15)
 
-// busy forest ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #3 ; spl
+;; busy forest ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #3
 CombC(Formant(LFNoise0([1, 0.7]) * 8 + 9, LFNoise0([1, 0.7]) * 4000 + 4000, 200) * 0.3, 0.2, 0.2, 1)
 
-// inverted saw ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #4 ; spl
+;; inverted saw ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #4
 Pan2(Saw(LFNoise1(1) * 1000 + 1200) * FSinOsc(SampleRate() / 2, 1), 0, 0.3)
 
-// hedge trimmer ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #5 ; spl
-Pan2(BPF(PinkNoise(), 1.to(64) * (LFNoise2(4) * 30 + 100), 0.01).sum, 0, 0.6)
+;; hedge trimmer ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #5
+Pan2(BPF(PinkNoise(), (1 .. 64) * (LFNoise2(4) * 30 + 100), 0.01).sum, 0, 0.6)
 
-// spectral harp ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #6 ; spl
+;; spectral harp ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #6
 var p = SinOsc(1760, 0) * [0.01, 0.01];
 p + CombC(p, 0.1, LFNoise1(0.5) * 0.1 + 0.1, -10)
 
-// spectral harp ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #6 ; edit ; spl
+;; spectral harp ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #6 ; edit
 var p = SinOsc(1760, 0) * [0.01, 0.01];
 p + CombC(p, 0.1, LFNoise1(0.5) * 0.1 + 0.1, [-10, 10])
 
-// FM curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7a ; spl
-SinOsc(1,  SinOsc(333,  SinOsc(143, 0) * ({ LFNoise2(0.2) }.dup(2) * 100 + 110))) * 0.1
+;; Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7a
+SinOsc(1, SinOsc(333, SinOsc(143, 0) * ({ LFNoise2(0.2) } ! 2 * 100 + 110))) * 0.1
 
-// FM curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7b ; spl
-SinOsc(1,  SinOsc(33,  SinOsc(1403, 0) * ({ LFNoise2(0.2) }.dup(2) * 10 + 11)) * 10) * 0.1
+;; Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7b
+SinOsc(1, SinOsc(33, SinOsc(1403, 0) * ({ LFNoise2(0.2) } ! 2 * 10 + 11)) * 10) * 0.1
 
-// FM curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7c ; spl
-SinOsc(1,  SinOsc(14003,  0) * ({ LFNoise2(0.2) }.dup(2) * 100 + 101)) * 0.1
+;; Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7c
+SinOsc(1, SinOsc(14003, 0) * ({ LFNoise2(0.2) } ! 2 * 100 + 101)) * 0.1
 
-// FM curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7d ; spl
-SinOsc(2,  SinOsc(6003,  0) * ({ LFNoise2(1) }.dup(2) * 200 + 201)) * 0.1
+;; Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7d
+SinOsc(2, SinOsc(6003, 0) * ({ LFNoise2(1) } ! 2 * 200 + 201)) * 0.1
 
-// FM curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7e ; spl
-SinOsc(0,  SinOsc(9005,  0) * ({ LFNoise2(1) }.dup(2) * 100 + 101)) * 0.1
+;; Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7e
+SinOsc(0, SinOsc(9005, 0) * ({ LFNoise2(1) } ! 2 * 100 + 101)) * 0.1
 
-// blizzard ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #8 ; spl
-var f = { 0.2 }.dup(8);
+;; blizzard ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #8
+var f = 0.2 ! 8;
 Pan2(BPF(PinkNoise() *0.2, LFNoise1(f) * 1000 + 1040, LFNoise1(f) * 0.3 + 0.31), 0, 1)
 
-// fey emissions ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #9 ; spl
-var d = { Dust(2) }.dup(2);
+;; fey emissions ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #9
+var d = { Dust(2) } ! 2;
 CombN(BPF(d, LFNoise0(10) * 3000 + 3040, 0.001) * 200, 0.2, 0.2, 5)
 
-// sine slurps ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #10 ; spl
-SinOsc(0, BPF({ Dust(10) }.dup(2) * 20000,  { LFNoise1(10) }.dup(2) * 4000 + 4000,  0.1)) * 0.2
+;; sine slurps ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #10
+SinOsc(0, BPF({ Dust(10) } ! 2 * 20000, { LFNoise1(10) } ! 2 * 4000 + 4000, 0.1)) * 0.2
 
-// noise slurps ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #11 ; spl
-SinOsc(0, BPF({ WhiteNoise() }.dup(2) * 1000,  { LFNoise1(0.1) }.dup(2) * 2000 + 4000,  0.001)) * 0.1
+;; noise slurps ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #11
+SinOsc(0, BPF({ WhiteNoise() } ! 2 * 1000, { LFNoise1(0.1) } ! 2 * 2000 + 4000, 0.001)) * 0.1
 
-// feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12a ; spl
+;; feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12a
 var p = Saw(440 + [0, 0.2]) * 0.02;
 p + CombC(p, 0.1, LFNoise0(10) * 0.08 + 0.08, -10000)
 
-// feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12b ; spl
+;; feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12b
 var p = Saw(440 + [0, 0.2]) * 0.02;
 p + CombC(p, 0.1, LFNoise1(10) * 0.08 + 0.08, -10000)
 
-// feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12c ; spl
-var p = { PinkNoise() * 0.03 }.dup(2);
+;; feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12c
+var p = { PinkNoise() * 0.03 } ! 2;
 p + CombC(p, 0.2, LFNoise0(1) * 0.2 + 0.2, -10000)
 
-// feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12d ; spl
-var p = { WhiteNoise() * 0.02 }.dup(2);
+;; feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12d
+var p = { WhiteNoise() * 0.02 } ! 2;
 p + CombC(p, 0.1, LFNoise1(10) * 0.08 + 0.08, -10000)
 
-// feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12e ; spl
-var p = { Dust2(200) * 0.2 }.dup(2);
+;; feedback racket ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #12e
+var p = { Dust2(200) * 0.2 } ! 2;
 p + CombC(p, 0.4, LFNoise0(2) * 0.4 + 0.4, -10000)
 
-// trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13a ; spl
+;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13a
 var p = [1, 3, 5];
 Pan2(SinOsc(800 * (SinOsc(p * 0.1, 0) / p).roundTo(1 / 6).sum, 0), 0, 0.2)
 
-// trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13b ; spl
+;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13b
 var p = [1, 2] + 0.01;
 Pan2(SinOsc(1000 * Lag((LFSaw(p * 0.4, 0) / p).roundTo(1 / 6), 0.002).sum, 0), 0, 0.2)
 
-// trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13c ; spl
+;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13c
 var p = [0.5, 1, 2];
 Pan2(SinOsc(1000 * Lag((LFSaw(p * 0.4, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
-// trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13d ; spl
+;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13d
 var p = [1, 2] + 0.04;
 Pan2(SinOsc(1400 * Lag((LFTri(p * 0.2, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
-// trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13e ; spl
+;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13e
 var p = [1, 4] + 0.01;
 Pan2(SinOsc(1400 * Lag((LFTri(p * 0.2, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
-// short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14a ; spl
-Pan2(SinOsc(LPF(Stepper(Impulse(80, 0),  0,  1,  512,  84, 0),  1000) * 20,  0), 0, 0.2)
+;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14a
+Pan2(SinOsc(LPF(Stepper(Impulse(80, 0), 0, 1, 512, 84, 0), 1000) * 20, 0), 0, 0.2)
 
-// short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14b ; spl
-Pan2(SinOsc(LPF(Stepper(Impulse(10, 0),  0,  1,  12,  [3, 4, 10], 1),  1000) * 100,  0).sum, 0, 0.2)
+;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14b
+Pan2(SinOsc(LPF(Stepper(Impulse(10, 0), 0, 1, 12, [3, 4, 10], 1), 1000) * 100, 0).sum, 0, 0.2)
 
-// short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14c ; spl
-Pan2(SinOsc(LPF(Stepper(Impulse(10, 0),  0,  1,  16,  [4, 7, 10, 12], 1),  1000) * 70,  0).sum, 0, 0.2)
+;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14c
+Pan2(SinOsc(LPF(Stepper(Impulse(10, 0), 0, 1, 16, [4, 7, 10, 12], 1), 1000) * 70, 0).sum, 0, 0.2)
 
-// short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14d ; spl
-Pan2(SinOsc(LPF(Stepper(Impulse(10, 0),  0,  1,  16,  [3, 7, 10, 11], 1),  1000) * 90,  0).sum, 0, 0.2)
+;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14d
+Pan2(SinOsc(LPF(Stepper(Impulse(10, 0), 0, 1, 16, [3, 7, 10, 11], 1), 1000) * 90, 0).sum, 0, 0.2)
 
-// short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14e ; spl
-Pan2(SinOsc(RLPF(Stepper(Impulse(8, 0),  0,  1,  8,  [1, 2, 3], 1),  1000, 0.01) * 200,  0).sum, 0, 0.1)
+;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14e
+Pan2(SinOsc(RLPF(Stepper(Impulse(8, 0), 0, 1, 8, [1, 2, 3], 1), 1000, 0.01) * 200, 0).sum, 0, 0.1)
 
-// saw scratching ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #15 ; spl
-Pan2(CombC(LFSaw([0.49, 1, 1.51, 1.89] * 200,  0) *  0.1,  1,  Clip(RLPF(LFNoise2(0.1) *  0.4 + 0.6,  10,  1.1), 0.21, 1),  15).sum, 0, 1)
+;; saw scratching ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #15
+Pan2(CombC(LFSaw([0.49, 1, 1.51, 1.89] * 200, 0) * 0.1, 1, Clip(RLPF(LFNoise2(0.1) * 0.4 + 0.6, 10, 1.1), 0.21, 1), 15).sum, 0, 1)
 
-// shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16a ; spl
-Pan2(CombC(SinOsc(100, 0),  2,  LFTri(1.1389, 0) * 0.5 + 1.4,  80), 0, 0.1)
+;; shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16a
+Pan2(CombC(SinOsc(100, 0), 2, LFTri(1.1389, 0) * 0.5 + 1.4, 80), 0, 0.1)
 
-// shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16b ; spl
-Pan2(CombC(SinOsc(200, 0),  2,  LFNoise1(13.8389 * LFSaw(0.1, 0) + 14) * 0.5 + 1.4,  20), 0, 0.1)
+;; shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16b
+Pan2(CombC(SinOsc(200, 0), 2, LFNoise1(13.8389 * LFSaw(0.1, 0) + 14) * 0.5 + 1.4, 20), 0, 0.1)
 
-// shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16c ; spl
-Pan2(CombC(SinOsc(100, 0),  2,  LFTri(LFNoise0(0.2) + 1, 0) * 0.6 + 1.4,  80), 0, 0.1)
+;; shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16c
+Pan2(CombC(SinOsc(100, 0), 2, LFTri(LFNoise0(0.2) + 1, 0) * 0.6 + 1.4, 80), 0, 0.1)
 
-// shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16d ; spl
-Pan2(CombC(SinOsc(200, 0),  2,  LFTri(LFSaw(pi / 9, 0) * 9 + 9, 0) * 0.1 + 1.9,  20), 0, 0.1)
+;; shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16d
+Pan2(CombC(SinOsc(200, 0), 2, LFTri(LFSaw(pi / 9, 0) * 9 + 9, 0) * 0.1 + 1.9, 20), 0, 0.1)

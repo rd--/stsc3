@@ -33,4 +33,3 @@ However, most examples in the manual have parentheses around the code which allo
 			1 (* level *)
 		)
 	}.dup(n).sum
-

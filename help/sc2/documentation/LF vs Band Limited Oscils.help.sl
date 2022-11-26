@@ -20,7 +20,7 @@ and _LFPulse_:
 
 LFPulse is better to use as a low frequency controller because it is truely a rectangular wave.
 
-	// Synth.plot({ [LFPulse.ar(1000,0.3,0.7),Pulse.ar(1000,0.3,0.7)] })
+	;; Synth.plot({ [LFPulse.ar(1000,0.3,0.7),Pulse.ar(1000,0.3,0.7)] })
 
 The same issues apply to _Saw_ and _LFSaw_.
 
@@ -42,4 +42,4 @@ and LFSaw:
 
 LFSaw is better to use as a low frequency controller because it is truely a sawtooth shape.
 
-	 // Synth.plot({ [LFSaw(1000,0.7),Saw(1000,0.7)] })
+	;; Synth.plot({ [LFSaw(1000,0.7),Saw(1000,0.7)] })

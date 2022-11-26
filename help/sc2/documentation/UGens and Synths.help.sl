@@ -10,7 +10,7 @@ A unit generator is created by sending the 'ar' or 'kr' message to the unit gene
 
 The input parameters for a unit generator are given in the documentation for that class.
 
-	FSinOsc(800, 0) * 0.1 // create a sine oscillator at 800 Hz, amplitude 0.1
+	FSinOsc(800, 0) * 0.1 (* create a sine oscillator at 800 Hz, amplitude 0.1 *)
 
 A unit generator's signal inputs can be other unit generators, scalars, or arrays of unit generators and scalars.
 
@@ -26,6 +26,6 @@ The 'play' method of class Function will create and play a synth using the funct
 
 You can do math operations on unit generators and the result will be another unit generator. Doing math on unit generators is not doing any signal calculation itself - it is building the network of unit generators that will execute once they are played in a Synth. This is the essential thing to understand: Synthesis networks, or in other words signal flow graphs are created by executing expressions of unit generators.  The following expression creates a flow graph whose root is an instance of BinaryOpUGen which performs the '+' operation. Its inputs are the FSinOsc and BrownNoise unit generators.
 
-	(FSinOsc(800, 0) * 0.1) + (BrownNoise() * 0.1) // (use cmd-P)
+	(FSinOsc(800, 0) * 0.1) + (BrownNoise() * 0.1) (* use cmd-P *)
 
 You can find out what unit generators are in a Synth by dumping the Array stored in the 'ugens' instance variable. The unit generators are listed in the order they will be executed.
