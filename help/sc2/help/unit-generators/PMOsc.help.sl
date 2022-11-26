@@ -23,8 +23,6 @@ Modulate index:
 
 Texture:
 
-	OverlapTexture({
-		arg tr;
-		LinPan2(PMOsc(TRand(20, 2000, tr), TRand(0, 800, tr), TLine(0, TRand(0, 12, tr), 9), 0), TRand(-1, 1, tr), 0.1)
+	OverlapTexture({ :tr |
+		LinPan2(PMOsc(TRand(20, 2000, tr), TRand(0, 800, tr), TLine(0, TRand(0, 12, tr), 9, tr), 0), TRand(-1, 1, tr), 0.1)
 	}, 2, 5, 4)
-

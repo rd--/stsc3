@@ -2,7 +2,7 @@
 
 _LinCong(freq, a, c, m, xi)_
 
-Linear congruential generators are often used to implement random number generators. However the number series they generate are cyclic.  There are 'good' and 'bad' choices for the parameters if one wants to have a good random number series. However the real point of this UGen is to experiment and use the function as something between an oscillator and a noise source.  The formula is _"x1 = ((a * x0) + c) % m_.
+Linear congruential generators are often used to implement random number generators. However the number series they generate are cyclic.  There are 'good' and 'bad' choices for the parameters if one wants to have a good random number series. However the real point of this UGen is to experiment and use the function as something between an oscillator and a noise source.  The formula is _x1 = ((a * x0) + c) % m_.
 
 All of the parameters are integers and cannot be modulated.
 
@@ -13,12 +13,11 @@ All of the parameters are integers and cannot be modulated.
 
 Texture:
 
-	OverlapTexture({
-		arg tr;
+	OverlapTexture({ :tr |
 		var freq = SampleRate() / 2;
 		var m = TIRand(0, 1000000, tr);
 		var a = TIRand(1, 2000, tr);
 		var c = TIRand(1, 30000, tr);
-		LinCongC(freq, a, c, m, { TIRand(0, m, tr) }.dup(2)) * 0.05
+		LinCongC(freq, a, c, m, { TIRand(0, m, tr) } ! 2) * 0.05
 	}, 1, 2, 4)
 

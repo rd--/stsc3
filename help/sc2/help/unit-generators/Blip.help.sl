@@ -18,4 +18,3 @@ Modulate frequency:
 Modulate numharmonics:
 
 	Blip(200,Ln(1, 100, 20)) * 0.2
-

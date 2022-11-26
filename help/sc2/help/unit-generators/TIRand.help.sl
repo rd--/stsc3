@@ -15,8 +15,7 @@ Mouse controls density:
 Random degree, octave and number of harmonics:
 
 	var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
-	OverlapTexture({
-		arg tr;
+	OverlapTexture({ :tr |
 		{
 			var degree = TIRand(0, 7, tr);
 			var octave = TIRand(4, 7, tr);

@@ -20,8 +20,8 @@ Phasor controls sine frequency, end frequency matches a second sine wave:
 	var x = Phasor(trig, rate / sr, 0, 1, 0);
 	SinOsc(
 		[
-			LinLin(x, 0, 1, 600, 1000), // convert range from 0..1 to 600..1000
-			1000 // constant second frequency
+			LinLin(x, 0, 1, 600, 1000), (* convert range from 0..1 to 600..1000 *)
+			1000 (* constant second frequency *)
 		],
 		0
 	) * 0.1

@@ -9,18 +9,18 @@ _VarSaw(freq, iphase,width)_
 Modulate frequency and width:
 
 	VarSaw(
-		LFPulse([3, 3.03], 0, 0.3) * 200 + 200, // frequency
-		0, // initial phase
-		LFTri(1, 0) * 0.5 + 0.5 // width
-	) * 0.1 // mul
+		freq: LFPulse([3, 3.03], 0, 0.3) * 200 + 200,
+		iphase: 0,
+		width: LFTri(1, 0) * 0.5 + 0.5
+	) * 0.1
 
 Same but with static width:
 
 	VarSaw(
-		LFPulse([3, 3.03], 0, 0.3) * 200 + 200, // frequency
-		0, // initial phase
-		0.2 // width
-	) * 0.1 // mul
+		freq: LFPulse([3, 3.03], 0, 0.3) * 200 + 200,
+		iphase: 0,
+		width: 0.2
+	) * 0.1
 
 Compare VarSaw and LFPulse:
 

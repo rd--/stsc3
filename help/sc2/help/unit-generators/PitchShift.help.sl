@@ -18,20 +18,20 @@ Modulate pitch ratio:
 Pitch shift input.  **Use headphones** to prevent feedback:
 
 	PitchShift(
-		AudioIn([1, 2]), // stereo audio input
-		0.1, // grain size
-		MouseX(0, 2, 0, 0.2), // mouse x controls pitch shift ratio
-		0, // pitch dispersion
-		0.004 // time dispersion
+		in: AudioIn([1, 2]),
+		windowSize: 0.1,
+		pitchRatio: MouseX(0, 2, 0, 0.2),
+		pitchDispersion: 0,
+		timeDispersion: 0.004
 	)
 
 Use PitchShift to granulate input.  **Use headphones** to prevent feedback.  Upper left corner is normal playback. x = pitch dispersion, y = time dispersion.
 
 	var grainSize = 0.5;
 	PitchShift(
-		AudioIn([1, 2]),
-		grainSize,
-		1, // nominal pitch rate = 1
-		MouseX(0, 1, 0, 0.2), // pitch dispersion
-		MouseY(0, grainSize, 0, 0.2) // time dispersion
+		in: AudioIn([1, 2]),
+		windowSize: grainSize,
+		pitchRatio: 1,
+		pitchDispersion: MouseX(0, 1, 0, 0.2),
+		timeDispersion: MouseY(0, grainSize, 0, 0.2)
 	)

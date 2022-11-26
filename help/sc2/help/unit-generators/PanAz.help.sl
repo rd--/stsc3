@@ -14,11 +14,10 @@ modulate the pos.
 Five channel circular panning:
 
 	PanAz(
-		5, // numChans
-		ClipNoise(), // in
-		LFSaw(MouseX(0.2, 8, 1, 0.2), 0), // pos
-		0.1, // level
-		3, // width
-		0.5 // orientation
+		numChans: 5,
+		in: ClipNoise(),
+		pos: LFSaw(MouseX(0.2, 8, 1, 0.2), 0),
+		level: 0.1,
+		width: 3,
+		orientation: 0.5
 	)
-

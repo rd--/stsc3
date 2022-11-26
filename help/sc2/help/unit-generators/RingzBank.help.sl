@@ -23,18 +23,17 @@ With noise input:
 
 With stereo input:
 
-	RingzBank({ PinkNoise() }.dup(2) * 0.005, [200, 671, 1153, 1723], nil, nil)
+	RingzBank({ PinkNoise() } ! 2 * 0.005, [200, 671, 1153, 1723], nil, nil)
 
 With random frequencies input:
 
-	RingzBank(Decay(Impulse(4, 0), 0.03) * ClipNoise() * 0.005, { Rand(800, 4000) }.dup(12), nil, { Rand(0.1, 2) }.dup(12))
+	RingzBank(Decay(Impulse(4, 0), 0.03) * ClipNoise() * 0.005, { Rand(800, 4000) } ! 12, nil, { Rand(0.1, 2) } ! 12)
 
 Texture of variation of above:
 
-	OverlapTexture({
-		arg tr;
+	OverlapTexture({ :tr |
 		var z = Decay(Impulse(4, 0), TRand(0.03, 0.09, tr)) * ClipNoise() * 0.0025;
-		var r = RingzBank(z, { TRand(800, 4000, tr) }.dup(12), nil, { TRand(0.1, 2, tr) }.dup(12));
+		var r = RingzBank(z, { TRand(800, 4000, tr) } ! 12, nil, { TRand(0.1, 2, tr) } ! 12);
 		Pan2(r, TRand(-1, 1, tr), 1)
 	}, 8, 3, 4)
 

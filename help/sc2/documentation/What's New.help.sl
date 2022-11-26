@@ -1,4 +1,4 @@
-# What's new with 2.0 ?
+# What's new with 2.0?
 
 Everything.  SuperCollider has been completely rewritten.
 

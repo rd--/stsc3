@@ -26,10 +26,10 @@ From the SuperCollider 2.2.16 [archive](http://www.audiosynth.com/files/SC2.2.16
 
 # Tutorials
 
-- [01 Synth](?t=stsc3&e=help/sc2/tutorials/Audio-01-Synth.help.sl)
-- [02 Ugens](?t=stsc3&e=help/sc2/tutorials/Audio-02-Ugens.help.sl)
-- [05 Parallel & Series](?t=stsc3&e=help/sc2/tutorials/Audio-05-Parallel-and-Series.help.sl)
-- [06 Accessing Audio](?t=stsc3&e=help/sc2/tutorials/Audio-06-Accessing-Audio.help.sl)
+- [How to use Synth](<?t=stsc3&e=help/sc2/tutorials/How to use Synth.help.sl>)
+- [How to use Ugens](<?t=stsc3&e=help/sc2/tutorials/How to use Ugens.help.sl>)
+- [Parallel & Series](<?t=stsc3&e=help/sc2/tutorials/Parallel and Series.help.sl>)
+- [Accessing Audio](<?t=stsc3&e=help/sc2/tutorials/Accessing Audio.help.sl>)
 
 # Help
 

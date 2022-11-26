@@ -6,9 +6,7 @@ This is a function given inClifford Pickover's book Chaos In Wonderland, pg 26. 
 
 According to Pickover, parameters a and b should be in the range from -3 to +3, and parameters c and d should be in the range from 0.5 to 1.5.  The function can, depending on the parameters given, give continuous chaotic output, converge to a single value (silence) or oscillate in a cycle (tone).  This UGen is experimental and not optimized currently, so is rather hoggish of CPU.
 
-	// LatoocarfianC ; texture
-	OverlapTexture({
-		arg tr;
+	OverlapTexture({ :tr |
 		var freq = TRand(400, SampleRate() / 3, tr);
 		var a = TRand(-3, 3, tr);
 		var b = TRand(-3, 3, tr);
