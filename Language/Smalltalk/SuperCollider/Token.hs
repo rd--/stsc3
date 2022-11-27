@@ -9,6 +9,7 @@ data Token =
   | Comma
   | SemiColon
   | Colon
+  | VerticalBar
   | LeftBrace
   | RightBrace
   | LeftParen

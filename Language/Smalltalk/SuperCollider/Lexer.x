@@ -32,6 +32,7 @@ tokens :-
   ":"                                    { \_ -> Colon }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }
+  "|"                                    { \_ -> VerticalBar }
   "{"                                    { \_ -> LeftBrace }
   "}"                                    { \_ -> RightBrace }
   "("                                    { \_ -> LeftParen }

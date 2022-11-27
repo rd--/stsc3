@@ -1,5 +1,0 @@
-// Dust ; spl
-Dust(2) * 0.25
-
-// Dust ; decreasing density ; spl
-Dust(XLn(20000, 2, 10)) * 0.15

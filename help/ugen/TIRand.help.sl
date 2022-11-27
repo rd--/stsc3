@@ -1,0 +1,13 @@
+;; TIRand
+var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
+OverlapTexture({ :tr |
+	{
+		var degree = TIRand(0, 7, tr);
+		var octave = TIRand(4, 7, tr);
+		var pitchClass = Index(scale, degree);
+		var mnn = (octave * 12) + pitchClass;
+		var numHarm = TIRand(1, 4, tr);
+		Blip(mnn.midiCps, numHarm) * 0.1
+	}.dup(7).Splay2
+}, 4, 0.05, 2)
+

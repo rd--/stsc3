@@ -21,6 +21,7 @@ import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
       ','             { Comma }
       ';'             { SemiColon }
       ':'             { Colon }
+      '|'             { VerticalBar }
       '{'             { LeftBrace }
       '}'             { RightBrace }
       '('             { LeftParen }
@@ -249,6 +250,7 @@ maybe_arguments :: { Maybe [ScBlockArgument] }
 
 arguments :: { [ScBlockArgument] }
         : arg defaultvar_seq ';'               { $2 }
+        | argname_seq '|'               { $1 }
 
 defaultvar_seq :: { [ScBlockArgument] }
         : defaultvar                           { [$1] }
@@ -257,6 +259,13 @@ defaultvar_seq :: { [ScBlockArgument] }
 defaultvar :: { ScBlockArgument }
         :  identifier                          { ($1,Nothing) }
         |  identifier '=' literal              { ($1,Just $3) }
+
+argname_seq :: { [ScBlockArgument] }
+        : argname                              { [$1] }
+        | argname argname_seq                  { $1 : $2 }
+
+argname :: { ScBlockArgument }
+        :  ':' identifier                      { ($2,Nothing) }
 
 maybe_temporaries_seq :: { Maybe [ScTemporaries] }
         : {- empty -}                          { Nothing }

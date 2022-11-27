@@ -1,8 +1,0 @@
-// Klang
-Klang(1, 0, [[800, 1000, 1200], [0.3, 0.3, 0.3], [pi, pi, pi]].asKlangSpec) * 0.4
-
-// Klang
-Klang(1, 0, [[800, 1000, 1200], nil, nil].asKlangSpec) * 0.25
-
-// Klang
-Klang(1, 0, [{ 600.0.rrand(1000.0) }.dup(8), nil, nil].asKlangSpec) * 0.05

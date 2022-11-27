@@ -1,0 +1,41 @@
+;; LFSaw ; phase value = (0, 2), offset to lowest and midpoint ascending
+LFSaw(110, 2 * [0.5, 0]) * 0.1
+
+;; LFSaw ; as phasor
+(LFSaw(220, 0) * pi + pi).sin * 0.1
+
+;; LFSaw ; as phase input to sin ; scale using LinLin
+LinLin(LFSaw(440, 0), -1, 1, 0, 2 * pi).sin * 0.1
+
+;; LFSaw ; as phasor
+var freq = LFNoise2(3) * 110 + 220;
+[(LFSaw(freq, 0) * pi + pi).sin, SinOsc(freq, 0)] * 0.1
+
+;; LFSaw
+LFSaw(500, 1) * 0.05
+
+;; LFSaw ; used as both oscillator and lfo
+LFSaw(LFSaw(4, 0) * 400 + 400, 0) * 0.05
+
+;; LFSaw ; output range is bi-polar
+var f = [LinLin(LFSaw(0.5, 1), -1, 1, 200, 1600), 200, 1600];
+(SinOsc(f, 0) * [0.1, 0.05, 0.05]).sum
+
+;; LFSaw ; mixed with sin, then with distortions
+var f = XLn(220, 440, 10);
+var o1 = SinOsc(f + [0, 0.7], 0);
+var o2 = LFSaw (f + [0, 0.7], 0) * 0.3;
+var o3 = o1 + o2;
+o3.Distort.Distort.cubed * 0.5
+
+;; LFSaw ; https://scsynth.org/t/6320/2 (nh) ; requires=voicer
+var voiceFunc = { :e |
+	var freq = e.p.unitCps;
+	var auto = SinOsc(e.z * 2, 0).range(1, 1 + e.y);
+	var formatTable = [[400, 1600, 2700], [830, 1200, 4000]].asLocalBuf;
+	var formants = BufRd(3, formatTable, e.y * 3, 1, 2).kr  * [1 / auto, auto, auto ** 0.5];
+	var phase = LFSaw(freq, 0).range(0, 1);
+	var snd = (phase * formants / freq * 2 * pi).sin;
+	(snd[1] + (snd[2].sign * 0.25)) * e.z * 2 * e.w
+};
+Voicer(16, voiceFunc).splay2

@@ -1,5 +1,0 @@
-// BrownNoise ; spl
-{ BrownNoise() }.dup(2) * 0.05
-
-// BrownNoise ; spl
-HPZ1({ BrownNoise() }.dup) * 0.05

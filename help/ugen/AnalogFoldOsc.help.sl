@@ -1,0 +1,2 @@
+;; AnalogFoldOsc
+LPF(AnalogFoldOsc(60 + [0, 1], LinLin(SinOsc(LFSaw(0.1, 0) * 4, 0), -1, 1, 0, 1)), 1330)
