@@ -14,17 +14,17 @@ Plays back a memory resident sample.
 
 Normal playback at same speed of recording:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	PlayBuf(1, sf, 1, 0, 0, 1, 0)
 
 Accelerating pitch:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = XLn(0.1, 100, 60);
 	PlayBuf(1, sf, rate, 0, 0, 1, 0)
 
 Sine wave control of playback rate.  Negative rate plays backwards:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = SinOsc(XLn(0.2, 8, 30), 0) * 2 + 0.1;
 	PlayBuf(1, sf, rate, 0, 0, 1, 0)

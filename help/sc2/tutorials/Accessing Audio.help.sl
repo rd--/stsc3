@@ -31,8 +31,8 @@ Normal playback at same speed of recording:
 		1, (* playback rate *)
 		1, (* trigger playback *)
 		0, (* starting offset sample *)
-		1, (* loop *)
-	);
+		1 (* loop *)
+	)
 
 Mouse controls playback rate:
 
@@ -44,5 +44,5 @@ Mouse controls playback rate:
 		rateMultiplier, (* playback rate *)
 		1, (* trigger playback *)
 		0, (* starting offset sample *)
-		1, (* loop *)
-	);
+		1 (* loop *)
+	)
