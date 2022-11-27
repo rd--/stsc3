@@ -15,7 +15,7 @@ Step noise as frequency input:
 
 	Blip(Latch(WhiteNoise(), Impulse(9, 0)) * 400 + 500, 4) * 0.1
 
-The above are just meant as examples. LFNoise0 is a faster way to generate random steps:
+The above are just meant as examples. _LfNoise0_ is a faster way to generate random steps:
 
-	Blip(LFNoise0(9) * 400 + 500, 4) * 0.1
+	Blip(LfNoise0(9) * 400 + 500, 4) * 0.1
 

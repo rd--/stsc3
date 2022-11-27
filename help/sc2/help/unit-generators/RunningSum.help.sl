@@ -14,11 +14,11 @@ Overloads of course - would need scaling:
 Running Average over _x_ samples:
 
 	var x = 100;
-	RunningSum(LFSaw(440, 0), x) / x
+	RunningSum(LfSaw(440, 0), x) / x
 
 Rms power:
 
-	var input= LFSaw(440, 0);
+	var input= LfSaw(440, 0);
 	var numsamp = 30;
 	(RunningSum(input.squared, numsamp) / numsamp).sqrt
 

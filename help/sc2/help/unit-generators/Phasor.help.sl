@@ -7,7 +7,7 @@ Phasor is a linear ramp between start and end values. When it's trigger input cr
 Phasor is commonly used as an index control with [BufRd] and [BufWr].
 
 - trig: when triggered, reset value to resetPos (default: 0, Phasor outputs start initially)
-- rate: the amount of change per sample i.e at a rate of 1 the value of each sample	will be 1 greater than the preceding sample
+- rate: the amount of change per sample i.e at a rate of 1 the value of each sample will be 1 greater than the preceding sample
 - start: start point of ramp
 - end: end point of ramp
 - resetPos: the value to jump to upon receiving a trigger.
@@ -20,7 +20,7 @@ Phasor controls sine frequency, end frequency matches a second sine wave:
 	var x = Phasor(trig, rate / sr, 0, 1, 0);
 	SinOsc(
 		[
-			LinLin(x, 0, 1, 600, 1000), (* convert range from 0..1 to 600..1000 *)
+			LinLin(x, 0, 1, 600, 1000), (* convert range *)
 			1000 (* constant second frequency *)
 		],
 		0
@@ -45,6 +45,7 @@ Two phasors control two sound file positions.  _MouseX_ controls trigger frequen
 	var rate = MouseX(0.1, 100, 1, 0.2);
 	var trig = Impulse(rate, 0);
 	var framesInBuffer = SfFrames(b);
-	var x = Phasor(trig, SfRateScale(b), 0, framesInBuffer, [0, MouseY(0, framesInBuffer, 0, 0.2)]);
+	var resetPos = [0, MouseY(0, framesInBuffer, 0, 0.2)];
+	var x = Phasor(trig, SfRateScale(b), 0, framesInBuffer, resetPos);
 	SfRead(b, x, 1, 2)
 

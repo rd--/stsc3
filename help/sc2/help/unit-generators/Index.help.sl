@@ -10,6 +10,6 @@ The input signal value is truncated to an integer value and used as an index int
 Index buffer for frequency values:
 
 	var b = [50, 100, 200, 400, 800, 1600].asLocalBuf;
-	var f = Index(b, LinLin(LFSaw(2, 0), -1, 1, 0, 6));
+	var f = Index(b, LinLin(LfSaw(2, 0), -1, 1, 0, 6));
 	SinOsc([f, f * 9], 0) * 0.1
 

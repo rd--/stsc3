@@ -9,16 +9,16 @@ This is essentially the same as OnePole except that instead of supplying the coe
 
 As filter:
 
-	var x = LFPulse(300, 0, 0.5) * 0.1;
+	var x = LfPulse(300, 0, 0.5) * 0.1;
 	[x, Lag(x, 0.002)]
 
 Used to lag pitch:
 
 	SinOsc( (* sine wave *)
-	  Lag( (* lag the modulator *)
-		LFPulse(4, 0, 0.5) * 50 + 400, (* frequency modulator *)
-		Ln(0, 1, 15) (* modulate lag time *)
-	  ),
+		Lag( (* lag the modulator *)
+			LfPulse(4, 0, 0.5) * 50 + 400, (* frequency modulator *)
+			Ln(0, 1, 15) (* modulate lag time *)
+		),
 	0) (* phase *)
 	* 0.3 (* sine amplitude *)
 

@@ -16,7 +16,7 @@ Five channel circular panning:
 	PanAz(
 		numChans: 5,
 		in: ClipNoise(),
-		pos: LFSaw(MouseX(0.2, 8, 1, 0.2), 0),
+		pos: LfSaw(MouseX(0.2, 8, 1, 0.2), 0),
 		level: 0.1,
 		width: 3,
 		orientation: 0.5

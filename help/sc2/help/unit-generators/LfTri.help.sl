@@ -1,6 +1,6 @@
-# LFTri - triangle wave oscillator
+# LfTri - triangle wave oscillator
 
-_LFTri(freq, phase)_
+_LfTri(freq, phase)_
 
 A non-band-limited triangle wave oscillator. Output ranges from -1 to +1.
 
@@ -9,9 +9,9 @@ A non-band-limited triangle wave oscillator. Output ranges from -1 to +1.
 
 Constant frequency:
 
-	LFTri(500, 0) * 0.1
+	LfTri(500, 0) * 0.1
 
-Used as both Oscillator and LFO:
+Used as both Oscillator and LfO:
 
-	LFTri(LFTri(1, 0) * 400 + 400, 0) * 0.1
+	LfTri(LfTri(1, 0) * 400 + 400, 0) * 0.1
 

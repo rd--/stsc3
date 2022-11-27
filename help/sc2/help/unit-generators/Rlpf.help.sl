@@ -1,6 +1,6 @@
-# RLPF - resonant low pass filter
+# Rlpf - resonant low pass filter
 
-_RLPF(in, freq, rq)_
+_Rlpf(in, freq, rq)_
 
 A resonant low pass filter.
 
@@ -10,5 +10,5 @@ A resonant low pass filter.
 
 Modulate frequency:
 
-	RLPF(Saw(200) * 0.1, FSinOsc(XLn(0.7, 300, 20), 0) * 3600 + 4000, 0.2)
+	Rlpf(Saw(200) * 0.1, FSinOsc(XLn(0.7, 300, 20), 0) * 3600 + 4000, 0.2)
 

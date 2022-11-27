@@ -46,8 +46,8 @@ Use Median filter for high frequency noise:
 	var z = WhiteNoise() + SinOsc(800, 0) * 0.1;
 	Median(31, z)
 
-Use LeakDC for low frequency noise:
+Use LeakDc for low frequency noise:
 
 	var z = WhiteNoise() + SinOsc(800, 0) * 0.1;
-	LeakDC(Median(31, z), 0.9)
+	LeakDc(Median(31, z), 0.9)
 

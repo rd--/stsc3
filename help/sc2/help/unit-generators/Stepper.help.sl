@@ -43,10 +43,10 @@ Using Stepper and BufRd for sequencing, mouse controls clock rate:
 		5.timesRepeat { z := AllpassN(z, 0.05, { Rand(0, 0.05) } ! 2, Rand(1.5, 2)) };
 		c + (0.3 * z)
 	};
-	var out = LFPulse(freq * [1, 3/2, 2], 0, 0.3).sum;
-	out := RLPF(out, ffreq, 0.3) * env;
-	out := RLPF(out, ffreq, 0.3) * env;
-	out := LeakDC(rvb(out * 0.02), 0.995);
+	var out = LfPulse(freq * [1, 3/2, 2], 0, 0.3).sum;
+	out := Rlpf(out, ffreq, 0.3) * env;
+	out := Rlpf(out, ffreq, 0.3) * env;
+	out := LeakDc(rvb(out * 0.02), 0.995);
 	1.timesRepeat { out := DelayL(out, 0.1, lfo) + out }; (* flanger *)
 	OnePole(out, 0.9) * 0.5
 

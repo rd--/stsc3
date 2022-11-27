@@ -1,6 +1,6 @@
-# ToggleFF - toggle flip flop
+# ToggleFf - toggle flip flop
 
-_ToggleFF(trig)_
+_ToggleFf(trig)_
 
 Toggles between zero and one upon receiving a trigger.
 
@@ -8,4 +8,4 @@ Toggles between zero and one upon receiving a trigger.
 
 Increasing density triggers frequency switcher:
 
-	SinOsc((ToggleFF(Dust(XLn(1, 1000, 60))) * 400) + 800, 0) * 0.1
+	SinOsc((ToggleFf(Dust(XLn(1, 1000, 60))) * 400) + 800, 0) * 0.1

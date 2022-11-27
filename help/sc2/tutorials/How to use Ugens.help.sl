@@ -1,12 +1,12 @@
-# 2. How to use UGens
+# 2. How to use Ugens
 
-## 2.1 What is a UGen?
+## 2.1 What is a Ugen?
 
-A unit generator is an object that processes or generates sound.  There are many classes of unit generators, all of which derive from the class UGen.
+A unit generator is an object that processes or generates sound.  There are many classes of unit generators, all of which derive from the class Ugen.
 
-All of the UGen classes are listed in the help file [UGen_Ref_Sheet].  From there you can get help on any unit generator by double clicking on the class name and doing cmd-H.  Each UGen class help file has executable examples of its use.
+All of the Ugen classes are listed in the help file [Ugen_Ref_Sheet].  From there you can get help on any unit generator by double clicking on the class name and doing cmd-H.  Each Ugen class help file has executable examples of its use.
 
-## 2.2 How to create a UGen
+## 2.2 How to create a Ugen
 
 A unit generator is created by sending the 'ar' or 'kr' message to the unit generator's class object. The 'ar' message creates a unit generator that runs at audio rate. The 'kr' message creates a unit generator that runs at control rate. Control rate unit generators are used for low frequency or slowly changing control signals. Control rate unit generators produce only a single sample per block and therefore use less processing power than audio rate unit generators. Since block sizes are typically 64 samples, a control rate unit generator could theoretically be 1/64 the cost, however the savings is not quite that great due to setup overhead. The savings is significant though, so anytime a control rate ugen will serve, it should be used.
 
@@ -20,13 +20,13 @@ Create a control rate sine oscillator:
 
 The input parameters for a unit generator are given in the documentation for that class.
 
-In order to create sound, a UGen must be created inside of a Synth's ugenGraphFunction.
+In order to create sound, a Ugen must be created inside of a Synth's ugenGraphFunction.
 
 	{ SinOsc(800, 0) * 0.1 }.play
 
-## 2.3 Doing math with UGens
+## 2.3 Doing math with Ugens
 
-You can do math operations on unit generators and the result will be another unit generator. Doing math on unit generators is not doing any signal calculation itself - it is building the network of unit generators that will execute once they are played in a Synth. This is the essential thing to understand: Synthesis networks, or in other words signal flow graphs are created by executing expressions of unit generators.  The following expression creates a flow graph whose root is an instance of BinaryOpUGen which performs the '+' operation. Its inputs are the FSinOsc and BrownNoise unit generators. FSinOsc is a fast fixed frequency sine oscillator and BrownNoise is a noise generator that emphasizes lower frequencies.
+You can do math operations on unit generators and the result will be another unit generator. Doing math on unit generators is not doing any signal calculation itself - it is building the network of unit generators that will execute once they are played in a Synth. This is the essential thing to understand: Synthesis networks, or in other words signal flow graphs are created by executing expressions of unit generators.  The following expression creates a flow graph whose root is an instance of BinaryOpUgen which performs the '+' operation. Its inputs are the FSinOsc and BrownNoise unit generators. FSinOsc is a fast fixed frequency sine oscillator and BrownNoise is a noise generator that emphasizes lower frequencies.
 
 Add signals, use play command:
 
@@ -42,7 +42,7 @@ Multiply signals:
 
 ## 2.4 Signal level
 
-The output signal level of most unit generators that generate audio is from -1 to +1.  There are a few exceptions like COsc which ranges from -2 to +2, or LFPulse which ranges from 0 to +1. You can use the Synth plot method to check the range of any UGen.
+The output signal level of most unit generators that generate audio is from -1 to +1.  There are a few exceptions like COsc which ranges from -2 to +2, or _LfPulse_ which ranges from 0 to +1. You can use the Synth plot method to check the range of any Ugen.
 
 A 200 Hz sine wave:
 
@@ -62,13 +62,13 @@ Pink noise is capable of -1 to +1 but is statistically unlikely to acheive it
 
 500 Hz pulse wave with a 30% duty cycle:
 
-	{ LFPulse(500, 0, 0.3) * 0.1 }.plot
+	{ LfPulse(500, 0, 0.3) * 0.1 }.plot
 
-The output signal level of UGens that process their input such as filters and delays depend on the level of the input and the settings of the UGen's particular controls.
+The output signal level of Ugens that process their input such as filters and delays depend on the level of the input and the settings of the Ugen's particular controls.
 
 ## 2.5 Mul and Add inputs
 
-Many unit generators have inputs named mul and add which allow you to multiply and add signals to that UGen's output. Using mul and add is more efficient that using an explicit * or + operator.  Also it is often desirable to scale and offset the values of control UGens to match some specific range for purposes of modulation.  The values for mul and add default to 1 and 0 respectively, which leaves the output unchanged.  With these defaults, the multiply and add are optimized out and there is no computational cost for them.
+Many unit generators have inputs named mul and add which allow you to multiply and add signals to that Ugen's output. Using mul and add is more efficient that using an explicit * or + operator.  Also it is often desirable to scale and offset the values of control Ugens to match some specific range for purposes of modulation.  The values for mul and add default to 1 and 0 respectively, which leaves the output unchanged.  With these defaults, the multiply and add are optimized out and there is no computational cost for them.
 
 	{ FSinOsc(200) },plot (* a 200 Hz sine wave *)
 	{ FSinOsc(200) * 0.2 },plot (* 200 Hz sine wave with mul=0.2 *)
@@ -84,7 +84,7 @@ Mul can be used to ring modulate signals.  This example is equivalent to another
 
 	FSinOsc(800, 0) * (BrownNoise() * 0.2)
 
-You can plug control rate UGens into the mul and add inputs of an audio rate UGen.  While plugging an audio rate UGen into the mul or add input of a control rate UGen is possible, it is wasteful of CPU since a control rate UGen will sub-sample any audio rate input.
+You can plug control rate Ugens into the mul and add inputs of an audio rate Ugen.  While plugging an audio rate Ugen into the mul or add input of a control rate Ugen is possible, it is wasteful of CPU since a control rate Ugen will sub-sample any audio rate input.
 
 ## 2.6 Modulation
 
@@ -119,13 +119,13 @@ In the following example the frequency modulator is changed from a line to a sin
 		0) (* zero phase *)
 	* 0.1 (* amplitude 0.1 *)
 
-Now we'll modulate the modulator to cause the frequency modulation to speed up over time, i.e. sweep the frequency of an _LFO_
+Now we'll modulate the modulator to cause the frequency modulation to speed up over time, i.e. sweep the frequency of an _Lfo_
 
 	SinOsc( (* create a sine oscillator *)
 		SinOsc(
 			(* modulate the frequency with another sine oscillator
 			make the freq modulator speed up exponentially
-			by modulating its frequency with another UGen *)
+			by modulating its frequency with another Ugen *)
 			XLn( (* make an exponential line generator *)
 				0.5, (* begin at 0.5 Hz *)
 				100, (* end at 100 Hz *)

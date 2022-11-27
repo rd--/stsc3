@@ -12,5 +12,5 @@ Modulating the frequency:
 
 Two band limited sawtooth waves through a resonant low pass filter:
 
-	RLPF(Saw([100, 250]) * 0.1, XLn(8000, 400, 5), 0.05)
+	Rlpf(Saw([100, 250]) * 0.1, XLn(8000, 400, 5), 0.05)
 

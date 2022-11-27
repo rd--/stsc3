@@ -10,10 +10,10 @@ Delays a trigger by a given time. Any triggers which arrive in the time between 
 Impulse runs faster than flip flop:
 
 	var z = Impulse(2, 0);
-	[z, ToggleFF(TDelay(z, 0.5)) * SinOsc(440, 0)] * 0.1
+	[z, ToggleFf(TDelay(z, 0.5)) * SinOsc(440, 0)] * 0.1
 
 Dust runs faster than flip flop:
 
 	var z = Dust(5);
-	[z, ToggleFF(TDelay(z, 0.5)) * SinOsc(440, 0)] * 0.1
+	[z, ToggleFf(TDelay(z, 0.5)) * SinOsc(440, 0)] * 0.1
 

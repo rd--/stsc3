@@ -10,6 +10,6 @@ Normalizes the input amplitude to the given level. Normalize will not overshoot 
 
 Example signal to process:
 
-	var z = Decay2(Impulse(8, 0) * (LFSaw(0.25, 0) * -0.6 + 0.7), 0.001, 0.3) * FSinOsc(500, 0);
+	var z = Decay2(Impulse(8, 0) * (LfSaw(0.25, 0) * -0.6 + 0.7), 0.001, 0.3) * FSinOsc(500, 0);
 	[z, Normalizer(z, 0.4, 0.01)] * 0.2
 

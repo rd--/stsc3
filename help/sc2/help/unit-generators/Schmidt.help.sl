@@ -10,7 +10,7 @@ When in crosses to greater than hi, output 1.0, then when signal crosses lower t
 
 Threshold octave jumps:
 
-	var in = LFNoise1(3);
+	var in = LfNoise1(3);
 	var octave = Schmidt(in, -0.15, 0.15) + 1;
 	SinOsc(in * 200 + 500 * octave, 0) * 0.1
 

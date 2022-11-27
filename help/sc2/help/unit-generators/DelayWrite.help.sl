@@ -41,7 +41,7 @@ Ping pong delay:
 Distortion in the feedback loop:
 
 	var buffer = BufAlloc(1, 48000 * 0.3).clearBuf; (* allocate a buffer for the delay line *)
-	var input = FSinOsc(1000, 0) * LFPulse(0.3, 0, 0.05) * 0.3; (* sine pulse *)
+	var input = FSinOsc(1000, 0) * LfPulse(0.3, 0, 0.05) * 0.3; (* sine pulse *)
 	var delayedSignal = DelayTap(buffer, 0.15).Distort; (* tap the delay line at 0.15 second delay and distort *)
 	var mixedSignal = (delayedSignal * 0.8) + input; (* mix the delayed signal with the input *)
 	var writer = DelayWrite(buffer, mixedSignal); (* write the mixed signal to the delay line *)
@@ -50,7 +50,7 @@ Distortion in the feedback loop:
 Pitch shift in the feedback loop:
 
 	var buffer = BufAlloc(1, 48000 * 0.3).clearBuf; (* allocate a buffer for the delay line *)
-	var input = FSinOsc(1000, 0) * LFPulse(0.3, 0, 0.05) * 0.3; (* sine pulse *)
+	var input = FSinOsc(1000, 0) * LfPulse(0.3, 0, 0.05) * 0.3; (* sine pulse *)
 	var delayedSignal = DelayTap(buffer, 0.15); (* tap the delay line at 0.15 seconds *)
 	var shiftedSignal = PitchShift(delayedSignal, 0.2, 5 / 7, 0.01, 0.01); (* apply pitch shift *)
 	var mixedSignal = (shiftedSignal * 0.8) + input; (* mix the delayed signal with the input *)

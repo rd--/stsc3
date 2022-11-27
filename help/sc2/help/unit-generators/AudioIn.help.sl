@@ -1,4 +1,4 @@
-# AudioIn -  read audio input from ADC
+# AudioIn -  read audio input from analogue-to-digital converter
 
 _AudioIn(channel=1)_
 

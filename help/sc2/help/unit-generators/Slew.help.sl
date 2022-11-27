@@ -10,6 +10,6 @@ Limits the slope of an input signal. The slope is expressed in units per second.
 
 Slew square wave:
 
-	var z = LFPulse(800, 0, 0.5) * 0.1;
+	var z = LfPulse(800, 0, 0.5) * 0.1;
 	[z, Slew(z, 4000, 4000)]
 

@@ -7,7 +7,7 @@ Outputs the peak amplitude of the signal received at the input.  if level is bel
 - in: input signal.
 - decay: decay factor.
 
-Internally, the absolute value of the signal is used, to prevent underreporting the peak value if there is a negative DC offset. To obtain the minimum and maximum values of the signal as is, use the _RunningMin_ and _RunningMax_ UGens.
+Internally, the absolute value of the signal is used, to prevent underreporting the peak value if there is a negative Dc offset. To obtain the minimum and maximum values of the signal as is, use the _RunningMin_ and _RunningMax_ UGens.
 
 No decay:
 

@@ -12,7 +12,7 @@ Converts a linear range of values to an exponential range of values.  The dstlo 
 
 Convert -1 to +1 sawtooth into 0.01 to 1.0 exponential:
 
-	var s = LFSaw(500, 0);
+	var s = LfSaw(500, 0);
 	[s * 0.1, LinExp(s, -1, 1, 0.001, 0.1)]
 
 Convert oscillator output to frequency input:

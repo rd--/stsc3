@@ -14,12 +14,12 @@ Modal space, mouse controls discrete pitch in dorian mode:
 	var k = DegreeToKey(b, MouseX(0, 15, 0, 0.1), 12);
 	var c = { :n :r |
 		var o = SinOsc((r + k + (n * 0.04)).MidiCps, 0) * 0.1;
-		var t = LFPulse([48, 55].MidiCps, 0, 0.15);
+		var t = LfPulse([48, 55].MidiCps, 0, 0.15);
 		var f = (SinOsc(0.1, 0) * 10 + r).MidiCps;
-		var d = RLPF(t, f, 0.1) * 0.1;
+		var d = Rlpf(t, f, 0.1) * 0.1;
 		var m = o + d;
 		CombN(m, 0.31, 0.31, 2) + m
 	};
-	var n = LFNoise1([3, 3]);
+	var n = LfNoise1([3, 3]);
 	(c.value(n, 48) + c.value(n, 72)) * 0.25
 

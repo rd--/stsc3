@@ -1,6 +1,6 @@
-# BPF - 2nd order Butterworth bandpass filter
+# Bpf - 2nd order Butterworth bandpass filter
 
-_BPF(in, freq, rq)_
+_Bpf(in, freq, rq)_
 
 A second order low pass filter.
 
@@ -10,5 +10,5 @@ A second order low pass filter.
 
 Modulate frequency:
 
-	BPF(Saw(200) * 0.5, FSinOsc(XLn(0.7, 300, 20), 0) * 3600 + 4000, 0.3)
+	Bpf(Saw(200) * 0.5, FSinOsc(XLn(0.7, 300, 20), 0) * 3600 + 4000, 0.3)
 

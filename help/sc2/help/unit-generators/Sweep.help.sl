@@ -13,19 +13,20 @@ Using sweep to index into a buffer:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
 	var sf = SfAcquire("floating_1", 1, [1]).first;
-	BufRd(1, sf, Sweep(trig, BufSampleRate(sf)))
+	BufRd(1, sf, Sweep(trig, BufSampleRate(sf)), 1, 2)
 
 Backwards, variable offset:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
 	var sf = SfAcquire("floating_1", 1, [1]).first;
 	var rate = BufSampleRate(sf);
-	BufRd(1, sf, Sweep(trig, rate.negated) + (BufFrames(sf) * LFNoise0(0.2)))
+	var ph = Sweep(trig, rate.negated) + (BufFrames(sf) * LfNoise0(0.2));
+	BufRd(1, sf, ph, 1, 2)
 
 Raising rate:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
 	var sf = SfAcquire("floating_1", 1, [1]).first;
 	var rate = Sweep(trig, 2) + 0.5;
-	BufRd(1, sf, Sweep(trig, BufSampleRate(sf) * rate))
+	BufRd(1, sf, Sweep(trig, BufSampleRate(sf) * rate), 1, 2)
 
