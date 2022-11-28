@@ -2,7 +2,7 @@
 | x y i d a z1 z2 freq c |
 x := MouseX minval: -10 maxval: 10 warp: 0 lag: 0.2.
 y := MouseY minval: 0 maxval: 5 warp: 0 lag: 0.2.
-i := LFSaw freq: 0.062 iphase: 0 mul: 10 add: (y * (0 to: 8)).
+i := LfSaw freq: 0.062 iphase: 0 mul: 10 add: (y * (0 to: 8)).
 d := i frac.
 a := (ModDif x: d y: 0.5 mod: 1) negated + 0.8.
 z1 := (i gcd: x) + d.

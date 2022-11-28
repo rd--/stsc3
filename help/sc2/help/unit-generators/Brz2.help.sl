@@ -1,6 +1,6 @@
-# BRZ2 - two zero fixed midcut
+# Brz2 - two zero fixed midcut
 
-_BRZ2(in)_
+_Brz2(in)_
 
 A special case fixed filter.  Implements the formula _out(i) = 0.5 * (in(i) + in(i-2))_.
 
@@ -12,5 +12,5 @@ Compare:
 
 and:
 
-	BRZ2(WhiteNoise() * 0.1)
+	Brz2(WhiteNoise() * 0.1)
 

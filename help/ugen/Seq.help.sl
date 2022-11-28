@@ -29,17 +29,17 @@ SinOsc(f.kr, 0) * 0.1
 var tr = Impulse(6, 0);
 var n0 = DmdOn(tr, 0, Seq(inf, [60, 62, 63, 58, 48, 55]));
 var n1 = DmdOn(tr, 0, Seq(inf, [63, 60, 48, 62, 55, 58]));
-LFSaw([n0, n1].midiCps, 0) * 0.05
+LfSaw([n0, n1].MidiCps, 0) * 0.05
 
 ;; Seq ; rather than Mce expansion at tr, it can be clearer to view tr as a functor
 var m = { :f |
 	var tr = Impulse(f, 0);
 	var sq = Seq(inf, [60, 63, 67, 69]);
-	DmdOn(tr, 0, sq).midiCps
+	DmdOn(tr, 0, sq).MidiCps
 };
 SinOsc([2, 3, 5].collect(m), 0).Splay2 * 0.1
 
 ;; Seq
 var t = Impulse(2, 0);
 var m = DmdOn(t, 0, Seq(inf, [55, 60, 63, 62, 60, 67, 63, 58]));
-SinOsc(m.midiCps, 0) * 0.1
+SinOsc(m.MidiCps, 0) * 0.1

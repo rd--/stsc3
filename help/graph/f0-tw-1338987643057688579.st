@@ -7,4 +7,4 @@ d := (LinExp in: (VarSaw freq: (b / 181.8) iphase: 0 width: 0.5) srclo: -1 srchi
 c := (VarSaw freq: (1 / 8) iphase: (1 / b) width: 0.5) + 8.18 * 1.8.
 z := LinLin in: (VarSaw freq: (1 / 81.8) iphase: 0 width: 0.5) srclo: -1 srchi: 1 dstlo: 1.8 ** -1 dsthi: 8.1 / 8.18.
 p := (Pluck in: x trig: t maxdelaytime: (1.8 / 181.8) delaytime: d decaytime: c coef: z) * (VarSaw freq: (1.8 / b) iphase: 0 width: 0.5) / 1.8.
-HPF in: p splay2 freq: (18 / 1.81)
+Hpf in: p splay2 freq: (18 / 1.81)

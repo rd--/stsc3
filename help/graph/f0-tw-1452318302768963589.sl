@@ -7,5 +7,5 @@ var f = SinOsc(b / 9, b) / 3 + c;
 var h = CombC(c / 50, 2, t, 5);
 var a = 50 / m * SinOsc(b / 50, 0).max(0) + 0.5;
 var z = Blip(f, h) * a;
-var o = HPF(Splay2(z) * 1.5, 15).tanh;
+var o = Hpf(Splay2(z) * 1.5, 15).tanh;
 o + GVerb(o.sum / 2 * Line(0, 1, 1, 0), 50, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 5

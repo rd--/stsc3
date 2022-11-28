@@ -1,6 +1,6 @@
 ;; https://scsynth.org/t/5487 ; mv
-var prime = LFNoise0(1 / 19) * 8 + 300;
-var diff = LFNoise0(1 / 29) + 10;
+var prime = LfNoise0(1 / 19) * 8 + 300;
+var diff = LfNoise0(1 / 29) + 10;
 var fade = 10;
 var primetime = 20;
 var difftime = 30;

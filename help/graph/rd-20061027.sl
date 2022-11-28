@@ -1,15 +1,15 @@
 ;; 20061027 ; rd
 var h0 = {
-	var n = LFNoise0(1) * 5 + 5;
-	var a = LFNoise0(1) * 0.2 + 1.2;
-	var b = LFNoise0(1) * 0.15 + 0.15;
+	var n = LfNoise0(1) * 5 + 5;
+	var a = LfNoise0(1) * 0.2 + 1.2;
+	var b = LfNoise0(1) * 0.15 + 0.15;
 	var f = 40;
 	var h = HenonN([f, f * 0.5], a, b, 0, 0);
 	Saw(h * 3200 + 1600) * 0.35
  };
 var h1 = {
-	var n0 = LFNoise0(32);
-	var n1 = LFNoise0(2);
+	var n0 = LfNoise0(32);
+	var n1 = LfNoise0(2);
 	var a = MouseX(1.2, 1.4, 0, 0.1);
 	var b = MouseY(0.2, 0.3, 0, 0.1);
 	var h = n0.range(1, 32);

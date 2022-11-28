@@ -5,9 +5,9 @@ var v = 3; (* number of overlapped voices *)
 OverlapTexture({ :tr |
 	var y = Dust(MouseX(0.1, 4, 1, 0.2)) * 0.4;
 	y := Resonz(y, 400, 0.4);
-	y := LPF(y, 12000);
+	y := Lpf(y, 12000);
 	y := Integrator(y, 0.99);
-	y := HPF(y, 200);
+	y := Hpf(y, 200);
 	y := {
 		CombL(
 			y,

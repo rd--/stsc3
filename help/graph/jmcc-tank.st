@@ -22,7 +22,7 @@ tank := [ :i |
 	l3 := AllpassN in: l2 maxdelaytime: 0.05 delaytime: [Rand lo: 0.01 hi: 0.05] dup decaytime: 2.
 	l4 := DelayN in: l3 maxdelaytime: 0.3 delaytime: #(0.17 0.23).
 	l5 := AllpassN in: l4 maxdelaytime: 0.05 delaytime: [Rand lo: 0.03 hi: 0.15] dup decaytime: 2.
-	l6 := LeakDC in: l5 coef: 0.995.
+	l6 := LeakDc in: l5 coef: 0.995.
 	l7 := l6 + i.
 	l7 mrg: (LocalOut channelsArray: l7)
 ].

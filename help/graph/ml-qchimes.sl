@@ -1,7 +1,7 @@
 ;; event control ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68844.html (ml) ; requires=voicer
 var voiceFunc = { :e |
 	var numPartials = 40;
-	var baseFreq = (e.x * 25 + 48).midiCps;
+	var baseFreq = (e.x * 25 + 48).MidiCps;
 	var sig = Decay(K2A(e.w) * 0.1, 0.001) * PinkNoise();
 	var rat = [
 		1, 1.125, 1.25, 1.333, 1.5, 1.666, 1.875,
@@ -18,6 +18,6 @@ var voiceFunc = { :e |
 	var amp = { 0.1.rrand(0.9) }.dup(numPartials);
 	var dcy = { 0.5.rrand(9.0) }.dup(numPartials);
 	var osc = DynRingzBank(sig, freq, amp, dcy);
-	Pan2(osc, e.o * 2 - 1, LagUD(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal) ;; note .kr!
+	Pan2(osc, e.o * 2 - 1, LagUd(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal) ;; note .kr!
 };
 Voicer(16, voiceFunc).sum

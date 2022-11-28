@@ -1,5 +1,5 @@
 ;; tw 0020 (f0)
-var a = { :freq | LFPulse(freq, 0, 0.5) };
+var a = { :freq | LfPulse(freq, 0, 0.5) };
 var b = [0 .. 3];
 var a1 = a(b / 32) + 1 / 8;
 var a2 = a(a1) + 1 * b;

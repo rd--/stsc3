@@ -7,6 +7,6 @@ var voicedCarrier = Saw(freq);
 var isVoiced = Lag(Lag(ZeroCrossing(src).CpsMidi, 0.05) > 5000.CpsMidi, 0.05);
 var carrier = SelectX(isVoiced, [voicedCarrier, PinkNoise()]);
 var filterQ = TRand(10, 100, Dust(0.5));
-var srcAmp = Amplitude(BPF(src, bandFreqs, 1 / filterQ), 0.01, 0.05);
-var snd = BPF(carrier, bandFreqs, 0.05) * srcAmp;
+var srcAmp = Amplitude(Bpf(src, bandFreqs, 1 / filterQ), 0.01, 0.05);
+var snd = Bpf(carrier, bandFreqs, 0.05) * srcAmp;
 Pan2(snd.sum, 0, numBands / 4)

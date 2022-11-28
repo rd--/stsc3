@@ -32,7 +32,7 @@ You can have multiple control panel windows and create and destroy them dynamica
 
 You can read and compile text at runtime. Therefore scores may contain any executable text.
 
-Instruments and unit generator networks can be built dynamically on a per event basis and can be parameterized by other unit generator networks. So you can put an LFO in your score to control pitch if you like. Scores don't have to be just lists of floating point numbers.
+Instruments and unit generator networks can be built dynamically on a per event basis and can be parameterized by other unit generator networks. So you can put an Lfo in your score to control pitch if you like. Scores don't have to be just lists of floating point numbers.
 
 Programmatic patch building and multi channel expansion allow creation of large patches with a few lines of code.
 

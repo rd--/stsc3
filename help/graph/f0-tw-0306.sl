@@ -2,4 +2,4 @@
 var f = { :i |
 	SinOsc(DmdFor(i + 1 / 9, 0, Seq(inf, [1 .. 8].stutter(32)) * Dseq(inf, 8.fibonacciArray) * 99), 0)
 };
-HPF(FreeVerb([0, 1].collect(f), 0.2, 1, 0.2), 9) / 3
+Hpf(FreeVerb([0, 1].collect(f), 0.2, 1, 0.2), 9) / 3

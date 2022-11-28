@@ -1,6 +1,6 @@
 ;; pkt 07 (f0) ; https://fredrikolofsson.com/f0blog/pact-februari/
 GVerb(
-	LeakDC(
+	LeakDc(
 		SinOsc(
 			SinOsc(
 				SinOsc(
@@ -33,7 +33,7 @@ GVerb(
 ;; pkt 07 (f0) ; https://fredrikolofsson.com/f0blog/pact-februari/ ; helper
 var sinosc = { :f :l :r | LinExp(SinOsc(f, 0), -1, 1, l, r) };
 GVerb(
-	LeakDC(
+	LeakDc(
 		SinOsc(
 			SinOsc(
 				SinOsc(

@@ -6,7 +6,7 @@ var r = { :i |
 	var l3 = AllpassN(l2, 0.05, { Rand(0.01,0.05) } ! 2, 2);
 	var l4 = DelayN(l3, 0.3, [0.17, 0.23]);
 	var l5 = AllpassN(l4, 0.05, { Rand(0.03,0.15) } ! 2, 2);
-	var l6 = LeakDC(l5, 0.995) + i;
+	var l6 = LeakDc(l5, 0.995) + i;
 	l6 <! LocalOut(l6)
 };
 var z = p.dup(12).sum + Pan2(Decay2(Dust(0.01), 0.04, 0.3) * BrownNoise(), 0, 1);

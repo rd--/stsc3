@@ -4,7 +4,7 @@ var env = Env([0, 0.1, 0.1, 0], [3, 2, 3], ['sin'], nil, nil, 0);
 SinOsc(440, 0) * EnvGen(trg, 1, 0, 1, 0, env.asArray)
 
 ;; EnvGen ; if gate < 0 then the envelope will end immediately with release time set to 0 - gate + 1
-var gate = LinLin(LFPulse(0.25, 0, 0.1), -1, 1, MouseX(-25, 0, 0, 0.2), 1);
+var gate = LinLin(LfPulse(0.25, 0, 0.1), -1, 1, MouseX(-25, 0, 0, 0.2), 1);
 PinkNoise() * Asr(gate, 0.01, 1, -4) * 0.1
 
 ;; EnvGen ; https://scsynth.org/t/6348/3

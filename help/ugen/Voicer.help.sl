@@ -1,22 +1,22 @@
-;; sinosc ; event control ; p-field
-Voicer(16, { :e | SinOsc(e.p.unitCps, 0) * e.w * e.z }).splay2
+;; SinOsc ; event control ; p-field
+Voicer(16, { :e | SinOsc(e.p.unitCps, 0) * e.w * e.z }).Splay2
 
-;; sinosc ; event control ; x-field
-Voicer(16, { :e | Pan2(SinOsc((e.x * 24 + 48).midiCps, 0), e.o * 2 - 1, e.z * e.w) }).sum
+;; SinOsc ; event control ; x-field
+Voicer(16, { :e | Pan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.o * 2 - 1, e.z * e.w) }).sum
 
-;; blip ; event control ; shared parameter
+;; Blip ; event control ; shared parameter
 var nh = 1;
-Voicer(16, { :e | Blip(e.p.unitCps, nh) * e.w * e.z }).splay2
+Voicer(16, { :e | Blip(e.p.UnitCps, nh) * e.w * e.z }).Splay2
 
-;; blip ; event control ; i=o ii=rx iii=ry
-var f = { :e | Pan2(Blip(e.p.unitCps, e.y * 10 + 1), e.i * 2 - 1, e.w * e.z * e.z) };
+;; Blip ; event control ; i=o ii=rx iii=ry
+var f = { :e | Pan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1, e.w * e.z * e.z) };
 Voicer(16, f).sum
 
-;; blip ; event control
+;; blip ; event control ; keywords
 var f = { :e | Pan2(in: Blip(freq: e.p.unitCps, numharm: e.y * 10 + 1), pos: e.o * 2 - 1, level: e.w * e.z * e.z) };
 Voicer(numVoices: 16, voiceFunc: f).sum
 
-;; membraneCircle ; event control ; note limited voice count
+;; MembraneCircle ; event control ; note limited voice count ; keywords
 var f = { :e |
 	var loss = LinExp(in: e.y, srclo: 0, srchi: 1, dstlo: 0.99999, dsthi: 0.99950);
 	var wobble = SinOsc(freq: 2, phase: 0);
@@ -37,6 +37,6 @@ Voicer(numVoices: 16, voiceFunc: f).sum
 
 ;; resonz ; pinkNoise ; event control
 var f = { :e |
-	Pan2(in: Resonz(in: PinkNoise(), freq: (e.p * 127 + e.px).midiCps, bwr: e.y * 0.25) * 24, pos: e.o * 2 - 1, level: e.z.squared * e.w)
+	Pan2(in: Resonz(in: PinkNoise(), freq: (e.p * 127 + e.px).MidiCps, bwr: e.y * 0.25) * 24, pos: e.o * 2 - 1, level: e.z.squared * e.w)
 };
 Voicer(numVoices: 16, voiceFunc: f).sum

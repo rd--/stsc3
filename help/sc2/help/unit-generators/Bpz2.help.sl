@@ -1,6 +1,6 @@
-# BPZ2 - two zero fixed midpass
+# Bpz2 - two zero fixed midpass
 
-_BPZ2(in)_
+_Bpz2(in)_
 
 A special case fixed filter.  Implements the formula _out(i) = 0.5 * (in(i) - in(i-2))_
 
@@ -12,5 +12,5 @@ Compare:
 
 and:
 
-	BPZ2(WhiteNoise() * 0.1)
+	Bpz2(WhiteNoise() * 0.1)
 

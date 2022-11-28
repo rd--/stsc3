@@ -4,7 +4,7 @@ gen := [ :tr |
 	| f a r n g |
 	f := (TRand lo: 24 hi: 96 trig: tr) midiCps.
 	a := (500 / f) min: 1.
-	r := TXLine start: (TExpRand lo: 0.1 hi: 20 trig: tr) end: (TExpRand lo: 0.1 hi: 20 trig: tr) dur: 25.6 trig: tr.
+	r := TxLine start: (TExpRand lo: 0.1 hi: 20 trig: tr) end: (TExpRand lo: 0.1 hi: 20 trig: tr) dur: 25.6 trig: tr.
 	n := 12.
 	g := [
 		| fm m |

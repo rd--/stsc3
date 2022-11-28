@@ -6,4 +6,4 @@ p2 := (t *  5) bitAnd: (t bitShiftRight: #(3 4)).
 p3 := (t *  2) bitAnd: (t bitShiftRight: 9).
 p4 := (t *  8) bitAnd: (t bitShiftRight: 11).
 s := ({p1. p2. p3. p4} inject: 0 into: [:i :j | j bitOr: i]) - 3 % 256.
-(HPF in: (((s / 127) - 1) * 3) freq: 20) tanh * 0.02
+(Hpf in: (((s / 127) - 1) * 3) freq: 20) tanh * 0.02

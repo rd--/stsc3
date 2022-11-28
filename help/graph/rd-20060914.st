@@ -7,9 +7,9 @@ gen := [ :tr |
 		ds := 3.
 		du := #(5 4 5 7 4 5).
 		d := du * ds.
-		f := (TXLine start: m end: (TRand lo: 0.05 hi: 0.5 trig: tr) + m dur: d trig: tr) midiCps.
+		f := (TxLine start: m end: (TRand lo: 0.05 hi: 0.5 trig: tr) + m dur: d trig: tr) midiCps.
 		e := (Sine trig: tr dur: du maxItem * ds) * (TRand lo: 0.005 hi: 0.01 trig: tr).
-		p := TXLine start: (TRand lo: -1 hi: 1 trig: tr) end: (TRand lo: -1 hi: 1 trig: tr) dur: d trig: tr.
+		p := TxLine start: (TRand lo: -1 hi: 1 trig: tr) end: (TRand lo: -1 hi: 1 trig: tr) dur: d trig: tr.
 		o := SinOsc freq: f kr phase: 0.
 		(Pan2 in: o * e pos: p level: 1) sum
 	].

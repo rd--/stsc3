@@ -7,8 +7,8 @@ gen := [ :tr |
 	z := [
 		| f y m |
 		m := ((12 * (TRand lo: 3 hi: 6 trig: tr)) + (Select which: (TChoose trig: tr array: #(0 2 3 5 7 8 10)) array: scl)) midiCps.
-		f := LFTri freq: 1 / 99 iphase: 0 mul: 9 add: m.
-		y := SinOscFB freq: f feedback: ((LFTri freq: (1 + i) / 50 iphase: 0) + 1) / 2.
-		Pan2 in: y pos: (LFTri freq: i / 70 iphase: 0) level: ((TRand lo: 0 hi: 1 trig: tr) > 0.5 / 2) ] dup: 9.
+		f := LfTri freq: 1 / 99 iphase: 0 mul: 9 add: m.
+		y := SinOscFb freq: f feedback: ((LfTri freq: (1 + i) / 50 iphase: 0) + 1) / 2.
+		Pan2 in: y pos: (LfTri freq: i / 70 iphase: 0) level: ((TRand lo: 0 hi: 1 trig: tr) > 0.5 / 2) ] dup: 9.
 	(CombN in: z sum maxdelaytime: 0.2 delaytime: 0.2 decaytime: 1) tanh * 0.1 ].
 OverlapTexture graphFunc: gen sustainTime: 3 transitionTime: 9 overlap: 2

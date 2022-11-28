@@ -10,9 +10,9 @@ var length = 5;
 var buf = BufAlloc(1, length);
 var count = PulseCount(trig, 0);
 var chord = DmdOn(trig, 0, Dbufrd(buf, count + 1.to(length), 1)).reversed.mrg(DmdOn(trig, 0, Dbufwr(buf, count, note, 1)));
-var chord_cps = chord.midiCps;
-var cf = Vibrato(chord_cps, 6, 0.02, 0, 0, 0.04, 0.1, 0, 0);
-var mf = chord_cps * LinLin(LFPulse(1 / 8, 0, 0.5), 0, 1, 1.01, 2.01);
-var sig = PMOsc(cf, mf, TXLine(3, 0.0001, 0.2, trig), 0);
-var cmp = (sig * AmpCompA(chord_cps, 0, 0.32, 1) * amp).sum;
-XFade2([cmp, cmp], GVerb(BPF(cmp, 90.midiCps, 1), 50, 8, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)
+var chordCps = chord.MidiCps;
+var cf = Vibrato(chordCps, 6, 0.02, 0, 0, 0.04, 0.1, 0, 0);
+var mf = chordCps * LinLin(LfPulse(1 / 8, 0, 0.5), 0, 1, 1.01, 2.01);
+var sig = PmOsc(cf, mf, TxLine(3, 0.0001, 0.2, trig), 0);
+var cmp = (sig * AmpCompA(chordCps, 0, 0.32, 1) * amp).sum;
+XFade2([cmp, cmp], GVerb(Bpf(cmp, 90.midiCps, 1), 50, 8, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)

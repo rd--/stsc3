@@ -2,15 +2,15 @@
 var x = MouseX(0.001, 0.02, 1, 0.1);
 var y = MouseY(120, 400, 1, 0.1);
 var p = {
-	var f = LFNoise0(4) * [32, 64];
-	var w = LFNoise0(32) * x;
-	var z = LFNoise0(2) * 0.1;
-	var m = LFNoise0(6);
+	var f = LfNoise0(4) * [32, 64];
+	var w = LfNoise0(32) * x;
+	var z = LfNoise0(2) * 0.1;
+	var m = LfNoise0(6);
 	var s = Pulse(f, w);
 	Resonz(s, y + z, (m * 0.4) + 0.8) * 0.5
 };
 var q = {
-	var n = LFNoise0(128);
+	var n = LfNoise0(128);
 	CombN(p(), 0.2, (n * 0.1) + 0.1, 3)
 };
 var r = {

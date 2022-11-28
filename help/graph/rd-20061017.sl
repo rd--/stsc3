@@ -1,5 +1,5 @@
 ;; 20061017 ; rd
-var o = SinOsc(LFNoise0([0.5, 1.5]), 0);
+var o = SinOsc(LfNoise0([0.5, 1.5]), 0);
 var t = Impulse(Slope(o).abs * [2, 3], 0);
 var x = MouseX(960, 3620, 1, 0.2);
 var y = MouseY(0.5, 2.0, 0, 0.2);

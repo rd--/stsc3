@@ -8,19 +8,19 @@ CombL(
 				0
 			),
 			1.0.rand2,
-			LFNoise2(100 + 20.0.rand2) * 0.1
+			LfNoise2(100 + 20.0.rand2) * 0.1
 		)
 	}.dup(4).sum
-	+ MulAdd(LFNoise2(MulAdd(LFNoise2([0.4, 0.4]), 90, 620)), MulAdd(LFNoise2([0.3, 0.3]), 0.15, 0.18), 0),
+	+ MulAdd(LfNoise2(MulAdd(LfNoise2([0.4, 0.4]), 90, 620)), MulAdd(LfNoise2([0.3, 0.3]), 0.15, 0.18), 0),
 	0.3, 0.3, 3
 ) * 0.5
 
 ;; police state (jmcc) #2
 var node = {
 	var f = SinOsc(Rand(0.02, 0.12), Rand(0, 2 * pi)) * Rand(0, 600) + 1000 + Rand(-300, 300);
-	Pan2(SinOsc(f, 0) * LFNoise2(100 + Rand(-20, 20)) * 0.1, Rand(-1, 1), 1)
+	Pan2(SinOsc(f, 0) * LfNoise2(100 + Rand(-20, 20)) * 0.1, Rand(-1, 1), 1)
 };
-var e = LFNoise2(LFNoise2([0.4, 0.4]) * 90 + 620) * (LFNoise2([0.3, 0.3]) * 0.15 + 0.18);
+var e = LfNoise2(LfNoise2([0.4, 0.4]) * 90 + 620) * (LfNoise2([0.3, 0.3]) * 0.15 + 0.18);
 CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5
 
 ;; police state ; jmcc ; keywords
@@ -35,10 +35,10 @@ var node = {
 			phase: 0
 		),
 		pos: 1.0.rand2,
-		level: LFNoise2(freq: 100 + 20.0.rand2) * 0.1
+		level: LfNoise2(freq: 100 + 20.0.rand2) * 0.1
 	)
 };
-var e = LFNoise2(freq: LFNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LFNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);
+var e = LfNoise2(freq: LfNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LfNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);
 CombL(
 	in: node.dup(4).sum + e,
 	maxdelaytime: 0.3,

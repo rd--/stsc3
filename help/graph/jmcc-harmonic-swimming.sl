@@ -10,7 +10,7 @@ var offset = Ln(0, -0.02, 60); (* causes sound to separate and fade *)
 			0
 		),
 		MulAdd(
-			LFNoise1(
+			LfNoise1(
 				6 + [4.0.rand2, 4.0.rand2] (* amplitude rate *)
 			),
 			0.02, (* amplitude scale *)
@@ -25,7 +25,7 @@ z
 var a = 0.02;
 var l = Line(0, 0 - a, 60, 0);
 var o = { :h |
-	var n = LFNoise1(6 + { Rand(-4, 4) } ! 2) * a + l;
+	var n = LfNoise1(6 + { Rand(-4, 4) } ! 2) * a + l;
 	SinOsc(50 * (h + 1), 0) * n.max(0)
 };
 (0 .. 20).collect(o).sum

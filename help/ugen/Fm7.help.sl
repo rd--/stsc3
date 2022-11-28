@@ -1,4 +1,4 @@
-;; FM7 ; two of six
+;; Fm7 ; two of six
 var ctlMatrix = [
 	[XLn(300, 310, 4), 0, 1],
 	[XLn(300, 310, 8), 0, 1],
@@ -15,23 +15,23 @@ var modMatrix = [
 	[0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0]
 ];
-FM7(ctlMatrix, modMatrix) * 0.1
+Fm7(ctlMatrix, modMatrix) * 0.1
 
-;; FM7
-var freq = LFNoise0(3).expRange(200, 310);
+;; Fm7
+var freq = LfNoise0(3).expRange(200, 310);
 var ctlMatrix = [
 	[freq, 0, 1],
 	[freq, 0, 1],
-	[LFNoise2(0.5).expRange(3, 80), 0, 1],
-	[LFNoise2(0.5).expRange(3, 800), 0, 1],
-	[LFNoise2(0.5).expRange(3, 800), 0, 1],
-	[LFNoise2(0.5).expRange(0.3, 10), 0, 1]
+	[LfNoise2(0.5).expRange(3, 80), 0, 1],
+	[LfNoise2(0.5).expRange(3, 800), 0, 1],
+	[LfNoise2(0.5).expRange(3, 800), 0, 1],
+	[LfNoise2(0.5).expRange(0.3, 10), 0, 1]
 ];
 var x = MouseX(0, 3, 0, 0.2);
-var modMatrix = { { LFNoise1(0.5).max(0) } ! 6 * x } ! 6;
-FM7(ctlMatrix, modMatrix).keep(2) * -12.dbAmp
+var modMatrix = { { LfNoise1(0.5).max(0) } ! 6 * x } ! 6;
+Fm7(ctlMatrix, modMatrix).keep(2) * -12.dbAmp
 
-;; FM7 ; an algorithmically generated graph courtesy f0 ; note one-indexing
+;; Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing
 var xMatrix = [
 	[
 		[0.0, -1/3, -1.0, 0.0],
@@ -116,7 +116,7 @@ var yMatrix = [
 ];
 var ctlMatrix = xMatrix.collect { :p | p.collect { :q | SinOsc(q[1], q[2]) * q[3] + q[4] } };
 var modMatrix = yMatrix.collect { :p | p.collect { :q | Pulse(q[1], q[2]) * q[3] + q[4] } };
-var o = FM7(ctlMatrix, modMatrix);
-var g3 = LinLin(LFSaw(0.1, 0), -1, 1, 0, -12.dbAmp);
+var o = Fm7(ctlMatrix, modMatrix);
+var g3 = LinLin(LfSaw(0.1, 0), -1, 1, 0, -12.dbAmp);
 var g6 = -3.dbAmp;
 [o[1] + (o[3] * g3) + o[5], o[2] + o[4] + o[6] * g6]

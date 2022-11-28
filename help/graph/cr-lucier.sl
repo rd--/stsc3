@@ -9,8 +9,8 @@ OverlapTexture({ :tr |
 	var srcPos = 0.3;
 	var pk2Pos = 0.9;
 	var maxDelay = 1;
-	var mkDelay = { :i :r | LPZ1(DelayC(i, maxDelay, r * stringDelay)) };
-	var mkAllpass = { :i :r :dt | LPZ1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
+	var mkDelay = { :i :r | Lpz1(DelayC(i, maxDelay, r * stringDelay)) };
+	var mkAllpass = { :i :r :dt | Lpz1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
 	var drv = InFb(1, bus);
 	var pk1R = mkDelay(drv, srcPos - pk1Pos);
 	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2,  TRand(0.001, 0.11, tr));
@@ -22,7 +22,7 @@ OverlapTexture({ :tr |
 		var s = SinOsc(220, 0) * 0.01;
 		var a = Amplitude(drv, 0.01, 0.01) * 11;
 		var p = Pulse(60 + a, 0.5) * 0.1;
-		var f = RLPF(s + p, 320, 0.05);
+		var f = Rlpf(s + p, 320, 0.05);
 		var e = 1 - Amplitude(drv, 0.01, 0.01).min(1);
 		Normalizer(f, 0.7, 0.01) * e
 	};

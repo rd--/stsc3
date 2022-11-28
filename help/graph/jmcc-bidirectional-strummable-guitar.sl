@@ -3,14 +3,14 @@ var pitch1 = [52, 57, 62, 67, 71, 76];
 var pitch2 = pitch1 + 7;
 var mousex = MouseX(0, 1, 0, 0.2);
 var strFunc = { :i |
-	var trigger = HPZ1(mousex > (0.25 + (i * 0.1)));
+	var trigger = Hpz1(mousex > (0.25 + (i * 0.1)));
 	var pluck1 = PinkNoise() * Decay(trigger.max(0), 0.05).kr;
-	var period1 = pitch1[i].midiCps.reciprocal;
+	var period1 = pitch1[i].MidiCps.reciprocal;
 	var string1 = CombL(pluck1, period1, period1, 4);
 	var pluck2 = BrownNoise() * Decay(trigger.negated.max(0), 0.05).kr;
-	var period2 = pitch2[i].midiCps.reciprocal;
+	var period2 = pitch2[i].MidiCps.reciprocal;
 	var string2 = CombL(pluck2, period2, period2, -4);
 	Pan2(string1 + string2, i * 0.2 - 0.5,  1)
 };
 var out = (1 .. pitch1.size).collect(strFunc).sum;
-LeakDC(LPF(out, 12000), 0.995)
+LeakDc(Lpf(out, 12000), 0.995)

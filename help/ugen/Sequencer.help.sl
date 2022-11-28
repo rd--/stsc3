@@ -6,13 +6,13 @@ SinOsc(freq, 0) * 0.1
 var clock = Impulse(8, 0);
 var trig1 = ImpulseSequencer([0.4, 0.1, 0.2, 0.1], clock);
 var root = Sequencer([24, 26, 24, 22], PulseDivider(clock, 64, 0));
-var x = RLPF(
+var x = Rlpf(
 	{ GrayNoise() } ! 2 * Decay2(trig1, 0.005, 0.7) * 0.4,
 	MouseX(200, 8000, 1, 0.2),
 	0.2
 ).Distort;
 var trig2 = ImpulseSequencer([0.4, 0.0, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1], clock);
-var freq = (Sequencer([33, 33, 35, 36, 45, 47, 38, 40, 33, 33, 35, 36, 47, 48, 50, 52], clock) + root).midiCps;
+var freq = (Sequencer([33, 33, 35, 36, 45, 47, 38, 40, 33, 33, 35, 36, 47, 48, 50, 52], clock) + root).MidiCps;
 var z = VarSaw(freq * [1, 1.505], 0, MouseY(0, 1, 0, 0.2)) * Decay2(trig2, 0.005, 1.4);
 CombN(x + z * 0.5, 0.26, 0.26, 4).SoftClip
 
@@ -24,8 +24,8 @@ var p = Choose(inf, [
 var clock = Impulse(12, 0);
 var root = Sequencer([57, 59, 62, 55], PulseDivider(clock, 128, 0));
 var trig1 = ImpulseSequencer([1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1], PulseDivider(clock, 2, 0));
-var r = LPF(
-	RLPF(
+var r = Lpf(
+	Rlpf(
 		{ BrownNoise() } ! 2 * Decay2(trig1, 0.005, 0.7) * 3,
 		MouseX(200, 300, 1, 0.2),
 		0.4
@@ -33,15 +33,15 @@ var r = LPF(
 	800
 );
 var trig2 = ImpulseSequencer([0.4, 0.1, 0.2, 0.1], clock);
-var x = RLPF(
+var x = Rlpf(
 	{ GrayNoise() } ! 2 * Decay2(trig2, 0.005, 0.3) * 0.4,
 	MouseX(200, 8000, 1, 0.2),
 	0.2
 ).Distort;
 var scale = [0, 2, 3, 5, 7, 8, 10].asLocalBuf;
 var trig3 = ImpulseSequencer([0.4, 0.0, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1] * 1.5, clock);
-var freq = (DegreeToKey(scale, DmdOn(clock, 0, p), 12) - 12 + root).midiCps;
-var z = RLPF(
+var freq = (DegreeToKey(scale, DmdOn(clock, 0, p), 12) - 12 + root).MidiCps;
+var z = Rlpf(
 	VarSaw(freq * [1, 1.505], 0, MouseY(0, 1, 0, 0.2)) * Decay2(trig3, 0.005, 0.8),
 	MouseX(200, 8000, 1, 0.2),
 	0.2
@@ -88,11 +88,11 @@ var s = RingzBank(exc3, { Rand(3500, 4000) } ! 4, nil, { Rand(0.05, 0.2) } ! 4).
 var exc4 = { GrayNoise() } ! 2 * 0.0007;
 var y = OverlapTexture({ :tr |
 	var env = SinOsc(TRand(1, 6, tr), { TRand(0, 2 * pi, tr) } ! 2) * 0.5 + 0.5;
-	DynRingzBank(exc4, { TIRand(200, 2500, tr) } ! 4, nil, { TRand(0.2, 0.8, tr) } ! 4) * env
+	DynRingzBank(exc4, { TiRand(200, 2500, tr) } ! 4, nil, { TRand(0.2, 0.8, tr) } ! 4) * env
 }, 4, 2, 2).scaleNeg(MouseX(-1, 1, 0, 0.2));
 var snd = x + (y * 0.5) + s + r;
 6.timesRepeat {
-	snd := AllpassN(LPZ2(snd), 0.03, { Rand(0, 0.03) } ! 2, 5)
+	snd := AllpassN(Lpz2(snd), 0.03, { Rand(0, 0.03) } ! 2, 5)
 };
 snd
 

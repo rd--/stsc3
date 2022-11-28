@@ -1,7 +1,7 @@
 ;; clipped inharmonic warbulence ; jmcc
 var z = OverlapTexture({ :tr |
-	var r = LinExp(LFNoise1(1 / 16), -1, 1, 0.1, 20);
-	var f = TRand(24, 96, tr).midiCps;
+	var r = LinExp(LfNoise1(1 / 16), -1, 1, 0.1, 20);
+	var f = TRand(24, 96, tr).MidiCps;
 	var a = (500 / f).min(1);
 	var n = 12;
 	a * (1 .. n).collect({ :i |
@@ -9,5 +9,5 @@ var z = OverlapTexture({ :tr |
 		var o = (SinOsc(f * g, 0) * (SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.08 - 0.04).max(0)).max(0);
 		Pan2(o, TRand(-1, 1, tr), 2 / g)
 	}).sum;
-}, 12.8, 6.4, 6).LeakDC(0.995);
+}, 12.8, 6.4, 6).LeakDc(0.995);
 { CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 20) }.dup(8).sum * 0.2

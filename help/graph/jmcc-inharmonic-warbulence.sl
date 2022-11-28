@@ -1,8 +1,8 @@
-;; jmcc - inharmonic warbulence ; graph rewrite
+;; jmcc ; inharmonic warbulence ; graph rewrite
 var z = OverlapTexture({ :tr |
-	var f = TRand(24, 96, tr).midiCps;
+	var f = TRand(24, 96, tr).MidiCps;
 	var a = (500 / f).min(1);
-	var r = TXLine(TExpRand(0.1, 20, tr), TExpRand(0.1, 20, tr), 25.6, tr);
+	var r = TxLine(TExpRand(0.1, 20, tr), TExpRand(0.1, 20, tr), 25.6, tr);
 	var n = 12;
 	(1 .. n).collect({ :i |
 		var g = TRand(0, n, tr) + 1;

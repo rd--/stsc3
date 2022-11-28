@@ -13,7 +13,7 @@ fundamentals.collect({ :freq |
 var numVoices = 30;
 var fundamentals = { 200.0.Rand(400) }.dup(numVoices).sorted;
 fundamentals.withIndexCollect({ :freq0 :index |
-	var freq = freq0 + (LFNoise2(0.5) * 3 * index);
+	var freq = freq0 + (LfNoise2(0.5) * 3 * index);
 	Pan2(
 		BLowPass(Saw(freq), freq * 5, 0.5),
 		Rand(-0.5, 0.5),
@@ -28,8 +28,8 @@ var finalPitches = ((1 .. numVoices).collect { :each | (each / (numVoices / 6)).
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
 var ampEnvelope = CurveGen(1, [0, 1, 1, 0], [3, 21, 3], [2, 0, -4]);
 var voiceFunc = { :numTone |
-	var initRandomFreq = fundamentals[numTone] + (LFNoise2(0.5) * 6 * (numVoices - numTone));
-	var destinationFreq = finalPitches[numTone] + (LFNoise2(0.1) * numTone / 3);
+	var initRandomFreq = fundamentals[numTone] + (LfNoise2(0.5) * 6 * (numVoices - numTone));
+	var destinationFreq = finalPitches[numTone] + (LfNoise2(0.1) * numTone / 3);
 	var sweepEnv = CurveGen(1, [0, Rand(0.1, 0.2), 1], [Rand(5.5, 6), Rand(8.5, 9)], [Rand(2, 3), Rand(4, 5)]);
 	var freq = ((1 - sweepEnv) * initRandomFreq) + (sweepEnv * destinationFreq);
 	Pan2(

@@ -2,6 +2,6 @@
 var f = { :i |
 	var c = i / 48;
 	var b = c / 72;
-	VarSaw((LFSaw(c, 0) * LFSaw(b, 0) * 8 + 9).roundTo(i % 9 + 1) * 25 + c, c, LFSaw(3, i) + 1 / 3) * (LFSaw(b, i / pi) % 1) / 2
+	VarSaw((LfSaw(c, 0) * LfSaw(b, 0) * 8 + 9).roundTo(i % 9 + 1) * 25 + c, c, LfSaw(3, i) + 1 / 3) * (LfSaw(b, i / pi) % 1) / 2
 };
 (0 .. 29).collect(f).Splay2

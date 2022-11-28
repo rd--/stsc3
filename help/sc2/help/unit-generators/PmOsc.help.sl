@@ -1,6 +1,6 @@
-# PMOsc - phase modulation oscillator pair
+# PmOsc - phase modulation oscillator pair
 
-_PMOsc(carfreq, modfreq, index, modphase)_
+_PmOsc(carfreq, modfreq, index, modphase)_
 
 Phase modulation sine oscillator pair.
 
@@ -11,18 +11,18 @@ Phase modulation sine oscillator pair.
 
 Modulate carfreq:
 
-	PMOsc(Ln(600, 900, 5), 600, 3, 0) * 0.1
+	PmOsc(Ln(600, 900, 5), 600, 3, 0) * 0.1
 
 Modulate modfreq:
 
-	PMOsc(300, Ln(600, 900, 5), 3, 0) * 0.1
+	PmOsc(300, Ln(600, 900, 5), 3, 0) * 0.1
 
 Modulate index:
 
-	PMOsc(300, 550, Ln(0, 20, 8), 0) * 0.1
+	PmOsc(300, 550, Ln(0, 20, 8), 0) * 0.1
 
 Texture:
 
 	OverlapTexture({ :tr |
-		LinPan2(PMOsc(TRand(20, 2000, tr), TRand(0, 800, tr), TLine(0, TRand(0, 12, tr), 9, tr), 0), TRand(-1, 1, tr), 0.1)
+		LinPan2(PmOsc(TRand(20, 2000, tr), TRand(0, 800, tr), TLine(0, TRand(0, 12, tr), 9, tr), 0), TRand(-1, 1, tr), 0.1)
 	}, 2, 5, 4)

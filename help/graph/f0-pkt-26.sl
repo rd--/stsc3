@@ -11,7 +11,7 @@ var x = { :i |
 	var g = VarSaw(0.048, 0, 0.5) * 25 + 150;
 	var h = VarSaw(i + 1 * g, t, 1/3) * 150;
 	var o = SinOsc(h, f * pi) * d + b;
-	var z = LeakDC(VarSaw(o, t, 0.5), 0.995);
+	var z = LeakDc(VarSaw(o, t, 0.5), 0.995);
 	Pan2(z, VarSaw(0.02, t, 0.5), 1 / n)
 };
 (1 .. n).collect(x).sum * 0.25

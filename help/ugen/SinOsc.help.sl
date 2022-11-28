@@ -22,10 +22,10 @@ OverlapTexture({ :tr |
 	var syncEgTop = TRand(8, 20, tr);
 	var syncRatio = 2;
 	var syncDcy = TRand(0.5, 2, tr);
-	var syncEnv = TXLine(syncEgTop / syncRatio, 1, syncDcy, tr);
+	var syncEnv = TxLine(syncEgTop / syncRatio, 1, syncDcy, tr);
 	var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
-	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).midiCps } ! 5;
-	var in = LFTri(freq, 0);
+	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).MidiCps } ! 5;
+	var in = LfTri(freq, 0);
 	var phase = Sweep(in, freq * syncRatio * syncEnv);
 	var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
 	var sig = synced * in * gainEnv;
@@ -46,9 +46,9 @@ var sig = SinOsc(freq, { Rand(0, 2 * pi) } ! numPartials);
 
 ;; SinOsc ; https://scsynth.org/t/6256/5 ; bipolar version
 var freq = 130;
-var squeezeStretch = LFTri(0.1, 0) * 5; (* from -5 to 5 *)
-var tri = LFTri(freq, 1) * 0.5 + 0.5;
-var pulse = LFPulse(freq, 0, 0.5) * 2 - 1;
+var squeezeStretch = LfTri(0.1, 0) * 5; (* from -5 to 5 *)
+var tri = LfTri(freq, 1) * 0.5 + 0.5;
+var pulse = LfPulse(freq, 0, 0.5) * 2 - 1;
 var outPhase = pulse * (tri ** (2 ** squeezeStretch));
 SinOsc(0, outPhase * pi) * 0.1
 
@@ -121,7 +121,7 @@ SinOsc([freqSweep, freqSweep + 400], 0).mean
 
 ;; SinOsc
 SinOsc(
-	LFNoise2(
+	LfNoise2(
 		SinOsc([3, 5], 0).range([2, 7], 35)
 	).range(100, [200, 300]),
 	0
@@ -154,7 +154,7 @@ var voiceFunc = { :e |
 	var pitchMod = SinOsc(pitchModRate, 0) * pitchModDepth;
 	var mod = SinOsc(pitch * ratio, 0) * pitch * indexEnv;
 	var car = SinOsc(pitch * (2 ** (pitchMod / 1200)) + mod, 0) * volEnv * amp;
-	var filter = LPF(car * volMod, LinExp(tone, 0, 1, 200, 20000));
+	var filter = Lpf(car * volMod, LinExp(tone, 0, 1, 200, 20000));
 	Pan2(filter, (panModDepth < 0.01).ifTrue({ pan }, ifFalse: { panMod }), 1)
 };
 var fmSignal = Voicer(16, voiceFunc).sum;

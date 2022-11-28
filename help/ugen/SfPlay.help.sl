@@ -20,7 +20,7 @@ SfPlay(sf, rateMultiplier, Impulse(rateMultiplier / SfDur(sf), 0), 0, 0)
 var sf = SfAcquire("floating_1", 1, 1);
 var r = 10;
 (1 .. 6).do { :i |
-	r := LFNoise1(0.2 ** i * 50) * r
+	r := LfNoise1(0.2 ** i * 50) * r
 };
 SfPlay(sf, r, 1, [0, 18000], 1)
 

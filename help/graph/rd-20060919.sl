@@ -1,7 +1,7 @@
 ;; 20060919 ; rd
 var fwalk = { :r |
 	var t = Dust(3);
-	var r1 = TIRand(0, 6, t);
+	var r1 = TiRand(0, 6, t);
 	var r2 = TRand(-0.0001, 0.0001, t);
 	var b0 = [
 		40, 47, 42, 40, 50,

@@ -3,8 +3,8 @@ OverlapTexture({ :tr |
 	var n = 8;
 	{
 		var osc = SinOsc(80 + TRand(0, 2000, tr), 0);
-		var pos = LFNoise1(0.4 + TRand(0, 0.8, tr));
-		var amp = LFNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5;
+		var pos = LfNoise1(0.4 + TRand(0, 0.8, tr));
+		var amp = LfNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5;
 		Pan2(osc, pos, amp)
 	}.dup(n).sum * 0.1 / n
 }, 8, 8, 2)

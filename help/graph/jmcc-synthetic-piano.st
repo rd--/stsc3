@@ -9,7 +9,7 @@ p := [
 	e := Decay2 in: s attackTime: 0.008 decayTime: 0.04.
 	c := [ :ix |
 		| n0 o dt |
-		n0 := LFNoise2 freq: 3000.
+		n0 := LfNoise2 freq: 3000.
 		o := #(-0.05 0.0 0.04) at: ix.
 		dt := (n + o) midiCps reciprocal.
 		CombL in: (n0 * e) maxdelaytime: dt delaytime: dt decaytime: 6

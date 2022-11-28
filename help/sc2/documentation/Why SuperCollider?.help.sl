@@ -13,7 +13,7 @@ There are at least two answers to this. Dynamism: Most graphical synthesis envir
 	;; reverb predelay time
 	var z = DelayC(s, 0.048, 0.048);
 	;; 7 length modulated comb delays in parallel
-	var y = { CombL(z, 0.1, LFNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) }.dup(7).sum;
+	var y = { CombL(z, 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) }.dup(7).sum;
 	;; two parallel chains of 4 allpass delays (8 total)
 	4.timesRepeat { y := AllpassC(y, 0.050, [Rand(0, 0.050), Rand(0, 0.050)], 1) };
 	;; add original sound to reverb and play it
