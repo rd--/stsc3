@@ -1,8 +1,8 @@
 ;; deep trip (jmcc) #9
 {
-	var f = (LFNoise1(0.3.rand) * 60 + 70).midiCps;
-	var a = LFNoise2(f * 0.5.rand) * (LFNoise1(8.0.rand) * SinOsc(40.0.rand, 0) * 0.1).max(0);
-	var s = Pan2(SinOsc(f, 0) * a, LFNoise1(5.0.rand), 1);
+	var f = (LfNoise1(0.3.rand) * 60 + 70).MidiCps;
+	var a = LfNoise2(f * 0.5.rand) * (LfNoise1(8.0.rand) * SinOsc(40.0.rand, 0) * 0.1).max(0);
+	var s = Pan2(SinOsc(f, 0) * a, LfNoise1(5.0.rand), 1);
 	var c1 = CombN(s, 0.5, { 0.2.rand + 0.3 } ! 2, 20);
 	var c2 = CombN(s, 0.5, { 0.2.rand + 0.3 } ! 2, 20);
 	s + c1 + c2

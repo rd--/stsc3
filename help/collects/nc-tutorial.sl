@@ -71,7 +71,7 @@ Saw([440, 443 ,437]).sum * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; am, fm, chorus
 var src = Saw([440, 443, 437] + (SinOsc(100, 0) * 100));
-var amp = LFSaw(Line(3, 17, 3, 0),0) * 0.5 + 0.5 * Line(1, 0, 10, 0);
+var amp = LfSaw(Line(3, 17, 3, 0),0) * 0.5 + 0.5 * Line(1, 0, 10, 0);
 Resonz(src, XLine(10000, 10, 10, 0), Line(1, 0.05, 10, 0)).sum * amp
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.5 ; bell patch ; requires=kr
@@ -115,7 +115,7 @@ SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, env).midiCps, 0) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 var trig = Impulse(3, 0);
-var sound = LFPulse(110 * [1, 5 / 2], 0, 0.5).sum * 0.2;
+var sound = LfPulse(110 * [1, 5 / 2], 0, 0.5).sum * 0.2;
 var env = Decay2(trig, 0.02, 0.2);
 Pan2(sound * env, 0, 1)
 
@@ -128,7 +128,7 @@ EnvGen(Impulse(MouseX(10, 300, 1, 0.2), 0), 1, 0, 1, 0, e) * 0.2
 Saw(Lag(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 200, MouseX(0.0, 0.2, 0, 0.2))) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Ringz(Saw(LinExp(Lag(LFNoise0(5), 0.1), -1, 1, 100, 2000)) * 0.2, 1000, 0.01) * 0.1
+Ringz(Saw(LinExp(Lag(LfNoise0(5), 0.1), -1, 1, 100, 2000)) * 0.2, 1000, 0.01) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Ringz(Saw(LinExp(Lag(LFNoise0(5), MouseX(0.01, 0.3, 0, 0.2)), -1, 1, 100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1
+Ringz(Saw(LinExp(Lag(LfNoise0(5), MouseX(0.01, 0.3, 0, 0.2)), -1, 1, 100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1

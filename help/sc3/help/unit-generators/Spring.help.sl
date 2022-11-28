@@ -33,7 +33,7 @@ Modulating a resonating string with the force, spring constant is _MouseX_, _Mou
 	var k = MouseX(0.5, 100, 1, 0.2);
 	var d = MouseY(0.0001, 0.01, 1, 0.2);
 	var t = Dust(2);
-	var m0 = Spring(ToggleFF(t), 1 * k, 0.01);
+	var m0 = Spring(ToggleFf(t), 1 * k, 0.01);
 	var m1 = Spring(m0, 0.5 * k, d);
 	var m2 = Spring(m0, 0.6 * k, d);
 	var m3 = Spring([m1, m2], 0.4 * k, d);

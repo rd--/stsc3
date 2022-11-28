@@ -42,3 +42,26 @@ var f = {
 	Pan2(osc, Rand(-1, 1), 0.5 / n.sqrt)
 };
 Resonz(f.dup(n).sum, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
+
+;; Gendy1 ; overlap texture
+{
+	var n = 11;
+	{
+		var freq = Rand(50, 560.3);
+		var numcps = Rand(2, 20);
+		var knum = SinOsc(ExpRand(0.02, 0.2), 0).LinLin(-1, 1, 0, numcps);
+		var osc = Gendy1(
+			ampdist: Rand(0, 6),
+			durdist: Rand(0, 6),
+			adparam: Rand(0, 1),
+			ddparam: Rand(0, 1),
+			minfreq: freq,
+			maxfreq: freq,
+			ampscale: Rand(0, 1),
+			durscale: Rand(0, 1),
+			initCPs: numcps,
+			knum: knum.kr
+		);
+		Pan2(osc, Rand(-1, 1), 0.1 / n.sqrt)
+	}.dup(n).sum
+}.overlap(4, 5, 3)

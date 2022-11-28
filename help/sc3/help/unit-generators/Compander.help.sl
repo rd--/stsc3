@@ -23,7 +23,7 @@ If any of this is confusing, see <http://en.wikipedia.org/wiki/Audio_level_compr
 Example signal to process:
 
 	Decay2(
-		Impulse(8, 0) * MulAdd(LFSaw(0.3, 0), -0.3, 0.3),
+		Impulse(8, 0) * MulAdd(LfSaw(0.3, 0), -0.3, 0.3),
 		0.001,
 		0.3
 	) * Pulse([80, 81], 0.3).sum
@@ -31,7 +31,7 @@ Example signal to process:
 Noise gate:
 
 	var z = Decay2(
-		Impulse(8, 0) * MulAdd(LFSaw(0.3, 0), -0.3, 0.3),
+		Impulse(8, 0) * MulAdd(LfSaw(0.3, 0), -0.3, 0.3),
 		0.001,
 		0.3
 	) * Pulse([80, 81], 0.3).sum;
@@ -48,7 +48,7 @@ Noise gate:
 Compressor:
 
 	var z = Decay2(
-		Impulse(8, 0) * MulAdd(LFSaw(0.3, 0), -0.3, 0.3),
+		Impulse(8, 0) * MulAdd(LfSaw(0.3, 0), -0.3, 0.3),
 		0.001,
 		0.3
 	) * Pulse([80, 81], 0.3).sum;
@@ -65,7 +65,7 @@ Compressor:
 Limiter:
 
 	var z = Decay2(
-		Impulse(8, 0) * MulAdd(LFSaw(0.3, 0), -0.3, 0.3),
+		Impulse(8, 0) * MulAdd(LfSaw(0.3, 0), -0.3, 0.3),
 		0.001,
 		0.3
 	) * Pulse([80, 81], 0.3).sum;
@@ -82,7 +82,7 @@ Limiter:
 Sustainer:
 
 	var z = Decay2(
-		Impulse(8, 0) * MulAdd(LFSaw(0.3, 0), -0.3, 0.3),
+		Impulse(8, 0) * MulAdd(LfSaw(0.3, 0), -0.3, 0.3),
 		0.001,
 		0.3
 	) * Pulse([80, 81], 0.3).sum;
