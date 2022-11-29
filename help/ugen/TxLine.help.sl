@@ -1,4 +1,4 @@
-;; TXLine
+;; TxLine
 var trigger = Impulse(0.25, 0);
 var gainEnv = Decay2(trigger, 0.01, 1);
-Pan2(Saw(TXLine(100, 1000, 0.1, trigger)), TLine(-1, 1, 0.75, trigger), gainEnv)
+Pan2(Saw(TxLine(100, 1000, 0.1, trigger)), TLine(-1, 1, 0.75, trigger), gainEnv)

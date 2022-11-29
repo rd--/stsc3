@@ -7,6 +7,7 @@ import qualified Sound.Sc3.Ugen.Db.Bindings.Js as Js {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.Som as Som {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.SuperCollider as Sc {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Bindings.Smalltalk as St {- hsc3-db -}
+import qualified Sound.Sc3.Ugen.Db.Bindings.Spl as Spl {- hsc3-db -}
 import qualified Sound.Sc3.Ugen.Db.Record as Record {- hsc3-db -}
 
 {- | Unary operators
@@ -14,6 +15,8 @@ import qualified Sound.Sc3.Ugen.Db.Record as Record {- hsc3-db -}
      Sc>>log is natural, ie. St>>ln
      Sc>>log2 is base 2, ie. St>>log2
      Sc>>log10 is base 10, ie. St>>log
+
+> map snd uop
 -}
 uop :: [(String, Int)]
 uop =
@@ -27,6 +30,8 @@ uop =
 
      Sc>>** is not St>>raisedTo: since in Sc (0 ** 0) is 1 and in St (0 raisedTo: 0) is an error
      Smalltalk modulo is rem: but use % here.
+
+> map snd binop
 -}
 binop :: [(String, Int)]
 binop =
@@ -38,6 +43,9 @@ binop =
   ,("bitShiftLeft:",26),("bitShiftRight:",27)
   ,("amClip:",40),("scaleNeg:", 41),("clip2:",42),("fold2:",44)]
 
+ugen :: [String]
+ugen = Spl.ugen_list_core ++ Spl.ugen_list_ext
+
 {-
 > selectorToSpecialIndex uop
 > selectorToSpecialIndex binop
@@ -46,53 +54,6 @@ selectorToSpecialIndex :: [(String, Int)] -> String
 selectorToSpecialIndex =
   let f (sel, ix) = printf "#%s -> %d" sel ix
   in intercalate ". " . map f
-
-{-
-> Data.List.sort ugen == ugen
-> filter (not . Db.ugen_is_core) ugen
--}
-ugen :: [String]
-ugen =
-  ["AllpassC","AllpassL","AllpassN","AmpComp","AmpCompA","Amplitude"
-  ,"Balance2","BBandPass","BBandStop","BHiPass","Blip","BlockSize","BLowPass","BPeakEQ","BPF","BPZ2","BRF","BRZ2","BrownNoise","BufDur","BufFrames","BufRateScale","BufRd","BufSampleRate","BufWr"
-  ,"ClearBuf","Clip","ClipNoise","CoinGate","CombC","CombL","CombN","Compander","ControlDur","ControlRate","Convolution","Crackle","CuspL","CuspN"
-  ,"Dbufrd","Dbufwr","DC","Decay","Decay2","DegreeToKey","Delay1","Delay2","DelayC","DelayL","DelayN","Demand","DetectSilence","DFM1", "Diwhite","Drand","Dseq","Dseries","Dshuf","Dust","Dust2","Duty","DWGPluckedStiff","Dwhite","Dxrand"
-  ,"EnvGen","ExpRand"
-  ,"FBSineL","FBSineC","FFT","Fold","Formant","Formlet","FOS","FreqShift","FSinOsc","FreeVerb","FreeVerb2" -- "FM7",
-  ,"Gate","Gendy1","GrainBuf","GrainFM","GrainSin","GrayNoise","GVerb"
-  ,"Hasher","HenonC","HenonL","HenonN","HPF","HPZ1","HPZ2"
-  ,"IFFT","Impulse","In","Index","IndexInBetween","InFeedback","InRange","IRand","Integrator"
-  ,"K2A","KeyState","Klang","Klank"
-  ,"LFBrownNoise1","LFClipNoise","LFCub","LFDNoise1","LFDNoise3","LFGauss","LFNoise0","LFNoise1","LFNoise2","LFPar","LFPulse","LFSaw","LFTri","LPF"
-  ,"Lag","LagUD","Lag2","Lag3","Lag3UD","Latch","LatoocarfianC","LeakDC","Limiter","LinCongC","Line","Linen","LinExp","LinPan2","LinRand","LinXFade2","LocalBuf","LocalIn","LocalOut","Logistic","LorenzL","LPZ1","LPZ2"
-  ,"MantissaMask","MaxLocalBufs","Median","MidEQ","ModDif","MoogFF","MouseButton","MouseX","MouseY","MulAdd"
-  ,"Normalizer","NRand","NumOutputBuses"
-  ,"OnePole","OneZero","Osc","Out"
-  ,"Pan2","PanAz","PanB","PeakFollower","Perlin3", "Phasor","PinkNoise","Pitch","PitchShift","PlayBuf","Pluck","Pulse","PulseCount","PulseDivider"
-  ,"PV_Diffuser","PV_RandComb"
-  ,"QuadL","QuadC"
-  ,"RHPF","RLPF","Rand","RecordBuf","ReplaceOut","Resonz","Ringz","RunningMax","RunningSum"
-  ,"Rotate2"
-  ,"SampleDur","SampleRate","Sanitize","Saw","Schmidt","Select","SetBuf","SetResetFF","SinOsc","SinGrain","SinOscFB","Slew","Slope","SOS","Spring","StandardL","StandardN","Stepper","Sweep","SyncSaw"
-  ,"TDelay", "TDuty","TExpRand","TGrains","Timer","TIRand","ToggleFF","TRand","Trig","Trig1","TwoPole","TwoZero"
-  ,"VarSaw","VBJonVerb", "Vibrato"
-  ,"Warp1","WaveLoss","WhiteNoise","Wrap","WrapIndex"
-  ,"XFade2","XLine"
-  ,"ZeroCrossing"
-  ,"MoogLadder" -- sc3-plugins/Bhob
-  ,"GreyholeRaw" -- sc3-plugins/DEIND
-  ,"CrossoverDistortion" -- sc3-plugins/Distortion
-  ,"Friction" -- sc3-plugins/MCLD
-  ,"MembraneCircle" -- sc3-plugins/Membrane
-  ,"VOSIM" -- sc3-plugins/VOSIM
-  ,"MiBraids", "MiClouds", "MiRings" -- mi-UGens
-  ,"AnalogFoldOsc" -- portedplugins
-  ,"RCD","SCM" -- vb_UGens
-  ,"DustRange","ExpRandN","LinRandN","RandN" -- sc3-rdu
-  ,"TLinRand","TScramble" -- sc3-rdu
-  ,"Dx7","Dx7Env","ObxdFilter","SvfBp","SvfHp","SvfLp" -- sc3-rdu
-  ,"Bezier","Freezer" -- sc3-rdu ,"ShufflerB"
-  ]
 
 is_osc :: Record.U -> Bool
 is_osc u = (Record.u_num_inputs u > 0) && not (Record.u_is_filter u)

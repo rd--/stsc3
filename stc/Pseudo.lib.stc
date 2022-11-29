@@ -499,7 +499,7 @@ Tr : PseudoUgen {
 }
 
 /* Triggered XLine */
-TXLine : PseudoUgen {
+TxLine : PseudoUgen {
 	*constructor {
 		arg start, end, dur, trig;
 		^EnvSpec([start, start, end], [0, dur], #['exp', 'exp'], -1, -1, 0).asEnvGen(trig)

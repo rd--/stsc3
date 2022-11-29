@@ -1,4 +1,4 @@
-TXLine = PseudoUgen (
+TxLine = PseudoUgen (
 ----------------------------
 
 start: start end: end dur: dur trig: trig = (
