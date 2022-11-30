@@ -1,4 +1,4 @@
-# Rand
+# Rand - random number generator
 
 _Rand(lo, hi)_
 

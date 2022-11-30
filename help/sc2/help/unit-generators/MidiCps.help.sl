@@ -1,6 +1,5 @@
-# midicps
+# MidiCps
 
-Convert midi note to cycles per second
+Convert midi note to cycles per second.
 
-	Saw(Ln(24, 108, 10).midicps) *  0.1
-
+	Saw(Ln(24, 108, 10).MidiCps) *  0.1

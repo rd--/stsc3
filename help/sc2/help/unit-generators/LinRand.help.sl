@@ -1,8 +1,8 @@
-# LinRand
+# LinRand - random number generator
 
 _LinRand(lo, hi, minmax)_
 
-Generates a single random float value in linear distribution from lo to hi, skewed towards lo if minmax < 0, otherwise skewed towards hi.
+Generates a single random float value in linear distribution from _lo_ to _hi_, skewed towards _lo_ if _minmax_ `< 0`, otherwise skewed towards _hi_.
 
 	var minmax = MouseX(0, 1, 0, 0.2);
 	{
