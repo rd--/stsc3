@@ -1,0 +1,9 @@
+;; tapping tools (jmcc) #7
+{
+	var rate = XLn(64, 0.125, 60);
+	var exc = Decay(Impulse(LinRand(1, 20, 0) * rate, 0) * 0.03, 0.001);
+	var flt = RingzBank(exc, { 400 + 8000.rand } ! 4, nil, { 0.01 + 0.1.rand } ! 4);
+	var z = Release(Pan2(flt, 1.rand2, 0.25), 1, 4, 1);
+	3.timesRepeat { z := AllpassN(z, 0.05, { 0.05.rand } ! 2, 2) };
+	z
+}.playEvery(2)

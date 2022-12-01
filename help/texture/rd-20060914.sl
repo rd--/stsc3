@@ -1,4 +1,4 @@
-;; chrd (rd)
+;; 20060914 ; rd
 {
 	var chrd = { :m |
 		var ds = 3;
