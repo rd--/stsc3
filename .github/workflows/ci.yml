@@ -12,10 +12,7 @@ jobs:
         versions:
           - ghc: latest
             cabal: latest
-        os:
-          - ubuntu-latest
-	  - ubuntu-18.04
-          - macos-latest
+        os: [ubuntu-latest, ubuntu-18.04, macos-latest]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
