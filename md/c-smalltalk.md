@@ -101,7 +101,7 @@ Note also that trailing _value:_ elements of selectors are elided, _p.q(r, s)_ i
 
 In addition there may be a rule to translate selectors, for instance from _at:put_ to _atPut_.
 
-_stsc3_ includes a [translator](https://rohandrape.net/pub/stsc3/html/stc-to-js.html) from C-Smalltalk to a scheme-like subset of Javascript.
+_stsc3_ includes a [translator](https://rohandrape.net/pub/stsc3/html/stsc3.html) from C-Smalltalk to a scheme-like subset of Javascript.
 
 ## Unary and binary message selectors
 
