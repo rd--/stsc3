@@ -173,20 +173,20 @@ This table gives names to standard operators, however it is not generic, c.f. js
 -}
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
-  [("+", "add"), ("-", "sub"), ("*", "mul"), ("/", "fdiv"), ("%", "mod"), ("**", "pow")
-  ,(">", "gt"), ("<", "lt"), (">=", "ge"), ("<=", "le"), ("==", "eq"), ("!=", "neq")
-  ,("&", "bitAnd"), ("|", "bitOr"), ("<<", "shiftLeft"), (">>", "shiftLeft")
+  [("+", "Add"), ("-", "Sub"), ("*", "Mul"), ("/", "Fdiv"), ("%", "Mod"), ("**", "Pow")
+  ,(">", "Gt"), ("<", "Lt"), (">=", "Ge"), ("<=", "Le"), ("==", "Eq"), ("!=", "Neq")
+  ,("&", "BitAnd"), ("|", "BitOr"), ("<<", "ShiftLeft"), (">>", "ShiftLeft")
   ,("++", "append")]
 
--- | Table giving generic names to operator characters.
+-- | Table giving generic names to operator characters (.sl names).
 jsCharNameTable :: [(Char, String)]
 jsCharNameTable =
-  [('~', "tilde"), ('`', "graveaccent")
-  ,('!', "exclamation"), ('@', "atsign"), ('#', "numbersign"), ('$', "dollar"), ('%', "percent"), ('^', "caret"), ('&', "ampersand"), ('*', "asterisk")
-  ,('_', "underscore"), ('-', "hypen"), ('+', "plus"), ('=', "equals")
+  [('~', "tilde"), ('`', "backtick")
+  ,('!', "bang"), ('@', "at"), ('#', "hash"), ('$', "dollar"), ('%', "percent"), ('^', "caret"), ('&', "ampersand"), ('*', "times")
+  ,('_', "underscore"), ('-', "minus"), ('+', "plus"), ('=', "equals")
   ,('|', "verticalline"), ('\\', "backslash")
   ,(':', "colon"), (';', "semicolon"), ('"', "quotationmark"), ('\'', "apostrophe")
-  ,('<', "lessthan"), (',', "comma"), ('>', "greaterthan"), ('.', "fullstop"), ('?', "questionmark"), ('/', "slash")
+  ,('<', "lessThan"), (',', "comma"), ('>', "greaterThan"), ('.', "fullstop"), ('?', "query"), ('/', "dividedBy")
   ]
 
 {- | A generic renamer.
