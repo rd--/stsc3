@@ -5,14 +5,13 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.os }}, ghc-${{ matrix.ghc }}
+    name: ${{ matrix.os }}, ghc-${{ matrix.versions.ghc }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        ghc:
-          - 8.10.1
-        cabal:
-          - 3.2.0.0
+        versions:
+          - ghc: latest
+            cabal: latest
         os:
           - ubuntu-latest
           - macos-latest
@@ -22,8 +21,8 @@ jobs:
       - name: Setup
         uses: haskell/actions/setup@v1
         with:
-          ghc-version: ${{ matrix.ghc }}
-          cabal-version: ${{ matrix.cabal }}
+          ghc-version: ${{ matrix.versions.ghc }}
+          cabal-version: ${{ matrix.versions.cabal }}
       - name: Build
         run: |
           cabal update
