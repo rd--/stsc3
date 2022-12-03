@@ -1,6 +1,6 @@
 # C-Smalltalk
 
-C-Smalltalk is  C-like notation for [Smalltalk](https://squeak.org/).
+C-Smalltalk is a C-like notation for [Smalltalk](https://squeak.org/).
 C-Smalltalk is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) notation.
 
 C-Smalltalk notation is an interesting complement to Smalltalk notation.
@@ -114,7 +114,7 @@ If translation is desired, unary and binary message selectors can be named so th
 
 ## Notation for the _at:_ and _at:put:_ protocol
 
-The C-like notations _p[q]_ and _p[q] = r_ translate as _p at: q_ and _p at: q put: r_ respectively.
+The C-like notations _p[q]_ and _p[q] := r_ translate as _p at: q_ and _p at: q put: r_ respectively.
 This protocol is very widely implemented and a concise and familiar notation seems useful.
 The _at:put:_ notation forms an _expression_, at the same syntax level as the _assignment_ syntax.
 
