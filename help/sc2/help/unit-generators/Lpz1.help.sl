@@ -1,8 +1,8 @@
-# LPZ1 - two point average filter
+# Lpz1 - two point average filter
 
-_LPZ1(in)_
+_Lpz1(in)_
 
-A special case fixed filter. Implements the formula _out(i) = 0.5 * (in(i) + in(i-1))_ which is a two point averager.
+A special case fixed filter. Implements the formula _out[i] = 0.5 * (in[i] + in[i - 1])_ which is a two point averager.
 
 Compare:
 
@@ -10,5 +10,5 @@ Compare:
 
 and:
 
-	LPZ1(WhiteNoise() * 0.1)
+	Lpz1(WhiteNoise() * 0.1)
 
