@@ -25,4 +25,4 @@ var p = Pulse(f, LfNoise1(0.157) * 0.4 + 0.5) * 0.04;
 var z = Rlpf(p, LfNoise1(0.2) * 2000 + 2400, 0.2) * 0.25;
 var c = { :i | CombL(i, 0.06, LfNoise1(0.3.Rand) * 0.025 + 0.035, 1) };
 var y = z * 0.6;
-z + { [y, y].collect(c).sum }.dup
+{ [y, y].collect(c).sum } ! 2 + z

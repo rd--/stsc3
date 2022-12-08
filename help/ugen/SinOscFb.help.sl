@@ -19,5 +19,5 @@ OverlapTexture({ :tr |
 		var freq = f0 + TRand(0, f0, tr);
 		var fb = LinLin(LfNoise2(1), -1, 1, 0, x);
 		SinOscFb(freq, fb) * 0.1
-	}.dup(16).Splay2
-}, 2, 6, 3)
+	} ! 16
+}, 2, 6, 3).Splay2

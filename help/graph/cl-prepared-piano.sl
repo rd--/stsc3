@@ -15,7 +15,7 @@ OverlapTexture({ :tr |
 			TRand(1, 8, tr) / TRand(1, 9, tr) * 0.001, (* Partch tonality diamond about 1000Hz *)
 			5
 		)
-	}.dup(c).sum;
+	} !+ c;
 	a.timesRepeat {
 		y := AllpassN(y, 0.040, { TRand(0, 0.040, tr) } ! 2, 8)
 	};

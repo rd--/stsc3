@@ -6,6 +6,6 @@ OverlapTexture({ :tr |
 		var f = LfTri(1 / 99, 0) * 9 + (12 * TRand(3, 6, tr) + Select(TChoose(tr, [0, 2, 3, 5, 7, 8, 10]), c)).MidiCps;
 		var y = SinOscFb(f, LfTri(1 + i / 50, 0) + 1 / 2);
 		Pan2(y, LfTri(i / 70, 0), TRand(0, 1, tr) > 0.5 / 2)
-	}.dup(9).sum;
+	} !+ 9;
 	CombN(z, 0.2, 0.2, 1).tanh * 0.1
 }, 3, 9, 2)

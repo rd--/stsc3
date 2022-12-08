@@ -10,4 +10,4 @@ var z = OverlapTexture({ :tr |
 		Pan2(SinOsc(f * g, 0), TRand(-1, 1, tr), m * (2 / g))
 	}).sum * 0.1
 }, 12.8, 6.4, 6);
-{ CombN(z, 0.3, { Rand(0.1, 0.3) }.dup, 8) }.dup(5).sum * 0.3
+{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) } !+ 5 * 0.3

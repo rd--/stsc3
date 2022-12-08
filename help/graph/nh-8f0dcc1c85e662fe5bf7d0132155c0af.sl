@@ -16,7 +16,7 @@ snd := Sanitize(snd, 0);
 };
 snd := snd <! LocalOut(snd);
 snd := snd.Splay2;
-snd.Clip2(1) * -5.dbAmp
+snd.Clip2(1) * -12.DbAmp
 
 ;; https://gist.github.com/nhthn/8f0dcc1c85e662fe5bf7d0132155c0af (nh)
 var freqScale = MouseY(0.01, 3, 1, 0.2);
@@ -31,4 +31,4 @@ snd := LeakDc(Sanitize(snd, 0).Clip2(1), 0.995);
 snd := [2, 3, 4, 1].collect { :index | snd[index] };
 snd := snd <! LocalOut(snd.Clip2(1));
 snd := Splay(snd, 0.5, 1, 0, true);
-snd.Clip2(1) * -5.dbAmp
+snd.Clip2(1) * -12.DbAmp

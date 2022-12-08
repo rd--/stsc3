@@ -8,6 +8,6 @@
 		var g = Rand(1, n + 1);
 		var m = (SinOsc(r * Rand(0.9, 1.1), (2 * pi).Rand) * 0.08 - 0.04).max(0);
 		Pan2(FSinOsc(f * g, 0) * m * (2 / g), 1.Rand2, 1)
-	}.dup(n).sum * a;
-	{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)	}.dup(5).sum * 0.3
+	} !+ n * a;
+	{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)	} !+ 5 * 0.3
 }.overlap(12.8, 6.4, 6)

@@ -10,8 +10,11 @@ CombL(
 			1.Rand2,
 			LfNoise2(100 + 20.Rand2) * 0.1
 		)
-	}.dup(4).sum
-	+ MulAdd(LfNoise2(MulAdd(LfNoise2([0.4, 0.4]), 90, 620)), MulAdd(LfNoise2([0.3, 0.3]), 0.15, 0.18), 0),
+	} !+ 4 + (
+		LfNoise2(MulAdd(LfNoise2([0.4, 0.4]), 90, 620))
+		*
+		MulAdd(LfNoise2([0.3, 0.3]), 0.15, 0.18)
+	),
 	0.3, 0.3, 3
 ) * 0.5
 
@@ -21,7 +24,7 @@ var node = {
 	Pan2(SinOsc(f, 0) * LfNoise2(100 + Rand(-20, 20)) * 0.1, Rand(-1, 1), 1)
 };
 var e = LfNoise2(LfNoise2([0.4, 0.4]) * 90 + 620) * (LfNoise2([0.3, 0.3]) * 0.15 + 0.18);
-CombL(node.dup(4).sum + e, 0.3, 0.3, 3) * 0.5
+CombL(node !+ 4 + e, 0.3, 0.3, 3) * 0.5
 
 ;; police state ; jmcc ; keywords
 var n = 4; (* number of sirens *)
@@ -40,7 +43,7 @@ var node = {
 };
 var e = LfNoise2(freq: LfNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LfNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);
 CombL(
-	in: node.dup(4).sum + e,
+	in: node !+ 4 + e,
 	maxdelaytime: 0.3,
 	delaytime: 0.3,
 	decaytime: 3

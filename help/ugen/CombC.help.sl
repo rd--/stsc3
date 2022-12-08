@@ -12,4 +12,4 @@ var z = Decay2(
 		delaytime: Rand(0.01, 0.09),
 		decaytime: 3
 	)
-}.dup(n).sum
+} !+ n

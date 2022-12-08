@@ -6,6 +6,6 @@ OverlapTexture({ :tr |
 	var fn = {
 		var y = f1 + TRand(0, f2, tr);
 		SinOsc(y, 0) * f1 / y
-	}.dup(n).sum;
-	{ fn } ! 2 * 0.1 / n;
+	};
+	{ fn !+ n } ! 2 * 0.1 / n;
 }, 4, 4, 3)

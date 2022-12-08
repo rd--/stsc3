@@ -6,5 +6,5 @@ OverlapTexture({ :tr |
 		var pos = LfNoise1(0.4 + TRand(0, 0.8, tr));
 		var amp = LfNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5;
 		Pan2(osc, pos, amp)
-	}.dup(n).sum * 0.1 / n
+	} !+ n * 0.1 / n
 }, 8, 8, 2)

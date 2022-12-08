@@ -14,6 +14,6 @@ OverlapTexture({ :tr |
 			TLine(pos, pos + TRand(-2, 2, tr), 4, tr),
 			1
 		);
-	}.dup(5).sum;
+	} !+ 5;
 	noise * eg * amp
 }, 8, 0.01, 2)

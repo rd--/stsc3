@@ -7,5 +7,5 @@
             LfNoise1(0.4 + 0.8.Rand),
             LfNoise1(0.4 + 0.8.Rand) * 0.4 + 0.5
         )
-    }.dup(n).sum * (0.4 / n);
+    } !+ n * 0.4 / n
 }.xfade(8, 8)

@@ -1,5 +1,5 @@
 ;; Gendy1 ; texture
-var f = {
+{
 	Pan2(
 		SinOsc(
 			Gendy1(
@@ -18,8 +18,7 @@ var f = {
 		),
 		Rand(-1, 1), 0.1
 	)
-};
-f.dup(10).sum
+} !+ 10
 
 ;; Gendy1 ; texture ; mouse control ; keywords ; requires=kr
 var n = 11;
@@ -41,7 +40,7 @@ var f = {
 	);
 	Pan2(osc, Rand(-1, 1), 0.5 / n.sqrt)
 };
-Resonz(f.dup(n).sum, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
+Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 
 ;; Gendy1 ; overlap texture
 {
@@ -63,5 +62,5 @@ Resonz(f.dup(n).sum, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 			knum: knum.kr
 		);
 		Pan2(osc, Rand(-1, 1), 0.1 / n.sqrt)
-	}.dup(n).sum
+	} !+ n
 }.overlap(4, 5, 3)

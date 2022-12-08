@@ -21,6 +21,6 @@ var r = {
 		var am = Rand(0.04, 0.16) * y1;
 		SinOsc(fr, 0) * am
 	};
-	{ f.dup(16).sum }.dup(2)
+	{ f !+ 16 } ! 2
 };
 p() + q() + r()

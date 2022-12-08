@@ -9,4 +9,4 @@ var mk = {
 };
 var x = MouseX(100, 2000, 0, 0.2);
 var y = MouseY(0.01, 1.0, 0, 0.2);
-Resonz(mk.dup(n).sum, x, y) * 0.5
+Resonz(mk !+ n, x, y) * 0.5

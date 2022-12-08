@@ -7,5 +7,5 @@
 		var m = (SinOsc(r * Rand(0.9, 1.1), 2 * pi.Rand) * 0.1 - 0.05).max(0);
 		Pan2(SinOsc(f * i, 0) * m * (1 / i), 1.Rand2, 1)
 	}).sum * p;
-	{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) }.dup(5).sum * 0.5
+	{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) } !+ 5 * 0.5
 }.overlap(12.8, 6.4, 6)

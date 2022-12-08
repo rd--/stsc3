@@ -8,4 +8,4 @@ var f = {
 	20.timesRepeat(p);
 	x * 5
 };
-f.dup(4).sum
+f !+ 4

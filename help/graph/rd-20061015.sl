@@ -8,4 +8,4 @@ var part = {
         var g = mkls(ts, [0, 0.33, { Rand(0.01, 0.035) } ! 2, 1, 0]);
 	Saw(f) * g
 };
-part.dup(8).sum
+part !+ 8

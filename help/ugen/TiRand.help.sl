@@ -8,6 +8,6 @@ OverlapTexture({ :tr |
 		var mnn = (octave * 12) + pitchClass;
 		var numHarm = TiRand(1, 4, tr);
 		Blip(mnn.MidiCps, numHarm) * 0.1
-	}.dup(7).Splay2
-}, 4, 0.05, 2)
+	} ! 7
+}, 4, 0.05, 2).Splay2
 

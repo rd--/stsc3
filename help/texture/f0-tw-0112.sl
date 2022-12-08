@@ -4,5 +4,5 @@
 		var lvl = Seq(1, [12 .. 0] * (i % 63 + 99));
 		var saw = VarSaw(DmdFor(1 / 12, 0, lvl) * [1, 1.01], 0, i / 9 % 9 / 9) / 9;
 		Release(saw, 0.02, 1, 0.02);
-	}.dup(2).sum
+	} !+ 2
 } { 1 / 3 }

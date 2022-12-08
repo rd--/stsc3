@@ -29,7 +29,7 @@ var ctlMatrix = [
 ];
 var x = MouseX(0, 3, 0, 0.2);
 var modMatrix = { { LfNoise1(0.5).max(0) } ! 6 * x } ! 6;
-Fm7(ctlMatrix, modMatrix).keep(2) * -12.dbAmp
+Fm7(ctlMatrix, modMatrix).keep(2) * -12.DbAmp
 
 ;; Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing
 var xMatrix = [
@@ -117,6 +117,6 @@ var yMatrix = [
 var ctlMatrix = xMatrix.collect { :p | p.collect { :q | SinOsc(q[1], q[2]) * q[3] + q[4] } };
 var modMatrix = yMatrix.collect { :p | p.collect { :q | Pulse(q[1], q[2]) * q[3] + q[4] } };
 var o = Fm7(ctlMatrix, modMatrix);
-var g3 = LinLin(LfSaw(0.1, 0), -1, 1, 0, -12.dbAmp);
-var g6 = -3.dbAmp;
+var g3 = LinLin(LfSaw(0.1, 0), -1, 1, 0, -12.DbAmp);
+var g6 = -3.DbAmp;
 [o[1] + (o[3] * g3) + o[5], o[2] + o[4] + o[6] * g6]
