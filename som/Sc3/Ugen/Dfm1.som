@@ -1,4 +1,4 @@
-dfm1 = ScUgen (
+Dfm1 = ScUgen (
 ----
 comment = (
 	^'Digitally modelled analog filter'
@@ -11,10 +11,10 @@ primaryFactoryMethod = (
 	^#in:freq:res:inputgain:type:noiselevel:
 )
 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel mul: mul = (
-	^(dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul
+	^(Dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul
 )
 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel mul: mul add: add = (
-	^(dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul + add
+	^(Dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul + add
 )
 
 )
