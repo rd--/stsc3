@@ -1,0 +1,20 @@
+PvDiffuser = ScUgen (
+----
+comment = (
+	^'Random phase shifting.'
+)
+
+buffer: buffer trig: trig = (
+	^UgenBuilder name: 'PV_Diffuser' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {buffer. trig}
+)
+primaryFactoryMethod = (
+	^#buffer:trig:
+)
+buffer: buffer trig: trig mul: mul = (
+	^(PvDiffuser buffer: buffer trig: trig) * mul
+)
+buffer: buffer trig: trig mul: mul add: add = (
+	^(PvDiffuser buffer: buffer trig: trig) * mul + add
+)
+
+)

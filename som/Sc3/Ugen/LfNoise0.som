@@ -1,0 +1,20 @@
+LfNoise0 = ScUgen (
+----
+comment = (
+	^'Step noise'
+)
+
+freq: freq = (
+	^UgenBuilder name: 'LFNoise0' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
+)
+primaryFactoryMethod = (
+	^#freq:
+)
+freq: freq mul: mul = (
+	^(LfNoise0 freq: freq) * mul
+)
+freq: freq mul: mul add: add = (
+	^(LfNoise0 freq: freq) * mul + add
+)
+
+)

@@ -11,7 +11,7 @@ var offset = Ln(0, -0.02, 60); (* causes sound to separate and fade *)
 		),
 		MulAdd(
 			LfNoise1(
-				6 + [4.0.rand2, 4.0.rand2] (* amplitude rate *)
+				{ Rand(2, 8) } ! 2 (* amplitude rate *)
 			),
 			0.02, (* amplitude scale *)
 			offset (* amplitude offset *)

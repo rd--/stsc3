@@ -12,12 +12,12 @@ However, most examples in the manual have parentheses around the code which allo
 
 	var n = 5; (* number of strings *)
 	var b = [ (* array of possible impulse excitation behaviours *)
-		{ Impulse(2 + 0.2.rand, 0) * 0.3 }, (* slow phasing *)
+		{ Impulse(2 + 0.2.Rand, 0) * 0.3 }, (* slow phasing *)
 		{ Dust(0.5) * 0.3 }, (* "wind chimes" *)
-		{ Impulse(SinOsc(0.05 + 0.1.rand, 2 * pi.rand) * 5 + 5.2, 0) * 0.3 } (* races *)
+		{ Impulse(SinOsc(0.05 + 0.1.Rand, 2 * pi.Rand) * 5 + 5.2, 0) * 0.3 } (* races *)
 	].atRandom; (* choose one at random to use for all voices *)
 	{ (* n strings tuned randomly to MIDI keys 60-90 *)
-		var delayTime = 1 / (60 + 30.rand).midiCps; (* calculate delay based on a random note *)
+		var delayTime = 1 / (60 + 30.IRand).MidiCps; (* calculate delay based on a random note *)
 		Pan2(
 			CombL( (* used as a string resonator *)
 				Decay( (* decaying envelope for noise *)
@@ -29,7 +29,7 @@ However, most examples in the manual have parentheses around the code which allo
 				delayTime, (* actual delay time *)
 				4  (* decay time of string *)
 			),
-			1.0.rand2, (* random pan position *)
+			1.Rand2, (* random pan position *)
 			1 (* level *)
 		)
 	}.dup(n).sum

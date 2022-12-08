@@ -4,11 +4,11 @@ CombL(
 	{
 		Pan2(
 			SinOsc(
-				MulAdd(SinOsc(0.1.rand + 0.02, 2 * pi.rand), 600.rand, 1000 + 300.rand2),
+				MulAdd(SinOsc(0.1.Rand + 0.02, 2 * pi.Rand), 600.Rand, 1000 + 300.Rand2),
 				0
 			),
-			1.0.rand2,
-			LfNoise2(100 + 20.0.rand2) * 0.1
+			1.Rand2,
+			LfNoise2(100 + 20.Rand2) * 0.1
 		)
 	}.dup(4).sum
 	+ MulAdd(LfNoise2(MulAdd(LfNoise2([0.4, 0.4]), 90, 620)), MulAdd(LfNoise2([0.3, 0.3]), 0.15, 0.18), 0),
@@ -29,13 +29,13 @@ var node = {
 	Pan2(
 		in: SinOsc(
 			freq: SinOsc(
-				freq: 0.1.rand + 0.02,
-				phase: 2 * pi.rand
-			) * 600.rand + 1000 + 300.rand2,
+				freq: 0.1.Rand + 0.02,
+				phase: 2 * pi.Rand
+			) * 600.Rand + 1000 + 300.Rand2,
 			phase: 0
 		),
-		pos: 1.0.rand2,
-		level: LfNoise2(freq: 100 + 20.0.rand2) * 0.1
+		pos: 1.Rand2,
+		level: LfNoise2(freq: 100 + 20.Rand2) * 0.1
 	)
 };
 var e = LfNoise2(freq: LfNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LfNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);

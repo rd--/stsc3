@@ -14,7 +14,7 @@ var trig = XLn(10 ! 2, 0.1, 60); (* trigger probability decreases over time *)
 				trig (* trigger rate *)
 			) * 0.02, (* trigger amplitude *)
 			0.005, (* grain attack time *)
-			0.5.rand (* grain decay time *)
+			0.5.Rand (* grain decay time *)
 		),
 		z
 	)

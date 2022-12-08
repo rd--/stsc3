@@ -7,8 +7,8 @@ var x = {
 	var z = RLPF(y, 8 ** LFTri(d * b, 0) * 999, 1);
 	Splay2(AllpassC(AllpassC(z, 1, LFTri([6, 4, 6] / 4, [0, 1]) + 1 / 2, 1), 1, 1 / 2, 4) * d)
 };
-99.timesRepeat({
-	var t = 9.rand / 8 + 33.rand + 8;
+99.timesRepeat {
+	var t = 9.random / 8 + 33.random + 8;
 	{ Release(x(), 9, t, 24) }.play;
 	t.seconds.wait
-})
+}

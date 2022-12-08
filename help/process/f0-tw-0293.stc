@@ -1,6 +1,5 @@
 // https://sccode.org/1-4Qy ; f0 ; 0293
-var f = {
-	arg a;
+var f = { :a |
 	var d;
 	{
 		var i = a.first;

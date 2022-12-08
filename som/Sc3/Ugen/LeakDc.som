@@ -1,0 +1,20 @@
+LeakDc = ScUgen (
+----
+comment = (
+	^'Remove DC'
+)
+
+in: in coef: coef = (
+	^UgenBuilder name: 'LeakDC' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. coef}
+)
+primaryFactoryMethod = (
+	^#in:coef:
+)
+in: in coef: coef mul: mul = (
+	^(LeakDc in: in coef: coef) * mul
+)
+in: in coef: coef mul: mul add: add = (
+	^(LeakDc in: in coef: coef) * mul + add
+)
+
+)

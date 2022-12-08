@@ -1,0 +1,20 @@
+VbJonVerb = ScUgen (
+----
+comment = (
+	^'artifical reverberator'
+)
+
+in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail = (
+	^UgenBuilder name: 'VBJonVerb' numChan: 2 rateSpec: #(1) specialIndex: 0 inputArray: {in. decay. damping. inputbw. erfl. tail}
+)
+primaryFactoryMethod = (
+	^#in:decay:damping:inputbw:erfl:tail:
+)
+in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail mul: mul = (
+	^(VbJonVerb in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail) * mul
+)
+in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail mul: mul add: add = (
+	^(VbJonVerb in: in decay: decay damping: damping inputbw: inputbw erfl: erfl tail: tail) * mul + add
+)
+
+)

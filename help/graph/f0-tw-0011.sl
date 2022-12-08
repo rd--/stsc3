@@ -5,5 +5,5 @@ var s = { :o :i |
 var f = { :o :i |
 	(i > 0).if { s(o, i) } { o }
 };
-var k = 10 + 10.rand; (* udp packet size... *)
+var k = 10 + 10.randomInteger; (* udp packet size... *)
 f(k, 6) / k

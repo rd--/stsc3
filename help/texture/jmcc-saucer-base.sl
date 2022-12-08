@@ -1,8 +1,8 @@
 ;; saucer base (jmcc) #6
 {
-	var b = 1000.0.rand;
-	var c = 5000.0.rand;
-	var o1 = SinOsc(20.0.rand, 0) * b + (1.1 * b);
+	var b = 1000.Rand;
+	var c = 5000.Rand;
+	var o1 = SinOsc(20.Rand, 0) * b + (1.1 * b);
 	var o2 = SinOsc(o1, 0) * c + (1.1 * c);
-	Pan2(SinOsc(o2, 0), 1.0.rand2, 0.1)
+	Pan2(SinOsc(o2, 0), 1.Rand2, 0.1)
 }.overlap(6, 2, 4)

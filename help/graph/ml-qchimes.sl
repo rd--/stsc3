@@ -14,9 +14,9 @@ var voiceFunc = { :e |
 		128, 144, 160, 170.666, 192, 213.333, 240,
 		256, 288, 320, 341.333
 	];
-	var freq = { baseFreq * rat.at(60.rand) }.dup(numPartials);
-	var amp = { 0.1.rrand(0.9) }.dup(numPartials);
-	var dcy = { 0.5.rrand(9.0) }.dup(numPartials);
+	var freq = { baseFreq * rat.atRandom }.dup(numPartials);
+	var amp = { Rand(0.1, 0.9) }.dup(numPartials);
+	var dcy = { Rand(0.5, 9) }.dup(numPartials);
 	var osc = DynRingzBank(sig, freq, amp, dcy);
 	Pan2(osc, e.o * 2 - 1, LagUd(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal) ;; note .kr!
 };

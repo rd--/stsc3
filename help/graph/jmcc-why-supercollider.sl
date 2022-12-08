@@ -1,13 +1,7 @@
 ;; why supercollider (jmcc) #0
-var s = { Resonz(Dust(0.2) * 50,  200 + 3000.0.rand, 0.003) }.dup(10).sum;
-var x = { CombL(DelayN(s, 0.048, 0.048), 0.1, LfNoise1(0.1.rand) * 0.04 + 0.05, 15) }.dup(7).sum;
-4.timesRepeat { x := AllpassN(x, 0.050, { 0.050.rand }.dup, 1) };
-s + (x * 0.2)
-
-;; why supercollider (jmcc) #0 ; Rand UGens
-var s = { Resonz(Dust(0.2) * 50,  Rand(200, 3200), 0.003) }.dup(10).sum;
-var x = { CombL(DelayN(s, 0.048, 0.048), 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) }.dup(7).sum;
-4.timesRepeat { x := AllpassN(x, 0.050, { Rand(0,0.050) }.dup, 1) };
+var s = { Resonz(Dust(0.2) * 50,  200 + 3000.Rand, 0.003) }.dup(10).sum;
+var x = { CombL(DelayN(s, 0.048, 0.048), 0.1, LfNoise1(0.1.Rand) * 0.04 + 0.05, 15) }.dup(7).sum;
+4.timesRepeat { x := AllpassN(x, 0.050, { 0.050.Rand }.dup, 1) };
 s + (x * 0.2)
 
 ;; why supercollider (jmcc) #0 ; keywords

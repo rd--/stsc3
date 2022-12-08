@@ -11,9 +11,9 @@ var n = 4; (* number of overlapping events *)
 			),
 			{ 200 + LinRand(0, 3000, 0) } ! p, (* resonant frequencies *)
 			nil, (* amplitudes default to 1.0 *)
-			{ 0.2 + Rand(0, 1) } ! p (* ring times *)
+			{ 0.2 + 1.Rand } ! p (* ring times *)
 		),
-		Ln(Rand(-1, 1), Rand(-1, 1), 8), (* sweep pan *)
+		Ln(1.Rand2, 1.Rand2, 8), (* sweep pan *)
 		1
 	)
 }.overlap(2, 3, n)

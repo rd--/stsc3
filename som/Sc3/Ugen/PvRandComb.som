@@ -1,0 +1,20 @@
+PvRandComb = ScUgen (
+----
+comment = (
+	^'Pass random bins.'
+)
+
+buffer: buffer wipe: wipe trig: trig = (
+	^UgenBuilder name: 'PV_RandComb' numChan: 1 rateSpec: (Rate kr) specialIndex: 0 inputArray: {buffer. wipe. trig}
+)
+primaryFactoryMethod = (
+	^#buffer:wipe:trig:
+)
+buffer: buffer wipe: wipe trig: trig mul: mul = (
+	^(PvRandComb buffer: buffer wipe: wipe trig: trig) * mul
+)
+buffer: buffer wipe: wipe trig: trig mul: mul add: add = (
+	^(PvRandComb buffer: buffer wipe: wipe trig: trig) * mul + add
+)
+
+)

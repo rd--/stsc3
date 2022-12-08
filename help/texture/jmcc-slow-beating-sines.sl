@@ -5,13 +5,13 @@
 	var p = OrderedCollection.new;
 	var q = OrderedCollection.new;
 	var f = { :freq |
-		SinOscBank(freq.asArray, 0.1, { 0.rrand(2 * pi) } ! (3 * n))
+		SinOscBank(freq.asArray, 0.1, { 2 * pi.Rand } ! (3 * n))
 	};
 	n.timesRepeat {
-		var freq = 24.rrand(84).midiCps;
+		var freq = IRand(24, 84).MidiCps;
 		p.add(freq);
-		{ p.add(freq + d.rand2) } ! 2;
-		{ q.add(freq + d.rand2) } ! 3
+		{ p.add(freq + d.Rand2) } ! 2;
+		{ q.add(freq + d.Rand2) } ! 3
 	};
 	[p, q].collect(f) / n
 }.xfade(4, 4)

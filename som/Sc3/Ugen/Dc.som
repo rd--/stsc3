@@ -1,0 +1,20 @@
+Dc = ScUgen (
+----
+comment = (
+	^'Create a constant amplitude signal'
+)
+
+in: in = (
+	^UgenBuilder name: 'DC' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {in}
+)
+primaryFactoryMethod = (
+	^#in:
+)
+in: in mul: mul = (
+	^(Dc in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(Dc in: in) * mul + add
+)
+
+)

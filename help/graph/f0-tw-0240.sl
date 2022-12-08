@@ -32,7 +32,7 @@ var l = [
 	32,
 	32
 ];
-var d = Pulse(DmdFor(1 / [10, 4], 0, Seq(99, l.midiCps)).mean, 0.5);
+var d = Pulse(DmdFor(1 / [10, 4], 0, Seq(99, l.MidiCps)).mean, 0.5);
 Pan2(CombN(BLowPass4(d, 1200, 1), 1, 1, 8) / 2, d, 1) / 2
 
 (*

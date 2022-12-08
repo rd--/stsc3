@@ -11,7 +11,7 @@ fundamentals.collect({ :freq |
 
 ;; http://earslap.com/article/recreating-the-thx-deep-note.html ; adding random wobbling to freqs, sorting randoms, lowpassing ; fundamentals are sorted, so higher frequencies drift more
 var numVoices = 30;
-var fundamentals = { 200.0.Rand(400) }.dup(numVoices).sorted;
+var fundamentals = { Rand(200, 400) }.dup(numVoices).sorted;
 fundamentals.withIndexCollect({ :freq0 :index |
 	var freq = freq0 + (LfNoise2(0.5) * 3 * index);
 	Pan2(
@@ -23,7 +23,7 @@ fundamentals.withIndexCollect({ :freq0 :index |
 
 ;; http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks ; requires=CurveGen
 var numVoices = 30;
-var fundamentals = { 200.0.rrand(400.0) }.dup(numVoices).sorted.reversed;
+var fundamentals = { 200.randomFloat(400) }.dup(numVoices).sorted.reversed;
 var finalPitches = ((1 .. numVoices).collect { :each | (each / (numVoices / 6)).rounded * 12 } + 14.5 ).MidiCps;
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
 var ampEnvelope = CurveGen(1, [0, 1, 1, 0], [3, 21, 3], [2, 0, -4]);

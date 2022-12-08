@@ -16,5 +16,5 @@ var o = Pan2(u2, pan, amp * 10);
 var f1 = Bpf(o * 5, 700, 0.1);
 var f2 = CombL(Lpf(f1 * LfNoise1(0.1).max(0), 800), 0.5, 0.5, 1) + f1.reversed;
 var f3 = f2;
-5.timesRepeat { f3 := AllpassN(f3, 0.18, { 0.06.rand } ! 2 + 0.06, 8) };
+5.timesRepeat { f3 := AllpassN(f3, 0.18, { 0.06.Rand } ! 2 + 0.06, 8) };
 Lpf(f2 + f3, 400) + (LfNoise1(0.2) * f2)

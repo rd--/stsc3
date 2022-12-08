@@ -4,12 +4,8 @@ var d = CombN(o, 3.0, [1.35, 0.7], 6);
 Pan2(o, 0, 1) + d
 
 ;; random sine waves ; https://github.com/cianoc/supercollider_fragments
-var f = { Pan2(SinOsc(SinOsc(1 / 10, 0.rrand(6)) * 200 + 600, 0), 0.rrand(1), 0.05) };
-f.dup(15).Splay2
-
-;; random sine waves ; https://github.com/cianoc/supercollider_fragments ; Rand
-var f = { Pan2(SinOsc(SinOsc(1 / 10, Rand(0, 6)) * 200 + 600, 0), Rand(0, 1), 0.05) };
-f.dup(15).Splay2
+var f = { Pan2(SinOsc(SinOsc(1 / 10, 6.Rand) * 200 + 600, 0), 1.Rand, 0.05) };
+f.dup(15).sum
 
 ;; nice use of blip ; https://github.com/cianoc/supercollider_fragments
 var t = Impulse(6, 0);
@@ -18,15 +14,8 @@ var p = Pan2(o, TRand(-1.0, 1.0, t), Decay2(t, 0.1, 3) * 0.5);
 p + CombL(p, 2.0, 4/6, 6)
 
 ;; interesting rising sounds ; https://github.com/cianoc/supercollider_fragments
-var f = { arg c; Pan2(SinOsc(LfSaw((c * 0.2 + 1)/3, 0) * 500 + 700, 0), LfNoise0(1), 0.05) };
+var f = { :c | Pan2(SinOsc(LfSaw((c * 0.2 + 1) / 3, 0) * 500 + 700, 0), LfNoise0(1), 0.05) };
 1.to(5).collect(f).sum
-
-;; use of dust with rising sounds ; https://github.com/cianoc/supercollider_fragments
-var f = {
-	var s = RingzBank(Dust(1 / 3) * 0.1, { 1000.expRand(10000) }.dup(3), [1], { 1.0.rrand(4.0) }.dup(15));
-	Pan2(s, LfTri(3.0.rrand(10.0), 0), 0.1)
-};
-f.dup(20).sum
 
 ;; use of dust with rising sounds ; https://github.com/cianoc/supercollider_fragments ; Rand
 var f = {
@@ -35,22 +24,13 @@ var f = {
 };
 f.dup(20).sum
 
-;; pretty ; nice, but inessential ; https://github.com/cianoc/supercollider_fragments
-var f = {
-	arg i;
-	var freq = MouseX(0.1.rrand(5.0), 3.0.rrand(20.0), 0, 0.2);
-	var amp = LfNoise0(MouseX(1.0.rrand(6.0), 6.0.rrand(1.0), 0, 0.2)).max(0);
-	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + 200.0.rrand(5000.0), 0) * amp;
-	Pan2(osc, 1.0.rand2, 0.03) };
-1.to(12).collect(f).sum
-
 ;; pretty ; nice, but inessential ; https://github.com/cianoc/supercollider_fragments ; Rand
-var f = {
-	arg i;
+var f = { :i |
 	var freq = MouseX(Rand(0.1, 5), Rand(3, 20), 0, 0.2);
 	var amp = LfNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).max(0);
 	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + Rand(200, 5000), 0) * amp;
-	Pan2(osc, Rand(-1, 1), 0.03) };
+	Pan2(osc, 1.Rand2, 0.03)
+};
 1.to(12).collect(f).sum
 
 ;; random impulses ; https://github.com/cianoc/supercollider_fragments
@@ -93,28 +73,28 @@ var sync = 5;
 
 ;; synched impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
-var f = { arg frq, num; SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1) };
-[f.value(100, 3), f.value(300, 7), f.value(500, 5), f.value(700, 2), f.value(900, 9), f.value(1100, 6), f.value(1300, 1)].Splay2 * 0.2
+var f = { :frq :num| SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1) };
+[f(100, 3), f(300, 7), f(500, 5), f(700, 2), f(900, 9), f(1100, 6), f(1300, 1)].Splay2 * 0.2
 
 ;; synchronised impulses ; https://github.com/cianoc/supercollider_fragments
 var sync = 5;
 var freq = [1, 3, 5, 7, 9, 11, 13];
 var numer = [3, 7, 5, 2, 9, 6, 1];
-var f = { arg i; SinOsc(freq[i] * 100, 0) * Decay2(Impulse(numer[i] / sync, 0), 0.01, 1) };
-(1 .. freq.size).collect(f).Splay2 * 0.5
+var f = { :i | SinOsc(freq[i] * 100, 0) * Decay2(Impulse(numer[i] / sync, 0), 0.01, 1) };
+(1 .. freq.size).collect(f).Splay2 * 0.2
 
 ;; nice buzzing effect
 var speed = 14;
 var f = SinOsc(1000, 0) * 150 + 300;
 var t = Impulse(1 / 3, 0);
-var v = { arg n; SinOsc(f * n, 0) * (LfNoise1(Rand(speed, speed * 2)) * 0.5 + 0.5) / n };
+var v = { :n | SinOsc(f * n, 0) * (LfNoise1(Rand(speed, speed * 2)) * 0.5 + 0.5) / n };
 1.to(12).collect(v).sum * 0.1
 
 ;; additive saw
 var f = 100;
 var t = Impulse(1 / 3, 0);
 var dt = [1.4, 1.1, 2, 1, 1.8, 2.9, 4, 0.3, 1, 3.6, 2.3, 1.1];
-var v = { arg n; SinOsc(f * n, 0) * Decay2(t, 0.01, dt.at(n)) / n };
+var v = { :n | SinOsc(f * n, 0) * Decay2(t, 0.01, dt[n]) / n };
 1.to(12).collect(v).sum * 0.1
 
 ;; lovely bells ; https://github.com/cianoc/supercollider_fragments
@@ -126,7 +106,7 @@ SinOsc([60, 64, 67, 71, 74, 78].MidiCps, 0).sum * env * 0.1
 ;; interesting drone ; https://github.com/cianoc/supercollider_fragments
 var freq = [40, 42, 43, 45, 47, 48, 41, 42].MidiCps;
 var amp = LfNoise1({ Rand(0.1, 0.5) }.dup(8)) * 0.5 + 0.5;
-Pan2(SinOsc(freq, 0), { Rand(-1, 1) }.dup(8), amp).sum * 0.1
+Pan2(SinOsc(freq, 0), { 1.Rand2 }.dup(8), amp).sum * 0.1
 
 ;; great inharmonic spectrum ; https://github.com/cianoc/supercollider_fragments
 var freq = [72, 135, 173, 239, 267, 306, 355, 473, 512, 572, 626];
@@ -145,27 +125,25 @@ f.dup(k).Splay2 / k
 var harmonics = 16;
 var f = {
 	var amp = SinOsc(1 / Rand(3, 6), 0) * Rand(0.1, 0.9);
-	Pan2(SinOsc(ExpRand(100, 2000), 0), Rand(-1, 1), amp)
+	Pan2(SinOsc(ExpRand(100, 2000), 0), 1.Rand2, amp)
 };
 f.dup(harmonics).sum / (2 * harmonics)
 
 ;; worth experimenting with ; https://github.com/cianoc/supercollider_fragments
 var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
-var f = {
-	arg partial;
+var f = { :partial |
 	var env = Asr(tr, 0, 5, [0]) / partial;
 	var amp = LfNoise1(Rand(5, 12)).max(0);
-	Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), env * amp)
+	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, env * amp)
 };
 1.to(16).collect(f).sum * 0.5
 
 ;; multiple sines ; https://github.com/cianoc/supercollider_fragments
 var speeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] / 20;
 var f0 = (MouseX(0, 36, 0, 0.2).roundTo(7) + 24).MidiCps;
-var f = {
-	arg partial;
-	Pan2(SinOsc(f0 * partial, 0), Rand(-1, 1), SinOsc(speeds.atRandom, 0).max(0))
+var f = { :partial |
+	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, SinOsc(speeds.atRandom, 0).max(0))
 };
 var harmonics = 16;
 1.to(harmonics).collect(f).sum / harmonics * 0.5
@@ -173,7 +151,7 @@ var harmonics = 16;
 ;; more bells ; https://github.com/cianoc/supercollider_fragments
 var env = Decay2(Dust(1 / 3), 0.01, 2) * 0.1;
 var osc = SinOsc({ Rand(300, 1200) }.dup(12), 0);
-Pan2(osc, { Rand(-1, 1) }.dup(12), env).sum
+Pan2(osc, { 1.Rand2 }.dup(12), env).sum
 
 ;; pink noise, frequencies emerge ; https://github.com/cianoc/supercollider_fragments
 RLPF(PinkNoise() * 0.3, { LfNoise0(12) }.dup(2) * 500 + 500, 0.2)
@@ -224,8 +202,7 @@ SinOsc(Latch(LfSaw(MouseX(0.1, 20, 0, 0.2), 0) * 500 + 600, Impulse(10, 0)), 0) 
 SinOsc(Latch(LfSaw(Line(0.1, 20, 60, 0), 0) * 500 + 600, Impulse(10, 0)), 0) * 0.1
 
 ;; risefallpad ; https://github.com/cianoc/supercollider_fragments ; requires=voicer
-var vc = {
-	arg e;
+var vc = { :e |
 	var freq = e.p.unitCps;
 	var gate = e.w;
 	var osc1 = Saw(freq + LfTri(0.3, 0));

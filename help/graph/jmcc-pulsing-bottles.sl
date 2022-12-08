@@ -7,9 +7,9 @@ var n = 6; ;; number of 'bottles'
 			400 + LinRand(0, 7000, 0),
 			0.01
 		),
-		SinOsc(0.1 + 0.4.rand, (2 * pi).rand),
+		SinOsc(0.1 + 0.4.Rand, (2 * pi).Rand),
 		1
-	) * LfPulse(4 + 10.0.rand, 0, 0.7.rand) * 0.8 / n
+	) * LfPulse(4 + 10.Rand, 0, 0.7.Rand) * 0.8 / n
 }.dup(n).sum
 
 ;; pulsing bottles (jmcc) #2

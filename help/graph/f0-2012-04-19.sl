@@ -2,4 +2,4 @@
 var sw = LfSaw(10, 0) * 0.01;
 var t0 = LfTri([5, 6] * 0.1, 0);
 var t1 = LfTri(0.1, 0) * 0.05 + 0.05;
-CombN(Limiter(BRF(sw, t0, 1), 1, 0.01), 0.1, t1.roundTo(0.01), 1) * 0.1
+CombN(Limiter(Brf(sw, t0, 1), 1, 0.01), 0.1, t1.roundTo(0.01), 1) * 0.1

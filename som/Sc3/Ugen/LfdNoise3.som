@@ -1,0 +1,20 @@
+LfdNoise3 = ScUgen (
+----
+comment = (
+	^'Dynamic cubic noise'
+)
+
+freq: freq = (
+	^UgenBuilder name: 'LFDNoise3' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {freq}
+)
+primaryFactoryMethod = (
+	^#freq:
+)
+freq: freq mul: mul = (
+	^(LfdNoise3 freq: freq) * mul
+)
+freq: freq mul: mul add: add = (
+	^(LfdNoise3 freq: freq) * mul + add
+)
+
+)

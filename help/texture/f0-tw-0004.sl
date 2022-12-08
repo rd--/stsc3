@@ -1,6 +1,6 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0004
 {
-	var z = 20.rand + 6;
+	var z = 6 + 20.randomFloat;
 	var d = 26 - z;
 	{
 		var y = LfTri(z, 0).abs / 9 / z;

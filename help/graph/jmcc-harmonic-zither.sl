@@ -5,7 +5,7 @@ var panSpacing = 1.5 / (pitch.size - 1);
 var stringFunc = { :i |
 	var trigger = Hpz1(MouseX(0, 1, 0, 0.2) > (0.25 + i * triggerSpacing)).abs;
 	var pluck = PinkNoise() * Decay(trigger, 0.05).kr;
-	var period = pitch.at(i).MidiCps.reciprocal;
+	var period = pitch[i].MidiCps.reciprocal;
 	var string = CombL(pluck, period, period, 8);
 	Pan2(string, i - 1 * panSpacing - 0.75, 1)
 };

@@ -5,7 +5,10 @@ SinOscBank([800, 1000, 1200], [0.3, 0.3, 0.3], [pi, pi, pi]) * 0.4
 SinOscBank([800, 1000, 1200], 1, 0) * 0.3 * 0.4
 
 ;; SinOscBank
-{ SinOscBank({ 600.rrand(1000) } ! 8, 0.1, 0) } ! 2 * 0.1
+{ SinOscBank({ 600.Rand(1000) } ! 8, 0.1, 0) } ! 2 * 0.1
+
+;; SinOscBank
+{ SinOscBank({ 600.randomFloat(1000) } ! 8, 0.1, 0) } ! 2 * 0.1
 
 ;; SinOscBank
 var f1 = [221, 614, 1145, 1804, 2577, 3456, 4419];

@@ -2,7 +2,7 @@
 var rules = [[0, 1], [0]];
 var rewrite = { :c :n |
 	var r = c;
-	n.timesRepeat { r := r.collect({ :e | rules.at(e + 1) }).concatenation };
+	n.timesRepeat { r := r.collect({ :e | rules[e + 1] }).concatenation };
 	r
 };
 var n = 7;

@@ -1,0 +1,20 @@
+Brz2 = ScUgen (
+----
+comment = (
+	^'Two zero fixed midcut.'
+)
+
+in: in = (
+	^UgenBuilder name: 'BRZ2' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+)
+primaryFactoryMethod = (
+	^#in:
+)
+in: in mul: mul = (
+	^(Brz2 in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(Brz2 in: in) * mul + add
+)
+
+)

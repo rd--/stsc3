@@ -84,6 +84,6 @@ Here's a final example illustrating multi channel expansion and Mix.  By changin
 			{ Rand(0.0003, 0.004) } ! n, (* array of different random lengths for each 'string' *)
 			4 (* decay time in seconds *)
 		),
-		{ Rand(-1, 1) } ! n, (* give each voice a different pan position *)
+		{ 1.Rand2 } ! n, (* give each voice a different pan position *)
 		1
 	).sum

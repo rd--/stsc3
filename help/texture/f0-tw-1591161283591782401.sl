@@ -7,4 +7,4 @@
 	var z = Rlpf(y, 8 ** LfTri(d * b, 0) * 999, 1);
 	var x = Splay2(AllpassC(AllpassC(z, 1, LfTri([6, 4, 6] / 4, [0, 1]) + 1 / 2, 1), 1, 1 / 2, 4) * d);
 	Release(x, 9, t, 24)
-}.playEvery { 9.random / 8 + 33.random + 8 }
+}.playEvery { 9.randomFloat / 8 + 33.randomFloat + 8 }

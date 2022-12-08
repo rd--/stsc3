@@ -7,14 +7,14 @@
 	var q = OrderedCollection.new;
 	var k = 24 + 12.randomInteger;
 	n.timesRepeat {
-		var freq = ([0, 2, 4, 5, 7, 9].atRandom + (7.randomInteger * 12) + k).midiCps;
+		var freq = ([0, 2, 4, 5, 7, 9].atRandom + (IRand(0, 7) * 12) + k).MidiCps;
 		[p, q].do { :each |
 			[1, 2, 4, 5, 6].do { :h |
-				each.add(freq * h + d.rand2)
+				each.add(freq * h + d.Rand2)
 			}
 		}
 	};
-	[p, q].collect({ :freq |
-		SinOscBank(freq.asArray, 0.1, { 2 * pi.rand } ! (m * n))
-	}) / n
+	[p, q].collect { :freq |
+		SinOscBank(freq.asArray, 0.1, { 2 * Rand(0, pi) } ! (m * n))
+	} / n
 }.xfade(6, 3)

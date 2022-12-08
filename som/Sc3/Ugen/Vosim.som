@@ -1,0 +1,20 @@
+Vosim = ScUgen (
+----
+comment = (
+	^'vosim pulse generator'
+)
+
+trig: trig freq: freq nCycles: nCycles decay: decay = (
+	^UgenBuilder name: 'VOSIM' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {trig. freq. nCycles. decay}
+)
+primaryFactoryMethod = (
+	^#trig:freq:nCycles:decay:
+)
+trig: trig freq: freq nCycles: nCycles decay: decay mul: mul = (
+	^(Vosim trig: trig freq: freq nCycles: nCycles decay: decay) * mul
+)
+trig: trig freq: freq nCycles: nCycles decay: decay mul: mul add: add = (
+	^(Vosim trig: trig freq: freq nCycles: nCycles decay: decay) * mul + add
+)
+
+)

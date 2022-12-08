@@ -15,4 +15,4 @@ var cf = Vibrato(chordCps, 6, 0.02, 0, 0, 0.04, 0.1, 0, 0);
 var mf = chordCps * LinLin(LfPulse(1 / 8, 0, 0.5), 0, 1, 1.01, 2.01);
 var sig = PmOsc(cf, mf, TxLine(3, 0.0001, 0.2, trig), 0);
 var cmp = (sig * AmpCompA(chordCps, 0, 0.32, 1) * amp).sum;
-XFade2([cmp, cmp], GVerb(Bpf(cmp, 90.midiCps, 1), 50, 8, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)
+XFade2([cmp, cmp], GVerb(Bpf(cmp, 90.MidiCps, 1), 50, 8, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)

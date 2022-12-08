@@ -1,0 +1,20 @@
+Ifft = ScUgen (
+----
+comment = (
+	^'Inverse Fast Fourier Transform'
+)
+
+buffer: buffer wintype: wintype winsize: winsize = (
+	^UgenBuilder name: 'IFFT' numChan: 1 rateSpec: (Rate ar) specialIndex: 0 inputArray: {buffer. wintype. winsize}
+)
+primaryFactoryMethod = (
+	^#buffer:wintype:winsize:
+)
+buffer: buffer wintype: wintype winsize: winsize mul: mul = (
+	^(Ifft buffer: buffer wintype: wintype winsize: winsize) * mul
+)
+buffer: buffer wintype: wintype winsize: winsize mul: mul add: add = (
+	^(Ifft buffer: buffer wintype: wintype winsize: winsize) * mul + add
+)
+
+)

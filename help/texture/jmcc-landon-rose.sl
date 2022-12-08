@@ -10,7 +10,7 @@ var noteList = [
 {
 	RingzBank(
 		Release({ PinkNoise() } ! 2 * 0.001, 2, 1, 2),
-		noteList.atRandom.midiCps,
+		noteList.atRandom.MidiCps,
 		1,
 		ringTimes
 	)

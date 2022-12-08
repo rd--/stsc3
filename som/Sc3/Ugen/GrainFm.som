@@ -1,0 +1,20 @@
+GrainFm = ScUgen (
+----
+comment = (
+	^'Granular synthesis with frequency modulated sine tones'
+)
+
+numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains = (
+	^UgenBuilder name: 'GrainFM' numChan: numChan rateSpec: (Rate ar) specialIndex: 0 inputArray: {trigger. dur. carfreq. modfreq. index. pan. envbufnum. maxGrains}
+)
+primaryFactoryMethod = (
+	^#numChan:trigger:dur:carfreq:modfreq:index:pan:envbufnum:maxGrains:
+)
+numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul = (
+	^(GrainFm numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul
+)
+numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains mul: mul add: add = (
+	^(GrainFm numChan: numChan trigger: trigger dur: dur carfreq: carfreq modfreq: modfreq index: index pan: pan envbufnum: envbufnum maxGrains: maxGrains) * mul + add
+)
+
+)

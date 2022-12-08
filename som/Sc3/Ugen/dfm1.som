@@ -1,0 +1,20 @@
+dfm1 = ScUgen (
+----
+comment = (
+	^'Digitally modelled analog filter'
+)
+
+in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel = (
+	^UgenBuilder name: 'DFM1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. freq. res. inputgain. type. noiselevel}
+)
+primaryFactoryMethod = (
+	^#in:freq:res:inputgain:type:noiselevel:
+)
+in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel mul: mul = (
+	^(dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul
+)
+in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel mul: mul add: add = (
+	^(dfm1 in: in freq: freq res: res inputgain: inputgain type: type noiselevel: noiselevel) * mul + add
+)
+
+)

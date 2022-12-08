@@ -3,7 +3,7 @@
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octave = [24, 36, 48, 60, 72, 84, 96] - 3;
 	var s1 = {
-		var f = (scale.atRandom + octave.atRandom).midiCps;
+		var f = (scale.atRandom + octave.atRandom).MidiCps;
 		var z = {
 			var ff = f * (SinOsc(ExpRand(4, 6), 0) * 0.008 + 1);
 			LfSaw([ff * Rand(0.99, 1.01), ff * Rand(0.99, 1.01)], 0) * 0.01

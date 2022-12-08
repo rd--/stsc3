@@ -1,0 +1,20 @@
+LagUd = ScUgen (
+----
+comment = (
+	^'Exponential lag'
+)
+
+in: in lagTimeU: lagTimeU lagTimeD: lagTimeD = (
+	^UgenBuilder name: 'LagUD' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in. lagTimeU. lagTimeD}
+)
+primaryFactoryMethod = (
+	^#in:lagTimeU:lagTimeD:
+)
+in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul = (
+	^(LagUd in: in lagTimeU: lagTimeU lagTimeD: lagTimeD) * mul
+)
+in: in lagTimeU: lagTimeU lagTimeD: lagTimeD mul: mul add: add = (
+	^(LagUd in: in lagTimeU: lagTimeU lagTimeD: lagTimeD) * mul + add
+)
+
+)

@@ -34,7 +34,7 @@ Simple detune & pitchmod via FreqShift:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = ([0 .. 2].atRandom * 12 + 48 + table.atRandom).midiCps;
+		var freq = ([0 .. 2].atRandom * 12 + 48 + table.atRandom).MidiCps;
 		var detune = 1.5;
 		var osc = SinOsc(freq, 0) * 0.1;
 		var left = osc + FreqShift(osc, freq * detune, 0);
@@ -46,7 +46,7 @@ Shift pulse wave in opposite directions:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).midiCps;
+		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).MidiCps;
 		var osc = Pulse(freq, SinOsc(2.3, 0).LinLin(-1, 1, 0.2, 0.8)) * 0.1;
 		var left = FreqShift(osc, XLn(-0.1, -200, 3), 0);
 		var right = FreqShift(osc, XLn(0.1, 200, 3), 0);
@@ -57,7 +57,7 @@ FreqShift, feedback, FreqShift:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).midiCps;
+		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).MidiCps;
 		var in = FreqShift(InFb(1, 0) * 3.2, XLn(0.01, freq * 1.5, 1), 0);
 		var snd1 = SinOsc(freq, 0) * Sine(1, 9) * 0.1;
 		var snd2 = FreqShift(snd1 + in, SinOsc(4.24, 0.5) * 3, 0) * 0.5;

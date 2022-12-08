@@ -11,8 +11,7 @@ Resonz(f.dup(n).sum, MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; sawtooth
 var n = 9;
-var f = {
-	arg i;
+var f = { :i |
 	var mult = (-1 ** i) * (0.5 / (i + 1));
 	SinOsc(440 * (i + 1), 0) * mult
 };
@@ -20,8 +19,7 @@ Pan2(0.to(n).collect(f).sum, 0, 1 / n)
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; square
 var n = 9;
-var f = {
-	arg i;
+var f = { :i |
 	var harmonicnumber = 2 * i + 1;
 	SinOsc(440 * harmonicnumber, 0) / harmonicnumber
 };
@@ -29,8 +27,7 @@ Pan2(0.to(n).collect(f).sum, 0, 1 / n)
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; triangle
 var n = 9;
-var f = {
-	arg i;
+var f = { :i |
 	var harmonicnumber = 2 * i + 1;
 	var mult = (-1 ** (harmonicnumber - 1 / 2)) * (1 / (harmonicnumber * harmonicnumber));
 	SinOsc(440 * harmonicnumber, 0) * mult
@@ -80,11 +77,10 @@ var amplitudes = [0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1];
 var numpartials = spectrum.size;
 var modfreqs1 = { Rand(1, 5) } ! numpartials;
 var modfreqs2 = { Rand(0.1, 3) } ! numpartials;
-var decaytimes = 1.to(numpartials).collect({ arg i; Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials)))) });
-var partial = {
-	arg i;
-	var freq = spectrum.at(i) + (SinOsc(modfreqs1.at(i), 0) * 0.005) * 500;
-	var amp = 0.1 * Line(1, 0, decaytimes.at(i), 0) * (SinOsc(modfreqs2.at(i), 0) * 0.1 + 0.9 * amplitudes.at(i));
+var decaytimes = 1.to(numpartials).collect { :i | Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials)))) };
+var partial = { :i |
+	var freq = spectrum[i] + (SinOsc(modfreqs1[i], 0) * 0.005) * 500;
+	var amp = 0.1 * Line(1, 0, decaytimes[i], 0) * (SinOsc(modfreqs2[i], 0) * 0.1 + 0.9 * amplitudes[i]);
 	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
 };
 1.to(numpartials).collect(partial).sum

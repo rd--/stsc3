@@ -1,6 +1,6 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0005
 {
-	var z = 60.rand + 1;
+	var z = Rand(1, 61);
 	var d = z / 3;
 	{
 		var y = LfTri(z, 0).abs / z;

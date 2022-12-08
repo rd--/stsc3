@@ -1,0 +1,20 @@
+Hpz1 = ScUgen (
+----
+comment = (
+	^'Two point difference filter'
+)
+
+in: in = (
+	^UgenBuilder name: 'HPZ1' numChan: 1 rateSpec: #(1) specialIndex: 0 inputArray: {in}
+)
+primaryFactoryMethod = (
+	^#in:
+)
+in: in mul: mul = (
+	^(Hpz1 in: in) * mul
+)
+in: in mul: mul add: add = (
+	^(Hpz1 in: in) * mul + add
+)
+
+)
