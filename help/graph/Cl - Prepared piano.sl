@@ -2,6 +2,7 @@
 var c = 4; (* number of combs *)
 var a = 4;	(* number of allpasses *)
 var v = 3; (* number of overlapped voices *)
+var d = MouseY(0, 1, 0, 0.2) > 0.5; (* is pitch space discrete or continuous *)
 OverlapTexture({ :tr |
 	var y = Dust(MouseX(0.1, 4, 1, 0.2)) * 0.4;
 	y := Resonz(y, 400, 0.4);
@@ -12,7 +13,7 @@ OverlapTexture({ :tr |
 		CombL(
 			y,
 			0.1,
-			TRand(1, 8, tr) / TRand(1, 9, tr) * 0.001, (* Partch tonality diamond about 1000Hz *)
+			TRand(1, 8, tr).RoundTo(d) / TRand(1, 9, tr).RoundTo(d) * 0.001, (* Partch tonality diamond about 1000Hz *)
 			5
 		)
 	} !+ c;

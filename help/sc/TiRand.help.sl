@@ -26,3 +26,6 @@ Random degree, octave and number of harmonics:
 		}.dup(7).Splay2
 	}, 4, 0.05, 2)
 
+*  * *
+
+See also: _IRand_, _TRand_

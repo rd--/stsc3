@@ -85,7 +85,7 @@ Arithmetic:
 Adding:
 
 - _add: newObject_ - Include the argument, newObject, as one of the receiver's elements. Answer newObject.
-- _addAIl: aCollection_ - Include all the elements of the argument, aCollection, as the receiver's elements. Answer aCollection.
+- _addAll: aCollection_ - Include all the elements of the argument, aCollection, as the receiver's elements. Answer aCollection.
 
 Removing:
 
