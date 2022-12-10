@@ -4,4 +4,4 @@ var f = { :i |
 	var d = c % DelayN(c, 0.2, 0.2);
 	SinOscFb(1 + c ** i + i * 99, d) * Lag3(d, c % 1 / 99)
 };
-(0 .. 3).collect(f).Splay2 / 3
+(0 .. 3).collect(f).Splay2.transpose.sum / 3

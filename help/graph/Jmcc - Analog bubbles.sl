@@ -1,6 +1,6 @@
 ;; analog bubbles ; jmcc
-var f = MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80)).MidiCps; ;; glissando function
-CombN(SinOsc(f, 0) * 0.04, 0.2, 0.2, 4) ;; echoing sine wave
+var f = MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80)).MidiCps; (* glissando function *)
+CombN(SinOsc(f, 0) * 0.04, 0.2, 0.2, 4) (* echoing sine wave *)
 
 ;; analog bubbles (jmcc) #1
 var o = LfSaw([8, 7.23], 0) * 3 + 80;
@@ -9,9 +9,9 @@ CombN(SinOsc(m.MidiCps, 0) * 0.04, 0.2, 0.2, 4)
 
 ;; analog bubbles (jmcc) #1 ; keywords
 var o = LfSaw(freq: [8, 7.23], iphase: 0) * 3 + 80;
-var m = LfSaw(freq: 0.4, iphase: 0) * 24 + o; ;; glissando function
+var m = LfSaw(freq: 0.4, iphase: 0) * 24 + o; (* glissando function *)
 var s = SinOsc(freq: m.MidiCps, phase: 0) * 0.04;
-CombN(in: s, maxdelaytime: 0.2, delaytime: 0.2, decaytime: 4) * 0.1 ;; echoing sine wave
+CombN(in: s, maxdelaytime: 0.2, delaytime: 0.2, decaytime: 4) * 0.1 (* echoing sine wave *)
 
 ;; analog bubbles (jmcc) ; applicative order
 CombN(MulAdd(SinOsc(MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80)).MidiCps, 0), 0.04, 0), 0.2, 0.2, 4)

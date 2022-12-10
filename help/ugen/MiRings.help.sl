@@ -26,8 +26,8 @@ MiRings(in: 0, trig: 0, pit: pit, struct: struct, bright: 0.5, damp: 0.7, pos: 0
 
 ;; MiRings ; inharmonic string
 var trig = Dust(3);
-var pit = Latch(WhiteNoise(), Dust(0.5)).range(30, 60);
-var struct = Latch(PinkNoise(), trig).range(0.1, 1);
+var pit = Latch(WhiteNoise(), Dust(0.5)).Range(30, 60);
+var struct = Latch(PinkNoise(), trig).Range(0.1, 1);
 var damp = 0.8;
 var model = 2;
 var poly = 4;
@@ -35,5 +35,5 @@ MiRings(in: 0, trig: trig, pit: pit, struct: struct, bright: 0.5, damp: damp, po
 
 ;; MiRings ; simple vibrato
 var trig = Dust(0.5);
-var pit = Latch(WhiteNoise(), trig).range(36, 48) + SinOsc(3, 0);
+var pit = Latch(WhiteNoise(), trig).Range(36, 48) + SinOsc(3, 0);
 MiRings(in: 0, trig: 0, pit: pit, struct: 0.2, bright: 0.5, damp: 0.7, pos: 0.25, model: 0, poly: 1, intern_exciter: 0, easteregg: 0, bypass: 0)
