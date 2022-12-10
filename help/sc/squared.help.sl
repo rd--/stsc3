@@ -1,4 +1,0 @@
-# squared
-
-Squared value
-

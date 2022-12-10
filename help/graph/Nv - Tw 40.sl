@@ -2,7 +2,7 @@
 var f = { :i |
 	var t = 0.6 ** i * 40 * Impulse(2 ** i / 32, 1 / 2);
 	var f = 4 ** LfNoise0(1 / 16) * 300;
-	Rlpf(t, f, 0.005).sin
+	Rlpf(t, f, 0.005).Sin
 };
 var x = (0 .. 8).collect(f).Splay2;
 2.timesRepeat { x := FreeVerb2(x.first, x.second, 0.1, 1, 1) };

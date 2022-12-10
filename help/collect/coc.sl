@@ -1,5 +1,5 @@
 ;; wandering sines ; https://github.com/cianoc/supercollider_fragments
-var o = SinOsc((LfNoise1(0.5) * 600 + (LfSaw(1.5, 0) * 50 + 500)).abs, 0) * 0.1;
+var o = SinOsc((LfNoise1(0.5) * 600 + (LfSaw(1.5, 0) * 50 + 500)).Abs, 0) * 0.1;
 var d = CombN(o, 3.0, [1.35, 0.7], 6);
 Pan2(o, 0, 1) + d
 
@@ -8,7 +8,7 @@ Pan2(o, 0, 1) + d
 
 ;; nice use of blip ; https://github.com/cianoc/supercollider_fragments
 var t = Impulse(6, 0);
-var o = Blip(TRand(48, 72, t).MidiCps, TRand(1, 12, t)) * TRand(-0.5, 0.4, t).max(0);
+var o = Blip(TRand(48, 72, t).MidiCps, TRand(1, 12, t)) * TRand(-0.5, 0.4, t).Max(0);
 var p = Pan2(o, TRand(-1.0, 1.0, t), Decay2(t, 0.1, 3) * 0.5);
 p + CombL(p, 2.0, 4/6, 6)
 
@@ -25,7 +25,7 @@ var f = { :c | Pan2(SinOsc(LfSaw((c * 0.2 + 1) / 3, 0) * 500 + 700, 0), LfNoise0
 ;; pretty ; nice, but inessential ; https://github.com/cianoc/supercollider_fragments ; Rand
 { :i |
 	var freq = MouseX(Rand(0.1, 5), Rand(3, 20), 0, 0.2);
-	var amp = LfNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).max(0);
+	var amp = LfNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).Max(0);
 	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + Rand(200, 5000), 0) * amp;
 	Pan2(osc, 1.Rand2, 0.03)
 }.map([1 .. 12]).sum
@@ -130,16 +130,16 @@ var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
 (1 .. 16).collect({ :partial |
 	var env = Asr(tr, 0, 5, [0]) / partial;
-	var amp = LfNoise1(Rand(5, 12)).max(0);
+	var amp = LfNoise1(Rand(5, 12)).Max(0);
 	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, env * amp)
 }).sum * 0.5
 
 ;; multiple sines ; https://github.com/cianoc/supercollider_fragments
 var speeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] / 20;
-var f0 = (MouseX(0, 36, 0, 0.2).roundTo(7) + 24).MidiCps;
+var f0 = (MouseX(0, 36, 0, 0.2).RoundTo(7) + 24).MidiCps;
 var harmonics = 16;
 (1 .. harmonics).collect({ :partial |
-	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, SinOsc(speeds.atRandom, 0).max(0))
+	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, SinOsc(speeds.atRandom, 0).Max(0))
 }).sum / harmonics * 0.5
 
 ;; more bells ; https://github.com/cianoc/supercollider_fragments
@@ -160,8 +160,8 @@ var totalPartials = 3;
 	var freq = { Rand(1, 24) * base * Rand(1, 1.1) } ! totalPartials;
 	var amp = { Rand(0.1, 0.5) } ! 10;
 	var res = RingzBank(GrayNoise() * Rand(0.03, 0.1), freq, amp, [1]);
-	Pan2(res, LfNoise1(1), (SinOsc(10 / Rand(1, 5), 0) * 0.005).max(0));
-} !+ 8 * LfNoise1(1 / 10).abs
+	Pan2(res, LfNoise1(1), (SinOsc(10 / Rand(1, 5), 0) * 0.005).Max(0));
+} !+ 8 * LfNoise1(1 / 10).Abs
 
 ;; phase modulation, all three ; https://github.com/cianoc/supercollider_fragments
 {

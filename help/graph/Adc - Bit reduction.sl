@@ -5,5 +5,5 @@ var src = Blip(f, nh);
 var sr = MouseX(1000, SampleRate() * 0.1, 1, 0.2);
 var bitSize = MouseY(1, 24, 1, 0.2);
 var downSample = Latch(src, Impulse(sr, 0));
-var bitRedux = downSample.roundTo(0.5 ** bitSize);
+var bitRedux = downSample.RoundTo(0.5 ** bitSize);
 [downSample, bitRedux]

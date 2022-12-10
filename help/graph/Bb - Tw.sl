@@ -1,16 +1,16 @@
 ;; http://earslap.com/article/sctweeting.html
 var a = LocalIn(1, 0);
-var x = SinOsc((Decay(Impulse([4, 4.005], 0), 1000 * a.abs) * 50), a).Distort;
+var x = SinOsc((Decay(Impulse([4, 4.005], 0), 1000 * a.Abs) * 50), a).Distort;
 x <! LocalOut(x.sum)
 
 ;; http://earslap.com/article/sctweeting.html ; wait to start
-var f = LocalIn(2, 0).tanh;
-var k = Latch(f.first.abs, Impulse(0.5, 0));
+var f = LocalIn(2, 0).Tanh;
+var k = Latch(f.first.Abs, Impulse(0.5, 0));
 f <! LocalOut(f + AllpassN(Pulse([2, 3], k * 0.01 + 0.000001) * 0.9, 1, k * 0.3, 100 * k))
 
 ;; http://earslap.com/article/sctweeting.html
-var f = LocalIn(2, 0).tanh;
-var k = Latch(f.first.abs, Impulse(1 / 4, 0));
+var f = LocalIn(2, 0).Tanh;
+var k = Latch(f.first.Abs, Impulse(1 / 4, 0));
 f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 
 ;; http://earslap.com/article/sctweeting.html
@@ -20,4 +20,4 @@ f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 } !+ 80
 
 ;; http://earslap.com/article/sctweeting.html
-AllpassC(SinOsc(55, 0).tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).roundTo([0.002, 0.0004]), 2)
+AllpassC(SinOsc(55, 0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.0004]), 2)

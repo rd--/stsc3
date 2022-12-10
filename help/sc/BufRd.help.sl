@@ -21,7 +21,7 @@ Zig zag around sound:
 Ordinary playback, phase courtesy _LfSaw_:
 
 	var sf = SfAcquire("floating_1", 1, [1]).first;
-	var sw = LfSaw(SfDur(sf).reciprocal, 0);
+	var sw = LfSaw(SfDur(sf).Recip, 0);
 	var ph = LinLin(sw, -1, 1, 0, SfFrames(sf));
 	BufRd(1, sf, ph, 1, 2)
 

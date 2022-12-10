@@ -7,5 +7,5 @@ OverlapTexture({ :tr |
 		var y = SinOscFb(f, LfTri(1 + i / 50, 0) + 1 / 2);
 		Pan2(y, LfTri(i / 70, 0), TRand(0, 1, tr) > 0.5 / 2)
 	} !+ 9;
-	CombN(z, 0.2, 0.2, 1).tanh * 0.1
+	CombN(z, 0.2, 0.2, 1).Tanh * 0.1
 }, 3, 9, 2)

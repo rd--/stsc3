@@ -1,3 +1,0 @@
-# tanh
-
-Hyperbolic tangent

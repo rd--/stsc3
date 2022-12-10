@@ -11,7 +11,7 @@ var x = { :i |
 	var h = SinOsc(0.05, i + 3) * 0.5 + 1;
 	var j = SinOsc(800 + i, 0) * h;
 	var k = LinExp(i, 0, n - 1, 70, 1500);
-	var z = SinOsc(k, a) * c.max(0) * e * g * j;
+	var z = SinOsc(k, a) * c.Max(0) * e * g * j;
 	var l = LinLin(i, 0, n - 1, -0.925, 0.925);
 	Pan2(z, l, 1 / n)
 };

@@ -1,4 +1,0 @@
-# cubed
-
-Cubed value
-

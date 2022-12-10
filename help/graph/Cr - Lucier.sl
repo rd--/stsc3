@@ -23,7 +23,7 @@ OverlapTexture({ :tr |
 		var a = Amplitude(drv, 0.01, 0.01) * 11;
 		var p = Pulse(60 + a, 0.5) * 0.1;
 		var f = Rlpf(s + p, 320, 0.05);
-		var e = 1 - Amplitude(drv, 0.01, 0.01).min(1);
+		var e = 1 - Amplitude(drv, 0.01, 0.01).Min(1);
 		Normalizer(f, 0.7, 0.01) * e
 	};
 	var lOut = ReplaceOut(bus, source() * 0.2 + stringR);

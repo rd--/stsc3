@@ -32,7 +32,7 @@ Pan2(BrownNoise(), MouseX(-1, 1, 0, 0.2), 0.1)
 		1 / 80,
 		1 / 80,
 		0.3
-	) * SinOsc(80.04, 0.5 * pi).abs
+	) * SinOsc(80.04, 0.5 * pi).Abs
 ]
 
 ;; waveform ; jmcc
@@ -43,7 +43,7 @@ Pan2(BrownNoise(), MouseX(-1, 1, 0, 0.2), 0.1)
 		1 / 80,
 		1 / 80,
 		0.3
-	) * SinOsc(80, 1).abs
+	) * SinOsc(80, 1).Abs
 ]
 
 ;; filtered decorrelated noise ; jmcc

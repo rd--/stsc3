@@ -46,7 +46,7 @@ SinOsc(SinOsc(modfreq,0) * modfreq * modindex + 440, 0) * 0.25
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.4 ; fm
 var carfreq = 440;
-var harmonicity = MouseX(0, 10, 0, 0.2).roundTo(1);
+var harmonicity = MouseX(0, 10, 0, 0.2).RoundTo(1);
 var modindex = MouseY(0.0, 10.0, 0, 0.2);
 var modfreq = carfreq * harmonicity;
 SinOsc(carfreq + (SinOsc(modfreq, 0) * modfreq * modindex), 0.0) * 0.1
@@ -127,4 +127,4 @@ Saw(Lag(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 200, MouseX(0.0, 0.2, 0, 0.2))
 Ringz(Saw(LinExp(Lag(LfNoise0(5), 0.1), -1, 1, 100, 2000)) * 0.2, 1000, 0.01) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
-Ringz(Saw(LinExp(Lag(LfNoise0(5), MouseX(0.01, 0.3, 0, 0.2)), -1, 1, 100, 2000).roundTo(20)) * 0.2, 1000, 0.01) * 0.1
+Ringz(Saw(LinExp(Lag(LfNoise0(5), MouseX(0.01, 0.3, 0, 0.2)), -1, 1, 100, 2000).RoundTo(20)) * 0.2, 1000, 0.01) * 0.1

@@ -1,4 +1,0 @@
-# floor
-
-Next lower integer
-

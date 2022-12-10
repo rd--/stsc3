@@ -1,4 +1,0 @@
-# arcTan
-
-Arc tangent
-

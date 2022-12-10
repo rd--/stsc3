@@ -7,4 +7,4 @@ var s = Choose(inf, [
 var f = DmdOn(t, 0, s * 100);
 var x = MouseX(-1, 1, 0, 0.1);
 var o = SinOsc([f, f + 0.7], 0);
-o.cubed.cubed.ScaleNeg(x) * 0.1
+o.Cubed.Cubed.ScaleNeg(x) * 0.1

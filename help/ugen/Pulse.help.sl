@@ -3,7 +3,7 @@ Pulse(MouseX(100, 200, 1, 0.2), 0.5) * 0.1
 
 ;; Pulse ; https://nathan.ho.name/posts/integer-ring-modulation/
 var freq = 100;
-Pulse(freq, 0.5) * Pulse(freq * LinLin(LfTri(0.3, pi), -1, 1, 1, 20).rounded, 0.5) * 0.1
+Pulse(freq, 0.5) * Pulse(freq * LinLin(LfTri(0.3, pi), -1, 1, 1, 20).RoundTo(1), 0.5) * 0.1
 
 ;; Pulse ; interference
 Pulse([100, 100.1], 0.5).sum * 0.1

@@ -2,7 +2,7 @@
 var x = MouseX(0, 1, 0, 0.2);
 var str = { :ix |
 	var n = 15;
-	var tr = Hpz1(x > (0.25 + (ix - 1 * 0.07))).abs;
+	var tr = Hpz1(x > (0.25 + (ix - 1 * 0.07))).Abs;
 	var env = Decay(Impulse(14, 0) * Lag(Trig(tr, 1), 0.2) * 0.01, 0.04);
 	var pluck = PinkNoise() * env;
 	var freq = ([-2, 0, 3, 5, 7, 10, 12, 15][ix] + 60).MidiCps;

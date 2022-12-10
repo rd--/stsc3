@@ -5,7 +5,7 @@ OverlapTexture({ :tr |
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
 		var f = TxLine(m, m + TRand(0.05, 0.5, tr), d, tr).MidiCps;
-		var e = Sine(tr, du.max * ds) * TRand(0.005, 0.01, tr);
+		var e = Sine(tr, du.Max * ds) * TRand(0.005, 0.01, tr);
 		var p = TxLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr);
 		var o = SinOsc(f, 0);
 		Pan2(o * e, p, 1).sum

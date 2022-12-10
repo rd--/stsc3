@@ -37,4 +37,4 @@ var sf = SfAcquire("floating_1", 1, 1);
 ;; SfPlay ; 2 min (adc) ; https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00736.html
 var sf = SfAcquire("floating_1", 1, 1);
 var l = XLn(1, 0.007, 120);
-SfPlay(sf, Decay(Dust(1 / (l * l)) * l.sqrt, 1), 1, l, 1)
+SfPlay(sf, Decay(Dust(1 / (l * l)) * l.Sqrt, 1), 1, l, 1)

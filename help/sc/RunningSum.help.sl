@@ -20,12 +20,12 @@ Rms power:
 
 	var input= LfSaw(440, 0);
 	var numsamp = 30;
-	(RunningSum(input.squared, numsamp) / numsamp).sqrt
+	(RunningSum(input.Squared, numsamp) / numsamp).Sqrt
 
 Play around:
 
 	var input = AudioIn([1]);
 	var numsamp = 500;
 	var power= MouseX(0.1, 4, 0, 0.2);
-	(RunningSum(input ** power, numsamp) / numsamp) ** power.reciprocal
+	(RunningSum(input ** power, numsamp) / numsamp) ** power.Recip
 

@@ -80,7 +80,7 @@ Stochastic _rate_, fixed clock rate:
 
 	var clk = Impulse(440, 0);
 	var buf = SfAcquire("floating_1", 1, [1]).first;
-	var rate = 1.2 ** (WhiteNoise() * 3).roundTo(1);
+	var rate = 1.2 ** (WhiteNoise() * 3).RoundTo(1);
 	var pos = MouseX(0, BufDur(buf), 0, 0.2);
 	var dur = 1.2 / MouseY(2, 120, 1, 0.2);
 	var pan = WhiteNoise() * 0.6;

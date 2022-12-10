@@ -7,10 +7,10 @@ A standard first order filter section. Filter coefficients are given directly ra
 Same as OnePole:
 
 	var x = MouseX(-1, 1, 0, 0.2);
-	Fos(LfSaw(200, 0) * 0.1, 1 - x.abs, 0, x)
+	Fos(LfSaw(200, 0) * 0.1, 1 - x.Abs, 0, x)
 
 Same as OneZero:
 
 	var x = MouseX(-1, 1, 0, 0.2);
-	Fos(LfSaw(200, 0) * 0.1, 1 - x.abs, x, 0)
+	Fos(LfSaw(200, 0) * 0.1, 1 - x.Abs, x, 0)
 

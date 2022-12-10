@@ -1,7 +1,7 @@
 ;; https://twitter.com/redFrik/status/1138498427241861122 (f0)
 var f = 9.sqrt;
 var b = [f, 9.999];
-var d = SinOscFb(b / 99, 0).max(0);
+var d = SinOscFb(b / 99, 0).Max(0);
 var t1 = Select2(SinOscFb(SinOscFb(9 / 999, 0), 0) > SinOscFb(9 / 99, 0), f, 9 / b);
 var t2 = Select2(SinOscFb(9 / 99, 0) < SinOscFb(99 / 9999, 0), b / 9, f);
 var f1 = Lag(9.9 * b * t1 * t2, 0.1);

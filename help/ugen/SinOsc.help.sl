@@ -26,7 +26,7 @@ OverlapTexture({ :tr |
 	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).MidiCps } ! 5;
 	var in = LfTri(freq, 0);
 	var phase = Sweep(in, freq * syncRatio * syncEnv);
-	var synced = SinOsc(0, (phase % 1) * 2 * pi).squared;
+	var synced = SinOsc(0, (phase % 1) * 2 * pi).Squared;
 	var sig = synced * in * gainEnv;
 	sig.Splay2 * 0.2
 }, 2, 0, 2)
@@ -35,7 +35,7 @@ OverlapTexture({ :tr |
 var numPartials = 64;
 var spectrum = [1 .. numPartials];
 var inharmonic = MouseX(0.002, 0.008, 0, 0.2);
-var tension = (1 + (spectrum * spectrum * inharmonic)).sqrt;
+var tension = (1 + (spectrum * spectrum * inharmonic)).Sqrt;
 var tilt = MouseY(-5, -1, 0, 0.2);
 var ampArray = (spectrum.log2 * tilt).DbAmp;
 var freq0 = 110;
@@ -57,7 +57,7 @@ var freqRes = MouseY(100, 1200, 0, 0.2);
 var pdbase = Impulse(freqBase, 0);
 var pd = Phasor(pdbase, 2 * pi* freqBase / SampleRate(), 0, 2 * pi, 0);
 var pdres = Phasor(pdbase, 2 * pi * freqRes / SampleRate(), 0, 2 * pi, 0);
-var pdi = LinLin((2 * pi - pd).max(0), 0, 2 * pi, 0, 1);
+var pdi = LinLin((2 * pi - pd).Max(0), 0, 2 * pi, 0, 1);
 Lag(SinOsc(0, pdres) * pdi, 1 / freqBase)
 
 ;; SinOsc ; https://scsynth.org/t/6264/9 (es)
@@ -65,7 +65,7 @@ var freq = [440, 880];
 var k = 12000 * (SampleRate()  / 44100) / (freq * freq.log);
 var sinSig = SinOsc(freq, 0);
 var cosSig = SinOsc(freq, pi / 2);
-var sqSig = (sinSig * k).tanh;
+var sqSig = (sinSig * k).Tanh;
 var sawSig = sqSig * (cosSig + 1);
 sawSig * 0.1
 

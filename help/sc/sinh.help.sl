@@ -1,4 +1,0 @@
-# sinh
-
-Hyperbolic sine
-

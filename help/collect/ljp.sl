@@ -72,23 +72,23 @@ p + CombC(p, 0.4, LfNoise0(2) * 0.4 + 0.4, -10000)
 
 ;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13a
 var p = [1, 3, 5];
-Pan2(SinOsc(800 * (SinOsc(p * 0.1, 0) / p).roundTo(1 / 6).sum, 0), 0, 0.2)
+Pan2(SinOsc(800 * (SinOsc(p * 0.1, 0) / p).RoundTo(1 / 6).sum, 0), 0, 0.2)
 
 ;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13b
 var p = [1, 2] + 0.01;
-Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).roundTo(1 / 6), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 6), 0.002).sum, 0), 0, 0.2)
 
 ;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13c
 var p = [0.5, 1, 2];
-Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
 ;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13d
 var p = [1, 2] + 0.04;
-Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
 ;; trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13e
 var p = [1, 4] + 0.01;
-Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).roundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
 
 ;; short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14a
 Pan2(SinOsc(Lpf(Stepper(Impulse(80, 0), 0, 1, 512, 84, 0), 1000) * 20, 0), 0, 0.2)

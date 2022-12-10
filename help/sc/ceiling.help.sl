@@ -1,4 +1,0 @@
-# ceil
-
-Next higher integer
-

@@ -8,7 +8,7 @@ Voicer(16, { :e |
 	var twoPi = 2 * pi;
 	var pd = Phasor(pdbase, twoPi * freqBase / SampleRate(), 0, twoPi, 0);
 	var pdres = Phasor(pdbase, twoPi * freqRes / SampleRate(), 0, twoPi, 0);
-	var pdi = LinLin((twoPi - pd).max(0), 0, twoPi, 0, 1);
+	var pdi = LinLin((twoPi - pd).Max(0), 0, twoPi, 0, 1);
 	var snd = Lag(SinOsc(0, pdres) * pdi, 1 / freqBase);
 	var env = Decay2(Trig(e.w, SampleDur()), 0.005, 10);
 	Pan2(snd, e.o * 2 - 1, env * amp)

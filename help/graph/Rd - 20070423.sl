@@ -1,5 +1,5 @@
 ;; 20070423 ; rd ; requires=kr
-var eggcrate = { :x :y | (x * pi).cos * (y * pi).sin };
+var eggcrate = { :x :y | (x * pi).Cos * (y * pi).Sin };
 var p = [64, 72, 96, 128, 256, 6400, 7200, 8400, 9600];
 var x = BrownNoise();
 var y = BrownNoise();

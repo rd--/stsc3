@@ -2,7 +2,7 @@
 var b = [1, 2, 3] / 3;
 var c = 2 * pi * b;
 var t = SinOsc(10, pi * b);
-var x = SinOsc(b, 0) > 0 * SinOsc(b * 50, 0) + 1 / 2 * (300 ** SinOsc(1 / 32, c) + 99) + (SinOsc(1 / 256, c).rounded * 50 + 99);
+var x = SinOsc(b, 0) > 0 * SinOsc(b * 50, 0) + 1 / 2 * (300 ** SinOsc(1 / 32, c) + 99) + (SinOsc(1 / 256, c).RoundTo(1) * 50 + 99);
 var f = Latch(x, t % SinOsc(99 ** SinOsc(1 / 64, 0), 0));
 var y = SinOsc(SinOsc(1 / 16, 0) * 3 + 12, 0) + 1 / 2 * (SinOsc(1 / 8, c) * 50 + 51);
 var h = Latch(y, t * SinOsc(1 / 4, 0));

@@ -1,7 +1,7 @@
 ;; jh ; https://scsynth.org/t/auditory-illusion-with-exponentially-spaced-frequencies/4157 ; rd (edit)
 var t = Impulse(0.1, 0);
 var sinosc = { :freq |
-	(Phasor(t, freq * SampleDur(), 0, 1, 0) * 2 * pi).sin
+	(Phasor(t, freq * SampleDur(), 0, 1, 0) * 2 * pi).Sin
 };
 var k = 120; (* 160 ; udp *)
 var b = TRand(2, 2.25, t);

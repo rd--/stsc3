@@ -17,7 +17,7 @@ var spread = 1;
 var metronome = Ringz(trig, 6000, 0.01) * 0.03;
 var pulses = Rcd(trig, rotate, reset, 3, spread, 0, 0, 0, 0);
 var out = Ringz(pulses, freqs, decays) * 0.05;
-Splay2(out * 0.7).tanh + metronome
+Splay2(out * 0.7).Tanh + metronome
 
 ;; Rcd  ; using 'reset'
 var clock = LfPulse(8, 0, 0.001);

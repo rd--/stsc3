@@ -6,7 +6,7 @@ var mod = LfNoise1(0.5) * 0.5 + 0.5;
 MiBraids(pitch: 40, timbre: mod, color: 0, model: 1, trig: 0, resamp: 0, decim: 0, bits: 0, ws: 0) ! 2 * 0.05
 
 ;; MiBraids ; vosim
-var pitch = LinLin(LfNoise0(4), -1, 1, 33, 66).rounded;
+var pitch = LinLin(LfNoise0(4), -1, 1, 33, 66).RoundTo(1);
 var timbre = LfNoise1(0.3) * 0.5 + 0.5;
 var color = LfNoise1(0.3) * 0.5 + 0.5;
 MiBraids(pitch: pitch, timbre: timbre, color: color, model: 21, trig: 0, resamp: 0, decim: 0, bits: 0, ws: 0) ! 2 * 0.1
@@ -31,14 +31,14 @@ MiBraids(pitch: 38, timbre: timbre, color: color, model: 40, trig: 0, resamp: 1,
 
 ;; MiBraids ; trigger ; 28=plucked
 var trig = Dust(0.6);
-var pitch = TRand(45, 72, trig).rounded;
+var pitch = TRand(45, 72, trig).RoundTo(1);
 var timbre = 0.5;
 var color = LfNoise1(0.3) * 0.5 + 0.5;
 MiBraids(pitch: pitch, timbre: timbre, color: color, model: 28, trig: trig, resamp: 0, decim: 0, bits: 0, ws: 0) ! 2 * 0.1
 
 ;; MiBraids ; 34=kick
 var trig =  Impulse(4, 0);
-var pitch = LinLin(Latch(PinkNoise(), trig), -1, 1, 30, 50).rounded;
+var pitch = LinLin(Latch(PinkNoise(), trig), -1, 1, 30, 50).RoundTo(1);
 var timbre = LfNoise1(0.4) * 0.5 + 0.5;
 var color = LfNoise1(0.3) * 0.5 + 0.5;
 MiBraids(pitch: pitch, timbre: timbre, color: color, model: 34, trig: trig, resamp: 0, decim: 0, bits: 0, ws: 0) ! 2 * 0.2

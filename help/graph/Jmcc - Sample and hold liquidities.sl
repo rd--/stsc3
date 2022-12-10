@@ -1,6 +1,6 @@
 ;; sample and hold liquidities (jmcc) #4
 var r = MouseX(1, 200, 1, 0.1);
-var t = r.reciprocal;
+var t = r.Recip;
 var c = Impulse(r, 0) * 0.4;
 var cf = MouseY(100, 8000, 1, 0.1);
 var f = Latch(WhiteNoise() * cf * 0.5 + cf, c);
@@ -10,7 +10,7 @@ CombN(i, 0.3, 0.3, 2)
 
 ;; sample and hold liquidities (jmcc) #4 ; keywords
 var r = MouseX(minval: 1, maxval: 200, warp: 1, lag: 0.1);
-var t = r.reciprocal;
+var t = r.Recip;
 var c = Impulse(freq: r, phase: 0) * 0.4;
 var cf = MouseY(minval: 100, maxval: 8000, warp: 1, lag: 0.1);
 var f = Latch(in: WhiteNoise() * cf * 0.5 + cf, trig: c);

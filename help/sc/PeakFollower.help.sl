@@ -19,11 +19,11 @@ A little decay:
 
 Mouse controls decay:
 
-	var decay = MouseX(0.99, 1.00001, 0, 0.1).min(1);
+	var decay = MouseX(0.99, 1.00001, 0, 0.1).Min(1);
 	SinOsc(PeakFollower(Dust(20) * Ln(0, 1, 4), decay) * 1500 + 200, 0) * 0.1
 
 Follow a sine lfo, decay controlled by mouse:
 
-	var decay = MouseX(0, 1.1, 0, 0.1).min(1);
+	var decay = MouseX(0, 1.1, 0, 0.1).Min(1);
 	SinOsc(PeakFollower(SinOsc(0.2, 0), decay) * 200 + 500, 0) * 0.1
 

@@ -1,3 +1,0 @@
-# negated
-
-Negation (inversion)
