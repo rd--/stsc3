@@ -10,11 +10,9 @@ Mixing sine oscillators in parallel:
 
 	var n = 16; (* number of structures to make *)
 	var f = { FSinOsc(Rand(200, 1200), 0) }; (* function to create an oscillator at a random frequency *)
-	f.dup(n).sum / (8 * n) (* array of n places, summed, scale amplitude *)
+	f !+ n / n * 0.1 (* array of n places, summed, scale amplitude *)
 
-Filling an Array and mixing it is a common idiom:
-
-	{ ... }.dup(n).sum
+Filling an Array and mixing it is a common idiom, `{ ... }.dup(n).sum`, which is implemented as the _!+_ operator.
 
 One common structure used in reverbs is to mix several comb delays in parallel.  This example shows how you can use parallel structures to process a single input.
 
@@ -33,7 +31,7 @@ One common structure used in reverbs is to mix several comb delays in parallel. 
 			delaytime: Rand(0.01, 0.09), (* random delay time from 0.01 to 0.09 seconds *)
 			decaytime: 3
 		)
-	}.dup(n).sum
+	} !+ n
 
 # 5.2 How to build series structures.
 

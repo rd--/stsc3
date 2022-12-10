@@ -7,7 +7,7 @@ var f = {
 	var osc = Gendy1(Rand(0, 6), Rand(0, 6), Rand(0, 1), Rand(0, 1), freq , freq,  Rand(0, 1),  Rand(0, 1),  numcps,  knum.kr);
 	Pan2(osc,  Rand(-1, 1), 0.5 / n.sqrt)
 };
-Resonz(f.dup(n).sum, MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
+Resonz(f !+ n, MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 2.1 ; sawtooth
 var n = 9;

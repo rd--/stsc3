@@ -12,5 +12,5 @@ Generates a single random integer value in uniform distribution from lo to hi
 		var mnn = (octave * 12) + pitchClass;
 		var numHarm = IRand(1, 4);
 		Blip(mnn.MidiCps, numHarm) * 0.1
-	}.dup(7).Splay2
+	} !^ 7
 

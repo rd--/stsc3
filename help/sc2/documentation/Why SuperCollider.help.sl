@@ -15,11 +15,11 @@ _Dynamism_: Most graphical synthesis environments use statically allocated unit 
  _Brevity_: In SuperCollider, symmetries in a patch can be exploited by either multichannel expansion or programmatic patch building. For example, the following short program generates a patch of 49 unit generators. In a graphical program this might require a significant amount of time and space to wire up. Another advantage is that the size of the patch below can be easily expanded or contracted just by changing a few constants.
 
 	(* 10 voices of a random sine percussion sound *)
-	var s = { Resonz(Dust(0.2) * 50, Rand(200, 3200), 0.003) }.dup(10).sum;
+	var s = { Resonz(Dust(0.2) * 50, Rand(200, 3200), 0.003) } !+ 10;
 	(* reverb predelay time *)
 	var z = DelayC(s, 0.048, 0.048);
 	(* 7 length modulated comb delays in parallel *)
-	var y = { CombL(z, 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) }.dup(7).sum;
+	var y = { CombL(z, 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) } !+ 7;
 	(* two parallel chains of 4 allpass delays *)
 	4.timesRepeat { y := AllpassC(y, 0.050, [Rand(0, 0.050), Rand(0, 0.050)], 1) };
 	(* add original sound to reverb *)

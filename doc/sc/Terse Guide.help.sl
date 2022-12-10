@@ -1,3 +1,10 @@
+'sc/collection'
+'3'.dup(3) = ['3', '3', '3']
+'3' ! 3 = ['3', '3', '3']
+var m = { randomFloat() }.dup(9).mean; m > 0 & { m < 1 }
+({ randomFloat() } ! 9).size = 9
+({ randomFloat() } ! 3).allSatisfy(isNumber) = true
+
 'sc/Clock'
 Clock().isClock
 Clock().priorityQueue.isEmpty

@@ -32,4 +32,4 @@ However, most examples in the manual have parentheses around the code which allo
 			1.Rand2, (* random pan position *)
 			1 (* level *)
 		)
-	}.dup(n).sum
+	} !+ n

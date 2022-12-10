@@ -6,9 +6,9 @@ OverlapTexture({ :tr |
 	var lfo = LfBrownNoise1(4, dev, 0) * 4 + 5;
 	var index = IndexInBetween(buffer,  lfo).rounded;
 	var intv = Index(buffer,  index);
-	Splay2({
+	{
 		var freq = Lag(intv, 0.1) * root * (LfNoise2(12) * 0.02 + 1);
 		var env = (LfNoise2(4) * 0.4 + 0.6) ** 2;
 		MoogLadder(Saw(freq) * env, LfNoise2(1) * 1700 + 2200, 0.3)
-	} ! 8) * 0.5
+	} !^ 8 * 0.5
 }, 4, 4, 4)
