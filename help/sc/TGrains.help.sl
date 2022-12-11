@@ -18,7 +18,7 @@ Sequences for _rate_ and _pan_ inputs, mouse control of _trigger_ rate and _pos_
 
 	var trate = MouseY(2, 200, 1, 0.2);
 	var clk = Impulse(trate, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = Seq(inf, [10, 1, 1, 0.5, 0.5, 0.2, 0.1]);
 	var pos = MouseX(0, BufDur(buf), 0, 0.2);
 	var dur = 4 / trate;
@@ -29,7 +29,7 @@ Uniform unary rate, perturb _pos_ at clock rate
 
 	var trate = MouseY(8, 120, 1, 0.2);
 	var clk = Impulse(trate, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var pos = MouseX(0,BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
 	var dur = 12 / trate;
 	var pan = WhiteNoise() * 0.6;
@@ -39,7 +39,7 @@ Stochastic clock (_Dust_):
 
 	var trate = MouseY(8, 120, 1, 0.2);
 	var clk = Dust(trate);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var pos = MouseX(0, BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
 	var dur = 4 / trate;
 	var pan = WhiteNoise() * 0.6;
@@ -49,7 +49,7 @@ Mouse control of _pos_ and _dur_:
 
 	var trate = 12;
 	var clk = Impulse(trate, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var pos = MouseX(0, BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
 	var dur = MouseY(0.2, 24, 1, 0.2) / trate;
 	var pan = WhiteNoise() * 0.6;
@@ -59,7 +59,7 @@ Stochastic _pos_, no external control:
 
 	var trate = 100;
 	var clk = Impulse(trate, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var pos = Integrator(BrownNoise().kr * 0.001, 1);
 	var dur = 8 / trate;
 	var pan = WhiteNoise().kr * 0.6;
@@ -69,7 +69,7 @@ Stochastic _rate_:
 
 	var trate = MouseY(1, 400, 1, 0.2);
 	var clk = Impulse(trate, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = 2 ** (WhiteNoise().kr * 2);
 	var pos = MouseX(0, BufDur(buf), 0, 0.2);
 	var dur = 8 / trate;
@@ -79,7 +79,7 @@ Stochastic _rate_:
 Stochastic _rate_, fixed clock rate:
 
 	var clk = Impulse(440, 0);
-	var buf = SfAcquire("floating_1", 1, [1]).first;
+	var buf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = 1.2 ** (WhiteNoise() * 3).RoundTo(1);
 	var pos = MouseX(0, BufDur(buf), 0, 0.2);
 	var dur = 1.2 / MouseY(2, 120, 1, 0.2);

@@ -12,13 +12,13 @@ Using sweep to modulate sine frequency:
 Using sweep to index into a buffer:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	BufRd(1, sf, Sweep(trig, BufSampleRate(sf)), 1, 2)
 
 Backwards, variable offset:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = BufSampleRate(sf);
 	var ph = Sweep(trig, rate.Neg) + (BufFrames(sf) * LfNoise0(0.2));
 	BufRd(1, sf, ph, 1, 2)
@@ -26,7 +26,7 @@ Backwards, variable offset:
 Raising rate:
 
 	var trig = Impulse(MouseX(0.5, 10, 1, 0.2), 0);
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var rate = Sweep(trig, 2) + 0.5;
 	BufRd(1, sf, Sweep(trig, BufSampleRate(sf) * rate), 1, 2)
 

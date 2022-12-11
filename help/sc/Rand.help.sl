@@ -1,6 +1,7 @@
 # Rand - random number generator
 
-_Rand(lo, hi)_
+- _Rand(lo, hi)_
+- _Rand(hi)_ ≡ _Rand(0, hi)_
 
 Generates a single random float value in uniform distribution from lo to hi. It generates this when the SynthDef first starts playing, and remains fixed for the duration of the synth's existence.
 
@@ -10,3 +11,6 @@ Generates a single random float value in uniform distribution from lo to hi. It 
 		FSinOsc(freq, 0) * Ln(0.2, 0, 1)
 	} !^  5
 
+* * *
+
+See also: _Rand2_

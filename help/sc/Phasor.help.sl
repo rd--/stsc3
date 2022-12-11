@@ -36,12 +36,12 @@ Two phasors control two sine frequencies.  _MouseX_ controls trigger frequency a
 
 Use phasor to index into a sound file.  Start and end here are defined as 0 and the number of frames in the buffer.  This means that the Phasor will output values from 0 to numFrames - 1 before looping, which is perfect for driving BufRd.  (See note above)
 
-	var b = SfAcquire("crotale-d6", 1, [1]);
+	var b = SfAcquire('crotale-d6', 1, [1]);
 	SfRead(b, Phasor(1, SfRateScale(b), 0, SfFrames(b), 0), 1, 2)
 
 Two phasors control two sound file positions.  _MouseX_ controls trigger frequency and _MouseY_ controls resetPos of the second:
 
-	var b = SfAcquire("crotale-d6", 1, [1]);
+	var b = SfAcquire('crotale-d6', 1, [1]);
 	var rate = MouseX(0.1, 100, 1, 0.2);
 	var trig = Impulse(rate, 0);
 	var framesInBuffer = SfFrames(b);

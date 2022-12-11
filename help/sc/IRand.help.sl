@@ -1,6 +1,7 @@
 # IRand
 
-_IRand(lo, hi)_
+- _IRand(lo, hi)_
+- _IRand(hi)_ ≡ _IRand(0, hi)_
 
 Generates a single random integer value in uniform distribution from lo to hi
 
@@ -14,3 +15,6 @@ Generates a single random integer value in uniform distribution from lo to hi
 		Blip(mnn.MidiCps, numHarm) * 0.1
 	} !^ 7
 
+* * *
+
+See also: _Rand_

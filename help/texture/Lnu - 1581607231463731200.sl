@@ -1,6 +1,6 @@
 ;; https://twitter.com/lukiss163/status/1581607231463731200 ; lnu ; requires=SfAcquire
 {
-	var b = SfAcquire("floating_1", 1, [1]);
+	var b = SfAcquire('floating_1', 1, [1]);
 	var n = [-36, -9, -14, 0, -19, -5, 3, -2, -24, -7];
 	var k = n.size;
 	var r = { LfdNoise3(1 / 86).Abs };

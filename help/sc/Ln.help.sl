@@ -8,7 +8,7 @@ Generates a line from the start value to the end value.
 - end: ending value
 - dur: duration in seconds
 
-XLn is usually better than Line for frequency:
+XLn is usually better than Ln for frequency:
 
 	SinOsc(Ln(200, 17000, 10), 0) * 0.1
 

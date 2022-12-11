@@ -13,7 +13,7 @@ However, most examples in the manual have parentheses around the code which allo
 	var n = 5; (* number of strings *)
 	var b = [ (* array of possible impulse excitation behaviours *)
 		{ Impulse(2 + 0.2.Rand, 0) * 0.3 }, (* slow phasing *)
-		{ Dust(0.5) * 0.3 }, (* "wind chimes" *)
+		{ Dust(0.5) * 0.3 }, (* wind chimes *)
 		{ Impulse(SinOsc(0.05 + 0.1.Rand, 2 * pi.Rand) * 5 + 5.2, 0) * 0.3 } (* races *)
 	].atRandom; (* choose one at random to use for all voices *)
 	{ (* n strings tuned randomly to MIDI keys 60-90 *)

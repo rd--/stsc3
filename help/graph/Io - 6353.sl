@@ -1,7 +1,7 @@
 ;; https://scsynth.org/t//6353 ; io ; https://ingoogni.nl/
 var shuheiKawachi = { :x :y :a :b |
 	(x.Cos * y.Cos)
-	+ (((a.Sqrt * x - y) / b).Cos * ((x + (a.Sqrt * y) ) / b).Cos)
+	+ (((a.Sqrt * x - y) / b).Cos * ((x + (a.Sqrt * y)) / b).Cos)
 	+ (((a.Sqrt * x + y) / b).Cos * ((x - (a.Sqrt * y * y)) / b).Cos);
 };
 var segments = 45; (* 50 ; udp *)

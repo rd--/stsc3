@@ -14,19 +14,19 @@ _BufRd(numChannels, bufnum=0, phase=0, loop=1, interpolation=2)_
 
 Zig zag around sound:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var phase = LfNoise2(MouseX(2, 20, 1, 0.2)) * SfFrames(sf);
 	BufRd(1, sf, phase, 1, 2)
 
 Ordinary playback, phase courtesy _LfSaw_:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	var sw = LfSaw(SfDur(sf).Recip, 0);
 	var ph = LinLin(sw, -1, 1, 0, SfFrames(sf));
 	BufRd(1, sf, ph, 1, 2)
 
 Ordinary playback, phase courtesy _Phasor_:
 
-	var sf = SfAcquire("floating_1", 1, [1]).first;
+	var sf = SfAcquire('floating_1', 1, [1]).first;
 	BufRd(1, sf, Phasor(0, SfRateScale(sf), 0, SfFrames(sf), 0), 1, 2)
 
