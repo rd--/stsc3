@@ -7,7 +7,6 @@ input * modulator
 (* ---- notes.md
 
 _MouseX_ controls ring modulator frequency.
-
 Offset phase of one oscillator by 90 degrees (_pi_ / 2).
 
 *)

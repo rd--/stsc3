@@ -9,14 +9,3 @@ var z = { :i |
 	Ringz(o3, i + 1 * (n * 2 - 1), 0.1)
 };
 (1 .. n).collect(z).mean / 5
-
-;; tw 0134 (f0)
-var n = 50;
-var z = { :i |
-	Ringz(
-		Blip(LfSaw(i + 1 / [3, 4], 0) > (LfSaw(i + 1 / 8, 0) + 1) * (n / 2) + n, i + [2, 3]) *
-		LfSaw(i + 1 / n, i / (n / 2)), i + 1 * (n * 2 - 1),
-		0.1
-	)
-};
-(1 .. n).collect(z).mean / 5

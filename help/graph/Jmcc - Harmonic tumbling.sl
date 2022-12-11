@@ -20,11 +20,3 @@ var trig = XLn(10 ! 2, 0.1, 60); (* trigger probability decreases over time *)
 	)
 };
 z
-
-;; harmonic tumbling (jmcc) #1
-var t = XLine([10, 11], 0.1, 60, 0);
-var o = { :h |
-	var e = Decay2(Dust(t) * 0.02, 0.005, Rand(0, 0.5));
-	SinOsc(80 * (h + 1), 0) * e
-};
-(0 .. 10).collect(o).sum

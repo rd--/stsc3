@@ -1,4 +1,4 @@
-;; impulse sequencer (jmcc) SC2
+;; impulse sequencer (jmcc) Sc2
 var t = Impulse(8, 0);
 var seq = { :s | t * DmdOn(t, 0, Seq(inf, s)) };
 var cSeq = seq([1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0]);

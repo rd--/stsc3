@@ -8,7 +8,6 @@ LeakDc(y, 0.995)
 (* ---- notes.md
 
 _z_ is the reverb predelay time.
-
 _y_ is 6 modulated comb delays in parallel followed by 4 allpass delays on each of two channels (8 total).
 
 *)

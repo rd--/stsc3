@@ -5,10 +5,3 @@ var x = MouseX(0, 0.9, 0, 0.2);
 var y = MouseY(4000, 200, 1, 0.8) + detune;
 var f = y + (y * SinOsc(mod, 0) * 0.02);
 Pan2(SinOsc(f, 0), 0, x * 0.1)
-
-;; theremin (jmcc) ; event control
-Voicer(16, { :e |
-	var freq = Lag(LinExp(e.y, 0, 1, 4000, 200), 0.8);
-	var a = SinOsc(freq + (freq * SinOsc(4 + 3 * e.rx, 0) * 0.02), 0) * e.x * 0.6 * Lag(e.w, 0.2);
-	Pan2(a, e.o * 0.25, 0.5 + e.z)
-}).sum * 0.5
