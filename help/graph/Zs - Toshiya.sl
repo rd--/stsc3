@@ -15,7 +15,7 @@ var y = { CombL(z, 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) } !+ 7;
 4.timesRepeat { y := AllpassN(y, 0.050, [Rand(0, 0.050), Rand(0, 0.050)], 1) };
 snd := snd + (LinLin(Lag(LfNoise0(1 / 10), 10), -1, 1, 0.01, 0.06) * y);
 snd := snd + [
-	Amplitude(snd, 0.01, 0.01).kr,
+	Amplitude(snd, 0.01, 0.01),
 	LinLin(Lag(LfNoise0(1 / 1), 1), -1, 1, 0, 1),
 	RingzBank({ PinkNoise() * 0.007 } ! 2, [hz, hz * 2 + 23, hz * 4 + 53, hz * 8 + 23], [1, 1, 1, 1], [1, 1, 1, 1])
 ].product;

@@ -204,8 +204,10 @@ splRewriteBinaryOperators :: String -> String
 splRewriteBinaryOperators txt =
   case txt of
     [] -> []
-    ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '|' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '%' : ' ' : splRewriteBinaryOperators txt'
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : '+' : ' ' : txt' -> ' ' : '%' : '+' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : '^' : ' ' : txt' -> ' ' : '%' : '^' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
 -- | Parse C-Smalltalk InitializerDefinition.
