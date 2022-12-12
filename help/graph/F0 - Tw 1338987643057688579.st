@@ -1,4 +1,4 @@
-"f0 <https://twitter.com/redFrik/status/1338987643057688579>"
+"f0 https://twitter.com/redFrik/status/1338987643057688579"
 | b x t d c z p |
 b := (8 to: 18) asArray.
 x := VarSaw freq: #(18.1 81.8 1.81) + b iphase: 1 width: (VarSaw freq: (b / 81) iphase: 0 width: 0.5).
