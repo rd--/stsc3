@@ -1,8 +1,8 @@
-# !^
+# !^ ≡ bangHat - duplicate and distribute
 
-- _anObject !^ anInteger_ ≡ _anObject.dup(anInteger).Splay2_
+- _anObject !^ anInteger_ ≡ _(anObject ! anInteger).Splay2_
 
-Names the idiom of generating an array distributing it across the stereo spectrum.
+Names the idiom of generating an array and distributing it across the stereo spectrum.
 
 ```
 {

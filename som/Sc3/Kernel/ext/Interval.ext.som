@@ -1,7 +1,7 @@
 Interval = Interval (
 
 choose = (
-	"Choose a random element of myself.  Alias for atRandom."
+	"Alias for atRandom.  Choose a random element of myself."
 	^self atRandom
 )
 

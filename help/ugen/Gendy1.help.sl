@@ -3,8 +3,8 @@
 	Pan2(
 		SinOsc(
 			Gendy1(
-				Rand(0, 6),
-				Rand(0, 6),
+				IRand(0, 6),
+				IRand(0, 6),
 				SinOsc(0.1, 0) * 0.49 + 0.51,
 				SinOsc(0.13, 0) * 0.49 + 0.51,
 				Rand(130, 160.3),

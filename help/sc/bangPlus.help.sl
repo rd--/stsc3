@@ -1,6 +1,6 @@
-# !+
+# !+ ≡ bangPlus - duplicate and sum
 
-- _anObject !+ anInteger_ ≡ _anObject.dup(anInteger).sum_
+- _anObject !+ anInteger_ ≡ (_anObject ! anInteger).sum_
 
 Names the idiom of generating an array and then immediately summing it.
 This operator does not need to construct the intermediate array structure to calculate the answer.

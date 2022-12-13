@@ -2,14 +2,16 @@ The Stc parser should directly generate an Expr Ast.
 
 The comment rule is:
 
-Line (//) comments are discarded
+Line comments, `;;`, are discarded
 
-Block (/* */) comments are part of the Ast and may only appear as either:
+Block comments, `(* *)`, are discarded.
+
+There should be a distinct comment format that is part of the Ast and may only appear as either:
 
 - class comments (preceding class definition)
 - method comments (first element of method body)
 
-The block (/* */) form does not allow either nested comments or the * character.
+The block form does not allow either nested comments or the * character.
 
 "Any kind of sequence can be defined using either left recursion or
 right recursion, but you should always use left recursion, because it

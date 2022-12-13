@@ -3,7 +3,7 @@ TChoose = PseudoUgen (
 
 trig: trig array: array = (
 
-^(Select apply: {(TIRand apply: {0. array size - 1. trig}). array})
+^(Select apply: {(TiRand apply: {0. array size - 1. trig}). array})
 )
 
 primaryFactoryMethod = (

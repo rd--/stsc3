@@ -1,11 +1,28 @@
 Object = Object (
 
-<| rhs = (
+%% anInteger = (
+	"Alias.  In .sl this is written !"
+	^self dup: anInteger
+)
+
+%+ anInteger = (
+	"Alias.  In .sl this is written !+"
+	^(self dup: anInteger) sum
+)
+
+%~ anInteger = (
+	"Alias.  In .sl this is written !^"
+	^(self dup: anInteger) splay2
+)
+
+<% rhs = (
+	"Alias.  In .sl this is written <!"
 	^self mrg: rhs
 )
 
-%% anInteger = (
-	^self dup: anInteger
+ceil = (
+	"Alias.  In .sl this is written Ceil"
+	^self ceiling
 )
 
 apply: argumentsArray = (

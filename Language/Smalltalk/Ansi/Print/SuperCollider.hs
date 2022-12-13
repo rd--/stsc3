@@ -1,4 +1,4 @@
-{- | Printer from ANSI Smalltalk AST to SuperCollider
+{- | Printer from Ansi Smalltalk Ast to .stc
 
 Notes:
 
@@ -128,7 +128,7 @@ sc_temporaries_pp :: Temporaries -> String
 sc_temporaries_pp (Temporaries t) = printf "var %s;" (strjnComma t)
 
 sc_comment_pp :: Comment -> String
-sc_comment_pp = unlines . map ("// " ++) . lines
+sc_comment_pp = unlines . map (";; " ++) . lines
 
 sc_initializerDefinition_pp :: InitializerDefinition -> String
 sc_initializerDefinition_pp (InitializerDefinition c t s) =
@@ -205,7 +205,7 @@ sc_basicExpression_pp (BasicExpression p m c) =
            ,maybe "" (sc_messages_pp rqp) m
            ,maybe "" sc_cascadedMessages_pp c]
 
-{- | In SuperCollider keyword patterns bind more closely than binary patterns.
+{- | In .stc keyword patterns bind more closely than binary patterns.
 
 > let p = sc_messages_pp . stParse messages
 > p "min: 2 * 3"

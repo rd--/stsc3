@@ -1,13 +1,10 @@
-# ! ≡dup - duplicate
+# ! ≡bang - duplicate
 
 - _anObject ! anInteger_
-- _dup(anObject, anInteger)_
 
 Answer an _Array_ constructed by applying _value_ to _anObject_ _anInteger_ times
 
 Ordinarily _anObject_ is a no-argument _Procedure_ and each element of the answer is a result of evaluating the procedure.
-
-The operator _!_ is an alias for _dup_.
 
 ```
 {
@@ -25,4 +22,4 @@ This can be more written more simply using the _!^_ operator as:
 
 * * *
 
-See also: _replicate_
+See also: _dup_, _replicate_

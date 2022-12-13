@@ -175,13 +175,13 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 
 -- * C-Smalltalk translator
 
-{- | Separate out any leading // prefixed comment
+{- | Separate out any leading ;; prefixed comment
 
 > stcLeadingComment "only\na\nprogram\n"
-> stcLeadingComment "// a\n// comment\nthen\na\nprogram\n"
+> stcLeadingComment ";; a\n;; comment\nthen\na\nprogram\n"
 -}
 stcLeadingComment :: String -> (String, String)
-stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
+stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf ";; ") . lines
 
 {- | In Spl f(x, y) and x.f(y) are interchangeable.
 In particular f may be a "constructor" procedure.
@@ -207,7 +207,7 @@ splRewriteBinaryOperators txt =
     ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '%' : ' ' : splRewriteBinaryOperators txt'
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     ' ' : '!' : '+' : ' ' : txt' -> ' ' : '%' : '+' : ' ' : splRewriteBinaryOperators txt'
-    ' ' : '!' : '^' : ' ' : txt' -> ' ' : '%' : '^' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : '^' : ' ' : txt' -> ' ' : '%' : '~' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
 -- | Parse C-Smalltalk InitializerDefinition.
@@ -337,7 +337,7 @@ rw "p.q:r(i)" -- error ; arity mismatch
 rw "p.q:(i)" -- error ; message names may not have trailing colons
 rw "p.q(x: i)" -- error ; keywords are not allowed
 rw "p(q.r(i).s).t + k" == "(p apply: {(q r: i) s}) t + k .\n"
-rw "// commentary\nprogram" == "\"commentary\n\" program .\n"
+rw ";; commentary\nprogram" == "\"commentary\n\" program .\n"
 
 rw = scToSt
 scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"

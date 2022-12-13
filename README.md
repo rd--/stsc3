@@ -7,7 +7,7 @@ stsc3
 - Initial implementation notes: [st/README.md](http://rohandrape.net/?t=stsc3&e=st/README.md)
 - _.stc_ notes: [c-smalltalk](https://rohandrape.net/?t=stsc3&e=md/c-smalltalk.md)
 
-![](http://rohandrape.net/sw/stsc3/lib/png/smalltalk-balloon.png)
+![Smalltalk Balloon](http://rohandrape.net/sw/stsc3/lib/png/smalltalk-balloon.png)
 
 Cli:
 

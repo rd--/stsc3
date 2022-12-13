@@ -142,7 +142,7 @@ p.q(a,b)                 // p.q([a,b])
 6.0.forBy(5.0,-1.0, {arg x; [\forBy,x].postln})
 
 'Randomness'
-{var i=0,x=nil; {x=1.0.rand; i=i+1; x>0.1}.while({[x,i].postln})}.value
+{var i=0,x=nil; {x=1.rand; i=i+1; x>0.1}.while({[x,i].postln})}.value
 
 'Variable Arguments'
 -3.abs == 3

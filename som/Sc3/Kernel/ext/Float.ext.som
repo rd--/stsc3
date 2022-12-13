@@ -7,22 +7,12 @@ do: aBlock = (
 	[ (counter + 0.5) <= (self + 1) ] whileTrue: [ aBlock value: counter. counter := counter + 1.0 ]
 )
 
-expRand: upperBound = (
-	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
-	^1.0 rand linExpFrom: self to: upperBound
-)
-
-rand = (
+randomFloat = (
 	"Generate a random float between 0 and myself (inclusive)"
 	^(100000000 atRandom / 100000000.0) * self
 )
 
-rand2 = (
-	"Generate a random float between myself negated and myself (inclusive)"
-	^(self negated) rand: self
-)
-
-rrand: upperBound = (
+randomFloat: upperBound = (
 	"Generate a random float between myself and upperBound (inclusive)"
 	^(100000000 atRandom / 100000000.0) * (upperBound - self) + self
 )

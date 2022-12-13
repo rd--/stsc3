@@ -1,9 +1,5 @@
 BlockClosure = BlockClosure (
 
-%% anInteger = (
-	^self dup: anInteger
-)
-
 apply: anArray = (
 	^self valueWithArguments: anArray
 )

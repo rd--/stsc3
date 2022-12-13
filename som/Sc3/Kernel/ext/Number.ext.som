@@ -21,7 +21,7 @@ centiSeconds = (
 
 coin = (
 	"With probability of myself return true, with probability of 1 - myself return false."
-	^1.0 rand < self
+	^1.0 randomFloat < self
 )
 
 cpsMidi = (
@@ -36,6 +36,11 @@ dbAmp = (
 
 div: aNumber = (
 	^self // aNumber
+)
+
+expRand: upperBound = (
+	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
+	^1.0 randomFloat linExpFrom: self to: upperBound
 )
 
 kr = (
@@ -55,6 +60,28 @@ midiCps = (
 midiRatio = (
 	"Convert from fractional midi interval to ratio"
 	^2 raisedTo: (self * (1 / 12))
+)
+
+randomFloat = (
+	"Generate a random float between zero and myself (inclusive)"
+	^self asFloat randomFloat
+)
+
+randomFloat: upperBound = (
+	"Generate a random float between myself and upperBound (inclusive)"
+	^self asFloat randomFloat: upperBound
+)
+
+rand = (
+	^self randomFloat
+)
+
+rand: upperBound = (
+	^self randomFloat: upperBound
+)
+
+rand2 = (
+	^(self negated) randomFloat: self
 )
 
 rate = (

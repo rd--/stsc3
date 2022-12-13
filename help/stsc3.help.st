@@ -185,21 +185,21 @@ MessageNames openMessageNames. "open Message Names tool"
 
 "Random - Float"
 
-5.0 rand "=> uniform random Float in 0 to 5"
-2.0 rand: 3.0 "=> uniform random Float in 2 to 3"
-4.0 rand2 "=> uniform random Float in -4 to 4"
-1.0 exprand: 2.0 "=> exponential distribution"
+5 randomFloat "=> uniform random Float in 0 to 5"
+2 randomFloat: 3 "=> uniform random Float in 2 to 3"
 0.2 rand + 0.1 "=> uniform random Float in 0.1 to 0.3"
-[ 5.0 rand ] dup: 100"=> 100 random Floats in 0 to 5"
+4 rand2 "=> uniform random Float in -4 to 4"
+1 expRand: 2 "=> exponential distribution"
+[ 5 rand ] dup: 100"=> 100 random Floats in 0 to 5"
 [ 0.2 coin ] dup: 100 "=> true 20%, false 80%"
 
 "Random - Integer"
 
 5 atRandom
-5 rand "=> random Integer in 1 to 5 ; i.e. atRandom"
-1 rand: 5 "=> random Integer in 1 to 5"
-4 rand2 "=> random Integer in -4 to 4"
-[ 5 rand ] dup: 100 "=> 100 random Integers in 0 to 5"
+5 randomInteger "=> random Integer in 1 to 5 ; i.e. atRandom"
+1 randomInteger: 5 "=> random Integer in 1 to 5"
+-4 randomInteger: 4 "=> random Integer in -4 to 4"
+[ 5 randomInteger ] dup: 100 "=> 100 random Integers in 1 to 5"
 
 "Random - Array"
 

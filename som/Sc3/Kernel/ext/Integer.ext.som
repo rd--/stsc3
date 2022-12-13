@@ -16,11 +16,6 @@ do: aBlock = (
 	^ [ counter <= self ] whileTrue: [ aBlock value: counter. counter := counter + 1 ]
 )
 
-expRand: upperBound = (
-	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
-	^1.0 rand linExpFrom: self asFloat to: upperBound asFloat.
-)
-
 fib = (
 	^Array fib: self
 )
@@ -33,17 +28,12 @@ iota = (
 	^(1 to: self)
 )
 
-rand = (
-	"Generate a random integer between 1 and myself (inclusive).  Alias for atRandom."
+randomInteger = (
+	"Alias for atRandom.  Generate a random integer between 1 and myself (inclusive)."
 	^self atRandom
 )
 
-rand2 = (
-	"Generate a random integer between myself negated and myself (inclusive)."
-	^(self negated) rand: self
-)
-
-rrand: upperBound = (
+randomInteger: upperBound = (
 	"Generate a random integer between myself and upperBound (inclusive)."
 	^(upperBound - self + 1) atRandom + self - 1
 )

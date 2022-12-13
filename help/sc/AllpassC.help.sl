@@ -1,4 +1,4 @@
-# AllpassC - All pass filter
+# AllpassC - all pass filter
 
 _AllpassC(in, maxdelaytime, delaytime, decaytime)_
 

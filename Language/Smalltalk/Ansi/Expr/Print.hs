@@ -174,7 +174,7 @@ This table gives names to standard operators, however it is not generic, c.f. js
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
   [("+", "Add"), ("-", "Sub"), ("*", "Mul"), ("/", "Fdiv"), ("%", "Mod"), ("**", "Pow")
-  ,(">", "Gt"), ("<", "Lt"), (">=", "Ge"), ("<=", "Le"), ("==", "Eq"), ("!=", "Neq")
+  ,(">", "Gt"), ("<", "Lt"), (">=", "Ge"), ("<=", "Le"), ("=", "Eq"), ("~=", "Neq")
   ,("&", "BitAnd"), ("|", "BitOr"), ("<<", "ShiftLeft"), (">>", "ShiftLeft")
   ,("++", "append")]
 
@@ -214,7 +214,7 @@ jsRenamerFromTable maybePrefix tbl nm = fromMaybe "" maybePrefix ++ fromMaybe nm
 {- | Checks that the arity agrees (which should be correct by construction)
      and that all subsequent keyword parts are "value".
 
-"at:put:" is currently handled specially because in .stc "p[q] = r" is syntax for "p.at(q, put:r)".
+"at:put:" is currently handled specially because in .stc "p[q] := r" is syntax for "p.at(q, put:r)".
 There could also be a more general rewrite rule, so that "at:put:" was returned as "atPut",
 or there could be a rewrite table with entries of the form ("at:put:", "put").
 
@@ -247,7 +247,7 @@ map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
 map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) }.value(3, 5)"]
 map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
 map rw (words "inf pi nil twoPi")
-rw "// c\nx = 6; x.postln"
+rw ";; c\nx := 6; x.postln"
 rw "p:q:r(1, 2, 3)" -- interior colons not allowed
 -}
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr -> String

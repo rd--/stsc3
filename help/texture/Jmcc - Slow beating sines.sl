@@ -1,4 +1,4 @@
-;; slow beating sines (jmcc) #7 - ritual hymn in praise of the god of the LS-3000 life support unit
+;; slow beating sines (jmcc) #7
 {
 	var n = 20; (* n * 3 components in each channel *)
 	var d = 5.0; (* beating frequency deviation *)

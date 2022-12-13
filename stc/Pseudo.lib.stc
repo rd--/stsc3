@@ -1,4 +1,4 @@
-/* EnvGen of simplified EnvAdsr */
+(* EnvGen of simplified EnvAdsr *)
 Adsr : PseudoUgen {
 	*constructor {
 		arg gate = 1, attackTime = 0.01, decayTime = 0.3, sustainLevel = 0.5, releaseTime = 1, curves = -4;
@@ -6,7 +6,7 @@ Adsr : PseudoUgen {
 	}
 }
 
-/* EnvGen of simplified EnvAsr */
+(* EnvGen of simplified EnvAsr *)
 Asr : PseudoUgen {
 	*constructor {
 		arg gate = 1, attackTime = 0.01, releaseTime = 1, curves = -4;
@@ -14,7 +14,7 @@ Asr : PseudoUgen {
 	}
 }
 
-/* Audio input */
+(* Audio input *)
 AudioIn : PseudoUgen {
 	*constructor {
 		arg channels;
@@ -22,7 +22,7 @@ AudioIn : PseudoUgen {
 	}
 }
 
-/* Bipolar linear to linear mapping */
+(* Bipolar linear to linear mapping *)
 Bilin : PseudoUgen {
 	*constructor {
 		arg in, inCenter, inMin, inMax, outCenter, outMin, outMax;
@@ -48,7 +48,7 @@ BLowPass4 : PseudoUgen {
 	}
 }
 
-/* Allocate a buffer local to the synth */
+(* Allocate a buffer local to the synth *)
 BufAlloc : PseudoUgen {
 	*constructor {
 		arg numChannels, numFrames;
@@ -56,7 +56,7 @@ BufAlloc : PseudoUgen {
 	}
 }
 
-/* Record signal into a Buffer */
+(* Record signal into a Buffer *)
 BufRec : PseudoUgen {
 	*constructor {
 		arg bufnum, reset, inputArray;
@@ -64,7 +64,7 @@ BufRec : PseudoUgen {
 	}
 }
 
-/* Buffer writing oscillator */
+(* Buffer writing oscillator *)
 BufWrite : PseudoUgen {
 	*constructor {
 		arg bufnum, phase, loop, inputArray;
@@ -72,7 +72,7 @@ BufWrite : PseudoUgen {
 	}
 }
 
-/* Continuous controller input */
+(* Continuous controller input *)
 Cc : PseudoUgen {
 	*constructor {
 		arg index;
@@ -80,15 +80,15 @@ Cc : PseudoUgen {
 	}
 }
 
-/* Triggers when a value changes */
+(* Triggers when a value changes *)
 Changed : PseudoUgen {
 	*constructor {
 		arg input, threshold;
-		^HPZ1(input).abs > threshold
+		^Hpz1(input).abs > threshold
 	}
 }
 
-/* Random sequence generator */
+(* Random sequence generator *)
 Choose : PseudoUgen {
 	*constructor {
 		arg repeats, list;
@@ -96,7 +96,7 @@ Choose : PseudoUgen {
 	}
 }
 
-/* Curve Segment Envelope */
+(* Curve Segment Envelope *)
 CurveGen : PseudoUgen {
 	*constructor {
 		arg gate, levels, times, curves;
@@ -104,7 +104,7 @@ CurveGen : PseudoUgen {
 	}
 }
 
-/* Curve Segment Envelope */
+(* Curve Segment Envelope *)
 CurveSeg : PseudoUgen {
 	*constructor {
 		arg gate, coord;
@@ -115,7 +115,7 @@ CurveSeg : PseudoUgen {
 	}
 }
 
-/* EnvGen of simple cutoff envelope */
+(* EnvGen of simple cutoff envelope *)
 Cutoff : PseudoUgen {
 	*constructor {
 		arg sustainTime, releaseTime, curve;
@@ -123,7 +123,7 @@ Cutoff : PseudoUgen {
 	}
 }
 
-/* Demand with duration input (Duty) */
+(* Demand with duration input (Duty) *)
 DmdFor : PseudoUgen {
 	*constructor {
 		arg dur, reset, level;
@@ -131,7 +131,7 @@ DmdFor : PseudoUgen {
 	}
 }
 
-/* Demand with trigger input (Demand) */
+(* Demand with trigger input (Demand) *)
 DmdOn : PseudoUgen {
 	*constructor {
 		arg trig, reset, demandUGens;
@@ -139,7 +139,7 @@ DmdOn : PseudoUgen {
 	}
 }
 
-/* Dynamic klank, set of non-fixed resonating filters */
+(* Dynamic klank, set of non-fixed resonating filters *)
 DynKlank : PseudoUgen {
 	*constructor {
 		arg input, freqscale, freqoffset, decayscale, specificationsArrayRef;
@@ -155,7 +155,7 @@ DynKlank : PseudoUgen {
 	}
 }
 
-/* Dynamic parallel bank of Ringz */
+(* Dynamic parallel bank of Ringz *)
 DynRingzBank : PseudoUgen {
 	*constructor {
 		arg input, freq, amp, time;
@@ -171,7 +171,7 @@ EnvRelease {
 	}
 }
 
-/* Read signal from a bus with a current or one cycle old timestamp */
+(* Read signal from a bus with a current or one cycle old timestamp *)
 InFb : PseudoUgen {
 	*constructor {
 		arg numChan, bus;
@@ -179,7 +179,7 @@ InFb : PseudoUgen {
 	}
 }
 
-/* Key down control input for indicated voice (W) */
+(* Key down control input for indicated voice (W) *)
 KeyDown : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -187,7 +187,7 @@ KeyDown : PseudoUgen {
 	}
 }
 
-/* Key pitch control input for indicated voice */
+(* Key pitch control input for indicated voice *)
 KeyPitch : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -195,7 +195,7 @@ KeyPitch : PseudoUgen {
 	}
 }
 
-/* Key timbre control input for indicated voice (Y) */
+(* Key timbre control input for indicated voice (Y) *)
 KeyTimbre : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -203,7 +203,7 @@ KeyTimbre : PseudoUgen {
 	}
 }
 
-/* Key velocity control input for indicated voice (Z) */
+(* Key velocity control input for indicated voice (Z) *)
 KeyVelocity : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -211,7 +211,7 @@ KeyVelocity : PseudoUgen {
 	}
 }
 
-/* Line Segment Envelope */
+(* Line Segment Envelope *)
 LinGen : PseudoUgen {
 	*constructor {
 		arg gate, levels, times;
@@ -219,7 +219,7 @@ LinGen : PseudoUgen {
 	}
 }
 
-/* Map a linear range to a linear range */
+(* Map a linear range to a linear range *)
 LinLin : PseudoUgen {
 	*constructor {
 		arg in, srclo, srchi, dstlo, dsthi;
@@ -227,7 +227,7 @@ LinLin : PseudoUgen {
 	}
 }
 
-/* Line Segment Envelope */
+(* Line Segment Envelope *)
 LinSeg : PseudoUgen {
 	*constructor {
 		arg gate, coord;
@@ -237,7 +237,7 @@ LinSeg : PseudoUgen {
 	}
 }
 
-/* Line generator */
+(* Line generator *)
 Ln : PseudoUgen {
 	*constructor {
 		arg start, end, dur;
@@ -252,7 +252,7 @@ Mix : PseudoUgen {
 	}
 }
 
-/* An oscillator that reads through a table once */
+(* An oscillator that reads through a table once *)
 Osc1 : PseudoUgen {
 	*constructor {
 		arg bufnum, dur;
@@ -261,7 +261,7 @@ Osc1 : PseudoUgen {
 	}
 }
 
-/* Texture generator */
+(* Texture generator *)
 OverlapTexture : PseudoUgen {
 	*constructor {
 		arg graphFunc, sustainTime, transitionTime, overlap;
@@ -274,7 +274,7 @@ OverlapTexture : PseudoUgen {
 	}
 }
 
-/* Pen angle */
+(* Pen angle *)
 PenAngle : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -282,7 +282,7 @@ PenAngle : PseudoUgen {
 	}
 }
 
-/* Pen down (W) */
+(* Pen down (W) *)
 PenDown : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -290,7 +290,7 @@ PenDown : PseudoUgen {
 	}
 }
 
-/* Pen radius */
+(* Pen radius *)
 PenRadius : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -298,7 +298,7 @@ PenRadius : PseudoUgen {
 	}
 }
 
-/* Pen X */
+(* Pen X *)
 PenX : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -306,7 +306,7 @@ PenX : PseudoUgen {
 	}
 }
 
-/* Pen Y */
+(* Pen Y *)
 PenY : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -314,7 +314,7 @@ PenY : PseudoUgen {
 	}
 }
 
-/* Pen Z */
+(* Pen Z *)
 PenZ : PseudoUgen {
 	*constructor {
 		arg voiceNumber;
@@ -322,7 +322,7 @@ PenZ : PseudoUgen {
 	}
 }
 
-/* EnvGen of EnvPerc without level input */
+(* EnvGen of EnvPerc without level input *)
 Perc : PseudoUgen {
 	*constructor {
 		arg trig, attackTime = 0.01, releaseTime = 1, curve = -4;
@@ -330,7 +330,7 @@ Perc : PseudoUgen {
 	}
 }
 
-/* Phase modulation sine oscillator pair */
+(* Phase modulation sine oscillator pair *)
 PMOsc : PseudoUgen {
 	*constructor {
 		arg carfreq, modfreq, pmindex, modphase;
@@ -345,7 +345,7 @@ Release {
 	}
 }
 
-/* Parallel bank of Ringz */
+(* Parallel bank of Ringz *)
 RingzBank : PseudoUgen {
 	*constructor {
 		arg input, freq, amp, time;
@@ -353,7 +353,7 @@ RingzBank : PseudoUgen {
 	}
 }
 
-/* Select one of two branches based on predicate signal */
+(* Select one of two branches based on predicate signal *)
 Select2 : PseudoUgen {
 	*constructor {
 		arg predicate, ifTrue, ifFalse;
@@ -361,7 +361,7 @@ Select2 : PseudoUgen {
 	}
 }
 
-/* Mix one output from many sources */
+(* Mix one output from many sources *)
 SelectX : PseudoUgen {
 	*constructor {
 		arg which, array;
@@ -373,7 +373,7 @@ SelectX : PseudoUgen {
 	}
 }
 
-/* Sequence generator */
+(* Sequence generator *)
 Seq : PseudoUgen {
 	*constructor {
 		arg repeats, list;
@@ -381,7 +381,7 @@ Seq : PseudoUgen {
 	}
 }
 
-/* Demand rate sequence generator. */
+(* Demand rate sequence generator. *)
 Ser : PseudoUgen {
 	*constructor {
 		arg repeats, list;
@@ -396,7 +396,7 @@ Series : PseudoUgen {
 	}
 }
 
-/* Demand rate random sequence generator */
+(* Demand rate random sequence generator *)
 Shuf : PseudoUgen {
 	*constructor {
 		arg repeats, list;
@@ -418,7 +418,7 @@ Sine : PseudoUgen {
 	}
 }
 
-/* Parallel bank of SinOsc */
+(* Parallel bank of SinOsc *)
 SinOscBank : PseudoUgen {
 	*constructor {
 		arg freq, amp, phase;
@@ -426,7 +426,7 @@ SinOscBank : PseudoUgen {
 	}
 }
 
-/* Pan an array of channels across the stereo field */
+(* Pan an array of channels across the stereo field *)
 Splay : PseudoUgen {
 	*constructor {
 		arg inArray, spread = 1, level = 1, center = 0, levelComp;
@@ -442,7 +442,7 @@ Splay : PseudoUgen {
 	}
 }
 
-/* Pan an array of channels across the stereo field */
+(* Pan an array of channels across the stereo field *)
 Splay2 : PseudoUgen {
 	*constructor {
 		arg inArray;
@@ -450,7 +450,7 @@ Splay2 : PseudoUgen {
 	}
 }
 
-/* Switch (maintained or momentary) controller input */
+(* Switch (maintained or momentary) controller input *)
 Sw : PseudoUgen {
 	*constructor {
 		arg index;
@@ -458,15 +458,15 @@ Sw : PseudoUgen {
 	}
 }
 
-/* Randomly select one of several inputs on trigger */
+(* Randomly select one of several inputs on trigger *)
 TChoose : PseudoUgen {
 	*constructor {
 		arg trig, array;
-		^Select(TIRand(0, array.size - 1, trig), array)
+		^Select(TiRand(0, array.size - 1, trig), array)
 	}
 }
 
-/* Demand with duration input (TDuty) */
+(* Demand with duration input (TDuty) *)
 TDmdFor : PseudoUgen {
 	*constructor {
 		arg dur, reset, level;
@@ -474,7 +474,7 @@ TDmdFor : PseudoUgen {
 	}
 }
 
-/* Triggered Line */
+(* Triggered Line *)
 TLine : PseudoUgen {
 	*constructor {
 		arg start, end, dur, trig;
@@ -482,7 +482,7 @@ TLine : PseudoUgen {
 	}
 }
 
-/* Trig1 with duration of one sample */
+(* Trig1 with duration of one sample *)
 Tr1 : PseudoUgen {
 	*constructor {
 		arg in;
@@ -490,15 +490,15 @@ Tr1 : PseudoUgen {
 	}
 }
 
-/* Trig with duration of one sample */
+(* Trig with duration of one sample *)
 Tr : PseudoUgen {
 	*constructor {
 		arg in;
-		^Trig(in, SampleDur()) // Should be SampleDur if audio rate and ControlDur if control rate, requires QuantaDur or some such
+		^Trig(in, SampleDur()) ;; Should be SampleDur if audio rate and ControlDur if control rate, requires QuantaDur or some such
 	}
 }
 
-/* Triggered XLine */
+(* Triggered XLine *)
 TxLine : PseudoUgen {
 	*constructor {
 		arg start, end, dur, trig;
@@ -506,7 +506,7 @@ TxLine : PseudoUgen {
 	}
 }
 
-/* Wrap signal in an Out Ugen if required */
+(* Wrap signal in an Out Ugen if required *)
 WrapOut : PseudoUgen {
 	*constructor {
 		arg bus, channelsArray;
@@ -518,7 +518,7 @@ WrapOut : PseudoUgen {
 	}
 }
 
-/* EnvGen of simplified EnvAdsr */
+(* EnvGen of simplified EnvAdsr *)
 Adsr : PseudoUgen {
 	*constructor {
 		arg gate = 1, attackTime = 0.01, decayTime = 0.3, sustainLevel = 0.5, releaseTime = 1, curves = -4;
@@ -526,7 +526,7 @@ Adsr : PseudoUgen {
 	}
 }
 
-/* EnvGen of simplified EnvAsr */
+(* EnvGen of simplified EnvAsr *)
 Asr : PseudoUgen {
 	*constructor {
 		arg gate = 1, attackTime = 0.01, releaseTime = 1, curves = -4;
@@ -534,7 +534,7 @@ Asr : PseudoUgen {
 	}
 }
 
-/* Audio input */
+(* Audio input *)
 AudioIn : PseudoUgen {
 	*constructor {
 		arg channelsArray;
@@ -542,7 +542,7 @@ AudioIn : PseudoUgen {
 	}
 }
 
-/* Bipolar linear to linear mapping */
+(* Bipolar linear to linear mapping *)
 Bilin : PseudoUgen {
 	*constructor {
 		arg in, inCenter, inMin, inMax, outCenter, outMin, outMax;
@@ -552,7 +552,7 @@ Bilin : PseudoUgen {
 	}
 }
 
-/* Allocate a buffer local to the synth */
+(* Allocate a buffer local to the synth *)
 BufAlloc : PseudoUgen {
 	*constructor {
 		arg numChannels, numFrames;
@@ -560,7 +560,7 @@ BufAlloc : PseudoUgen {
 	}
 }
 
-/* Record signal into a Buffer */
+(* Record signal into a Buffer *)
 BufRec : PseudoUgen {
 	*constructor {
 		arg bufnum, reset, inputArray;
@@ -568,7 +568,7 @@ BufRec : PseudoUgen {
 	}
 }
 
-/* Buffer writing oscillator */
+(* Buffer writing oscillator *)
 BufWrite : PseudoUgen {
 	*constructor {
 		arg bufnum = 0, phase = 0, loop = 1, inputArray;
@@ -576,7 +576,7 @@ BufWrite : PseudoUgen {
 	}
 }
 
-/* Continuous controller input */
+(* Continuous controller input *)
 Cc : PseudoUgen {
 	*constructor {
 		arg index;
@@ -584,15 +584,15 @@ Cc : PseudoUgen {
 	}
 }
 
-/* Triggers when a value changes */
+(* Triggers when a value changes *)
 Changed : PseudoUgen {
 	*constructor {
 		arg input, threshold;
-		^HPZ1(input).abs > threshold
+		^Hpz1(input).abs > threshold
 	}
 }
 
-/* Random sequence generator */
+(* Random sequence generator *)
 Xchoose : PseudoUgen {
 	*constructor {
 		arg repeats = 1, list;
@@ -600,7 +600,7 @@ Xchoose : PseudoUgen {
 	}
 }
 
-/* Line generator */
+(* Line generator *)
 XLn : PseudoUgen {
 	*constructor {
 		arg start = 1, end = 2, dur = 1;
@@ -636,7 +636,7 @@ ImpulseSequencer : PseudoUgen {
 	}
 }
 
-/* Random sequence generator */
+(* Random sequence generator *)
 White : PseudoUgen {
 	*constructor {
 		arg length, lo = 0, hi = 1;
