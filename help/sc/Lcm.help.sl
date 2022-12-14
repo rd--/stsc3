@@ -1,4 +1,4 @@
-# Lcm - least common multiple
+# Lcm -- least common multiple
 
 This definition extends the usual definition and returns a negative number if any of the operands is negative.
 This makes it consistent with the lattice-theoretical interpretation and its idempotency, commutative, associative, absorption laws.

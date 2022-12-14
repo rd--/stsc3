@@ -1,4 +1,4 @@
-# Amplitude - amplitude follower
+# Amplitude -- amplitude follower
 
 _Amplitude(in, attackTime, releaseTime)_
 

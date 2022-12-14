@@ -1,4 +1,4 @@
-# Blip - band limited impulse oscillator
+# Blip -- band limited impulse oscillator
 
 _Blip(freq, numharm)_
 

@@ -1,4 +1,4 @@
-# XFade2 - equal power two channel cross fade
+# XFade2 -- equal power two channel cross fade
 
 _XFade2(inA, inB, pan, level)_
 

@@ -1,4 +1,4 @@
-# FreqShift - Frequency Shifter
+# FreqShift -- Frequency Shifter
 
 _FreqShift(input, shift, phase)_
 

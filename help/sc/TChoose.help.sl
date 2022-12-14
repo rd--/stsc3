@@ -1,4 +1,4 @@
-# TChoose - randomly select one of several inputs
+# TChoose -- randomly select one of several inputs
 
 _TChoose(trig, array)_
 

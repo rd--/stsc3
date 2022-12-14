@@ -1,4 +1,4 @@
-# Schmidt - Schmidt trigger
+# Schmidt -- Schmidt trigger
 
 _Schmidt(in, lo, hi)_
 

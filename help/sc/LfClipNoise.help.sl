@@ -1,4 +1,4 @@
-# LfClipNoise - clipped noise
+# LfClipNoise -- clipped noise
 
 _LfClipNoise(freq)_
 

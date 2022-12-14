@@ -1,4 +1,4 @@
-# Ceil - next higher integer
+# Ceil -- next higher integer
 
 Stepped line:
 

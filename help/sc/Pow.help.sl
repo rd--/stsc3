@@ -1,4 +1,4 @@
-# Pow - math operator
+# Pow -- math operator
 
 - _Pow(self, aNumber)_
 

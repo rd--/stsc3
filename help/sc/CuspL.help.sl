@@ -1,4 +1,4 @@
-# CuspL - cusp map chaotic generator
+# CuspL -- cusp map chaotic generator
 
 _CuspL(freq, a, b, xi)_
 

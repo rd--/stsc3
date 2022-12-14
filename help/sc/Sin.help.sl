@@ -1,1 +1,1 @@
-# Sin - sine
+# Sin -- sine

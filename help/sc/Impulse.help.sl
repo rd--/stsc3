@@ -1,4 +1,4 @@
-# Impulse - impulse oscillator
+# Impulse -- impulse oscillator
 
 _Impulse(freq, phase)_
 

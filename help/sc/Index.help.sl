@@ -1,4 +1,4 @@
-# Index - index into a table with a signal
+# Index -- index into a table with a signal
 
 _Index(table, in)_
 

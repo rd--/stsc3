@@ -1,4 +1,4 @@
-# transpose - rearranging
+# transpose -- rearranging
 
 _transpose(aMatrix)_
 

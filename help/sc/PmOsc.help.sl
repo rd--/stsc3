@@ -1,4 +1,4 @@
-# PmOsc - phase modulation oscillator pair
+# PmOsc -- phase modulation oscillator pair
 
 _PmOsc(carfreq, modfreq, index, modphase)_
 

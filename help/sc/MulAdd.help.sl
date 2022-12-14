@@ -1,4 +1,4 @@
-# MulAdd - multiply and add
+# MulAdd -- multiply and add
 
 - _MulAdd(self, mul, add)_
 

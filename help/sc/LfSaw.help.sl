@@ -1,4 +1,4 @@
-# LfSaw - sawtooth oscillator
+# LfSaw -- sawtooth oscillator
 
 _LfSaw(freq, phase)_
 

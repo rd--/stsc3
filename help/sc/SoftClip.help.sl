@@ -1,4 +1,4 @@
-# softclip - nonlinear distortion
+# softclip -- nonlinear distortion
 
 Distortion with a perfectly linear region from -0.5 to +0.5.
 

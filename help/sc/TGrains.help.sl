@@ -1,4 +1,4 @@
-# TGrains - buffer granulator
+# TGrains -- buffer granulator
 
 _TGrains(numChannels, trigger, bufnum, rate, centerPos, dur, pan, amp, interp)_
 

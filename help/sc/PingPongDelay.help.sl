@@ -1,4 +1,4 @@
-# PingPongDelay - stereo ping pong delay
+# PingPongDelay -- stereo ping pong delay
 
 _PingPongDelay(left, right, maxdelaytime, delaytime, feedback)_
 

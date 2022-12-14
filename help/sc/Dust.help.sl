@@ -1,4 +1,4 @@
-# Dust - random impulses
+# Dust -- random impulses
 
 _Dust(density)_
 

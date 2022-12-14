@@ -1,4 +1,4 @@
-# Sos - second order filter section (biquad)
+# Sos -- second order filter section (biquad)
 
 _Sos(in, a0, a1, a2, b1, b2)_
 

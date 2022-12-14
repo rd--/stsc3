@@ -1,4 +1,4 @@
-# Gcd - greatest common divisor
+# Gcd -- greatest common divisor
 
 _Gcd(self, aNumber)_
 

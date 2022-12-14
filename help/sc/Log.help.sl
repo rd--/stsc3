@@ -1,1 +1,1 @@
-# Log - natural logarithm
+# Log -- natural logarithm

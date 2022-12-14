@@ -1,4 +1,4 @@
-# DelayC - delay line
+# DelayC -- delay line
 
 _DelayC(in, maxdelaytime, delaytime)_
 

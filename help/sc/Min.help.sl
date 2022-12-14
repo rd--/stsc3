@@ -1,4 +1,4 @@
-# Min - minimum
+# Min -- minimum
 
 Modulates and envelopes:
 

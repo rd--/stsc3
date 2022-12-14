@@ -1,4 +1,4 @@
-# AmpComp - psychoacoustic amplitude compensation
+# AmpComp -- psychoacoustic amplitude compensation
 
 _AmpComp(freq, root, exp)_
 

@@ -1,4 +1,4 @@
-# GVerb - two-channel reverb
+# GVerb -- two-channel reverb
 
 A two-channel reverb Ugen, based on the _GVerb_ Ladspa effect by Juhana Sadeharju.
 

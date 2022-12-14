@@ -1,4 +1,4 @@
-# TwoZero - two zero filter
+# TwoZero -- two zero filter
 
 _TwoZero(in, freq, radius)_
 

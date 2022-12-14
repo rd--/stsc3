@@ -1,4 +1,4 @@
-# PanB - Ambisonic B format panner
+# PanB -- Ambisonic B format panner
 
 PanB(in, azimuth, elevation, level)
 

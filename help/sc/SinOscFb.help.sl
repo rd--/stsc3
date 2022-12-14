@@ -1,4 +1,4 @@
-# SinOscFb - Feedback Fm oscillator
+# SinOscFb -- Feedback Fm oscillator
 
 _SinOscFb(freq, feedback)_
 

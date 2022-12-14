@@ -1,4 +1,4 @@
-# SinOscBank - sin oscillator bank
+# SinOscBank -- sin oscillator bank
 
 _SinOscBank(freqArray, ampArray, phaseArray)_
 

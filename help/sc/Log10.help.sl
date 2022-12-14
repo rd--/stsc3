@@ -1,2 +1,2 @@
-# Log10 - base 10 logarithm
+# Log10 -- base 10 logarithm
 

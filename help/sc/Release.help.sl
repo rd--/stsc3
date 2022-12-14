@@ -1,4 +1,4 @@
-# Release - envelope generator
+# Release -- envelope generator
 
 - _Release(in, attackTime, sustainTime, releaseTime)_
 
@@ -9,4 +9,6 @@ var counter = PinkNoise() * Decay(Impulse(1, 0), 0.1) * 0.1;
 Release(SinOsc(440, 0) * 0.1, 3, 3, 5) + counter
 ```
 
-See also _Asr_.
+* * *
+
+See also: _Asr_

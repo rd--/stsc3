@@ -1,4 +1,4 @@
-# TRand - triggered random number generator
+# TRand -- triggered random number generator
 
 _TRand(lo, hi, trig)_
 

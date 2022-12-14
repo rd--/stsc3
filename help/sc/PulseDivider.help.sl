@@ -1,4 +1,4 @@
-# PulseDivider - pulse divider
+# PulseDivider -- pulse divider
 
 _PulseDivider(trig, div, startCount)_
 

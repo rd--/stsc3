@@ -1,4 +1,4 @@
-# pyramid - counting
+# pyramid -- counting
 
 - _pyramid(aSequence, patternType)_
 

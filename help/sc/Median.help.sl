@@ -1,4 +1,4 @@
-# Median - median filter
+# Median -- median filter
 
 _Median(length, in)_
 

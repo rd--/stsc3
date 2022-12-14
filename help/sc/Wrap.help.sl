@@ -1,4 +1,4 @@
-# Wrap - wrap a signal outside given thresholds
+# Wrap -- wrap a signal outside given thresholds
 
 _Wrap(in, lo, hi)_
 

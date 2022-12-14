@@ -1,4 +1,4 @@
-# Choose - demand rate random sequence generator
+# Choose -- demand rate random sequence generator
 
 Choose(repeats, list)
 

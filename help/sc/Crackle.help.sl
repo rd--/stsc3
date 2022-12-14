@@ -1,4 +1,4 @@
-# Crackle - chaotic noise function
+# Crackle -- chaotic noise function
 
 _Crackle(param)_
 

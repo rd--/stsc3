@@ -1,4 +1,4 @@
-# OverlapTexture - overlap events
+# OverlapTexture -- overlap events
 
 _OverlapTexture(newEventFunc, sustainTime, transitionTime, overlap)_
 

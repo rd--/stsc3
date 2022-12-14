@@ -1,4 +1,4 @@
-# MouseY - cursor unit generator
+# MouseY -- cursor unit generator
 
 _MouseY(minval, maxval, warp, lag)_
 

@@ -1,4 +1,4 @@
-# LinXFade2 - two channel linear crossfade
+# LinXFade2 -- two channel linear crossfade
 
 _LinXFade2(a, b, pos)_
 

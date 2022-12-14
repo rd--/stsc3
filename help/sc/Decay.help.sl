@@ -1,4 +1,4 @@
-# Decay - exponential decay
+# Decay -- exponential decay
 
 _Decay(in, decayTime)_
 

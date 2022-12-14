@@ -1,4 +1,4 @@
-# PanAz - azimuth panner
+# PanAz -- azimuth panner
 
 _PanAz(numChans, in, pos, level, width, orientation)_
 

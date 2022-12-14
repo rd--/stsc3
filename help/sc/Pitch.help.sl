@@ -1,4 +1,4 @@
-# Pitch - autocorrelation pitch follower
+# Pitch -- autocorrelation pitch follower
 
 _Pitch(in, initFreq, minFreq, maxFreq, execFreq, maxBinsPerOctave, median, ampThreshold, peakThreshold, downSample)_
 

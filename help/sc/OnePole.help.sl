@@ -1,4 +1,4 @@
-# OnePole - one pole filter
+# OnePole -- one pole filter
 
 _OnePole(in, coef)_
 

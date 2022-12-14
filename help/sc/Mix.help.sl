@@ -1,4 +1,4 @@
-# Mix - sum an array of inputs
+# Mix -- sum an array of inputs
 
 _Mix([...])_
 

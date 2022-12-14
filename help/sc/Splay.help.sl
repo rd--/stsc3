@@ -1,4 +1,4 @@
-# Splay - stereo panner
+# Splay -- stereo panner
 
 - _Splay(inArray, spread, level, center, levelComp)_
 

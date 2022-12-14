@@ -1,4 +1,4 @@
-# Delay1 - single sample delay
+# Delay1 -- single sample delay
 
 _Delay1(in)_
 

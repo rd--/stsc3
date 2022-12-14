@@ -1,4 +1,4 @@
-# Sweep - triggered linear ramp
+# Sweep -- triggered linear ramp
 
 _Sweep(trig, rate)_
 

@@ -1,4 +1,4 @@
-# MultiTapDelay - multi-tap delay line
+# MultiTapDelay -- multi-tap delay line
 
 _MultiTapDelay(timesArray, levelsArray, in)_
 

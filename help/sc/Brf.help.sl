@@ -1,4 +1,4 @@
-# Brf - 2nd order Butterworth band reject filter
+# Brf -- 2nd order Butterworth band reject filter
 
 _Brf(in, freq, rq)_
 

@@ -1,4 +1,4 @@
-# Cutoff - very simple envelope shape
+# Cutoff -- very simple envelope shape
 
 _Cutoff(sustain, decay, curve)_
 

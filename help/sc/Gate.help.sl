@@ -1,4 +1,4 @@
-# Gate - gate or hold
+# Gate -- gate or hold
 
 _Gate(in, gate)_
 

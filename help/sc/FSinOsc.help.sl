@@ -1,4 +1,4 @@
-# FSinOsc - fast sine oscillator
+# FSinOsc -- fast sine oscillator
 
 _FSinOsc(freq, iphase)_
 

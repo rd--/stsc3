@@ -1,4 +1,4 @@
-# Latch - sample and hold
+# Latch -- sample and hold
 
 _Latch(in, trig)_
 

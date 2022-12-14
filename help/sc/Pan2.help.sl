@@ -1,4 +1,4 @@
-# Pan2 - two channel equal power pan
+# Pan2 -- two channel equal power pan
 
 _Pan2(in, pos, level)_
 

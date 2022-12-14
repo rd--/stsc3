@@ -1,4 +1,4 @@
-# Exp - exponential
+# Exp -- exponential
 
 - _Exp(aNumber)_
 

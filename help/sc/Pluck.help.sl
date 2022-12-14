@@ -1,4 +1,4 @@
-# Pluck - karplus-strong ugen
+# Pluck -- karplus-strong ugen
 
 _Pluck(in, trig, maxdelaytime, delaytime, decaytime, coef)_
 

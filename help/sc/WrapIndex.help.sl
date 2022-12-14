@@ -1,4 +1,4 @@
-# WrapIndex - index into a table with a signal
+# WrapIndex -- index into a table with a signal
 
 _WrapIndex(table, in)_
 

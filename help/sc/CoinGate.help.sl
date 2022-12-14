@@ -1,4 +1,4 @@
-# CoinGate - statistical gate
+# CoinGate -- statistical gate
 
 _CoinGate(prob, trig)_
 

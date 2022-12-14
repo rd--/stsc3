@@ -1,4 +1,4 @@
-# XLn - exponential line generator
+# XLn -- exponential line generator
 
 _XLn(start, end, dur)_
 

@@ -1,4 +1,4 @@
-# LfNoise1 - ramp noise
+# LfNoise1 -- ramp noise
 
 _LfNoise1(freq)_
 

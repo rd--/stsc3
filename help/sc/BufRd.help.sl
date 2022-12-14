@@ -1,4 +1,4 @@
-# BufRd - Buffer reading oscillator
+# BufRd -- Buffer reading oscillator
 
 Read the content of a buffer at an index.
 

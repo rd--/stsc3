@@ -1,4 +1,4 @@
-# overlap - texture generator
+# overlap -- texture generator
 
 - _overlap(aProcedure, sustainTime, transitionTime, overlap)_
 

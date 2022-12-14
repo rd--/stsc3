@@ -1,4 +1,4 @@
-# Lag - exponential lag
+# Lag -- exponential lag
 
 _Lag(in, lagTime)_
 

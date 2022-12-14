@@ -1,4 +1,4 @@
-# Slope - slope of signal
+# Slope -- slope of signal
 
 _Slope(in)_
 

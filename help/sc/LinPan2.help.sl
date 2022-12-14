@@ -1,4 +1,4 @@
-# LinPan2 - two channel linear pan
+# LinPan2 -- two channel linear pan
 
 _LinPan2(in, pos, level)_
 

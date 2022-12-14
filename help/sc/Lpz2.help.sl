@@ -1,4 +1,4 @@
-# Lpz2 - two zero fixed lowpass
+# Lpz2 -- two zero fixed lowpass
 
 _Lpz2(in)_
 

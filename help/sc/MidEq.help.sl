@@ -1,4 +1,4 @@
-# MidEq - parametric filter
+# MidEq -- parametric filter
 
 Attenuates or boosts a frequency band.
 

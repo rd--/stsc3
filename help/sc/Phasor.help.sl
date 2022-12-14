@@ -1,4 +1,4 @@
-# Phasor - a resettable linear ramp between two levels
+# Phasor -- a resettable linear ramp between two levels
 
 _Phasor(trig, rate, start, end, resetPos)_
 

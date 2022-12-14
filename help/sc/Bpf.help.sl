@@ -1,4 +1,4 @@
-# Bpf - 2nd order Butterworth bandpass filter
+# Bpf -- 2nd order Butterworth bandpass filter
 
 _Bpf(in, freq, rq)_
 

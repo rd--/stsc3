@@ -1,1 +1,1 @@
-# Sinh - hyperbolic sine
+# Sinh -- hyperbolic sine

@@ -1,4 +1,4 @@
-# LinRand - random number generator
+# LinRand -- random number generator
 
 _LinRand(lo, hi, minmax)_
 

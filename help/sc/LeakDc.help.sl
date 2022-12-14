@@ -1,4 +1,4 @@
-# LeakDc - remove Dc
+# LeakDc -- remove Dc
 
 _LeakDc(in, coef)_
 

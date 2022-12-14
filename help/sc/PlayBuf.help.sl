@@ -1,4 +1,4 @@
-# PlayBuf - sample playback oscillator
+# PlayBuf -- sample playback oscillator
 
 _PlayBuf(numChannels, bufnum=0, rate=1, trigger=1, startPos=0, loop = 0, doneAction=0)_
 

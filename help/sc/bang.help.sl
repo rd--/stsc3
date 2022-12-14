@@ -1,4 +1,4 @@
-# ! ≡bang - duplicate
+# ! ≡bang -- duplicate
 
 - _anObject ! anInteger_
 

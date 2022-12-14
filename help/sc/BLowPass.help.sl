@@ -1,4 +1,4 @@
-# BLowPass - 12db/oct rolloff 2nd order resonant low pass filter
+# BLowPass -- 12db/oct rolloff 2nd order resonant low pass filter
 
 The B equalization suite is based on the Second Order Section (SOS) biquad UGen.
 

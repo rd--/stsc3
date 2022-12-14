@@ -1,4 +1,4 @@
-# LfCub - oscillator
+# LfCub -- oscillator
 
 _LfCub(freq, iphase)_
 

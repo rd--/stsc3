@@ -1,4 +1,4 @@
-# Warp1 - Warp a buffer with a time pointer
+# Warp1 -- Warp a buffer with a time pointer
 
 Inspired by Chad Kirby's SuperCollider2 Warp1 class, which was inspired by Richard Karpen's sndwarp for CSound. A granular time stretcher and pitchshifter.
 

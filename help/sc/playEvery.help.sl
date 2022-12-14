@@ -1,4 +1,4 @@
-# playEvery - schedule sound generating procedure at intervals
+# playEvery -- schedule sound generating procedure at intervals
 
 - _playEvery(aProcedure, interval)_
 

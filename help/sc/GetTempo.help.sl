@@ -1,4 +1,4 @@
-# GetTempo - continuous tempo
+# GetTempo -- continuous tempo
 
 _GetTempo()_
 

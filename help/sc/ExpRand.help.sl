@@ -1,4 +1,4 @@
-# ExpRand - random number generator
+# ExpRand -- random number generator
 
 _ExpRand(lo, hi)_
 

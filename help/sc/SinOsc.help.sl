@@ -1,4 +1,4 @@
-# SinOsc - interpolating sine wavetable oscillator
+# SinOsc -- interpolating sine wavetable oscillator
 
 _SinOsc(freq, phase)_
 

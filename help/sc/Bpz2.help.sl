@@ -1,4 +1,4 @@
-# Bpz2 - two zero fixed midpass
+# Bpz2 -- two zero fixed midpass
 
 _Bpz2(in)_
 

@@ -1,3 +1,3 @@
-# AllpassN - all pass filter
+# AllpassN -- all pass filter
 
 See _AllpassC_

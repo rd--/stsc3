@@ -1,4 +1,4 @@
-# Max - maximum
+# Max -- maximum
 
 Modulates and envelopes:
 

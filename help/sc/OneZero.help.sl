@@ -1,4 +1,4 @@
-# OneZero - one zero filter
+# OneZero -- one zero filter
 
 _OneZero(in, coef)_
 

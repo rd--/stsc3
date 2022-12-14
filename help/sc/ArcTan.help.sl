@@ -1,1 +1,1 @@
-# ArcTan - arc tangent
+# ArcTan -- arc tangent

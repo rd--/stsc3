@@ -1,4 +1,4 @@
-# LfNoise0 - step noise
+# LfNoise0 -- step noise
 
 _LfNoise0(freq)_
 

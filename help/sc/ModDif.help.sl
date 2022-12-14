@@ -1,4 +1,4 @@
-# ModDif - minimum difference of two values in modulo arithmetics
+# ModDif -- minimum difference of two values in modulo arithmetics
 
 _ModDif(x, y, mod)_
 

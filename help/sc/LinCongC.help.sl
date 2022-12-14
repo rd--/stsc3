@@ -1,4 +1,4 @@
-# LinCongC - linear congruential generator
+# LinCongC -- linear congruential generator
 
 _LinCong(freq, a, c, m, xi)_
 

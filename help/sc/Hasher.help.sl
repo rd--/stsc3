@@ -1,4 +1,4 @@
-# Hasher - randomized value
+# Hasher -- randomized value
 
 _Hasher(in)_
 

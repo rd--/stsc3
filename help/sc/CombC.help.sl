@@ -1,4 +1,4 @@
-# CombC - comb filter
+# CombC -- comb filter
 
 _CombC(in, maxdelaytime, delaytime, decaytime)_
 

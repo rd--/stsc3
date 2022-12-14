@@ -1,4 +1,4 @@
-# Hypot - hypotenuse
+# Hypot -- hypotenuse
 
 _Hypot(self, aNumber)_
 

@@ -1,4 +1,4 @@
-# LfdNoise3 - dynamic cubic noise
+# LfdNoise3 -- dynamic cubic noise
 
 _LfdNoise3(freq)_
 

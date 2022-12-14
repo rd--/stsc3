@@ -1,4 +1,4 @@
-# coin - random boolean generator
+# coin -- random boolean generator
 
 - _coin(probability: Number)_: generates a random number between zero and one and answers if it is less than _probablity_
 

@@ -1,4 +1,4 @@
-# Stepper - pulse counter
+# Stepper -- pulse counter
 
 _Stepper(trig, reset, min, max, step, resetval)_
 

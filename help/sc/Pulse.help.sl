@@ -1,4 +1,4 @@
-# Pulse - band limited pulse wave
+# Pulse -- band limited pulse wave
 
 _Pulse(kfreq, kwidth)_
 

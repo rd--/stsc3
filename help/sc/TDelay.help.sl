@@ -1,4 +1,4 @@
-# TDelay - trigger delay
+# TDelay -- trigger delay
 
 _TDelay(trigger, delayTime)_
 

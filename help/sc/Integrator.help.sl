@@ -1,4 +1,4 @@
-# Integrator - leaky integrator
+# Integrator -- leaky integrator
 
 _Integrator(in, leak)_
 

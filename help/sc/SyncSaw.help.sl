@@ -1,4 +1,4 @@
-# SyncSaw - hard sync sawtooth wave
+# SyncSaw -- hard sync sawtooth wave
 
 _SyncSaw(ksyncFreq, ksawFreq)_
 

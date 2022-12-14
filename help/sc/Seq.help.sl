@@ -1,4 +1,4 @@
-# Seq - demand rate sequence generator
+# Seq -- demand rate sequence generator
 
 _Seq(repeats, list)_
 

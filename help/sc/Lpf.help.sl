@@ -1,4 +1,4 @@
-# Lpf - 2nd order Butterworth lowpass filter
+# Lpf -- 2nd order Butterworth lowpass filter
 
 _Lpf(in, freq)_
 

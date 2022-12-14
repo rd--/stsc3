@@ -1,4 +1,4 @@
-# LinExp - convert a linear range to an exponential range
+# LinExp -- convert a linear range to an exponential range
 
 _LinExp(in, srclo, srchi, dstlo, dsthi)_
 

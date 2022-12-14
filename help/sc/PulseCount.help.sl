@@ -1,4 +1,4 @@
-# PulseCount - pulse counter
+# PulseCount -- pulse counter
 
 _PulseCount(trig, reset)_
 

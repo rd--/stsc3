@@ -1,4 +1,4 @@
-# Dust2 - bipolar random impulses
+# Dust2 -- bipolar random impulses
 
 _Dust2(density)_
 

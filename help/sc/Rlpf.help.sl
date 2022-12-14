@@ -1,4 +1,4 @@
-# Rlpf - resonant low pass filter
+# Rlpf -- resonant low pass filter
 
 _Rlpf(in, freq, rq)_
 

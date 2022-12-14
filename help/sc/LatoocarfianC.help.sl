@@ -1,4 +1,4 @@
-# LatoocarfianC - latoocarfian chaotic generator
+# LatoocarfianC -- latoocarfian chaotic generator
 
 _LatoocarfianC(freq, a, b, c, d, xi, yi)_
 

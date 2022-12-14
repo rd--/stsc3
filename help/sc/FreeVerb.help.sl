@@ -1,4 +1,4 @@
-# FreeVerb - a reverb
+# FreeVerb -- a reverb
 
 _FreeVerb(in, mix, room, damp)_
 

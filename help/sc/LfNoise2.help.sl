@@ -1,4 +1,4 @@
-# LfNoise2 - quadratic noise
+# LfNoise2 -- quadratic noise
 
 _LfNoise2(freq)_
 

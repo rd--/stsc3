@@ -1,4 +1,4 @@
-# Slew - slew rate limiter
+# Slew -- slew rate limiter
 
 _Slew(in, upSlope, downSlope)_
 

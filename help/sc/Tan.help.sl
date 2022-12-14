@@ -1,1 +1,1 @@
-# Tan - tangent
+# Tan -- tangent

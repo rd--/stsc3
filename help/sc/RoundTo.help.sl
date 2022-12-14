@@ -1,4 +1,4 @@
-# RoundTo - round to multiple of
+# RoundTo -- round to multiple of
 
 _RoundTo(self, aNumber)_
 

@@ -1,4 +1,4 @@
-# FbSineC - feedback sine with chaotic phase indexing
+# FbSineC -- feedback sine with chaotic phase indexing
 
 _FbSineC(freq, im, fb, a, c, xi, yi)_
 

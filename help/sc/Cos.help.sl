@@ -1,2 +1,2 @@
-# Cos - cosine
+# Cos -- cosine
 

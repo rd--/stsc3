@@ -1,4 +1,4 @@
-# Select - select output from an array of inputs
+# Select -- select output from an array of inputs
 
 _Select(which, array)_
 

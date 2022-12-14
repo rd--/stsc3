@@ -1,4 +1,4 @@
-# Normalizer - flattens dynamics
+# Normalizer -- flattens dynamics
 
 _Normalizer(input, level, lookAheadTime)_
 

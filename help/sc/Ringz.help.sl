@@ -1,4 +1,4 @@
-# Ringz - ringing filter
+# Ringz -- ringing filter
 
 _Ringz(in, freq, decaytime)_
 

@@ -1,4 +1,4 @@
-# Timer - returns time since last triggered
+# Timer -- returns time since last triggered
 
 _Timer(trig)_
 

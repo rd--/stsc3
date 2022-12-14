@@ -1,4 +1,4 @@
-# Formlet - FOF-like filter
+# Formlet -- FOF-like filter
 
 _Formlet(in, freq, attackTime, decayTime)_
 

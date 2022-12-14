@@ -1,4 +1,4 @@
-# ToggleFf - toggle flip flop
+# ToggleFf -- toggle flip flop
 
 _ToggleFf(trig)_
 

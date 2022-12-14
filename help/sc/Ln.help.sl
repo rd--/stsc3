@@ -1,4 +1,4 @@
-# Ln - line generator
+# Ln -- line generator
 
 _Ln(start, end, dur)_
 

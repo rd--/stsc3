@@ -1,4 +1,4 @@
-# TiRand - triggered integer random number generator
+# TiRand -- triggered integer random number generator
 
 _TiRand(lo, hi, trig)_
 

@@ -1,4 +1,4 @@
-# Spring - physical model of resonating spring
+# Spring -- physical model of resonating spring
 
 _Spring(in, spring, damp)_
 

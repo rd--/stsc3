@@ -1,4 +1,4 @@
-# Saw - band limited sawtooth
+# Saw -- band limited sawtooth
 
 _Saw(kfreq)_
 

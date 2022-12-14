@@ -1,4 +1,4 @@
-# DegreeToKey - convert signal to modal pitch
+# DegreeToKey -- convert signal to modal pitch
 
 _DegreeToKey(table, in, octave)_
 

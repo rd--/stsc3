@@ -1,4 +1,4 @@
-# Rhpf - resonant high pass filter
+# Rhpf -- resonant high pass filter
 
 _Rhpf(in, freq, q)_
 

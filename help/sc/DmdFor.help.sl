@@ -1,4 +1,4 @@
-# DmdFor - demand results from demand rate ugens
+# DmdFor -- demand results from demand rate ugens
 
 _DmdFor(dur, reset, level)_
 

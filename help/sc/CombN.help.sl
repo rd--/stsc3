@@ -1,3 +1,3 @@
-# CombN - comb filter
+# CombN -- comb filter
 
 See _CombC_.

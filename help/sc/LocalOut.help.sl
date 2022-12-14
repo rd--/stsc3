@@ -1,4 +1,4 @@
-# LocalOut - define and write to an audio bus local to the enclosing synth
+# LocalOut -- define and write to an audio bus local to the enclosing synth
 
 _LocalOut(channelsArray)_
 

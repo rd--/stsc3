@@ -1,4 +1,4 @@
-# Floor - next lower integer
+# Floor -- next lower integer
 
 Stepped line:
 

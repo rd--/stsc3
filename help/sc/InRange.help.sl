@@ -1,4 +1,4 @@
-# InRange - tests if a signal is within a given range
+# InRange -- tests if a signal is within a given range
 
 _InRange(in, lo, hi)_
 

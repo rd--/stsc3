@@ -1,4 +1,4 @@
-# Resonz - resonant filter
+# Resonz -- resonant filter
 
 _Resonz(in, freq, rq)_
 

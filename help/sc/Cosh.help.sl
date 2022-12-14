@@ -1,1 +1,1 @@
-# Cosh - hyperbolic cosine
+# Cosh -- hyperbolic cosine

@@ -1,4 +1,4 @@
-# Hpf - 2nd order Butterworth highpass filter
+# Hpf -- 2nd order Butterworth highpass filter
 
 _Hpf(in, freq)_
 

@@ -1,4 +1,4 @@
-# Fold - fold a signal outside given thresholds
+# Fold -- fold a signal outside given thresholds
 
 _Fold(in, lo, hi)_
 

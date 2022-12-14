@@ -1,4 +1,4 @@
-# LfdNoise0 - dynamic step noise
+# LfdNoise0 -- dynamic step noise
 
 _LfdNoise0(freq)_
 

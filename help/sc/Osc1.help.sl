@@ -1,4 +1,4 @@
-# Osc1 - one-shot oscillator
+# Osc1 -- one-shot oscillator
 
 _Osc1(table, dur)_
 

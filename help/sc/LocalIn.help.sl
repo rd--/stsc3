@@ -1,4 +1,4 @@
-# LocalIn - define and read from an audio bus local to the enclosing synth
+# LocalIn -- define and read from an audio bus local to the enclosing synth
 
 _LocalIn(numChannels)_
 

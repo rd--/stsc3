@@ -1,4 +1,4 @@
-# Limiter - peak limiter
+# Limiter -- peak limiter
 
 _Limiter(input, level, lookAheadTime)_
 

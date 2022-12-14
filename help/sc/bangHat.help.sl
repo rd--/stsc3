@@ -1,4 +1,4 @@
-# !^ ≡ bangHat - duplicate and distribute
+# !^ ≡ bangHat -- duplicate and distribute
 
 - _anObject !^ anInteger_ ≡ _(anObject ! anInteger).Splay2_
 

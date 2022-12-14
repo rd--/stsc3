@@ -1,4 +1,4 @@
-# Brz2 - two zero fixed midcut
+# Brz2 -- two zero fixed midcut
 
 _Brz2(in)_
 

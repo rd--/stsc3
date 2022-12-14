@@ -1,4 +1,4 @@
-# TwoPole - two pole filter
+# TwoPole -- two pole filter
 
 _TwoPole(in, freq, radius)_
 

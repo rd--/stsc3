@@ -1,4 +1,4 @@
-# Decay2 - exponential decay
+# Decay2 -- exponential decay
 
 _Decay2(in, attackTime, decayTime)_
 

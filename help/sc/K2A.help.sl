@@ -1,4 +1,4 @@
-# K2A - control rate to audio rate converter
+# K2A -- control rate to audio rate converter
 
 _K2A(in)_
 

@@ -1,4 +1,4 @@
-# PeakFollower - track peak signal amplitude
+# PeakFollower -- track peak signal amplitude
 
 _PeakFollower(in, decay)_
 

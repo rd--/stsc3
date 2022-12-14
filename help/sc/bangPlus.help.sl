@@ -1,4 +1,4 @@
-# !+ ≡ bangPlus - duplicate and sum
+# !+ ≡ bangPlus -- duplicate and sum
 
 - _anObject !+ anInteger_ ≡ (_anObject ! anInteger).sum_
 

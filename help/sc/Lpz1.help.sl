@@ -1,4 +1,4 @@
-# Lpz1 - two point average filter
+# Lpz1 -- two point average filter
 
 _Lpz1(in)_
 

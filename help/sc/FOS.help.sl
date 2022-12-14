@@ -1,4 +1,4 @@
-# Fos - first order filter section
+# Fos -- first order filter section
 
 _Fos(in, a0, a1, b1)_
 

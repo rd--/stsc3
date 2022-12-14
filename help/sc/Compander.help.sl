@@ -1,4 +1,4 @@
-# Compander - compressor, expander, limiter, gate, ducker
+# Compander -- compressor, expander, limiter, gate, ducker
 
 _Compander(in, control, thresh, slopeBelow, slopeAbove, clampTime, relaxTime)
 

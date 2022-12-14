@@ -1,4 +1,4 @@
-# Abs - absolute value
+# Abs -- absolute value
 
 Contrary motion:
 

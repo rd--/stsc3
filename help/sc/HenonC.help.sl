@@ -1,4 +1,4 @@
-# HenonC - Henon map chaotic generator
+# HenonC -- Henon map chaotic generator
 
 _HenonC(freq, a, b, x0, x1)_
 

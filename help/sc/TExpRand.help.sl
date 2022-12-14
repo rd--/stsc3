@@ -1,4 +1,4 @@
-# TExpRand - triggered exponential random number generator
+# TExpRand -- triggered exponential random number generator
 
 _TExpRand(lo, hi, trig)_
 

@@ -1,4 +1,4 @@
-# LfTri - triangle wave oscillator
+# LfTri -- triangle wave oscillator
 
 _LfTri(freq, phase)_
 

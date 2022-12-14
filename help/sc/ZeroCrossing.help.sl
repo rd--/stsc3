@@ -1,4 +1,4 @@
-# ZeroCrossing - zero crossing frequency follower
+# ZeroCrossing -- zero crossing frequency follower
 
 _ZeroCrossing(in)_
 

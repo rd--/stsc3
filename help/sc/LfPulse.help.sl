@@ -1,4 +1,4 @@
-# LfPulse - pulse oscillator
+# LfPulse -- pulse oscillator
 
 _LfPulse(freq, phase, width)_
 

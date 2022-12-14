@@ -1,4 +1,4 @@
-# VarSaw - variable duty saw
+# VarSaw -- variable duty saw
 
 _VarSaw(freq, iphase,width)_
 

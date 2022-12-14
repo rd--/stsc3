@@ -1,4 +1,4 @@
-# DmdOn - demand results from demand rate ugens
+# DmdOn -- demand results from demand rate ugens
 
 _Demand(trig, reset, demandUgens)_
 

@@ -1,2 +1,2 @@
-# Log2 - base 2 logarithm
+# Log2 -- base 2 logarithm
 

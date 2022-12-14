@@ -1,4 +1,4 @@
-# Formant - formant oscillator
+# Formant -- formant oscillator
 
 _Formant(kfundfreq, kformfreq, kwidthfreq)_
 

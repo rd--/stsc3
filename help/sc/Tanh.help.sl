@@ -1,4 +1,4 @@
-# Tanh - hyperbolic tangent
+# Tanh -- hyperbolic tangent
 
 Tanh is a form of distortion:
 

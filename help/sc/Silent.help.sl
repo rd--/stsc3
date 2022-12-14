@@ -1,4 +1,4 @@
-# Silent - output silence
+# Silent -- output silence
 
 _Silent(numChannels)_
 
