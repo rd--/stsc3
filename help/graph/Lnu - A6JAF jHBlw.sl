@@ -10,7 +10,7 @@ var f = { :a |
 };
 Splay(
 	[0, 3.1, 7.05, 10, -9, 17].collect { :n |
-		Pan2(f(c() + 52 + n) * (12 * m().Neg).DbAmp, LfNoise2(500), 1)
+		EqPan2(f(c() + 52 + n) * (12 * m().Neg).DbAmp, LfNoise2(500))
 	},
 	0.5, 1, 0, true
 ).transpose.sum

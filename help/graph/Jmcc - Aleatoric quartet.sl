@@ -12,7 +12,7 @@ var mkFreq = {
 };
 var mkSig = { :ix |
 	var x = PinkNoise() * (LfNoise1(8) * dmul + dadd).Max(0);
-	Pan2(CombL(x, 0.02, mkFreq().Recip, 3), Rand(-1, 1), 1)
+	EqPan2(CombL(x, 0.02, mkFreq().Recip, 3), Rand(-1, 1))
 };
 var g = (1 .. 4).collect(mkSig).sum;
 5.timesRepeat { g := rapf(g) };

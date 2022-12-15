@@ -5,5 +5,5 @@
 	var o = SinOsc(f * [1.0, 1.2, 1.5, 1.8], 0);
 	var a = 0.Max(LfNoise2(r ! 4) * 0.1);
 	var l = { 1.Rand2 } ! 4;
-	Pan2(o * a, l, 1).sum.CombN(0.1, 0.1, 1)
+	EqPan2(o * a, l).sum.CombN(0.1, 0.1, 1)
 }.xfade(2, 0.5)

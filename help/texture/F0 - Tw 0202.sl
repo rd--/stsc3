@@ -3,7 +3,7 @@
 	{
 		var b = 0.1;
 		var p = SinOsc(DmdFor(b, 0, Seq(9, [0, i % 9, 2, 3, 4, 0, 2, 1] * 150)), 0);
-		Pan2(SinOsc(i, p), i % 3 - 1, b)
+		EqPan2(SinOsc(i, p), i % 3 - 1) * b
 	}.play;
 	[i % 5 + 1, i + 1]
 }.scheduleInjecting(1)

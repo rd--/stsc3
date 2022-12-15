@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1479212835192332289 (f0)
+;; https://twitter.com/redFrik/status/1479212835192332289 (f0) ; requires=QuadC
 var q = { :freq | QuadC(freq, 1, -1, -0.75, 0) };
 var q1 = q(5);
 var b = [5, 2.5, 6];

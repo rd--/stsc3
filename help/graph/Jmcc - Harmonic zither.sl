@@ -7,6 +7,6 @@ var stringFunc = { :i |
 	var pluck = PinkNoise() * Decay(trigger, 0.05).kr;
 	var period = pitch[i].MidiCps.Recip;
 	var string = CombL(pluck, period, period, 8);
-	Pan2(string, i - 1 * panSpacing - 0.75, 1)
+	EqPan2(string, i - 1 * panSpacing - 0.75)
 };
 LeakDc(Lpf((1 .. pitch.size).collect(stringFunc).sum, 12000), 0.995)

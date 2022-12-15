@@ -6,5 +6,5 @@
 	var decayTime = 1 / freq * 1000;
 	var freq2 = SinOsc(4 + 4.Rand, 0) * (0.01 * freq) + freq;
 	var delay = 1 / freq2;
-	Pan2(CombC(WhiteNoise() * 0.008, 0.01, delay, decayTime), 1.Rand2, 1)
+	EqPan2(CombC(WhiteNoise() * 0.008, 0.01, delay, decayTime), 1.Rand2)
 }.overlap(4 / 3, 4 / 3, 6)

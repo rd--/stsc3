@@ -6,7 +6,7 @@ var z = OverlapTexture({ :tr |
 	var o = SinOsc(Decay2(i, 0.05, 0.5) * -0.9 * f + f, 0);
 	var l = TxLine(TExpRand(0.01, 0.5, tr), TExpRand(0.01, 0.5, tr), dur, tr);
 	var s = Decay2(i * l, 0.01, 0.2) * o;
-	Pan2(s, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), dur, tr), 1)
+	EqPan2(s, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), dur, tr))
 }, dur - 2, 1, 8);
 4.timesRepeat { z := AllpassN(z, 0.1, { Rand(0, 0.05) } ! 2, 4) };
 z

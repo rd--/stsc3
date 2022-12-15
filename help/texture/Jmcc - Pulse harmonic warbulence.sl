@@ -5,7 +5,7 @@
 	var p = LfPulse(ExpRand(0.2, 1.2), Rand(0.1, 0.2), 0.5);
 	var z = (1 .. 12).collect({ :i |
 		var m = (SinOsc(r * Rand(0.9, 1.1), 2 * pi.Rand) * 0.1 - 0.05).Max(0);
-		Pan2(SinOsc(f * i, 0) * m * (1 / i), 1.Rand2, 1)
+		EqPan2(SinOsc(f * i, 0) * m * (1 / i), 1.Rand2)
 	}).sum * p;
 	{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) } !+ 5 * 0.5
 }.overlap(12.8, 6.4, 6)

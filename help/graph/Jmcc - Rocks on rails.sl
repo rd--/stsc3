@@ -2,7 +2,7 @@
 var p = 20; (* number of partials *)
 var n = 4; (* number of overlapping events *)
 OverlapTexture({ :tr |
-	Pan2(
+	EqPan2(
 		DynRingzBank( (* p resonant modes *)
 			Resonz(
 				Dust(100) * 0.04, (* excitation *)
@@ -13,7 +13,6 @@ OverlapTexture({ :tr |
 			[1], (* amplitudes *)
 			{ 0.2 + TRand(0, 1, tr) } ! p (* ring times *)
 		),
-		Ln(TRand(-1, 1, tr), TRand(-1, 1, tr), 8), (* sweep pan *)
-		1
+		Ln(TRand(-1, 1, tr), TRand(-1, 1, tr), 8) (* sweep pan *)
 	)
 }, 2, 3, n) * 0.5

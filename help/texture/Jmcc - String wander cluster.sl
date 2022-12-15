@@ -3,5 +3,5 @@
 	var note1 = 50 + 50.IRand;
 	var note2 = Fold(note1 + 15.IRand - 7, 50, 120);
 	var delay = 1 / note2.MidiCps;
-	Pan2(CombC(WhiteNoise() * 0.008, 0.01, delay, delay * 1000), 1.Rand2, 1)
+	EqPan2(CombC(WhiteNoise() * 0.008, 0.01, delay, delay * 1000), 1.Rand2)
 }.overlap(4 / 3, 4 / 3, 6)

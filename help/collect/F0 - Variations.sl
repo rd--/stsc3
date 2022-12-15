@@ -88,3 +88,11 @@ var j = DmdFor(e / (12 ** m), 0, l);
 var k = DegreeToKey(b.asLocalBuf, j, 12);
 var o = SinOscFb(k.MidiCps, LfTri(c / b + 1 / 3, Decay2(Impulse([2 / 3, 1.5, 3, 1.5, 3], 0), c, d)) * d);
 FreeVerb(Splay2(o), 0.1, 1, 0.5) * 0.1
+
+;; <https://twitter.com/redFrik/status/1452954849885163525> ; f0
+var i = Rand(1, 64);
+var x = (SinOsc(i % 9.33, 0) * 5 + 5).Ceil;
+var t = SinOsc(2 ** (i % 11) * 150 / x, 0);
+var y = Hpz1(x).Abs > 0;
+var f = LinExp(t, -1, 1, Latch(LinExp(SinOsc(i % 4.4, 0), -1, 1, 9, 999), y), Latch(LinExp(SinOsc(i % pi, 0), -1, 1, 99, 9000), y));
+Pan2(Blip(f, t + 2) * (1 - t), SinOsc(0.1, i), Line(0.2, 0, 9, 2).Min(0.6) ** 2)

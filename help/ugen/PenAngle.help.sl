@@ -5,5 +5,8 @@ SinOsc([220, 440], 0) * 0.025 + (1 .. 16).collect({ :vc |
 
 ;; PenAngle ; as pan control
 (1 .. 16).collect({ :vc |
-	Pan2(Blip(PenX(vc) * 220 + 220, PenY(vc) * 4 + 1), PenAngle(vc) * 2 - 1, PenZ(vc) * PenDown(vc))
+	EqPan2(
+		Blip(PenX(vc) * 220 + 220, PenY(vc) * 4 + 1),
+		PenAngle(vc) * 2 - 1
+	) * PenZ(vc) * PenDown(vc)
 }).sum

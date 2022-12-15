@@ -11,6 +11,6 @@ Voicer(16, { :e |
 	var pdi = LinLin((twoPi - pd).Max(0), 0, twoPi, 0, 1);
 	var snd = Lag(SinOsc(0, pdres) * pdi, 1 / freqBase);
 	var env = Decay2(Trig(e.w, SampleDur()), 0.005, 10);
-	Pan2(snd, e.o * 2 - 1, env * amp)
+	EqPan2(snd, e.o * 2 - 1) * env * amp
 }).sum
 

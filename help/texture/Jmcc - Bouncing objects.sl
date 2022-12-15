@@ -8,5 +8,5 @@
 	var fltAmp = { 1.Rand } ! 4;
 	var fltRtm = { 0.01 + 0.1.Rand } ! 4;
 	var flt = RingzBank(exc, fltFreq, fltAmp, fltRtm);
-	Pan2(Release(flt, 0, 3, 0.001), 1.Rand2, 1)
+	EqPan2(Release(flt, 0, 3, 0.001), 1.Rand2)
 }.playEvery { 0.6 + 0.6.randomFloat }

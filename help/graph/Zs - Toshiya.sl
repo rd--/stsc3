@@ -6,7 +6,7 @@ var gen = {
 	var sig = SinOsc((note + TChoose(Impulse(Rand(1 / 30, 1 / 5), 0), [0, 9, 4, 14, 5, 2, 17]).kr).MidiCps, 0);
 	sig := Lpf(sig, LinExp(SinOsc(Rand(1 / 30, 1 / 10), Rand(0, 2 * pi)), -1, 1, 20, 12000)) * 2;
 	sig := DelayC(sig, Rand(0.01, 0.03), (LfNoise1(Rand(5, 10)) * 0.01 + 0.02) / NRand(10, 20, 3));
-	Pan2(sig, Lag(LfNoise0(1 / 3), 3), 1) / 12 * amp
+	EqPan2(sig, Lag(LfNoise0(1 / 3), 3)) / 12 * amp
 };
 var osc = gen !+ 12 + Pan2(SinOsc((note - 12).MidiCps, LinLin(LfTri(0.5, 0), -1, 1, 0.2, 0.8)) / 12 * amp, SinOsc(0.1, 0) * 0.2, 1);
 var snd = MoogLadder(osc.Tanh, LinExp(Lag(LfNoise0(1 / 6), 6), -1, 1, hz * 2, hz * 10), 0);

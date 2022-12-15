@@ -47,6 +47,6 @@ Texture of variation of above:
 			nil,
 			{ TRand(0.1, 2, tr) } ! 12
 		);
-		Pan2(r, TRand(-1, 1, tr), 1)
+		EqPan2(r, TRand(-1, 1, tr))
 	}, 8, 3, 4)
 

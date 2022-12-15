@@ -1,6 +1,6 @@
 ;; Gendy1 ; texture
 {
-	Pan2(
+	EqPan2(
 		SinOsc(
 			Gendy1(
 				IRand(0, 6),
@@ -16,8 +16,8 @@
 			) * 200 + 400,
 			0
 		),
-		Rand(-1, 1), 0.1
-	)
+		Rand(-1, 1)
+	) *  0.1
 } !+ 10
 
 ;; Gendy1 ; texture ; mouse control ; keywords ; requires=kr
@@ -38,7 +38,7 @@ var f = {
 		initCPs: numcps,
 		knum: knum.kr
 	);
-	Pan2(osc, Rand(-1, 1), 0.5 / n.sqrt)
+	EqPan2(osc, Rand(-1, 1)) * 0.5 / n.sqrt
 };
 Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 
@@ -61,6 +61,6 @@ Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 			initCPs: numcps,
 			knum: knum.kr
 		);
-		Pan2(osc, Rand(-1, 1), 0.1 / n.sqrt)
+		EqPan2(osc, Rand(-1, 1)) * 0.1 / n.sqrt
 	} !+ n
 }.overlap(4, 5, 3)

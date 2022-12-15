@@ -1,9 +1,8 @@
 ;; tank (jmcc)
 var p = {
-	Pan2(
+	EqPan2(
 		Decay2(Dust(0.2), 0.1, 0.5) * 0.1 * SinOsc(ExpRand(300, 2200), 0).Cubed,
-		Rand(-1, 1),
-		1
+		Rand(-1, 1)
 	)
 };
 var r = { :i |

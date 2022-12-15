@@ -8,7 +8,7 @@
 		var env = Sine(1, du.max * ds) * Rand(0.005, 0.01);
 		var pos = XLn(1.Rand2, 1.Rand2, d);
 		var osc = SinOsc(freq, 0);
-		Pan2(osc, pos, env).sum
+		EqPan2(osc, pos).sum * env
 	};
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octaves = [4, 5, 6, 7];

@@ -154,7 +154,7 @@ var voiceFunc = { :e |
 	var mod = SinOsc(pitch * ratio, 0) * pitch * indexEnv;
 	var car = SinOsc(pitch * (2 ** (pitchMod / 1200)) + mod, 0) * volEnv * amp;
 	var filter = Lpf(car * volMod, LinExp(tone, 0, 1, 200, 20000));
-	Pan2(filter, (panModDepth < 0.01).ifTrue({ pan }, ifFalse: { panMod }), 1)
+	EqPan2(filter, (panModDepth < 0.01).if { pan } { panMod })
 };
 var fmSignal = Voicer(16, voiceFunc).sum;
 var delayMix = 0.5, delayTime = 0.3, delayFeedback = 0.3;

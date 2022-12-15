@@ -18,7 +18,7 @@ However, most examples in the manual have parentheses around the code which allo
 	].atRandom; (* choose one at random to use for all voices *)
 	{ (* n strings tuned randomly to MIDI keys 60-90 *)
 		var delayTime = 1 / (60 + 30.IRand).MidiCps; (* calculate delay based on a random note *)
-		Pan2(
+		EqPan2(
 			CombL( (* used as a string resonator *)
 				Decay( (* decaying envelope for noise *)
 					b(), (* instantiate an exciter *)
@@ -29,7 +29,6 @@ However, most examples in the manual have parentheses around the code which allo
 				delayTime, (* actual delay time *)
 				4  (* decay time of string *)
 			),
-			1.Rand2, (* random pan position *)
-			1 (* level *)
+			1.Rand2 (* random pan position *)
 		)
 	} !+ n

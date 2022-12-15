@@ -22,8 +22,8 @@ OverlapTexture({ :tr |
 	var l2 = TRand(-1, 1, tr);
 	var l = TLine(l1, l2, dur, tr);
 	var pm = TLine(0, pme, dur, tr);
-	Pan2 (PmOsc(cf, mf, pm, 0), l, 0.05)
-}, 2, 2, 4)
+	EqPan2(PmOsc(cf, mf, pm, 0), l)
+}, 2, 2, 4) * 0.05
 
 ;; PmOsc ; event control
 var s = Voicer(16, { :e |

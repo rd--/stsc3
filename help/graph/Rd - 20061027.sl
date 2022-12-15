@@ -18,6 +18,6 @@ var h1 = {
 	var g = n1.Range(0.55, 0.85);
 	var f = 40;
 	var o = Blip(HenonN(f, a, b, 0, 0).Range(p, p * 2), h);
-	Pan2(o, l, g) * 0.35
+	EqPan2(o, l) * g * 0.35
  };
 h0() + h1()

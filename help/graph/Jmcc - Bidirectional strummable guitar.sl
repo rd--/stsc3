@@ -10,7 +10,7 @@ var strFunc = { :i |
 	var pluck2 = BrownNoise() * Decay(trigger.Neg.Max(0), 0.05).kr;
 	var period2 = pitch2[i].MidiCps.Recip;
 	var string2 = CombL(pluck2, period2, period2, -4);
-	Pan2(string1 + string2, i * 0.2 - 0.5,  1)
+	EqPan2(string1 + string2, i * 0.2 - 0.5)
 };
 var out = (1 .. pitch1.size).collect(strFunc).sum;
 LeakDc(Lpf(out, 12000), 0.995)

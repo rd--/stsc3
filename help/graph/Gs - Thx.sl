@@ -4,5 +4,5 @@ var randomFreq = Env([1, 1, 0.007], [8, 6], [0, -4], 0, 0, 0).asEnvGen(1);
 var ampEnv = Env([0.07, 0.07, 0.21], [8, 6], [0, 1], 0, 0, 0).asEnvGen(1);
 freqArray.collect({ :item |
 	var freq = LfNoise2(1.3) * 100 + 230 * randomFreq + Env([0, 0, item], [8, 6], [0, -3], 0, 0, 0).asEnvGen(1);
-	Pan2(Saw(freq), LfNoise2(1.3), 1)
+	EqPan2(Saw(freq), LfNoise2(1.3))
 }).sum * ampEnv * 0.25

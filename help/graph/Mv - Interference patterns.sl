@@ -16,4 +16,4 @@ var amp = TRand(0.1, 0.2, tr);
 var sustain = TRand(7, 14, tr);
 var pan = TRand(-0.7, 0.7, tr);
 var sig = SinOsc(freq, 0) * amp * Decay2(tr, 0.01, sustain);
-brainwave + Pan2(sig, pan, 1)
+brainwave + EqPan2(sig, pan)

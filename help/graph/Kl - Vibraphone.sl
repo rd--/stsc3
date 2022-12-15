@@ -15,6 +15,6 @@ var voiceFunc = { :e |
 	var soundMain = TxLine(zero, 1, 1 / freqs, e.w) * TxLine(1, zero, decays * 4, e.w) * sound * mod;
 	var soundHigh = TxLine(0.3 * (velocity + zero), zero, 0.02, e.w) * SinOsc(hifreqs, 0); ;; hi frequency onset
 	var pan = e.o * 2 - 1;
-	Pan2(soundMain.sum + soundHigh.sum, pan, LagUd(e.w, 0.01, 4))
+	EqPan2(soundMain.sum + soundHigh.sum, pan) * LagUd(e.w, 0.01, 4)
 };
 Voicer(16, voiceFunc).sum * 0.1

@@ -5,5 +5,5 @@ OverlapTexture({ :tr |
 	var sw = LfSaw(p1() + p1() + 2, 0) * TRand(1000, 1800, tr).Neg + 4000 + TRand(-1200, 1200, tr);
 	var freq = Lag(sw, 0.05);
 	var amp = Lag(p2, 0.3);
-	Pan2(SinOsc(freq, 0) * amp, TRand(-1, 1, tr), 1)
+	EqPan2(SinOsc(freq, 0) * amp, TRand(-1, 1, tr))
 }, 7, 4, 4)

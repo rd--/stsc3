@@ -14,7 +14,7 @@ It may be useful if you want to simulate feedback Fm synths.
 	{
 		var freq = f0 + f0.Rand;
 		var fb = LinLin(LfNoise2(1), -1, 1, 0, x);
-		Pan2(SinOscFb(freq, fb), 1.Rand2, 0.1)
+		EqPan2(SinOscFb(freq, fb), 1.Rand2) *  0.1
 	} !+ 16
 }.overlap(2, 6, 3)
 ```

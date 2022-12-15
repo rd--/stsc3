@@ -22,5 +22,5 @@ var f2 = [
 		{ Rand(0.01, 0.1) } ! f.size / f * f.size.squared,
 		[0]
 	);
-	Pan2(o, LfNoise2(0.25), LfNoise2(0.5).Range(0.05, 0.15))
+	EqPan2(o, LfNoise2(0.25)) * LfNoise2(0.5).Range(0.05, 0.15)
 }).sum

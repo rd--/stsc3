@@ -16,7 +16,7 @@ SinOsc(440, 0) <! Saw(1) * 0.1
 
 ;; Process ; c.f. stc-fork-region (Emacs)
 99.timesRepeat {
-	Pan2(SinOsc(Rand(220, 440), 0), 1.Rand2, Line(0.1, 0, 7, 2)).play;
+	{ EqPan2(SinOsc(Rand(220, 440), 0), 1.Rand2) * Line(0.1, 0, 7, 2) }.play;
 	2.seconds.wait
 }
 

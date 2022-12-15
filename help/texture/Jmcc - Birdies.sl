@@ -6,5 +6,5 @@
 	var sw = LfSaw(p1 + p2, 0) * (1000 + 800.Rand).Neg + 4000 + 1200.Rand2;
 	var freq = Lag(sw, 0.05);
 	var amp = Lag(p3, 0.3);
-	Pan2(SinOsc(freq, 0) * amp, 1.Rand2, 0.02)
+	EqPan2(SinOsc(freq, 0) * amp, 1.Rand2) * 0.02
 }.overlap(7, 4, 4)

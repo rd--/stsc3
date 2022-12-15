@@ -34,7 +34,7 @@ var freq = SinOsc(
 	{ Rand(0, 1) } ! k
 ).Range(1000, 3000);
 LeakDc(
-	Pan2(
+	EqPan2(
 		Pluck(
 			WhiteNoise() * 0.1 ! k,
 			Impulse({ Rand(10, 12) } ! k, 0),
@@ -43,8 +43,7 @@ LeakDc(
 			2,
 			Rand(0.01, 0.2)
 		),
-		{ 1.Rand2 } ! k,
-		1
+		{ 1.Rand2 } ! k
 	).sum,
 	0.995
 )

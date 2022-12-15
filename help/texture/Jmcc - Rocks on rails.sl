@@ -2,7 +2,7 @@
 var p = 20; (* number of partials *)
 var n = 4; (* number of overlapping events *)
 {
-	Pan2(
+	EqPan2(
 		RingzBank( (* p resonant modes *)
 			Resonz(
 				Dust(100) * 0.04, (* excitation *)
@@ -13,7 +13,6 @@ var n = 4; (* number of overlapping events *)
 			nil, (* amplitudes default to 1.0 *)
 			{ 0.2 + 1.Rand } ! p (* ring times *)
 		),
-		Ln(1.Rand2, 1.Rand2, 8), (* sweep pan *)
-		1
+		Ln(1.Rand2, 1.Rand2, 8) (* sweep pan *)
 	)
 }.overlap(2, 3, n)

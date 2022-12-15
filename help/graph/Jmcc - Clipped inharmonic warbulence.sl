@@ -9,7 +9,7 @@ var z = OverlapTexture({ :tr |
 		var o1 = SinOsc(f * g, 0);
 		var o2 = SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.08 - 0.04;
 		var o = (o1 * o2.Max(0)).Max(0);
-		Pan2(o, TRand(-1, 1, tr), 2 / g)
+		EqPan2(o, TRand(-1, 1, tr)) * 2 / g
 	}).sum;
 }, 12.8, 6.4, 6).LeakDc(0.995);
 { CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 20) } !+ 8 * 0.2

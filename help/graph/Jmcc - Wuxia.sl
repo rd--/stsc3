@@ -9,10 +9,9 @@ OverlapTexture({ :tr |
 	};
 	noise := {
 		var pos = TRand(-1, 1, tr);
-		Pan2(
+		EqPan2(
 			CombC(noise, 0.2, TRand(0.1, 0.2, tr), 3) + noise,
-			TLine(pos, pos + TRand(-2, 2, tr), 4, tr),
-			1
+			TLine(pos, pos + TRand(-2, 2, tr), 4, tr)
 		);
 	} !+ 5;
 	noise * eg * amp

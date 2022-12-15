@@ -30,6 +30,6 @@ var buf = voiceData.concatenation.asLocalBuf;
 var voiceFunc = {
 	var tr = Dust(1 / 32).kr;
 	var dx7 = Dx7(buf, tr, 0, 0, 0, TRand(48, 72, tr), TRand(0.1, 0.6, tr), 0, 0, 0, 0);
-	Pan2(dx7, TRand(-1, 1, tr), 1)
+	EqPan2(dx7, TRand(-1, 1, tr))
 };
 voiceFunc !+ 32 * 0.25

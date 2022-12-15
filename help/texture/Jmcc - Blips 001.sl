@@ -7,7 +7,7 @@ var blipProc = {
 };
 {
 	if(0.8.coin) {
-		var z = Pan2(blipProc() * blipProc(), Ln(1.Rand2, 1.Rand2, 4), 0.3).Distort;
+		var z = EqPan2(blipProc() * blipProc(), Ln(1.Rand2, 1.Rand2, 4)).Distort * 0.3;
 		6.timesRepeat { z := AllpassN(z, 0.05, { 0.05.Rand } ! 2, 4) };
 		z
 	} {

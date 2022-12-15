@@ -11,6 +11,7 @@ var f = { :i |
 	) * SinOscFb(i + 1 / 36, 1);
 	p % q
 };
-var p = SinOscFb((SinOscFb([1 .. 5], 1) * 3).RoundTo(1) + 5 * c, 1) * SinOscFb(12, 1).Max(1) * 3;
+var o = SinOscFb((SinOscFb([1 .. 5], 1) * 3).RoundTo(1) + 5 * c, 1);
+var p = o * SinOscFb(12, 1).Max(1) * 3;
 var q = SinOscFb(c, 0.7) * (SinOscFb(3, 1).Min(0) / 3);
 (0 .. 11).collect(f).mean.Tanh + Splay2(p.Tanh / 9) + q

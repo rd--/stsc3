@@ -12,5 +12,5 @@ OverlapTexture({ :tr |
 		var env = Perc(tr, 0.005, dur * durArray[i], -4.5) * ampArray[i];
 		SinOsc(freq * freqArray[i] + detuneArray[i], 0) * amp * env;
 	};
-	Pan2(src.sum, pan, 0.1)
-}, 9, 0, 7)
+	EqPan2(src.sum, pan)
+}, 9, 0, 7) * 0.1

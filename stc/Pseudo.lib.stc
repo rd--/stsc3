@@ -657,3 +657,10 @@ Add : PseudoUgen {
 		^in + add
 	}
 }
+
+EqPan2 : PseudoUgen {
+	*constructor {
+		arg in, pos = 0;
+		^Pan2(in, pos, 1)
+	}
+}

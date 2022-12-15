@@ -8,6 +8,6 @@ var voiceFunc = { :e |
 	var decay = e.z * 2;
 	var trig = Impulse(impulseFreq, 0);
 	var snd = SinOsc(oscFreq, 0) * Decay2(trig, 0.01, 0.2 * decay);
-	Pan2((snd * distort).Tanh / distort, pan.Lag(0.1), mul.Lag(0.1))
+	EqPan2((snd * distort).Tanh / distort, pan.Lag(0.1)) * mul.Lag(0.1)
 };
 Voicer(16, voiceFunc).sum

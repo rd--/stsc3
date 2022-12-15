@@ -10,5 +10,5 @@ OverlapTexture({ :tr |
 	var amp1 = Decay2(tr, 0, art) * TRand(0.1, 0.3, tr);
 	var amp2 = Decay2(tr, 0, art * 1.3) * TRand(0.1, 0.5, tr);
 	var sig = PmOsc(freq, mod * freq, Decay2(tr, 0, art) * tone, 0);
-	Pan2(sig, pan, amp1 * amp2)
+	EqPan2(sig, pan) * amp1 * amp2
 }, 12, 0, 8)

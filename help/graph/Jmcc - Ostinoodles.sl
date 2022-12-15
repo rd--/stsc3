@@ -9,7 +9,7 @@ var z = OverlapTexture({ :tr |
 	var trig = Impulse(f, 0);
 	var freq = sequ(sequence.MidiCps, trig);
 	var sig = LfTri(freq.kr, 0) * Decay2(trig, 0.004, 0.3).kr * 0.1;
-	Pan2(sig, TRand(-1, 1, tr), 1)
+	EqPan2(sig, TRand(-1, 1, tr))
 }, 6, 3, 6);
 6.timesRepeat { z := AllpassN(z, 0.04, { Rand(0, 0.04) } ! 2, 16) };
 z
