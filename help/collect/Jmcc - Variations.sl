@@ -19,10 +19,24 @@ var m = LfSaw(0.4, 0) * 24 + o;
 CombN(SinOsc(m.MidiCps, 0) * 0.04, 0.2, 0.2, 4)
 
 ;; analog bubbles (jmcc) #1 ; keywords
-var o = LfSaw(freq: [8, 7.23], iphase: 0) * 3 + 80;
-var m = LfSaw(freq: 0.4, iphase: 0) * 24 + o; (* glissando function *)
-var s = SinOsc(freq: m.MidiCps, phase: 0) * 0.04;
-CombN(in: s, maxdelaytime: 0.2, delaytime: 0.2, decaytime: 4) * 0.1 (* echoing sine wave *)
+var o = LfSaw(
+	freq: [8, 7.23],
+	iphase: 0
+) * 3 + 80;
+var m = LfSaw(
+	freq: 0.4,
+	iphase: 0
+) * 24 + o; (* glissando function *)
+var s = SinOsc(
+	freq: m.MidiCps,
+	phase: 0
+) * 0.04;
+CombN(
+	in: s,
+	maxdelaytime: 0.2,
+	delaytime: 0.2,
+	decaytime: 4
+) * 0.1 (* echoing sine wave *)
 
 ;; analog bubbles (jmcc) ; applicative order
 CombN(MulAdd(SinOsc(MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80)).MidiCps, 0), 0.04, 0), 0.2, 0.2, 4)
@@ -205,18 +219,87 @@ Rlpf(s, 100, 0.1).Clip2(0.4)
 
 ;; jmcc - ostinoodles ; keywords ; ?
 var z = OverlapTexture({ :tr |
-	var sequ = { :s :tr | DmdOn(trig: tr, reset: 0, demandUGens: Seq(repeats: inf, list: s)) };
-	var root = 81 + TRand(lo: -6, hi: 6, trig: tr);
+	var sequ = { :s :tr |
+		DmdOn(
+			trig: tr,
+			reset: 0,
+			demandUGens: Seq(
+				repeats: inf,
+				list: s
+			)
+		)
+	};
+	var root = 81 + TRand(
+		lo: -6,
+		hi: 6,
+		trig: tr
+	);
 	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
-	var offset = TRand(lo: -16, hi: 16, trig: tr);
-	var sequence = DegreeToKey(bufnum: major, in: TScramble(trigger: tr, inputs: [0, 1, 2, 3] + offset), octave: 12) + root;
-	var f = TxLine(start: TExpRand(lo: 4, hi: 24, trig: tr), end: TExpRand(lo: 4, hi: 24, trig: tr), dur: 12, trig: tr);
-	var trig = Impulse(freq: f, phase: 0);
-	var freq = sequ(value: sequence.MidiCps, value: trig);
-	var sig = LfTri(freq: freq.kr, iphase: 0) * Decay2(in: trig, attackTime: 0.004, decayTime: 0.3).kr * 0.1;
-	Pan2(in: sig, pos: TRand(lo: -1, hi: 1, trig: tr), level: 1)
+	var offset = TRand(
+		lo: -16,
+		hi: 16,
+		trig: tr
+	);
+	var sequence = DegreeToKey(
+		bufnum: major,
+		in: TScramble(
+			trigger: tr,
+			inputs: [0, 1, 2, 3] + offset
+		),
+		octave: 12
+	) + root;
+	var f = TxLine(
+		start: TExpRand(
+			lo: 4,
+			hi: 24,
+			trig: tr
+		),
+		end: TExpRand(
+			lo: 4,
+			hi: 24,
+			trig: tr
+		),
+		dur: 12,
+		trig: tr
+	);
+	var trig = Impulse(
+		freq: f,
+		phase: 0
+	);
+	var freq = sequ(
+		value: sequence.MidiCps,
+		value: trig
+	);
+	var sig = LfTri(
+		freq: freq.kr,
+		iphase: 0
+	) * Decay2(
+		in: trig,
+		attackTime: 0.004,
+		decayTime: 0.3
+	).kr * 0.1;
+	Pan2(
+		in: sig,
+		pos: TRand(
+			lo: -1,
+			hi: 1,
+			trig: tr
+		),
+		level: 1
+	)
 }, 6, 3, 6);
-6.timesRepeat { z := AllpassN(in: z, maxdelaytime: 0.04, delaytime: { Rand(lo: 0, hi: 0.04) } ! 2, decaytime: 16) };
+6.timesRepeat {
+	z := AllpassN(
+		in: z,
+		maxdelaytime: 0.04,
+		delaytime: {
+			Rand(
+				lo: 0,
+				hi: 0.04
+			)
+		} ! 2,
+		decaytime: 16)
+};
 z
 
 ;; police state (jmcc) #2
@@ -242,7 +325,15 @@ var node = {
 		level: LfNoise2(freq: 100 + 20.Rand2) * 0.1
 	)
 };
-var e = LfNoise2(freq: LfNoise2(freq: [0.4, 0.4]) * 90 + 620) * (LfNoise2(freq: [0.3, 0.3]) * 0.15 + 0.18);
+var e = LfNoise2(
+	freq: LfNoise2(
+		freq: [0.4, 0.4]
+	) * 90 + 620
+) * (
+	LfNoise2(
+		freq: [0.3, 0.3]
+	) * 0.15 + 0.18
+);
 CombL(
 	in: node !+ 4 + e,
 	maxdelaytime: 0.3,
@@ -267,14 +358,48 @@ OverlapTexture({ :tr |
 }, 8, 2, 4)
 
 ;; sample and hold liquidities (jmcc) #4 ; keywords
-var r = MouseX(minval: 1, maxval: 200, warp: 1, lag: 0.1);
+var r = MouseX(
+	minval: 1,
+	maxval: 200,
+	warp: 1,
+	lag: 0.1
+);
 var t = r.Recip;
-var c = Impulse(freq: r, phase: 0) * 0.4;
-var cf = MouseY(minval: 100, maxval: 8000, warp: 1, lag: 0.1);
-var f = Latch(in: WhiteNoise() * cf * 0.5 + cf, trig: c);
-var p = Latch(in: WhiteNoise(), trig: c);
-var i = Pan2(in: SinOsc(freq: f, phase: 0), pos: p, level: Decay2(in: c, attackTime: 0.1 * t, decayTime: 0.9 * t));
-CombN(in: i, maxdelaytime: 0.3, delaytime: 0.3, decaytime: 2)
+var c = Impulse(
+	freq: r,
+	phase: 0
+) * 0.4;
+var cf = MouseY(
+	minval: 100,
+	maxval: 8000,
+	warp: 1,
+	lag: 0.1
+);
+var f = Latch(
+	in: WhiteNoise() * cf * 0.5 + cf,
+	trig: c
+);
+var p = Latch(
+	in: WhiteNoise(),
+	trig: c
+);
+var i = EqPan2(
+	in: SinOsc(
+		freq: f,
+		phase: 0
+	),
+	pos: p
+) * Decay2(
+	in: c,
+	attackTime: 0.1 * t,
+	decayTime: 0.9 * t
+);
+CombN(
+	in: i,
+	maxdelaytime: 0.3,
+	delaytime: 0.3,
+	decaytime: 2
+)
 
 ;; scratchy (jmcc) #1
 var n = { BrownNoise() } !2 * 0.5 - 0.49;
@@ -348,8 +473,13 @@ var y = z * 0.6;
 ;; why supercollider (jmcc) #0 ; keywords
 var s = {
 	Resonz(
-		in: Dust(density: 0.2) * 50,
-		freq: Rand(lo: 200, hi: 3200),
+		in: Dust(
+			density: 0.2
+		) * 50,
+		freq: Rand(
+			lo: 200,
+			hi: 3200
+		),
 		bwr: 0.003
 	)
 } !+ 10;
@@ -362,7 +492,12 @@ var x = {
 	CombL(
 		in: z,
 		maxdelaytime: 0.1,
-		delaytime: LfNoise1(freq: Rand(lo: 0, hi: 0.1)) * 0.04 + 0.05,
+		delaytime: LfNoise1(
+			freq: Rand(
+				lo: 0,
+				hi: 0.1
+			)
+		) * 0.04 + 0.05,
 		decaytime: 15
 	)
 } !+ 7;
@@ -370,7 +505,12 @@ var x = {
 	x := AllpassN(
 		in: x,
 		maxdelaytime: 0.050,
-		delaytime: { Rand(lo: 0, hi: 0.05) } ! 2,
+		delaytime: {
+			Rand(
+				lo: 0,
+				hi: 0.05
+			)
+		} ! 2,
 		decaytime: 1
 	)
 };

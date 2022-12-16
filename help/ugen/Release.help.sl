@@ -2,7 +2,12 @@
 Release(SinOsc(440, 0) * 0.1, 0.01, 3, 7)
 
 ;;---- Release ; keywords
-Release(in: SinOsc(freq: 440, phase: 0) * 0.1, attackTime: 0.01, dur: 3, releaseTime: 7)
+Release(
+	in: SinOsc(440, 0) * 0.1,
+	attackTime: 0.01,
+	dur: 3,
+	releaseTime: 7
+)
 
 ;;---- Release ; process ; requires=fork
 9.timesRepeat({

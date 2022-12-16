@@ -19,5 +19,5 @@ To reset the synthesiser type _Ctrl-FullStop_.
 
 To get help about a word, for instance _SinOscFb_, select it and type _Ctrl-QuestionMark_.
 
-Text in brackets, for instance _[Simple Editor]_, indicates the name of a help document.
-To open it select the name at type _Ctrl-QuestionMark_.
+Text in brackets, for instance _[Simple Editor]_, indicates that the bracketed text is the name of a help document,
+which can be visited the same way.

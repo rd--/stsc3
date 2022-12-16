@@ -28,7 +28,7 @@ var input = 0.5.coin.if { (* Audio input signal *)
 } {
 	Decay2(Impulse(0.2, 2), 0.001, 0.2) * PinkNoise()
 };
-var buffer = BufAlloc(1, 48000 * 0.1).clearBuf; (* A buffer for the early reflections delay line *)
+var buffer = BufAlloc(1, 48000 * 0.1).BufClear; (* A buffer for the early reflections delay line *)
 var revMonoInput = input.isArray.if {
 	input.sum / input.size (* Reverb input must be mono *)
 } {

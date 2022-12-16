@@ -3,7 +3,7 @@ var vc = { :e |
 	var freq = (e.x * 25 + 48).MidiCps + [0, TRand(1, 4, e.w)];
 	var carriers = [SinOsc(freq, 0), Saw(freq), Pulse(freq, 0.5)];
 	var modulators = { SinOsc(TRand(0.0322, 1.0, e.w) * 0.0647, 0) } ! carriers.size;
-	var filterEnv = Env([3600, 220, 3600], [e.y * 2, 16], ['exp'], 1, nil, 0).asEnvGen(e.w);
+	var filterEnv = Env([3600, 220, 3600], [e.y * 2, 16], 2, 1, nil, 0).asEnvGen(e.w);
 	EqPan2(Lpf((carriers * modulators).sum, filterEnv), e.o * 2 - 1).sum * LagUd(e.w * e.z, 0, 0.25)
 };
 var pre = Voicer(16, vc).sum;

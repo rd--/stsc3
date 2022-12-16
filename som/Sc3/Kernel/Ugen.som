@@ -38,8 +38,8 @@ addToUgenSet: c protectedBy: w = (
 	scUgen addToUgenSet: c protectedBy: w
 )
 
-clearBuf = (
-	"ClearBuf does not copy the buffer number through so this is an Mrg node."
+bufClear = (
+	"ClearBuf does not copy the buffer number through.  This form is an Mrg node."
 	^self mrg: (ClearBuf buf: self)
 )
 

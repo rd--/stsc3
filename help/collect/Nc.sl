@@ -102,12 +102,12 @@ PinkNoise() * 0.1 * [source, Trig1(source, 0.001)]
 SinOsc(300 + (200 * Latch(SinOsc(13.3, 0), Impulse(10, 0))), 0) * 0.2
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; ?
-var env = Env([0, 1, 0, 0.5, -0.4], [0.1], ['step'], nil, nil, 0).asArray;
+var env = Env([0, 1, 0, 0.5, -0.4], [0.1], 0, nil, nil, 0).asArray;
 SinOsc(400 * (1 + EnvGen(Impulse(2.5, 0), 1, 0, 1, 0, env)), 0) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; ?
-var env = Env([63, 63, 60, 55, 60], [0.125], ['step'], nil, nil, 0).asArray;
-SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, env).midiCps, 0) * 0.1
+var env = Env([63, 63, 60, 55, 60], [0.125], 0, nil, nil, 0).asArray;
+SinOsc(EnvGen(Impulse(2, 0), 1, 0, 1, 0, env).MidiCps, 0) * 0.1
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4
 var trig = Impulse(3, 0);
@@ -117,7 +117,7 @@ Pan2(sound * env, 0, 1)
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; ?
 var t = MouseY(0, 1, 0, 0.2) * [0, 128, 256, 128] / SampleRate();
-var e = Env([0, 0, 1, -1, 0], t, ['lin'], nil, nil, 0).asArray;
+var e = Env([0, 0, 1, -1, 0], t, 1, nil, nil, 0).asArray;
 EnvGen(Impulse(MouseX(10, 300, 1, 0.2), 0), 1, 0, 1, 0, e) * 0.2
 
 ;; nc ; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 3.4 ; portamento/glide

@@ -4,6 +4,7 @@
 var m = { randomFloat() }.dup(9).mean; m > 0 & { m < 1 }
 ({ randomFloat() } ! 9).size = 9
 ({ randomFloat() } ! 3).allSatisfy(isNumber) = true
+[0, [1, 2], [3, 4, 5]].flop = [[0, 1, 3], [0, 2, 4], [0, 1, 5]]
 
 'sc/Clock'
 Clock().isClock
