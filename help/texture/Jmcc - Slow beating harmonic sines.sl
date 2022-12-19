@@ -5,7 +5,7 @@
 	var m = 5; (* harmonics per note *)
 	var p = OrderedCollection.new;
 	var q = OrderedCollection.new;
-	var k = 24 + 12.randomInteger;
+	var k = 24 + 12.atRandom;
 	n.timesRepeat {
 		var freq = ([0, 2, 4, 5, 7, 9].atRandom + (IRand(0, 7) * 12) + k).MidiCps;
 		[p, q].do { :each |

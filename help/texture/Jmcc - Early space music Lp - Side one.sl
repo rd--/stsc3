@@ -17,12 +17,12 @@
 	};
 	var s2 = {
 		var rnd = { ExpRand(4, 12) * [1, Rand(0.9, 1.1)] };
-		var rates = XLn(rnd(), rnd(), 12) * [1, -1].atRandom;
+		var rates = XLn(rnd.value, rnd.value, 12) * [1, -1].atRandom;
 		var sw = LfSaw(rates, 0) * Rand(2, 16) + Rand(40, 120);
 		var lfo = LfTri(ExpRand(0.25, 0.5) * [1, -1].atRandom, 0);
 		var freq = (lfo * LinRand(4, 30, 0) + sw).MidiCps;
 		CombN(SinOsc(freq, 0) * 0.02, 0.3, Rand(0.15, 0.3), 4)
 	};
-	var z = [s1, s2].atRandom.value;
+	var z = [s1.value, s2,value].atRandom.value;
 	CombN(z, 0.5, [0.5, 0.47], 7) + z.reversed
 }.overlap(4, 4, 6)

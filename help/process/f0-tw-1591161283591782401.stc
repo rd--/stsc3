@@ -9,7 +9,7 @@ var x = {
 	Splay2(AllpassC(AllpassC(z, 1, LFTri([6, 4, 6] / 4, [0, 1]) + 1 / 2, 1), 1, 1 / 2, 4) * d)
 };
 99.timesRepeat {
-	var t = 9.random / 8 + 33.random + 8;
+	var t = 9.atRandom / 8 + 33.atRandom + 8;
 	{ Release(x(), 9, t, 24) }.play;
 	t.seconds.wait
 }
