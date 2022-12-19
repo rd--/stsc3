@@ -16,7 +16,7 @@ var freqArray = { 50.ExpRand(1500) }.dup(segments).sorted;
 var oscArray = (1 .. segments).collect { :index |
 	var x = xMinor + (rMinor * (index * 2 * pi / segments).Sin);
 	var y = yMinor + (rMinor * (index * 2 * pi / segments).Cos);
-	var grey = shuheiKawachi.value(x, y, 2 * pi, 0.5);
+	var grey = shuheiKawachi(x, y, 2 * pi, 0.5);
 	var amp = Lag(Wrap(grey, 0, 1), 0.01) / segments;
 	SinOsc(freqArray[index], 0) * amp
 };

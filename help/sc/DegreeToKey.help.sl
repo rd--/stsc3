@@ -21,5 +21,4 @@ Modal space, mouse controls discrete pitch in dorian mode:
 		CombN(m, 0.31, 0.31, 2) + m
 	};
 	var n = LfNoise1([3, 3]);
-	(c.value(n, 48) + c.value(n, 72)) * 0.25
-
+	(c(n, 48) + c(n, 72)) * 0.25

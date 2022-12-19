@@ -4,7 +4,7 @@ OverlapTexture({ :tr |
 	var freq = TRand(56, 64, tr);
 	var blocksize = 1 / ControlRate();
 	var mkDt = { :f | 1 / f - blocksize };
-	var stringDelay = mkDt.value(freq);
+	var stringDelay = mkDt(freq);
 	var pk1Pos = 0.1;
 	var srcPos = 0.3;
 	var pk2Pos = 0.9;
@@ -12,12 +12,12 @@ OverlapTexture({ :tr |
 	var mkDelay = { :i :r | Lpz1(DelayC(i, maxDelay, r * stringDelay)) };
 	var mkAllpass = { :i :r :dt | Lpz1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
 	var drv = InFb(1, bus);
-	var pk1R = mkDelay.value(drv, srcPos - pk1Pos);
-	var pk1L = mkAllpass.value(pk1R * -1, pk1Pos * 2,  TRand(0.001, 0.11, tr));
-	var pk2L = mkDelay.value(pk1L, pk2Pos - pk1Pos) * 0.99;
-	var stringL = mkDelay.value(pk2L, 1 - pk2Pos);
-	var pk2R = mkAllpass.value(stringL * -1, 1 - pk2Pos, 2 + TRand(0.001, 0.11, tr)) * 0.99;
-	var stringR = mkDelay.value(pk2R, pk2Pos - srcPos);
+	var pk1R = mkDelay(drv, srcPos - pk1Pos);
+	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2,  TRand(0.001, 0.11, tr));
+	var pk2L = mkDelay(pk1L, pk2Pos - pk1Pos) * 0.99;
+	var stringL = mkDelay(pk2L, 1 - pk2Pos);
+	var pk2R = mkAllpass(stringL * -1, 1 - pk2Pos, 2 + TRand(0.001, 0.11, tr)) * 0.99;
+	var stringR = mkDelay(pk2R, pk2Pos - srcPos);
 	var source = {
 		var s = SinOsc(220, 0) * 0.01;
 		var a = Amplitude(drv, 0.01, 0.01) * 11;
