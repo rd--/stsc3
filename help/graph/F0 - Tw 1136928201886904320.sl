@@ -1,7 +1,7 @@
 ;; f0 ; https://twitter.com/redFrik/status/1136928201886904320
 var f = { :a |
 	var ix = a.key;
-	var osc = a.value;
+	var osc:/2 = a.value;
 	var b = [4, 2, 1, 3, 5];
 	var c = (osc(1 / b, 0) * b).RoundTo(osc(b / 9, 0) > 0);
 	var o = SinOscFb(c ** 2 * ((osc(0.02, ix) > 0) + 1 * 50), osc(c / 9, 0) % 1);
@@ -10,4 +10,4 @@ var f = { :a |
 	var y = Bpf(x, ix * 99 + 400, 0.001) * (osc(0.04, ix) + 1 * 9);
 	Splay2(x + y) / 3
 };
-[0 -> LfTri, 1 -> LfSaw, 2 -> LfPar].collect(f).sum
+[0 -> LfTri:/2, 1 -> LfSaw:/2, 2 -> LfPar:/2].collect(f).sum
