@@ -163,3 +163,36 @@ var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);
 var delaySignal = (fmSignal + (delayReturn * delayMix)) <! LocalOut(delayReturn * delayFeedback);
 var reverbMix = 0.5;
 FreeVerb(delaySignal, reverbMix, 0.8, 0.5);
+
+;; SinOsc ; simple fm
+var modFreq = [400, MouseX(400, 700, 1, 0.2)];
+var modDev = SinOsc(LfNoise2(1) + 1, 0).Abs * 1200;
+var modOsc = SinOsc(modFreq, 0) * modDev;
+var carFreq = [400, MouseY(400, 500, 1, 0.2)];
+SinOsc(carFreq + modOsc, 0) * LfNoise2([1, 2]).Range(0, 0.1)
+
+;; SinOsc ; simple fm
+var modFreq = MouseX(1, 1000, 1, 0.2);
+var modDev = MouseY(0, [100, 700], 0, 0.2);
+var modOsc = SinOsc(modFreq, 0) * modDev;
+var carFreq = 400;
+var carAmp = 0.1;
+SinOsc(carFreq + modOsc, 0) * carAmp
+
+;; SinOsc ; simple fm ; modIndex
+var modFreq = MouseX(1, 1000, 1, 0.2);
+var modIndex = MouseY(0, [7, 11], 0, 0.2);
+var modDev = modFreq * modIndex;
+var modOsc = SinOsc(modFreq, 0) * modDev;
+var carFreq = 440;
+var carAmp = 0.1;
+SinOsc(carFreq + modOsc, 0) * carAmp
+
+;; SinOsc ; simple fm ; modRatio & carRatio
+var freq = 440;
+var modRatio = MouseX(0.1, 10, 1, 0.2);
+var modDev = MouseY(0, 100, 0, 0.2);
+var modOsc = SinOsc(freq * modRatio, 0) * modDev;
+var carRatio = [1, 1 / 3] / modRatio;
+var carAmp = 0.1;
+SinOsc(freq * carRatio + modOsc, 0) * carAmp
