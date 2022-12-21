@@ -12,7 +12,11 @@
 	};
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octaves = [4, 5, 6, 7];
-	var mnn = scale.collect({ :n | octaves.collect({ :o | n + (o * 12) }) }).concatenation;
+	var mnn = scale.collect({ :n |
+		octaves.collect { :o |
+			n + (o * 12)
+		}
+	}).concatenation;
 	var chd = { mnn.atRandom } ! 6;
 	{ chrd(chd) } !+ 9
 }.overlap(21, 0, 3)

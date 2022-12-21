@@ -2,7 +2,10 @@
 var i = {
 	var s0 = Impulse(Rand(2, 2.2), 0) * 0.3;
 	var s1 = Dust(0.5) * 0.3;
-	var s2 = Impulse(SinOsc(Rand(0.05, 0.15), Rand(0, pi * 2)) * 5 + 5.2, 0) * 0.3;
+	var s2 = Impulse(
+		SinOsc(Rand(0.05, 0.15), Rand(0, pi * 2)) * 5 + 5.2,
+		0
+	) * 0.3;
 	[s0, s1, s2].atRandom
 };
 {

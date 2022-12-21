@@ -6,8 +6,12 @@ var z = OverlapTexture({ :tr |
 	var n = 12;
 	(1 .. n).collect({ :i |
 		var g = TRand(0, n, tr) + 1;
-		var m = (SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.08 - 0.04).Max(0);
+		var m = 0.Max(
+			SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.08 - 0.04
+		);
 		EqPan2(SinOsc(f * g, 0), TRand(-1, 1, tr)) * m * 2 / g
 	}).sum * 0.1
 }, 12.8, 6.4, 6);
-{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) } !+ 5 * 0.3
+{
+	CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)
+} !+ 5 * 0.3

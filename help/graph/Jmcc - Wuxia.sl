@@ -3,7 +3,12 @@ OverlapTexture({ :tr |
 	var amp = 0.1;
 	var eg = LinSeg(tr, [0, 0.03, 1, 4, 1, 2, 0]);
 	var noise = WhiteNoise() * 0.1 * eg;
-	var dt = TxLine(TExpRand(10, 12000, tr), TExpRand(10, 12000, tr), 4, tr).Recip;
+	var dt = TxLine(
+		TExpRand(10, 12000, tr),
+		TExpRand(10, 12000, tr),
+		4,
+		tr
+	).Recip;
 	6.timesRepeat{
 		noise := LeakDc(CombC(noise, 0.1, dt, dt * 6) + dt, 0.995);
 	};

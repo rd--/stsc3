@@ -5,8 +5,12 @@ var z = OverlapTexture({ :tr |
 	var n = 12;
 	var p = LfPulse(TExpRand(0.2, 1.2, tr), TRand(0.1, 0.2, tr), 0.5);
 	(1 .. n).collect({ :i |
-		var m = (SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.1 - 0.05).Max(0);
+		var m = 0.Max(
+			SinOsc(r * TRand(0.9, 1.1, tr), TRand(0, 2 * pi, tr)) * 0.1 - 0.05
+		);
 		EqPan2(SinOsc(f * i + f, 0) * m, TRand(-1, 1, tr)) / (i + 1)
 	}).sum * p
 }, 12.8, 6.4, 6);
-{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8) } !+ 5 * 0.25
+{
+	CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)
+ } !+ 5 * 0.25
