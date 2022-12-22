@@ -3,7 +3,7 @@ Changed = PseudoUgen (
 
 input: input threshold: threshold = (
 
-^(HPZ1 apply: {input}) abs > threshold
+^(Hpz1 apply: {input}) abs > threshold
 )
 
 primaryFactoryMethod = (
@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Triggers when a value changes *
+
 ')
 
 

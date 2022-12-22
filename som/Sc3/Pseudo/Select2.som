@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Select one of two branches based on predicate signal *
+
 ')
 
 

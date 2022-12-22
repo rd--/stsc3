@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Allocate a buffer local to the synth *
+
 ')
 
 

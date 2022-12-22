@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Record signal into a Buffer *
+
 ')
 
 

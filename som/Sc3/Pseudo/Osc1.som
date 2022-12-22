@@ -15,7 +15,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- An oscillator that reads through a table once *
+
 ')
 
 

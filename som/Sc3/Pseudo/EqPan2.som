@@ -1,14 +1,14 @@
-Tr1 = PseudoUgen (
+EqPan2 = PseudoUgen (
 ----------------------------
 
-in: in = (
+in: in pos: pos = (
 
-^(Trig1 apply: {in. (SampleDur apply: {})})
+^(Pan2 apply: {in. pos. 1})
 )
 
 primaryFactoryMethod = (
 
-^#'in:'
+^#'in:pos:'
 )
 
 

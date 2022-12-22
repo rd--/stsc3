@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Read signal from a bus with a current or one cycle old timestamp *
+
 ')
 
 

@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Randomly select one of several inputs on trigger *
+
 ')
 
 

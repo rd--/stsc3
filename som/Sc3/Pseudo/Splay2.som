@@ -13,7 +13,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Pan an array of channels across the stereo field *
+
 ')
 
 

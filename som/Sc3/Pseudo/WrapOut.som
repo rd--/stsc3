@@ -15,7 +15,7 @@ primaryFactoryMethod = (
 
 
 comment = (^'
- Wrap signal in an Out Ugen if required *
+
 ')
 
 
