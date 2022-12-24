@@ -1,4 +1,4 @@
-# WhiteNoise
+# WhiteNoise -- noise generator
 
 _WhiteNoise()_
 

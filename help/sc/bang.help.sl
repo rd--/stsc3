@@ -1,10 +1,11 @@
-# ! ≡bang -- duplicate
+# ! -- duplicate
 
-- _anObject ! anInteger_
+- _aValue ! anInteger_
+- _bang(aValue, anInteger)_
 
-Answer an _Array_ constructed by applying _value_ to _anObject_ _anInteger_ times
+Answer an _Array_ constructed by applying _value_ to _aValue_ _anInteger_ times
 
-Ordinarily _anObject_ is a no-argument _Procedure_ and each element of the answer is a result of evaluating the procedure.
+Ordinarily _aValue_ is a no-argument _Procedure_ and each element of the answer is a result of evaluating the procedure.
 
 ```
 {

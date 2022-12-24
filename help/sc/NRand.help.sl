@@ -1,4 +1,4 @@
-# NRand
+# NRand -- random number generator
 
 _NRand(lo, hi, n)_
 
@@ -16,4 +16,3 @@ As n increases, distribution converges towards gaussian.
 		var dur =  (1 / freq) * 7500;
 		FSinOsc(freq, 0) * Ln(0.2, 0, dur)
 	} !^ 15
-

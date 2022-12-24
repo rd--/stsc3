@@ -1,4 +1,4 @@
-# play
+# play -- synthesiser control
 
 - _play(aProcedure)_
 

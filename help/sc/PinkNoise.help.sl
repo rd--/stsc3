@@ -1,4 +1,4 @@
-# PinkNoise
+# PinkNoise -- noise generator
 
 _PinkNoise()_
 

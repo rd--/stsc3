@@ -11,7 +11,7 @@ Constant frequency:
 
 	LfTri(500, 0) * 0.1
 
-Used as both Oscillator and LfO:
+Used as both Oscillator and Lfo:
 
 	LfTri(LfTri(1, 0) * 400 + 400, 0) * 0.1
 

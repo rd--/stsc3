@@ -1,6 +1,6 @@
-# MidiCps
+# MidiCps -- convert midi note to cycles per second
 
-Convert midi note to cycles per second.
+Inverse of _CpsMidi_.
 
 	Saw(Ln(24, 108, 10).MidiCps) *  0.1
 

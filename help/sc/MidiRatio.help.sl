@@ -1,5 +1,5 @@
-# MidiRatio
+# MidiRatio -- convert an interval in midi notes into a frequency ratio
 
-Convert an interval in Midi notes into a frequency ratio.
+Inverse of _RatioMidi_.
 
 	12.MidiRatio = 2

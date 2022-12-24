@@ -1,0 +1,217 @@
+# Sc Help Index
+
+- ! -- duplicate
+- !^ -- duplicate and distribute
+- !+ -- duplicate and sum
+- <! -- first argument
+- Abs -- absolute value
+- AllpassC -- all pass filter
+- AllpassN -- all pass filter
+- AmpComp -- psychoacoustic amplitude compensation
+- AmpDb -- convert linear amplitude to decibels
+- Amplitude -- amplitude follower
+- ArcCos -- arc cosine
+- ArcSin -- arc sine
+- ArcTan -- arc tangent
+- AudioIn --  read audio input from analogue-to-digital converter
+- BLowPass -- 12db/oct rolloff 2nd order resonant low pass filter
+- Blip -- band limited impulse oscillator
+- Bpf -- 2nd order Butterworth bandpass filter
+- Bpz2 -- two zero fixed midpass
+- Brf -- 2nd order Butterworth band reject filter
+- BrownNoise -- noise generator
+- Brz2 -- two zero fixed midcut
+- BufRd -- Buffer reading oscillator
+- Ceil -- next higher integer
+- Choose -- demand rate random sequence generator
+- ClipNoise -- noise generator
+- CoinGate -- statistical gate
+- CombC -- comb filter
+- CombL -- comb filter
+- CombN -- comb filter
+- Compander -- compressor, expander, limiter, gate, ducker
+- Cos -- cosine
+- Cosh -- hyperbolic cosine
+- CpsMidi -- convert cycles per second to midi note
+- CpsOct -- convert cycles per second to decimal octaves
+- Crackle -- chaotic noise function
+- Cubed -- cubed value
+- CuspL -- cusp map chaotic generator
+- Cutoff -- very simple envelope shape
+- DbAmp -- convert decibels to linear amplitude
+- Decay -- exponential decay
+- Decay2 -- exponential decay
+- DegreeToKey -- convert signal to modal pitch
+- Delay1 -- single sample delay
+- Delay2 -- two sample delay
+- DelayC -- delay line
+- DelayN -- delay line
+- DelayWrite, DelayTap
+- Distort -- nonlinear distortion
+- DmdFor -- demand results from demand rate ugens
+- DmdOn -- demand results from demand rate ugens
+- Dust -- random impulses
+- Dust2 -- bipolar random impulses
+- EqPan2 -- two channel equal power pan
+- Exp -- exponential
+- ExpRand -- random number generator
+- FSinOsc -- fast sine oscillator
+- FbSineC -- feedback sine with chaotic phase indexing
+- Floor -- next lower integer
+- Fold -- fold a signal outside given thresholds
+- Formant -- formant oscillator
+- Formlet -- FOF-like filter
+- Fos -- first order filter section
+- Frac -- fractional part
+- FreeVerb -- a reverb
+- FreqShift -- Frequency Shifter
+- GVerb -- two-channel reverb
+- Gate -- gate or hold
+- Gcd -- greatest common divisor
+- GetTempo -- continuous tempo
+- GrayNoise -- noise generator
+- Hasher -- randomized value
+- HenonC -- Henon map chaotic generator
+- Hpf -- 2nd order Butterworth highpass filter
+- Hpz1 -- two point difference filter
+- Hpz2 -- two zero fixed highpass
+- Hypot -- hypotenuse
+- IRand -- random number generator
+- Impulse -- impulse oscillator
+- InRange -- tests if a signal is within a given range
+- Index -- index into a table with a signal
+- Integrator -- leaky integrator
+- K2A -- control rate to audio rate converter
+- Lag -- exponential lag
+- Latch -- sample and hold
+- LatoocarfianC -- latoocarfian chaotic generator
+- Lcm -- least common multiple
+- LeakDc -- remove Dc
+- LfClipNoise -- clipped noise
+- LfCub -- oscillator
+- LfNoise0 -- step noise
+- LfNoise1 -- ramp noise
+- LfNoise2 -- quadratic noise
+- LfPulse -- pulse oscillator
+- LfSaw -- sawtooth oscillator
+- LfTri -- triangle wave oscillator
+- LfdNoise0 -- dynamic step noise
+- LfdNoise3 -- dynamic cubic noise
+- Limiter -- peak limiter
+- LinCongC -- linear congruential generator
+- LinExp -- convert a linear range to an exponential range
+- LinPan2 -- two channel linear pan
+- LinRand -- random number generator
+- LinXFade2 -- two channel linear crossfade
+- Ln -- line generator
+- LocalIn -- define and read from an audio bus local to the enclosing synth
+- LocalOut -- define and write to an audio bus local to the enclosing synth
+- Log -- natural logarithm
+- Log10 -- base 10 logarithm
+- Log2 -- base 2 logarithm
+- Lpf -- 2nd order Butterworth lowpass filter
+- Lpz1 -- two point average filter
+- Lpz2 -- two zero fixed lowpass
+- Max -- maximum
+- Median -- median filter
+- MidEq -- parametric filter
+- MidiCps -- convert midi note to cycles per second
+- MidiRatio -- convert an interval in midi notes into a frequency ratio
+- Min -- minimum
+- Mix -- sum an array of inputs
+- ModDif -- minimum difference of two values in modulo arithmetics
+- MouseX -- cursor unit generator
+- MouseY -- cursor unit generator
+- MulAdd -- multiply and add
+- MultiTapDelay -- multi-tap delay line
+- NRand -- random number generator
+- Neg -- negation (inversion)
+- Normalizer -- flattens dynamics
+- OctCps -- convert decimal octaves to cycles per second
+- OnePole -- one pole filter
+- OneZero -- one zero filter
+- Osc1 -- one-shot oscillator
+- OverlapTexture -- overlap events
+- Pan2 -- two channel equal power pan
+- PanAz -- azimuth panner
+- PanB -- Ambisonic B format panner
+- PeakFollower -- track peak signal amplitude
+- Phasor -- a resettable linear ramp between two levels
+- PingPongDelay -- stereo ping pong delay
+- PinkNoise -- noise generator
+- Pitch -- autocorrelation pitch follower
+- PitchShift -- granular pitch shifter
+- PlayBuf -- sample playback oscillator
+- Pluck -- karplus-strong ugen
+- PmOsc -- phase modulation oscillator pair
+- Pow -- math operator
+- Pulse -- band limited pulse wave
+- PulseCount -- pulse counter
+- PulseDivider -- pulse divider
+- Rand -- random number generator
+- Rand2 -- random number generator
+- RandRange -- random number generator
+- RatioMidi -- convert interval as frequency ratio to midi note number
+- Recip -- reciprocal
+- Release -- envelope generator
+- Resonz -- resonant filter
+- Rhpf -- resonant high pass filter
+- Ringz -- ringing filter
+- RingzBank -- bank of resonators
+- Rlpf -- resonant low pass filter
+- RoundTo -- round to multiple of
+- RunningSum -- summing
+- Saw -- band limited sawtooth
+- Schmidt -- Schmidt trigger
+- Select -- select output from an array of inputs
+- Seq -- demand rate sequence generator
+- Silent -- output silence
+- Sin -- sine
+- SinOsc -- interpolating sine wavetable oscillator
+- SinOscBank -- sin oscillator bank
+- SinOscFb -- Feedback Fm oscillator
+- Sinh -- hyperbolic sine
+- Slew -- slew rate limiter
+- Slope -- slope of signal
+- SoftClip -- nonlinear distortion
+- Sos -- second order filter section (biquad)
+- Splay -- stereo panner
+- Splay2 -- stereo panner
+- Spring -- physical model of resonating spring
+- Sqrt -- square root
+- Squared -- squared value
+- Stepper -- pulse counter
+- Sweep -- triggered linear ramp
+- SyncSaw -- hard sync sawtooth wave
+- TChoose -- randomly select one of several inputs
+- TDelay -- trigger delay
+- TExpRand -- triggered exponential random number generator
+- TGrains -- buffer granulator
+- TRand -- triggered random number generator
+- Tan -- tangent
+- Tanh -- hyperbolic tangent
+- TiRand -- triggered integer random number generator
+- Timer -- returns time since last triggered
+- ToggleFf -- toggle flip flop
+- TwoPole -- two pole filter
+- TwoZero -- two zero filter
+- VarSaw -- variable duty saw
+- Warp1 -- Warp a buffer with a time pointer
+- WhiteNoise -- noise generator
+- Wrap -- wrap a signal outside given thresholds
+- Wrap2 -- bilateral wrapping
+- WrapIndex -- index into a table with a signal
+- XFade2 -- equal power two channel cross fade
+- XLn -- exponential line generator
+- ZeroCrossing -- zero crossing frequency follower
+- coin -- random boolean generator
+- dup -- duplicate
+- isNegative -- math operator
+- isPositive -- math operator
+- isStrictlyPositive -- math operator
+- overlap -- texture generator
+- play -- synthesiser control
+- playEvery -- schedule sound generating procedure at intervals
+- pyramid -- counting
+- schedule -- process
+- xfade -- texture generator

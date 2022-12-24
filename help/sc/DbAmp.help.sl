@@ -1,6 +1,4 @@
-# DbAmp
-
-Convert decibels to linear amplitude.
+# DbAmp -- convert decibels to linear amplitude
 
 Fixed amplitude:
 

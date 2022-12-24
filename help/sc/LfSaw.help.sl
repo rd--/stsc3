@@ -11,7 +11,7 @@ ConstantFixed frequency:
 
 	LfSaw(500, 1) * 0.1
 
-Used as both Oscillator and LfO:
+Used as both Oscillator and Lfo:
 
 	LfSaw(LfSaw(4, 0) * 400 + 400, 0) * 0.1
 

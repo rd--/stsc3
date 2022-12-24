@@ -1,6 +1,6 @@
-# OctCps
+# OctCps -- convert decimal octaves to cycles per second
 
-Convert decimal octaves to cycles per second
+Inverse of _CpsOct_.
 
 	Saw(Ln(2, 9, 10).OctCps) * 0.1
 

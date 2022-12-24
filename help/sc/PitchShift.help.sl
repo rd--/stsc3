@@ -1,4 +1,4 @@
-# PitchShift
+# PitchShift -- granular pitch shifter
 
 _PitchShift(in, windowSize, pitchRatio, pitchDispersion, timeDispersion)_
 

@@ -13,6 +13,6 @@ freq := note2 midiCps. "convert midi note to cycles per second"
 env := Decay2 in: clock attackTime: (clock_time * 0.05) decayTime: (clock_time * 2).
 amp := env * 0.1 + 0.02. "amplitude envelope"
 filt := env * (FSinOsc freq: 0.17 iphase: 0) * 800 + 1400. "filter frequency"
-pw := SinOsc freq: 0.08 phase: {0. 0.5 * Float pi} mul: 0.45 add: 0.5. "pulse width LfO(s)"
+pw := SinOsc freq: 0.08 phase: {0. 0.5 * Float pi} mul: 0.45 add: 0.5. "pulse width Lfo(s)"
 sig := Pulse freq: freq kr width: pw kr mul: amp kr.
 CombN in: (Rlpf in: sig freq: filt kr rq: 0.15) maxdelaytime: 0.2 delaytime: #(0.2 0.17) decaytime: 1.5

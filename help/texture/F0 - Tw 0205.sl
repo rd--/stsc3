@@ -5,4 +5,4 @@
 		Release(SinOsc(DmdFor(1 / [8, 9], 0, Seq(99, a)), 0) * 0.1, 0, 0, 9)
 	}.play;
 	a
-}.recurseEvery([1, 3, 5, 7, 9] * 99, 2.seconds)
+}.recurseEvery([1, 3, 5, 7, 9] * 99, 2)

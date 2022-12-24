@@ -1,4 +1,4 @@
-# schedule
+# schedule -- process
 
 - _schedule(aClock, deltaTime, aProcedure)_
 - _schedule(deltaTime, aProcedure)_ ⇒ _aClock = system::clock_

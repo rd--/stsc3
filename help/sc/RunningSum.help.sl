@@ -1,4 +1,4 @@
-# RunningSum
+# RunningSum -- summing
 
 _RunningSum(in, numsamp)_
 
@@ -7,7 +7,7 @@ A running sum over a user specified number of samples, useful for running RMS po
 - in: Input signal
 - numsamp: How many samples to take the running sum over (initialisation time only, not modulatable)
 
-Overloads of course - would need scaling:
+Overloads of course, would need scaling:
 
 	RunningSum(AudioIn([1]), 40) / 40
 

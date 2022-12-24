@@ -1,4 +1,4 @@
-# IRand
+# IRand -- random number generator
 
 - _IRand(lo, hi)_
 - _IRand(hi)_ ≡ _IRand(0, hi)_

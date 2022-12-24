@@ -1,6 +1,6 @@
-# RatioMidi
+# RatioMidi -- convert interval as frequency ratio to midi note number
 
-Interval as frequency ratio in midi note numbers.
+Inverse of _MidiRatio_.
 
 	2.RatioMidi = 12
 
