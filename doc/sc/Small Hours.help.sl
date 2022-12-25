@@ -21,3 +21,5 @@ To get help about a word, for instance _SinOscFb_, select it and type _Ctrl-Ques
 
 Text in brackets, for instance _[Simple Editor]_, indicates that the bracketed text is the name of a help document,
 which can be visited the same way.
+
+There is a language [Help Index] and an [Sc Help Index] where terms are sorted alphabetically.
