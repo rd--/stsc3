@@ -20,6 +20,10 @@ loop = (
 	[ true ] whileTrue: [ self value ]
 )
 
+map: aCollection = (
+	^aCollection collect: self
+)
+
 overlapTexture: sustainTime value: transitionTime value: overlap = (
 	^OverlapTexture graphFunc: self sustainTime: sustainTime transitionTime: transitionTime overlap: overlap
 )

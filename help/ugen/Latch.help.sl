@@ -1,5 +1,5 @@
 ;; Latch
-SinOsc(Latch(SinOsc(13.3, 0), Impulse(10, 0)) * 200 + 300, 0) * 0.2
+SinOsc(Latch(SinOsc([13.3, 13.7], 0), Impulse([9, 11], 0)) * 200 + 300, 0) * 0.1
 
 ;; Latch
 Blip(Latch(WhiteNoise(), Impulse(9, 0)) * 400 + 500, 4) * 0.2

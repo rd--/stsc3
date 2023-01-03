@@ -337,6 +337,8 @@ Array fill: 5 value: [10 rand] "=> 5 random numbers between 1 and 10"
 #(#(1 2) #(3 4) #(4 5) #(6 7 8 9)) allTuples size = 32.
 } allSatisfy: #yourself
 
+| x | x := #(#(4 4.5) #(2 3 5 6)). (x crossMultiply: x) = #((16 20.25) (8 13.5 20 27) (8 13.5 20 27) (4 9 25 36))
+| x | x := #(#(4 4.5) #(2 3 5 6)). (x withCrossed: x collect: [ :i :j | i * j ]) = #((16 20.25) (8 13.5 20 27) (8 13.5 20 27) (4 9 25 36))
 | x | x := #(#(4 4.5) #(2 3 5 6)). (x perform: #* crossedWith: x) = #((16 20.25) (8 13.5 20 27) (8 13.5 20 27) (4 9 25 36))
 
 "Array - Expressions"

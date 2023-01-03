@@ -85,6 +85,10 @@ clump: groupSize = (
 	^answer
 )
 
+crossMultiply: aSequence = (
+	^self withCrossed: aSequence collect: [ :i :j | i * j ]
+)
+
 differentiate = (
 	| answer prev |
 	answer := self species new: self size.
@@ -185,15 +189,7 @@ nth: index = (
 )
 
 perform: aSelector crossedWith: aSequence = (
-	"Perform aSelector for each of my items with each of anArrays items in turn (p *.x q in Sc)"
-	| answer nextIndex |
-	answer := self species new: self size * aSequence size.
-	nextIndex := 1.
-	self do: [ :leftItem |
-		aSequence do: [ :rightItem |
-			answer at: nextIndex put: (leftItem perform: aSelector with: rightItem).
-			nextIndex := nextIndex + 1 ] ].
-	^answer
+	^self withCrossed: aSequence collect: [ :i :j | i perform: aSelector with: j]
 )
 
 putNrtOn: aStream = (
@@ -341,6 +337,18 @@ transpose = (
 
 truncateTo: arg = (
 	^arg adaptToCollection: self andSend: #truncateTo:
+)
+
+withCrossed: aSequence collect: aBlock = (
+	"Apply aBlock for each of my items with each item of aSequence in turn (p *.x q in Sc)"
+	| answer nextIndex |
+	answer := self species new: self size * aSequence size.
+	nextIndex := 1.
+	self do: [ :leftItem |
+		aSequence do: [ :rightItem |
+			answer at: nextIndex put: (aBlock value: leftItem value: rightItem).
+			nextIndex := nextIndex + 1 ] ].
+	^answer
 )
 
 withExtending: other collect: aBlock = (
