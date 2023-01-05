@@ -9,4 +9,3 @@ Reads audio from the sound input hardware.
 Stereo through patching from input to output:
 
 		AudioIn([1, 2])
-
