@@ -129,7 +129,7 @@ SinOsc(
 ;; SinOsc ; fm ; https://github.com/Thrifleganger/VisualSynth ; requires=Voicer
 var voiceFunc = { :e |
 	var index = e.y * 3;
-	var pitch = e.p.unitCps;
+	var pitch = e.x * 24 + 48;
 	var ratio = 3.5;
 	var amp = 0.5;
 	var gate = e.w;

@@ -33,4 +33,4 @@ var s = Voicer(16, { :e |
 	var ix = TxLine(3, 0.001, 0.2, e.w);
 	PmOsc(cpsv, mfreq, ix, 0) * e.z * e.w
 }).sum;
-XFade2(s, GVerb(BPF(s, 90.MidiCps, 1), 50, 5, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)
+XFade2(s, GVerb(Bpf(s, 90.MidiCps, 1), 50, 5, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)

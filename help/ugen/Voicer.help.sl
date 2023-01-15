@@ -1,15 +1,15 @@
 ;; SinOsc ; event control ; p-field
-Voicer(16, { :e | SinOsc(e.p.unitCps, 0) * e.w * e.z }).Splay2
+Voicer(16, { :e | SinOsc((e.p * 127).MidiCps, 0) * e.w * e.z }).Splay2
 
 ;; SinOsc ; event control ; x-field
-Voicer(16, { :e | Pan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.o * 2 - 1, e.z * e.w) }).sum
+Voicer(16, { :e | EqPan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.o * 2 - 1) * e.z * e.w }).sum
 
 ;; Blip ; event control ; shared parameter
 var nh = 1;
-Voicer(16, { :e | Blip(e.p.UnitCps, nh) * e.w * e.z }).Splay2
+Voicer(16, { :e | Blip((e.p * 127).MidiCps, nh) * e.w * e.z }).Splay2
 
 ;; Blip ; event control ; i=o ii=rx iii=ry
-var f = { :e | Pan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1, e.w * e.z * e.z) };
+var f = { :e | Pan2(Blip((e.p * 127).MidiCps, e.y * 10 + 1), e.o * 2 - 1, e.w * e.z * e.z) };
 Voicer(16, f).sum
 
 ;; blip ; event control ; keywords
@@ -26,7 +26,7 @@ var f = { :e |
 };
 Voicer(numVoices: 6, voiceFunc: f).sum
 
-;; pluck ; event control
+;; pluck ; event control ; keywords
 var f = { :e |
 	var n = WhiteNoise() * e.z * 2;
 	var dlMax = 1 / 220;
@@ -35,7 +35,7 @@ var f = { :e |
 };
 Voicer(numVoices: 16, voiceFunc: f).sum
 
-;; resonz ; pinkNoise ; event control
+;; resonz ; pinkNoise ; event control ; keywords
 var f = { :e |
 	Pan2(in: Resonz(in: PinkNoise(), freq: (e.p * 127 + e.px).MidiCps, bwr: e.y * 0.25) * 24, pos: e.o * 2 - 1, level: e.z.Squared * e.w)
 };

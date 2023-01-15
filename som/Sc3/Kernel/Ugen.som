@@ -100,6 +100,10 @@ mul: mul add: add = (
 	^(self mul: mul) add: add
 )
 
+neg = (
+	  ^self negated
+)
+
 play = (
 	Sc3 play: self
 )

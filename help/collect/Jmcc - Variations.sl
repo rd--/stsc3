@@ -72,7 +72,7 @@ var b = { :f :m :a :g |
 
 ;; berlin 1977 (jmcc) #4 ; event control
 Voicer(16, { :e |
-	var freq = e.p.unitCps;
+	var freq = (e.x * 24 + 48).MidiCps;
 	var env = Decay2(Trig(e.w, 0.001), 0.05 * e.y, 2 * e.y);
 	var amp = env * e.z + 0.02;
 	var filt = env * (FSinOsc(0.17, 0) * 800) + 1400;
@@ -448,7 +448,7 @@ Voicer(16, { :e |
 
 ;; tremulate (jmcc) ;  event control ; requires=voicer
 var voiceFunc = { :e |
-	var s = SinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); ;; just minor seventh chord
+	var s = SinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); (* just minor seventh chord *)
 	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.rx)).Max(0) * e.z;
 	Pan2(s, { Rand(-1, 1) } ! 4 + (e.o * 2 - 1), a * LagUd(e.w, 0, e.ry * 2)).sum
 };

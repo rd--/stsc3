@@ -331,7 +331,7 @@ Perc : PseudoUgen {
 }
 
 (* Phase modulation sine oscillator pair *)
-PMOsc : PseudoUgen {
+PmOsc : PseudoUgen {
 	*constructor {
 		arg carfreq, modfreq, pmindex, modphase;
 		^SinOsc(carfreq, SinOsc(modfreq, modphase) * pmindex)

@@ -13,7 +13,7 @@ var voiceFunc = { :e |
 	var decays = [1, 0.7 * (-1 * decay).exp, 0.5 * (-1 * decay).exp, 0.4 * (-1 * decay).exp];
 	var zero = 0.000001;
 	var soundMain = TxLine(zero, 1, 1 / freqs, e.w) * TxLine(1, zero, decays * 4, e.w) * sound * mod;
-	var soundHigh = TxLine(0.3 * (velocity + zero), zero, 0.02, e.w) * SinOsc(hifreqs, 0); ;; hi frequency onset
+	var soundHigh = TxLine(0.3 * (velocity + zero), zero, 0.02, e.w) * SinOsc(hifreqs, 0); (* hi frequency onset *)
 	var pan = e.o * 2 - 1;
 	EqPan2(soundMain.sum + soundHigh.sum, pan) * LagUd(e.w, 0.01, 4)
 };

@@ -13,3 +13,10 @@ Blip(
 	freq: MouseX([3, 12], 1, 0, 0.2),
 	numharm: MouseY([100, 1000], 1, 0, 0.2)
 ) * 0.1
+
+;; Blip ; requires=voicer (event control)
+var f = { :e |
+	var o = Blip((e.x * 13 + 48).MidiCps, e.y * 19 + 1);
+	EqPan2(o, e.o * 2 - 1) * e.z * e.w * 0.5
+};
+Voicer(16, f).sum
