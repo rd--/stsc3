@@ -1,7 +1,7 @@
 ;; coolant ; jmcc #2 ; graph rewrite
 var o = OnePole(BrownNoise() * 0.002, 0.95);
-OverlapTexture({ :tr |
+XFadeTexture({ :tr |
 	{
-		Ringz(o, 40 + TRand(0, 2000, tr), 1) * 0.2
+		Ringz(o, 40 + TRand(0, 2000, tr), 1) * 0.5
 	} !^ 10
-}, 6, 6, 3)
+}, 4, 4)
