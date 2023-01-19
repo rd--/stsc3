@@ -2,7 +2,7 @@
 
 _OverlapTexture(newEventFunc, sustainTime, transitionTime, overlap)_
 
-Creates a series of overlapped sounds from a user function. The user function should return a graph of unit generators that produce a continuous sound.  OverlapTexture will apply an envelope to the sound to cross fade different invocations of the user function. OverlapTexture is a convenience class built upon Spawn.
+Creates a series of overlapped sounds from a user function. The user function should return a graph of unit generators that produce a continuous sound.  OverlapTexture will apply an envelope to the sound to cross fade different invocations of the user function.
 
 - newEventFunc: You supply a function that returns a graph of unit generators. If it returns nil, then no event is spawned this time. This function is passed one argument, a trigger that is reset for each new event.
 - sustainTime: the sustain time (in beats) of the envelope.

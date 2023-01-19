@@ -1,6 +1,7 @@
-;; coolant (jmcc) #2 ; graph rewrite
+;; coolant ; jmcc #2 ; graph rewrite
+var o = OnePole(BrownNoise() * 0.002, 0.95);
 OverlapTexture({ :tr |
-	var p = 10;
-	var exc = OnePole(BrownNoise() * 0.002, 0.95);
-	{ RingzBank(exc, { 40 + TRand(0, 2000, tr) } ! p, 1, 1) } ! 2
-}, 4, 4, 2)
+	{
+		Ringz(o, 40 + TRand(0, 2000, tr), 1) * 0.2
+	} !^ 10
+}, 6, 6, 3)
