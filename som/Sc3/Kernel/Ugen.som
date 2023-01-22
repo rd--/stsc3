@@ -145,7 +145,7 @@ splay2 = (
 )
 
 unitCps = (
-	^(self * 127) midiCps
+	^(self * 100) midiCps
 )
 
 ----------------------------
