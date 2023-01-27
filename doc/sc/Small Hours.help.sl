@@ -4,7 +4,7 @@ Small Hours is an experimental interpreter for the experimental [_Simple Program
 
 It includes a library for communicating with the _SuperCollider_ synthesiser.
 
-To play a synthesiser program select it and type _Ctrl-Enter_.
+To play a synthesiser program select it and type either _Ctrl-Enter_ or _Ctrl-Comma_.
 
 ```
 ;; https://sccode.org/1-4Qy ; f0 ; 0283
