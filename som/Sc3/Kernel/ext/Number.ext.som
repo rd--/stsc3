@@ -68,7 +68,19 @@ kr = (
 
 linExpFrom: lo to: hi = (
 	"Myself (I am in range 0 to 1) mapped to the indicated range following an exponential curve."
-	^lo * ((hi / lo) ln * self) exp
+	^lo * ((hi / lo) log * self) exp
+)
+
+log = (
+	^self ln
+)
+
+log2 = (
+	^self log: 2
+)
+
+log10 = (
+	^self log: 10
 )
 
 midiCps = (

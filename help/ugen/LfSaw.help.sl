@@ -30,7 +30,7 @@ o3.Distort.Distort.Cubed * 0.5
 
 ;; LfSaw ; https://scsynth.org/t/6320/2 (nh) ; requires=voicer
 var voiceFunc = { :e |
-	var freq = (e.p * 127).MidiCps;
+	var freq = e.p.UnitCps;
 	var auto = SinOsc(e.z * 2, 0).Range(1, 1 + e.y);
 	var formatTable = [[400, 1600, 2700], [830, 1200, 4000]].asLocalBuf;
 	var formants = BufRd(3, formatTable, e.y * 3, 1, 2).kr  * [1 / auto, auto, auto ** 0.5];

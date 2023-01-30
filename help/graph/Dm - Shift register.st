@@ -18,7 +18,7 @@ note := DmdOn trig: trig reset: 0 demandUGens: (Seq repeats: Float infinity list
 chord := shiftRegister value: 5 value: trig value: note midiCps.
 cf := Vibrato freq: chord rate: 6 depth: 0.02 delay: 0 onset: 0 rateVariation: 0.04 depthVariation: 0.1 iphase: 0 trig: 0.
 mf := chord * (LinLin in: (LfPulse freq: 1 / 8 iphase: 0 width: 0.5) srclo: -1 srchi: 1 dstlo: 1.01 dsthi: 2.01).
-sig := PMOsc carfreq: cf modfreq: mf pmindex: ((EnvSpec levels: #(3 3 0) times: #(0 0.2) curves: #(-4 -4)) asEnvGen: trig) modphase: 0.
+sig := PmOsc carfreq: cf modfreq: mf pmindex: ((EnvSpec levels: #(3 3 0) times: #(0 0.2) curves: #(-4 -4)) asEnvGen: trig) modphase: 0.
 cmp := (sig * (AmpCompA freq: chord root: 0 minAmp: 0.32 rootAmp: 1) * amp) sum.
 rvb := GVerb in: (Bpf in: cmp freq: 90 midiCps rq: 1) roomsize: 50 revtime: 8 damping: 0.5 inputbw: 0.5 spread: 15 drylevel: 0 earlyreflevel: 0.7 taillevel: 0.5 maxroomsize: 300.
 XFade2 inA: {cmp. cmp} inB: rvb pan: 0.2 level: 1

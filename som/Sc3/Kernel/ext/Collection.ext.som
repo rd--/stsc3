@@ -44,6 +44,10 @@ exp = (
 	^self collect: [ :item | item exp ]
 )
 
+expRange: lo value: hi = (
+	^self collect: [ :item | item linExpFrom: lo to: hi ]
+)
+
 frac = (
 	^self collect: [ :item | item frac ]
 )
@@ -55,6 +59,10 @@ kr = (
 
 log = (
 	^self collect: [ :item | item log ]
+)
+
+log10 = (
+	^self collect: [ :item | item log10]
 )
 
 maxItem = (
@@ -111,6 +119,10 @@ softClip = (
 
 squared = (
 	^self collect: [ :item | item squared ]
+)
+
+tan = (
+	^self collect: [ :item | item tan ]
 )
 
 tanh = (

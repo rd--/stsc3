@@ -18,4 +18,4 @@ f := [ :e |
 		bypass: 0
 		mul: e z
 ].
-(Voicer numVoices: 16 voiceFunc: f) sum * 4
+(Voicer numVoices: 6 voiceFunc: f) sum * 4

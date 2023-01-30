@@ -11,7 +11,7 @@ var voiceData = [
 var buf = voiceData.concatenation.asLocalBuf;
 var voiceFunc = { :e |
 	var x0 = Latch(e.x, e.w);
-	var dx7 = Dx7(buf, e.w, 0, 0, 0, e.p * 127, e.z, (8192 * (e.x - x0)), 0, 0, 0);
+	var dx7 = Dx7(buf, e.w, 0, 0, 0, e.x * 24 + 48, e.z, (8192 * (e.x - x0)), 0, 0, 0);
 	Pan2(dx7, e.o * 2 - 1, e.z)
 };
 Voicer(16, voiceFunc).sum

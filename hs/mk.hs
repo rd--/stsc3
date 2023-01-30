@@ -39,8 +39,8 @@ binop =
   ,("<=",10),(">=",11),("min:",12),("max:",13)
   ,("bitAnd:",14),("bitOr:",15)
   ,("lcm:",17),("gcd:",18),("roundTo:",19)
-  ,("truncateTo:",21), ("hypot:", 23), ("raisedTo:",25)
-  ,("bitShiftLeft:",26),("bitShiftRight:",27)
+  ,("truncateTo:",21), ("atan2:", 22), ("hypot:", 23), ("raisedTo:",25)
+  ,("shiftLeft:",26),("shiftRight:",27)
   ,("amClip:",40),("scaleNeg:", 41),("clip2:",42),("fold2:",44)]
 
 ugen :: [String]

@@ -2,5 +2,5 @@
 var t = PulseCount(Impulse(8000, 0), 0);
 var f = { :p | (t * p.key).BitAnd(t.ShiftRight(p.value)) };
 var b = [15 -> 5, 5 -> [3, 4], 2 -> 9, 8 -> 11].collect(f);
-var s = (b.injectInto(0, { :j :i | i.BitOr(j) }) - 3) % 256;
+var s = (b.reduce { :j :i | i.BitOr(j) } - 3) % 256;
 Hpf(((s / 127) - 1) * 3, 20).Tanh * 0.02

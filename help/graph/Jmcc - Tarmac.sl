@@ -14,9 +14,9 @@ OverlapTexture({ :tr |
 	var i = DmdOn(t, 0, Seq(inf, TScramble(tr, TChoose(tr, a)))) * t;
 	var d = TRand(0.05, 0.5, tr);
 	var z = PinkNoise() * (LfNoise1(TRand(0, 3, tr)) * 0.0008 + 0.0022);
-	var s = 0.Max(
+	var s = (
 		{ Ringz(z, TRand(50, 4000, tr), TRand(0.2, 12, tr)) } !+ 4
-	) * TChoose(tr, [-1, 1]);
+	).Max(0) * TChoose(tr, [-1, 1]);
 	var f = Rlpf(
 		s,
 		Decay2(t, 0.004, d) * TRand(0, 5000, tr) + TRand(0, 100, tr) + 100,

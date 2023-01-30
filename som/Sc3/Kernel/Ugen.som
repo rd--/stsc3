@@ -11,7 +11,7 @@ Ugen = Object (
 )
 
 << aUgen = (
-	^self bitShiftLeft: aUgen
+	^self shiftLeft: aUgen
 )
 
 adaptToCollection: rcvr andSend: selector = (
@@ -79,12 +79,24 @@ lag: lagTime = (
 	^Lag in: self lagTime: lagTime
 )
 
+lag2: lagTime = (
+	^Lag2 in: self lagTime: lagTime
+)
+
+lag3: lagTime = (
+	^Lag3 in: self lagTime: lagTime
+)
+
 linExpFrom: lo to: hi = (
 	^LinExp in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
 )
 
 linLinFrom: lo to: hi = (
 	^LinLin in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
+)
+
+ln = (
+	^self log
 )
 
 mrg: rhs = (

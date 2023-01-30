@@ -9,7 +9,7 @@ selector: selector a: a b: b = (
 )
 
 selectorToSpecialIndexDictionary = (
-	^SelectorToSpecialIndexDictionary ifNil: [SelectorToSpecialIndexDictionary := Dictionary newFrom: {#+ -> 0. #- -> 1. #* -> 2. #/ -> 4. #% -> 5. #/= -> 7. #< -> 8. #> -> 9. #<= -> 10. #>= -> 11. #min: -> 12. #max: -> 13. #bitAnd: -> 14. #bitOr: -> 15. #lcm: -> 17. #gcd: -> 18. #roundTo: -> 19. #truncateTo: -> 21. #raisedTo: -> 25. #bitShiftLeft: -> 26. #bitShiftRight: -> 27. #amClip: -> 40. #clip2: -> 42. #fold2: -> 44}].
+	^SelectorToSpecialIndexDictionary ifNil: [SelectorToSpecialIndexDictionary := Dictionary newFrom: {#+ -> 0. #- -> 1. #* -> 2. #/ -> 4. #% -> 5. #/= -> 7. #< -> 8. #> -> 9. #<= -> 10. #>= -> 11. #min: -> 12. #max: -> 13. #bitAnd: -> 14. #bitOr: -> 15. #lcm: -> 17. #gcd: -> 18. #roundTo: -> 19. #truncateTo: -> 21. #atan2: -> 22. #raisedTo: -> 25. #shiftLeft: -> 26. #shiftRight: -> 27. #amClip: -> 40. #clip2: -> 42. #fold2: -> 44}].
 )
 
 specialIndex: specialIndex a: a b: b = (
