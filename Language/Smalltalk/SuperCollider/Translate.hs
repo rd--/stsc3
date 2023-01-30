@@ -199,15 +199,20 @@ splRewriteDotExpressions txt =
 
 {- | Spl allows binary operator characters not allowed by St(/c).
 These are re-written to allowed operators.
+This also deletes the arity specifier, which is not an operator.
+
+> splRewriteBinaryOperators "{ } !^ 6" == "{ } %~ 6"
+> splRewriteBinaryOperators "LfPar:/2" == "LfPar"
 -}
 splRewriteBinaryOperators :: String -> String
 splRewriteBinaryOperators txt =
   case txt of
     [] -> []
+    ':' : '/' : _ : txt' -> splRewriteBinaryOperators txt'
     ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '%' : ' ' : splRewriteBinaryOperators txt'
-    ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     ' ' : '!' : '+' : ' ' : txt' -> ' ' : '%' : '+' : ' ' : splRewriteBinaryOperators txt'
     ' ' : '!' : '^' : ' ' : txt' -> ' ' : '%' : '~' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
 -- | Parse C-Smalltalk InitializerDefinition.
@@ -218,7 +223,10 @@ stcParseInitializerDefinition s =
       eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p'))
   in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite eSc)
 
--- | Translate C-Smalltalk program text to Smalltalk.
+{- | Translate C-Smalltalk program text to Smalltalk.
+
+> stcToSt "{ Rand(0, 1) } !^ 4"
+-}
 stcToSt :: String -> String
 stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 

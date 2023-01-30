@@ -1,4 +1,4 @@
-PMOsc = PseudoUgen (
+PmOsc = PseudoUgen (
 ----------------------------
 
 carfreq: carfreq modfreq: modfreq pmindex: pmindex modphase: modphase = (

@@ -13,7 +13,7 @@ $underscore            = _                                    -- 3.5.1 nonCaseLe
 $letter                = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit         = [a-z A-Z _ 0-9]
 $letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
-$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/]         -- !@%&*-+=|<>?/
+$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~]         -- !@%&*-+=|<>?/~
 $graphic               = $printable # $white
 
 @decimal               = $digit+

@@ -846,6 +846,7 @@ factorial := [:n| n = 1 ifTrue: [1] ifFalse: [(factorial value: n - 1) * n]].
 
 (-20 to: 30) collect: [ :each | each wrap: 0 hi: 10 ]
 (-20 to: 20) collect: [ :each | each wrap: -10 hi: 10 ]
+8 fibonacciSequence asArray = #(1 1 2 3 5 8 13 21)
 
 "Delay"
 

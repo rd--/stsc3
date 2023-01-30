@@ -17,7 +17,7 @@ Bezier haltAfter: 100 dx: 0.0001 freq: x phase: 0 param: {0. 0. y. -1.3. 0.3. -1
 
 "Bezier - dynamic shifting of control points as oscillator"
 | w f |
-w := [ :rng | LinLin in: (LfDNoise3 freq: 2) srclo: -1 srchi: 1 dstlo: rng key dsthi: rng value ].
+w := [ :rng | LinLin in: (LfdNoise3 freq: 2) srclo: -1 srchi: 1 dstlo: rng key dsthi: rng value ].
 f := [ :ix |
 	| p o |
 	p := {0. 0. w value: 0.05 -> 0.25. -1.3. w value: 0.25 -> 0.45. -1.3. 0.5. 0. w value: 0.55 -> 0.75. 1.3. w value: 0.75 -> 0.95. 1.3. 1. 0}.

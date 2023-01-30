@@ -4,6 +4,5 @@ var c = a ** Lag(a, 0.1);
 var o = Blip(DmdFor(1 / [9, 8], 0, Seq(inf, [65, 86, 86, 86, 70].MidiCps) / a), c) * (c + 5);
 CombN(o, 0.2, 0.2, 1).Tanh * 0.15
 
-(*
+;; ----
 'AVVVF'.ascii = [65, 86, 86, 86, 70]
-*)

@@ -43,6 +43,25 @@ expRand: upperBound = (
 	^1.0 randomFloat linExpFrom: self to: upperBound
 )
 
+
+fibonacciSequence = (
+	"First self elements of the Fibonacci sequence."
+	| a b i temp answer |
+	a := 0. b := 1. i := 0. temp := nil. answer := OrderedCollection new.
+	[ i < self ] whileTrue: [
+		answer add: b.
+		temp := b.
+		b := a + b.
+		a := temp.
+		i := i + 1
+	].
+	^answer
+)
+
+fibonacciArray = (
+	^self fibonacciSequence asArray
+)
+
 kr = (
 	^self
 )
@@ -86,6 +105,11 @@ rand2 = (
 
 rate = (
 	^Rate ir
+)
+
+recip = (
+	"Alias for Sc3."
+	^self reciprocal
 )
 
 to: stop collect: aBlock = (

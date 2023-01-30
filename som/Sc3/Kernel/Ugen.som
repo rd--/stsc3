@@ -100,6 +100,10 @@ mul: mul add: add = (
 	^(self mul: mul) add: add
 )
 
+mulAdd: mul value: add = (
+	^(self mul: mul) add: add
+)
+
 neg = (
 	  ^self negated
 )
@@ -125,6 +129,11 @@ range: lo value: hi = (
 
 rate = (
 	^scUgen rate
+)
+
+recip = (
+	"Alias for Sc3."
+	^self reciprocal
 )
 
 rounded = (

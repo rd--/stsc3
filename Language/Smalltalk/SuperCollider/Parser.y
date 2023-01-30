@@ -277,6 +277,7 @@ temporaries_seq :: { [ScTemporaries] }
 
 temporaries :: { ScTemporaries }
         : var temporary_seq ';'                { $2 }
+        | '|' temporary_seq ';' '|'            { $2 }
 
 temporary_seq :: { ScTemporaries }
         : temporary                            { [$1] }

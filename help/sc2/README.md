@@ -166,7 +166,7 @@ Random:
 - [NRand](?t=stsc3&e=help/sc2/help/unit-generators/NRand.help.sl)
 - [Rand](?t=stsc3&e=help/sc2/help/unit-generators/Rand.help.sl)
 - [TExpRand](?t=stsc3&e=help/sc2/help/unit-generators/TExpRand.help.sl)
-- [TIRand](?t=stsc3&e=help/sc2/help/unit-generators/TIRand.help.sl)
+- [TiRand](?t=stsc3&e=help/sc2/help/unit-generators/TiRand.help.sl)
 - [TRand](?t=stsc3&e=help/sc2/help/unit-generators/TRand.help.sl)
 
 Samples:
