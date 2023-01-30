@@ -34,10 +34,6 @@ dbAmp = (
 	^10 raisedTo: (self * 0.05)
 )
 
-div: aNumber = (
-	^self // aNumber
-)
-
 expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 randomFloat linExpFrom: self to: upperBound
@@ -60,6 +56,10 @@ fibonacciSequence = (
 
 fibonacciArray = (
 	^self fibonacciSequence asArray
+)
+
+idiv: aNumber = (
+	^self // aNumber
 )
 
 kr = (

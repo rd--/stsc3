@@ -6,7 +6,7 @@ OverlapTexture({ :tr |
 	Splay2(o * a)
 }, 6, 3, 3)
 
-;; Splay2 ; texture (Eval)
+;; ---- Splay2 ; texture (Eval)
 {
 	var k = 7;
 	var o = SinOsc({ IRand(40, 90).MidiCps } ! k, 0);

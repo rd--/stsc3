@@ -1,4 +1,4 @@
-;; PlayBuf
+;; ---- PlayBuf ; requires=SfAcquire
 var sf = SfAcquire('piano-c5', 2, [1, 2]);
 PlayBuf(1, sf, SfRateScale(sf), 1, 0, 1, 0) * 0.5
 

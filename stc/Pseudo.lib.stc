@@ -100,7 +100,14 @@ Choose : PseudoUgen {
 CurveGen : PseudoUgen {
 	*constructor {
 		arg gate, levels, times, curves;
-		^EnvSpec([levels.first] ++ levels, [0] ++ times, [0] ++ curves.extendCyclically(times.size), nil, nil, 0).asEnvGen(gate)
+		^EnvSpec(
+			[levels.first] ++ levels,
+			[0] ++ times,
+			[0] ++ curves.extendCyclically(times.size),
+			nil,
+			nil,
+			0
+		).asEnvGen(gate)
 	}
 }
 
@@ -230,9 +237,9 @@ LinLin : PseudoUgen {
 (* Line Segment Envelope *)
 LinSeg : PseudoUgen {
 	*constructor {
-		arg gate, coord;
-		var levels = 1.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
-		var times = 2.to(coord.size, by: 2).collect({ arg i; coord.at(i) });
+		arg gate, coordArray;
+		var levels = 1.to(coordArray.size, by: 2).collect({ arg i; coordArray.at(i) });
+		var times = 2.to(coordArray.size, by: 2).collect({ arg i; coordArray.at(i) });
 		^LinGen(gate, levels, times)
 	}
 }

@@ -43,10 +43,6 @@ bufClear = (
 	^self mrg: (ClearBuf buf: self)
 )
 
-div: arg = (
-	^self // arg
-)
-
 draw = (
 	Sc3 draw: self
 )
@@ -56,6 +52,10 @@ expRange: lo value: hi = (
 	This is a very common idiom.
 	In Sc this also adjusts for some unipolar inputs, which doesn't seem like a very good idea in general."
 	^self linExpFrom: lo to: hi
+)
+
+idiv: arg = (
+	^self // arg
 )
 
 isOutUgen = (
@@ -151,6 +151,10 @@ scUgen: anScUgen port: anInteger = (
 
 splay2 = (
 	^Splay2 inArray: self
+)
+
+trunc: b = (
+	^self truncateTo: b
 )
 
 unitCps = (

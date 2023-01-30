@@ -22,7 +22,7 @@ OverlapTexture({ :tr |
 	} ! 16
 }, 2, 6, 3).Splay2
 
-;; SinOscFb ; overlap
+;; ---- SinOscFb ; overlap (scheduled)
 {
 	var x = MouseX(0.15, 0.85, 0, 0.2);
 	var f0 = [110, 220, 440].atRandom;

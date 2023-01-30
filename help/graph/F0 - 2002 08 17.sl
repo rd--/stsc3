@@ -1,4 +1,4 @@
-;; https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00534.html ; f0 ; duplicated
+;; ---- https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00534.html ; f0 ; duplicated ; requires=SfAcquire
 {
 	var b = SfAcquire('floating_1', 1, 1);
 	(* k-rate noise is linearly interpolated to audio rate phase *)

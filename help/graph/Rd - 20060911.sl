@@ -9,4 +9,4 @@ var n = {
 	Ringz(n2, n3, x)
 };
 var b = TRand(0, 1, Dust(8));
-Clip2(n !+ 3, b) * 0.25
+(n !+ 3).Clip2(b) * 0.25

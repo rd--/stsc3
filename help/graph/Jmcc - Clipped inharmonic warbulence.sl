@@ -11,5 +11,5 @@ var z = OverlapTexture({ :tr |
 		var o = (o1 * o2.Max(0)).Max(0);
 		EqPan2(o, TRand(-1, 1, tr)) * 2 / g
 	}).sum;
-}, 12.8, 6.4, 6).LeakDc(0.995);
-{ CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 20) } !+ 8 * 0.2
+}, 12.8, 6.4, 6);
+{ CombN(LeakDc(z, 0.995), 0.3, { Rand(0.1, 0.3) } ! 2, 20) } !+ 8 * 0.2

@@ -1,4 +1,4 @@
-;; SfPlay ; normal playback at same speed of recording ; loop
+;; ---- SfPlay ; normal playback at same speed of recording ; loop ; requires=SfAcquire
 var sf = SfAcquire('floating_1', 1, 1);
 SfPlay(sf, 1, 1, 0, 1)
 

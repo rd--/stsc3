@@ -16,6 +16,10 @@ linLinFrom: lo to: hi = (
 	^LinLin in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
 )
 
+neg = (
+	^self negated
+)
+
 play = (
 	Sc3 play: self
 )
@@ -30,6 +34,10 @@ range: lo value: hi = (
 
 splay2 = (
 	^Splay2 inArray: self
+)
+
+trunc: b = (
+	^self truncateTo: b
 )
 
 )
