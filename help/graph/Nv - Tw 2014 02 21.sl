@@ -6,6 +6,6 @@ var f = {
 		x := Lpf(a, 8 ** LfNoise2({ 0.1.Rand } ! 2) * 2500).Tanh
 	};
 	20.timesRepeat(p);
-	x * 5
+	x * 0.5
 };
 f !+ 4

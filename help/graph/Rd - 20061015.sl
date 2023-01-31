@@ -1,6 +1,6 @@
 ;; 20061015 ; discretion ; rd ; requires=EnvBreakPoint
 var mkls = { :ts :bp |
-	EnvGen(1, 1, 0, ts, 2, EnvBreakPoint(bp, 'linear'))
+	EnvGen(1, 1, 0, ts, 2, EnvBreakPoint(bp, 0).asArray)
 };
 var part = {
 	var ts = 21;

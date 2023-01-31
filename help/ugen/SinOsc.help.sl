@@ -167,7 +167,7 @@ SinOsc(freq, phase) * amp
 ;; ---- SinOsc ; mce ; two out ; each single channel ; hence mono
 SinOsc([[440], [441]], 0).sum * 0.1
 
-;; ----SinOsc ; fm ; https://github.com/Thrifleganger/VisualSynth ; requires=Voicer
+;; ---- SinOsc ; fm ; https://github.com/Thrifleganger/VisualSynth ; requires=Voicer
 var voiceFunc = { :e |
 	var index = e.y * 3;
 	var pitch = e.x * 24 + 48;
