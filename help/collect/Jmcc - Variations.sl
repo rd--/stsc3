@@ -73,13 +73,25 @@ var pw = SinOsc(0.08, [0, 0.5 * pi]) * 0.45 + 0.5;
 var s = Pulse(freq, pw) * amp;
 CombC(Rlpf(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5)
 
+;; bowed string (jmcc) ; voicer
+Voicer(16, { :e |
+	var f = (e.x * 24 + 48).MidiCps;
+	var k = DynRingzBank(
+		{ BrownNoise() } ! 2 * e.z * LagUd(e.w, e.y * 0.1, e.y * 4),
+		12.series(f, f),
+		12.geom(1, Rand(0.7, 0.9)),
+		{ Rand(1, 3) } ! 12
+	);
+	(k * 0.1).SoftClip
+}).sum * 0.2
+
 ;; bowed string (jmcc)
 var root = 5;
 var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var k = RingzBank(x, Array.series(12, f, f), Array.geom(12, 1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12);
+var k = RingzBank(x, 12.series(f, f), 12.geom(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12);
 (k * 0.1).SoftClip
 
 ;; bowed string (jmcc) ; .random
@@ -88,7 +100,7 @@ var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var k = RingzBank(x, Array.series(12, f, f), Array.geom(12, 1, 0.7.randomFloat(0.9)), { 1.randomFloat(3) } ! 12);
+var k = RingzBank(x, 12.series(f, f), 12.geom(1, 0.7.randomFloat(0.9)), { 1.randomFloat(3) } ! 12);
 (k * 0.1).SoftClip
 
 ;; bowed string (jmcc) ; klank
@@ -97,7 +109,7 @@ var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var d = [Array.series(12, f, f), Array.geom(12, 1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12].transpose.concatenation;
+var d = [12.series(f, f), 12.geom(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12].transpose.concatenation;
 var k = Klank(x, 1, 0, 1, d);
 (k * 0.1).SoftClip
 

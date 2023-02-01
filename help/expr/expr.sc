@@ -152,7 +152,7 @@ p.q(a,b)                 // p.q([a,b])
 1.to(9) + 1 == Interval.new(2, 10, 1)             // true
 1.to(9) - 1 == Interval.new(0, 8, 1)              // true
 1.to(9) * 3 == Interval.new(3, 27, 3)             // true
-(1.to(9) * 3).asArray == 3.series(6,27)           // true ; (3,6 .. 27)
+(1.to(9) * 3).asArray == 3.series(6, 27)           // true ; (3,6 .. 27)
 (0.to(9) * 3).at(5) == 15                         // true
 0.5.to(4.5,0.5) == Interval.new(0.5, 4.5, 0.5)    // true
 1.to(10 ** 15)                                        // Interval

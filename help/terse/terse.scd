@@ -96,8 +96,8 @@ var c = [1, 2, 3]; c.scramble; c == [1, 2, 3]               // scramble is non-m
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
 { 1 }.dup(3) == [1, 1, 1]                                   // Array.fill notation
 { 1 } ! 3 == [1, 1, 1]                                      // infix Array.fill notation
-Array.series(4, 3, 2) == [3, 5, 7, 9]                       // arithmetic series (size from by)
-Array.geom(4, 3, 2) == [3, 6, 12, 24]                       // geometric series (size from by)
+4.series(3, 2) == [3, 5, 7, 9]                       // arithmetic series (size from by)
+5.geom(3, 2) == [3, 6, 12, 24]                       // geometric series (size from by)
 Array.iota(4) == [0, 1, 2, 3]                               // array with counter
 Array.iota(3, 2) == [[0, 1], [2, 3], [4, 5]]                // matrix with counter
 Array.rand(4, 1, 9)                                         // array of random numbers (uniform distribution)

@@ -402,20 +402,4 @@ fill: size value: aBlock = (
 	^(1 to: size) collect: [ :unusedItem | aBlock value ]
 )
 
-geom: size value: start value: grow = (
-	"Generate a geometric series (curve) of size places from start by grow."
-	| accum |
-	accum := start.
-	^(1 to: size) collect: [ :unusedItem |
-		| entry |
-		entry := accum.
-		accum := grow * accum.
-		entry ]
-)
-
-series: size value: start value: step = (
-	"Generate an arithmetic series (ramp) of size places from start by step."
-	^(1 to: size) collect: [ :item | (step * (item - 1)) + start ]
-)
-
 )

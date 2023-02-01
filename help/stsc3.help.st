@@ -300,8 +300,8 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 (Array with: 1 with: 2 with: 3 with: 4) = #(1 2 3 4).
 (Array with: 1 with: 2 with: 3 with: 4 with: 5) = #(1 2 3 4 5).
 (Array with: 1 with: 2.3 with: 'str') = #(1 2.3 'str').
-(Array series: 10 value: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}. "Gnu..."
-(Array geom: 5 value: 1 value: 3) = #(1 3 9 27 81).
+(10 series: 0 value: 1/10) = {0. 1/10. 1/5. 3/10. 2/5. 1/2. 3/5. 7/10. 4/5. 9/10}. "Gnu..."
+(5 geom: 1 value: 3) = #(1 3 9 27 81).
 (#(1 2 3 4 5) nth: 3) = 3. "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
 ({1. 2. 3} at: 2 put: -2) == -2. "=> true (at:put: returns the element put)"
 (#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
