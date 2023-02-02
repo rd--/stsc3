@@ -12,11 +12,11 @@ var buf = voiceData.concatenation.asLocalBuf;
 var voiceFunc = { :e |
 	var x0 = Latch(e.x, e.w);
 	var dx7 = Dx7(buf, e.w, 0, 0, 0, e.x * 24 + 48, e.z, (8192 * (e.x - x0)), 0, 0, 0);
-	Pan2(dx7, e.o * 2 - 1, e.z)
+	Pan2(dx7, e.o * 2 - 1, 1)
 };
 Voicer(16, voiceFunc).sum
 
-;; dx7 ; data at local buffer, random notes
+;; Dx7 ; data at local buffer, random notes
 var voiceData = [
 	[25, 21, 98, 38, 99,  0, 99,  0, 36, 17, 87,  2,  1, 0, 0, 0, 59,  0,  1, 1, 8],
 	[66, 69, 60, 35,  0,  0, 98,  0,  0,  0,  4,  0,  0, 0, 0, 1, 90,  0,  1, 0, 8],
