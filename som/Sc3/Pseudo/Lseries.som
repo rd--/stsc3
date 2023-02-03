@@ -1,0 +1,20 @@
+Lseries = PseudoUgen (
+----------------------------
+
+length: length start: start step: step = (
+
+^(Dseries apply: {length. start. step})
+)
+
+primaryFactoryMethod = (
+
+^#'length:start:step:'
+)
+
+
+comment = (^'
+
+')
+
+
+)

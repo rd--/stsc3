@@ -3,7 +3,7 @@ Sequencer = PseudoUgen (
 
 valueArray: valueArray trig: trig = (
 
-^(DmdOn apply: {trig. 0. (Seq apply: {(Float infinity). valueArray})})
+^(DmdOn apply: {trig. 0. (Lseq apply: {(Float infinity). valueArray})})
 )
 
 primaryFactoryMethod = (

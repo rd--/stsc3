@@ -38,7 +38,7 @@ var o2 = SinOsc(o1, 0) * TRand(0.3, 0.6, tr) + TRand(0.3, 0.5, tr);
 Rhpf({ BrownNoise() } ! 2, TRand(0.3, 3, tr), o2) * 0.1
 
 ;; https://sccode.org/1-4S6 ; f0 ; 't'
-var p = Saw([3, 4]) * (Saw(1) * 32 + 128) + DmdFor(1, 0, (Seq(1, [0, 8, 1, 5]) * [1, 4, 8]).flop);
+var p = Saw([3, 4]) * (Saw(1) * 32 + 128) + DmdFor(1, 0, (Lseq(1, [0, 8, 1, 5]) * [1, 4, 8]).flop);
 var o = SinOsc(Saw(3) * 64 + 99, p) / 9;
 CombN(o, 1 / 4, 1 / 2.125, SinOsc(0.005, 1.5 * pi).Range(0, 6)).transpose.sum
 
@@ -94,7 +94,7 @@ var e = [3, 2 / 3, 4, 3 / 2, 2];
 var c = 0.021;
 var d = LfTri(b / 999, 0) % 1;
 var m = LfTri(b * c, 0);
-var l = m * 7 + 20 + Seq(inf, b % m * 5 + 6);
+var l = m * 7 + 20 + Lseq(inf, b % m * 5 + 6);
 var j = DmdFor(e / (12 ** m), 0, l);
 var k = DegreeToKey(b.asLocalBuf, j, 12);
 var o = SinOscFb(k.MidiCps, LfTri(c / b + 1 / 3, Decay2(Impulse([2 / 3, 1.5, 3, 1.5, 3], 0), c, d)) * d);

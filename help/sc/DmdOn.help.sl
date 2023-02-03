@@ -21,9 +21,9 @@ Mouse control of tone:
 
 ```
 var t = Impulse(24, 0);
-var s = Choose(inf, [
-	Seq(1, [1, 2, 3, 4, 5, 4, 3, 2]),
-	Choose(8, [4 .. 11])
+var s = Lrand(inf, [
+	Lseq(1, [1, 2, 3, 4, 5, 4, 3, 2]),
+	Lrand(8, [4 .. 11])
 ]);
 var f = DmdOn(t, 0, s * 100);
 var x = MouseX(-1, 1, 0, 0.1);

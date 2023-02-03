@@ -1,6 +1,6 @@
 ;; DwgPluckedStiff ; re-sounding
-var sequ = { :s :tr | DmdOn(tr, 0, Seq(inf, s)) };
-var t = TDmdFor(Seq(inf, [1, 1, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 3, 4] * 0.175), 0, 1);
+var sequ = { :s :tr | DmdOn(tr, 0, Lseq(inf, s)) };
+var t = TDmdFor(Lseq(inf, [1, 1, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 3, 4] * 0.175), 0, 1);
 var freq = [
 	sequ([60,62,63,58,48,55], t),
 	sequ([63,60,48,62,55,58], t)

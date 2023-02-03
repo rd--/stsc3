@@ -19,5 +19,5 @@ var p = p1.collect({ :x |
 	[y, y].concatenation
 }).concatenation ++ p2.concatenation;
 var tr = Impulse(5, 0);
-var freq = DmdOn(tr, 0, Seq(1, p.MidiCps));
+var freq = DmdOn(tr, 0, Lseq(1, p.MidiCps));
 Pan2(FreeVerb(Lpf(Saw(Lag(freq, 0.03)), 1000), 0.3, 0.5, 0.35), 0, 0.2)

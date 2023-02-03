@@ -1,19 +1,19 @@
 LinSeg = PseudoUgen (
 ----------------------------
 
-gate: gate coord: coord = (
+gate: gate coordArray: coordArray = (
 | levels times |
 
-levels := (1 to: (coord size) by: 2) collect: [ :i | coord at: i .
+levels := (1 to: (coordArray size) by: 2) collect: [ :i | coordArray at: i .
  ] .
- times := (2 to: (coord size) by: 2) collect: [ :i | coord at: i .
+ times := (2 to: (coordArray size) by: 2) collect: [ :i | coordArray at: i .
  ] .
  ^(LinGen apply: {gate. levels. times})
 )
 
 primaryFactoryMethod = (
 
-^#'gate:coord:'
+^#'gate:coordArray:'
 )
 
 

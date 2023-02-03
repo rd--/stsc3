@@ -1,9 +1,9 @@
-Choose = PseudoUgen (
+Lxrand = PseudoUgen (
 ----------------------------
 
 repeats: repeats list: list = (
 
-^(Drand apply: {repeats. list})
+^(Lxrand apply: {repeats. list})
 )
 
 primaryFactoryMethod = (

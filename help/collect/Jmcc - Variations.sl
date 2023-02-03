@@ -56,8 +56,8 @@ Voicer(16, { :e |
 }).sum
 
 ;; berlin 1977 (jmcc) #4 ; var syntax
-var sequ = { :s :tr | DmdOn(tr, 0, Seq(inf, s)) };
-var sequR = { :s :tr | DmdOn(tr, 0, Shuf(inf, s)) };
+var sequ = { :s :tr | DmdOn(tr, 0, Lseq(inf, s)) };
+var sequR = { :s :tr | DmdOn(tr, 0, Lshuf(inf, s)) };
 var clockRate = MouseX(5, 20, 1, 0.2);
 var clockTime = 1 / clockRate;
 var clock = Impulse(clockRate, 0);
@@ -166,7 +166,7 @@ var z = OverlapTexture({ :tr |
 		DmdOn(
 			trig: tr,
 			reset: 0,
-			demandUGens: Seq(
+			demandUGens: Lseq(
 				repeats: inf,
 				list: s
 			)

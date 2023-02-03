@@ -13,7 +13,7 @@ var n = 7;
 var strFunc = { :i |
 	var str = rewrite([0], i + 6);
 	var dt = 2 ** (n - i).negated * 20;
-	var trig = TDuty(dt, 0, 0, Seq(1, str), 0);
+	var trig = TDmdFor(dt, 0, Lseq(1, str));
 	var freq = TExpRand(200, (n - i) / n * 10100, trig);
 	var trigFlt = Bpf(trig, LfNoise2(0.1) * 0.02 + 1 * freq, 0.2);
 	Ringz(

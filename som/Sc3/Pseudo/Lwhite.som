@@ -1,4 +1,4 @@
-White = PseudoUgen (
+Lwhite = PseudoUgen (
 ----------------------------
 
 length: length lo: lo hi: hi = (

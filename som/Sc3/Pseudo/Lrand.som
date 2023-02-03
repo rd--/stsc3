@@ -1,9 +1,9 @@
-Ser = PseudoUgen (
+Lrand = PseudoUgen (
 ----------------------------
 
 repeats: repeats list: list = (
 
-^(Dser apply: {repeats. list})
+^(Drand apply: {repeats. list})
 )
 
 primaryFactoryMethod = (

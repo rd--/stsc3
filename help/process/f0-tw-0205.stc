@@ -3,7 +3,7 @@ var a = [1, 3, 5, 7, 9] * 99;
 {
 	a = Wrap(a * 9, 99, 8000);
 	{
-		Release(SinOsc(DmdFor(1 / [8, 9], 0, Seq(99, a)), 0) * 0.2, 0, 0, 9)
+		Release(SinOsc(DmdFor(1 / [8, 9], 0, Lseq(99, a)), 0) * 0.2, 0, 0, 9)
 	}.play;
 	2.seconds.wait
 }.loop

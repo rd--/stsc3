@@ -1,9 +1,9 @@
-Shuf = PseudoUgen (
+Lseq = PseudoUgen (
 ----------------------------
 
 repeats: repeats list: list = (
 
-^(Dshuf apply: {repeats. list})
+^(Dseq apply: {repeats. list})
 )
 
 primaryFactoryMethod = (

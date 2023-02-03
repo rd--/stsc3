@@ -18,9 +18,9 @@ Demand Ugen as durations:
 
 ```
 var freq = DmdFor(
-	Choose(inf, [0.01, 0.2, 0.4]),
+	Lrand(inf, [0.01, 0.2, 0.4]),
 	0,
-	Seq(inf, [204, 400, 201, 502, 300, 200])
+	Lseq(inf, [204, 400, 201, 502, 300, 200])
 );
 SinOsc(freq * [1, 1.01], 0) * 0.1
 ```
@@ -31,7 +31,7 @@ Control rate ugen as durations:
 var freq = DmdFor(
 	MouseX(0.001, 2, 1, 0.2),
 	0,
-	Seq(inf, [204, 400, 201, 502, 300, 200])
+	Lseq(inf, [204, 400, 201, 502, 300, 200])
 );
 SinOsc(freq * [1, 1.01], 0) * 0.1
 ```
@@ -40,9 +40,9 @@ Control rate resetting the demand ugens:
 
 ```
 var freq = DmdFor(
-	Seq(inf, [0.2, 0.3, 0.4, Seq(inf, [1, 1, 1, 2, 1, 2])]) / 2,
+	Lseq(inf, [0.2, 0.3, 0.4, Lseq(inf, [1, 1, 1, 2, 1, 2])]) / 2,
 	Dust(1).kr,
-	Seq(inf, [0, 1, 2, Seq(inf, [1, 2, 3, 4, 5])])
+	Lseq(inf, [0, 1, 2, Lseq(inf, [1, 2, 3, 4, 5])])
 ) * 30 + 250;
 SinOsc(freq * [1, 1.01], 0) * 0.1
 ```
@@ -51,9 +51,9 @@ Demand rate reset:
 
 ```
 var freq = DmdFor(
-	Seq(inf, [0.2, 0.3, 0.4, Seq(inf, [1, 1, 1, 2, 1, 2])]) / 2,
-	Seq(inf, [1, 2, 4, 5]),
-	Seq(inf, [0, 1, 2, Seq(inf, [1, 2, 3, 4, 5])])
+	Lseq(inf, [0.2, 0.3, 0.4, Lseq(inf, [1, 1, 1, 2, 1, 2])]) / 2,
+	Lseq(inf, [1, 2, 4, 5]),
+	Lseq(inf, [0, 1, 2, Lseq(inf, [1, 2, 3, 4, 5])])
 ) * 30 + 250;
 SinOsc(freq * [1, 1.01], 0) * 0.1
 ```
@@ -65,8 +65,8 @@ var n = 5;
 var m = 64;
 var a = {
 	var x = { 0.2.Rand2 } ! m;
-	x := x ++ ({  Choose(1, { 0.2.Rand2 } ! n) } ! m.atRandom);
-	Seq(inf, x.scramble)
+	x := x ++ ({  Lrand(1, { 0.2.Rand2 } ! n) } ! m.atRandom);
+	Lseq(inf, x.scramble)
 } ! n;
 DmdFor(
 	MouseX(1, 125, 1, 0.2) * SampleDur() * [1, 1.02],

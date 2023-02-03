@@ -1,7 +1,7 @@
 ;; berlin 1977 (jmcc) #4
 |
-	sequ = { :s :tr | DmdOn(tr, 0, Seq(inf, s)) },
-	sequR = { :s :tr | DmdOn(tr, 0, Shuf(inf, s)) },
+	sequ = { :s :tr | DmdOn(tr, 0, Lseq(inf, s)) },
+	sequR = { :s :tr | DmdOn(tr, 0, Lshuf(inf, s)) },
 	clockRate = MouseX(5, 20, 1, 0.2),
 	clockTime = 1 / clockRate,
 	clock = Impulse(clockRate, 0),

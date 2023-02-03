@@ -1,7 +1,7 @@
 ;; analogue daze (jmcc) #3
 var pattern = [55, 63, 60, 63, 57, 65, 62, 65];
 var f = { :octave :clockRate :pwmrate :fltrate |
-	var sequ = { :s :tr | DmdOn(tr, 0, Seq(inf, s)) };
+	var sequ = { :s :tr | DmdOn(tr, 0, Lseq(inf, s)) };
 	var tr = Impulse(clockRate, 0);
 	var patternCps = (pattern + (12 * octave)).MidiCps;
 	var sq = sequ(patternCps, tr);

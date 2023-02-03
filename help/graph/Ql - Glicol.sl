@@ -1,6 +1,6 @@
 ;; https://glicol.org/demo#ontherun ; requires=VbJonVerb
 var tr = Impulse(12, 0);
-var seq = DmdOn(tr, 0, Seq(inf, [40, 43, 45, 43, 50, 48, 50, 52]));
+var seq = DmdOn(tr, 0, Lseq(inf, [40, 43, 45, 43, 50, 48, 50, 52]));
 var osc = Pulse(seq.MidiCps, 0.5);
 var env = Decay2(tr, 0.05, 0.25);
 var flt = Rlpf(osc * env, SinOsc(0.2, 0) * 1200 + 1500, 1) * 0.1;

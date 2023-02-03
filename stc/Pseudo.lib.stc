@@ -89,7 +89,7 @@ Changed : PseudoUgen {
 }
 
 (* Random sequence generator *)
-Choose : PseudoUgen {
+Lrand : PseudoUgen {
 	*constructor {
 		arg repeats, list;
 		^Drand(repeats, list)
@@ -151,8 +151,7 @@ DynKlank : PseudoUgen {
 	*constructor {
 		arg input, freqscale, freqoffset, decayscale, specificationsArrayRef;
 		var gen;
-		gen = {
-		    arg ix;
+		gen = { arg ix;
 		    var f = specificationsArrayRef.at(ix);
 		    var a = specificationsArrayRef.at(ix + 1);
 		    var d = specificationsArrayRef.at(ix + 2);
@@ -381,7 +380,7 @@ SelectX : PseudoUgen {
 }
 
 (* Sequence generator *)
-Seq : PseudoUgen {
+Lseq : PseudoUgen {
 	*constructor {
 		arg repeats, list;
 		^Dseq(repeats, list)
@@ -389,22 +388,15 @@ Seq : PseudoUgen {
 }
 
 (* Demand rate sequence generator. *)
-Ser : PseudoUgen {
+Lseries : PseudoUgen {
 	*constructor {
-		arg repeats, list;
-		^Dser(repeats, list)
-	}
-}
-
-Series : PseudoUgen {
-	*constructor {
-		arg start, step, length;
-		^Dseries(start, step, length)
+		arg length, start, step;
+		^Dseries(length, start, step)
 	}
 }
 
 (* Demand rate random sequence generator *)
-Shuf : PseudoUgen {
+Lshuf : PseudoUgen {
 	*constructor {
 		arg repeats, list;
 		^Dshuf(repeats, list)
@@ -600,10 +592,10 @@ Changed : PseudoUgen {
 }
 
 (* Random sequence generator *)
-Xchoose : PseudoUgen {
+Lxrand : PseudoUgen {
 	*constructor {
 		arg repeats = 1, list;
-		^Dxrand(repeats, list)
+		^Lxrand(repeats, list)
 	}
 }
 
@@ -632,7 +624,7 @@ DelayTap : PseudoUgen {
 Sequencer : PseudoUgen {
 	*constructor {
 		arg valueArray, trig;
-		^DmdOn(trig, 0, Seq(inf, valueArray))
+		^DmdOn(trig, 0, Lseq(inf, valueArray))
 	}
 }
 
@@ -644,7 +636,7 @@ ImpulseSequencer : PseudoUgen {
 }
 
 (* Random sequence generator *)
-White : PseudoUgen {
+Lwhite : PseudoUgen {
 	*constructor {
 		arg length, lo = 0, hi = 1;
 		^Dwhite(length, lo, hi)

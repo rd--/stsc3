@@ -8,7 +8,7 @@ Splay(
 		DmdFor(
 			4,
 			0,
-			Seq(inf, [1, Choose(1, [5, 10]), 1, Choose(1, [11, 20])])
+			Lseq(inf, [1, Lrand(1, [5, 10]), 1, Lrand(1, [11, 20])])
 		)
 	),
 	1,

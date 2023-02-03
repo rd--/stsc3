@@ -1,7 +1,7 @@
 ;; demanding studies (jmcc)
-var s1 = Choose(inf, [72, 75, 79, 82]);
-var s2 = Choose(1, [82, 84, 86]);
-var s3 = Seq(inf, [72, 75, 79, s2]);
+var s1 = Lrand(inf, [72, 75, 79, 82]);
+var s2 = Lrand(1, [82, 84, 86]);
+var s3 = Lseq(inf, [72, 75, 79, s2]);
 var x = MouseX(5, 13, 0, 0.2);
 var tr = Impulse(x, 0);
 var f = DmdOn(tr, 0, [(s1 - 12).MidiCps, s3.MidiCps]);

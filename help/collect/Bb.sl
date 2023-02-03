@@ -1,5 +1,5 @@
 ;; http://earslap.com/weblog/music-release-laconicism.html
-var k = DmdFor(6.4, 0, Seq(inf, [0.05, Choose(1, [0.04, 0.08])]));
+var k = DmdFor(6.4, 0, Lseq(inf, [0.05, Lrand(1, [0.04, 0.08])]));
 Splay(Integrator((LfNoise0(5 ! 3) * k).RoundTo(k / 10), 1).Sin.Sqrt.Tanh, 0.3, 1, 0, true)
 
 ;; http://earslap.com/weblog/music-release-laconicism.html ; wait
@@ -10,7 +10,7 @@ s <! LocalOut(x)
 ;; http://earslap.com/weblog/music-release-laconicism.html ; wait
 var q = [0, 3, 5, 7, 10];
 var t = Impulse(4, 0) * LfNoise0(500) > 0;
-var f = DmdOn(t, 0, Choose(inf, (q + 12 ++ q + 33).MidiCps));
+var f = DmdOn(t, 0, Lrand(inf, (q + 12 ++ q + 33).MidiCps));
 PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0) ! 2
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
@@ -43,7 +43,7 @@ var l = n(6);
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
 var t = [0, 0, 0, 1, 5, 7, 10, 12, 12, 12] + 30;
-var a = DmdFor(1/8, 0, Choose(inf, t + 24 ++ t ++ t));
+var a = DmdFor(1/8, 0, Lrand(inf, t + 24 ++ t ++ t));
 (BHiPass(LfNoise1(8) ** 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
@@ -56,7 +56,7 @@ SinOsc(LagUd(i(2), 0, 0.4) * 360, ph)
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
 var t = [0, 3, 5, 7, 10, 12] + 40;
-var p = DmdFor(1/4, 0, Choose(inf, (t + 12 ++ t).MidiCps));
+var p = DmdFor(1/4, 0, Lrand(inf, (t + 12 ++ t).MidiCps));
 var b = TRand(1500, 2000, Impulse(16, 0)).Lag(0.1);
 Blip([b, b + p], 1).mean ! 2 ** 2
 
@@ -79,7 +79,7 @@ var v = Blip([20000, 20000 - 9], 1) * (n(16) * 0.5 + 0.5 ** 9);
 (Hpf(LfNoise1(2), [10, 10.1]) * 100).Tanh
 
 ;; http://earslap.com/weblog/music-release-laconicism.html ; requires=kr
-var x = DmdFor(1/8, 0, Choose(inf, [0, Choose(1, [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])]));
+var x = DmdFor(1/8, 0, Lrand(inf, [0, Lrand(1, [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])]));
 LeakDc(Brf(Saw(8) * Decay2(x, 0.01, 0.3).kr ** 1.5, x * 20 + [45.1, 45], 0.1), 0.995).Tanh
 
 ;; http://earslap.com/weblog/music-release-laconicism.html ; wait
