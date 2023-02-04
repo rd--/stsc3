@@ -12,7 +12,7 @@ var rewrite = { :n |
 var strFunc = { :i |
 	var str = rewrite(i + 6);
 	var dt = 2 ** i.negated * 10;
-	var trig = TDmdFor(dt, 0, Lseq(1, str));
+	var trig = TDmdFor(dt, 0, Dseq(1, str));
 	var freq = ExpRand(200, i + 1 / 7 * 10100);
 	Ringz(
 		trig,

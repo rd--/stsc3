@@ -7,6 +7,7 @@ comment = (
 ctlArray: ctlArray modArray: modArray = (
 	^UgenBuilder name: 'FM7' numChan: 6 rateSpec: (Rate ar) specialIndex: 0 inputArray: ctlArray , modArray
 )
+
 ctlMatrix: ctlMatrix modMatrix: modMatrix = (
 	^Fm7 ctlArray: ctlMatrix concatenation modArray: modMatrix concatenation
 )

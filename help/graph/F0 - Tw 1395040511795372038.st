@@ -2,7 +2,7 @@
 | b c l f o p m h q r |
 b := #(2 6 3 1).
 c := 500.
-l := Lseq repeats: Float infinity list: ((SinOscFb freq: b / 24 feedback: 0) rounded + (0 to: 9) * 7 + 29.17) midiCps.
+l := Dseq repeats: Float infinity list: ((SinOscFb freq: b / 24 feedback: 0) rounded + (0 to: 9) * 7 + 29.17) midiCps.
 f := DmdFor dur: b reset: (SinOscFb freq: b / 9 feedback: 0) level: l.
 o := SinOscFb freq: f feedback: (((SinOscFb freq: b / 13 feedback: 0) max: 0) / 3 * 2).
 p := AllpassN in: o / 8 maxdelaytime: 1 delaytime: 0.51 decaytime: 8.

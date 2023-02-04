@@ -1,7 +1,7 @@
 ;; jmcc ; ostinoodles ; requires=TScramble
 var z = OverlapTexture({ :tr |
 	var Sequencer = { :s :tr |
-		DmdOn(tr, 0, Lseq(inf, s))
+		Demand(tr, 0, Dseq(inf, s))
 	};
 	var root = 81 + TRand(-6, 6, tr);
 	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;

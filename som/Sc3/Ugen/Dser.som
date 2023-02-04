@@ -1,0 +1,20 @@
+Dser = ScUgen (
+----
+comment = (
+	^'Demand rate sequence generator.'
+)
+
+repeats: repeats list: list = (
+	^UgenBuilder name: 'Dser' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats} , (list asArray))
+)
+primaryFactoryMethod = (
+	^#repeats:list:
+)
+repeats: repeats list: list mul: mul = (
+	^(Dser repeats: repeats list: list) * mul
+)
+repeats: repeats list: list mul: mul add: add = (
+	^(Dser repeats: repeats list: list) * mul + add
+)
+
+)

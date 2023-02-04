@@ -1,33 +1,33 @@
-"Lseq ; at control rate"
+"Dseq ; at control rate"
 | n x t f |
-n := Lseq repeats: 3 list: #(1 3 2 7 8).
+n := Dseq repeats: 3 list: #(1 3 2 7 8).
 x := MouseX minval: 1 maxval: 40 warp: 1 lag: 0.1.
 t := Impulse freq: x phase: 0.
-f := (DmdOn trig: t reset: 0 demandUGens: n) * 30 + 340.
+f := (Demand trig: t reset: 0 demandUGens: n) * 30 + 340.
 SinOsc freq: (f kr) phase: 0 mul: 0.1
 
-"Lseq ; at audio rate"
+"Dseq ; at audio rate"
 | n x t f |
-n := Lseq repeats:  Float infinity list: #(1 3 2 7 8 32 16 18 12 24).
+n := Dseq repeats:  Float infinity list: #(1 3 2 7 8 32 16 18 12 24).
 x := MouseX minval: 1 maxval: 10000 warp: 1 lag: 0.1.
 t := Impulse freq: x phase: 0.
-f := (DmdOn trig: t reset: 0 demandUGens: n) * 30 + 340.
+f := (Demand trig: t reset: 0 demandUGens: n) * 30 + 340.
 SinOsc freq: f phase: 0 mul: 0.1
 
-"Lseq ; the SC2 Sequencer UGen is somewhat like the sequ function below"
+"Dseq ; the Sc2 Sequencer Ugen is somewhat like the sequ function below"
 | sequ t n0 n1 |
-sequ := [ :s :tr | DmdOn trig: tr reset: 0 demandUGens: (Lseq repeats:  Float infinity list: s) ].
+sequ := [ :s :tr | Demand trig: tr reset: 0 demandUGens: (Dseq repeats:  Float infinity list: s) ].
 t := Impulse freq: 6 phase: 0.
 n0 := sequ value: #(60 62 63 58 48 55) value: t.
 n1 := sequ value: #(63 60 48 62 55 58) value: t.
 LfSaw freq: {n0. n1} midiCps iphase: 0 mul: 0.05
 
-"Seq ; rather than Mce expansion at tr, it can be clearer to view tr as a functor"
+"Dseq ; rather than Mce expansion at tr, it can be clearer to view tr as a functor"
 | m |
 m := [ :f |
 	| tr sq |
 	tr := Impulse freq: f phase: 0.
-	sq := Lseq repeats:  Float infinity list: #(60 63 67 69).
-	(DmdOn trig: tr reset: 0 demandUGens: sq) midiCps kr
+	sq := Dseq repeats:  Float infinity list: #(60 63 67 69).
+	(Demand trig: tr reset: 0 demandUGens: sq) midiCps kr
 ].
 (SinOsc freq: (#(2 3 5) collect: m) phase: 0 mul: 0.1) splay2

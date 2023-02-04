@@ -10,7 +10,7 @@ var fftSize = 2 ** (window * sampleRate).Log2.Floor;
 var trigPeriod = fftSize / sampleRate;
 var trig = Impulse(1 / trigPeriod, 0);
 var bufdur = BufDur(bufnum);
-var pos = DmdFor(trig, 0, Lseries(inf, 0, trigPeriod / (stretch * bufdur)));
+var pos = DmdFor(trig, 0, Dseries(inf, 0, trigPeriod / (stretch * bufdur)));
 var grains = [
 	GrainBuf(1, trig, trigPeriod, bufnum, 1, pos, 2, 0, envBufnum, 512),
 	GrainBuf(1, trig, trigPeriod, bufnum, 1, pos + (trigPeriod / (2 * stretch * bufdur)), 2, 0, envBufnum, 512)

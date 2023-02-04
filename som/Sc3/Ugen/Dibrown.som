@@ -1,0 +1,20 @@
+Dibrown = ScUgen (
+----
+comment = (
+	^'Demand rate brownian movement generator.'
+)
+
+length: length lo: lo hi: hi step: step = (
+	^UgenBuilder name: 'Dibrown' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: {length. lo. hi. step}
+)
+primaryFactoryMethod = (
+	^#length:lo:hi:step:
+)
+length: length lo: lo hi: hi step: step mul: mul = (
+	^(Dibrown length: length lo: lo hi: hi step: step) * mul
+)
+length: length lo: lo hi: hi step: step mul: mul add: add = (
+	^(Dibrown length: length lo: lo hi: hi step: step) * mul + add
+)
+
+)

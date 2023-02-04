@@ -8,9 +8,9 @@ var tenvx = { :tr :atk :hld :rel |
 };
 var noteZero = MouseY(48, 75, 0, 0.2).rounded;
 var decayTime = MouseX(2, 4, 0, 0.2);
-var seq = Lseq(inf, [0, 5, 0, 3, 0, 3, 5, 0, 3] + noteZero);
+var seq = Dseq(inf, [0, 5, 0, 3, 0, 3, 5, 0, 3] + noteZero);
 var tr = Impulse(4, 0);
-var osc = SinOsc(DmdOn(tr, 0, seq.MidiCps), 0) * 0.1;
+var osc = SinOsc(Demand(tr, 0, seq.MidiCps), 0) * 0.1;
 var env = tenvx(tr, 0.01, 0.1, 0.2) + tenvx(PulseDivider(tr, 2, 0), 0.01, 0.1, 0.2);
 var snd = osc * env ! 2;
 CombC(snd, 0.25, 0.25, decayTime) * 0.4 + snd

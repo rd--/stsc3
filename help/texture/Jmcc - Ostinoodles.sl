@@ -1,6 +1,6 @@
 ;; ostinoodles (jmcc) #9
 var Sequencer = { :s :tr |
-	DmdOn(tr, 0, Lseq(inf, s))
+	Demand(tr, 0, Dseq(inf, s))
 };
 var root = 81 + (-6 .. 6).atRandom;
 var major = [0, 2, 4, 5, 7, 9, 11];

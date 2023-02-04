@@ -1,0 +1,20 @@
+Dwrand = ScUgen (
+----
+comment = (
+	^'Demand rate weighted random sequence generator'
+)
+
+repeats: repeats weights: weights list: list = (
+	^UgenBuilder name: 'Dwrand' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({repeats. weights} , (list asArray))
+)
+primaryFactoryMethod = (
+	^#repeats:weights:list:
+)
+repeats: repeats weights: weights list: list mul: mul = (
+	^(Dwrand repeats: repeats weights: weights list: list) * mul
+)
+repeats: repeats weights: weights list: list mul: mul add: add = (
+	^(Dwrand repeats: repeats weights: weights list: list) * mul + add
+)
+
+)

@@ -48,7 +48,7 @@ rw(250, 750, 0.1);
 rw(2500, 5000, 0.2);
 z := FreqShift(
 	z,
-	DmdFor(8, 0, Lwhite(inf, -1 * freq * 10, freq * 10).RoundTo(freq / 2)),
+	DmdFor(8, 0, Dwhite(inf, -1 * freq * 10, freq * 10).RoundTo(freq / 2)),
 	0
 ) * 0.25 + z;
 z := CombC(z, 1, 1, 8);

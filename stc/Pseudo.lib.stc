@@ -88,14 +88,6 @@ Changed : PseudoUgen {
 	}
 }
 
-(* Random sequence generator *)
-Lrand : PseudoUgen {
-	*constructor {
-		arg repeats, list;
-		^Drand(repeats, list)
-	}
-}
-
 (* Curve Segment Envelope *)
 CurveGen : PseudoUgen {
 	*constructor {
@@ -135,14 +127,6 @@ DmdFor : PseudoUgen {
 	*constructor {
 		arg dur, reset, level;
 		^Duty(dur, reset, 0, level)
-	}
-}
-
-(* Demand with trigger input (Demand) *)
-DmdOn : PseudoUgen {
-	*constructor {
-		arg trig, reset, demandUGens;
-		^Demand(trig, reset, demandUGens)
 	}
 }
 
@@ -379,30 +363,6 @@ SelectX : PseudoUgen {
 	}
 }
 
-(* Sequence generator *)
-Lseq : PseudoUgen {
-	*constructor {
-		arg repeats, list;
-		^Dseq(repeats, list)
-	}
-}
-
-(* Demand rate sequence generator. *)
-Lseries : PseudoUgen {
-	*constructor {
-		arg length, start, step;
-		^Dseries(length, start, step)
-	}
-}
-
-(* Demand rate random sequence generator *)
-Lshuf : PseudoUgen {
-	*constructor {
-		arg repeats, list;
-		^Dshuf(repeats, list)
-	}
-}
-
 Sine : PseudoUgen {
 	*constructor {
 		arg trig, dur = 1;
@@ -624,7 +584,7 @@ DelayTap : PseudoUgen {
 Sequencer : PseudoUgen {
 	*constructor {
 		arg valueArray, trig;
-		^DmdOn(trig, 0, Lseq(inf, valueArray))
+		^Demand(trig, 0, Dseq(inf, valueArray))
 	}
 }
 
@@ -632,14 +592,6 @@ ImpulseSequencer : PseudoUgen {
 	*constructor {
 		arg valueArray, trig;
 		^Sequencer(valueArray, trig) * trig
-	}
-}
-
-(* Random sequence generator *)
-Lwhite : PseudoUgen {
-	*constructor {
-		arg length, lo = 0, hi = 1;
-		^Dwhite(length, lo, hi)
 	}
 }
 

@@ -1,0 +1,20 @@
+Dswitch1 = ScUgen (
+----
+comment = (
+	^'Demand rate generator for switching between inputs.'
+)
+
+index: index list: list = (
+	^UgenBuilder name: 'Dswitch1' numChan: 1 rateSpec: (Rate dr) specialIndex: 0 inputArray: ({index} , (list asArray))
+)
+primaryFactoryMethod = (
+	^#index:list:
+)
+index: index list: list mul: mul = (
+	^(Dswitch1 index: index list: list) * mul
+)
+index: index list: list mul: mul add: add = (
+	^(Dswitch1 index: index list: list) * mul + add
+)
+
+)

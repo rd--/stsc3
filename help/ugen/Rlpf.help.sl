@@ -14,10 +14,10 @@ var ctl = Rlpf(LfSaw(5, 0) * 0.1, 25, 0.03);
 SinOsc(ctl * 200 + 400, 0) * 0.1
 
 ;; Rlpf
-var freq = DmdOn(
+var freq = Demand(
 	Impulse(0.25, 0),
 	0,
-	Lseq(inf, [27, 24, 22, 24] + 2)
+	Dseq(inf, [27, 24, 22, 24] + 2)
 ).MidiCps + [0, 0.3];
 Rlpf(LfPulse(freq, 0, 0.2) * 0.4 - 0.2, 300, 0.5)
 

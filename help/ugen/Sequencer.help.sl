@@ -17,9 +17,9 @@ var z = VarSaw(freq * [1, 1.505], 0, MouseY(0, 1, 0, 0.2)) * Decay2(trig2, 0.005
 CombN(x + z * 0.5, 0.26, 0.26, 4).SoftClip
 
 ;; Sequencer ; jmcc
-var p = Lrand(inf, [
-	Lseq(1, [0, 0, 1, 2, 7, 8, 9, 8, 10, 10, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 9, 8, 11, 11, 1, 2, 1, 2, 3, 4]),
-	Lseq(2, [0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4])
+var p = Drand(inf, [
+	Dseq(1, [0, 0, 1, 2, 7, 8, 9, 8, 10, 10, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 9, 8, 11, 11, 1, 2, 1, 2, 3, 4]),
+	Dseq(2, [0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4])
 ]);
 var clock = Impulse(12, 0);
 var root = Sequencer([57, 59, 62, 55], PulseDivider(clock, 128, 0));
@@ -40,7 +40,7 @@ var x = Rlpf(
 ).Distort;
 var scale = [0, 2, 3, 5, 7, 8, 10].asLocalBuf;
 var trig3 = ImpulseSequencer([0.4, 0.0, 0.1, 0.1, 0.4, 0.1, 0.1, 0.1] * 1.5, clock);
-var freq = (DegreeToKey(scale, DmdOn(clock, 0, p), 12) - 12 + root).MidiCps;
+var freq = (DegreeToKey(scale, Demand(clock, 0, p), 12) - 12 + root).MidiCps;
 var z = Rlpf(
 	VarSaw(freq * [1, 1.505], 0, MouseY(0, 1, 0, 0.2)) * Decay2(trig3, 0.005, 0.8),
 	MouseX(200, 8000, 1, 0.2),
@@ -55,22 +55,22 @@ var snd = (r * 0.1 + x + z + [y, w]) * 0.4;
 
 ;; Sequencer ; jmcc
 var z = 0, a = 0.1, b = 0.2, c = 0.4;
-var p = Lseq(1, [
-	Lseq(2, [c, z, z, z, z, z, z, z]),
-	Lseq(2, [c, z, z, b, z, z, b, z, c, z, z, z, b, z, b, a]),
-	Lrand(inf, [
-		Lseq(2, [c, z, z, b, z, z, b, z, c, z, b, z, c, z, b, z]),
-		Lseq(2, [c, z, a, b, z, a, b, z, c, z, b, z, c, a, b, a]),
-		Lseq(2, [c, a, a, b, z, a, b, a, c, z, b, z, c, a, b, a]),
-		Lseq(2, [c, a, a, b, z, a, b, a, c, z, b, z, z, b, a, a]),
-		Lseq(2, [c, z, z, z, z, z, z, z]),
-		Lseq(2, [c, z, z, b, z, z, b, z, c, z, z, z, b, z, b, a])
+var p = Dseq(1, [
+	Dseq(2, [c, z, z, z, z, z, z, z]),
+	Dseq(2, [c, z, z, b, z, z, b, z, c, z, z, z, b, z, b, a]),
+	Drand(inf, [
+		Dseq(2, [c, z, z, b, z, z, b, z, c, z, b, z, c, z, b, z]),
+		Dseq(2, [c, z, a, b, z, a, b, z, c, z, b, z, c, a, b, a]),
+		Dseq(2, [c, a, a, b, z, a, b, a, c, z, b, z, c, a, b, a]),
+		Dseq(2, [c, a, a, b, z, a, b, a, c, z, b, z, z, b, a, a]),
+		Dseq(2, [c, z, z, z, z, z, z, z]),
+		Dseq(2, [c, z, z, b, z, z, b, z, c, z, z, z, b, z, b, a])
 	])
 ]);
-var q = Lrand(inf, [
-	Lseq(2, [c, z, b, z, a, a, a, a, b, z, b, z, z, z, b, z]),
-	Lseq(2, [c, z, z, z, z, z, z, z, b, z, b, z, z, z, c, z]),
-	Lseq(2, [c, z, z, z, a, z, z, z, b, z, b, z, a, z, c, z])
+var q = Drand(inf, [
+	Dseq(2, [c, z, b, z, a, a, a, a, b, z, b, z, z, z, b, z]),
+	Dseq(2, [c, z, z, z, z, z, z, z, b, z, b, z, z, z, c, z]),
+	Dseq(2, [c, z, z, z, a, z, z, z, b, z, b, z, a, z, c, z])
 ]);
 var clock = Impulse(9, 0);
 ;; (* bass drum *)
@@ -98,5 +98,5 @@ snd
 
 ;; Sequencer ; jmcc
 var clock = Impulse(XLn(24, 1, 12), 0);
-var x = SinOsc(Sequencer(Lwhite(inf, 2000, 12000), clock), 0) * Decay2(clock, 0.002, 0.04);
+var x = SinOsc(Sequencer(Dwhite(inf, 2000, 12000), clock), 0) * Decay2(clock, 0.002, 0.04);
 { CombN(x, 0.1, { ExpRand(0.02, 0.05) } ! 2, 2) * Ln(0.2, 0, 12) } !+ 2

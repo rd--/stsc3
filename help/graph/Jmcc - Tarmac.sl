@@ -11,7 +11,7 @@ var a = [
 ];
 OverlapTexture({ :tr |
 	var t = Impulse(8, 0);
-	var i = DmdOn(t, 0, Lseq(inf, TScramble(tr, TChoose(tr, a)))) * t;
+	var i = Demand(t, 0, Dseq(inf, TScramble(tr, TChoose(tr, a)))) * t;
 	var d = TRand(0.05, 0.5, tr);
 	var z = PinkNoise() * (LfNoise1(TRand(0, 3, tr)) * 0.0008 + 0.0022);
 	var s = (

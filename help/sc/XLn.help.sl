@@ -11,3 +11,7 @@ Generates an exponential curve from the start value to the end value. Both the s
 Control frequency of sine oscillator:
 
 	SinOsc(XLn(200, 17000, 10), 0) * 0.1
+
+* * *
+
+Note: This is the Sc _XLine_ Ugen without the _doneAction_ input.

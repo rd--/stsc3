@@ -6,7 +6,7 @@
 		var b = Saw(i);
 		d := 1 / i;
 		Release(
-			EqPan2(SinOscFb(DmdFor(d, 0, Lseq(1, a * 99 / 2)), b), b) / 5,
+			EqPan2(SinOscFb(DmdFor(d, 0, Dseq(1, a * 99 / 2)), b), b) / 5,
 			0.02, 8, 0.02
 		)
 	}.play;

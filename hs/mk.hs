@@ -62,7 +62,7 @@ main :: IO ()
 main = do
   Som.som_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/som/Sc3/Ugen/" ugen
   St.st_sc3_gen_bindings_wr "/home/rohan/sw/stsc3/st/Sc3-Ugen-Bindings.st" uop binop ugen
-  Js.js_sc3_gen_bindings_wr True "/home/rohan/sw/jssc3/js/sc3-bindings.ts" Js.js_sc3_uop Js.js_sc3_binop ugen
+  Js.js_sc3_gen_bindings_wr True "/home/rohan/sw/jssc3/ts/sc3/bindings.ts" Js.js_sc3_uop Js.js_sc3_binop ugen
   let col = map u_lookup_cs_err ugen
       flt = filter Record.u_is_filter col
       osc = filter is_osc col

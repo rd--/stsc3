@@ -1,8 +1,8 @@
 "demanding studies (jmcc)"
 | s1 s2 s3 x tr f o1 o2 o3 |
-s1 := Lrand repeats: Float infinity list: #(72 75 79 82).
-s2 := Lrand repeats: 1 list: #(82 84 86).
-s3 := Lseq repeats: Float infinity list: {72. 75. 79. s2}.
+s1 := Drand repeats: Float infinity list: #(72 75 79 82).
+s2 := Drand repeats: 1 list: #(82 84 86).
+s3 := Dseq repeats: Float infinity list: {72. 75. 79. s2}.
 x := MouseX minval: 5 maxval: 13 warp: 0 lag: 0.2.
 tr := Impulse freq: x phase: 0.
 f := DmdOn trig: tr reset: 0 demandUGens: {(s1 - 12) midiCps. s3 midiCps}.

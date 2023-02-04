@@ -56,8 +56,8 @@ Voicer(16, { :e |
 }).sum
 
 ;; berlin 1977 (jmcc) #4 ; var syntax
-var sequ = { :s :tr | DmdOn(tr, 0, Lseq(inf, s)) };
-var sequR = { :s :tr | DmdOn(tr, 0, Lshuf(inf, s)) };
+var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
+var sequR = { :s :tr | Demand(tr, 0, Dshuf(inf, s)) };
 var clockRate = MouseX(5, 20, 1, 0.2);
 var clockTime = 1 / clockRate;
 var clock = Impulse(clockRate, 0);
@@ -163,10 +163,10 @@ Rlpf(s, 100, 0.1).Clip2(0.4)
 ;; jmcc - ostinoodles ; requires=keywords
 var z = OverlapTexture({ :tr |
 	var sequ = { :s :tr |
-		DmdOn(
+		Demand(
 			trig: tr,
 			reset: 0,
-			demandUGens: Lseq(
+			demandUGens: Dseq(
 				repeats: inf,
 				list: s
 			)

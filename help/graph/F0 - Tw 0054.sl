@@ -1,5 +1,5 @@
 ;; https://fredrikolofsson.com/f0blog/more-sc-twitter/
-var sq = Lseq(99, [2, 2, 2, 2, 2, 2, 4, 3]);
+var sq = Dseq(99, [2, 2, 2, 2, 2, 2, 4, 3]);
 var sy = Saw([3, 4]) * 32 + 64;
 var sz = Saw([4, 3]) * 99;
 (0 .. 4).collect({ :x |
