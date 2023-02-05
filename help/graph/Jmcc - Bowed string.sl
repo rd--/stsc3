@@ -12,5 +12,5 @@ OverlapTexture({ :tr |
 		12.geom(1, TRand(0.7, 0.9, tr)),
 		{ TRand(1, 3, tr) } ! 12
 	);
-	(k * 0.1).SoftClip
+	Pan2(k.SoftClip, TRand(-1, 1, tr), 0.1)
 }, 5, 2, 9)

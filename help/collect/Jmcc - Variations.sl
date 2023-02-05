@@ -354,12 +354,11 @@ var n = { BrownNoise() } ! 2 * 0.5 - 0.49;
 var f = n.Max(0) * 20;
 Rhpf(f, 5000, 1)
 
-
 ;; slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
 var n = 20;
 var d = 5;
-var p = OrderedCollection.new;
-var q = OrderedCollection.new;
+var p = OrderedCollection();
+var q = OrderedCollection();
 var f = { :freq |
 	SinOscBank(freq.asArray, [1], { Rand(0, 2 * pi) } ! (3 * n))
 };

@@ -1,8 +1,8 @@
 ;; slow beating sines (jmcc) #7 ; graph rewrite
 OverlapTexture({ :tr |
 	var n = 20;
-	var p = OrderedCollection.new;
-	var q = OrderedCollection.new;
+	var p = OrderedCollection();
+	var q = OrderedCollection();
 	var f = { :freqArray |
 		freqArray.collect({ :freq |
 			SinOsc(freq, TRand(0, 2 * pi, tr))

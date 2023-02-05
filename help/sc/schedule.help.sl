@@ -1,7 +1,7 @@
 # schedule -- process
 
 - _schedule(aClock, deltaTime, aProcedure)_
-- _schedule(deltaTime, aProcedure)_ ⇒ _aClock = system::clock_
+- _schedule(deltaTime, aProcedure)_ ⇒ _aClock = workspace::clock_
 - _schedule(aProcedure)_ ⇒ _deltaTime = 0_
 
 Schedule _aProcedure_ for _deltaTime_ at _aClock_.
