@@ -3,9 +3,9 @@ var rules = [[0, 1], [0]];
 var rewrite = { :c :n |
 	var r = c;
 	n.timesRepeat {
-		r := r.collect({ :e |
+		r := r.collect { :e |
 			rules[e + 1]
-		}).concatenation
+		}.concatenation
 	};
 	r
 };

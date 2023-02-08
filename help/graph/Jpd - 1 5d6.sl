@@ -15,11 +15,11 @@ var grains = [
 	GrainBuf(1, trig, trigPeriod, bufnum, 1, pos, 2, 0, envBufnum, 512),
 	GrainBuf(1, trig, trigPeriod, bufnum, 1, pos + (trigPeriod / (2 * stretch * bufdur)), 2, 0, envBufnum, 512)
 ] * amp;
-var diffused = grains.collect({ :item |
+var diffused = grains.collect { :item |
 	var c1 = Fft(BufAlloc(1, fftSize), item, 1, -1, 1, 0);
 	var c2 = PvDiffuser(c1, 1 - trig);
 	Ifft(c2, -1, 0)
-});
+};
 var enveloped = diffused * PlayBuf(1, envBufnum, 1 / trigPeriod, 1, 0, 1, 0);
 var delayed = DelayC(enveloped.second, trigPeriod / 2, trigPeriod / 2);
 Pan2(enveloped.first + delayed, pan, 1)

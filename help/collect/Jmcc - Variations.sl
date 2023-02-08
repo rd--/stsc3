@@ -136,10 +136,10 @@ c !+ 2 + s
 
 ;; harmonic swimming (jmcc) #1
 var l = Ln(0, -0.02, 60);
-(1 .. 20).collect({ :h |
+(1 .. 20).collect { :h |
 	var n = LfNoise1({ Rand(-4, 4) } ! 2 + 6) * 0.02 + l;
 	SinOsc(50 * (h + 1), 0) * n.Max(0)
-}).sum
+}.sum
 
 ;; harmonic tumbling (jmcc) #1
 var t = XLine([10, 11], 0.1, 60, 0);

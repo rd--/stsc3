@@ -4,9 +4,9 @@ OverlapTexture({ :tr |
 	var p = OrderedCollection();
 	var q = OrderedCollection();
 	var f = { :freqArray |
-		freqArray.collect({ :freq |
+		freqArray.collect { :freq |
 			SinOsc(freq, TRand(0, 2 * pi, tr))
-		}).sum
+		}.sum
 	};
 	n.timesRepeat {
 		var freq = TRand(24, 84, tr).MidiCps;

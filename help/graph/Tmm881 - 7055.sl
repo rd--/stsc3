@@ -32,7 +32,7 @@ var tendencyMask = [
 	var freqMul = {
 		(mouse * 10 + 0.1).atRandom
 	} ! 3;
-	var dry = (1 .. 3).collect({ :i |
+	var dry = (1 .. 3).collect { :i |
 		var freqRange = 10 ** i * [22, 88] * freqMul[i];
 		var freq = {
 			TRand(
@@ -43,7 +43,7 @@ var tendencyMask = [
 		} ! 2;
 		var tr = Impulse(triggerRate[i], 0);
 		GrainFm(2, tr, dur[i], freq[1], freq[2], 1, WhiteNoise() * 0.6, -1, 512) * 0.1
-	}).sum;
+	}.sum;
 	var rev = FreeVerb(dry, 0.33, 0.5, 0.5);
 	var del = CombC(dry, 0.2, 0.2, 1);
 	dry + rev + del * 0.2

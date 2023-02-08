@@ -77,9 +77,9 @@ var f = { :frq :num| SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1) };
 var sync = 5;
 var freq = [1, 3, 5, 7, 9, 11, 13];
 var numer = [3, 7, 5, 2, 9, 6, 1];
-(1 .. freq.size).collect({ :i |
+(1 .. freq.size).collect { :i |
 	SinOsc(freq[i] * 100, 0) * Decay2(Impulse(numer[i] / sync, 0), 0.01, 1)
-}).Splay2 * 0.2
+}.Splay2 * 0.2
 
 ;; nice buzzing effect
 var speed = 14;
@@ -128,19 +128,19 @@ var harmonics = 16;
 ;; worth experimenting with ; https://github.com/cianoc/supercollider_fragments
 var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
-(1 .. 16).collect({ :partial |
+(1 .. 16).collect { :partial |
 	var env = Asr(tr, 0, 5, [0]) / partial;
 	var amp = LfNoise1(Rand(5, 12)).Max(0);
 	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, env * amp)
-}).sum * 0.5
+}.sum * 0.5
 
 ;; multiple sines ; https://github.com/cianoc/supercollider_fragments
 var speeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] / 20;
 var f0 = (MouseX(0, 36, 0, 0.2).RoundTo(7) + 24).MidiCps;
 var harmonics = 16;
-(1 .. harmonics).collect({ :partial |
+(1 .. harmonics).collect { :partial |
 	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, SinOsc(speeds.atRandom, 0).Max(0))
-}).sum / harmonics * 0.5
+}.sum / harmonics * 0.5
 
 ;; more bells ; https://github.com/cianoc/supercollider_fragments
 var env = Decay2(Dust(1 / 3), 0.01, 2) * 0.1;

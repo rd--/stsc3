@@ -9,7 +9,7 @@ LfNoise2(XLn(1000, 10000, 10)) * 0.05
 
 ;; LfNoise2 ; modulate parameters
 var n = 23;
-var s = (1 .. n).collect({ :i |
+var s = (1 .. n).collect { :i |
 	var lf = 3 * (1.1 ** i);
 	var o1 = LfNoise2(lf) * SinOsc(ExpRand(0.08, 0.16), Rand(0, 1)).Range(0, 4);
 	var o2 = SinOsc(
@@ -25,5 +25,5 @@ var s = (1 .. n).collect({ :i |
 		o3 ** (i / 3),
 		LfSaw(LfNoise2(lf) / i, Rand(0, 1))
 	) * e
-}).sum;
+}.sum;
 FreeVerb2(s.first, s.second, 1 / 3, 0.5, 0.5)

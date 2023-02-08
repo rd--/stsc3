@@ -14,10 +14,10 @@ var p2 = [
 	[36,47,67,71,74,77,74,71,74,71,67,71,62,65,64,62],
 	{ 60 } ! 16
 ];
-var p = p1.collect({ :x |
+var p = p1.collect { :x |
 	var y = x ++ (3 .. 5).collect { :i | x[i] };
 	[y, y].concatenation
-}).concatenation ++ p2.concatenation;
+}.concatenation ++ p2.concatenation;
 var tr = Impulse(5, 0);
 var freq = Demand(tr, 0, Dseq(1, p.MidiCps));
 Pan2(FreeVerb(Lpf(Saw(Lag(freq, 0.03)), 1000), 0.3, 0.5, 0.35), 0, 0.2)
