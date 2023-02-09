@@ -1,11 +1,17 @@
-# AudioIn --  read audio input from analogue-to-digital converter
+# AudioIn -- sound input
 
-_AudioIn(channel=1)_
+Read audio input from analogue-to-digital converter.
+
+- _AudioIn(channelArray)_
 
 Reads audio from the sound input hardware.
 
-- channel: input channel number to read. Channel numbers begin at 1.
+- channelArray: input channel numbers to read, channel numbers are one-indexed
 
-Stereo through patching from input to output:
+Stereo through patching from input to output with one second delay:
 
-		AudioIn([1, 2])
+		DelayN(AudioIn([1, 2]), 1, 1)
+
+* * *
+
+See also: _ControlIn_, _In_
