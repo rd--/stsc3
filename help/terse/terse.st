@@ -377,6 +377,7 @@ Class superclass = ClassDescription.
 (#(1 2 2 3 3 3) histogramOf: [ :each | each]) = #(1 2 2 3 3 3) asBag.
 (#(2 3 4 5 5 6) copyWithout: 5) = #(2 3 4 6).
 [ #(1 2) take: -1 ] on: Error do: [ true ].
+(#() select: [ :each | each > 0 ] ) = #().
 } allSatisfy: #yourself
 
 'Color'

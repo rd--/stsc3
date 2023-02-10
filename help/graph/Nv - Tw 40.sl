@@ -5,5 +5,7 @@ var f = { :i |
 	Rlpf(t, f, 0.005).Sin
 };
 var x = (0 .. 8).collect(f).Splay2;
-2.timesRepeat { x := FreeVerb2(x.first, x.second, 0.1, 1, 1) };
+2.timesRepeat {
+	x := FreeVerb2(x.first, x.second, 0.1, 1, 1)
+};
 x

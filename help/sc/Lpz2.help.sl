@@ -12,3 +12,6 @@ and:
 
 	Lpz2(WhiteNoise() * 0.1)
 
+* * *
+
+See also: _Lpz1_
