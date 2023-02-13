@@ -495,6 +495,17 @@ var o = SinOsc(Rand(24, 108).MidiCps, Rand(0, 2 * pi));
 var s = o * a(ExpRand(0.3, 8)).Max(0) * a(ExpRand(6, 24)).Abs;
 Pan2(s, Rand(-1, 1), 1)
 
+;; ---- birdies (jmcc) #6 ; muladd
+{
+	var p1 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 2);
+	var p2 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 0);
+	var p3 = MulAdd(LfPulse(0.2 + 0.5.Rand, 0, 0.4), 0.02, 0);
+	var sw = MulAdd(LfSaw(p1 + p2, 0), (1000 + 800.Rand).Neg, 4000 + 1200.Rand2);
+	var freq = Lag(sw, 0.05);
+	var amp = Lag(p3, 0.3);
+	Pan2(SinOsc(freq, 0) * amp, 1.Rand2, 1)
+}.overlap(7, 4, 4)
+
 ;; ---- alien froggies (jmcc) #1 ; left-to-right
 OverlapTexture({ :tr |
 	var r = TRand(-0.2, [0.1, 0.2], tr).Exp.Mul(11).Fold(1, 30);
