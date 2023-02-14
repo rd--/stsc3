@@ -18,7 +18,8 @@ var z = OverlapTexture({ :tr |
 		blips() * blips(),
 		TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), 4, tr)
 	) * 0.3
-}, 2, 1, 12);
-z := z.Distort;
-6.timesRepeat { z := AllpassN(z, 0.05, { Rand(0, 0.05) } ! 2, 4) };
+}, 2, 1, 12).Distort;
+6.timesRepeat {
+	z := AllpassN(z, 0.05, { Rand(0, 0.05) } ! 2, 4)
+};
 z

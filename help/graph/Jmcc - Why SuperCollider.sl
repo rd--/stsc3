@@ -10,8 +10,8 @@ var x = {
 	CombL(
 		DelayN(s, 0.048, 0.048),
 		0.1,
-		LfNoise1(0.1.Rand) * 0.04 + 0.05
-		, 15
+		LfNoise1(0.1.Rand) * 0.04 + 0.05,
+		15
 	)
 } !+ 7;
 4.timesRepeat {
