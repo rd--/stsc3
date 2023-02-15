@@ -27,7 +27,12 @@ Equivalent to:
 ```
 {
 	{
-		{ FSinOsc(600.Rand(1000), 1.Rand) * 0.1 } !+ 8
+		{
+			FSinOsc(
+				600.Rand(1000),
+				1.Rand
+			) * 0.1
+		} !+ 8
 	} ! 2 * 0.1
 }.xfade(3, 4)
 ```
