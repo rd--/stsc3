@@ -15,9 +15,16 @@ _GrainFm(numChannels, trigger, dur, carfreq, modfreq, index, pan, envbufnum, max
 Mouse controls panning,  noise and mouse control deviation from center pitch:
 
 ```
-var pan = MouseX(-1, 1, 0, 0.2);
-var freqDev = WhiteNoise() * MouseY(0, 400, 0, 0.2);
 var tr = Impulse(10, 0);
-var ix = LfNoise1(500).Range(1, 10);
-GrainFm(2, tr, 0.1, 440 + freqDev, TRand(20, 200, tr), ix, pan, -1, 512) * 0.1
+GrainFm(
+	2,
+	tr,
+	0.1,
+	440 + WhiteNoise() * MouseY(0, 400, 0, 0.2),
+	TRand(20, 200, tr),
+	LfNoise1(500).Range(1, 10),
+	MouseX(-1, 1, 0, 0.2),
+	-1,
+	512
+) * 0.1
 ```

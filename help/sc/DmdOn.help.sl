@@ -1,5 +1,5 @@
-# Demand -- demand results from demand rate ugens
+# DmdOn -- demand results
 
-_Demand(trig, reset, demandUgens)_
+_DmdOn(trig, reset, demandUgens)_
 
 This is an alias for _Demand_.
