@@ -8,4 +8,5 @@ Toggles between zero and one upon receiving a trigger.
 
 Increasing density triggers frequency switcher:
 
-	SinOsc((ToggleFf(Dust(XLn(1, 1000, 60))) * 400) + 800, 0) * 0.1
+	var ff = ToggleFf(Dust(XLn(1, 1000, 60)));
+	SinOsc(ff * 400 + 800, 0) * 0.1

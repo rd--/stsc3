@@ -44,8 +44,8 @@ Two phasors control two sound file positions.  _MouseX_ controls trigger frequen
 	var b = SfAcquire('crotale-d6', 1, [1]);
 	var rate = MouseX(0.1, 100, 1, 0.2);
 	var trig = Impulse(rate, 0);
-	var framesInBuffer = SfFrames(b);
-	var resetPos = [0, MouseY(0, framesInBuffer, 0, 0.2)];
-	var x = Phasor(trig, SfRateScale(b), 0, framesInBuffer, resetPos);
+	var bFrames = SfFrames(b);
+	var resetPos = [0, MouseY(0, bFrames, 0, 0.2)];
+	var x = Phasor(trig, SfRateScale(b), 0, bFrames, resetPos);
 	SfRead(b, x, 1, 2)
 

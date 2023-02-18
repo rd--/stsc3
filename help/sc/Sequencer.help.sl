@@ -9,17 +9,31 @@ Outputs a different value from the sequence each time a trigger is received.
 
 Sequence triggered by square wave:
 
-    LfSaw(Sequencer([60, 62, 63, 58, 48, 55].MidiCps, LfPulse(6, 0, 0.5)), 0) * 0.1
+```
+var freq = Sequencer(
+	[60, 62, 63, 58, 48, 55].MidiCps,
+	LfPulse(6, 0, 0.5)
+);
+LfSaw(freq, 0) * 0.1
+```
 
 Sequence triggered by random impulses:
 
-    LfSaw(Sequencer([60, 62, 63, 58, 48, 55].MidiCps, Dust(6)), 0) * 0.1
+```
+var freq = Sequencer(
+	[60, 62, 63, 58, 48, 55].MidiCps,
+	Dust(6)
+);
+LfSaw(freq, 0) * 0.1
+```
 
 Sequence of a demand rate value:
 
 ```
 var tr = LfPulse(6, 0, 0.5);
-var freq = { Sequencer(Drand(inf, [1, 2, 3, 7, 8]), tr) * 30 + 340 } ! 2;
+var freq = {
+	Sequencer(Drand(inf, [1, 2, 3, 7, 8]), tr) * 30 + 340
+} ! 2;
 SinOsc(freq, 0) * 0.1
 ```
 

@@ -14,16 +14,28 @@ Shifting a 100Hz tone by 1 Hz rising to 500Hz:
 
 Shifting a complex tone by 1 Hz rising to 500Hz:
 
-	FreqShift(SinOscBank([101, 303, 606, 808], 0.1, 0), XLn(1, 500, 10), 0) * 0.1
+	FreqShift(
+		SinOscBank([101, 303, 606, 808], 0.1, 0),
+		XLn(1, 500, 10),
+		0
+	) * 0.1
 
 Modulating shift and phase:
 
-	FreqShift(SinOsc(10, 0), LfNoise2(0.3) * 1500, SinOsc(500, 0).LinLin(-1, 1, 0, 2 * pi)) * 0.1
+	FreqShift(
+		SinOsc(10, 0),
+		LfNoise2(0.3) * 1500,
+		SinOsc(500, 0).LinLin(-1, 1, 0, 2 * pi)
+	) * 0.1
 
 Frequency shifting an audio sample:
 
 	var sf = SfAcquire('floating_1', 1, [1]);
-	FreqShift(PlayBuf(1, sf, 1, 0, 1, 0), LfNoise0(0.45) * 1000, 0) * 0.5
+	FreqShift(
+		PlayBuf(1, sf, 1, 0, 0, 1, 0),
+		LfNoise0(0.45) * 1000,
+		0
+	) * 0.5
 
 Shifting bandpassed noise:
 
@@ -34,7 +46,9 @@ Simple detune & pitchmod via FreqShift:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = ([0 .. 2].atRandom * 12 + 48 + table.atRandom).MidiCps;
+		var octave = [0 .. 2].atRandom;
+		var note = 48 + table.atRandom;
+		var freq = (octave * 12 + note).MidiCps;
 		var detune = 1.5;
 		var osc = SinOsc(freq, 0) * 0.1;
 		var left = osc + FreqShift(osc, freq * detune, 0);
@@ -46,8 +60,11 @@ Shift pulse wave in opposite directions:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).MidiCps;
-		var osc = Pulse(freq, SinOsc(2.3, 0).LinLin(-1, 1, 0.2, 0.8)) * 0.1;
+		var octave = [0 .. 2].atRandom;
+		var note = 48 + table.atRandom;
+		var freq = (octave * 12 + note).MidiCps;
+		var width = SinOsc(2.3, 0).LinLin(-1, 1, 0.2, 0.8);
+		var osc = Pulse(freq, width) * 0.1;
 		var left = FreqShift(osc, XLn(-0.1, -200, 3), 0);
 		var right = FreqShift(osc, XLn(0.1, 200, 3), 0);
 		[left, right] / 3
@@ -57,9 +74,19 @@ FreqShift, feedback, FreqShift:
 
 	{
 		var table = [0, 2, 4, 5, 7, 9, 11, 12];
-		var freq = (48 + (12 * (0 .. 2).atRandom) + table.atRandom).MidiCps;
-		var in = FreqShift(InFb(1, 0) * 3.2, XLn(0.01, freq * 1.5, 1), 0);
-		var snd1 = SinOsc(freq, 0) * Sine(1, 9) * 0.1;
-		var snd2 = FreqShift(snd1 + in, SinOsc(4.24, 0.5) * 3, 0) * 0.5;
-		(snd1 + snd2) / 3 ! 2
+		var octave = [0 .. 2].atRandom;
+		var note = 48 + table.atRandom;
+		var freq = (octave * 12 + note).MidiCps;
+		var in = FreqShift(
+			InFb(1, 0) * 3.2,
+			XLn(0.01, freq * 1.5, 1),
+			0
+		);
+		var osc = SinOsc(freq, 0) * Sine(1, 9) * 0.1;
+		var snd = FreqShift(
+			osc + in,
+			SinOsc(4.24, 0.5) * 3,
+			0
+		) * 0.5;
+		(osc + snd) / 3 ! 2
 	}.overlap(3, 3, 3)

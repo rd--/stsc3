@@ -28,5 +28,6 @@ Ordinary playback, phase courtesy _LfSaw_:
 Ordinary playback, phase courtesy _Phasor_:
 
 	var sf = SfAcquire('floating_1', 1, [1]).first;
-	BufRd(1, sf, Phasor(0, SfRateScale(sf), 0, SfFrames(sf), 0), 1, 2)
+	var ph = Phasor(0, SfRateScale(sf), 0, SfFrames(sf), 0);
+	BufRd(1, sf, ph, 1, 2)
 

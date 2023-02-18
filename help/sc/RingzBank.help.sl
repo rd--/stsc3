@@ -11,19 +11,39 @@ RingzBank (_Klank_) is a bank of fixed frequency resonators which can be used to
 
 Four resonant filters, default amplitudes and decay times:
 
-	RingzBank(Impulse(2, 0) * 0.1, [800, 1071, 1153, 1723], nil, nil)
+	RingzBank(
+		Impulse(2, 0) * 0.1,
+		[800, 1071, 1153, 1723],
+		nil,
+		nil
+	)
 
 With dust input:
 
-	RingzBank(Dust(8) * 0.1, [800, 1071, 1153, 1723], nil, nil)
+	RingzBank(
+		Dust(8) * 0.1,
+		[800, 1071, 1153, 1723],
+		nil,
+		nil
+	)
 
 With noise input:
 
-	RingzBank(PinkNoise() * 0.007, [800, 1071, 1153, 1723], nil, nil)
+	RingzBank(
+		PinkNoise() * 0.007,
+		[800, 1071, 1153, 1723],
+		nil,
+		nil
+	)
 
 With stereo input:
 
-	RingzBank({ PinkNoise() } ! 2 * 0.005, [200, 671, 1153, 1723], nil, nil)
+	RingzBank(
+		{ PinkNoise() } ! 2 * 0.005,
+		[200, 671, 1153, 1723],
+		nil,
+		nil
+	)
 
 With random frequencies input:
 

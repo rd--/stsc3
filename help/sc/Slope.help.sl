@@ -8,10 +8,15 @@ Measures the rate of change per second of a signal.  Formula implemented is: _ou
 
 Noise and derivatives control frequency of sine oscillator:
 
-	var a = LfNoise2(2); (* quadratic noise *)
-	var b = Slope(a); (* first derivative produces line segments *)
-	var c = Slope(b); (* second derivative produces constant segments *)
-	var scale = 0.2; (* needed to scale back to +/- 1.0 *)
-	Splay2(SinOsc([a, b * scale, c * scale.squared] * 100 + 200, 0)) * 0.1
+ 	(* quadratic noise *)
+	var a = LfNoise2(2);
+ 	(* first derivative produces line segments *)
+	var b = Slope(a);
+ 	(* second derivative produces constant segments *)
+	var c = Slope(b);
+ 	(* needed to scale back to +/- 1.0 *)
+	var scale = 0.2;
+	var freq = [a, b * scale, c * scale.squared] * 100 + 200;
+	Splay2(SinOsc(freq, 0)) * 0.1
 
 For another example of Slope see [hypot].

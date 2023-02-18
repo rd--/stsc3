@@ -7,7 +7,7 @@ Triggers generate grains from a buffer. Each grain has a Hanning envelope (_sin^
 - numChannels: number of output channels.
 - trigger: at each trigger, the following arguments are sampled and used as the arguments of a new grain. A trigger occurs when a signal changes from <= 0 to > 0. If the trigger is audio rate then the grains will start with sample accuracy.
 - bufnum: the index of the buffer to use. It must be a one channel (mono) buffer.
-- rate: 1.0 is normal, 2.0 is one octave up, 0.5 is one octave down -1.0 is backwards normal rate ... etc. Unlike PlayBuf, the rate is multiplied by BufRate, so you needn't do that yourself.
+- rate: 1.0 is normal, 2.0 is one octave up, 0.5 is one octave down -1.0 is backwards normal rate ... etc. Unlike PlayBuf, the rate is multiplied by BufRate, so you need not do that yourself.
 - centerPos: the position in the buffer in seconds at which the grain envelope will reach maximum amplitude.
 - dur: duration of the grain in seconds.
 - pan: a value from -1 to 1. Determines where to pan the output in the same manner as PanAz.
@@ -30,7 +30,8 @@ Uniform unary rate, perturb _pos_ at clock rate
 	var trate = MouseY(8, 120, 1, 0.2);
 	var clk = Impulse(trate, 0);
 	var buf = SfAcquire('floating_1', 1, [1]).first;
-	var pos = MouseX(0,BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
+	var pos0 = MouseX(0, BufDur(buf), 0, 0.2);
+	var pos = pos0 + TRand(0, 0.01, clk);
 	var dur = 12 / trate;
 	var pan = WhiteNoise() * 0.6;
 	TGrains(2, clk, buf, 1, pos, dur, pan, 0.2, 4)
@@ -40,7 +41,8 @@ Stochastic clock (_Dust_):
 	var trate = MouseY(8, 120, 1, 0.2);
 	var clk = Dust(trate);
 	var buf = SfAcquire('floating_1', 1, [1]).first;
-	var pos = MouseX(0, BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
+	var pos0 = MouseX(0, BufDur(buf), 0, 0.2);
+	var pos = pos0 + TRand(0, 0.01, clk);
 	var dur = 4 / trate;
 	var pan = WhiteNoise() * 0.6;
 	TGrains(2, clk, buf, 1, pos, dur, pan, 0.1, 4)
@@ -50,7 +52,8 @@ Mouse control of _pos_ and _dur_:
 	var trate = 12;
 	var clk = Impulse(trate, 0);
 	var buf = SfAcquire('floating_1', 1, [1]).first;
-	var pos = MouseX(0, BufDur(buf), 0, 0.2) + TRand(0, 0.01, clk);
+	var pos0 = MouseX(0, BufDur(buf), 0, 0.2);
+	var pos = pos0 + TRand(0, 0.01, clk);
 	var dur = MouseY(0.2, 24, 1, 0.2) / trate;
 	var pan = WhiteNoise() * 0.6;
 	TGrains(2, clk, buf, 1, pos, dur, pan, 0.1, 4)
