@@ -1,4 +1,6 @@
-# RatioMidi -- convert interval as frequency ratio to midi note number
+# RatioMidi -- arithmetic
+
+Convert interval as frequency ratio to midi note number.
 
 Inverse of _MidiRatio_.
 
@@ -12,7 +14,9 @@ Generate Pythagorean scale:
 
 ```
 var genScale = { :ratio |
-	(0 .. 11).collect { :each | (ratio ** each).RatioMidi % 12 }
+	(0 .. 11).collect { :each |
+		(ratio ** each).RatioMidi % 12
+	}
 };
 var notes = 48 + genScale(3/2);
 var amps = { 0.1.Rand } ! 12;

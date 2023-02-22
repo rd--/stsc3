@@ -1,6 +1,6 @@
 ;; 20060914 ; rd
 {
-	var chrd = { :m |
+	var chord = { :m |
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
@@ -18,5 +18,5 @@
 		}
 	}.concatenation;
 	var chd = { mnn.atRandom } ! 6;
-	{ chrd(chd) } !+ 9
+	{ chd.chord } !+ 9
 }.overlap(21, 0, 3)

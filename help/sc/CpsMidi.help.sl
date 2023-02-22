@@ -1,4 +1,6 @@
-# CpsMidi -- convert cycles per second to midi note
+# CpsMidi -- arithmetic
+
+Convert cycles per second to midi note.
 
 Inverse of _MidiCps_.
 

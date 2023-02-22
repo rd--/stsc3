@@ -1,4 +1,6 @@
-# MidiCps -- convert midi note to cycles per second
+# MidiCps -- arithmetic
+
+Convert midi note to cycles per second.
 
 Inverse of _CpsMidi_.
 
@@ -7,3 +9,7 @@ Inverse of _CpsMidi_.
 A4 = 440hz:
 
 	69.MidiCps = 440
+
+* * *
+
+See also: _MidiRatio_
