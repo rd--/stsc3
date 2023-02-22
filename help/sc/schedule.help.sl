@@ -6,3 +6,8 @@
 
 Schedule _aProcedure_ for _deltaTime_ at _aClock_.
 When _aProcedure_ is evaluated the answer is either an interval at which to re-schedule, or _nil_ to halt.
+
+* * *
+
+See also: _repeatEvery_, _scheduleInjecting_, _Clock_
+
