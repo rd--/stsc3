@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0293
-{ :a |
+{ :t :a |
 	var d;
 	{
 		var i = a[1];

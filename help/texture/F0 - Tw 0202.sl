@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0202
-{ :i |
+{ :t :i |
 	{
 		var b = 0.1;
 		var s = Dseq(9, [0, i % 9, 2, 3, 4, 0, 2, 1] * 150);

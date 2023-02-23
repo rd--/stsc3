@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0205
-{ :i |
+{ :t :i |
 	var a = Wrap(i * 9, 99, 8000);
 	{
 		var o = SinOsc(DmdFor(1 / [8, 9], 0, Dseq(99, a)), 0);

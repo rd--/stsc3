@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-4Qy ; f0 ; 0005
-{
+{ :currentTime |
 	var z = Rand(1, 61);
 	var d = z / 3;
 	{
