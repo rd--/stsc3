@@ -14,3 +14,6 @@ var select = (0 .. k).collect { :i | mouseX > i };
 var note = { TChoose(reset, [0, 2, 3, 5, 7, 9, 10]) + TChoose(reset, [48, 60]) } ! k;
 var osc = SinOsc(note.MidiCps, 0) * select * 0.05;
 Splay2(osc)
+
+;; Mouse control of Impulse frequency
+Impulse([4, 5, 9] * MouseX(0.01, 150, 2, 0.2), 0).Splay2 * 0.2
