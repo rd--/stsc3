@@ -7,7 +7,7 @@ var f = { :octave :clockRate :pwmRate :fltRate |
 	var sq = sequ(patternCps, tr);
 	var pwm = SinOsc(pwmRate, Rand(0, 2 * pi)) * 0.4 + 0.5;
 	var cf = SinOsc(fltRate, Rand(0, 2 * pi)) * 1400 + 2000;
-	Rlpf(LfPulse(Lag(sq, 0.05), 0, pwm) * 0.1, cf, 1 / 15);
+	Rlpf(LfPulse(Lag(sq, 0.05), 0, pwm) * 0.1, cf, 1 / 15)
 };
 var a = { LfNoise0(LfNoise1(0.3) * 6000 + 8000) } ! 2 * 0.07;
 var x = Decay(Impulse(2, 0), 0.15) * a;

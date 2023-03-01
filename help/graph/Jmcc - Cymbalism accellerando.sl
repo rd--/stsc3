@@ -5,5 +5,9 @@ OverlapTexture({ :tr |
 	var s = Decay(i, 0.004) * WhiteNoise() * 0.03;
 	var f1 = TRand(500, 2500, tr);
 	var f2 = TRand(0, 8000, tr);
-	{ { Ringz(s, f1 + TRand(0, f2, tr), TRand(1, 5, tr)) } !+ p } ! 2
+	{
+		{
+			Ringz(s, f1 + TRand(0, f2, tr), TRand(1, 5, tr))
+		} !+ p
+	} ! 2
 }, 4, 4, 3) * 0.1

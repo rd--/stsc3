@@ -1,4 +1,4 @@
-;; analog bubbles (jmcc) ; applicative order
+;; analog bubbles (jmcc) #1 ; applicative order
 CombN(
 	MulAdd(
 		SinOsc(
@@ -85,7 +85,7 @@ Voicer(16, { :e |
 	(k * 0.1).SoftClip
 }).sum * 0.2
 
-;; bowed string (jmcc)
+;; bowed string (jmcc) ; Rand
 var root = 5;
 var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
@@ -94,7 +94,7 @@ var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.
 var k = RingzBank(x, 12.series(f, f), 12.geom(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12);
 (k * 0.1).SoftClip
 
-;; bowed string (jmcc) ; .random
+;; bowed string (jmcc) ; .randomFloat
 var root = 5;
 var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
@@ -159,91 +159,6 @@ CombL(s, 0.3, [0.2, 0.25], 2)
 var f = SinOsc(0.2, 0) * 10 + 21;
 var s = LfPulse(f, [0, 0.1], 0.1);
 Rlpf(s, 100, 0.1).Clip2(0.4)
-
-;; jmcc - ostinoodles ; requires=keywords
-var z = OverlapTexture({ :tr |
-	var sequ = { :s :tr |
-		Demand(
-			trig: tr,
-			reset: 0,
-			demandUGens: Dseq(
-				repeats: inf,
-				list: s
-			)
-		)
-	};
-	var root = 81 + TRand(
-		lo: -6,
-		hi: 6,
-		trig: tr
-	);
-	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
-	var offset = TRand(
-		lo: -16,
-		hi: 16,
-		trig: tr
-	);
-	var sequence = DegreeToKey(
-		bufnum: major,
-		in: TScramble(
-			trigger: tr,
-			inputs: [0, 1, 2, 3] + offset
-		),
-		octave: 12
-	) + root;
-	var f = TxLine(
-		start: TExpRand(
-			lo: 4,
-			hi: 24,
-			trig: tr
-		),
-		end: TExpRand(
-			lo: 4,
-			hi: 24,
-			trig: tr
-		),
-		dur: 12,
-		trig: tr
-	);
-	var trig = Impulse(
-		freq: f,
-		phase: 0
-	);
-	var freq = sequ(
-		value: sequence.MidiCps,
-		value: trig
-	);
-	var sig = LfTri(
-		freq: freq.kr,
-		iphase: 0
-	) * Decay2(
-		in: trig,
-		attackTime: 0.004,
-		decayTime: 0.3
-	).kr * 0.1;
-	Pan2(
-		in: sig,
-		pos: TRand(
-			lo: -1,
-			hi: 1,
-			trig: tr
-		),
-		level: 1
-	)
-}, 6, 3, 6);
-6.timesRepeat {
-	z := AllpassN(
-		in: z,
-		maxdelaytime: 0.04,
-		delaytime: {
-			Rand(
-				lo: 0,
-				hi: 0.04
-			)
-		} ! 2,
-		decaytime: 16)
-};
-z
 
 ;; police state (jmcc) #2
 var node = {
@@ -495,17 +410,6 @@ var o = SinOsc(Rand(24, 108).MidiCps, Rand(0, 2 * pi));
 var s = o * a(ExpRand(0.3, 8)).Max(0) * a(ExpRand(6, 24)).Abs;
 Pan2(s, Rand(-1, 1), 1)
 
-;; ---- birdies (jmcc) #6 ; muladd
-{
-	var p1 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 2);
-	var p2 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 0);
-	var p3 = MulAdd(LfPulse(0.2 + 0.5.Rand, 0, 0.4), 0.02, 0);
-	var sw = MulAdd(LfSaw(p1 + p2, 0), (1000 + 800.Rand).Neg, 4000 + 1200.Rand2);
-	var freq = Lag(sw, 0.05);
-	var amp = Lag(p3, 0.3);
-	Pan2(SinOsc(freq, 0) * amp, 1.Rand2, 1)
-}.overlap(7, 4, 4)
-
 ;; ---- alien froggies (jmcc) #1 ; left-to-right
 OverlapTexture({ :tr |
 	var r = TRand(-0.2, [0.1, 0.2], tr).Exp.Mul(11).Fold(1, 30);
@@ -542,6 +446,17 @@ var b = { :f :m :a :g |
 	{ b(14, 400, 500, 0.06) } ! 2,
 	{ b(20, 800, 1000, 0.10) } ! 2
 ].sum
+
+;; ---- birdies (jmcc) #6 ; muladd
+{
+	var p1 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 2);
+	var p2 = MulAdd(LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1), 3.Rand + 4, 0);
+	var p3 = MulAdd(LfPulse(0.2 + 0.5.Rand, 0, 0.4), 0.02, 0);
+	var sw = MulAdd(LfSaw(p1 + p2, 0), (1000 + 800.Rand).Neg, 4000 + 1200.Rand2);
+	var freq = Lag(sw, 0.05);
+	var amp = Lag(p3, 0.3);
+	Pan2(SinOsc(freq, 0) * amp, 1.Rand2, 1)
+}.overlap(7, 4, 4)
 
 ;; ---- coolant (jmcc) ; filtermethods
 { BrownNoise().Mul(0.002).OnePole(0.95).RingzBank({ 40 + 2000.Rand } ! 10, [0.1], [1]) } ! 2
@@ -583,6 +498,91 @@ var c = { :n :r |
 };
 var n = LfNoise1([3, 3]);
 c(n, 48) + c(n, 72) * 0.25
+
+;; ---- jmcc - ostinoodles ; requires=keywords
+var z = OverlapTexture({ :tr |
+	var sequ = { :s :tr |
+		Demand(
+			trig: tr,
+			reset: 0,
+			demandUGens: Dseq(
+				repeats: inf,
+				list: s
+			)
+		)
+	};
+	var root = 81 + TRand(
+		lo: -6,
+		hi: 6,
+		trig: tr
+	);
+	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
+	var offset = TRand(
+		lo: -16,
+		hi: 16,
+		trig: tr
+	);
+	var sequence = DegreeToKey(
+		bufnum: major,
+		in: TScramble(
+			trigger: tr,
+			inputs: [0, 1, 2, 3] + offset
+		),
+		octave: 12
+	) + root;
+	var f = TxLine(
+		start: TExpRand(
+			lo: 4,
+			hi: 24,
+			trig: tr
+		),
+		end: TExpRand(
+			lo: 4,
+			hi: 24,
+			trig: tr
+		),
+		dur: 12,
+		trig: tr
+	);
+	var trig = Impulse(
+		freq: f,
+		phase: 0
+	);
+	var freq = sequ(
+		value: sequence.MidiCps,
+		value: trig
+	);
+	var sig = LfTri(
+		freq: freq.kr,
+		iphase: 0
+	) * Decay2(
+		in: trig,
+		attackTime: 0.004,
+		decayTime: 0.3
+	).kr * 0.1;
+	Pan2(
+		in: sig,
+		pos: TRand(
+			lo: -1,
+			hi: 1,
+			trig: tr
+		),
+		level: 1
+	)
+}, 6, 3, 6);
+6.timesRepeat {
+	z := AllpassN(
+		in: z,
+		maxdelaytime: 0.04,
+		delaytime: {
+			Rand(
+				lo: 0,
+				hi: 0.04
+			)
+		} ! 2,
+		decaytime: 16)
+};
+z
 
 ;; ---- scratchy ; jmcc ; left-to-right
 { BrownNoise() }.dup(2).MulAdd(0.5, -0.49).Max(0).Mul(20).Rhpf(5000, 1)

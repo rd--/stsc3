@@ -8,5 +8,7 @@ var z = OverlapTexture({ :tr |
 		LfNoise1(TRand(0, 1, tr))
 	) * LfPulse(TRand(0, 15, tr), 0, TRand(0.2, 0.4, tr))
 }, 8, 3, 4);
-6.timesRepeat { z := AllpassC(z, 0.040, { Rand(0, 0.04) } ! 2, 16) };
+6.timesRepeat {
+	z := AllpassC(z, 0.040, { Rand(0, 0.04) } ! 2, 16)
+};
 z * 0.2
