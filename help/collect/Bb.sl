@@ -36,10 +36,9 @@ var t = Impulse(8, 0) * LfNoise1(2);
 CombL((Saw([3, 4]) * Decay(t, 0.1)).Tanh, 1, TRand(0, 0.01, t).RoundTo(0.00015), TRand(-30, 30, t))
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
-var n = { :freq | LfNoise0(freq) };
 var f = [60, 61];
-var l = n(6);
-(BBandPass((n(4).Max(l).Max(SinOsc(f * (l * 9).Ceil.Lag(0.1), 0) * 0.7)), f, n(1).Abs / 2) * 700 * l.Lag(1)).Tanh
+var l = LfNoise0(6);
+(BBandPass((LfNoise0(4).Max(l).Max(SinOsc(f * (l * 9).Ceil.Lag(0.1), 0) * 0.7)), f, LfNoise0(1).Abs / 2) * 700 * l.Lag(1)).Tanh
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
 var t = [0, 0, 0, 1, 5, 7, 10, 12, 12, 12] + 30;
@@ -50,9 +49,8 @@ var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
 AllpassL(SinOsc(55,0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.004]), 2)
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
-var i = { :freq | Impulse(freq, 0) };
 var ph = Integrator(Integrator(i(64).Lag(LfNoise1(2 ! 2)  * 2 + 2) * 99, 0.9), 0.99).Fold2(pi);
-SinOsc(LagUd(i(2), 0, 0.4) * 360, ph)
+SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph)
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
 var t = [0, 3, 5, 7, 10, 12] + 40;
@@ -68,10 +66,9 @@ var i = Impulse(8, 0).Lag(0.3) ! 2;
 i
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
-var n = { :freq | LfNoise0(freq) };
-var v = Blip([20000, 20000 - 9], 1) * (n(16) * 0.5 + 0.5 ** 9);
+var v = Blip([20000, 20000 - 9], 1) * (LfNoise0(16) * 0.5 + 0.5 ** 9);
 42.timesRepeat {
-	v := LeakDc(AllpassC(v, 1, n(5) * 0.05 + (0.05 + 0.001), 100), 0.995)
+	v := LeakDc(AllpassC(v, 1, LfNoise0(5) * 0.05 + (0.05 + 0.001), 100), 0.995)
 };
 (v * 99).Tanh
 
@@ -83,10 +80,9 @@ var x = DmdFor(1/8, 0, Drand(inf, [0, Drand(1, [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 LeakDc(Brf(Saw(8) * Decay2(x, 0.01, 0.3).kr ** 1.5, x * 20 + [45.1, 45], 0.1), 0.995).Tanh
 
 ;; http://earslap.com/weblog/music-release-laconicism.html ; wait
-var n = { :freq :mul :add | LfNoise0(freq) * mul + add };
-var v = Blip([60, 61], 5) * (n(4, 1, 0) ** 8);
+var v = Blip([60, 61], 5) * (LfNoise0(4).MulAdd(1, 0) ** 8);
 12.timesRepeat {
-	v := LeakDc(CombC(v, 1, n(1, 0.05, 0.06).Lag(5000), 9), 0.995)
+	v := LeakDc(CombC(v, 1, LfNoise0(1).MulAdd(0.05, 0.06).Lag(5000), 9), 0.995)
 };
 Limiter(v, 0.9, 1)
 
@@ -114,7 +110,9 @@ fundamentals.withIndexCollect { :freq0 :index |
 ;; http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks ; requires=CurveGen
 var numVoices = 30;
 var fundamentals = { 200.randomFloat(400) }.dup(numVoices).sorted.reversed;
-var finalPitches = ((1 .. numVoices).collect { :each | (each / (numVoices / 6)).RoundTo(1) * 12 } + 14.5).MidiCps;
+var finalPitches = ((1 .. numVoices).collect { :each |
+	(each / (numVoices / 6)).RoundTo(1) * 12
+} + 14.5).MidiCps;
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
 var ampEnvelope = CurveGen(1, [0, 1, 1, 0], [3, 21, 3], [2, 0, -4]);
 var voiceFunc = { :numTone |

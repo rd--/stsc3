@@ -35,7 +35,11 @@ GVerb(
 var tr = Impulse(0.1, 0);
 var o1 = SinOsc(TRand(0.3, 5, tr), 0) * TRand(0, 0.5, tr) + TRand(0.49, 0.56, tr);
 var o2 = SinOsc(o1, 0) * TRand(0.3, 0.6, tr) + TRand(0.3, 0.5, tr);
-Rhpf({ BrownNoise() } ! 2, TRand(0.3, 3, tr), o2) * 0.1
+Rhpf(
+	{ BrownNoise() } ! 2,
+	TRand(0.3, 3, tr),
+	o2
+) * 0.1
 
 ;; https://sccode.org/1-4S6 ; f0 ; 't'
 var p = Saw([3, 4]) * (Saw(1) * 32 + 128) + DmdFor(1, 0, (Dseq(1, [0, 8, 1, 5]) * [1, 4, 8]).flop);
