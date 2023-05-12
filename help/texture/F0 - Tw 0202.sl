@@ -6,6 +6,6 @@
 		var f = DmdFor(b, 0, s);
 		var p = SinOsc(f, 0);
 		EqPan2(SinOsc(i, p), i % 3 - 1) * b
-	}.play;
+	}.playAt(t + 0.5);
 	[i % 5 + 1, i + 1]
 }.scheduleInjecting(1)

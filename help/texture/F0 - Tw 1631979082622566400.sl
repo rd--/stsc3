@@ -16,6 +16,6 @@
 			SinOsc(f, 0) * a + f,
 			0
 		) * XLine(0.1, 0.0001, 4 + d, 2) * c
-	}.play;
+	}.playAt(t + 0.5);
 	[n, i + 1]
 }.scheduleInjecting(0)

@@ -9,6 +9,6 @@
 			EqPan2(SinOscFb(DmdFor(d, 0, Dseq(1, a * 99 / 2)), b), b) / 5,
 			0.02, 8, 0.02
 		)
-	}.play;
+	}.playAt(t + 0.5);
 	[2, a + 3 / d % 9]
 }.scheduleInjecting([4 .. 12])

@@ -1,6 +1,7 @@
 # collectTexture -- scheduling
 
-- _collectTexture(aCollection, aProcedure, aDelay)_
+- _collectTexture(aClock, aCollection, aProcedure:/1, aDelay)_
+- _collectTexture(aCollection, aProcedure:/1, aDelay)_ ⇒ _aClock = workspace::clock_
 
 Evaluate _aProcedure_ at each element of _aCollection_ with _aDelay.value_ seconds between each occurence, and _play_ each answer.
 
