@@ -1,8 +1,3 @@
 Number = Number (
 
-to: stop = (
-	"Allow step to be negative."
-	^Interval from: self to: stop by: (stop >= self ifTrue: [ 1 ] ifFalse: [ -1 ])
-)
-
 )

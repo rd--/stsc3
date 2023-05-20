@@ -718,11 +718,14 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 ((1.0 to: 3.0 by: 1.0 successor) includes: 3.0) not.
 (0 to: 1 by: 1/10) = (0.0 to: 1 by: 1/10).
 (9 to: 1 by: -1) asArray = #(9 8 7 6 5 4 3 2 1).
+(5 to: 1) asArray = #().
+(5 downTo: 1) asArray = #(5 4 3 2 1).
+(5 downTo: 1 by: 2) asArray = #(5 3 1).
 } allSatisfy #yourself
 
 (Interval newFrom: #(1 2 3)) = (1 to: 3)
 (#(33 5 -23) as: Interval) = (33 to: -23 by: -28)
-(-4 to: -12 by: -1) as: Interval
+(#(-4 -6 -8 -10 -12) as: Interval) = (-4 to: -12 by: -2)
 (#(2 4 6) as: Interval) = (2 to: 6 by: 2)
 (1 to: 10) + 5 = (6 to: 15)
 (6 to: 15) - 5 = (1 to: 10)
@@ -731,9 +734,10 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 (10 to: 20 by: 3) reverseDo: [ :each | Transcript show: each printString; cr ]
 (1 to: 2 by: 1/2) = ({1. 3/2. 2} as: Interval)
 (1 to: 2 by: 1/5) = ({1. 6/5. 7/5. 8/5. 9/5. 2} as: Interval)
-(2 to: 1) anyOne
+(2 downTo: 1) anyOne = 2
+(1 upTo: 2) anyOne = 1
 
-(1 to: 9) hash = 19.
+(1 to: 9) hash = 106153533
 (1 to: 9) do: [ :item | Transcript show: item; cr ]         "iterate over interval"
 
 'Json'

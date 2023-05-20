@@ -34,11 +34,19 @@ dbAmp = (
 	^10 raisedTo: (self * 0.05)
 )
 
+downTo: stop by: step = (
+	(self < stop) ifTrue: [ 'downTo:by: not descending or empty' error ].
+	^ self to: stop by: step negated
+)
+
+downTo: stop = (
+	^ self downTo: stop by: 1
+)
+
 expRand: upperBound = (
 	"Generate a random float with exponential distribution between myself and upperBound (inclusive)"
 	^1.0 randomFloat linExpFrom: self to: upperBound
 )
-
 
 fibonacciSequence = (
 	"First self elements of the Fibonacci sequence."
@@ -69,14 +77,6 @@ kr = (
 linExpFrom: lo to: hi = (
 	"Myself (I am in range 0 to 1) mapped to the indicated range following an exponential curve."
 	^lo * ((hi / lo) log * self) exp
-)
-
-log = (
-	^self ln
-)
-
-log2 = (
-	^self log: 2
 )
 
 log10 = (
@@ -138,6 +138,20 @@ to: stop by: step collect: aBlock = (
 
 to: stop by: step select: aBlock = (
 	^(self to: stop by: step) select: aBlock
+)
+
+upOrDownTo: stop = (
+	"Allow step to be negative."
+	^Interval from: self to: stop by: (stop >= self ifTrue: [ 1 ] ifFalse: [ -1 ])
+)
+
+upTo: stop by: step = (
+	(self > stop) ifTrue: [ 'upTo: not ascending or empty' error ].
+	^ self to: stop by: step
+)
+
+upTo: stop = (
+	^ self upTo: stop by: 1
 )
 
 wrap: lo hi: hi = (

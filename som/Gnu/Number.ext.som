@@ -22,6 +22,10 @@ isZero = (
 	^self = 0
 )
 
+log10 = (
+	^self log: 10
+)
+
 log2 = (
 	^self log: 2
 )
