@@ -907,6 +907,8 @@ ascii := String withAll: ((0 to: 255) collect: [:n| n asCharacter])
 
 'SequenceableCollection'
 
+#(1 2 3 4) beginsWith: #(1 2) = true
+#(1 2 3 4) beginsWith: #() = true
 #(1 2 3 4) permutationsDo: [ :each | Transcript show: each printString; cr ]
 #(1 2 3 4) permutations asSet size = 24
 (#(1 9 2 8 3 7 4 6) pairsCollect: [ :i :j | i + j ]) = #(10 10 10 10).
