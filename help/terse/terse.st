@@ -1085,6 +1085,9 @@ String initializedInstance = ''.
 ('\"' at: 2) = $".
 String cr = Character cr asString.
 'string' asArray = #($s $t $r $i $n $g).
+('a/b/c' splitBy: '/') =  #('a' 'b' 'c').
+('/a/b/c' splitBy: '/') =  #('' 'a' 'b' 'c').
+('a/b/c/' splitBy: '/') =  #('a' 'b' 'c' '').
 } allSatisfy: #yourself
 
 (#('\b' '\t' '\n' '\f' '\r' '\''' '\\') collect: #size) = #(2 2 2 2 2 2 2)
