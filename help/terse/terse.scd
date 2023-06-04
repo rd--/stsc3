@@ -219,8 +219,8 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [9, 4, 5, 7, 8, 6].sum == 39                                // sum of collection (inject 0 +)
 [9, 4, 5, 7, 8, 6].mean == 6.5                              // sum of collection divided by size
 [9, 4, 5, 7, 8, 6].product == 60480                         // product of collection (inject 1 *)
-[9, 4, 5, 7, 8, 6].inject(0, { | z e | e + z }) == 39       // sum of collection
-[9, 4, 5, 7, 8, 6].inject(1, { | z e | e * z }) == 60480    // product of collection
+[9, 4, 5, 7, 8, 6].inject(0) { | z e | e + z } == 39        // sum of collection
+[9, 4, 5, 7, 8, 6].inject(1) { | z e | e * z } == 60480     // product of collection
 [9, 4, 5, 7, 8, 6].includes(7) == true                      // is element in collection
 [9, 4, 5, 7, 8, 6].count { | item | item.even } == 3        // count elements that satisfy predicate
 [9, 4, 5, 7, 8, 6].any { | item | item.even } == true       // do any elements satisfy predicate
@@ -380,8 +380,8 @@ Interval.new(-1, 1, 0.000001).at(1000000) == 0              // access value at 1
 var n = 0; 4.do { n = n + 1 }; n == 4                       // times repeat loop (int)
 var n = 0; 4.do { | x | n = n + x }; n == 6                 // times repeat loop (int)
 var n = 0; 4.do { | x | n = n + x }; n == 6                 // for loop (int)
-var s = ""; 4.do({ | x | s = s ++ x }); s == "0123"         // for loop (int)
-var s = ""; 4.reverseDo({ | x | s = s ++ x }); s == "3210"  // for loop (int, reversed)
+var s = ""; 4.do { | x | s = s ++ x }; s == "0123"          // for loop (int)
+var s = ""; 4.reverseDo { | x | s = s ++ x }; s == "3210"   // for loop (int, reversed)
 var s = ""; 1.to(5).do { | x | s = s ++ x }; s == "12345"   // for loop (interval)
 var s = ""; [1, 3, 5].do { | x | s = s ++ x }; s == "135"   // for loop (collection)
 var s = ""; 1.for(5) { | x | s = s ++ x }; s == "12345"     // for loop
