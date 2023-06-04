@@ -71,7 +71,7 @@ var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element fr
 [1, 2, 3, 4].collect { | x | x * x } == [1, 4, 9, 16]       // map function over elements
 [1, 2, 3, 4].detect { | x | x > 2 } == 3                    // find first element for which predicate holds
 [1, 2, 3, 4].detectIndex { | x | x > 2 } == 2               // find index of first element for which predicate holds
-[1, 2, 3, 4].do { | x | x.postln } == [1, 2, 3, 4]          // iterate over array (run function at each element)
+var n = 0; [1, 2, 3, 4].do { | x | n = n + x }; n == 10     // iterate over array (run function at each element)
 [1, 2, 3, 4].inject(0) { | z e | e - z } == 2               // left fold: (1 - 0)
 [1, 2, 3, 4].injectr(0) { | z e | e - z } == -2             // right fold
 [].isEmpty == true                                          // is array empty
@@ -159,9 +159,9 @@ true.and(false) == false                                    // logical and
 true.or(false) == true                                      // logical or
 true && false == false                                      // logical and (operator)
 true || false == true                                       // logical or (operator)
-true.if { 'ifTrue'.postln } == 'ifTrue'                     // if then, c.f. conditional statements
-false.if { 'T'.postln } { 'F'.postln } == 'F'               // if then else (do)
-true.if { 'ifTrue' } { 'ifFalse' }.postln == 'ifTrue'       // if then else (value)
+true.if { 'T' } == 'T'                                      // if then, c.f. conditional statements
+false.if { 'T' } { 'F' } == 'F'                             // if then else (do)
+true.if { 'T' } { 'F' } == 'T'                              // if then else (value)
 true.not.not == true                                        // not
 1.isKindOf(Number) == true                                  // test if object is class or subclass of
 1.isMemberOf(Integer) == true                               // test if object is type of class
@@ -281,11 +281,11 @@ $a.asCompileString == "$a"                                  // convert object to
 15.asHexString(2) == "0F"                                   // convert to string in hex base
 
 'Date'
-Date.getDate                                                // current date and time
-Date.localtime                                              // current local date and time
+Date.getDate.class == Date                                  // current date and time
+Date.localtime.class == Date                                // current local date and time
 Date.localtime.rawSeconds.isFloat == true                   // fractional seconds
 Date.localtime.stamp.isString == true                       // timestamp as string
-Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString         // Mon Apr 12 14:57:10 2020
+Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString; true   // Mon Apr 12 14:57:10 2020
 
 'Dictionary'
 Dictionary.superclass == Set                                // dictionaries are sets
@@ -293,37 +293,38 @@ d = Dictionary.new(4); d.isEmpty                            // new empty diction
 d.add('x' -> 1).add('y' -> 2).add('z' -> 3).size == 3       // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence of adjacent key value pairs
 d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations ; c.f. Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])
-d.asArray == [2, 1]                                         // values (not keys or associations) as array
-d.associationsDo { | x | x.postln }                         // run f at associations of dictionary
+d.asArray == [2, 1, 3]                                      // values (not keys or associations) as array
+n = 0; d.associationsDo { | x | n = n + x.value }; n == 6   // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
-d.do { | x | x.postln }                                     // run f at values of dictionary
+var n = 0; d.do { | x | n = n + x }; n == 6                 // run f at values of dictionary
 d.includes(3) == true                                       // does dictionary have indicated value
 d.includesKey('z') == true                                  // does dictionary have indicated key
 d.keys == Set.newFrom(['x', 'y', 'z'])                      // set of keys at dictionary
-d.keysDo { | x | x.postln }                                 // run f at keys of dictionary
-d.keysValuesDo { | k v | [k, v].postln }                    // run f at keys & values of dictionary
+var n = 0; d.keysDo { | x | n = n + d[x] }; n == 6          // run f at keys of dictionary
+d.keysValuesDo { | k v | (d[k] != v).if { 'x'.error } } == d// run f at keys & values of dictionary
 d.occurrencesOf(3) == 1                                     // number of occurences of value in dictionary
-{ d.removeAt('x') == 1; d.add('x' -> 1) }.value             // remove key (and return value of) from dictionary
+{ d.removeAt('x') == 1; d.add('x' -> 1) }.value.size == 3   // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
-d.values.sort { | i j | i <= j }                            // list of values at dictionary
+d.values.sort { | i j | i <= j }.asArray == (1 .. 3)        // list of values at dictionary
 
 'Environment'
 Environment.superclass == IdentityDictionary                // environments are dictionaries
 Object.classVarNames.includes('currentEnvironment') == true // currentEnvironment is a class variable of Object
 'key'.envirPut('value') == 'value'                          // put 'key' -> 'value' into currentEnvironment
 'key'.envirGet == 'value'                                   // lookup 'key' in currentEnvironment
-f = { 'i'.envirGet + 'j'.envirGet }                         // function to lookup and sum i and j
-g = { | result | result.errorString }                       // function to retrieve error message
-{ f.value }.try(g)                                          // are i and j in currentEnvironment and non nil?
-e = Environment.newFrom(['i', 4, 'j', 5] )                  // new environment with 'i' -> 4 and 'j'-> 5
+f = { 'i'.envirGet + 'j'.envirGet }; f.isFunction           // function to lookup and sum i and j
+g = { | result | result.errorString }; g.isFunction         // function to retrieve error message
+{ f.value }.try { | e | e.class == DoesNotUnderstandError } // are i and j in currentEnvironment and non nil?
+e = Environment.newFrom(['i', 4, 'j', 5] ); true            // new environment with 'i' -> 4 and 'j'-> 5
 e.use(f) == 9                                               // evaluate f with currentEnvironment of e => 4 + 5 = 9
-c = Environment.new                                         // new empty environment
-{ c.use(f) }.try(g)                                         // i and j aren't in c, => nil + nil = error
-c.parent_(e)                                                // set e as parent of c, c is child of e
+c = Environment.new; true                                   // new empty environment
+{ c.use(f) }.try { true }                                   // i and j aren't in c, => nil + nil = error
+c.parent_(e); true                                          // set e as parent of c, c is child of e
 c.use(f) == 9                                               // c is empty, look through c into e => 4 + 5 = 9
-c.put('j', 7)                                               // set j in c
+c.put('j', 7) == c                                          // set j in c
 c.use(f) == 11                                              // i from e and j from c => 4 + 7 = 11
+h = { ('i'.envirGet ? 3) * ('j'.envirGet ? 3) }; true       // function to lookup and multiply i and j with defaults
 e.use(h) == 20                                              // => 4 * 5 = 20
 c.use(h) == 28                                              // => 4 * 7 = 28
 h.value == 9                                                // => 3 * 3 = 9
@@ -338,58 +339,62 @@ h.value == 9                                                // => 3 * 3 = 9
 
 'IdentityDictionary'
 IdentityDictionary.superclass == Dictionary                 // identity dictionaries are dictionaries
-d = IdentityDictionary.newFrom(['i', 1, 'j', 2])            // new dictionary from array
+d = IdentityDictionary.newFrom(['i', 1, 'j', 2]); true      // new dictionary from array
 d.asArray == [2, 1]                                         // values as array
 d.size == 2                                                 // number of entries
-c = IdentityDictionary.new                                  // new empty dictionary
-c.proto_(d)                                                 // there is a proto variable
+c = IdentityDictionary.new; true                            // new empty dictionary
+c.proto_(d) == c                                            // there is a proto variable
 c.at('i') == 1                                              // lookup searches proto
 c.size == 0                                                 // size does not include proto
-c.parent_(IdentityDictionary.newFrom(['j', -2, 'k', -3]))   // there is a parent variable
+e = IdentityDictionary.newFrom(['j', -2, 'k', -3]); true    // new dictionary (from array)
+c.parent_(e) == c                                           // there is a parent variable, set to e
 c.at('j') == 2                                              // lookup is in proto before parent
 c.at('k') == -3                                             // lookup is in parent after proto
-c.put('i', 'I')                                             // at & put protocol
+c.put('i', 'I') == c                                        // at & put protocol
 c.at('i') == 'I'                                            // lookup is at self before proto
 c.keys == Set.newFrom(['i'])                                // only "local" elements are considered
-c.collect { | item | item.postln; nil }.at('j') == 2        // only "local" elements, parent and proto are copied
+c.collect { | item | nil }.at('j') == 2                     // only "local" elements, parent and proto are copied
 
 'Integer'
-(0 .. 255).collect { | each | each.asBinaryDigits(8) }      // integer as big endian binary digits to n places
+127.asBinaryDigits(8) == [0, 1, 1, 1, 1, 1, 1, 1]           // integer as big endian binary digits to n places
+(0 .. 255).collect { | n | n.asBinaryDigits(8) }.size == 256// all eight bit integers
 
 'Interpreter'
 this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
 this.interpret("{ | x | x + 2 }").value(1) == 3             // interpret string
-this.a == nil                                               // there are single letter interpreter variables
+this.r == nil                                               // there are single letter interpreter variables
 this.s == Server.default                                    // by convention s has the default scsynth
-this.executeFile("program.scd")                             // run program tex
-"['c' -> 60, 'b' -> 50, 'a' -> 100]".interpret              // interpret (read) data structure
+this.executeFile("program.scd"); true                       // run program tex
+"['c' -> 60, 'b' -> 50, 'a' -> 100]".interpret.isArray      // interpret (read) data structure
 context.class == Frame                                      // context
 
 'Interval'
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
 Interval.new(0, 12, 3).size == 5                            // number of elements in interval
-2.to(14, 4).collect({ | x | x * x }) == [4, 36, 100, 196]   // to method at Integer
+2.to(14, 4).collect { | x | x * x } == [4, 36, 100, 196]    // to method at Integer
 Interval.new(-1, 1, 0.000001).size == 2000001               // 2000001 places between -1 and 1
 Interval.new(-1, 1, 0.000001).at(1000000) == 0              // access value at 1000001st place
 
 'Iteration'
-4.do({ 'x'.postln}) == 4                                    // times repeat loop (int)
-4.do({ | x | x.postln }) == 4                               // for loop (int)
-4.reverseDo({ | x | x.postln }) == 4                        // for loop (int, reversed)
-1.to(5).do({ | x | x.postln }) == 1.to(5)                   // for loop (interval)
-[1, 2, 3, 4, 5].do({ | x | x.postln }) == [1, 2, 3, 4, 5]   // for loop (collection)
-1.for(5, { | x | x.postln }) == 1                           // for loop
-1.forBy(9, 2, { | x | x.postln }) == 1                      // for by loop
-{ 9.rand > 3 }.while({ 'x'.postln }) == nil                 // while loop
+var n = 0; 4.do { n = n + 1 }; n == 4                       // times repeat loop (int)
+var n = 0; 4.do { | x | n = n + x }; n == 6                 // times repeat loop (int)
+var n = 0; 4.do { | x | n = n + x }; n == 6                 // for loop (int)
+var s = ""; 4.do({ | x | s = s ++ x }); s == "0123"         // for loop (int)
+var s = ""; 4.reverseDo({ | x | s = s ++ x }); s == "3210"  // for loop (int, reversed)
+var s = ""; 1.to(5).do { | x | s = s ++ x }; s == "12345"   // for loop (interval)
+var s = ""; [1, 3, 5].do { | x | s = s ++ x }; s == "135"   // for loop (collection)
+var s = ""; 1.for(5) { | x | s = s ++ x }; s == "12345"     // for loop
+var s = ""; 1.forBy(9, 2) { | x | s = s ++ x }; s == "13579"// for by loop
+var n = 9; { n > 3 }.while { n = n - 1 }; n == 3            // while loop
 
 'Files'
-File.open("/tmp/x", "w").put('x').close                     // open file, put value, close file
-File.use("/tmp/x", "w", { | f | f.put('x') })               // use file to put value
+File.open("/tmp/x", "w").put('x').close.class == File       // open file, put value, close file
+File.use("/tmp/x", "w") { | f | f.put('x') }.class == File  // use file to put value
 File.exists("/tmp/x") == true                               // file exists predicate
 File.fileSize("/tmp/x") == 1                                // file size (bytes)
 File.readAllString("/tmp/x") == "x"                         // read file contents (string)
-File.use("/tmp/x", "r", { | f | f.getChar }) == $x          // use file to read character
+File.use("/tmp/x", "r") { | f | f.getChar } == $x           // use file to read character
 File.delete("/tmp/x")                                       // delete file
 
 'Functions (Blocks)'
@@ -413,9 +418,9 @@ var l = [1, 3, 2, 4, 5].asList; l.reverse.reverse == l      // list reverse (cop
 (1 .. 5).asList.add(6).asArray == (1 .. 6)                  // add element at end (snoc)
 (2 .. 6).asList.addFirst(1).asArray == (1 .. 6)             // add element at start (cons)
 var l = [1, 3, 2, 4].asList; (l.pop == 4) && (l.size == 3)  // remove (in place) and return last element
-var l = [1, 2, 4].asList.put(2, 3); l                       // replace (in place) element at index
-var l = [1, 2, 4].asList.insert(2, 3); l                    // insert (in place) element at index
-var l = [1, 2, 4].asList; [l.removeAt(2), l]                // remove (in place) and return element at index
+var l = [1, 2, 4].asList.put(2, 3); l[2] == 3               // replace (in place) element at index
+var l = [1, 2, 4].asList.insert(2, 3); l.size == 4          // insert (in place) element at index
+var l = [1, 2, 4].asList; [l.removeAt(2), l.size] == [4, 2] // remove (in place) and return element at index
 var l = [1, 2, 3].asList; l.clear; l.isEmpty                // remove all items from collection
 List.new.add(1) == [1].asList                               // add element to list, return list
 List.new(4).size == 0                                       // new with size makes empty list
@@ -445,8 +450,8 @@ List.new.species == Array                                   // Lists species is 
 1.min(2) == 1                                               // minimum
 3.neg == -3                                                 // negation
 3.odd == true                                               // oddness predicate
-pi == 3.1415926535898                                       // constant pi (Float pi)
-inf                                                         // constant positive infinity
+pi.closeTo(3.1415926535898)                                 // constant pi (Float pi)
+inf.isNumber                                                // constant positive infinity (is a number)
 2.pow(3) == 8                                               // i to the power of j
 5.reciprocal == 0.2                                         // 1 / x
 (pi/2).sin == 1                                             // sine
@@ -507,8 +512,8 @@ nil.isNil == true                                           // is nil
 (200 @ 100).asArray == [200, 100]                           // array of x and y
 
 'Post'
-"text".postln                                               // write text to post window (console)
-'sym'.postln                                                // write object to post window (console)
+"text".postln == "text"                                     // write text to post window (console)
+'sym'.postln == 'sym'                                       // write object to post window (console)
 
 'Pseudo variables'
 false.class == False                                        // constant (instance of False)
@@ -525,28 +530,25 @@ thisThread.class == Thread                                  // context
 true.class == True                                          // constant (instance of True)
 
 'Random values'
-{ 9.rand }.dup(9)                                           // random integers (0 to self)
-{ 0.9.rand }.dup(3)                                         // random floats (0 to self)
-#[1, 2, 3, 4, 5].choose                                     // random element of collection
-#[1, 2, 3, 4, 5].wchoose(#[1, 2, 3, 4, 5] / 15)             // weighted random element of collection (weights sum to 1)
-{ 3.rrand(9) }.dup(9)                                       // random integer in range
-{ 0.3.rrand(0.9) }.dup(3)                                   // random float in range
-{ 99.0.rand }.dup(9999).histo.plot                          // uniform distribution between zero and n
-{ 99.0.linrand }.dup(9999).histo.plot                       // linear distribution between zero and n biased to zero
-{ 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero
+{ 9.rand }.dup(9).size == 9                                 // random integers (0 to self)
+{ 0.9.rand }.dup(23).maxItem < 0.9                          // random floats (0 to self)
+#[1, 2, 3, 4, 5].choose.isInteger                           // random element of collection
+#[1, 2, 3, 4, 5].wchoose(#[1, 2, 3, 4, 5] / 15).isInteger   // weighted random element of collection (weights sum to 1)
+{ 3.rrand(9) }.dup(9).minItem >= 3                          // random integer in range
+{ 0.3.rrand(0.9) }.dup(23).maxItem < 0.9                    // random float in range
 
 'Routine'
-f = { | x | var y = x * 2; var z = y.yield; f.value(z) }    // yield the receiver to the coroutine (received by next)
-r = Routine.new(f)                                          // a routine is instantiated on a function
-1.to(9).collect { | i | var j = r.next(i); i -> j }         // sends value to coroutine (also resume, value, run)
+f = { | x | var y = x * 2, z = y.yield; f.value(z) }; true  // yield the receiver to the coroutine (received by next)
+r = Routine.new(f); r.class == Routine                      // a routine is instantiated on a function
+(1 .. 9).collect { | i | i -> r.next(i) }.at(6) == (7 -> 14)// sends value to coroutine (also resume, value, run)
 
 'SequenceableCollection'
-SequenceableCollection.allSubclasses.size == 180            // sequencable collection class
+SequenceableCollection.allSubclasses.includes(List)         // sequencable collection class
 [1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences
 [1, 3, 2, 4, 5].reverse == [5, 4, 2, 3, 1]                  // reverse sequence
 [1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
-[1, 3, 2, 4, 5].sort({ arg i, j; i <= j })                  // sort using provided comparison
-[3, 3, 3, 2, 2, 1].sort                                     // sort retains duplicates
+[1, 3, 2, 4, 5].sort { | i j | i > j }.first == 5           // sort using provided comparison
+[3, 3, 3, 2, 2, 1].sort.size == 6                           // sort retains duplicates
 var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place (mutating)
 [1, 2, 3, 4, 5].keep(3) == [1, 2, 3]                        // keep first n items
 [1, 2, 3, 4, 5].drop(2) == [3, 4, 5]                        // discard first n items
@@ -565,9 +567,9 @@ var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place 
 [1, 3, 5, 7, 9].integrate == [1, 4, 9, 16, 25]              // incremental sum
 [1, 4, 9, 16, 25].differentiate == [1, 3, 5, 7, 9]          // pairwise difference
 [0, 2, 4, 5, 7, 9, 11].mode(5, 12) == [0, 2, 3, 5, 7, 8, 10]// rotate and transpose scale
-List.rand(4, 1, 9)                                          // list of random numbers (uniform distribution)
-List.linrand(4, 1, 9)                                       // list of random numbers (linear distribution)
-List.exprand(4, 1, 9)                                       // list of random numbers (exponential distribution)
+List.rand(4, 1, 9).minItem >= 1                             // list of random numbers (uniform distribution)
+List.linrand(4, 1, 9).first.isInteger                       // list of random numbers (linear distribution)
+List.exprand(4, 1, 9).first.isInteger.not                   // list of random numbers (exponential distribution)
 [1, 2, 3].wrapAt(3) == 1                                    // index with wrap-around
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
 List.rand(4, 1, 9).asArray.class == Array                   // as array
@@ -575,7 +577,7 @@ List.rand(4, 1, 9).asArray.class == Array                   // as array
 'Set'
 Set.new.isKindOf(Collection) == true                        // c.f. Collection
 Set.new(4).size == 0                                        // allocate empty set for up to 4 elements
-[1, 2, 3, 4].asSet                                          // set from array
+[1, 2, 3, 4].asSet.size == 4                                // set from array
 Set.new(4).add(1).add(2).add(3) == [1, 2, 3].asSet          // add elements to collection
 Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements of collection to collection
 [1, 2, 3, 4].asSet.remove(3) == [1, 2, 4].asSet             // remove element from collection
@@ -591,7 +593,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 [1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array and sort
 
 'String'
-"quoted string"                                             // quoted string
+"quoted string".isString                                    // quoted string
 "x" ++ "y" == "xy"                                          // catenation
 "x" + "y" == "x y"                                          // catenation with space
 "/usr" +/+ "local" == "/usr/local"                          // file path catenation
@@ -611,12 +613,12 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 ["m", "ss", "ss", "pp", ""].join("i") == "mississippi"      // join using string
 "mississippi".split($i) == ["m", "ss", "ss", "pp", ""]      // split at char (not string)
 "str ing".split($ ) == ["str", "ing"]                       // split at char
-"a=1 b=2 c=3".split($ ).collect { arg e; e.split($=) }      // split as parser
+"a b=2".split($ ).collect { | e | e.split($=) }[1][1] == "2"// split as parser
 "a" < "b" == true                                           // string comparison
 "dcba".copy.sort == "abcd"                                  // inplace string sort
 "text".copyRange(1,2) == "ex"                               // substring
 "text".copyRange(2,2) == "x"                                // substring (single character)
-"% string % interpolation".format('format', 'with')         // format string with interpolation
+"% string % interpolation".format('format', 'with').isString// format string with interpolation
 { "string".add($!) }.try({ "oh oh..." }) == "oh oh..."      // literal strings are immutable arrayed collections
 ["", "string"].collect('maxSize') == [16, 64]               // of minimum maxSize 16
 var s = "string".copy; s.add($!); s.at(6) == $!             // copied string literals inherit maxSize
@@ -636,14 +638,21 @@ var x; x == nil                                             // uninitialised var
 var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce multiple temporaries
 var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
 
-'Plotting'
-Env.sine.plot(size: 400)                                    // Env ; plot
-Env.sine.asSignal(400).plot                                 // Env as discrete array ; plot
-1.to(9).asArray.mirror.plot                                 // Array ; plot
-[1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
-1.to(99).collect({ arg n; n.asBinaryDigits(8) }).flat.plot  // Array ; plot
-{ SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
-{ | x | x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)      // Unary function ; plot
+'Collection access and mutation syntax'
+"text".copy[2].toUpper == $X                                // c[k] is syntax for c.at(k), lookup char in string
+x = "text".copy; x[2] = $s; x == "test"                     // c[k] = v is syntax for c.put(k, v), set char in mutable string
+x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutable array
+
+'Event (Dictionary) syntax'
+(a: 1, b: 2) == Event.newFrom(['a', 1, 'b', 2])             // (a: 1, ...) is syntax for Event.newFrom(['a', 1, ...])
+() == Event.new                                             // empty dictionary
+
+'Tilde Syntax'
+'i'.envirPut('j'.envirPut(3)) == 3                          // ~i = ... is syntax for 'i'.envirPut(...)
+'i'.envirGet * 'j'.envirGet == 9                            // ~i is syntax for 'i'.envirGet
+
+'Setter Syntax'
+Point.new.x_(9).x == 9                                      // p.x = y is syntax for p.x_(y)
 
 'Debugging'
 String.browse                                               // browse specified class
@@ -662,25 +671,19 @@ UGen.dumpSubclassList                                       // print sub classes
 Number.dumpFullInterface                                    // print methods per class
 SinOsc.dumpMethodList                                       // print methods alphabetically
 Class.allClasses.printAll                                   // print all class names
-
-'Collection access and mutation syntax'
-"text".copy[2].toUpper == $X                                // c[k] is syntax for c.at(k), lookup char in string
-x = "text".copy; x[2] = $s; x == "test"                     // c[k] = v is syntax for c.put(k, v), set char in mutable string
-x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutable array
-
-'Event (Dictionary) syntax'
-(a: 1, b: 2) == Event.newFrom(['a', 1, 'b', 2])             // (a: 1, ...) is syntax for Event.newFrom(['a', 1, ...])
-() == Event.new                                             // empty dictionary
-
-'Tilde Syntax'
-'i'.envirPut('j'.envirPut(3))                               // ~i = ... is syntax for 'i'.envirPut(...)
-'i'.envirGet * 'j'.envirGet                                 // ~i is syntax for 'i'.envirGet
-
-'Setter Syntax'
-Point.new.x_(9).x == 9                                      // p.x = y is syntax for p.x_(y)
-
-'Ui'
 String.methods.inspect                                      // methods for class
+
+'UI - Plotting'
+Env.sine.plot(size: 400)                                    // Env ; plot
+Env.sine.asSignal(400).plot                                 // Env as discrete array ; plot
+1.to(9).asArray.mirror.plot                                 // Array ; plot
+[1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
+1.to(99).collect({ arg n; n.asBinaryDigits(8) }).flat.plot  // Array ; plot
+{ SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
+{ | x | x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)      // Unary function ; plot
+{ 99.0.rand }.dup(9999).histo.plot                          // uniform distribution between zero and n
+{ 99.0.linrand }.dup(9999).histo.plot                       // linear distribution between zero and n biased to zero
+{ 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero
 
 'Method Return'
 { ^1 }.value                                                // ^ terminates block & method (exits all nested blocks)
