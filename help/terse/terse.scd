@@ -1,7 +1,6 @@
-"A Terse Guide to SuperCollider - c.f. http://wiki.squeak.org/squeak/5699 by Chris Rathman"
+'A Terse Guide to SuperCollider - c.f. http://wiki.squeak.org/squeak/5699 by Chris Rathman'
 
 'Arithmetic expressions'
-
 6 + 3 == 9                                                  // addition
 6 - 3 == 3                                                  // subtraction
 6 * 3 == 18                                                 // multiplication
@@ -22,7 +21,7 @@
 25.sqrt == 5.0                                              // square root
 5.0 ** 2.0 == 25.0                                          // power function
 5 ** 2 == 25                                                // power function with integer
-1.exp == 2.718281828459                                     // exponential
+1.exp.closeTo(2.718281828459)                               // exponential
 -5.abs == 5                                                 // absolute value
 3.99.round == 4                                             // round ; c.f. rounded
 3.99.trunc == 3                                             // truncate
@@ -44,12 +43,11 @@ pi.raddeg == 180.0                                          // convert radians t
 10.max(20) == 20                                            // get maximum of two numbers
 10.min(20) == 10                                            // get minimum of two numbers
 pi == 3.141592653589793                                     // pi (3.141592653589793)
-1.exp                                                       // e (2.718281828459)
-100.rand                                                    // random number in (0, self-1)
+1.exp.closeTo(2.718281828459)                               // e (2.718281828459)
+var n = 100.rand; (n > 0) && { n < 100 }                    // random number in (0, self-1)
 4 + 5 * 6 == 54                                             // operators are evaluated left to right
 
 'Array'
-
 Array.new.isKindOf(Collection) == true                      // c.f. Collection
 Array.new.isKindOf(SequenceableCollection) == true          // c.f. SequenceableCollection
 Array.new.isKindOf(ArrayedCollection) == true               // c.f. ArrayedCollection
@@ -66,26 +64,26 @@ var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element fr
 [1, 2, 3, 4].removeAll([3, 4]) == [1, 2]                    // remove all elements of collection from array
 #['x', 'y', 'z'] == ['x', 'y', 'z']                         // literal array syntax
 #[1, 2, 3, 4] == [1, 2, 3, 4]                               // literal array syntax
-#[]                                                         // empty literal array
-#[1, 3.14, 'x', \x, "x"]                                    // heterogenous literal array
+#[].size == 0                                               // empty literal array
+#[1, 3.14, 'x', \x, "x"].size == 5                          // heterogenous literal array
 [1, 2, 3, 4].at(0) == 1                                     // indexing (access element in slot at index)
-[1, 2, 3, 4].collect({ arg x; x * x }) == [1, 4, 9, 16]     // Map function over elements
-[1, 2, 3, 4].collect { arg x; x * x } == [1, 4, 9, 16]      // map function over elements
-[1, 2, 3, 4].detect({ arg x; x > 2 }) == 3                  // find first element for which predicate holds
-[1, 2, 3, 4].detectIndex({ arg x; x > 2 }) == 2             // find index of first element for which predicate holds
-[1, 2, 3, 4].do({ arg x; x.postln }) == [1, 2, 3, 4]        // iterate over array (run function at each element)
-[1, 2, 3, 4].inject(0, { arg z, e; e - z }) == 2            // left fold: (1 - 0)
-[1, 2, 3, 4].injectr(0, { arg z, e; e - z }) == -2          // right fold
+[1, 2, 3, 4].collect { | x | x * x } == [1, 4, 9, 16]       // Map function over elements
+[1, 2, 3, 4].collect { | x | x * x } == [1, 4, 9, 16]       // map function over elements
+[1, 2, 3, 4].detect { | x | x > 2 } == 3                    // find first element for which predicate holds
+[1, 2, 3, 4].detectIndex { | x | x > 2 } == 2               // find index of first element for which predicate holds
+[1, 2, 3, 4].do { | x | x.postln } == [1, 2, 3, 4]          // iterate over array (run function at each element)
+[1, 2, 3, 4].inject(0) { | z e | e - z } == 2               // left fold: (1 - 0)
+[1, 2, 3, 4].injectr(0) { | z e | e - z } == -2             // right fold
 [].isEmpty == true                                          // is array empty
 [1, 2, 3, 4].includes(3) == true                            // test if element is in array
 [1, 2, 3, 4].copyRange(1, 2) == [2, 3]                      // subarray
-[1, 2, 3, 4].every({ arg x; x < 5 }) == true                // test if all elements meet condition
-[1, 2, 3, 4].any({ arg x; x == 3 }) == true                 // test if any elements meet condition
+[1, 2, 3, 4].every { | x | x < 5 } == true                  // test if all elements meet condition
+[1, 2, 3, 4].any { | x | x == 3 } == true                   // test if any elements meet condition
 [1, 2, 3, 4].includes(3) == true                            // has element
 [1, 2, 3, 4].put(0, '1') == ['1', 2, 3, 4]                  // set element at index
-[1, 2, 3, 4].reject({ arg x; x > 2 }) == [1, 2]             // filter elements
-[1, 2, 3, 4].select({ arg x; x > 2 }) == [3, 4]             // filter elements
-[1, 2, 3, 4].scramble                                       // randomly shuffle elements
+[1, 2, 3, 4].reject { | x | x > 2 } == [1, 2]               // filter elements
+[1, 2, 3, 4].select { | x | x > 2 } == [3, 4]               // filter elements
+[1, 2, 3, 4].scramble.sort == [1, 2, 3, 4]                  // randomly shuffle elements
 var c = [1, 2, 3]; c.scramble; c == [1, 2, 3]               // scramble is non-mutating
 [1, 2, 3, 4].mirror == [1, 2, 3, 4, 3, 2, 1]                // append reverse of prefix of array
 [[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
@@ -96,51 +94,50 @@ var c = [1, 2, 3]; c.scramble; c == [1, 2, 3]               // scramble is non-m
 [1, 2, 3, 4].clump(2) == [[1, 2], [3, 4]]                   // collect subarrays of indicated size
 { 1 }.dup(3) == [1, 1, 1]                                   // Array.fill notation
 { 1 } ! 3 == [1, 1, 1]                                      // infix Array.fill notation
-4.series(3, 2) == [3, 5, 7, 9]                              // arithmetic series (size from by)
-5.geom(3, 2) == [3, 6, 12, 24]                              // geometric series (size from by)
+Array.series(4, 3, 2) == [3, 5, 7, 9]                       // arithmetic series (size from by)
+3.series(5, 11) == [3, 5, 7, 9, 11]                         // arithmetic series (first second last)
+5.geom(3, 2) == [3, 6, 12, 24, 48]                          // geometric series (size from by)
 Array.iota(4) == [0, 1, 2, 3]                               // array with counter
 Array.iota(3, 2) == [[0, 1], [2, 3], [4, 5]]                // matrix with counter
-Array.rand(4, 1, 9)                                         // array of random numbers (uniform distribution)
-Array.linrand(4, 1, 9)                                      // array of random numbers (linear distribution)
-Array.exprand(4, 1, 9)                                      // array of random numbers (exponential distribution)
+Array.rand(4, 1, 9).size == 4                               // array of random numbers (uniform distribution)
+Array.linrand(4, 1, 9).size == 4                            // array of random numbers (linear distribution)
+Array.exprand(4, 1, 9).size == 4                            // array of random numbers (exponential distribution)
 3.series(5, 9) == [3, 5, 7, 9]                              // arithmetic series (from then to)
 [1, 2, 3].reverse == [3, 2, 1]                              // reverse elements
 var c = [1, 2]; c.reverse; c == [1, 2]                      // reverse is not in place
 var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in place
-[1, 3, 7, 9].rand                                           // collect with .rand
+[1, 3, 7, 9].rand.maxItem < 9                               // collect with .rand
 [[1], [[2]], [[[3]]]].collect('rank') == [1, 2, 3]          // rank
 [[1, 2, 3], [4, 5, 6]].shape == [2, 3]                      // size of shape is rank
 [[1, 2], [3, 4], [5, 6]].shape == [3, 2]                    // size of each element is size at depth
 [[[1], [2]], [[3], [4]], [[5], [6]]].shape == [3, 2, 1]     // rank and shape both assume regularity
 [1, 2, 3, 4].pyramid(1) == [1, 1, 2, 1, 2, 3, 1, 2, 3, 4]   // pattern generator (ten rules)
+[1, 2, 4].separate { | a b | (b - a) > 1 } == [[1, 2], [4]] // separate using predicate block
 
 'Assignment'
-
-var x;                                                      // variable declaration
-var x, y, z;                                                // variable declarations (multiple)
-var x = 5;                                                  // variable declaration with initializer expression
-x = 5                                                       // assignment
-x = y = z = 6                                               // compound assignment
-x = (y = 6) + 1                                             // compound (expression) assignment
-x = 1.2.hash                                                // hash value for object
-y = x.copy                                                  // copy object
-y = x.shallowCopy                                           // copy object (not overridden)
-y = x.deepCopy                                              // copy object and instance vars
+var x; x == nil                                             // variable declaration (default value is nil)
+var x, y, z; x == z                                         // variable declarations (multiple)
+var x = 5; x == 5                                           // variable declaration with initializer expression
+x = 5; x == 5                                               // assignment (single letter "interpreter" variables)
+x = y = z = 6; x == z                                       // compound assignment
+x = (y = 6) + 1; x == 7                                     // compound (expression) assignment
+x = 1.2.hash; x == 1527098321                               // hash value for object (stable for numbers)
+y = x.copy; x == y                                          // copy object
+y = x.shallowCopy; x == y                                   // copy object (not overridden)
+y = x.deepCopy; x == y                                      // copy object and instance vars
 var x; x = 5; x == 5                                        // assignment (set variable x to 5)
 var x, y; x = y = 5; [x, y] == [5, 5]                       // compound assignment (set variables x and y to 5)
 var x, y; x = (y = 5) + 1; [x, y] == [6, 5]                 // expression assignment
 var x = 1; var y = x + 1, z = y; [x, z] == [1, 2]           // multiple variable declarations
 
 'Association'
-
-Association.new('x', 1)                                     // associate key with value
-'x' -> 1 == Association.new('x', 1)                         // literal syntax
+Association.new('x', 1).class == Association                // associate key with value
+'x' -> 1 == Association.new('x', 1)                         // operator syntax
 ('x' -> 1).key == 'x'                                       // key (left hand side) of association
 ('x' -> 1).value == 1                                       // value (right hand side) of association
 ((0 -> 1) == (0 -> 2)) == true                              // equality for associations is based on key only
 
 'Bitwise Manipulation'
-
 2.bitAnd(3) == 2                                            // and bits
 2.bitOr(3) == 3                                             // or bits
 2.bitXor(3) == 1                                            // xor bits
@@ -154,7 +151,6 @@ Association.new('x', 1)                                     // associate key wit
 16 >> 3 == 2                                                // right shift operator
 
 'Booleans'
-
 true == true                                                // constant
 false == false                                              // constant
 1 == 1 == true                                              // equality predicate (operator)
@@ -163,9 +159,9 @@ true.and(false) == false                                    // logical and
 true.or(false) == true                                      // logical or
 true && false == false                                      // logical and (operator)
 true || false == true                                       // logical or (operator)
-true.if({ 'ifTrue'.postln })                                // if then, c.f. conditional statements
-false.if({ 'ifTrue'.postln }, { 'ifFalse'.postln })         // if then else (do)
-true.if({ 'ifTrue' }, { 'ifFalse' }).postln                 // if then else (value)
+true.if { 'ifTrue'.postln } == 'ifTrue'                     // if then, c.f. conditional statements
+false.if { 'T'.postln } { 'F'.postln } == 'F'               // if then else (do)
+true.if { 'ifTrue' } { 'ifFalse' }.postln == 'ifTrue'       // if then else (value)
 true.not.not == true                                        // not
 1.isKindOf(Number) == true                                  // test if object is class or subclass of
 1.isMemberOf(Integer) == true                               // test if object is type of class
@@ -183,7 +179,6 @@ $A.isUpper == true                                          // test if upper cas
 $a.isLower == true                                          // test if lower case character
 
 'Character'
-
 $x.class == Char
 $x.ascii == 120                                             // Char -> Int
 $x.asString == "x"                                          // Char -> String
@@ -194,31 +189,28 @@ $1.isDecDigit== true                                        // is [0-9]
 $l.isLower == true                                          // is lower case
 $ .isSpace == true                                          // is whitespace
 $U.isUpper == true                                          // is upper case
-#[$., $$, $ ]                                               // notable characters (period, dollar, space)
+#[$., $$, $ ].join == ".$ "                                 // notable characters (period, dollar, space)
 
 'Class'
-
 String.isKindOf(Class) == true                              // class
 String.name == 'String'                                     // class name
 String.class == Meta_String                                 // meta class (class of a class)
 String.class.class == Class                                 // class of a meta class is Class
-String.instVarNames                                         // immediate instance variable names
-String.classVarNames                                        // immediate class variable names
-String.methods.inspect                                      // methods for class
-String.methods.collect({ arg m; m.name })                   // message selectors for class
+String.instVarNames == nil                                  // immediate instance variable names
+String.classVarNames.size == 1                              // immediate class variable names
+String.methods.collect { | m | m.name }.includes('++')      // message selectors for class (selectors are symbols)
 String.superclass == RawArray                               // immediate superclass
 String.superclasses.size == 5                               // all superclass
 UGen.superclasses == [AbstractFunction, Object]             // superclass sequence
-UGen.subclasses.size == 362                                 // immediate subclasses
-UGen.allSubclasses.size == 884                              // accumulated subclasses
+UGen.subclasses.includes(LinExp).not                        // immediate subclasses
+UGen.allSubclasses.includes(LinExp)                         // accumulated subclasses
 1.class == Integer                                          // class of value
 1.isKindOf(Number) == true                                  // is instance of a class or a subclass
 1.isMemberOf(Integer) == true                               // is instance of a class
 1.respondsTo('exp') == true                                 // responds to message
 
 'Collection'
-
-Collection.allSubclasses.size == 41                         // collection class
+Collection.allSubclasses.includes(Set)                      // collection class
 [].isEmpty == true                                          // is collection empty
 [1, 2, 3] == [1, 2, 3]                                      // are collections equal
 [9, 4, 5, 7, 8, 6].size == 6                                // size of collection
@@ -227,62 +219,58 @@ Collection.allSubclasses.size == 41                         // collection class
 [9, 4, 5, 7, 8, 6].sum == 39                                // sum of collection (inject 0 +)
 [9, 4, 5, 7, 8, 6].mean == 6.5                              // sum of collection divided by size
 [9, 4, 5, 7, 8, 6].product == 60480                         // product of collection (inject 1 *)
-[9, 4, 5, 7, 8, 6].inject(0, { arg z, e; e + z }) == 39     // sum of collection
-[9, 4, 5, 7, 8, 6].inject(1, { arg z, e; e * z }) == 60480  // product of collection
+[9, 4, 5, 7, 8, 6].inject(0, { | z e | e + z }) == 39       // sum of collection
+[9, 4, 5, 7, 8, 6].inject(1, { | z e | e * z }) == 60480    // product of collection
 [9, 4, 5, 7, 8, 6].includes(7) == true                      // is element in collection
-[9, 4, 5, 7, 8, 6].count({ arg item; item.even }) == 3      // count elements that satisfy predicate
-[9, 4, 5, 7, 8, 6].any({ arg item; item.even }) == true     // do any elements satisfy predicate
-[9, 4, 5, 7, 8, 6].every({ arg item; item.even }) == false  // do all elements satisfy predicate
+[9, 4, 5, 7, 8, 6].count { | item | item.even } == 3        // count elements that satisfy predicate
+[9, 4, 5, 7, 8, 6].any { | item | item.even } == true       // do any elements satisfy predicate
+[9, 4, 5, 7, 8, 6].every { | item | item.even } == false    // do all elements satisfy predicate
 [9, 4, 5, 7, 8, 6].occurrencesOf(7) == 1                    // count elements that are equal to object
 [1, 2, 3].union([3, 4, 5]) == [1, 2, 3, 4, 5]               // combine two collections
 [1, 2, 3].isSubsetOf([1, 2, 3, 4, 5]) == true               // is one collection a subset of the other
 [1, [2, 3], [4, [5, 6]]].maxDepth == 3                      // tree depth of collection
-[1, [2, 3], [4, [5, 6]]].deepCollect(3, { arg x; x -> '.'}) // tree collect to indicated depth
-[1, 2, 3, 4, 5].choose                                      // random element of collection
-[1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15)               // weighted random element of collection (weights sum to 1)
+[1, [2], [3, [4]]].deepCollect(3) { | x | x.neg }.size == 3 // tree collect to indicated depth
+[1, 2, 3, 4, 5].choose <= 5                                 // random element of collection
+[1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) < 5           // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 
 'Comments'
-
-"until end of line comment"                                 // until end of line comment
-"multi-line or interior-line comment"                       // /* multi-line or interior-line comment */
+"until end of line comment".isString                        // until end of line comment
+"multi-line or interior-line comment".isString              // /* multi-line or interior-line comment */
 
 'Complex'
-
-Complex.new(-1, 0).real == -1                              // real part of complex number
-Complex.new(-1, 0).imag == 0                               // imaginary part of complex number
-Complex.new(-1, 0) + 1                                     // complex addition with scalar
-Complex.new(-1, 0).pow(1 / 2)                              // complex math
+Complex(0, 0).class == Complex			                    // complex numbers
+Complex(-1, 0).real == -1                                   // real part of complex number, Complex(r, i) = Complex.new(r, i)
+Complex(-1, 0).imag == 0                                    // imaginary part of complex number
+Complex(-1, 0) + 1 == Complex(0, 0)                         // complex addition with scalar
+Complex(-1, 0).pow(1 / 2).closeTo(Complex(0, 1))            // complex math
 
 'Conditional Statements'
-
-(9.rand > 4).if({ 'ifTrue'.postln })                        // if then
-(9.rand > 4).if({ 'ifTrue'.postln }, { 'ifFalse'.postln })  // if then else
-(9.rand > 4).if('ifTrue', 'ifFalse').postln                 // if then else
-2.rand.switch(0, { 'A'.postln }, 1, { 'B'.postln })         // switch
+var x = (9.rand > 4).if { 'T' }; x.isNil || { x == 'T' }    // if then
+var x = (9.rand > 4).if { $T } { $F }; "TF".includes(x)     // if then else
+var x = (9.rand > 4).if($T, $F); "TF".includes(x)           // if then else
+var x = 2.rand.switch(0, { $A }, 1, $B); "AB".includes(x)   // switch
 
 'Constants'
-
 true                                                        // true constant
-false                                                       // false constant
-nil                                                         // nil object constant
+false.not                                                   // false constant
+nil.isNil                                                   // nil object constant
 inf.class == Float                                          // Infinity constant (instance of Float)
 pi.class == Float                                           // pi constant (instance of Float)
-1                                                           // integer constants
-3.14                                                        // float constants
--1                                                          // negative integer constants
--3.14                                                       // negative float constants
-"Hello"                                                     // string constant (\ quotes quote)
-$a                                                          // character constant
-$                                                           // character constant (space)
-'aSymbol'                                                   // symbol constants
-'a Symbol'                                                  // symbol constants (space)
-\aSymbol                                                    // prefix symbol notation
-#[3, 2, 1]                                                  // array constants
-#['a', "a", $a, 1]                                          // mixing of types allowed
+1.isNumber                                                  // integer constants
+3.14.isNumber                                               // float constants
+-1.isNumber                                                 // negative integer constants
+-3.14.isNumber                                              // negative float constants
+"Hello".isString                                            // string constant (\ quotes quote)
+$a.class == Char                                            // character constant
+$ .isSpace                                                  // character constant (space)
+'aSymbol'.isSymbol                                          // symbol constants
+'a Symbol'.isSymbol                                         // symbol constants (space)
+\aSymbol == 'aSymbol'                                       // prefix symbol notation
+#[3, 2, 1].size == 3                                        // array constants
+#['a', "a", $a, 1].size == 4                                // mixing of types allowed
 
 'Conversion'
-
 1.0.asInteger == 1                                          // convert number to integer (truncates in Squeak)
 1.5.asFraction == [3, 2]                                    // convert number to fraction
 3.asFloat == 3.0                                            // convert number to float
@@ -293,7 +281,6 @@ $a.asCompileString == "$a"                                  // convert object to
 15.asHexString(2) == "0F"                                   // convert to string in hex base
 
 'Date'
-
 Date.getDate                                                // current date and time
 Date.localtime                                              // current local date and time
 Date.localtime.rawSeconds.isFloat == true                   // fractional seconds
@@ -301,35 +288,33 @@ Date.localtime.stamp.isString == true                       // timestamp as stri
 Date.new(2020, 04, 12, 14, 57, 10, 1, nil).asString         // Mon Apr 12 14:57:10 2020
 
 'Dictionary'
-
 Dictionary.superclass == Set                                // dictionaries are sets
-d = Dictionary.new(4)                                       // new empty dictionary
-d.add('x' -> 1).add('y' -> 2).add('z' -> 3)                 // add association to dictionary
+d = Dictionary.new(4); d.isEmpty                            // new empty dictionary
+d.add('x' -> 1).add('y' -> 2).add('z' -> 3).size == 3       // add association to dictionary
 d == Dictionary.newFrom(['x', 1, 'y', 2, 'z', 3])           // new Dictionary from sequence of adjacent key value pairs
 d == Dictionary.with('x' -> 1, 'y' -> 2, 'z' -> 3)          // new Dictionary from associations ; c.f. Dictionary.with(*['x' -> 1, 'y' -> 2, 'z' -> 3])
 d.asArray == [2, 1]                                         // values (not keys or associations) as array
-d.associationsDo({ arg x; x.postln })                       // run f at associations of dictionary
+d.associationsDo { | x | x.postln }                         // run f at associations of dictionary
 d.at('x') == 1                                              // lookup value at key
 d.at('_') == nil                                            // lookup value at key, nil if key not present
-d.do({ arg x; x.postln })                                   // run f at values of dictionary
+d.do { | x | x.postln }                                     // run f at values of dictionary
 d.includes(3) == true                                       // does dictionary have indicated value
 d.includesKey('z') == true                                  // does dictionary have indicated key
 d.keys == Set.newFrom(['x', 'y', 'z'])                      // set of keys at dictionary
-d.keysDo({ arg x; x.postln })                               // run f at keys of dictionary
-d.keysValuesDo({ arg k, v; [k, v].postln })                 // run f at keys & values of dictionary
+d.keysDo { | x | x.postln }                                 // run f at keys of dictionary
+d.keysValuesDo { | k v | [k, v].postln }                    // run f at keys & values of dictionary
 d.occurrencesOf(3) == 1                                     // number of occurences of value in dictionary
 { d.removeAt('x') == 1; d.add('x' -> 1) }.value             // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
-d.values.sort({ arg i, j; i <= j })                         // list of values at dictionary
+d.values.sort { | i j | i <= j }                            // list of values at dictionary
 
 'Environment'
-
 Environment.superclass == IdentityDictionary                // environments are dictionaries
 Object.classVarNames.includes('currentEnvironment') == true // currentEnvironment is a class variable of Object
 'key'.envirPut('value') == 'value'                          // put 'key' -> 'value' into currentEnvironment
 'key'.envirGet == 'value'                                   // lookup 'key' in currentEnvironment
 f = { 'i'.envirGet + 'j'.envirGet }                         // function to lookup and sum i and j
-g = { arg result; result.errorString }                      // function to retrieve error message
+g = { | result | result.errorString }                       // function to retrieve error message
 { f.value }.try(g)                                          // are i and j in currentEnvironment and non nil?
 e = Environment.newFrom(['i', 4, 'j', 5] )                  // new environment with 'i' -> 4 and 'j'-> 5
 e.use(f) == 9                                               // evaluate f with currentEnvironment of e => 4 + 5 = 9
@@ -344,7 +329,6 @@ c.use(h) == 28                                              // => 4 * 7 = 28
 h.value == 9                                                // => 3 * 3 = 9
 
 'Floating point'
-
 1.0 * 3.0 > 3.0 == false                                    // integral floating point math
 0.1 * 3.0 > 0.3 == true                                     // general floating point math
 1.0 * 3.0 == 3.0 == true                                    // integral floating point math
@@ -353,7 +337,6 @@ h.value == 9                                                // => 3 * 3 = 9
 0.1 + 0.1 + 0.1 == 0.3 == false                             // general floating point math
 
 'IdentityDictionary'
-
 IdentityDictionary.superclass == Dictionary                 // identity dictionaries are dictionaries
 d = IdentityDictionary.newFrom(['i', 1, 'j', 2])            // new dictionary from array
 d.asArray == [2, 1]                                         // values as array
@@ -368,17 +351,15 @@ c.at('k') == -3                                             // lookup is in pare
 c.put('i', 'I')                                             // at & put protocol
 c.at('i') == 'I'                                            // lookup is at self before proto
 c.keys == Set.newFrom(['i'])                                // only "local" elements are considered
-c.collect({ arg item; item.postln; nil }).at('j') == 2      // only "local" elements, parent and proto are copied
+c.collect { | item | item.postln; nil }.at('j') == 2        // only "local" elements, parent and proto are copied
 
 'Integer'
-
-(0 .. 255).collect({ arg each; each.asBinaryDigits(8) })    // integer as big endian binary digits to n places
+(0 .. 255).collect { | each | each.asBinaryDigits(8) }      // integer as big endian binary digits to n places
 
 'Interpreter'
-
 this.class == Interpreter                                   // context in which expressions are evaluated
 this.interpret("1 + 2") == 3                                // interpret string
-this.interpret("{ arg x; x + 2 }").value(1) == 3            // interpret string
+this.interpret("{ | x | x + 2 }").value(1) == 3             // interpret string
 this.a == nil                                               // there are single letter interpreter variables
 this.s == Server.default                                    // by convention s has the default scsynth
 this.executeFile("program.scd")                             // run program tex
@@ -386,58 +367,52 @@ this.executeFile("program.scd")                             // run program tex
 context.class == Frame                                      // context
 
 'Interval'
-
 Interval.new(0, 12, 3).asArray == [0, 3, 6, 9, 12]          // elements of interval as array
 Interval.new(0, 12, 3).size == 5                            // number of elements in interval
-2.to(14, 4).collect({ arg x; x * x }) == [4, 36, 100, 196]  // to method at Integer
+2.to(14, 4).collect({ | x | x * x }) == [4, 36, 100, 196]   // to method at Integer
 Interval.new(-1, 1, 0.000001).size == 2000001               // 2000001 places between -1 and 1
 Interval.new(-1, 1, 0.000001).at(1000000) == 0              // access value at 1000001st place
 
 'Iteration'
-
 4.do({ 'x'.postln}) == 4                                    // times repeat loop (int)
-4.do({ arg x; x.postln }) == 4                              // for loop (int)
-4.reverseDo({ arg x; x.postln }) == 4                       // for loop (int, reversed)
-1.to(5).do({ arg x; x.postln }) == 1.to(5)                  // for loop (interval)
-[1, 2, 3, 4, 5].do({ arg x; x.postln }) == [1, 2, 3, 4, 5]  // for loop (collection)
-1.for(5, { arg x; x.postln }) == 1                          // for loop
-1.forBy(9, 2, { arg x; x.postln }) == 1                     // for by loop
+4.do({ | x | x.postln }) == 4                               // for loop (int)
+4.reverseDo({ | x | x.postln }) == 4                        // for loop (int, reversed)
+1.to(5).do({ | x | x.postln }) == 1.to(5)                   // for loop (interval)
+[1, 2, 3, 4, 5].do({ | x | x.postln }) == [1, 2, 3, 4, 5]   // for loop (collection)
+1.for(5, { | x | x.postln }) == 1                           // for loop
+1.forBy(9, 2, { | x | x.postln }) == 1                      // for by loop
 { 9.rand > 3 }.while({ 'x'.postln }) == nil                 // while loop
 
 'Files'
-
 File.open("/tmp/x", "w").put('x').close                     // open file, put value, close file
-File.use("/tmp/x", "w", { arg f; f.put('x') })              // use file to put value
+File.use("/tmp/x", "w", { | f | f.put('x') })               // use file to put value
 File.exists("/tmp/x") == true                               // file exists predicate
 File.fileSize("/tmp/x") == 1                                // file size (bytes)
 File.readAllString("/tmp/x") == "x"                         // read file contents (string)
-File.use("/tmp/x", "r", { arg f; f.getChar }) == $x         // use file to read character
+File.use("/tmp/x", "r", { | f | f.getChar }) == $x          // use file to read character
 File.delete("/tmp/x")                                       // delete file
 
 'Functions (Blocks)'
-
-x = { }                                                     // blocks are objects and may be assigned to a variable
+x = { }; x.isFunction                                       // blocks are objects and may be assigned to a variable
 { nil; 1 }.value == 1                                       // value is last expression evaluated unless ^ (return)
 { { 1 }.value }.value == 1                                  // blocks may be nested
-{ arg x; var y = x; y }.value(1) == 1                       // specification { arguments localvars expressions }
-{ ^1 }.value                                                // ^ terminates block & method (exits all nested blocks)
-{ 'x'.postln }.value                                        // simple block usage
-{ arg p1, p2; p1 ++ ' and ' ++ p2 }.value('x', 'y')         // block with argument passing
-{ arg x; x + 1 }.def.sourceCode == "{ arg x; x + 1 }"       // the FunctionDef can be retrieved
-({ arg x; x * 2 } <> { arg x; x + 3 }).value(4) == 14       // function composition
-{ arg x; x = nil }.value(42).isNil                          // arguments are mutable
+{ | x | var y = x; y }.value(1) == 1                        // specification { arguments localvars expressions }
+{ 'x'.postln }.value == 'x'                                 // simple block usage
+{ | p1 p2| p1 ++ ' & ' ++ p2 }.value('x', 'y') == "x & y"   // block with argument passing
+{ | x | x + 1 }.def.sourceCode == "{ | x | x + 1 }"         // the FunctionDef can be retrieved
+({ | x | x * 2 } <> { | x | x + 3 }).value(4) == 14         // function composition
+{ | x | x = nil }.value(42).isNil                           // arguments are mutable
 
 'List'
-
 List.new.isKindOf(Collection) == true                       // c.f. Collection
 List.new.isKindOf(SequenceableCollection) == true           // c.f. SequenceableCollection
-List.newUsing([1, 3, 2, 4, 5])                              // list from array
-[1, 3, 2, 4, 5].asList                                      // list from collection
-[1, 3, 2, 4, 5].asList.asArray                              // list to array
-var l = [1, 3, 2, 4, 5].asList; [l.reverse, l]              // list reverse (copying)
-[1, 3, 2, 4, 5].asList.add(6)                               // add element at end (snoc)
-[1, 3, 2, 4, 5].asList.addFirst(6)                          // add element at start (cons)
-var l = [1, 3, 2, 4, 5].asList; [l.pop == 5, l]             // remove (in place) and return last element
+List.newUsing([1, 3, 2, 4, 5]).size == 5                    // list from array
+[1, 3, 2, 4, 5].asList.size == 5                            // list from collection
+[1, 3, 2, 4, 5].asList.asArray == [1, 3, 2, 4, 5]           // list to array
+var l = [1, 3, 2, 4, 5].asList; l.reverse.reverse == l      // list reverse (copying)
+(1 .. 5).asList.add(6).asArray == (1 .. 6)                  // add element at end (snoc)
+(2 .. 6).asList.addFirst(1).asArray == (1 .. 6)             // add element at start (cons)
+var l = [1, 3, 2, 4].asList; (l.pop == 4) && (l.size == 3)  // remove (in place) and return last element
 var l = [1, 2, 4].asList.put(2, 3); l                       // replace (in place) element at index
 var l = [1, 2, 4].asList.insert(2, 3); l                    // insert (in place) element at index
 var l = [1, 2, 4].asList; [l.removeAt(2), l]                // remove (in place) and return element at index
@@ -448,7 +423,6 @@ List.newClear(4).size == 4                                  // newClear makes li
 List.new.species == Array                                   // Lists species is Array
 
 'Magnitude'
-
 1 < 3 == true                                               // less than
 3 <= 3 == true                                              // less than or equal to
 3 > 1 == true                                               // greater than
@@ -456,7 +430,6 @@ List.new.species == Array                                   // Lists species is 
 2 == 2 == true                                              // equal to
 
 'Math'
-
 -3.abs == 3                                                 // absolute value
 1.5.ceil == 2                                               // ceiling (round up)
 0.cos == 1                                                  // cosine
@@ -482,7 +455,6 @@ inf                                                         // constant positive
 pi.raddeg == 180                                            // radiansToDegrees
 
 'Message sends'
-
 9.sqrt == 3                                                 // unary message
 1.min(2) == 1                                               // n-ary message (keyword message in St)
 1 + 2 == 3                                                  // binary operator method
@@ -494,8 +466,7 @@ pi.raddeg == 180                                            // radiansToDegrees
 1.min(2).max(3) == 3                                        // n-ary method chaining
 
 'MultiLevelIdentityDictionary'
-
-m = MultiLevelIdentityDictionary.new                        // Tree structure, dictionary of dictionaries
+m = MultiLevelIdentityDictionary.new; m.isEmpty             // Tree structure, dictionary of dictionaries
 m.put('a', 'b', 'c', 1) == m                                // Put value at path (path as variable arguments)
 m.putAtPath(['a', 'b', 'd'], 2) == m                        // Put value at path (path as array)
 m.at('a', 'b', 'd') == (m.atPath(['a', 'b', 'c']) + 1)      // Get value at path
@@ -503,8 +474,8 @@ m.atPathFail(['a', 'b', 'e'], { "absent" }) == "absent"     // Get value at path
 m.at('a', 'b').keys == ['c', 'd'].asSet                     // Get sub-dictionary at path
 m.leaves == [[[2, 1]]]                                      // Get all leaves as nested array
 m.leaves.flat.sort == [1, 2]                                // Get all leaves in flat sorted array
-m.leafDo({ arg path; (path -> m.atPath(path)).post }) == m  // Apply function at path to every leaf node
-m.treeDo({ arg path; path.post }) == []                     // Apply function at path to every non-leaf node
+m.leafDo { | path | (path -> m.atPath(path)).post } == m    // Apply function at path to every leaf node
+m.treeDo { | path | path.post } == []                       // Apply function at path to every non-leaf node
 m.postTree == m                                             // Print pretty tree
 m.removeAt('a', 'b', 'c') == 1                              // Remove value at path
 m.at('a', 'b', 'c') == nil                                  // Nil indicates path exists
@@ -512,38 +483,34 @@ m.removeEmptyAt('a', 'b', 'd') == 2                         // Remove value at p
 m.dictionary.size == 0                                      // Get root dictionary
 
 'Nil'
-
 nil.class == Nil                                            // nil
 nil ? 'x' == 'x'                                            // right hand side if nil
 'x' ? 'y' == 'x'                                            // left hand side unless nil
 nil.isNil == true                                           // is nil
 
 'Point'
-
 200 @ 100 == Point.new(200, 100)                            // obtain a new point
-(200 @ 100).x                                               // x coordinate
-(200 @ 100).y                                               // y coordinate
-0 - (200 @ 100)                                             // negates x and y
-(0 - (200 @ 100)).abs                                       // absolute value of x and y
-200 @ 100 + 1                                               // add scale to both x and y
-200 @ 100 - 1                                               // subtract scale from both x and y
-200 @ 100 * 2                                               // multiply x and y by scale
-200 @ 100 / 2                                               // divide x and y by scale
-(200 @ 100).div(2)                                          // divide x and y by scale
-200 @ 100 % 3                                               // modulo of x and y by scale
-200 @ 100 + (50 @ 25)                                       // add points
-200 @ 100 - (50 @ 25)                                       // subtract points
-200 @ 100 * (3 @ 4)                                         // multiply points
-200 @ 100 / (3 @ 4)                                         // divide points
+(200 @ 100).x == 200                                        // x coordinate
+(200 @ 100).y == 100                                        // y coordinate
+0 - (200 @ 100) == (-200 @ -100)                            // negates x and y (note @- is an binary selector)
+(0 - (200 @ 100)).abs == (200 @ 100)                        // absolute value of x and y
+200 @ 100 + 1 == (201 @ 101)                                // add scale to both x and y
+200 @ 100 - 1 == (199 @ 99)                                 // subtract scale from both x and y
+200 @ 100 * 2 == (400 @ 200)                                // multiply x and y by scale
+200 @ 100 / 2 == (100 @ 50)                                 // divide x and y by scale
+(200 @ 100).div(2) == (100 @ 50)                            // divide x and y by scale
+200 @ 100 % 3 == (2 @ 1)                                    // modulo of x and y by scale
+200 @ 100 + (50 @ 25) == (250 @ 125)                        // add points
+200 @ 100 - (50 @ 25) == (150 @ 75)                         // subtract points
+200 @ 100 * (3 @ 4) == (600 @ 400)                          // multiply points
+1800 @ 100 / (3 @ 4) == (600 @ 25)                          // divide points
 (200 @ 100).asArray == [200, 100]                           // array of x and y
 
 'Post'
-
 "text".postln                                               // write text to post window (console)
 'sym'.postln                                                // write object to post window (console)
 
 'Pseudo variables'
-
 false.class == False                                        // constant (instance of False)
 nil.class == Nil                                            // constant (instance of Nil)
 pi.class == Float                                           // constant (instance of Float)
@@ -558,7 +525,6 @@ thisThread.class == Thread                                  // context
 true.class == True                                          // constant (instance of True)
 
 'Random values'
-
 { 9.rand }.dup(9)                                           // random integers (0 to self)
 { 0.9.rand }.dup(3)                                         // random floats (0 to self)
 #[1, 2, 3, 4, 5].choose                                     // random element of collection
@@ -570,13 +536,11 @@ true.class == True                                          // constant (instanc
 { 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero
 
 'Routine'
-
-f = { arg x; var y = x * 2; var z = y.yield; f.value(z) }   // yield the receiver to the coroutine (received by next)
+f = { | x | var y = x * 2; var z = y.yield; f.value(z) }    // yield the receiver to the coroutine (received by next)
 r = Routine.new(f)                                          // a routine is instantiated on a function
-1.to(9).collect({ arg i; var j = r.next(i); i -> j })       // sends value to coroutine (also resume, value, run)
+1.to(9).collect { | i | var j = r.next(i); i -> j }         // sends value to coroutine (also resume, value, run)
 
 'SequenceableCollection'
-
 SequenceableCollection.allSubclasses.size == 180            // sequencable collection class
 [1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences
 [1, 3, 2, 4, 5].reverse == [5, 4, 2, 3, 1]                  // reverse sequence
@@ -609,7 +573,6 @@ List.exprand(4, 1, 9)                                       // list of random nu
 List.rand(4, 1, 9).asArray.class == Array                   // as array
 
 'Set'
-
 Set.new.isKindOf(Collection) == true                        // c.f. Collection
 Set.new(4).size == 0                                        // allocate empty set for up to 4 elements
 [1, 2, 3, 4].asSet                                          // set from array
@@ -628,7 +591,6 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 [1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array and sort
 
 'String'
-
 "quoted string"                                             // quoted string
 "x" ++ "y" == "xy"                                          // catenation
 "x" + "y" == "x y"                                          // catenation with space
@@ -647,9 +609,9 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "string".size == 6                                          // length
 ["m", "ss", "ss", "pp", ""].join($i) == "mississippi"       // join using character
 ["m", "ss", "ss", "pp", ""].join("i") == "mississippi"      // join using string
-"mississippi".split($i) == ["m", "ss", "ss", "pp", ""]      // split at char
+"mississippi".split($i) == ["m", "ss", "ss", "pp", ""]      // split at char (not string)
 "str ing".split($ ) == ["str", "ing"]                       // split at char
-"a=1 b=2 c=3".split($ ).collect({ arg e; e.split($=) })     // split as parser
+"a=1 b=2 c=3".split($ ).collect { arg e; e.split($=) }      // split as parser
 "a" < "b" == true                                           // string comparison
 "dcba".copy.sort == "abcd"                                  // inplace string sort
 "text".copyRange(1,2) == "ex"                               // substring
@@ -661,7 +623,6 @@ var s = "string".copy; s.add($!); s.at(6) == $!             // copied string lit
 "String".asArray.class != Array                             // https://github.com/supercollider/supercollider/issues/5658
 
 'Symbol'
-
 'symbol'.class == Symbol                                    // symbol
 Symbol.superclass == Object                                 // Symbol is not a subclass of String
 'symbol'.asString == "symbol"                               // convert to string
@@ -671,23 +632,20 @@ Symbol.superclass == Object                                 // Symbol is not a s
 'Symbol'.asArray.class == Array
 
 'Temporaries'
-
 var x; x == nil                                             // uninitialised variables are nil
 var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce multiple temporaries
 var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
 
 'Plotting'
-
 Env.sine.plot(size: 400)                                    // Env ; plot
 Env.sine.asSignal(400).plot                                 // Env as discrete array ; plot
 1.to(9).asArray.mirror.plot                                 // Array ; plot
 [1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
 1.to(99).collect({ arg n; n.asBinaryDigits(8) }).flat.plot  // Array ; plot
 { SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
-{ arg x; x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)     // Unary function ; plot
+{ | x | x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)      // Unary function ; plot
 
 'Debugging'
-
 String.browse                                               // browse specified class
 Server.default.inspect                                      // open object inspector window
 nil.halt                                                    // breakpoint to stop interpreter
@@ -706,21 +664,23 @@ SinOsc.dumpMethodList                                       // print methods alp
 Class.allClasses.printAll                                   // print all class names
 
 'Collection access and mutation syntax'
-
 "text".copy[2].toUpper == $X                                // c[k] is syntax for c.at(k), lookup char in string
 x = "text".copy; x[2] = $s; x == "test"                     // c[k] = v is syntax for c.put(k, v), set char in mutable string
 x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutable array
 
 'Event (Dictionary) syntax'
-
 (a: 1, b: 2) == Event.newFrom(['a', 1, 'b', 2])             // (a: 1, ...) is syntax for Event.newFrom(['a', 1, ...])
 () == Event.new                                             // empty dictionary
 
 'Tilde Syntax'
-
 'i'.envirPut('j'.envirPut(3))                               // ~i = ... is syntax for 'i'.envirPut(...)
 'i'.envirGet * 'j'.envirGet                                 // ~i is syntax for 'i'.envirGet
 
 'Setter Syntax'
-
 Point.new.x_(9).x == 9                                      // p.x = y is syntax for p.x_(y)
+
+'Ui'
+String.methods.inspect                                      // methods for class
+
+'Method Return'
+{ ^1 }.value                                                // ^ terminates block & method (exits all nested blocks)
