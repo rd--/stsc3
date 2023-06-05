@@ -559,7 +559,9 @@ var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place 
 [1, 3, 5, 7, 9].find([5, 7, 9]) == 2                        // locate index of subsequence
 [1, 3, 5, 7, 9].indexOf(5) == 2                             // index of element (compared using ==)
 [1, 3, 5, 7, 9].first == 1                                  // first element of
+var a = (1 .. 9); a.first == a[0]                           // zero-indexed
 [1, 3, 5, 7, 9].last == 9                                   // last element of
+var a = (1 .. 9); a.last == a[8]                            // zero-indexed
 [1, 3, 5, 7, 9].middle == 5                                 // middle element of
 [1, 3, 5, 7, 9].clump(3) == [[1, 3, 5], [7, 9]]             // groups of n elements
 [1, 3, 5, 7, 9].clumps([2, 1]) == [[1, 3], [5], [7, 9]]     // groups of n elements
