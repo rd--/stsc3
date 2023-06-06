@@ -175,8 +175,8 @@ b = b copy                      "copies are equal"
 'Behaviour'
 
 {
-Float selectors size = 39.                                   "array of selectors implemented at class"
-Float allSelectors size = 242.                               "get all selectors an object responds to"
+Float selectors size = 50.                                   "array of selectors implemented at class"
+Float allSelectors size = 325.                               "get all selectors an object responds to"
 Double includesSelector: #+.                                 "test if class implements selector"
 (Float includesSelector: #+) not.                            "does not look in superclasses"
 (Float canUnderstand: #+).                                   "test if class can understand selector"

@@ -2,8 +2,8 @@
 {
 	var n = 20; (* n * 3 components in each channel *)
 	var d = 5.0; (* beating frequency deviation *)
-	var p = OrderedCollection();
-	var q = OrderedCollection();
+	var p = [];
+	var q = [];
 	n.timesRepeat {
 		var freq = IRand(24, 84).MidiCps;
 		p.add(freq);
@@ -12,7 +12,7 @@
 	};
 	[p, q].collect { :freq |
 		SinOscBank(
-			freq.asArray,
+			freq,
 			0.1,
 			{ 2 * pi.Rand } ! (3 * n)
 		)

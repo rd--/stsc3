@@ -272,10 +272,10 @@ Rhpf(f, 5000, 1)
 ;; slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
 var n = 20;
 var d = 5;
-var p = OrderedCollection();
-var q = OrderedCollection();
+var p = []
+var q = []
 var f = { :freq |
-	SinOscBank(freq.asArray, [1], { Rand(0, 2 * pi) } ! (3 * n))
+	SinOscBank(freq, [1], { Rand(0, 2 * pi) } ! (3 * n))
 };
 n.timesRepeat {
 	var freq = Rand(24, 84).MidiCps;
