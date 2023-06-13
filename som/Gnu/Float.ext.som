@@ -4,10 +4,22 @@ adaptToInteger: rcvr andSend: selector = (
 	^ rcvr asFloat perform: selector with: self
 )
 
+degreesToRadians = (
+	^self * 0.017453292519943295 "RadiansPerDegree"
+)
+
+radiansToDegrees = (
+	^self / 0.017453292519943295 "RadiansPerDegree"
+)
+
 ----
 
 infinity = (
 	^FloatD infinity
+)
+
+radiansPerDegree = (
+	^0.017453292519943295
 )
 
 )

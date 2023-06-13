@@ -1,5 +1,64 @@
 ArrayedCollection = ArrayedCollection (
 
+fillFrom: aCollection with: aBlock = (
+	| index |
+	index := 0.
+	aCollection do: [ :each |
+		self at: (index := index + 1) put: (aBlock value: each) ]
+)
+
+quickSort = (
+	self quickSortFrom: 1 to: self size by: nil
+)
+
+quickSort: sortBlock = (
+	self quickSortFrom: 1 to: self size by: sortBlock
+)
+
+quickSortFrom: from to: to by: sortBlock = (
+	| dij k l temp i j di dj n ij |
+	i := from.
+	j := to.
+	[
+		di := self at: i.
+		dj := self at: j.
+		(sortBlock ifNil: [ di <= dj ] ifNotNil: [ sortBlock value: di value: dj ]) ifFalse: [
+			self at: i put: dj; at: j put: di. temp := dj. dj := di. di := temp ].
+		(n := j + 1 - i) <= 2 ifTrue: [ ^self ].
+		dij := self at: (ij := i + j // 2).
+		(sortBlock ifNil: [ di <= dij ] ifNotNil: [ sortBlock value: di value: dij ])
+			ifTrue: [
+				(sortBlock ifNil: [ dij <= dj ] ifNotNil: [ sortBlock value: dij value: dj ]) ifFalse: [
+					self at: j put: dij; at: ij put: dj. dij := dj ] ]
+			ifFalse: [
+				self at: i put: dij; at: ij put: di. dij := di ].
+		n = 3 ifTrue: [ ^self ].
+		k := i.
+		l := j.
+		[
+			[ k <= (l := l - 1) and: [
+				sortBlock ifNil: [ dij <= (self at: l) ] ifNotNil: [ sortBlock value: dij value: (self at: l) ] ] ] whileTrue.
+			[ (k := k + 1) <= l and: [
+				sortBlock ifNil: [ (self at: k) <= dij ] ifNotNil: [ sortBlock value: (self at: k) value: dij ] ] ] whileTrue.
+			k <= l ] whileTrue: [ temp := self at: k. self at: k put: (self at: l); at: l put: temp. ].
+		i < l
+			ifFalse: [
+				k < j
+					ifFalse: [ ^self ]
+					ifTrue: [ i := k ] ]
+			ifTrue: [
+				k < j
+					ifFalse: [ j := l ]
+					ifTrue: [
+						l - i <  (j - k)
+							ifTrue: [
+								self quickSortFrom: i to: l by: sortBlock.
+								i := k ]
+							ifFalse: [
+								self quickSortFrom: k to: j by: sortBlock.
+								j := l ] ] ] ] repeat
+)
+
 ----
 
 newFrom: aCollection = (

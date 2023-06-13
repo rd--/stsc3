@@ -1,11 +1,56 @@
 ByteArray = ByteArray (
 
+hex = (
+	| string v index map |
+	map := '0123456789abcdef'.
+	string := String new: self size * 2.
+	index := 0.
+	1 to: self size do:[:i|
+		v := self at: i.
+		string at: (index := index + 1) put: (map at: (v bitShift: -4) + 1).
+		string at: (index := index + 1) put: (map at: (v bitAnd: 15) + 1).
+	].
+	^string
+)
+
+readHexFrom: aStream = (
+	1 to: self size do:
+		[:i| | n v1 v2 |
+		 n := aStream next asInteger.
+		 v1 := n > 57
+				ifTrue:
+					[n > 96
+						ifTrue: [n - 87]
+						ifFalse: [n > 64
+								ifTrue: [n - 55]
+								ifFalse: [-1]]]
+			 	ifFalse: [n - 48].
+		 (v1 between: 0 and: 15) ifFalse: [^self error: 'Hex digit expected'].
+		 n := aStream next asInteger.
+		 v2 := n > 57
+				ifTrue:
+					[n > 96
+						ifTrue: [n - 87]
+						ifFalse: [n > 64
+								ifTrue: [n - 55]
+								ifFalse: [-1]]]
+			 	ifFalse: [n - 48].
+		(v2 between: 0 and: 15) ifFalse: [^self error: 'Hex digit expected'].
+		self at: i put: (v1 bitShift: 4) + v2]
+)
+
 sendUdpToHost: hostAddress port: portNumber = (
 	| socket datagram |
 	socket := DatagramSocket remote: hostAddress port: portNumber local: nil port: 0.
 	datagram := Datagram data: self.
 	socket nextPut: datagram; flush.
 	socket close.
+)
+
+----
+
+readHexFrom: aString = (
+	^(self new: aString size // 2) readHexFrom: aString readStream
 )
 
 )

@@ -18,6 +18,10 @@ adaptToInteger: rcvr andSend: selector = (
 	^ self subclassResponsibility
 )
 
+degreesToRadians = (
+	^self asFloat degreesToRadians
+)
+
 isZero = (
 	^self = 0
 )
@@ -36,6 +40,10 @@ microSeconds = (
 
 milliSeconds = (
 	^ Delay forMilliseconds: self
+)
+
+radiansToDegrees = (
+	^self asFloat radiansToDegrees
 )
 
 seconds = (

@@ -1,0 +1,11 @@
+Boolean = Boolean (
+
+asInteger = (
+	^ self asBit
+)
+
+isBoolean = (
+	^ true
+)
+
+)

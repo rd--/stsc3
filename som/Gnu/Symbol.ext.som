@@ -1,7 +1,7 @@
 Symbol = Symbol (
 
 value: anObject = (
-	^anObject perform: self.
+	^anObject perform: self
 )
 
 value: anObject value: anotherObject = (

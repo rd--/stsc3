@@ -1,0 +1,7 @@
+ReadStream = ReadStream (
+
+take: maxNumberOfElements = (
+	^ self next: maxNumberOfElements
+)
+
+)

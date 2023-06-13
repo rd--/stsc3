@@ -4,5 +4,27 @@ putOn: aStream = (
 	^aStream nextPut: self
 )
 
+to: other = (
+	^ (self asInteger to: other asciiValue)
+		collect:	[:ascii | Character value: ascii]
+		as: String
+)
+
+----
+
+separators = (
+	^ {	Character value: 32. "space"
+		Character value: 13. "cr"
+		Character value: 9. "tab"
+		Character value: 10. "line feed"
+		Character value: 12. "form feed"
+		Character value: 1. "start of heading"
+	} as: String
+)
+
+linefeed = (
+	^self value: 10
+)
+
 )
 

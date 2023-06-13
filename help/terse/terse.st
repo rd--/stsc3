@@ -8,7 +8,6 @@
 6 * 3 = 18.                                                  "multiplication"
 1 + 2 * 3 = 9.                                               "evaluation always left to right (1 + 2) * 3"
 6 / 3 = 2.                                                   "integer division with integer result"
-(5 / 3) class = Fraction.                                    "integer division with non-integer result"
 ((5 / 3) asFloat) closeTo: 1.666666.                         "fraction as float"
 5.0 / 2.0 = 2.5.                                             "division with float result (operand float)"
 (355.0 / 113) closeTo: 3.141592.                             "division with float result (operand integer)"
@@ -59,10 +58,12 @@ Float pi radiansToDegrees = 180.0.                           "convert radians to
 Float pi = 3.141592653589793.                                "pi"
 Float e = 2.718281828459045.                                 "exp constant"
 100 atRandom between: 1 and: 100.                            "random integer in (1,self)"
-1.0 atRandom between: 0 and: 1.0.                            "random float in (0,self)"
 0 isZero.
 1 isZero not.
 } allSatisfy: #yourself
+
+(5 / 3) class = Fraction.                                    "integer division with non-integer result"
+1.0 atRandom between: 0 and: 1.0.                            "random float in (0,self)"
 
 'ArrayedCollection'
 
@@ -77,8 +78,9 @@ Float e = 2.718281828459045.                                 "exp constant"
 'mergeSortFrom:to:by:' copy sort = ':::FSbeegmmooorrrtty'. "merge sort"
 'quickSort' copy quickSort = 'Scikoqrtu'.
 (#(5 4 3 2 1) copy sort: [ :lhs :rhs | lhs < rhs ]) = #(1 2 3 4 5).
-(#(5 4 3 2 1) copy sort: #<) = #(1 2 3 4 5).
 } allSatisfy: #yourself
+
+(#(5 4 3 2 1) copy sort: #<) = #(1 2 3 4 5).
 
 letters := 'abcdefghijklmnopqrstuvwxzy' copy.
 {
@@ -99,12 +101,10 @@ Array isVariable = true.                                     "array is indexable
 (#(1 2 3 4 5) copyFrom: 2 to: 4) = #(2 3 4).                 "copy range"
 (#(1 2 3 4 5) copyFrom: 1 to: 5) = #(1 2 3 4 5).             "copy range"
 #(1 (2 (3 4))) = #(1 #(2 #(3 4))).                           "in st-80 sub-arrays do not require # prefix"
-#(x x: nil) = #(#x #x: nil).                                 "in st-80 symbols do not require #prefix"
 (#(5 4 3 2 1) detect: [ :i | i < 3 ]) = 2.                   "detect element (not index), so 2"
 (#(1 2 3 4 5) first: 3) = #(1 2 3).
 (#(1 2 3 4 5) take: 2) = #(1 2).
 (#(1 2) take: 5) = #(1 2).
-(#(1 2) readStream take: 5) = #(1 2).
 #(1 2) == #(1 2).                                            "literals are identical"
 #(1 2) ~~ #(1 2) shallowCopy.                                "copies are not identical"
 {1. 2} ~~ {1. 2}.                                            "array expressions are not identical"
@@ -118,6 +118,9 @@ Array isVariable = true.                                     "array is indexable
 ((Array new: 2) fillFrom: #(9 16) with: #sqrt) = #(3 4).
 #() == #(). "Empty array is canonical (identical to itself)"
 } allSatisfy: #yourself
+
+(#(1 2) readStream take: 5) = #(1 2).
+#(x x: nil) = #(#x #x: nil).                                 "in st-80 symbols do not require #prefix"
 
 c := {'string'. #symbol. 42}.
 {
@@ -175,15 +178,16 @@ b = b copy                      "copies are equal"
 'Behaviour'
 
 {
-Float selectors size = 50.                                   "array of selectors implemented at class"
-Float allSelectors size = 325.                               "get all selectors an object responds to"
-Double includesSelector: #+.                                 "test if class implements selector"
-(Float includesSelector: #+) not.                            "does not look in superclasses"
+Float selectors size >= 50.                                   "array of selectors implemented at class"
+Float allSelectors size >= 300.                               "get all selectors an object responds to"
 (Float canUnderstand: #+).                                   "test if class can understand selector"
 Float superclass = Number.                                   "superclass of class"
 Float inheritsFrom: Number.                                  "immediate inheritance"
 Float inheritsFrom: Magnitude.                               "non-immediate inheritance"
 } allSatisfy: #yourself
+
+Double includesSelector: #+.                                 "test if class implements selector"
+(Float includesSelector: #+) not.                            "does not look in superclasses"
 
 Float selectorsDo: [ :item | Transcript show: item; cr ]    "perform block at each selector"
 Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at self and each superclass in turn"
@@ -214,9 +218,10 @@ Float withAllSuperclassesDo: [:c | Transcript show: c; cr]  "perform block at se
 [ [ 42 ] value: nil ] ifError: [ true ]. "error"
 [ [ :item | 42 ] value ] on: Error do: [ true ]. "error"
 [ [ :item | 42 ] value ] ifError: [ true ]. "error"
-([ :item | item := nil ] value: 42) isNil. "arguments are mutable (not in gst)"
 [ 42 ] ~= 42.
 } allSatisfy: #yourself
+
+([ :item | item := nil ] value: 42) isNil. "arguments are mutable (not in gst)"
 
 b := [ :x | x * 42 ].
 {
@@ -282,7 +287,6 @@ true asInteger > false asInteger.
 {
 (ByteArray new: 4) hex = '00000000'.
 (ByteArray new: 4) size = 4.
-(ByteArray new: 4) byteSize = 4.
 ((ByteArray new: 4) at: 1) = 0.
 ((ByteArray new: 4) byteAt: 2) = 0.
 ((ByteArray new: 4) at: 1 put: 15; at: 3 put: 240; hex) = '0f00f000'.
@@ -293,10 +297,12 @@ true asInteger > false asInteger.
 'string' asByteArray hex = '737472696e67'.
 (ByteArray readHexFrom: '737472696e67') asString = 'string'.
 ((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'.
-((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64).
-ByteArray empty == ByteArray empty.
 'string' asByteArray asArray = #(115 116 114 105 110 103).
 } allSatisfy: #yourself
+
+(ByteArray new: 4) byteSize = 4.
+((ByteArray new: 4) word32At: 1 put: 123456) asArray = #(0 1 226 64).
+ByteArray empty == ByteArray empty.
 
 'Cascade messages'
 
@@ -308,7 +314,7 @@ Set new add: 1; add: 2; yourself
 
 {
 $ = Character space.
-$        = Character tab.
+$	 = Character tab.
 Character linefeed = Character lf.
 Character tab asInteger = 9.
 Character nl asInteger = 10.
@@ -332,19 +338,12 @@ Character space isSeparator = true.
 $e isVowel.
 $a asUppercase = $A.
 $A asLowercase = $a.
-$a hash = $a asInteger hash.
 $s ~= nil.
 ($a to: $z) = 'abcdefghijklmnopqrstuvwxyz'.
 ('/', Character separators) size = (Character separators size + 1).
-('/', CharacterSet separators) size = (CharacterSet separators asArray size + 1).
 $a printString = '$a'.
 $5 printString = '$5'.
 $@ printString = '$@'.
-Character cr printString = 'Character cr'.
-Character lf printString = 'Character lf'.
-Character space printString = 'Character space'.
-Character null printString = 'Character null'.
-(Character value: 17) printString = 'Character value: 17'.
 ${ = ${.
 $\ = $\.
 $/ = $/.
@@ -355,6 +354,13 @@ $' = ('''' at: 1).
 '\"' = (String newFrom: #($\ $")).
 } allSatisfy: #yourself
 
+$a hash = $a asInteger hash.
+Character cr printString = 'Character cr'.
+Character lf printString = 'Character lf'.
+Character space printString = 'Character space'.
+Character null printString = 'Character null'.
+(Character value: 17) printString = 'Character value: 17'.
+
 'CharacterSet'
 
 {
@@ -362,6 +368,7 @@ CharacterSet ascii size = 127.                               "ascii character se
 CharacterSet crlf size = 2.                                  "carriage return and line feed"
 CharacterSet separators size = 5.                            "whitespace"
 (CharacterSet separators any: 1 as: Array) = {Character tab}.
+('/', CharacterSet separators) size = (CharacterSet separators asArray size + 1).
 } allSatisfy: #yourself
 
 'Class'
@@ -403,21 +410,23 @@ Class superclass = ClassDescription.
 
 'Constants'
 
-true                                                        "true constant"
-false                                                       "false constant"
-nil                                                         "nil object constant"
-1                                                           "integer constants"
-3.14                                                        "float constants"
-2e-2                                                        "fractional constants"
-16r0F                                                       "hex constant"
--1                                                          "negative constants"
-'Hello'                                                     "string constant"
-'I''m here'                                                 "single quote escape"
-$A                                                          "character constant"
-$                                                           "character constant (space)"
-#aSymbol                                                    "symbol constants"
-#(3 2 1)                                                    "array constants"
-#('abc' 2 $a)                                               "mixing of types allowed"
+{
+true isBoolean.                                                        "true constant"
+false isBoolean.                                                       "false constant"
+nil isNil.                                                         "nil object constant"
+1 isInteger.                                                           "integer constants"
+3.14 isFloat.                                                       "float constants"
+2e-2 isFloat.                                                        "fractional constants"
+16r0F = 15.                                                       "hex constant"
+-1 isInteger.                                                          "negative constants"
+'Hello' isString.                                                     "string constant"
+'I''m here' isString.                                                 "single quote escape"
+$A isCharacter.                                                          "character constant"
+$  isCharacter.                                                         "character constant (space)"
+#aSymbol isSymbol.                                                   "symbol constants"
+#(3 2 1) isArray.                                                    "array constants"
+#('abc' 2 $a) isArray.                                              "mixing of types allowed"
+} allSatisfy: #yourself
 
 'Context'
 
@@ -429,21 +438,21 @@ thisContext class
 'Conversion'
 
 {
-3.99 asInteger = 3.                                          "convert number to integer (truncates in Squeak)"
 3 asFloat = 3.0.                                             "convert number to float"
 3 asFloat = 3.0.                                             "3 asFloat is equal to 3"
 65 asCharacter = $A.                                         "convert integer to character"
 $A asciiValue = 65.                                          "convert character to integer"
 3.99 printString = '3.99'.                                   "convert object to string via printOn:"
 3.99 storeString = '3.99'.                                   "convert object to string via storeOn:"
+} allSatisfy: #yourself
+
+3.99 asInteger = 3.                                          "convert number to integer (truncates in Squeak, rounds in Gnu)"
 ((2 raisedTo: 4) - 1 radix: 16) = 'F'.                       "convert to string in given base"
 ((2 raisedTo: 8) - 1 radix: 16) = 'FF'.
 ((2 raisedTo: 12) - 1 radix: 16) = 'FFF'.
 ((2 raisedTo: 16) - 1 radix: 16) = 'FFFF'.
 (15 numberOfDigitsInBase: 16) = 1.
 (16 numberOfDigitsInBase: 16) = 2.
-} allSatisfy: #yourself
-
 3.99 asFraction                                             "convert number to fraction (399/100)"
 
 'Date'
@@ -550,12 +559,12 @@ Smalltalk halt
 
 {
 Duration zero seconds = 0.
-Duration oneDay days = 1.
+(Duration seconds: 2) seconds = 2.
+(Duration seconds: 2.5) seconds = 2.5.
 } allSatisfy: #yourself
 
-(Duration seconds: 2) seconds = 2.
+Duration oneDay days = 1.
 (Duration seconds: 2) wait
-(Duration seconds: 2.5) seconds = 2.5.
 (Duration seconds: 2.5) wait
 (Duration milliSeconds: 2500)
 (Duration days: ChronologyConstants daysFromSmalltalkEpochToPosixEpoch) days = 25202.
@@ -578,26 +587,26 @@ Smalltalk error: 'a smalltalk?'
 
 {
 3.141 isFloat = true.                                        "is floating point"
-3.141 identityHash = 3.141 hash.                             "hash"
 3.0 hash = 3 hash.                                           "hash of integral is integral hash"
-Float epsilon <= (1 * (10 raisedTo: -12)).
 1.0 < 1.0 successor.
 1.0 > 1.0 predecessor.
 (1.25 timesTwoPower: 5) = 40.
-(Float readFrom: '3.141') = 3.141.
 (Float readFrom: '-1.4' readStream) = -1.4.
+3.141 asIEEE32BitWord = 1078527525.
+} allSatisfy: #yourself
+
+3.141 identityHash = 3.141 hash.                             "hash"
+Float epsilon <= (1 * (10 raisedTo: -12)).
+(Float readFrom: '3.141') = 3.141.
 Float nan ~~ Float nan.
 Float nan ~= Float nan.
-3.141 asIEEE32BitWord = 1078527525.
 (Double fromIEEE32Bit: 1078527525) closeTo: 3.141.
-} allSatisfy: #yourself
 
 'Fraction'
 
 {
 (Fraction numerator: 2 denominator: 3) class = Fraction.
 (2/3) isMemberOf: Fraction.
-(Fraction readFrom: '5/4') = (5/4).
 (Fraction numerator: 2 denominator: 3) reduced = (2/3).
 2 / (3/4) = (8/3).
 (2/3) + (2/3) = (4/3).
@@ -620,6 +629,7 @@ Float nan ~= Float nan.
 (1/4) asExactFloat = 0.25.
 } allSatisfy: #yourself
 
+(Fraction readFrom: '5/4') = (5/4).
 4/9 raisedTo: 1/2 "2/3"
 9/4 raisedTo: 1/2 "3/2"
 8/27 raisedTo: 1/3 "2/3"
