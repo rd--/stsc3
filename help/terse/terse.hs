@@ -1,6 +1,6 @@
 import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
-import qualified Sound.SC3.Lisp.SuperCollider as Lisp {- hsc3-lisp -}
+import qualified Sound.Sc3.Lisp.SuperCollider as Lisp {- hsc3-lisp -}
 
 sideBySide :: Int -> (String -> String) -> String -> String
 sideBySide col trs str =
@@ -11,7 +11,7 @@ sideBySide col trs str =
 rwToLisp :: IO ()
 rwToLisp = do
   e <- fmap lines (readFile "terse.scd")
-  putStrLn (unlines (map (sideBySide 60 Lisp.scToLispViewer) e))
+  putStrLn (unlines (map (sideBySide 60 (Lisp.scToLispViewer False)) e))
 
 rwToSt :: IO ()
 rwToSt = do

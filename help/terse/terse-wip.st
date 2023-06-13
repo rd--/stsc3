@@ -332,6 +332,11 @@ i := IdentityBag new add: s;  add: s; add: c; yourself
 obj := JsonObject fromAssociations: {#'x' -> 1}
 obj x
 
+'Math'
+1 exp log = 1 "base e (natural) logarithm"
+inf isNumber "constant positive infinity (is a number)"
+
+
 'Message'
 
 m := Message selector: #x: arguments: #(3.141)

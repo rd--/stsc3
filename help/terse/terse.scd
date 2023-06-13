@@ -44,7 +44,9 @@ pi.raddeg == 180.0                                          // convert radians t
 10.min(20) == 10                                            // get minimum of two numbers
 pi == 3.141592653589793                                     // pi (3.141592653589793)
 1.exp.closeTo(2.718281828459)                               // e (2.718281828459)
-var n = 100.rand; (n > 0) && { n < 100 }                    // random number in (0, self-1)
+var n = 100.rand; (n >= 0) && { n < 100 }                   // random number in (0, self-1)
+var n = 100.rand; n.inclusivelyBetween(0, 99)               // random number in (0, self-1)
+var n = 98.rand + 1; n.exclusivelyBetween(0, 100)           // random number in (0, self-1)
 4 + 5 * 6 == 54                                             // operators are evaluated left to right
 
 'Array'
@@ -54,7 +56,7 @@ Array.new.isKindOf(ArrayedCollection) == true               // c.f. ArrayedColle
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
-Array.fill(3, { 1 }) == [1, 1, 1]                           // new array with slots set by value protocol
+Array.fill(3) { 1 } == [1, 1, 1]                            // new array with slots set by value protocol
 Array.new(4).maxSize == 4                                   // Array has both size and maxSize
 Array.new.add(1) == [1]                                     // add element to array, return array
 Array.new(4).add(1).add(2).add(3) == [1, 2, 3]              // add elements to end of array
@@ -231,7 +233,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, [2, 3], [4, [5, 6]]].maxDepth == 3                      // tree depth of collection
 [1, [2], [3, [4]]].deepCollect(3) { | x | x.neg }.size == 3 // tree collect to indicated depth
 [1, 2, 3, 4, 5].choose <= 5                                 // random element of collection
-[1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) < 5           // weighted random element of collection (weights sum to 1)
+[1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 
 'Comments'
@@ -239,7 +241,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 "multi-line or interior-line comment".isString              // /* multi-line or interior-line comment */
 
 'Complex'
-Complex(0, 0).class == Complex			                    // complex numbers
+Complex(0, 0).class == Complex                              // complex numbers
 Complex(-1, 0).real == -1                                   // real part of complex number, Complex(r, i) = Complex.new(r, i)
 Complex(-1, 0).imag == 0                                    // imaginary part of complex number
 Complex(-1, 0) + 1 == Complex(0, 0)                         // complex addition with scalar
@@ -475,7 +477,7 @@ m = MultiLevelIdentityDictionary.new; m.isEmpty             // Tree structure, d
 m.put('a', 'b', 'c', 1) == m                                // Put value at path (path as variable arguments)
 m.putAtPath(['a', 'b', 'd'], 2) == m                        // Put value at path (path as array)
 m.at('a', 'b', 'd') == (m.atPath(['a', 'b', 'c']) + 1)      // Get value at path
-m.atPathFail(['a', 'b', 'e'], { "absent" }) == "absent"     // Get value at path with ifAbsent handler
+m.atPathFail(['a', 'b', 'e']) { "absent" } == "absent"      // Get value at path with ifAbsent handler
 m.at('a', 'b').keys == ['c', 'd'].asSet                     // Get sub-dictionary at path
 m.leaves == [[[2, 1]]]                                      // Get all leaves as nested array
 m.leaves.flat.sort == [1, 2]                                // Get all leaves in flat sorted array
@@ -621,7 +623,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "text".copyRange(1,2) == "ex"                               // substring
 "text".copyRange(2,2) == "x"                                // substring (single character)
 "% string % interpolation".format('format', 'with').isString// format string with interpolation
-{ "string".add($!) }.try({ "oh oh..." }) == "oh oh..."      // literal strings are immutable arrayed collections
+{ "string".add($!) }.try { "oh oh..." } == "oh oh..."       // literal strings are immutable arrayed collections
 ["", "string"].collect('maxSize') == [16, 64]               // of minimum maxSize 16
 var s = "string".copy; s.add($!); s.at(6) == $!             // copied string literals inherit maxSize
 "String".asArray.class != Array                             // https://github.com/supercollider/supercollider/issues/5658
@@ -657,35 +659,40 @@ x = #[1, 2, 3].copy; x[1] = $2; x == [1, $2, 3]             // set slot in mutab
 Point.new.x_(9).x == 9                                      // p.x = y is syntax for p.x_(y)
 
 'Debugging'
-String.browse                                               // browse specified class
-Server.default.inspect                                      // open object inspector window
-nil.halt                                                    // breakpoint to stop interpreter
-"Text".error                                                // print error string
-"Text".reportError                                          // print error string and print backtrace
-nil.doesNotUnderstand('unknownMessage')                     // flag message is not handled
-nil.shouldNotImplement                                      // flag message should not be implemented
-nil.subclassResponsibility                                  // flag message as abstract
-nil.primitiveFailed                                         // system primitive failed
-thisProcess.recompile                                       // recompile the class library
-Magnitude.dumpClassSubtree                                  // print class tree below
-Collection.dumpByteCodes('select')                          // print bytecodes for message
-UGen.dumpSubclassList                                       // print sub classes (as list)
-Number.dumpFullInterface                                    // print methods per class
-SinOsc.dumpMethodList                                       // print methods alphabetically
-Class.allClasses.printAll                                   // print all class names
-String.methods.inspect                                      // methods for class
+{ nil.doesNotUnderstand('unknownMessage') }.try { true }    // flag message is not handled
+{ nil.shouldNotImplement }.try { true }                     // flag message should not be implemented
+{ nil.subclassResponsibility }.try { true }                 // flag message as abstract
+{ nil.primitiveFailed }.try { true }                        // system primitive failed
 
-'UI - Plotting'
-Env.sine.plot(size: 400)                                    // Env ; plot
-Env.sine.asSignal(400).plot                                 // Env as discrete array ; plot
+'Debugging - Printing - !'
+"Text".error == "Text"                                      // print error string
+"Text".reportError == "Text"                                // print error string and print backtrace
+Magnitude.dumpClassSubtree == Magnitude                     // print class tree below
+Collection.dumpByteCodes('select') == Collection            // print bytecodes for message
+UGen.dumpSubclassList == UGen                               // print sub classes (as list)
+Number.dumpFullInterface == Number                          // print methods per class
+SinOsc.dumpMethodList == SinOsc                             // print methods alphabetically
+Class.allClasses.printAll.size > 1000                       // print all class names
+
+'Debugging - Qt - !'
+Platform.hasQt.if { String.browse }; true                   // browse specified class (Ui)
+Platform.hasQt.if { Server.default.inspect }; true          // open object inspector window (Ui)
+Platform.hasQt.if { String.methods.inspect }; true          // methods for class (Ui)
+
+'Plotting - Qt - !'
+Platform.hasQt.if { Env.sine.plot(size: 400) }; true        // Env ; plot
+Platform.hasQt.if { Env.sine.asSignal(400).plot }; true     // Env as discrete array ; plot
 1.to(9).asArray.mirror.plot                                 // Array ; plot
 [1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
-1.to(99).collect({ arg n; n.asBinaryDigits(8) }).flat.plot  // Array ; plot
+1.to(99).collect { arg n; n.asBinaryDigits(8) }.flat.plot   // Array ; plot
 { SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
 { | x | x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)      // Unary function ; plot
 { 99.0.rand }.dup(9999).histo.plot                          // uniform distribution between zero and n
 { 99.0.linrand }.dup(9999).histo.plot                       // linear distribution between zero and n biased to zero
 { 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero
 
-'Method Return'
+'Method Return - !'
 { ^1 }.value                                                // ^ terminates block & method (exits all nested blocks)
+
+'Compiler - !'
+thisProcess.recompile                                       // recompile the class library

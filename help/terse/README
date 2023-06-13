@@ -7,8 +7,9 @@ There is an .sc method _String>>terseGuideSummary_ that can evaluate 'Terse Guid
 
 Files are organised into paragraphs, separated by blank lines.
 
-Each paragraph has a title or subject line, which is ignored.
-Subsequent lines are all simple expressions that are expected to evaluate to true.
+Each paragraph has a title or subject line.
+If the subject line contains the string " - !" the paragraph is skipped over.
+Otherwise subsequent lines are all simple expressions that are expected to evaluate to true.
 Lines are evaluated in sequence.
 
 The summary indicates the number of tests per section, and how many of these passed.

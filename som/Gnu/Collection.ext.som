@@ -76,7 +76,11 @@ log2 = (
 )
 
 max  = (
-	^self inject: (self atRandom) into: [ :maximum :item | (maximum > item) ifTrue: [ maximum ] ifFalse: [ item ]]
+	^ self inject: self anyOne into: [:min :each | min max: each]
+)
+
+min  = (
+	^ self inject: self anyOne into: [:min :each | min min: each]
 )
 
 raisedTo: arg = (
