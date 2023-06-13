@@ -20,13 +20,26 @@ concatenation = (
 	^result
 )
 
-reversed = (
-	^ self reverse
+do: elementBlock separatedBy: separatorBlock = (
+	1 to: self size do:
+		[:index |
+		index = 1 ifFalse: [separatorBlock value].
+		elementBlock value: (self at: index)]
 )
 
-take: maxNumberOfElements = (
-	"Returns maxNumberOfElements as a new collection (using my #species) or less if the collection is not large enough."
-	^ self any: (maxNumberOfElements min: self size)
+joinOn: stream separatedBy: aSeparator = (
+	self
+		do: [:ea | stream nextPutAll: ea asString]
+		separatedBy: [stream nextPutAll: aSeparator asString].
+)
+
+joinSeparatedBy: aSeparator = (
+	^ String streamContents: [:stream |
+		self joinOn: stream separatedBy: aSeparator]
+)
+
+reversed = (
+	^ self reverse
 )
 
 shuffle = (
@@ -35,6 +48,28 @@ shuffle = (
 
 shuffled = (
 	^self copy shuffle
+)
+
+splitBy: aCollection = (
+	^Array streamContents:[:stream|
+		self splitBy: aCollection do:[:each| stream nextPut: each].
+	]
+)
+
+splitBy: aCollection do: aBlock = (
+	| lastIndex nextIndex |
+	lastIndex := 1.
+	[nextIndex := self indexOfSubCollection: aCollection startingAt: lastIndex.
+	nextIndex = 0] whileFalse:[
+		aBlock value: (self copyFrom: lastIndex to: nextIndex-1).
+		lastIndex := nextIndex+ aCollection size.
+	].
+	aBlock value: (self copyFrom: lastIndex to: self size).
+)
+
+take: maxNumberOfElements = (
+	"Returns maxNumberOfElements as a new collection (using my #species) or less if the collection is not large enough."
+	^ self any: (maxNumberOfElements min: self size)
 )
 
 withIndexCollect: elementAndIndexBlock = (
@@ -46,6 +81,18 @@ withIndexCollect: elementAndIndexBlock = (
 
 withIndexDo: elementAndIndexBlock = (
 	1 to: self size do: [ :index | elementAndIndexBlock value: (self at: index) value: index ]
+)
+
+----
+
+new: newSize streamContents: blockWithArg = (
+	| stream originalContents |
+	stream := WriteStream on: (self new: newSize).
+	blockWithArg value: stream.
+	originalContents := stream originalContents.
+	originalContents size =  stream position
+		ifTrue: [ ^originalContents ]
+		ifFalse: [ ^stream contents ]
 )
 
 )

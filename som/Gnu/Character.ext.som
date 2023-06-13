@@ -1,5 +1,9 @@
 Character = Character (
 
+isLiteral = (
+	^true
+)
+
 putOn: aStream = (
 	^aStream nextPut: self
 )

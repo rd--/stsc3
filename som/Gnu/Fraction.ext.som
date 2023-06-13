@@ -1,5 +1,23 @@
 Fraction = Fraction (
 
+adaptToInteger: rcvr andSend: selector = (
+	^ (Fraction numerator: rcvr denominator: 1) perform: selector with: self
+)
+
+gcd: aFraction = (
+	| d |
+	d := denominator gcd: aFraction denominator.
+	^(numerator *(aFraction denominator//d) gcd: aFraction numerator*(denominator//d)) / (denominator//d*aFraction denominator)
+)
+
+isFraction = (
+	^true
+)
+
+lcm: n = (
+	^self // (self gcd: n) * n
+)
+
 reduced = (
 	| gcd numer denom |
 	numerator = 0 ifTrue: [^0].

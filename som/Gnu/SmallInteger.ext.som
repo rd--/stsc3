@@ -19,9 +19,15 @@ SmallInteger = SmallInteger (
 )
 
 / aNumber = (
-	"The primitive answers integer results, i.e. 4 / 2.  Avoid fractions..."
 	<primitive: VMpr_SmallInteger_divide>
- 	^ self asFloat / aNumber
+	aNumber = 0 ifTrue: [
+		^self zeroDivide
+	].
+	aNumber isSmallInteger ifTrue: [
+		^ (Fraction numerator: self denominator: aNumber) reduce
+	] ifFalse: [
+		^ aNumber adaptToInteger: self andSend: #/
+	]
 )
 
 // aNumber = (

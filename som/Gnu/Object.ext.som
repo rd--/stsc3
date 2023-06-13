@@ -47,7 +47,15 @@ isCollection = (
 	^false
 )
 
+isFraction = (
+	^ false
+)
+
 isInterval = (
+	^false
+)
+
+isLiteral = (
 	^false
 )
 

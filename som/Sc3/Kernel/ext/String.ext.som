@@ -9,4 +9,52 @@ evalFile = (
 	^self readTextFile evalString
 )
 
+paragraphs = (
+	^self splitBy: {Character nl. Character nl}
+)
+
+postLine = (
+	Transcript show: self; cr
+)
+
+terseGuideSummary = (
+	| text totalTestCount totalPassCount areas |
+	text := self readTextFile.
+	totalTestCount := 0.
+	totalPassCount := 0.
+	areas := text paragraphs.
+	('Terse Guide Summary: Areas = ' , areas size printString) postLine.
+	areas do: [ :area |
+		| entries testCount failCount passCount |
+		entries := area lines reject: [ :x | x isEmpty ].
+		testCount := entries size - 1.
+		failCount := 0.
+		passCount := 0.
+		(entries at: 1) postLine.
+		(2 to: testCount + 1) collect: [ :index |
+			| test answer |
+			test := entries at: index.
+			answer := test evalString.
+			answer ifTrue: [
+				passCount := passCount + 1
+			] ifFalse: [
+				failCount := failCount + 1.
+				('	Error: ' , test) postLine
+			]
+		].
+		totalTestCount := totalTestCount + testCount.
+		totalPassCount := totalPassCount + passCount.
+		{
+			'	=> '.
+			passCount printString. ' / '. testCount printString.
+			(failCount > 0) ifTrue: [
+					' (' , failCount printString , ' Failures)'
+			] ifFalse: [
+				''
+			]
+		} join postLine.
+	].
+	('Total => ' , totalPassCount printString , ' / ' , totalTestCount printString) postLine
+)
+
 )

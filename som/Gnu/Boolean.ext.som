@@ -8,4 +8,8 @@ isBoolean = (
 	^ true
 )
 
+isLiteral = (
+	^ true
+)
+
 )

@@ -1,9 +1,5 @@
 Integer = Integer (
 
-atRandom = (
-	^Random between: 1 and: self
-)
-
 << shiftAmount = (
 	shiftAmount < 0 ifTrue: [ self error: 'negative arg' ].
 	^self bitShift: shiftAmount
@@ -12,6 +8,18 @@ atRandom = (
 >> shiftAmount = (
 	shiftAmount < 0 ifTrue: [ self error: 'negative arg' ].
 	^ self bitShift: 0 - shiftAmount
+)
+
+atRandom = (
+	^Random between: 1 and: self
+)
+
+isFraction = (
+	^true
+)
+
+isLiteral = (
+	^true
 )
 
 )

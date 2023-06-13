@@ -5,6 +5,50 @@ evalString = (
 	^Behavior evaluate: self
 )
 
+isLiteral = (
+	^true
+)
+
+lineIndicesDo: aBlock = (
+	| cr lf start sz nextLF nextCR |
+	start := 1.
+	sz := self size.
+	cr := Character cr.
+	nextCR := self indexOf: cr startingAt: 1.
+	lf := Character lf.
+	nextLF := self indexOf: lf startingAt: 1.
+	[ start <= sz ] whileTrue: [
+		(nextLF = 0 and: [ nextCR = 0 ])
+			ifTrue: [
+					aBlock value: start value: sz value: sz.
+					^self ].
+		(nextCR = 0 or: [ 0 < nextLF and: [ nextLF < nextCR ] ])
+			ifTrue: [
+					aBlock value: start value: nextLF - 1 value: nextLF.
+					start := 1 + nextLF.
+					nextLF := self indexOf: lf startingAt: start ]
+			ifFalse: [ 1 + nextCR = nextLF
+				ifTrue: [
+					aBlock value: start value: nextCR - 1 value: nextLF.
+					start := 1 + nextLF.
+					nextCR := self indexOf: cr startingAt: start.
+					nextLF := self indexOf: lf startingAt: start ]
+				ifFalse: [
+					aBlock value: start value: nextCR - 1 value: nextCR.
+					start := 1 + nextCR.
+					nextCR := self indexOf: cr startingAt: start ]]]
+)
+
+lines = (
+	^Array new: (self size // 60 max: 16) streamContents: [:lines |
+		self linesDo: [:aLine | lines nextPut: aLine]]
+)
+
+linesDo: aBlock = (
+	self lineIndicesDo: [:start :endWithoutDelimiters :end |
+		aBlock value: (self copyFrom: start to: endWithoutDelimiters)]
+)
+
 putOn: aStream = (
   "Run nextPut: for each character in self."
 	^1 to: self size do: [ :item | aStream nextPut: (self at: item) ]
