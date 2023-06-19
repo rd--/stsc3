@@ -69,6 +69,7 @@ var x = [1, 2]; [x.remove(2), x] == [2, [1]]                // remove element fr
 #[].size == 0                                               // empty literal array
 #[1, 3.14, 'x', \x, "x"].size == 5                          // heterogenous literal array
 [1, 2, 3, 4].at(0) == 1                                     // indexing (access element in slot at index)
+[1, 2, 3, 4].at(5) == nil                                   // out of bounds access answers nil
 [1, 2, 3, 4].collect { | x | x * x } == [1, 4, 9, 16]       // Map function over elements
 [1, 2, 3, 4].collect { | x | x * x } == [1, 4, 9, 16]       // map function over elements
 [1, 2, 3, 4].detect { | x | x > 2 } == 3                    // find first element for which predicate holds
@@ -115,6 +116,14 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 [[[1], [2]], [[3], [4]], [[5], [6]]].shape == [3, 2, 1]     // rank and shape both assume regularity
 [1, 2, 3, 4].pyramid(1) == [1, 1, 2, 1, 2, 3, 1, 2, 3, 4]   // pattern generator (ten rules)
 [1, 2, 4].separate { | a b | (b - a) > 1 } == [[1, 2], [4]] // separate using predicate block
+[0, 0, 0, 1, 1, 1].hammingDistance([0, 0, 1, 1, 0, 0]) == 3 // number places at which element differs
+"xyz".editDistance("xyz") == 0                              // identity
+"xyz".editDistance("xyZ") == 1                              // substitution (at end)
+"xyz".editDistance("xy") == 1                               // deletion (from end)
+"xy".editDistance("xyz") == 1                               // addition (at end)
+"xz".editDistance("xyz") == 1                               // addition (in interior)
+"xz".editDistance("xyz") == 1                               // deletion (from interior)
+"xyz".editDistance("xzy") == 2                              // substitutions
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
