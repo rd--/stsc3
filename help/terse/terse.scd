@@ -21,7 +21,7 @@
 25.sqrt == 5.0                                              // square root
 5.0 ** 2.0 == 25.0                                          // power function
 5 ** 2 == 25                                                // power function with integer
-1.exp.closeTo(2.718281828459)                               // exponential
+1.exp - 2.718281828459 < 0.00001                            // exponential
 -5.abs == 5                                                 // absolute value
 3.99.round == 4                                             // round ; c.f. rounded
 3.99.trunc == 3                                             // truncate
@@ -43,7 +43,7 @@ pi.raddeg == 180.0                                          // convert radians t
 10.max(20) == 20                                            // get maximum of two numbers
 10.min(20) == 10                                            // get minimum of two numbers
 pi == 3.141592653589793                                     // pi (3.141592653589793)
-1.exp.closeTo(2.718281828459)                               // e (2.718281828459)
+1.exp - 2.718281828459 < 0.00001                            // e (2.718281828459)
 var n = 100.rand; (n >= 0) && { n < 100 }                   // random number in (0, self-1)
 var n = 100.rand; n.inclusivelyBetween(0, 99)               // random number in (0, self-1)
 var n = 98.rand + 1; n.exclusivelyBetween(0, 100)           // random number in (0, self-1)
@@ -51,8 +51,11 @@ var n = 98.rand + 1; n.exclusivelyBetween(0, 100)           // random number in 
 
 'Array'
 Array.new.isKindOf(Collection) == true                      // c.f. Collection
+[].isCollection                                             // isCollection predicate
 Array.new.isKindOf(SequenceableCollection) == true          // c.f. SequenceableCollection
+[].isSequenceableCollection                                 // isSequenceableCollection predicate
 Array.new.isKindOf(ArrayedCollection) == true               // c.f. ArrayedCollection
+[].isArray                                                  // isArray predicate
 Array.new(4) == []                                          // new empty array
 Array.new(4).size == 0                                      // new empty array
 Array.newClear(4) == [nil, nil, nil, nil]                   // new array with slots set to nil
@@ -88,7 +91,9 @@ var n = 0; [1, 2, 3, 4].do { | x | n = n + x }; n == 10     // iterate over arra
 [1, 2, 3, 4].select { | x | x > 2 } == [3, 4]               // filter elements
 [1, 2, 3, 4].scramble.sort == [1, 2, 3, 4]                  // randomly shuffle elements
 var c = [1, 2, 3]; c.scramble; c == [1, 2, 3]               // scramble is non-mutating
-[1, 2, 3, 4].mirror == [1, 2, 3, 4, 3, 2, 1]                // append reverse of prefix of array
+(1 .. 4).mirror == [1, 2, 3, 4, 3, 2, 1]                    // append reverse of prefix of array
+(1 .. 4).mirror1 == [1, 2, 3, 4, 3, 2]                      // mirror without last element
+(1 .. 4).mirror2 == [1, 2, 3, 4, 4, 3, 2, 1]                // append reverse of array
 [[1, 2], [3, 4], [5, 6]].lace == [1, 3, 5, 2, 4, 6]         // interleave elements from sub-arrays
 [1, 3, 5, 2, 4, 6].unlace(3) == [[1, 2], [3, 4], [5, 6]]    // inverse of lace, argument tells number of subarrays
 [1, 4, 2, 5, 3, 6].unlace(2) == [[1, 2, 3], [4, 5, 6]]      // inverse of lace, argument tells number of subarrays
@@ -124,6 +129,23 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 "xz".editDistance("xyz") == 1                               // addition (in interior)
 "xz".editDistance("xyz") == 1                               // deletion (from interior)
 "xyz".editDistance("xzy") == 2                              // substitutions
+[[1, 2, 3], [4, 5, 6]].flop == [[1, 4], [2, 5], [3, 6]]     // matrix transposition
+[[1, 4], [2, 5], [3, 6]].flop == [[1, 2, 3], [4, 5, 6]]     // matrix transposition
+[[1, 2], [3, 4], [5]].flop == [[1, 3, 5], [2, 4, 5]]        // matrix transposition (shorter rows wrap)
+[].flop == [[]]                                             // matrix transposition (answer is matrix)
+[1, 2, 3, 4, 5, 6].shift(3, 0) == [0, 0, 0, 1, 2, 3]        // shift right with fill value
+[1, 2, 3, 4, 5, 6].shift(-3, 0) == [4, 5, 6, 0, 0, 0]       // shift left with fill value
+[[1, 2], [3]].allTuples == [[1, 3],[2, 3]]                  // all possible combinations of subcollections
+[[1, 2], [3, 4], [5, 6]].allTuples.size == (2 * 2 * 2)
+[[1, 2], [3, 4, 5], [6, 7, 8, 9]].allTuples.size == 24
+[1, 2, 3].permute(4) == [2, 3, 1]                           // nth permutaton of array
+[1, 2, 3].permute(5) == [3, 1, 2]
+(1 .. 9).normalizeSum.sum == 1                              // array divided by it's sum
+(1 .. 9).normalize(10, 90).sum == 450                       // normalize array to lie between minima and maxima
+[4,7,6,8].reshape(2, 2) == [[4, 7], [6, 8]]                 // reshape array given Apl type shape value
+[4,7,6,8].reshape(2, 3) == [[4, 7, 6], [8, 4, 7]]           // cycle input as required
+(1 .. 5).wrapExtend(9) == ((1 .. 5) ++ (1 .. 4))			// extend array cyclically
+(1 .. 5).wrapExtend(3) == (1 .. 3)							// truncate is required
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
@@ -254,7 +276,8 @@ Complex(0, 0).class == Complex                              // complex numbers
 Complex(-1, 0).real == -1                                   // real part of complex number, Complex(r, i) = Complex.new(r, i)
 Complex(-1, 0).imag == 0                                    // imaginary part of complex number
 Complex(-1, 0) + 1 == Complex(0, 0)                         // complex addition with scalar
-Complex(-1, 0).pow(1 / 2).closeTo(Complex(0, 1))            // complex math
+var c = Complex(0, 1); c * c == Complex(-1, 0)              // complex multiplication
+Complex(-1, 0).pow(1 / 2).real < 0.00001                    // complex raisedTo
 
 'Conditional Statements'
 var x = (9.rand > 4).if { 'T' }; x.isNil || { x == 'T' }    // if then
@@ -275,8 +298,8 @@ pi.class == Float                                           // pi constant (inst
 "Hello".isString                                            // string constant (\ quotes quote)
 $a.class == Char                                            // character constant
 $ .isSpace                                                  // character constant (space)
-'aSymbol'.isSymbol                                          // symbol constants
-'a Symbol'.isSymbol                                         // symbol constants (space)
+'aSymbol'.class == Symbol                                   // symbol constants
+'a Symbol'.class == Symbol                                  // symbol constants (space)
 \aSymbol == 'aSymbol'                                       // prefix symbol notation
 #[3, 2, 1].size == 3                                        // array constants
 #['a', "a", $a, 1].size == 4                                // mixing of types allowed
@@ -461,7 +484,7 @@ List.new.species == Array                                   // Lists species is 
 1.min(2) == 1                                               // minimum
 3.neg == -3                                                 // negation
 3.odd == true                                               // oddness predicate
-pi.closeTo(3.1415926535898)                                 // constant pi (Float pi)
+pi - 3.1415926535898 < 0.00001                              // constant pi (Float pi)
 inf.isNumber                                                // constant positive infinity (is a number)
 2.pow(3) == 8                                               // i to the power of j
 5.reciprocal == 0.2                                         // 1 / x
