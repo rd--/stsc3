@@ -144,8 +144,8 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 (1 .. 9).normalize(10, 90).sum == 450                       // normalize array to lie between minima and maxima
 [4,7,6,8].reshape(2, 2) == [[4, 7], [6, 8]]                 // reshape array given Apl type shape value
 [4,7,6,8].reshape(2, 3) == [[4, 7, 6], [8, 4, 7]]           // cycle input as required
-(1 .. 5).wrapExtend(9) == ((1 .. 5) ++ (1 .. 4))			// extend array cyclically
-(1 .. 5).wrapExtend(3) == (1 .. 3)							// truncate is required
+(1 .. 5).wrapExtend(9) == ((1 .. 5) ++ (1 .. 4))            // extend array cyclically
+(1 .. 5).wrapExtend(3) == (1 .. 3)                          // truncate is required
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
