@@ -129,6 +129,9 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 "xz".editDistance("xyz") == 1                               // addition (in interior)
 "xz".editDistance("xyz") == 1                               // deletion (from interior)
 "xyz".editDistance("xzy") == 2                              // substitutions
+"hello".similarity("hello") == 1                            // similarity based on edit distance (1 = equal)
+"hello".similarity("asdf") == 0                             // similarity based on edit distance (0 = unequal)
+"word".similarity("wrod") == 0.5                            // similarity based on edit distance
 [[1, 2, 3], [4, 5, 6]].flop == [[1, 4], [2, 5], [3, 6]]     // matrix transposition
 [[1, 4], [2, 5], [3, 6]].flop == [[1, 2, 3], [4, 5, 6]]     // matrix transposition
 [[1, 2], [3, 4], [5]].flop == [[1, 3, 5], [2, 4, 5]]        // matrix transposition (shorter rows wrap)
@@ -146,6 +149,10 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 [4,7,6,8].reshape(2, 3) == [[4, 7, 6], [8, 4, 7]]           // cycle input as required
 (1 .. 5).wrapExtend(9) == ((1 .. 5) ++ (1 .. 4))            // extend array cyclically
 (1 .. 5).wrapExtend(3) == (1 .. 3)                          // truncate is required
+[2, 3, 5, 6].indexOfGreaterThan(4) == 2                     // index of first item greater than argument
+[2, 3, 5, 6].indexInBetween(5.2) == 2.2                     // interpolated index for value (collection must be sorted)
+[2, 3, 5, 6].blendAt(2.2) == 5.2                            // interpolated value between indices
+[-1, 4].collect { | i | [2, 3, 5, 6].clipAt(i) } == [2, 6]  // clamp index to valid range
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
@@ -169,6 +176,15 @@ Association.new('x', 1).class == Association                // associate key wit
 ('x' -> 1).key == 'x'                                       // key (left hand side) of association
 ('x' -> 1).value == 1                                       // value (right hand side) of association
 ((0 -> 1) == (0 -> 2)) == true                              // equality for associations is based on key only
+
+'Bag'
+Bag(4).class == Bag						                    // Bag, multi-set, counted-set
+[1, 2, 3, 3].asBag.contents.isDictionary					// the contents of a Bag is a Dictionary
+[1, 2, 3, 3].asBag.itemCount(3) == 2						// number of occurences of indicated item
+[1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1				// remove one occurence of indicated item from Bag
+[1, 2, 3, 3].asBag.includes(3)                              // predicate to determine if a Bag contains an item
+var n = 0; [1, 3, 2].asBag.do { |i| n = n.max(i) }; n == 3  // iterate over items in bag
+var n = 0; "xx".asBag.countsDo { |i c| n = n.max(c) }; n == 2 // iterate over items & counts in bag
 
 'Bitwise Manipulation'
 2.bitAnd(3) == 2                                            // and bits
@@ -266,6 +282,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, 2, 3, 4, 5].choose <= 5                                 // random element of collection
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
+(1 .. 4).powerset.size == 16								// set of all subsets (size is 2 ** n)
 
 'Comments'
 "until end of line comment".isString                        // until end of line comment
@@ -341,6 +358,8 @@ d.occurrencesOf(3) == 1                                     // number of occuren
 { d.removeAt('x') == 1; d.add('x' -> 1) }.value.size == 3   // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort { | i j | i <= j }.asArray == (1 .. 3)        // list of values at dictionary
+var d = (c: 1, b: 2, a: 3); d.order == ['a', 'b', 'c']		// sorted array of keys
+var d = (c: 1, b: 2, a: 3); d.atAll(d.order) == [3, 2, 1]
 
 'Environment'
 Environment.superclass == IdentityDictionary                // environments are dictionaries
@@ -587,6 +606,7 @@ var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place 
 [1, 2, 3, 4, 5].keep(3) == [1, 2, 3]                        // keep first n items
 [1, 2, 3, 4, 5].drop(2) == [3, 4, 5]                        // discard first n items
 [1, 3, 5, 7, 9].isSeries == true                            // is array an arithmetic series
+[1, 3, 5, 7, 9].isSeries(2) == true                         // is array an arithmetic series (by)
 [1, 3, 5, 7, 9].resamp0(9) == [1, 3, 3, 5, 5, 7, 7, 9, 9]   // resampler
 [1, 3, 5, 7, 9].resamp1(9) == [1, 2, 3, 4, 5, 6, 7, 8, 9]   // linear interpolating resampler
 [1, 3, 5, 7, 9].copyRange(2, 4) == [5, 7, 9]                // copy part of collection
@@ -627,6 +647,11 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 [2, 3].asSet.isSubsetOf([1, 2, 3, 4].asSet) == true         // subset of
 [1, 1, 2, 2, 3, 3].asSet.asArray.size == 3                  // remove duplicates from array
 [1, 1, 2, 2, 3, 3].asSet.asArray.sort == [1, 2, 3]          // remove duplicates from array and sort
+
+'SortedList'
+[2, 1, 5, 3].asSortedList.asArray == [1, 2, 3, 5]           // sorted list from array, to array
+[1, 2, 5, 3].asSortedList.add(4).asArray == (1 .. 5)        // add element to a sorted list
+[1, 2, 5, 3].asSortedList.addAll([4, 6]).asArray == (1 .. 6)// add all elements of a collection to a sorted list
 
 'String'
 "quoted string".isString                                    // quoted string

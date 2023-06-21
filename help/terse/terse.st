@@ -125,6 +125,10 @@ Array isVariable = true "array is indexable"
 (#x -> 1) printString = '#x->1'
 (#+ -> 1) printString = '#+->1'
 
+'Bag'
+#(1 1 1 2 2 3) asBag class = Bag
+#(1 1 1 2 2 3) asBag sortedCounts min = (1 -> 3)
+
 'Behaviour'
 Float selectors size >= 50 "array of selectors implemented at class"
 Float allSelectors size >= 300 "get all selectors an object responds to"
