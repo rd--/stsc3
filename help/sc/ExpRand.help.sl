@@ -11,3 +11,6 @@ var ampl = { ExpRand(0.05, 0.10) } ! n;
 var o = SinOsc(freq, 0) * ampl;
 Splay2(o)
 ```
+* * *
+
+See also: _TExpRand_, _Rand_
