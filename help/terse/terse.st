@@ -126,8 +126,13 @@ Array isVariable = true "array is indexable"
 (#+ -> 1) printString = '#+->1'
 
 'Bag'
-#(1 1 1 2 2 3) asBag class = Bag
-#(1 1 1 2 2 3) asBag sortedCounts min = (1 -> 3)
+#(1 2 3 1 2 1) asBag class = Bag
+#(1 2 3 1 2 1) asBag sortedCounts min = (1 -> 3)
+#(1 2 3 1 2 1) asBag sortedCounts max = (3 -> 1)
+#(1 2 3 1 2 1) asBag sortedCounts asArray = {3 -> 1. 2 -> 2. 1 -> 3}
+#(1 2 3 1 3 1) asBag sortedCounts asArray = {3 -> 1. 2 -> 3. 1 -> 2}
+#(1 2 3 1 2 1) asBag sortedElements = {1 -> 3. 2 -> 2. 3 -> 1}
+#(1 2 3 1 3 1) asBag sortedElements = {1 -> 3. 2 -> 1. 3 -> 2}
 
 'Behaviour'
 Float selectors size >= 50 "array of selectors implemented at class"
