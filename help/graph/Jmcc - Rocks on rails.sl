@@ -1,7 +1,7 @@
 ;; rocks on rails ; jmcc ; graph variant ; requires=TLinRand
 var p = 20; (* number of partials *)
 var n = 4; (* number of overlapping events *)
-OverlapTexture({ :tr |
+{ :tr |
 	EqPan2(
 		DynRingzBank( (* p resonant modes *)
 			Resonz(
@@ -15,4 +15,4 @@ OverlapTexture({ :tr |
 		),
 		Ln(TRand(-1, 1, tr), TRand(-1, 1, tr), 8) (* sweep pan *)
 	)
-}, 2, 3, n) * 0.5
+}.OverlapTexture(2, 3, n) * 0.5

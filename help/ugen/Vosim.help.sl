@@ -5,7 +5,7 @@ Splay2(Vosim(Impulse(110 + [-1, 0, 1], 0), MouseX([110, 220, 440], 880, 1, 0.2),
 Splay2(Vosim(Impulse(110 + [-1, 0, 1], 0), LinExp(LfNoise2([0.35, 0.25, 0.15]), -1, 1, [110, 220, 440], 880), [3, 5, 7], [0.77, 0.88, 0.99])) * 0.1
 
 ;; Vosim
-OverlapTexture({ :tr |
+{ :tr |
 	{
 		Vosim(
 			Impulse(110 + TRand(-1, 1, tr), 0),
@@ -14,7 +14,7 @@ OverlapTexture({ :tr |
 			TChoose(tr, [0.77, 0.88, 0.99])
 		)
 	} ! 2
-}, 3, 5, 3) * 0.1
+}.OverlapTexture(3, 5, 3) * 0.1
 
 ;; Vosim
 var p = TRand(0, 1, Impulse([3, 7], 0));

@@ -1,5 +1,5 @@
 ;; swept resonant noise (jmcc) #2 ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var p = 10;
 	var n = WhiteNoise() * 0.007;
 	var m = MulAdd(
@@ -16,4 +16,4 @@ OverlapTexture({ :tr |
 			{ 0.5 + TRand(0, 2, tr) } ! p
 		)
 	} ! 2
-}, 4, 4, 5) * 0.25
+}.OverlapTexture(4, 4, 5) * 0.25

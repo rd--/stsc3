@@ -56,7 +56,7 @@ With random frequencies input:
 
 Texture of variation of above:
 
-	OverlapTexture({ :tr |
+	{ :tr |
 		var z = Decay(
 			Impulse(4, 0),
 			TRand(0.03, 0.09, tr)
@@ -68,5 +68,5 @@ Texture of variation of above:
 			{ TRand(0.1, 2, tr) } ! 12
 		);
 		EqPan2(r, TRand(-1, 1, tr))
-	}, 8, 3, 4)
+	}.OverlapTexture(8, 3, 4)
 

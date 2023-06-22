@@ -1,5 +1,5 @@
 ;; dragtokeyboard (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/
-OverlapTexture({ :tr |
+{ :tr |
 	var sr = TExpRand(300, 3000, tr) + [-0.6, 0.6];
 	var p1 = LfPulse(TExpRand(0.1, 1, tr), 0, 0.3) * 0.2 + 0.02;
 	var p2 = LfPulse(TExpRand(0.1, 12, tr), 0, 0.4) * 0.2 + 0.2;
@@ -10,4 +10,4 @@ OverlapTexture({ :tr |
 		sr * p3,
 		0.1
 	)
-}, 4, 4, 2)
+}.OverlapTexture(4, 4, 2)

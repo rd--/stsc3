@@ -1,5 +1,5 @@
 ;; data space (jmcc) #2 ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var dt = TRand(0, 0.25, tr) + 0.1;
 	var osc = { :n :m |
 		var e = MulAdd(
@@ -16,4 +16,4 @@ OverlapTexture({ :tr |
 		dt,
 		3
 	) * 0.04
-}, 6, 1, 4)
+}.OverlapTexture(6, 1, 4)

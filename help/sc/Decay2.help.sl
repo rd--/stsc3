@@ -1,6 +1,6 @@
 # Decay2 -- exponential decay
 
-_Decay2(in, attackTime, decayTime)_
+_Decay2(in, attackTime=0.01, decayTime=1)_
 
 _Decay_ has a very sharp attack and can produce clicks. _Decay2_ rounds off the attack by subtracting one Decay from another. _Decay2(in, attackTime, decayTime)_ is equivalent to _Decay(in, decayTime) - Decay(in, attackTime)_.
 

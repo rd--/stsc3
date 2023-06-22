@@ -1,6 +1,6 @@
 ;; https://recarteblog.wordpress.com/2021/05/05/gongfm_sc/ ; or ; texture (rd)
 var dur = 7;
-OverlapTexture({ :tr |
+{ :tr |
 	var freq = [67, 70, 74].MidiCps;
 	var ratio3 = TRand(0.34, 1.35, tr);
 	var op3 = [
@@ -30,4 +30,4 @@ OverlapTexture({ :tr |
 		TRand(-0.75, 0.75, tr),
 		0.7
 	)
-}, dur, 0, 2)
+}.OverlapTexture(dur, 0, 2)

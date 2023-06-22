@@ -1,6 +1,6 @@
 # Latch -- sample and hold
 
-_Latch(in, trig)_
+_Latch(in=0, trig=0)_
 
 Holds input signal value when triggered.
 

@@ -1,5 +1,5 @@
 ;; pond life (jmcc) #1 ; graph rewrite ; requires=TLinRand
-OverlapTexture({ :tr |
+{ :tr |
 	var f = MulAdd(
 		SinOsc(TRand(20, 50, tr), 0),
 		TRand(100, 400, tr),
@@ -10,4 +10,4 @@ OverlapTexture({ :tr |
 		SinOsc(f, 0) * e * 0.04,
 		TRand(-1, 1, tr)
 	)
-}, 8, 8, 4)
+}.OverlapTexture(8, 8, 4)

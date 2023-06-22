@@ -1,5 +1,5 @@
 ;; zizle (jmcc) #SC3d1.5 ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var amp = { :f |
 		SinOsc(
 			f * [TRand(0.7, 1.3, tr), 1],
@@ -18,4 +18,4 @@ OverlapTexture({ :tr |
 		].product,
 		TRand(-1, 1, tr)
 	)
-}, 4, 4, 12)
+}.OverlapTexture(4, 4, 12)

@@ -1,5 +1,5 @@
 ;; https://twitter.com/HernaniVillase/status/517517924236795905 ; rewrite (rd)
-OverlapTexture({ :tr |
+{ :tr |
 	var f = TRand(97, 101, tr);
 	var o = LfTri(
 		{ TRand(0, 200, tr) + 216 } ! 8 + f,
@@ -10,4 +10,4 @@ OverlapTexture({ :tr |
 		0
 	) * 0.1 + 0.01;
 	(o * e).Splay2
-}, 3, 5, 3)
+}.OverlapTexture(3, 5, 3)

@@ -1,5 +1,5 @@
 ;; wind metals (jmcc) ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var n = 6;
 	var exc = [
 		{ BrownNoise() } ! 2,
@@ -15,4 +15,4 @@ OverlapTexture({ :tr |
 	var dt = { TRand(0.1, 2, tr) } ! n;
 	var s = RingzBank(exc, f, [1], dt) * 0.1;
 	s.SoftClip
-}, 5, 2, 12) * 0.1
+}.OverlapTexture(5, 2, 12) * 0.1

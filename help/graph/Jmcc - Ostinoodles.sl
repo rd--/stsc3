@@ -1,5 +1,5 @@
-;; jmcc ; ostinoodles ; requires=TScramble
-var z = OverlapTexture({ :tr |
+;; jmcc ; ostinoodles ; requires=TScramble ; requires=kr
+var z = { :tr |
 	var Sequencer = { :s :tr |
 		Demand(tr, 0, Dseq(inf, s))
 	};
@@ -16,7 +16,7 @@ var z = OverlapTexture({ :tr |
 	var freq = Sequencer(seq.MidiCps, trig);
 	var sig = LfTri(freq.kr, 0) * Decay2(trig, 0.004, 0.3).kr * 0.1;
 	EqPan2(sig, TRand(-1, 1, tr))
-}, 6, 3, 6);
+}.OverlapTexture(6, 3, 6);
 6.timesRepeat {
 	z := AllpassN(z, 0.04, { Rand(0, 0.04) } ! 2, 16)
 };

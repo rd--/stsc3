@@ -1,5 +1,5 @@
 ;; plucked strings (jmcc)
-OverlapTexture({ :tr |
+{ :tr |
 	var i = {
 		var s0 = Impulse(TRand(2, 2.2, tr), 0) * 0.3;
 		var s1 = Dust(0.5) * 0.3;
@@ -14,4 +14,4 @@ OverlapTexture({ :tr |
 		var t = Decay(i(), 0.1) * PinkNoise() * 0.1;
 		EqPan2(CombL(t, dt, dt, 4), TRand(-1, 1, tr))
 	} !+ 5
-}, 7, 5, 3)
+}.OverlapTexture(7, 5, 3)

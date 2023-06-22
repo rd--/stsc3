@@ -49,7 +49,7 @@ Parallel filters with frequency ramps:
 
 Texture of above:
 
-	OverlapTexture({ :tr |
+	{ :tr |
 		var exciter = WhiteNoise() * 0.001;
 		{
 			Ringz(
@@ -63,5 +63,5 @@ Texture of above:
 				0.5
 			)
 		} !^ 10
-	}, 5, 10, 3)
+	}.OverlapTexture(5, 10, 3)
 

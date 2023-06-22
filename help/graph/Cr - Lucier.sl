@@ -1,6 +1,6 @@
 ;; lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html
 var bus = 20;
-OverlapTexture({ :tr |
+{ :tr |
 	var freq = TRand(56, 64, tr);
 	var blocksize = 1 / ControlRate();
 	var mkDt = { :f | 1 / f - blocksize };
@@ -31,7 +31,7 @@ OverlapTexture({ :tr |
 	var outR = pk2L + pk2R;
 	bus := bus + 1;
 	[outL, outR] <! lOut <! drv
-}, 1, 5, 3) * 0.25
+}.OverlapTexture(1, 5, 3) * 0.25
 
 (* ---- notes.md
 The OverlapTexture variant cannot use LocalIn & LocalOut since there can only be one pair per graph.

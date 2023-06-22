@@ -24,7 +24,7 @@ There are many examples of OverlapTexture in the examples files.
 	var lfoFreq = 6;
 	var lfo = LfNoise0(lfoFreq) * 1000 + 1200;
 	var left = Rlpf(
-		OverlapTexture({ :tr |
+		{ :tr |
 			var f = TChoose(
 				tr,
 				[
@@ -36,7 +36,7 @@ There are many examples of OverlapTexture in the examples files.
 				LfPulse(f, 0, 0.2),
 				LfPulse(2 * f + TRand(-0.5, 0.5, tr), 0, 0.2)
 			].sum
-		}, 4, 2, 4) * 0.02,
+		}.OverlapTexture(4, 2, 4) * 0.02,
 		lfo,
 		MouseX(0.2, 0.02, 1, 0.2)
 	);

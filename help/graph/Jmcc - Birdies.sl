@@ -1,5 +1,5 @@
 ;; birdies (jmcc) #6
-OverlapTexture({ :tr |
+{ :tr |
 	var p1 = {
 		LfPulse(
 			TRand(0.4, 1.4, tr),
@@ -19,4 +19,4 @@ OverlapTexture({ :tr |
 		SinOsc(freq, 0) * amp,
 		TRand(-1, 1, tr)
 	)
-}, 7, 4, 4)
+}.OverlapTexture(7, 4, 4)

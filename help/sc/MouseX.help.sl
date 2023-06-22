@@ -1,6 +1,6 @@
 # MouseX -- cursor unit generator
 
-_MouseX(minval, maxval, warp, lag)_
+_MouseX(minval=0, maxval=1, warp=0, lag=0.2)_
 
 - minval, maxval: range between left and right end of screen
 - warp: mapping curve. 0 is linear, 1 is exponential (for freq or times e.g)

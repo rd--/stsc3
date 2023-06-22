@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-5eo (bz) ; bohlen pierce scale ; graph edit ; requires=LfBrownNoise1
-OverlapTexture({ :tr |
+{ :tr |
 	var dev = TRand(0.2, 0.4, tr);
 	var root = TChoose(tr, [30, 32, 35, 37]);
 	var buffer = [
@@ -15,4 +15,4 @@ OverlapTexture({ :tr |
 		var env = (LfNoise2(4) * 0.4 + 0.6) ** 2;
 		MoogLadder(Saw(freq) * env, LfNoise2(1) * 1700 + 2200, 0.3)
 	} !^ 8 * 0.5
-}, 4, 4, 4)
+}.OverlapTexture(4, 4, 4)

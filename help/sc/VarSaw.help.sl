@@ -1,6 +1,6 @@
 # VarSaw -- variable duty saw
 
-_VarSaw(freq, iphase,width)_
+_VarSaw(freq=440, iphase=0, width=0.5)_
 
 - freq: frequency in Hertz
 - iphase: initial phase offset in cycles (0 .. 1)
@@ -9,17 +9,17 @@ _VarSaw(freq, iphase,width)_
 Modulate frequency and width:
 
 	VarSaw(
-		freq: LfPulse([3, 3.03], 0, 0.3) * 200 + 200,
-		iphase: 0,
-		width: LfTri(1, 0) * 0.5 + 0.5
+		LfPulse([3, 3.03], 0, 0.3) * 200 + 200,
+		0,
+		LfTri(1, 0) * 0.5 + 0.5
 	) * 0.1
 
 Same but with static width:
 
 	VarSaw(
-		freq: LfPulse([3, 3.03], 0, 0.3) * 200 + 200,
-		iphase: 0,
-		width: 0.2
+		LfPulse([3, 3.03], 0, 0.3) * 200 + 200,
+		0,
+		0.2
 	) * 0.1
 
 Compare VarSaw and LfPulse:

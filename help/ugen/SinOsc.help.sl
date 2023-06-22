@@ -17,7 +17,7 @@ var sig = SinOsc(LinExp(lfo, 0, 1, 100, 500), 0) + SinOsc(LinExp(lfo, 0, 1, 1000
 sig * 0.1
 
 ;; SinOsc ; https://scsynth.org/t/5169/5 (dietcv)
-OverlapTexture({ :tr |
+{ :tr |
 	var syncEgTop = TRand(8, 20, tr);
 	var syncRatio = 2;
 	var syncDcy = TRand(0.5, 2, tr);
@@ -29,7 +29,7 @@ OverlapTexture({ :tr |
 	var synced = SinOsc(0, (phase % 1) * 2 * pi).Squared;
 	var sig = synced * in * gainEnv;
 	sig.Splay2 * 0.2
-}, 2, 0, 2)
+}.OverlapTexture(2, 0, 2)
 
 ;; https://scsynth.org/t/6264/2
 var numPartials = 64;

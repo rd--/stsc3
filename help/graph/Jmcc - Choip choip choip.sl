@@ -1,6 +1,6 @@
 ;; jmcc ; choip choip choip
 var dur = 12;
-var z = OverlapTexture({ :tr |
+var z = { :tr |
 	var i = Impulse(
 		TxLine(
 			TExpRand(1, 30, tr),
@@ -25,7 +25,7 @@ var z = OverlapTexture({ :tr |
 	);
 	var s = Decay2(i * l, 0.01, 0.2) * o;
 	EqPan2(s, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), dur, tr))
-}, dur - 2, 1, 8);
+}.OverlapTexture(dur - 2, 1, 8);
 4.timesRepeat {
 	z := AllpassN(z, 0.1, { Rand(0, 0.05) } ! 2, 4)
 };

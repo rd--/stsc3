@@ -86,10 +86,10 @@ var exc3 = WhiteNoise() * Decay2(trig3, 0.005, 0.05);
 var s = RingzBank(exc3, { Rand(3500, 4000) } ! 4, nil, { Rand(0.05, 0.2) } ! 4).Distort * 0.1;
 ;; (* whine *)
 var exc4 = { GrayNoise() } ! 2 * 0.0007;
-var y = OverlapTexture({ :tr |
+var y = { :tr |
 	var env = SinOsc(TRand(1, 6, tr), { TRand(0, 2 * pi, tr) } ! 2) * 0.5 + 0.5;
 	DynRingzBank(exc4, { TiRand(200, 2500, tr) } ! 4, nil, { TRand(0.2, 0.8, tr) } ! 4) * env
-}, 4, 2, 2).scaleNeg(MouseX(-1, 1, 0, 0.2));
+}.OverlapTexture(4, 2, 2).scaleNeg(MouseX(-1, 1, 0, 0.2));
 var snd = x + (y * 0.5) + s + r;
 6.timesRepeat {
 	snd := AllpassN(Lpz2(snd), 0.03, { Rand(0, 0.03) } ! 2, 5)

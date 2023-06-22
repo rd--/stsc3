@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-5cZ ; bz (bernardo zitto) ; graph edit
-OverlapTexture({ :tr |
+{ :tr |
 	var n = 16;
 	var sig = {
 		var q = TRand(TRand(0.1, 0.5, tr), TRand(0.1, 0.5, tr), tr);
@@ -10,4 +10,4 @@ OverlapTexture({ :tr |
 			q) / q.Sqrt
 	} ! n;
 	((sig * TRand(1, 2, tr)).Tanh * 0.5).Splay2
-}, 4, 4, 4)
+}.OverlapTexture(4, 4, 4)

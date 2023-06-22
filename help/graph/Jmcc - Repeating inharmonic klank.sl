@@ -1,7 +1,7 @@
 ;; repeating inharmonic klank ; jmcc #6 ; graph rewrite
 var n = 4;
 var p = 8;
-OverlapTexture({ :tr |
+{ :tr |
 	var s = Decay(Dust(0.8) * 0.004, 3.4) * LfSaw(TRand(0, 40, tr), 0);
 	{
 		RingzBank(
@@ -11,4 +11,4 @@ OverlapTexture({ :tr |
 			{ TRand(0.4, 4.4, tr) } ! p
 		)
 	} ! 2
-}, 8, 8, n)
+}.OverlapTexture(8, 8, n)

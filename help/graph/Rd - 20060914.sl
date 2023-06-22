@@ -1,5 +1,5 @@
 ;; 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
-OverlapTexture({ :tr |
+{ :tr |
 	var chrd = { :m |
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
@@ -18,4 +18,4 @@ OverlapTexture({ :tr |
 	}.concatenation;
 	var chd = { TChoose(tr, mnn) } ! 6;
 	{ chrd(chd) } !+ 7
-}, 21, 0, 3)
+}.OverlapTexture(21, 0, 3)

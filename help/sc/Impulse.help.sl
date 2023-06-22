@@ -1,6 +1,6 @@
 # Impulse -- impulse oscillator
 
-_Impulse(freq, phase)_
+_Impulse(freq=440, phase=0)_
 
 Outputs non band limited single sample impulses.
 

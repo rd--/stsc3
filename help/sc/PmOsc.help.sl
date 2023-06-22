@@ -1,13 +1,13 @@
 # PmOsc -- phase modulation oscillator pair
 
-_PmOsc(carfreq, modfreq, index, modphase)_
+_PmOsc(carfreq, modfreq, index=0, modphase=0)_
 
 Phase modulation sine oscillator pair.
 
 - carfreq: carrier frequency in cycles per second.
 - modfreq: modulator frequency in cycles per second.
 - index: modulation index in radians.
-- modphase: a modulation input for the modulator's phase in radians
+- modphase: a modulation input for the modulators phase in radians
 
 Modulate carfreq:
 
@@ -23,7 +23,7 @@ Modulate index:
 
 Texture:
 
-	OverlapTexture({ :tr |
+	{ :tr |
 		LinPan2(
 			PmOsc(
 				TRand(20, 2000, tr),
@@ -34,4 +34,4 @@ Texture:
 			TRand(-1, 1, tr),
 			0.1
 		)
-	}, 2, 5, 4)
+	}.OverlapTexture(2, 5, 4)

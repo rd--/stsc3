@@ -1,5 +1,5 @@
 ;; https://sccode.org/1-4Q6 ; f0 ; risset ; requires=TLinRand
-OverlapTexture({ :tr |
+{ :tr |
 	var pan = TRand(-1, 1, tr);
 	var freq = TRand(90, 2000, tr);
 	var amp = TRand(0.1, 0.2, tr);
@@ -10,7 +10,7 @@ OverlapTexture({ :tr |
 	var detuneArray = [0, 1, 0, 1.7, 0, 0, 0, 0, 0, 0, 0];
 	var src = (1 .. 11).collect { :i |
 		var env = Perc(tr, 0.005, dur * durArray[i], -4.5) * ampArray[i];
-		SinOsc(freq * freqArray[i] + detuneArray[i], 0) * amp * env;
+		SinOsc(freq * freqArray[i] + detuneArray[i], 0) * amp * env
 	};
 	EqPan2(src.sum, pan)
-}, 9, 0, 7) * 0.1
+}.OverlapTexture(9, 0, 7) * 0.1

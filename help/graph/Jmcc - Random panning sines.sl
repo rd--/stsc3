@@ -1,5 +1,5 @@
 ;; random panning sines (jmcc) #4
-OverlapTexture({ :tr |
+{ :tr |
 	var n = 8;
 	{
 		var osc = SinOsc(80 + TRand(0, 2000, tr), 0);
@@ -7,4 +7,4 @@ OverlapTexture({ :tr |
 		var amp = LfNoise1(0.4 + TRand(0, 0.8, tr)) * 0.4 + 0.5;
 		EqPan2(osc, pos) * amp
 	} !+ n * 0.1 / n
-}, 8, 8, 2)
+}.OverlapTexture(8, 8, 2)

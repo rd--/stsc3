@@ -1,5 +1,5 @@
 ;; deep trip (jmcc) #9 ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var f = (LfNoise1(TRand(0, 0.3, tr)) * 60 + 70).MidiCps;
 	var a = [
 			LfNoise2(f * TRand(0, 0.5, tr)),
@@ -11,4 +11,4 @@ OverlapTexture({ :tr |
 		CombN(s, 0.5, { TRand(0, 0.2, tr) + 0.3 } ! 2, 20)
 	};
 	c !+ 2 + s
-}, 12, 4, 4)
+}.OverlapTexture(12, 4, 4)

@@ -9,7 +9,7 @@ var a = [
 	[1, 1, 1, 1, 1, 0, 0, 0],
 	[1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
-OverlapTexture({ :tr |
+{ :tr |
 	var t = Impulse(8, 0);
 	var i = Demand(t, 0, Dseq(inf, TScramble(tr, TChoose(tr, a)))) * t;
 	var d = TRand(0.05, 0.5, tr);
@@ -24,4 +24,4 @@ OverlapTexture({ :tr |
 	);
 	var e = Decay2(i, 0.004, d);
 	EqPan2(f, LfNoise1(TRand(0, 1, tr))) * e
-}, 12, 3, 6) * 0.2
+}.OverlapTexture(12, 3, 6) * 0.2

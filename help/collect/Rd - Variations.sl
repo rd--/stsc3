@@ -39,7 +39,7 @@ var b = TRand(0, 1, Dust(8));
 (n !+ 3).Clip2(b) * 0.25
 
 ;; 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
-OverlapTexture({ :tr |
+{ :tr |
 	var chrd = { :m |
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
@@ -55,7 +55,7 @@ OverlapTexture({ :tr |
 	var mnn = scale.collect { :n | octaves.collect { :o | n + (o * 12) } }.concatenation;
 	var chd = { TChoose(tr, mnn) } ! 6;
 	{ chrd(chd) } !+ 7
-}, 21, 0, 3)
+}.OverlapTexture(21, 0, 3)
 
 ;; 20060916 ; rd
 var mkRead = { :l :t |

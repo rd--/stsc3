@@ -1,5 +1,5 @@
 ;; bowed string (jmcc) ; texture ; graph rewrite
-OverlapTexture({ :tr |
+{ :tr |
 	var root = 5;
 	var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 	var oct = [24, 36, 48, 60, 72, 84];
@@ -8,9 +8,9 @@ OverlapTexture({ :tr |
 	var x = { BrownNoise() } ! 2 * 0.007 * e;
 	var k = DynRingzBank(
 		x,
-		12.series(f, f),
-		12.geom(1, TRand(0.7, 0.9, tr)),
+		12.arithmeticSeries(f, f),
+		12.geometricSeries(1, TRand(0.7, 0.9, tr)),
 		{ TRand(1, 3, tr) } ! 12
 	);
 	Pan2(k.SoftClip, TRand(-1, 1, tr), 0.1)
-}, 5, 2, 9)
+}.OverlapTexture(5, 2, 9)

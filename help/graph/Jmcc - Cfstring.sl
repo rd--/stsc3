@@ -1,6 +1,6 @@
 ;; cfstring1 (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/
 var nc = 2;
-OverlapTexture({ :tr |
+{ :tr |
 	var dgr = DegreeToKey(
 		[0, 2, 4, 5, 7, 9, 11].asLocalBuf,
 		TRand(0, 12, tr),
@@ -19,4 +19,4 @@ OverlapTexture({ :tr |
 	var eg = Decay2(tr, 0.5, 1);
 	var out = eg * Rlpf(osc.Distort * 0.2, fc, 0.1);
 	PanAz(nc, out, [pan, pan + 0.3], 1, 2, 0.5).sum
-}, 2, 0, 10)
+}.OverlapTexture(2, 0, 10)
