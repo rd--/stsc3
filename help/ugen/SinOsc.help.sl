@@ -105,6 +105,10 @@ SinOsc(0, ph) * 0.1
 ;; SinOsc ; multiple channel expansion
 SinOsc([220, 221], 0) * 0.1
 
+;; SinOsc ; multiple channel expansion ; named variable
+var freq = [220, 221];
+SinOsc(freq, 0) * 0.1
+
 ;; SinOsc ; mix to two channel
 SinOsc([220, 221, 440, 441], 0).Splay2 * 0.1
 

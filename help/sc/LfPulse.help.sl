@@ -1,6 +1,6 @@
 # LfPulse -- pulse oscillator
 
-_LfPulse(freq, phase, width)_
+_LfPulse(freq=440, phase=0, width=0.5)_
 
 A non-band-limited pulse oscillator. Outputs a high value of one and a low value of zero.
 

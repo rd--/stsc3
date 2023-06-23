@@ -2,7 +2,7 @@
 
 Attenuates or boosts a frequency band.
 
-_MidEq(in, freq, rq, db)_
+_MidEq(in, freq=440, rq=1, db=0)_
 
 - in: the input signal
 - freq: center frequency of the band in hertz

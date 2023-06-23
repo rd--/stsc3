@@ -1,6 +1,6 @@
 # Pulse -- band limited pulse wave
 
-_Pulse(kfreq, kwidth)_
+_Pulse(kfreq=440, kwidth=0.5)_
 
 Band limited pulse wave generator with pulse width modulation.
 
