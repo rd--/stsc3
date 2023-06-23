@@ -1,6 +1,6 @@
 # LfSaw -- sawtooth oscillator
 
-_LfSaw(freq, phase)_
+_LfSaw(freq=440, phase=0)_
 
 A non-band-limited sawtooth oscillator. Output ranges from -1 to +1.
 

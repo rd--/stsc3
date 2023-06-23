@@ -1,6 +1,6 @@
 # DelayC -- delay line
 
-_DelayC(in, maxdelaytime, delaytime)_
+_DelayC(in, maxdelaytime=0.2, delaytime=0.2)_
 
 Simple delay line. DelayN uses no interpolation, DelayL uses linear interpolation, DelayA uses all pass interpolation.
 

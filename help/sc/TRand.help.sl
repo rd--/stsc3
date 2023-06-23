@@ -1,6 +1,6 @@
 # TRand -- triggered random number generator
 
-_TRand(lo, hi, trig)_
+_TRand(lo=0, hi=1, trig=0)_
 
 Generates a random float value in uniform distribution from lo to hi each time the trig signal changes from nonpositive to positive values
 

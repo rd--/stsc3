@@ -1,6 +1,6 @@
 # LfTri -- triangle wave oscillator
 
-_LfTri(freq, phase)_
+_LfTri(freq=440, phase=0)_
 
 A non-band-limited triangle wave oscillator. Output ranges from -1 to +1.
 

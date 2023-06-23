@@ -1,6 +1,6 @@
 # Lag -- exponential lag
 
-_Lag(in=0, lagTime=0.1)_
+_Lag(in, lagTime=0.1)_
 
 This is essentially the same as OnePole except that instead of supplying the coefficient directly, it is caculated from a 60 dB lag time. This is the time required for the filter to converge to within 0.01% of a value. This is useful for smoothing out control signals.
 

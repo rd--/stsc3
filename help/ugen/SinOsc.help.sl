@@ -168,6 +168,16 @@ SinOsc(freq, phase) * amp
 | freq = 440, phase = 0, amp = 0.1; |
 SinOsc(freq, phase) * amp
 
+;; SinOsc
+var n = 16;
+{
+	var amp = 0.Max(SinOsc(ExpRand(0.1, 1), Rand(0, 2 * pi))) / n / 2;
+	EqPan2(
+		SinOsc(ExpRand(100, 1000), 0) * amp,
+		Rand(-1, 1)
+	)
+} !+ n
+
 ;; ---- SinOsc ; mce ; two out ; each single channel ; hence mono
 SinOsc([[440], [441]], 0).sum * 0.1
 

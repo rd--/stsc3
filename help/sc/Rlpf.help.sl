@@ -1,6 +1,6 @@
 # Rlpf -- resonant low pass filter
 
-_Rlpf(in, freq, rq)_
+_Rlpf(in, freq=440, rq=1)_
 
 A resonant low pass filter.
 
