@@ -324,6 +324,7 @@ $ .isSpace                                                  // character constan
 'Conversion'
 1.0.asInteger == 1                                          // convert number to integer (truncates in Squeak)
 1.5.asFraction == [3, 2]                                    // convert number to fraction
+pi.asFraction(10, false) == [22, 7]							// convert number to fraction (with maximum denominator)
 3.asFloat == 3.0                                            // convert number to float
 97.asAscii == $a                                            // convert integer to character
 $a.ascii == 97                                              // convert character to integer

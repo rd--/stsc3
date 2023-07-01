@@ -127,6 +127,8 @@ Array isVariable = true "array is indexable"
 
 'Bag'
 #(1 2 3 1 2 1) asBag class = Bag
+#(1 2 3 1 2 1) asBag sorted = #(1 1 1 2 2 3)
+#(1 2 3 1 3 1) asBag sorted = #(1 1 1 2 3 3)
 #(1 2 3 1 2 1) asBag sortedCounts min = (1 -> 3)
 #(1 2 3 1 2 1) asBag sortedCounts max = (3 -> 1)
 #(1 2 3 1 2 1) asBag sortedCounts asArray = {3 -> 1. 2 -> 2. 1 -> 3}

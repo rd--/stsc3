@@ -10,4 +10,3 @@ When _aProcedure_ is evaluated, with the current logical time as parameter, the 
 * * *
 
 See also: _repeatEvery_, _scheduleInjecting_, _Clock_
-
