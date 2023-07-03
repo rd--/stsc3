@@ -24,7 +24,7 @@ SmallInteger = SmallInteger (
 		^self zeroDivide
 	].
 	aNumber isSmallInteger ifTrue: [
-		^ (Fraction numerator: self denominator: aNumber) reduce
+		^ self / aNumber asFloat "(Fraction numerator: self denominator: aNumber) reduce"
 	] ifFalse: [
 		^ aNumber adaptToInteger: self andSend: #/
 	]

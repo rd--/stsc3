@@ -59,4 +59,8 @@ to: aNumber collect: aBlock = (
 	^(self to: aNumber) collect: aBlock
 )
 
+upOrDownTo: aNumber = (
+	^self to: aNumber by: ((aNumber > self) ifTrue: [ 1 ] ifFalse: [ 2 ])
+)
+
 )

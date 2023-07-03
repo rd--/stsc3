@@ -186,7 +186,7 @@ scIntervalRange :: ScExpression -> ScExpression -> ScPrimary
 scIntervalRange from to =
   scPrimaryKeywordMessageSend
   (ScPrimaryExpression from)
-  [("to", ScBasicExpression (ScPrimaryExpression to) Nothing)]
+  [("upOrDownTo", ScBasicExpression (ScPrimaryExpression to) Nothing)]
 
 scArrayRange :: ScExpression -> ScExpression -> ScPrimary
 scArrayRange from to = scBasicExpressionToPrimary (scConstructDotMessageSend (scIntervalRange from to) "asArray" [])

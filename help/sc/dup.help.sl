@@ -1,3 +1,3 @@
 # dup -- duplicate
 
-See _!_
+See also: !
