@@ -14,8 +14,19 @@ var f = Demand(t, 0, Drand(inf, (q + 12 ++ q + 33).MidiCps));
 PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0) ! 2
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
-var snd = Hpf(Pulse([[0.1, 0.11], [0.12, 0.13]], 0.6) * 0.005, 99);
-Hpf(MidEq(Limiter(GVerb(snd, [[1, 5 / 4], [1.5, 2]], 99, 0.5, 0.5, 15, 1, 0,7, 0.5) * 300, 1, 0.01) * 0.1, 9000, 0.9, 9), 200).sum.transpose.sum
+var snd = Hpf(
+	Pulse([[0.1, 0.11], [0.12, 0.13]], 0.6) * 0.005,
+	99
+);
+Hpf(
+	MidEq(
+		Limiter(GVerb(snd, [[1, 5 / 4], [1.5, 2]], 99, 0.5, 0.5, 15, 1, 0,7, 0.5) * 300, 1, 0.01) * 0.1,
+		9000,
+		0.9,
+		9
+	),
+	200
+).sum.transpose.sum
 
 ;; http://earslap.com/weblog/music-release-laconicism.html ; wait
 var f = LocalIn(2, 0).Tanh;
@@ -49,6 +60,7 @@ var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
 AllpassL(SinOsc(55,0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.004]), 2)
 
 ;; http://earslap.com/weblog/music-release-laconicism.html
+var i = { :freq | Impulse(freq, 0) };
 var ph = Integrator(Integrator(i(64).Lag(LfNoise1(2 ! 2)  * 2 + 2) * 99, 0.9), 0.99).Fold2(pi);
 SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph)
 

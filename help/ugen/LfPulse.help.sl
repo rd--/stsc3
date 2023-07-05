@@ -19,17 +19,6 @@ LfPulse(XLn(1, 200, 10), 0, 0.2) * SinOsc(440, 0) * 0.1
 ;; LfPulse ; used as both oscillator and lfo
 LfPulse(LfPulse(3, 0, 0.3) * 200 + 200, 0, 0.2) * 0.05
 
-;; LfPulse ; jmcc ; process
-{
-	var p1 = LfPulse(ExpRand(0.1, 1), 0, 0.3) * 0.2 + 0.02;
-	var in = LfSaw([21000, 21001], 0) * p1;
-	var sr = ExpRand(300, 3000) + [-0.6, 0.6];
-	var p2 = LfPulse(sr, 0, MouseY(0.01, 0.99, 0, 0.2));
-	var p3 = LfPulse(ExpRand(0.1,12), 0, 0.7) * 0.2;
-	var p4 = LfPulse(ExpRand(0.1,12), 0, 0.4) * 0.2 + 0.2 + p3;
-	Rlpf(in * p2, sr * p4, 0.1)
-}.overlap(4, 4, 4)
-
 ;; LfPulse ; humm
 var freqBass = 50;
 var freq = 50;
@@ -43,3 +32,14 @@ snd := Hpf(snd * 3, MouseX(5000, 7000, 1, 0.2));
 snd := Lpf(snd, MouseY(9000, 11000, 1, 0.2));
 snd := snd + SinOsc(freqBass, 0);
 Pan2(snd, pan, amp)
+
+;;---- LfPulse ; jmcc ; process (Eval)
+{
+	var p1 = LfPulse(ExpRand(0.1, 1), 0, 0.3) * 0.2 + 0.02;
+	var in = LfSaw([21000, 21001], 0) * p1;
+	var sr = ExpRand(300, 3000) + [-0.6, 0.6];
+	var p2 = LfPulse(sr, 0, MouseY(0.01, 0.99, 0, 0.2));
+	var p3 = LfPulse(ExpRand(0.1,12), 0, 0.7) * 0.2;
+	var p4 = LfPulse(ExpRand(0.1,12), 0, 0.4) * 0.2 + 0.2 + p3;
+	Rlpf(in * p2, sr * p4, 0.1)
+}.overlap(4, 4, 4)

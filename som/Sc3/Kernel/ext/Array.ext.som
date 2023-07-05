@@ -16,6 +16,14 @@ linLinFrom: lo to: hi = (
 	^LinLin in: self srclo: -1 srchi: 1 dstlo: lo dsthi: hi
 )
 
+lpz1 = (
+	^Lpz1 in: self
+)
+
+lpz2 = (
+	^Lpz2 in: self
+)
+
 neg = (
 	^self negated
 )

@@ -168,7 +168,7 @@ SinOsc(freq, phase) * amp
 | freq = 440, phase = 0, amp = 0.1; |
 SinOsc(freq, phase) * amp
 
-;; SinOsc
+;; SinOsc ; requires 0.Max(aUgen)
 var n = 16;
 {
 	var amp = 0.Max(SinOsc(ExpRand(0.1, 1), Rand(0, 2 * pi))) / n / 2;

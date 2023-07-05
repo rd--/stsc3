@@ -1,4 +1,4 @@
-;; LfClipNoise ; process
+;; ---- LfClipNoise ; process (Eval)
 {
 	var freq = Rand(47, 69) * [1, 1.1];
 	var mul = {

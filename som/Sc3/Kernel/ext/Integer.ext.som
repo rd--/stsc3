@@ -1,5 +1,10 @@
 Integer = Integer (
 
+arithmeticSeries: start value: step = (
+	"Generate an arithmetic series (ramp) of self places from start by step."
+	^(1 to: self) collect: [ :item | (step * (item - 1)) + start ]
+)
+
 asBinaryDigits: numDigits = (
 	| array |
 	array := Array new: numDigits.
@@ -24,7 +29,7 @@ from: start by: step = (
 	^(start to: self - 1 * step + start by: step)
 )
 
-geom: start value: grow = (
+geometricSeries: start value: grow = (
 	"Generate a geometric series (curve) of self places from start by grow."
 	| accum |
 	accum := start.
@@ -48,11 +53,6 @@ randomInteger = (
 randomInteger: upperBound = (
 	"Generate a random integer between myself and upperBound (inclusive)."
 	^(upperBound - self + 1) atRandom + self - 1
-)
-
-series: start value: step = (
-	"Generate an arithmetic series (ramp) of self places from start by step."
-	^(1 to: self) collect: [ :item | (step * (item - 1)) + start ]
 )
 
 to: aNumber collect: aBlock = (

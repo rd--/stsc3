@@ -1,4 +1,4 @@
-;; TExpRand ; texture
+;; TExpRand ; texture ; requires 0.Max(aUgen)
 { :tr |
 	EqPan2(
 		SinOsc(

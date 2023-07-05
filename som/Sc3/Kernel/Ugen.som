@@ -99,6 +99,14 @@ ln = (
 	^self log
 )
 
+lpz1 = (
+	^Lpz1 in: self
+)
+
+lpz2 = (
+	^Lpz2 in: self
+)
+
 mrg: rhs = (
 	scUgen mrg: rhs.
 	^self

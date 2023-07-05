@@ -269,22 +269,6 @@ var n = { BrownNoise() } ! 2 * 0.5 - 0.49;
 var f = n.Max(0) * 20;
 Rhpf(f, 5000, 1)
 
-;; slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
-var n = 20;
-var d = 5;
-var p = []; (* OrderedCollection() *)
-var q = []; (* OrderedCollection() *)
-var f = { :freq |
-	SinOscBank(freq, [1], { Rand(0, 2 * pi) } ! (3 * n))
-};
-n.timesRepeat {
-	var freq = Rand(24, 84).MidiCps;
-	p.add(freq);
-	{ p.add(freq + d.Rand2) } ! 2;
-	{ q.add(freq + d.Rand2) } ! 3
-};
-[p, q].collect(f) * 0.1 / n
-
 ;; sprinkler (jmcc) #1
 Bpz2(WhiteNoise() * LfPulse(LfPulse(0.09, 0, 0.16) * 10 + 7, 0, 0.25) * 0.1)
 
@@ -586,3 +570,19 @@ z
 
 ;; ---- scratchy ; jmcc ; left-to-right
 { BrownNoise() }.dup(2).MulAdd(0.5, -0.49).Max(0).Mul(20).Rhpf(5000, 1)
+
+;;---- slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf
+var n = 20;
+var d = 5;
+var p = []; (* OrderedCollection() *)
+var q = []; (* OrderedCollection() *)
+var f = { :freq |
+	SinOscBank(freq, [1], { Rand(0, 2 * pi) } ! (3 * n))
+};
+n.timesRepeat {
+	var freq = Rand(24, 84).MidiCps;
+	p.add(freq);
+	{ p.add(freq + d.Rand2) } ! 2;
+	{ q.add(freq + d.Rand2) } ! 3
+};
+[p, q].collect(f) * 0.1 / n
