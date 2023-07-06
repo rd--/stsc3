@@ -1,48 +1,64 @@
-;; analog bubbles (jmcc) #1 ; applicative order
-CombN(
-	MulAdd(
-		SinOsc(
-			MulAdd(
-				LfSaw(0.4, 0),
-				24,
-				MulAdd(
-					LfSaw([8, 7.23], 0),
-					3,
-					80
-				)
-			).MidiCps,
-			0),
-		0.04,
-		0),
-	0.2,
-	0.2,
-	4
-)
+;; analog bubbles (jmcc) ; method notation
+0.4
+	.LfSaw(0)
+	.MulAdd(24, [8, 7.23]
+		.LfSaw(0)
+		.MulAdd(3, 80))
+	.MidiCps
+	.SinOsc(0)
+	.Mul(0.04)
+	.CombN(0.2, 0.2, 4)
+	.Mul(0.1)
 
-;; analog bubbles (jmcc) #1
+;; analog bubbles (jmcc) ; as above ; one line
+0.4.LfSaw(0).Mul(24).Add([8, 7.23].LfSaw(0).MulAdd(3, 80)).MidiCps.SinOsc(0).Mul(0.04).CombN(0.2, 0.2, 4).Mul(0.1)
+
+;; analog bubbles (jmcc) ; alternate linearisation
+[8, 7.23].LfSaw(0)
+	.MulAdd(3, 80)
+	.Add(0.4
+		 .LfSaw(0)
+		 .Mul(24))
+	.MidiCps
+	.SinOsc(0)
+	.Mul(0.05)
+	.CombN(0.2, 0.2, 4)
+	.Mul(0.1)
+
+;; analog bubbles (jmcc) ; as above ; one line
+[8, 7.23].LfSaw(0).MulAdd(3, 80).Add(0.4.LfSaw(0).Mul(24)).MidiCps.SinOsc(0).Mul(0.05).CombN(0.2, 0.2, 4).Mul(0.1)
+
+;; analog bubbles (jmcc) #1 ; variable bindings
 var o = LfSaw([8, 7.23], 0) * 3 + 80;
 var m = LfSaw(0.4, 0) * 24 + o;
-CombN(SinOsc(m.MidiCps, 0) * 0.04, 0.2, 0.2, 4)
+CombN(SinOsc(m.MidiCps, 0) * 0.04, 0.2, 0.2, 4) * 0.1
 
-;; analog bubbles (jmcc) #1 ; keywords
-var o = LfSaw(
-	freq: [8, 7.23],
-	iphase: 0
-) * 3 + 80;
-var m = LfSaw(
-	freq: 0.4,
-	iphase: 0
-) * 24 + o; (* glissando function *)
-var s = SinOsc(
-	freq: m.MidiCps,
-	phase: 0
-) * 0.04;
-CombN(
-	in: s,
-	maxdelaytime: 0.2,
-	delaytime: 0.2,
-	decaytime: 4
-) * 0.1 (* echoing sine wave *)
+;; analog bubbles (jmcc) #1 ; applicative order
+Mul(
+	CombN(
+		MulAdd(
+			SinOsc(
+				MulAdd(
+					LfSaw(0.4, 0),
+					24,
+					MulAdd(
+						LfSaw([8, 7.23], 0),
+						3,
+						80
+					)
+				).MidiCps,
+				0),
+			0.05,
+			0),
+		0.2,
+		0.2,
+		4
+	),
+	0.1
+)
+
+;; analog bubbles (jmcc) ; as above ; one line
+Mul(CombN(Mul(SinOsc(MidiCps(MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80))), 0), 0.05), 0.2, 0.2, 4), 0.1)
 
 ;; berlin 1977 (jmcc) #4 ; event control
 Voicer(16, { :e |
@@ -78,8 +94,8 @@ Voicer(16, { :e |
 	var f = (e.x * 24 + 48).MidiCps;
 	var k = DynRingzBank(
 		{ BrownNoise() } ! 2 * e.z * LagUd(e.w, e.y * 0.1, e.y * 4),
-		12.series(f, f),
-		12.geom(1, Rand(0.7, 0.9)),
+		12.arithmeticSeries(f, f),
+		12.geometricSeries(1, Rand(0.7, 0.9)),
 		{ Rand(1, 3) } ! 12
 	);
 	(k * 0.1).SoftClip
@@ -91,7 +107,7 @@ var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var k = RingzBank(x, 12.series(f, f), 12.geom(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12);
+var k = RingzBank(x, 12.arithmeticSeries(f, f), 12.geometricSeries(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12);
 (k * 0.1).SoftClip
 
 ;; bowed string (jmcc) ; .randomFloat
@@ -168,7 +184,7 @@ var node = {
 var e = LfNoise2(LfNoise2([0.4, 0.4]) * 90 + 620) * (LfNoise2([0.3, 0.3]) * 0.15 + 0.18);
 CombL(node !+ 4 + e, 0.3, 0.3, 3) * 0.5
 
-;; police state ; jmcc ; keywords
+;; ---- police state ; jmcc ; keywords
 var n = 4; (* number of sirens *)
 var node = {
 	Pan2(
@@ -220,7 +236,7 @@ var n = 6;
 	{ Klank(s, 1, 0, 1, [{ f * TRand(1, 13, tr) } ! p, [1], { TRand(0.4, 3.4, tr) } ! p].asKlankSpec) } ! 2
 }.OverlapTexture(8, 2, 4)
 
-;; sample and hold liquidities (jmcc) #4 ; requires=keywords
+;; ---- sample and hold liquidities (jmcc) #4 ; requires=keywords
 var r = MouseX(
 	minval: 1,
 	maxval: 200,
@@ -334,7 +350,7 @@ var c = { :i | CombL(i, 0.06, LfNoise1(0.3.Rand) * 0.025 + 0.035, 1) };
 var y = z * 0.6;
 { [y, y].collect(c).sum } ! 2 + z
 
-;; why supercollider (jmcc) #0 ; keywords
+;; ---- why supercollider (jmcc) #0 ; requires=keywords
 var s = {
 	Resonz(
 		in: Dust(
@@ -393,6 +409,26 @@ var a = { :f | (SinOsc(f * [Rand(0.7, 1.3), 1], { Rand(0, 2 * pi) } ! 2) * 0.1).
 var o = SinOsc(Rand(24, 108).MidiCps, Rand(0, 2 * pi));
 var s = o * a(ExpRand(0.3, 8)).Max(0) * a(ExpRand(6, 24)).Abs;
 Pan2(s, Rand(-1, 1), 1)
+
+;;---- analog bubbles (jmcc) #1 ; requires=keywords
+var o = LfSaw(
+	freq: [8, 7.23],
+	iphase: 0
+) * 3 + 80;
+var m = LfSaw(
+	freq: 0.4,
+	iphase: 0
+) * 24 + o; (* glissando function *)
+var s = SinOsc(
+	freq: m.MidiCps,
+	phase: 0
+) * 0.04;
+CombN(
+	in: s,
+	maxdelaytime: 0.2,
+	delaytime: 0.2,
+	decaytime: 4
+) * 0.1 (* echoing sine wave *)
 
 ;; ---- alien froggies (jmcc) #1 ; left-to-right
 { :tr |
