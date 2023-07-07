@@ -11,4 +11,3 @@ var e = Decay2(t, 0.01, TRand(0.15, 0.5, t));
 	var b = Blip(m.MidiCps, TRand(1, 7, t)) * e * 8;
 	CombC(b.Tanh / 8, 1, 1, 8) * TRand(0.05, 0.15, t)
 } ! 2
-
