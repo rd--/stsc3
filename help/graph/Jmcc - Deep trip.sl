@@ -6,7 +6,7 @@
 			LfNoise1(TRand(0, 8, tr)),
 			SinOsc(TRand(0, 40, tr), 0) * 0.1
 		].product.Max(0);
-	var s = Pan2(SinOsc(f, 0) *  a, LfNoise1(TRand(0, 5, tr)), 1);
+	var s = Pan2(SinOsc(f, 0) * a, LfNoise1(TRand(0, 5, tr)), 1);
 	var c = {
 		CombN(s, 0.5, { TRand(0, 0.2, tr) + 0.3 } ! 2, 20)
 	};

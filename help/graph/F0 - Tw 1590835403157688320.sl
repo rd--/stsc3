@@ -8,7 +8,7 @@ var z = Latch(
 var r = Rlpf(
 	z,
 	9 ** SinOsc(g * 9, 0) * 999,
-	SinOsc(b / 77, 0) /  2 + 0.6
+	SinOsc(b / 77, 0) / 2 + 0.6
 );
 var x = SinOsc(999 * b.scramble / r, 0);
 var w = Latch(

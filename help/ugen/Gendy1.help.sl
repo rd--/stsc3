@@ -17,7 +17,7 @@
 			0
 		),
 		Rand(-1, 1)
-	) *  0.1
+	) * 0.1
 } !+ 10
 
 ;; Gendy1 ; texture ; mouse control ; keywords ; requires=kr

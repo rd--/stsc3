@@ -12,7 +12,7 @@ _GrainFm(numChannels, trigger, dur, carfreq, modfreq, index, pan, envbufnum, max
 - envbufnum: the buffer number containing a signal to use for the grain envelope, -1 uses a built-in Hann envelope.
 - maxGrains: the maximum number of overlapping grains that can be used at a given time (ir)
 
-Mouse controls panning,  noise and mouse control deviation from center pitch:
+Mouse controls panning, noise and mouse control deviation from center pitch:
 
 ```
 var tr = Impulse(10, 0);

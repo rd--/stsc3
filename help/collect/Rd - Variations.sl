@@ -102,7 +102,7 @@ var fw = { :r |
 	var f = BufRd(1, [b0, b1], r1, 0, 2);
 	var o1 = Blip((r + f).MidiCps, 12);
 	var o2 = Blip((r + f + r2).MidiCps, 12);
-        o1 + o2 * Decay2(t, 0.3, 1.2) * 0.1
+	o1 + o2 * Decay2(t, 0.3, 1.2) * 0.1
 };
 fw(24) + fw(36)
 
@@ -154,7 +154,7 @@ var x = MouseX(15, 0, 0, 0.1);
 var y = MouseY(15, 27, 0, 0.1);
 var t = Dust(9).kr;
 var b = TChoose(t, [36, 48, 60, 72]);
-var n = LfNoise1([3,  3.05]) * 0.04;
+var n = LfNoise1([3, 3.05]) * 0.04;
 var d = TiRand(x, y, t);
 var e = Decay2(t, 0.005, TRand(0.02, 0.15, t));
 var k = DegreeToKey([0, 2, 3.2, 5, 7, 9, 10].asLocalBuf, d, 12);
@@ -170,7 +170,7 @@ var t = Dust(9).kr;
 var u = PulseDivider(t, 9, 0);
 var d = TiRand(MouseX(15, 0, 0, 0.1), MouseY(15, 27, 0, 0.1), t);
 var k = DegreeToKey([0, 2, 3.2, 5, 7, 9, 10].asLocalBuf, d, 12);
-var m = LfNoise1([3,  3.05]) * 0.04 + TChoose(t, [36, 48, 60, 72]) + k;
+var m = LfNoise1([3, 3.05]) * 0.04 + TChoose(t, [36, 48, 60, 72]) + k;
 var o = SinOsc(m.MidiCps, 0) * Decay2(t, 0.005, TRand(0.02, 0.15, t)) * 0.2;
 o * 0.5 + AllpassC(o, 0.15, TRand(0.0075, 0.125, u), TRand(0.05, 0.15, u))
 

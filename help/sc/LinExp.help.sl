@@ -2,7 +2,7 @@
 
 _LinExp(in, srclo, srchi, dstlo, dsthi)_
 
-Converts a linear range of values to an exponential range of values.  The dstlo and dsthi arguments must be nonzero and have the same sign.
+Converts a linear range of values to an exponential range of values. The dstlo and dsthi arguments must be nonzero and have the same sign.
 
 - in: input to convert.
 - srclo: lower limit of input range.

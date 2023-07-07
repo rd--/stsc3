@@ -1,4 +1,4 @@
-;; tremulate (jmcc) ;  graph rewrite
+;; tremulate (jmcc) ; graph rewrite
 var voiceFunc = { :tr |
 	var f = TRand(400, 900, tr);
 	var r = TRand(60, 90, tr);

@@ -10,7 +10,7 @@ This is the same as Resonz, except that instead of a resonance parameter, the ba
 
 Resonant dust:
 
-	Ringz(Dust(3) *  0.1, 2000, 2)
+	Ringz(Dust(3) * 0.1, 2000, 2)
 
 Resonant noise:
 
@@ -21,16 +21,16 @@ Modulate frequency:
 	var freq = XLn(100, 3000, 10);
 	[
 		Ringz(WhiteNoise() * 0.005, freq, 0.5),
-		Ringz(Impulse(6, 0) * 0.1,  freq, 0.5)
+		Ringz(Impulse(6, 0) * 0.1, freq, 0.5)
 	]
 
 Modulate ring time:
 
-	Ringz(Impulse(6, 0) * 0.1,  2000, XLn(4, 0.04, 8))
+	Ringz(Impulse(6, 0) * 0.1, 2000, XLn(4, 0.04, 8))
 
 Modulate ring time opposite direction:
 
-	Ringz(Impulse(6, 0) * 0.1,  2000, XLn(0.04, 4, 8))
+	Ringz(Impulse(6, 0) * 0.1, 2000, XLn(0.04, 4, 8))
 
 Parallel filters with frequency ramps:
 

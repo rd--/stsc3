@@ -19,4 +19,4 @@ var t2 = PulseDivider(t1, 2, 0);
 var t4 = PulseDivider(t1, 4, 0);
 var t24 = PulseDivider(t1, 24, 0);
 var b = Demand(t24, 0, Dseq(inf, [0, -1, -2]));
-f(t1, b + 0) + f(t2, b + 12) +  f(t4, b - 5)
+f(t1, b + 0) + f(t2, b + 12) + f(t4, b - 5)

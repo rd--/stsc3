@@ -8,8 +8,8 @@
 		9
 	].asLocalBuf;
 	var lfo = LfBrownNoise1(4, dev, 0) * 4 + 5;
-	var index = IndexInBetween(buffer,  lfo).RoundTo(1);
-	var intv = Index(buffer,  index);
+	var index = IndexInBetween(buffer, lfo).RoundTo(1);
+	var intv = Index(buffer, index);
 	{
 		var freq = Lag(intv, 0.1) * root * (LfNoise2(12) * 0.02 + 1);
 		var env = (LfNoise2(4) * 0.4 + 0.6) ** 2;

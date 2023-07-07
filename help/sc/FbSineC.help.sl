@@ -15,4 +15,4 @@ A cubic-interpolating sound generator based on the difference equations:
 1. xn+1 = sin(im*yn + fb*xn)
 2. yn+1 = (ayn + c) % 2pi
 
-This uses a linear congruential function to drive the phase indexing of a sine wave.  For im = 1, fb = 0, and a = 1 a normal sinewave results.
+This uses a linear congruential function to drive the phase indexing of a sine wave. For im = 1, fb = 0, and a = 1 a normal sinewave results.

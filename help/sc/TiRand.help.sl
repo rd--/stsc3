@@ -26,6 +26,6 @@ Random degree, octave and number of harmonics:
 		} !^ 7
 	}.OverlapTexture(4, 0.05, 2)
 
-*  * *
+* * *
 
-See also: _IRand_, _TRand_
+See also: IRand, TRand

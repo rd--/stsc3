@@ -12,7 +12,7 @@
 	var mkAllpass = { :i :r :dt | Lpz1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
 	var drv = LocalIn(1, 0);
 	var pk1R = mkDelay(drv, srcPos - pk1Pos);
-	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2,  Rand(0.001, 0.11));
+	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2, Rand(0.001, 0.11));
 	var pk2L = mkDelay(pk1L, pk2Pos - pk1Pos) * 0.99;
 	var stringL = mkDelay(pk2L, 1 - pk2Pos);
 	var pk2R = mkAllpass(stringL * -1, 1 - pk2Pos, 2 + Rand(0.001, 0.11)) * 0.99;

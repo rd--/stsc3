@@ -1,6 +1,6 @@
 ;; https://sccode.org/1-5d6 (jpd) ; requires buf=10,buf=11
 var bufnum = 10;
-var  envBufnum = 11;
+var envBufnum = 11;
 var pan = 0;
 var stretch = 50;
 var window = 0.25;

@@ -13,7 +13,7 @@ There are two differences to LfClipNoise:
 
 If you dont need very high or very low freqs, or use fixed freqs, LfClipNoise is more efficient.
 
-Mouse control of frequency.  LfClipNoise will get stuck:
+Mouse control of frequency. LfClipNoise will get stuck:
 
 	LfClipNoise(MouseX(0.1, 1000, 1, 0.2)) * 0.1
 

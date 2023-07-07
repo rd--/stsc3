@@ -2,7 +2,7 @@
 
 _Slope(in)_
 
-Measures the rate of change per second of a signal.  Formula implemented is: _out[i] = (in[i] - in[i-1]) * sampling_rate_.
+Measures the rate of change per second of a signal. Formula implemented is: _out[i] = (in[i] - in[i-1]) * sampling_rate_.
 
 - in: input signal to measure.
 

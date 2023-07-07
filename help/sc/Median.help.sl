@@ -2,7 +2,7 @@
 
 _Median(length, in)_
 
-Returns the median of the last length input points.  This non linear filter is good at reducing impulse noise from a signal.
+Returns the median of the last length input points. This non linear filter is good at reducing impulse noise from a signal.
 
 - length: number of input points in which to find the median. Must be an odd number from 1 to 31. If length is 1 then Median has no effect.
 - in: input signal to be processed

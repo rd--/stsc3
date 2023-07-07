@@ -3,7 +3,7 @@
 _DelayWrite(buffer, in)_,
 _DelayTap(buffer, delayTime)_
 
-These unit generators implement delay line reading and writing in separate objects. This lets you put processing in the feedback loop, or granulate a delay line, or implement a ping pong delay or other feedback network. The Tap unit generators read from the delay line and DelayWr writes to it. You must supply an instance of Signal long enough to hold the maximum delay time you will require. You do not need to initialize the buffer.  The maximum delay time is the length of the buffer minus the block size. The minimum delay time is equal to the block size + 1.  A single delay line may have any number of Taps but only one DelayWr. The same buffer should be supplied to the DelayWr and all Tap unit generators which are part of the same delay line.
+These unit generators implement delay line reading and writing in separate objects. This lets you put processing in the feedback loop, or granulate a delay line, or implement a ping pong delay or other feedback network. The Tap unit generators read from the delay line and DelayWr writes to it. You must supply an instance of Signal long enough to hold the maximum delay time you will require. You do not need to initialize the buffer. The maximum delay time is the length of the buffer minus the block size. The minimum delay time is equal to the block size + 1. A single delay line may have any number of Taps but only one DelayWr. The same buffer should be supplied to the DelayWr and all Tap unit generators which are part of the same delay line.
 
 TapN uses no interpolation, TapL uses linear interpolation, TapA uses all pass interpolation.
 
@@ -12,7 +12,7 @@ The output of DelayWr is just its input. The output of DelayWr is usually not ne
 DelayWr arguments:
 
 - buffer: an instance of Signal.
-- in:  the input signal to write to the delay line.
+- in: the input signal to write to the delay line.
 
 Tap arguments:
 
@@ -36,9 +36,9 @@ Simple feedback delay (if this is all you want, Comb is easier to use):
 Ping pong delay:
 
  	(* allocate a buffer for the left delay line *)
-	var leftBuffer  = BufAlloc(1, 48000 * 0.4).BufClear;
+	var leftBuffer = BufAlloc(1, 48000 * 0.4).BufClear;
  	(* allocate a buffer for the right delay line *)
-	var rightBuffer  = BufAlloc(1, 48000 * 0.4).BufClear;
+	var rightBuffer = BufAlloc(1, 48000 * 0.4).BufClear;
  	(* make a percussive sound as input *)
 	var input = Decay(Impulse(0.4, 0), 0.1) * PinkNoise();
  	(* tap the left delay line *)

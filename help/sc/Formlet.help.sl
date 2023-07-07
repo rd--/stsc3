@@ -2,7 +2,7 @@
 
 _Formlet(in, freq, attackTime, decayTime)_
 
-This is a resonant filter whose impulse response is like that of a sine wave with a Decay2 envelope over it.  It is possible to control the attacktime and decaytime.
+This is a resonant filter whose impulse response is like that of a sine wave with a Decay2 envelope over it. It is possible to control the attacktime and decaytime.
 
 Formlet is equivalent to _Ringz(in, freq, decaytime) - Ringz(in, freq, attacktime)_.
 

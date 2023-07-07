@@ -65,7 +65,7 @@ var n = 5;
 var m = 64;
 var a = {
 	var x = { 0.2.Rand2 } ! m;
-	x := x ++ ({  Drand(1, { 0.2.Rand2 } ! n) } ! m.atRandom);
+	x := x ++ ({ Drand(1, { 0.2.Rand2 } ! n) } ! m.atRandom);
 	Dseq(inf, x.scramble)
 } ! n;
 DmdFor(

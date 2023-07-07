@@ -2,7 +2,7 @@
 
 _Resonz(in, freq, rq)_
 
-A two pole resonant filter with zeroes at z = +/- 1. Based on K. Steiglitz,  "A Note on Constant-Gain Digital Resonators," Computer Music Journal, vol 18, no. 4, pp. 8-10, Winter 1994.
+A two pole resonant filter with zeroes at z = +/- 1. Based on K. Steiglitz, "A Note on Constant-Gain Digital Resonators," Computer Music Journal, vol 18, no. 4, pp. 8-10, Winter 1994.
 
 - in: input signal to be processed
 - freq: resonant frequency in Hertz

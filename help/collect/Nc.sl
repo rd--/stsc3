@@ -3,11 +3,11 @@ var n = 11;
 var f = {
 	var freq = Rand(50, 560.3);
 	var numcps = Rand(2, 20);
-	var knum = MulAdd(SinOsc(ExpRand(0.02, 0.2),  0), numcps / 2,  numcps / 2);
-	var osc = Gendy1(Rand(0, 6), Rand(0, 6), Rand(0, 1), Rand(0, 1), freq , freq,  Rand(0, 1),  Rand(0, 1),  numcps,  knum.kr);
-	Pan2(osc,  Rand(-1, 1), 0.5 / n.sqrt)
+	var knum = MulAdd(SinOsc(ExpRand(0.02, 0.2), 0), numcps / 2, numcps / 2);
+	var osc = Gendy1(Rand(0, 6), Rand(0, 6), Rand(0, 1), Rand(0, 1), freq , freq, Rand(0, 1), Rand(0, 1), numcps, knum.kr);
+	Pan2(osc, Rand(-1, 1), 0.5 / n.sqrt)
 };
-Resonz(f !+ n, MouseX(100,  2000, 0, 0.2), MouseY(0.01,  1.0, 0, 0.2))
+Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 
 ;; tutorial 2.1 ; sawtooth
 var n = 9;
@@ -89,10 +89,10 @@ var partial = { :i |
 SinOsc(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 100, 0) * 0.1
 
 ;; tutorial 3.4
-Saw(Select(Stepper(Impulse(4, 0.1),  0,  0,  7,  1,  0),  [72, 63, 67, 72, 55, 62, 63, 60].midiCps)) *  0.1
+Saw(Select(Stepper(Impulse(4, 0.1), 0, 0, 7, 1, 0), [72, 63, 67, 72, 55, 62, 63, 60].MidiCps)) * 0.1
 
 ;; tutorial 3.4
-Saw(Select(Stepper(Impulse(MouseX(1, 40, 0, 0.2), 0.1),  0,  0,  7,  1,  0),  [72, 63, 67, 72, 55, 62, 63, 60].midiCps)) *  0.1
+Saw(Select(Stepper(Impulse(MouseX(1, 40, 0, 0.2), 0.1), 0, 0, 7, 1, 0), [72, 63, 67, 72, 55, 62, 63, 60].MidiCps)) * 0.1
 
 ;; tutorial 3.4
 var source = SinOsc(10, 0);

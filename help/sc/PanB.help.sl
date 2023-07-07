@@ -3,11 +3,11 @@
 PanB(in, azimuth, elevation, level)
 
 - in: input signal
-- azimuth:  in radians, -pi to +pi
-- elevation:  in radians, -0.5pi to +0.5pi
+- azimuth: in radians, -pi to +pi
+- elevation: in radians, -0.5pi to +0.5pi
 - level: a control rate level input.
 
-Output channels are in order W,X,Y,Z.  You will only hear the first two channels on a stereo setup.
+Output channels are in order W,X,Y,Z. You will only hear the first two channels on a stereo setup.
 
 	PanB(
 		WhiteNoise(),

@@ -23,7 +23,7 @@ sig * 0.1
 	var syncDcy = TRand(0.5, 2, tr);
 	var syncEnv = TxLine(syncEgTop / syncRatio, 1, syncDcy, tr);
 	var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
-	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60,  64, 65, 70]).MidiCps } ! 5;
+	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60, 64, 65, 70]).MidiCps } ! 5;
 	var in = LfTri(freq, 0);
 	var phase = Sweep(in, freq * syncRatio * syncEnv);
 	var synced = SinOsc(0, (phase % 1) * 2 * pi).Squared;
@@ -62,7 +62,7 @@ Lag(SinOsc(0, pdres) * pdi, 1 / freqBase)
 
 ;; SinOsc ; https://scsynth.org/t/6264/9 (es)
 var freq = [440, 880];
-var k = 12000 * (SampleRate()  / 44100) / (freq * freq.log);
+var k = 12000 * (SampleRate() / 44100) / (freq * freq.log);
 var sinSig = SinOsc(freq, 0);
 var cosSig = SinOsc(freq, pi / 2);
 var sqSig = (sinSig * k).Tanh;
@@ -70,7 +70,7 @@ var sawSig = sqSig * (cosSig + 1);
 sawSig * 0.1
 
 ;; SinOsc ; https://scsynth.org/t/6264/8 (fm)
-var  freq = 110;
+var freq = 110;
 var indexLimit = 1.5;
 var index = LinLin(SinOsc(1 / 10, 3 * pi / 2), -1, 1, 1, indexLimit);
 var phase = index * LocalIn(1, 1);

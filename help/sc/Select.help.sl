@@ -20,7 +20,7 @@ var a = [
 	Saw(440),
 	Pulse(440, 0.5)
 ];
-var cycle = a.size  * 0.5;
+var cycle = a.size * 0.5;
 Select(LfSaw(1, 0) * cycle + cycle, a) * 0.2
 ```
 

@@ -146,7 +146,7 @@ Splay2(f ! 10)
 ;; deep trip (jmcc) #9 ; texture=overlap,12,4,4,inf
 var f = (LfNoise1(Rand(0, 0.3)) * 60 + 70).MidiCps;
 var a = LfNoise2(f * Rand(0, 0.5)) * (LfNoise1(Rand(0, 8)) * SinOsc(Rand(0, 40), 0) * 0.1).Max(0);
-var s = Pan2(SinOsc(f, 0) *  a, LfNoise1(Rand(0, 5)), 1);
+var s = Pan2(SinOsc(f, 0) * a, LfNoise1(Rand(0, 5)), 1);
 var c = { CombN(s, 0.5, { Rand(0, 0.2) + 0.3 } ! 2, 20) };
 c !+ 2 + s
 
@@ -223,7 +223,7 @@ Pan2(o, Rand(-1, 1), 1)
 ;; pulsing bottles (jmcc) #2
 var n = 6;
 {
-	var a = LfPulse(4 + Rand(0, 10),  0,  Rand(0, 0.7)) * 0.8 / n;
+	var a = LfPulse(4 + Rand(0, 10), 0, Rand(0, 0.7)) * 0.8 / n;
 	var l = SinOsc(0.1 + Rand(0, 0.4), Rand(0, 2 * pi));
 	Pan2(Resonz(WhiteNoise(), 400 + LinRand(0, 7000, 0), 0.01), l, 1) * a
 } !+ n
@@ -306,7 +306,7 @@ Voicer(16, { :e |
 	Pan2(a, e.o * 0.25, 0.5 + e.z)
 }).sum * 0.5
 
-;; tremulate (jmcc) ;  event control ; requires=voicer
+;; tremulate (jmcc) ; event control ; requires=voicer
 var voiceFunc = { :e |
 	var s = SinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); (* just minor seventh chord *)
 	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.rx)).Max(0) * e.z;
@@ -333,7 +333,7 @@ var z = Rlpf(
 	0.2
 );
 var y = z * 0.6;
-z +  [
+z + [
 	CombL(y, 0.06, MulAdd(LfNoise1(0.3.Rand), 0.025, 0.035), 1) +
 	CombL(y, 0.06, MulAdd(LfNoise1(0.3.Rand), 0.025, 0.035), 1)
 	,

@@ -2,7 +2,7 @@
 
 _GetTempo()_
 
-Gives the current tempo as a control rate signal.  Tempo is always in beats per second.
+Gives the current tempo as a control rate signal. Tempo is always in beats per second.
 
 	SetTempo(MouseX(0.25, 4, 1, 0.2))
 

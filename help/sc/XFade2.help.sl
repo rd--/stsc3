@@ -8,4 +8,4 @@ _XFade2(inA, inB, pan, level)_
 
 Cross-fade between sawtooth and sine osillators.
 
-    XFade2(Saw(440), SinOsc(440, 0), LfTri(0.1, 0), 0.1)
+	XFade2(Saw(440), SinOsc(440, 0), LfTri(0.1, 0), 0.1)

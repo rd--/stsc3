@@ -39,7 +39,7 @@ i := Impulse freq: d phase: 0 mul: ((SinOsc freq: 0.05 phase: 0 mul: 0.1) max: 0
 SinOsc freq: {f0. f1} phase: 0 mul: 0.1 add: i
 
 "sinOsc ; When two tones are sounded together, a tone of lower frequency is
-frequently heard. Such a tone is called a combination tone.  The most
+frequently heard. Such a tone is called a combination tone. The most
 commonly heard combination tone occurs at a frequency f2 - f1."
 | f1 f2 f3 a3 |
 f1 := 300.

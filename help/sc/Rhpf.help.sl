@@ -6,7 +6,7 @@ A resonant high pass filter.
 
 - in: input signal to be processed
 - freq: cutoff frequency.
-- rq: the reciprocal of Q.  bandwidth / cutoffFreq.
+- rq: the reciprocal of Q. bandwidth / cutoffFreq.
 
 Modulate frequency:
 

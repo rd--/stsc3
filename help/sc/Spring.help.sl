@@ -17,7 +17,7 @@ Trigger gate is mouse button, spring constant is _MouseX_, _MouseY_ controls dam
 	var freq = outforce * 400 + 500;
 	SinOsc(freq, 0) * 0.2
 
-Several springs in series.  Trigger gate is mouse button, spring constant is _MouseX_, _MouseY_ controls damping, modulate frequency with the force:
+Several springs in series. Trigger gate is mouse button, spring constant is _MouseX_, _MouseY_ controls damping, modulate frequency with the force:
 
 	var d = MouseY(0.00001, 0.01, 1, 0.2);
 	var k = MouseX(0.1, 20, 1, 0.2);

@@ -2,7 +2,7 @@
 
 _PeakFollower(in, decay)_
 
-Outputs the peak amplitude of the signal received at the input.  if level is below maximum, the level decreases by the factor given in decay.
+Outputs the peak amplitude of the signal received at the input. If level is below maximum, the level decreases by the factor given in decay.
 
 - in: input signal.
 - decay: decay factor.

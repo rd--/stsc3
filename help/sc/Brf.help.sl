@@ -6,7 +6,7 @@ A second order low pass filter.
 
 - in: input signal to be processed
 - freq: cutoff frequency in Hertz.
-- rq: the reciprocal of Q.  bandwidth / cutoffFreq.
+- rq: the reciprocal of Q. bandwidth / cutoffFreq.
 
 Modulate frequency:
 

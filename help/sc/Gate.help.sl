@@ -16,4 +16,3 @@ var gatedNoise = Gate(
 );
 SinOsc(gatedNoise * 100 + 200, 0) * 0.1
 ```
-

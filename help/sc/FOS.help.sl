@@ -2,7 +2,7 @@
 
 _Fos(in, a0, a1, b1)_
 
-A standard first order filter section. Filter coefficients are given directly rather than calculated for you.  Formula is equivalent to _out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (b1 * out(i-1))_.
+A standard first order filter section. Filter coefficients are given directly rather than calculated for you. Formula is equivalent to _out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (b1 * out(i-1))_.
 
 Same as OnePole:
 

@@ -18,7 +18,7 @@ var lfo = { :rt | LfNoise1(rt ! 2) };
 z
 
 ;; https://sccode.org/1-50L (mk)
-var z =  PinkNoise();
+var z = PinkNoise();
 var lfo = { :rt | LfPulse(rt ! 2, 0, 0.5) };
 16.timesRepeat {
 	z := Brf(

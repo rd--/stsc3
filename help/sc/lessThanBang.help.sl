@@ -1,6 +1,6 @@
 # <! -- first argument
 
-- _aUgen <! anotherUgen_
+- _aUgen <! anotherUgen_ == - _lessThanBang(aUgen, anotherUgen)_
 
 Evaluates to _aUgen_ after attaching _anotherUgen_ to it.
 

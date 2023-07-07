@@ -1,7 +1,7 @@
 # !^ -- duplicate and distribute
 
 - _anObject !^ anInteger_
--  _bangHat(anObject, anInteger)_
+- _bangHat(anObject, anInteger)_
 
 ≡ _(anObject ! anInteger).Splay2_
 

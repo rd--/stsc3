@@ -8,7 +8,7 @@ Inverse of _MidiRatio_.
 
 A rational perfect fifth is 702 cents:
 
-        ((3 / 2).RatioMidi * 100).rounded = 702
+	((3 / 2).RatioMidi * 100).rounded = 702
 
 Generate Pythagorean scale:
 

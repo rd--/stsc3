@@ -2,7 +2,7 @@
 
 _TwoPole(in, freq, radius)_
 
-A two pole filter. This provides lower level access to setting of pole location.  For general purposes Resonz is better.
+A two pole filter. This provides lower level access to setting of pole location. For general purposes Resonz is better.
 
 - in: input signal to be processed
 - freq: frequency of pole angle.

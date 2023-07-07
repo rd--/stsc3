@@ -15,7 +15,7 @@ Modulate pitch ratio:
 	var z = Blip(800, 6) * 0.1;
 	PitchShift(z, 0.02, Ln(0.1, 4, 20), 0, 0.0001)
 
-Pitch shift input.  **Use headphones** to prevent feedback:
+Pitch shift input. **Use headphones** to prevent feedback:
 
 	PitchShift(
 		in: AudioIn([1, 2]),
@@ -25,7 +25,7 @@ Pitch shift input.  **Use headphones** to prevent feedback:
 		timeDispersion: 0.004
 	)
 
-Use PitchShift to granulate input.  **Use headphones** to prevent feedback.  Upper left corner is normal playback. x = pitch dispersion, y = time dispersion.
+Use PitchShift to granulate input. **Use headphones** to prevent feedback. Upper left corner is normal playback. x = pitch dispersion, y = time dispersion.
 
 	var grainSize = 0.5;
 	PitchShift(

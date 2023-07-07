@@ -29,7 +29,7 @@ var sf = SfAcquire('floating_1', 1, 1);
 (0 .. 9).collect { :n |
 	var r = 0.1 ** (n - 1);
 	(0 .. n).collect { :i |
-	    r := SfPlay(sf, r, 1, 0, 1) * (n - 2 < i).if { 0.5 } { 0.1 ** (n * 0.9 - 3.5 - i) }
+		r := SfPlay(sf, r, 1, 0, 1) * (n - 2 < i).if { 0.5 } { 0.1 ** (n * 0.9 - 3.5 - i) }
 	};
 	r
 }.sum
