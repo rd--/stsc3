@@ -218,3 +218,19 @@ var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);
 var delaySignal = (fmSignal + (delayReturn * delayMix)) <! LocalOut(delayReturn * delayFeedback);
 var reverbMix = 0.5;
 FreeVerb(delaySignal, reverbMix, 0.8, 0.5);
+
+;; alarm
+var tone = SinOsc([600, 800], 0);
+var control = Lpf(LfPulse(2, 0, 0.5), 70);
+SelectX(control, tone) * 0.1
+
+;; alarm
+var tone = SinOsc([723, 932, 1012], 0);
+var control = Lpf(Stepper(Impulse(23, 0), 0, 0, 2, 1, 0), 70);
+SelectX(control, tone) * 0.1
+
+;; alarm ; mouse selects timbre
+var freq = Lpf(DmdFor(0.05, 0, Dseq(inf, [723, 932, 1012])), 70);
+var osc = SinOsc(freq, 0);
+var operations = [osc, (osc * pi).Sin, (osc * pi).Cos, ((osc + 0.25) * pi).Cos];
+Select(MouseX(0, 4, 0, 0.2), operations) * 0.1

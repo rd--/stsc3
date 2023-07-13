@@ -1,6 +1,6 @@
 # Stepper -- pulse counter
 
-_Stepper(trig, reset, min, max, step, resetval)_
+_Stepper(trig, reset=0, min=0, max=7, step=1, resetval=min)_
 
 Each trigger increments a counter which is output as a signal. The counter wraps between min and max.
 

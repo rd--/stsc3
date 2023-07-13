@@ -1,6 +1,6 @@
 # Select -- select output from an array of inputs
 
-_Select(which, array)_
+- _Select(which, array)_
 
 The output is selected from an array of inputs.
 

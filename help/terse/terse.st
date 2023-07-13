@@ -342,6 +342,8 @@ Duration zero seconds = 0
 (Fraction numerator: 2 denominator: 3) class = Fraction
 (2/3) isMemberOf: Fraction
 (Fraction numerator: 2 denominator: 3) reduced = (2/3)
+(1/3 + 2/3) = (7/9) "/ is an operator, not a syntax, and ordinary precedence rules apply"
+(1/3) + (2/3) = 1
 2 / (3/4) = (8/3)
 (2/3) + (2/3) = (4/3)
 ((2/3) + (1/2)) = (7/6) "case showing reduction to common denominator"
@@ -430,6 +432,7 @@ Duration zero seconds = 0
 | s | s := ''. (1 to: 3) reverseDo: [ :x | s := s , x asString ]. s = '321' "for loop (interval, reversed)"
 | s | s := ''. #(1 3 5) do: [ :x | s := s , x asString ]. s = '135' "for loop (collection)"
 | n | n := 9. [ n > 3 ] whileTrue: [ n := n - 1 ]. n = 3 "while loop"
+((1 to: 9) do: [ :index | nil ]) = (1 to: 9) "do answers the receiver"
 
 'Magnitude'
 1 < 3 = true "less than"

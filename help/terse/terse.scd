@@ -31,6 +31,11 @@
 3.99.floor == 3                                             // round down
 3.99.ceil == 4                                              // round up
 5.factorial == 120                                          // factorial
+18.doubleFactorial == 185794560.0                           // doubleFactorial
+3.risingFactorial(9) == 19958400.0                          // risingFactorial
+(3 .. 11).product == 19958400                               // product of interval
+11.fallingFactorial(9) == 19958400.0                        // fallingFactorial
+(11 .. 3).product == 19958400                               // product of interval
 28.gcd(12) == 4                                             // greatest common denominator
 28.lcm(12) == 84                                            // least common multiple
 1.0.exp.log == 1.0                                          // natural logarithm
@@ -48,6 +53,8 @@ var n = 100.rand; (n >= 0) && { n < 100 }                   // random number in 
 var n = 100.rand; n.inclusivelyBetween(0, 99)               // random number in (0, self-1)
 var n = 98.rand + 1; n.exclusivelyBetween(0, 100)           // random number in (0, self-1)
 4 + 5 * 6 == 54                                             // operators are evaluated left to right
+300.nextPowerOfTwo == 512                                   // next power of two
+300.previousPowerOf(2) == 256                               // previous power of two
 
 'Array'
 Array.new.isKindOf(Collection) == true                      // c.f. Collection
@@ -178,10 +185,10 @@ Association.new('x', 1).class == Association                // associate key wit
 ((0 -> 1) == (0 -> 2)) == true                              // equality for associations is based on key only
 
 'Bag'
-Bag(4).class == Bag						                    // Bag, multi-set, counted-set
-[1, 2, 3, 3].asBag.contents.isDictionary					// the contents of a Bag is a Dictionary
-[1, 2, 3, 3].asBag.itemCount(3) == 2						// number of occurences of indicated item
-[1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1				// remove one occurence of indicated item from Bag
+Bag(4).class == Bag                                         // Bag, multi-set, counted-set
+[1, 2, 3, 3].asBag.contents.isDictionary                    // the contents of a Bag is a Dictionary
+[1, 2, 3, 3].asBag.itemCount(3) == 2                        // number of occurences of indicated item
+[1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1              // remove one occurence of indicated item from Bag
 [1, 2, 3, 3].asBag.includes(3)                              // predicate to determine if a Bag contains an item
 var n = 0; [1, 3, 2].asBag.do { |i| n = n.max(i) }; n == 3  // iterate over items in bag
 var n = 0; "xx".asBag.countsDo { |i c| n = n.max(c) }; n == 2 // iterate over items & counts in bag
@@ -282,7 +289,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, 2, 3, 4, 5].choose <= 5                                 // random element of collection
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
-(1 .. 4).powerset.size == 16								// set of all subsets (size is 2 ** n)
+(1 .. 4).powerset.size == 16                                // set of all subsets (size is 2 ** n)
 
 'Comments'
 "until end of line comment".isString                        // until end of line comment
@@ -324,7 +331,7 @@ $ .isSpace                                                  // character constan
 'Conversion'
 1.0.asInteger == 1                                          // convert number to integer (truncates in Squeak)
 1.5.asFraction == [3, 2]                                    // convert number to fraction
-pi.asFraction(10, false) == [22, 7]							// convert number to fraction (with maximum denominator)
+pi.asFraction(10, false) == [22, 7]                         // convert number to fraction (with maximum denominator)
 3.asFloat == 3.0                                            // convert number to float
 97.asAscii == $a                                            // convert integer to character
 $a.ascii == 97                                              // convert character to integer
@@ -359,7 +366,7 @@ d.occurrencesOf(3) == 1                                     // number of occuren
 { d.removeAt('x') == 1; d.add('x' -> 1) }.value.size == 3   // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort { | i j | i <= j }.asArray == (1 .. 3)        // list of values at dictionary
-var d = (c: 1, b: 2, a: 3); d.order == ['a', 'b', 'c']		// sorted array of keys
+var d = (c: 1, b: 2, a: 3); d.order == ['a', 'b', 'c']      // sorted array of keys
 var d = (c: 1, b: 2, a: 3); d.atAll(d.order) == [3, 2, 1]
 
 'Environment'
@@ -630,6 +637,7 @@ List.exprand(4, 1, 9).first.isInteger.not                   // list of random nu
 [1, 2, 3].wrapAt(3) == 1                                    // index with wrap-around
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
 List.rand(4, 1, 9).asArray.class == Array                   // as array
+[3, [1, 2, 1], 1].convertRhythm == List[0.75, 1.5, 0.75]    // variant of Mikael Laurson's notation
 
 'Set'
 Set.new.isKindOf(Collection) == true                        // c.f. Collection
