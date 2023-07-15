@@ -15,21 +15,32 @@ strjnWith x = intercalate [x] . filter (not . null)
 strjn :: [String] -> String
 strjn = strjnWith ' '
 
-{- | Read file, parse as 'smalltalkProgram', pretty print and write to file.
+{- | Parse as then print.
 
-> stParse smalltalkProgram "Transcript show: 'text'"
-> stParse smalltalkProgram "1 to: 5 do: [:x| Transcript cr ; show: x]"
+>>> stRewrite smalltalkProgram "Transcript show: 'text'"
+"Transcript show: 'text' .\n\n"
 
-> st <- readFile "/home/rohan/sw/stsc3/help/graph/jmcc-strummable-silk.st"
-> putStrLn $ smalltalkProgram_pp $ stParse smalltalkProgram st
+>>> stRewrite smalltalkProgram "1 to: 5 do: [:x| Transcript cr ; show: x]"
+"1 to: 5 do: [ :x | Transcript cr ; show: x .\n ] .\n\n"
+
+> st <- readFile "/home/rohan/sw/stsc3/help/graph/Jmcc - Strummable silk.st"
+> putStrLn $ stRewrite smalltalkProgram st
 -}
-stRewrite :: FilePath -> FilePath -> IO ()
-stRewrite st_fn rw_fn = do
+stRewrite :: P SmalltalkProgram -> String -> String
+stRewrite p = smalltalkProgram_pp . stParse p
+
+{- | Read file, parse as 'smalltalkProgram', pretty print and write to file. -}
+stRewriteFile :: FilePath -> FilePath -> IO ()
+stRewriteFile st_fn rw_fn = do
   st <- readFile st_fn
   let p = stParse smalltalkProgram st
   writeFile rw_fn (smalltalkProgram_pp p)
 
--- > smalltalkProgram_pp (SmalltalkProgram []) == ""
+{- | SmalltalkProgram pretty print
+
+>>> smalltalkProgram_pp (SmalltalkProgram [])
+""
+-}
 smalltalkProgram_pp :: SmalltalkProgram -> String
 smalltalkProgram_pp = unlines . map programElement_pp . programElements
 
@@ -51,9 +62,10 @@ programInitializerDefinition_pp = initializerDefinition_pp
 {- | Print method definition.
      If the method source has been stored return that, else a plain pretty print of the definition.
 
-> let rw = methodDefinition_pp . stParse (methodDefinition Nothing ("", False))
-> let src = "midicps ^440 * (2 ** ((self - 69) * (1 / 12)))"
-> rw src == src
+>>> let rw = methodDefinition_pp . stParse (methodDefinition Nothing ("", False))
+>>> let src = "midicps ^440 * (2 ** ((self - 69) * (1 / 12)))"
+>>> rw src == src
+True
 -}
 methodDefinition_pp :: MethodDefinition -> String
 methodDefinition_pp (MethodDefinition _ _ pat tmp stm prm _ src) =
@@ -63,9 +75,10 @@ methodDefinition_pp (MethodDefinition _ _ pat tmp stm prm _ src) =
 
 {- | Print pattern.
 
-> let rw = pattern_pp . stParse messagePattern
-> let src = ["midicps", "+ aNumber", "freq: f phase: p"]
-> map rw src == src
+>>> let rw = pattern_pp . stParse messagePattern
+>>> let src = ["midicps", "+ aNumber", "freq: f phase: p"]
+>>> map rw src == src
+True
 -}
 pattern_pp :: Pattern -> String
 pattern_pp pat =
@@ -79,7 +92,8 @@ temporaries_pp (Temporaries t) = printf "| %s |\n" (strjn t)
 
 {- | If comment is non-empty, enclose in double quotes.
 
-> comment_pp "" == ""
+>>> comment_pp ""
+""
 -}
 comment_pp :: Comment -> String
 comment_pp c = if null c then "" else '"' : c ++ ['"']
@@ -168,7 +182,11 @@ keywordArgument_pp (KeywordArgument p m1 m2) =
 cascadedMessages_pp :: CascadedMessages -> String
 cascadedMessages_pp = strjn . map ((++) "; " . messages_pp)
 
--- > map literal_pp [SelectorLiteral (UnarySelector "dinf")]
+{- | Literal pretty printer
+
+>>> map literal_pp [SelectorLiteral (UnarySelector "dinf")]
+["#'dinf'"]
+-}
 literal_pp :: Literal -> String
 literal_pp lit =
   case lit of

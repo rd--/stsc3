@@ -165,11 +165,17 @@ fileOutLibraryClassMethodEntries e x =
 fileOutLibraryClassMethods :: FileOutLibrary -> St.Identifier -> [St.MethodDefinition]
 fileOutLibraryClassMethods e = concatMap fileOutEntryMethodDefinitions . fileOutLibraryClassMethodEntries e
 
+fileOutEntryClassComment :: FileOutEntry -> String
+fileOutEntryClassComment cc =
+  case cc of
+    FileOutClassComment _className comment -> comment
+    _ -> error "fileOutEntryClassComment"
+
 -- | Translate FileOutClassDef to Ansi ClassDefinition.
 fileOutClassDefToClassDefinition :: FileOutClassDef -> St.ClassDefinition
 fileOutClassDefToClassDefinition (cd,cc,ci,cm,im) =
   let FileOutClassDeclaration superclassName className indexable instanceVariables classVariables poolDictionaries category = cd
-      FileOutClassComment _className comment = cc
+      comment = fileOutEntryClassComment cc
       importedPoolNames = poolDictionaries
       instanceMethods = concatMap fileOutEntryMethodDefinitions im
       classMethods = concatMap fileOutEntryMethodDefinitions cm
@@ -292,17 +298,26 @@ allowedChunkChar = quotedExclamationPoint P.<|> P.noneOf ['!']
 
 {- | Sequence of allowedChunkChar.
 
-> St.stParse chunkText "Any text!"
-> St.stParse chunkText "Any text with quoted exclamation points also!!!"
-> St.stParse chunkText "Any text with $!! character literals!"
-> St.stParse chunkText "Any text with 'string literals!!' literals!"
+>>> St.stParse chunkText "Any text!"
+"Any text"
+
+>>> St.stParse chunkText "Any text with quoted exclamation points also!!!"
+"Any text with quoted exclamation points also!"
+
+>>> St.stParse chunkText "Any text with $!! character literals!"
+"Any text with $! character literals"
+
+>>> St.stParse chunkText "Any text with 'string literals!!' literals!"
+"Any text with 'string literals!' literals"
 -}
 chunkText :: St.P String
 chunkText = P.many1 allowedChunkChar St.>>~ chunkDelimiter
 
 {- | A chunk that has only whitespace.
 
-> St.stParse emptyChunk " !" == " "
+>>> St.stParse emptyChunk " !"
+" "
+
 > St.stParse emptyChunk " x !" -- error
 -}
 emptyChunk :: St.P Whitespace
@@ -310,10 +325,16 @@ emptyChunk = P.many P.space St.>>~ chunkDelimiter
 
 {- | An ordinary chunk.  Does not delete leading whitespace.
 
-> St.stParse nonEmptyChunk " x !" == " x "
-> St.stParse nonEmptyChunk " x!! !" == " x! "
+>>> St.stParse nonEmptyChunk " x !"
+" x "
+
+>>> St.stParse nonEmptyChunk " x!! !"
+" x! "
+
 > St.stParse nonEmptyChunk " !" -- error
-> St.stParse (P.many1 nonEmptyChunk) " x ! y ! z!! !" == [" x ","y ","z! "]
+
+>>> St.stParse (P.many1 nonEmptyChunk) " x ! y ! z!! !"
+[" x ","y ","z! "]
 -}
 nonEmptyChunk :: St.P Chunk
 nonEmptyChunk = (P.try emptyChunk >> P.unexpected "emptyChunk") P.<|> chunkText
@@ -328,16 +349,20 @@ chunkSequence = P.many (P.try nonEmptyChunk) St.>>~ emptyChunk
 
 {- | A Reader.
 
-> St.stParse reader "!reader methodsFor: 'a category'!"
+>>> St.stParse reader "!reader methodsFor: 'a category'!"
+"reader methodsFor: 'a category'"
 -}
 reader :: St.P Reader
 reader = P.char '!' >> nonEmptyChunk
 
 {- | Parser for an Eval segment, a single non-empty chunk.
 
-> p = St.stParse fileOutEvalSegment
-> p " x ! " == FileOutEvalSegment " x "
-> p "X x!\n!Y y! !" == FileOutEvalSegment "X x"
+>>> let p = St.stParse fileOutEvalSegment
+>>> p " x ! "
+FileOutEvalSegment " x "
+
+>>> p "X x!\n!Y y! !"
+FileOutEvalSegment "X x"
 -}
 fileOutEvalSegment :: St.P FileOutSegment
 fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
@@ -345,8 +370,11 @@ fileOutEvalSegment = fmap FileOutEvalSegment nonEmptyChunk
 {- | The reader segments allowed consist of identifiers, keywords, literal strings and integers.
 The integer (at commentStamp:prior:) is converted to a string.
 
-> St.stParse readerQuotedWords "reader methodsFor: 'a category'"
-> St.stParse readerQuotedWords "reader commentStamp: 'a comment' prior: 0"
+>>> St.stParse readerQuotedWords "reader methodsFor: 'a category'"
+["reader","methodsFor:","a category"]
+
+>>> St.stParse readerQuotedWords "reader commentStamp: 'a comment' prior: 0"
+["reader","commentStamp:","a comment","prior:","0"]
 -}
 readerQuotedWords :: St.P [String]
 readerQuotedWords = P.many1 (P.choice [P.try St.quotedString, P.try St.keyword, St.identifier, fmap show St.integer])
@@ -357,14 +385,27 @@ readerWords = St.stParse readerQuotedWords
 
 {- | Parser for Reader segment.  Does not delete leading spaces.
 
-> p = St.stParse fileOutReaderSegment
-> p "!reader methodsFor: 'a category'! chunk! !"
-> p "!reader methodsFor: 'a category' stamp: 'initials and time'! chunk! !"
-> p "!reader class methodsFor: 'a category'! chunk! !"
-> p "!reader class methodsFor: 'a category' stamp: ''! chunk! !"
-> p "!reader class methodsFor: 'a category'! !" -- allow empty methods sequence
-> p "!reader commentStamp: 'a comment' prior: 0 ! chunk!"
+>>> let p = St.stParse fileOutReaderSegment
+>>> p "!reader methodsFor: 'a category'! chunk! !"
+FileOutReaderSegment "reader methodsFor: 'a category'" ["chunk"]
+
+>>> p "!reader methodsFor: 'a category' stamp: 'initials and time'! chunk! !"
+FileOutReaderSegment "reader methodsFor: 'a category' stamp: 'initials and time'" ["chunk"]
+
+>>> p "!reader class methodsFor: 'a category'! chunk! !"
+FileOutReaderSegment "reader class methodsFor: 'a category'" ["chunk"]
+
+>>> p "!reader class methodsFor: 'a category' stamp: ''! chunk! !"
+FileOutReaderSegment "reader class methodsFor: 'a category' stamp: ''" ["chunk"]
+
+>>> p "!reader class methodsFor: 'a category'! !" -- allow empty methods sequence
+FileOutReaderSegment "reader class methodsFor: 'a category'" []
+
+>>> p "!reader commentStamp: 'a comment' prior: 0 ! chunk!"
+FileOutReaderSegment "reader commentStamp: 'a comment' prior: 0 " ["chunk"]
+
 > p "!p! q! !" -- fail on p
+
 > p "!Z z! c! !" -- fail on Z
 -}
 fileOutReaderSegment :: St.P FileOutSegment
@@ -381,10 +422,16 @@ fileOutReaderSegment = do
 
 {- | Parser for FileOut segment.
 
-> p = St.stParse fileOutSegment
-> p "'A string chunk!!'!" == FileOutEvalSegment "'A string chunk!'"
-> p "\"A comment chunk!!\"!" == FileOutEvalSegment "\"A comment chunk!\""
-> p "!reader methodsFor: 'a category'! chunk one!!! chunk two!!! !" -- quoted !
+>>> let p = St.stParse fileOutSegment
+>>> p "'A string chunk!!'!"
+FileOutEvalSegment "'A string chunk!'"
+
+>>> p "\"A comment chunk!!\"!"
+FileOutEvalSegment "\"A comment chunk!\""
+
+>>> p "!reader methodsFor: 'a category'! chunk one!!! chunk two!!! !" -- quoted !
+FileOutReaderSegment "reader methodsFor: 'a category'" ["chunk one!","chunk two!"]
+
 > p "!p ! q ! !" -- fail on p
 -}
 fileOutSegment :: St.P FileOutSegment
@@ -392,13 +439,23 @@ fileOutSegment = P.try fileOutReaderSegment P.<|> fileOutEvalSegment
 
 {- | Parser for FileOut.
 
-> p = St.stParse fileOut
-> p "x! y! !"
-> p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'!"
-> p "ArrayedCollection class instanceVariableNames: ''! !ArrayedCollection class methodsFor: '' stamp: ''! m ^ nil! !"
-> p "!C methodsFor: 'some category name text'!\naUnaryMethod ^nil! !"
+>>> let p = St.stParse fileOut
+>>> p "x! y! !"
+[FileOutEvalSegment "x",FileOutEvalSegment "y"]
+
+>>> p "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'!"
+[FileOutEvalSegment "Object subclass: #UndefinedObject instanceVariableNames: '' classVariableNames: '' category: 'Kernel-Objects'"]
+
+>>> p "ArrayedCollection class instanceVariableNames: ''! !ArrayedCollection class methodsFor: '' stamp: ''! m ^ nil! !"
+[FileOutEvalSegment "ArrayedCollection class instanceVariableNames: ''",FileOutReaderSegment "ArrayedCollection class methodsFor: '' stamp: ''" ["m ^ nil"]]
+
+>>> p "!C methodsFor: 'some category name text'!\naUnaryMethod ^nil! !"
+[FileOutReaderSegment "C methodsFor: 'some category name text'" ["aUnaryMethod ^nil"]]
+
 > p "!p ! q ! ! x ! !" -- fail on p
+
 > p "x ! y ! !p ! q ! ! z ! !" -- fail on p
+
 > p "X x!\nY y!\n!Z z! c! !" -- fail on Z
 -}
 fileOut :: St.P FileOut

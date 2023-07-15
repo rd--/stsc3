@@ -91,8 +91,10 @@ data SmalltalkProgram =
 
 {- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
 
-> p = stParse smalltalkProgram
-> p "" == SmalltalkProgram {programElements = []}
+>>> p = stParse smalltalkProgram
+>>> p "" == SmalltalkProgram {programElements = []}
+True
+
 > p "self ifNil:" -- ? error
 -}
 smalltalkProgram :: P SmalltalkProgram
@@ -200,7 +202,8 @@ isMetaclassName x = " class" `isSuffixOf` x
 
 {- | Remove the ' class' suffix from a Metaclass name.
 
-> metaclassNameClassName "Array class" == "Array"
+>>> metaclassNameClassName "Array class"
+"Array"
 -}
 metaclassNameClassName :: UppercaseIdentifier -> UppercaseIdentifier
 metaclassNameClassName x =
@@ -247,7 +250,8 @@ type ClassCategoryParts = (String, String)
 
 {- | Split category string into two parts at hyphen.
 
-> map categoryParts (words "Kernel-Numbers Sound-Sc3 Broken")
+>>> map categoryParts (words "Kernel-Numbers Sound-Sc3 Broken")
+[("Kernel","Numbers"),("Sound","Sc3"),("Unknown","Broken")]
 -}
 categoryParts :: String -> ClassCategoryParts
 categoryParts cat =
@@ -360,8 +364,10 @@ type VariableInitializer = InitializerDefinition
 
 {- | <<global definition>> ::= [<<constant designator>>] <<global name>> [<<variable initializer>>]
 
-> p = stParse globalDefinition
-> p "g"
+>>> p = stParse globalDefinition
+>>> p "g"
+GlobalDefinition "g" (Just (InitializerDefinition Nothing Nothing Nothing))
+
 > p "g g := 0"
 -}
 globalDefinition :: P GlobalDefinition
@@ -378,10 +384,13 @@ type ProgramInitializerDefinition = InitializerDefinition
 
 {- | <<program initializer definition >> ::= <initializer definition>
 
-> p = stParse programInitializerDefinition
+>>> p = stParse programInitializerDefinition
+
 > p "|t| t + 1"
 > p "\"x\" |t| t + 1"
-> p "" == InitializerDefinition Nothing Nothing
+
+>>> p ""
+InitializerDefinition Nothing Nothing Nothing
 -}
 programInitializerDefinition :: P ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
@@ -530,12 +539,21 @@ data Pattern
 {- | Derive method selector from Pattern.
      Return is either Identifier or BinarySelector (both Strings).
 
-> p = stParse messagePattern
-> patternSelector (p "midicps") == UnarySelector "midicps"
-> patternSelector (p "| aBoolean") == BinarySelector "|"
-> patternSelector (p "+ aNumber") == BinarySelector "+"
-> patternSelector (p "new: x") == KeywordSelector "new:"
-> patternSelector (p "freq: f phase: p") == KeywordSelector "freq:phase:"
+>>> let p = stParse messagePattern
+>>> patternSelector (p "midicps")
+UnarySelector "midicps"
+
+>>> patternSelector (p "| aBoolean")
+BinarySelector "|"
+
+>>> patternSelector (p "+ aNumber")
+BinarySelector "+"
+
+>>> patternSelector (p "new: x")
+KeywordSelector "new:"
+
+>>> patternSelector (p "freq: f phase: p")
+KeywordSelector "freq:phase:"
 -}
 patternSelector :: Pattern -> Selector
 patternSelector pat =
@@ -546,7 +564,8 @@ patternSelector pat =
 
 {- | Derive argument list from Pattern.
 
-> map patternArguments [UnaryPattern "x",BinaryPattern "+" "x",KeywordPattern [("x:","p"),("y:","q")]]
+>>> map patternArguments [UnaryPattern "x",BinaryPattern "+" "x",KeywordPattern [("x:","p"),("y:","q")]]
+[[],["x"],["p","q"]]
 -}
 patternArguments :: Pattern -> [LowercaseIdentifier]
 patternArguments pat =
@@ -583,12 +602,22 @@ methodNameIdentifier (cl,sg) = cl ++ ">>" ++ sg
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
-> p = stParse messagePattern
-> p "p" == UnaryPattern "p"
-> p "+p" == p "+ p"
-> p "k1:p1" == p "k1: p1"
-> p "k1:p1 k2:p2" == p "k1: p1 k2: p2"
-> p "k: v x" == p "k:v"
+>>> let p = stParse messagePattern
+
+>>> p "p"
+UnaryPattern "p"
+
+>>> p "+p" == p "+ p"
+True
+
+>>> p "k1:p1" == p "k1: p1"
+True
+
+>>> p "k1:p1 k2:p2" == p "k1: p1 k2: p2"
+True
+
+>>> p "k: v x" == p "k:v"
+True
 -}
 messagePattern :: P Pattern
 messagePattern =
@@ -598,7 +627,9 @@ messagePattern =
 
 {- | <unary pattern> ::= unarySelector
 
-> stParse unaryPattern "p"
+>>> stParse unaryPattern "p"
+UnaryPattern "p"
+
 > stParse unaryPattern "p:" -- error
 -}
 unaryPattern :: P Pattern
@@ -606,7 +637,8 @@ unaryPattern = fmap (UnaryPattern . selectorIdentifier) unarySelector -- lexeme
 
 {- | <binary pattern> ::= binarySelector <method argument>
 
-> stParse binaryPattern "+p" == stParse binaryPattern "+ p"
+>>> stParse binaryPattern "+p" == stParse binaryPattern "+ p"
+True
 -}
 binaryPattern :: P Pattern
 binaryPattern = do
@@ -616,9 +648,14 @@ binaryPattern = do
 
 {- | <keyword pattern> ::= (keyword <method argument>)+
 
-> stParse keywordPattern "k: p" == KeywordPattern [("k:","p")]
-> stParse keywordPattern "k1: p1 k2: p2" == KeywordPattern [("k1:","p1"),("k2:","p2")]
-> stParse keywordPattern "k1: p1 ..." == KeywordPattern [("k1:","p1")]
+>>> stParse keywordPattern "k: p"
+KeywordPattern [("k:","p")]
+
+>>> stParse keywordPattern "k1: p1 k2: p2"
+KeywordPattern [("k1:","p1"),("k2:","p2")]
+
+>>> stParse keywordPattern "k1: p1 ..."
+KeywordPattern [("k1:","p1")]
 -}
 keywordPattern :: P Pattern
 keywordPattern = do
@@ -647,22 +684,36 @@ temporariesIdentifierSequence = P.between verticalBar verticalBar temporary_vari
 
 {- | <temporaries> ::= '|' <temporary variable list> '|'
 
-> p = stParse temporaries
-> p "||" == Temporaries []
-> p "|p|" == p "| p|"
-> p "|p |" == p "| p |"
-> p "|p q r|" == Temporaries ["p","q","r"]
+>>> let p = stParse temporaries
+>>> p "||"
+Temporaries {temporariesIdentifiers = []}
+
+>>> p "|p|" == p "| p|"
+True
+
+>>> p "|p |" == p "| p |"
+True
+
+>>> p "|p q r|"
+Temporaries {temporariesIdentifiers = ["p","q","r"]}
 -}
 temporaries :: P Temporaries
 temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporaries"
 
 {- | <temporary variable list> ::= identifier*
 
-> p = stParse temporary_variable_list
-> p ""
-> p "p"
-> p "p q"
-> p "p q r" == p "p q r +"
+>>> let p = stParse temporary_variable_list
+>>> p ""
+[]
+
+>>> p "p"
+["p"]
+
+>>> p "p q"
+["p","q"]
+
+>>> p "p q r" == p "p q r +"
+True
 -}
 temporary_variable_list :: P [LowercaseIdentifier]
 temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
@@ -1281,9 +1332,12 @@ characterLiteral = fmap CharacterLiteral quotedCharacter
 
 {- | <string literal> ::= quotedString
 
-> p = stParse stringLiteral
-> p "'x'" == StringLiteral "x"
-> p "'\\n'" == StringLiteral "\\n"
+>>> let p = stParse stringLiteral
+>>> p "'x'"
+StringLiteral "x"
+
+>>> p "'\\n'"
+StringLiteral "\\n"
 -}
 stringLiteral :: P Literal
 stringLiteral = fmap StringLiteral quotedString
@@ -1309,14 +1363,27 @@ closeParen = lexeme (P.char ')')
 {- | 3.4.6.6
      <array literal> ::= '#(' <array element>* ')'
 
-> p = stParse arrayLiteral
-> p "#()" == p "#( )"
-> p "#(1)" == p "#( 1 )"
-> p "#(1 2.0)"
-> p "#(1 2.0 3)"
-> p "#(1 2.0 true)"
-> p "#(1 #(2 3) 4)" == p "#(1 (2 3) 4)"
-> p "#(x x: #x: nil)" == p "#(#'x' #'x:' #x: nil)"
+>>> let p = stParse arrayLiteral
+>>> p "#()" == p "#( )"
+True
+
+>>> p "#(1)" == p "#( 1 )"
+True
+
+>>> p "#(1 2.0)"
+ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0))]
+
+>>> p "#(1 2.0 3)"
+ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0)),Left (NumberLiteral (Int 3))]
+
+>>> p "#(1 2.0 true)"
+ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0)),Right "true"]
+
+>>> p "#(1 #(2 3) 4)" == p "#(1 (2 3) 4)"
+True
+
+>>> p "#(x x: #x: nil)" == p "#(#'x' #'x:' #x: nil)"
+True
 -}
 arrayLiteral :: P Literal
 arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
@@ -1349,15 +1416,30 @@ as an <array element>
 ST-80:
 The Ansi rule is not the rule from ST-80, where #(x x: nil) means #(#'x' #'y:' nil).
 
-> p = stParse arrayElement
-> p "1"
-> p "2.0"
-> p "nil"
-> p "(1 2.0 nil symbol keyword: #hashedKeyword: -1)"
-> p "x"
-> p "x:"
-> p "#x:"
-> stParse (P.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
+>>> let p = stParse arrayElement
+>>> p "1"
+Left (NumberLiteral (Int 1))
+
+>>> p "2.0"
+Left (NumberLiteral (Float 2.0))
+
+>>> p "nil"
+Right "nil"
+
+>>> p "(1 2.0 nil symbol keyword: #hashedKeyword: -1)"
+Left (ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0)),Right "nil",Left (SymbolLiteral "symbol"),Left (SymbolLiteral "keyword:"),Left (SelectorLiteral (KeywordSelector "hashedKeyword:")),Left (NumberLiteral (Int (-1)))])
+
+>>> p "x"
+Left (SymbolLiteral "x")
+
+>>> p "x:"
+Left (SymbolLiteral "x:")
+
+>>> p "#x:"
+Left (SelectorLiteral (KeywordSelector "x:"))
+
+>>> stParse (P.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
+[Left (NumberLiteral (Int 1)),Left (StringLiteral "2"),Left (NumberLiteral (Float 3.14)),Left (SymbolLiteral "x"),Left (SymbolLiteral "y"),Left (NumberLiteral (Int (-1))),Left (SelectorLiteral (KeywordSelector "z:")),Left (NumberLiteral (Int (-2)))]
 -}
 arrayElement :: P (Either Literal Identifier)
 arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> interiorArrayLiteral P.<|> interiorSymbol) -- lexeme
@@ -1412,7 +1494,9 @@ commentDelimiter = P.char '"' -- non-lexeme (the lhs comment marker is not a lex
 
 {- | nonCommentDelimiter::= "any character that is not a commentDelimiter "
 
-> stParse nonCommentDelimiter "x" == 'x'
+>>> stParse nonCommentDelimiter "x"
+'x'
+
 > stParse nonCommentDelimiter "\"" -- FAIL
 -}
 nonCommentDelimiter :: P Char
@@ -1420,10 +1504,17 @@ nonCommentDelimiter = P.noneOf ['"']
 
 {- | comment := commentDelimiter nonCommentDelimiter * commentDelimiter
 
-> stParse comment "\"\"" == ""
-> stParse comment "\" x\"" == " x"
-> stParse comment "\"x \"" == "x "
-> stParse comment "\"analog bubbles (jmcc) #1\"" == "analog bubbles (jmcc) #1"
+>>> stParse comment "\"\""
+""
+
+>>> stParse comment "\" x\""
+" x"
+
+>>> stParse comment "\"x \""
+"x "
+
+>>> stParse comment "\"analog bubbles (jmcc) #1\""
+"analog bubbles (jmcc) #1"
 -}
 comment :: P String
 comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommentDelimiter)
@@ -1435,8 +1526,10 @@ type ReservedIdentifier = Identifier
 
 {- | One of stReservedIdentifiers
 
-> p = stParse reservedIdentifier
-> map p (words "self super nil")
+>>> let p = stParse reservedIdentifier
+>>> map p (words "self super nil")
+["self","super","nil"]
+
 > p "x" -- error
 -}
 reservedIdentifier :: P ReservedIdentifier
@@ -1446,11 +1539,17 @@ type OrdinaryIdentifier = String
 
 {- | An identifier that is not a reserved identifier
 
-> p = stParse ordinaryIdentifier
+>>> let p = stParse ordinaryIdentifier
+>>> p "x"
+"x"
+
+>>> p "x_"
+"x_"
+
+>>> p "x0"
+"x0"
+
 > p "self" -- error
-> p "x" == "x"
-> p "x_" == "x_"
-> p "x0" == "x0"
 -}
 ordinaryIdentifier :: P OrdinaryIdentifier
 ordinaryIdentifier = Token.identifier stLexer
@@ -1461,10 +1560,15 @@ underscore = P.char '_'
 
 {- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
 
-> p = stParse identifierNonLexemeForKeyword
-> p "x" == "x"
-> p "x_1" == "x_1"
-> p "super" == "super" -- super: as part of a keyword is allowed, &etc.
+>>> let p = stParse identifierNonLexemeForKeyword
+>>> p "x"
+"x"
+
+>>> p "x_1"
+"x_1"
+
+>>> p "super" -- super: as part of a keyword is allowed, &etc.
+"super"
 -}
 identifierNonLexemeForKeyword :: P OrdinaryIdentifier
 identifierNonLexemeForKeyword = do
@@ -1478,15 +1582,29 @@ type Identifier = String
 
 Ansi doesn't allow underscore but Squeak does, also some Sc Ugens have underscores in bot the class (PV_) and parameter names.
 
-> p = stParse identifier
-> p "x1" == "x1"
-> p "X1" == "X1"
-> p "x_1" == "x_1"
+>>> let p = stParse identifier
+>>> p "x1"
+"x1"
+
+>>> p "X1"
+"X1"
+
+>>> p "x_1"
+"x_1"
+
 > p "1x" -- FAIL
+
 > p "" -- FAIL
-> p "true" == "true"
-> p "nil" == "nil"
-> p "y:" == "y"
+
+>>> p "true"
+"true"
+
+>>> p "nil"
+"nil"
+
+>>> p "y:"
+"y"
+
 > p "#y:" -- error
 -}
 identifier :: P Identifier
@@ -1514,8 +1632,10 @@ keywordNotLexeme = do
 
 {- | keyword ::= identifier ':'
 
-> p = stParse keyword
-> p "kw:" == "kw:"
+>>> let p = stParse keyword
+>>> p "kw:"
+"kw:"
+
 > p "self:" -- error ?
 > p "kw :" -- error
 > p "kw" -- error
@@ -1540,15 +1660,19 @@ type BinaryIdentifier = Identifier
 
 {- | Is an identifier a binary operator?
 
-> map isBinaryIdentifier (words "+ - * / % @ ** | &")
+>>> map isBinaryIdentifier (words "+ - * / % @ ** | &")
+[True,True,True,True,True,True,True,True,True]
 -}
 isBinaryIdentifier :: Identifier -> Bool
 isBinaryIdentifier = all (`elem` binaryCharacterSet)
 
 {- | binarySelector ::= binaryCharacter+
 
-> stParse binarySelector "&" == BinarySelector "|"
-> stParse binarySelector "+p" == BinarySelector "+" -- +1 must parse as selector=+ argument=1
+>>> stParse binarySelector "&"
+BinarySelector "&"
+
+>>> stParse binarySelector "+p" -- +1 must parse as selector=+ argument=1
+BinarySelector "+"
 -}
 binarySelector :: P Selector
 binarySelector = fmap BinarySelector (Token.operator stLexer)
@@ -1565,16 +1689,18 @@ assignmentOperator = lexeme (P.string ":=")
 
 {- | integer ::= decimalInteger | radixInteger
 
-> p = stParse integer
-> map p (words "63 8r77 99 10r99 255 16rFF") == [63,63,99,99,255,255]
+>>> let p = stParse integer
+>>> map p (words "63 8r77 99 10r99 255 16rFF")
+[63,63,99,99,255,255]
 -}
 integer :: P Integer
 integer = P.try radixInteger P.<|> decimalInteger
 
 {- | radixInteger ::= radixSpecifier 'r' radixDigits
 
-> p = stParse radixInteger
-> map p (words "8r77 10r99 16rFF") == [63, 99, 255]
+>>> let p = stParse radixInteger
+>>> map p (words "8r77 10r99 16rFF")
+[63,99,255]
 -}
 radixInteger :: P Integer
 radixInteger = fmap (fromMaybe (error "radixInteger?")) radixIntegerMaybe
@@ -1623,7 +1749,8 @@ type QuotedCharacter = Char
 
 {- | quotedCharacter ::= '$' character
 
-> stParse quotedCharacter "$x" == 'x'
+>>> stParse quotedCharacter "$x"
+'x'
 -}
 quotedCharacter :: P Char
 quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
@@ -1635,36 +1762,65 @@ type QuotedString = String
 
 {- | Remove quote characters from QuotedString.
 
-> unquoteQuotedString "'string'" == "string"
-> unquoteQuotedString "'instance creation'" == "instance creation"
+>>> unquoteQuotedString "'string'"
+"string"
+
+>>> unquoteQuotedString "'instance creation'"
+"instance creation"
 -}
 unquoteQuotedString :: QuotedString -> String
 unquoteQuotedString x = take (length x - 2) (drop 1 x)
 
 {- | quotedString ::= stringDelimiter stringBody stringDelimiter
 
-> p = stParse quotedString
-> p "''" == ""
-> p "''''" == "'"
-> p "' xy'" == " xy"
-> p "'x''y'" == "x'y"
-> p "'''x''y'''" == "'x'y'"
-> p "'\n'" == "\n"
-> p "'x\n'" == "x\n"
-> p "'\0x\n'" == "\0x\n"
-> p "'\\n'" == "\\n"
+>>> let p = stParse quotedString
+>>> p "''"
+""
+
+>>> p "''''"
+"'"
+
+>>> p "' xy'"
+" xy"
+
+>>> p "'x''y'"
+"x'y"
+
+>>> p "'''x''y'''"
+"'x'y'"
+
+>>> p "'\n'"
+"\n"
+
+>>> p "'x\n'"
+"x\n"
+
+>>> p "'\0x\n'"
+"\NULx\n"
+
+>>> p "'\\n'"
+"\\n"
 -}
 quotedString :: P QuotedString
 quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- lexeme
 
 {- | stringBody ::= (nonStringDelimiter | (stringDelimiter stringDelimiter)*)
 
-> p = stParse stringBody
-> p "" == ""
-> p "x  y" == "x y"
-> p "x" == "x"
-> p "x''" == "x'"
-> p "x'" == "x"
+>>> let p = stParse stringBody
+>>> p ""
+""
+
+>>> p "x y"
+"x y"
+
+>>> p "x"
+"x"
+
+>>> p "x''"
+"x'"
+
+>>> p "x'"
+"x"
 -}
 stringBody :: P String
 stringBody = P.many (P.try escapedStringDelimiter P.<|> nonStringDelimiter)
@@ -1687,7 +1843,8 @@ type HashedString = String
 
 {- | hashedString ::= '#' quotedString
 
-> stParse hashedString "#'x'" == "x"
+>>> stParse hashedString "#'x'"
+"x"
 -}
 hashedString :: P HashedString
 hashedString = (P.char '#' >> quotedString) P.<?> "hashedString"
@@ -1696,7 +1853,9 @@ hashedString = (P.char '#' >> quotedString) P.<?> "hashedString"
 
 {- | Identifier (lexeme), not ending with ':'
 
-> stParse unarySelector "p" == UnarySelector "p"
+>>> stParse unarySelector "p"
+UnarySelector "p"
+
 > stParse unarySelector "p:" -- FAIL
 -}
 unarySelector :: P Selector
@@ -1727,9 +1886,14 @@ selectorIdentifier s =
 
 {- | Split KeywordSelector into it's components.
 
-> keywordSelectorElements "freq:" == ["freq:"]
-> keywordSelectorElements "freq:phase:" == ["freq:","phase:"]
-> keywordSelectorElements "" == []
+>>> keywordSelectorElements "freq:"
+["freq:"]
+
+>>> keywordSelectorElements "freq:phase:"
+["freq:","phase:"]
+
+>>> keywordSelectorElements ""
+[]
 -}
 keywordSelectorElements :: LowercaseIdentifier -> [LowercaseIdentifier]
 keywordSelectorElements = takeWhile (not . null) . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
@@ -1747,13 +1911,25 @@ selectorArity s =
 
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
-> p = stParse quotedSelector
-> p "#abs" == UnarySelector "abs"
-> p "#freq:" == KeywordSelector "freq:"
-> p "#freq:iphase:" == KeywordSelector "freq:iphase:"
-> p "#+" == BinarySelector "+"
-> p "#+:" == p "#+" -- ?
-> p "#+x" == p "#+" -- ?
+>>> let p = stParse quotedSelector
+>>> p "#abs"
+UnarySelector "abs"
+
+>>> p "#freq:"
+KeywordSelector "freq:"
+
+>>> p "#freq:iphase:"
+KeywordSelector "freq:iphase:"
+
+>>> p "#+"
+BinarySelector "+"
+
+>>> p "#+:" == p "#+" -- ?
+True
+
+>>> p "#+x" == p "#+" -- ?
+True
+
 > p "#'class'" -- error
 -}
 quotedSelector :: P Selector
@@ -1763,10 +1939,16 @@ quotedSelector =
 
 {- | keywordSelector ::= keyword+
 
-> p = stParse keywordSelector
-> p "freq:" == KeywordSelector "freq:"
-> p "freq:iphase:" == KeywordSelector "freq:iphase:"
-> p "p: q:" == KeywordSelector "p:"
+>>> let p = stParse keywordSelector
+>>> p "freq:"
+KeywordSelector "freq:"
+
+>>> p "freq:iphase:"
+KeywordSelector "freq:iphase:"
+
+>>> p "p: q:"
+KeywordSelector "p:"
+
 > p "freq:iphase:x" -- error
 -}
 keywordSelectorNotLexeme :: P Selector
@@ -1779,13 +1961,27 @@ keywordSelector = lexeme keywordSelectorNotLexeme
 
 {- | separator ::= (whitespace | comment)*
 
-> stParse separator " " == " "
-> stParse separator "\t" == "\t"
-> stParse separator "\n" == "\n"
-> stParse separator "  " == "  "
-> stParse separator " \t" == " \t"
-> stParse separator "\"commentary\"" == "commentary"
-> stParse separator "\t\"commentary\"" == "\tcommentary"
+>>> stParse separator " "
+" "
+
+>>> stParse separator "\t"
+"\t"
+
+>>> stParse separator "\n"
+"\n"
+
+>>> stParse separator "  "
+"  "
+
+>>> stParse separator " \t"
+" \t"
+
+>>> stParse separator "\"commentary\""
+"commentary"
+
+>>> stParse separator "\t\"commentary\""
+"\tcommentary"
+
 > stParse separator "" -- FAIL
 -}
 separator :: P String
@@ -1796,8 +1992,11 @@ separator = fmap concat (P.many1 (fmap return P.space  P.<|> comment) P.<?> "sep
 {- | Parse Squeak/Gnu type Vm primitive. (Non-Ansi).
 Allow unquoted symbol, which will be printed back unquoted (as would a quoted symbol).
 
-stParse primitive "<primitive: 63>"
-stParse primitive "<primitive: VMpr_ByteString_at>"
+>>> stParse primitive "<primitive: 63>"
+Primitive {primitiveLabel = NumberLiteral (Int 63)}
+
+>>> stParse primitive "<primitive: VMpr_ByteString_at>"
+Primitive {primitiveLabel = SymbolLiteral "VMpr_ByteString_at"}
 -}
 data Primitive = Primitive { primitiveLabel :: Literal } deriving (Eq, Show)
 
