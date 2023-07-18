@@ -473,6 +473,13 @@ Float pi radiansToDegrees = 180 "radiansToDegrees"
 [ 1 unimplementedMessage ] on: Error do: [ true ]
 6561 sqrt sqrt sqrt = 3 "unary message sequence"
 
+'Numbers'
+23 isInteger "decimal integer literal"
+2r10111 = 23 "binary (base 2) integer literals"
+8r27 = 23 "octal (base 8) integer literals"
+10r23 = 23 "decimal (base 10) integer literals"
+16r17 = 23 "hexadecimal (base 16) integer literals"
+
 'String'
 String isVariable "St-80 = true, Squeak = false"
 'string' isLiteral "string literal"

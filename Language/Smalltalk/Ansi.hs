@@ -1701,6 +1701,9 @@ integer = P.try radixInteger P.<|> decimalInteger
 >>> let p = stParse radixInteger
 >>> map p (words "8r77 10r99 16rFF")
 [63,99,255]
+
+>>> map p (words "2r10111 8r27 10r23 16r17")
+[23,23,23,23]
 -}
 radixInteger :: P Integer
 radixInteger = fmap (fromMaybe (error "radixInteger?")) radixIntegerMaybe
@@ -1716,7 +1719,7 @@ radixIntegerMaybe = do
           _ -> Nothing
       n =
         case rs of
-          --2 -> get (readBin rd) -- base=4.16.1
+          2 -> get (readBin rd) -- base=4.16.1
           8 -> get (readOct rd)
           10 -> get (readDec rd)
           16 -> get (readHex rd)

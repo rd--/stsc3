@@ -554,6 +554,12 @@ nil ? 'x' == 'x'                                            // right hand side i
 'x' ? 'y' == 'x'                                            // left hand side unless nil
 nil.isNil == true                                           // is nil
 
+'Numbers'
+23.isInteger                                                // decimal integer literal
+2r10111 = 23                                                // binary (base 2) integer literals
+8r27 = 23                                                   // octal (base 8) integer literals
+16r17 = 23                                                  // hexadecimal (base 16) integer literals
+
 'Point'
 200 @ 100 == Point.new(200, 100)                            // obtain a new point
 (200 @ 100).x == 200                                        // x coordinate
