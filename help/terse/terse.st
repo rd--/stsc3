@@ -475,10 +475,15 @@ Float pi radiansToDegrees = 180 "radiansToDegrees"
 
 'Numbers'
 23 isInteger "decimal integer literal"
-2r10111 = 23 "binary (base 2) integer literals"
-8r27 = 23 "octal (base 8) integer literals"
-10r23 = 23 "decimal (base 10) integer literals"
-16r17 = 23 "hexadecimal (base 16) integer literals"
+2r10111 = 23 "binary (base 2) integer literal"
+8r27 = 23 "octal (base 8) integer literal"
+10r23 = 23 "decimal (base 10) integer literal"
+16r17 = 23 "hexadecimal (base 16) integer literal"
+-23 isInteger "negative decimal integer literal"
+-2r10111 = -23 "negative binary (base 2) integer literal"
+-8r27 = -23 "negative octal (base 8) integer literal"
+-10r23 = -23 "negative decimal (base 10) integer literal"
+-16r17 = -23 "negative hexadecimal (base 16) integer literal"
 
 'String'
 String isVariable "St-80 = true, Squeak = false"
