@@ -399,6 +399,10 @@ Duration zero seconds = 0
 16rFF = 255
 (1 to: 63 collect: [:i | ((-1 bitShift: i) bitShift: i negated) = -1 ]) allSatisfy: #yourself
 (1 to: 62 collect: [:i | ((1 bitShift: i) bitShift: i negated) = 1 ]) allSatisfy: #yourself
+(1 to: 10) collect: [ :i | i printStringRoman ] = #('I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IX' 'X')
+(11 to: 20) collect: [ :i | i printStringRoman ] = #('XI' 'XII' 'XIII' 'XIV' 'XV' 'XVI' 'XVII' 'XVIII' 'XIX' 'XX')
+(50 to: 160 by: 11) collect: [ :i | i printStringRoman ] = #('L' 'LXI' 'LXXII' 'LXXXIII' 'XCIV' 'CV' 'CXVI' 'CXXVII' 'CXXXVIII' 'CXLIX' 'CLX')
+(#('I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IX' 'X') collect: [ :s | s romanNumber ]) = (1 to: 10) asArray
 
 'Interval'
 (Interval from: 5 to: 10) class = Interval "create interval object"

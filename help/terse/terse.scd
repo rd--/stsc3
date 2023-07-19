@@ -419,6 +419,14 @@ c.collect { | item | nil }.at('j') == 2                     // only "local" elem
 'Integer'
 127.asBinaryDigits(8) == [0, 1, 1, 1, 1, 1, 1, 1]           // integer as big endian binary digits to n places
 (0 .. 255).collect { | n | n.asBinaryDigits(8) }.size == 256// all eight bit integers
+23.asDigits(2, 5) == [1, 0, 1, 1, 1]                        // binary digits
+23.asDigits(8, 2) == [2, 7]                                 // octal digits
+23.asDigits(10, 2) == [2, 3]                                // decimal digits
+23.asDigits(16, 2) == [1, 7]                                // hexadecimal digits
+[1, 0, 1, 1, 1].convertDigits(2) == 23
+[2, 7].convertDigits(8) == 23
+[2, 3].convertDigits(10) == 23
+[1, 7].convertDigits(16) == 23
 
 'Interpreter'
 this.class == Interpreter                                   // context in which expressions are evaluated
