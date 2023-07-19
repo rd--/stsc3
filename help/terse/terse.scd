@@ -397,6 +397,12 @@ h.value == 9                                                // => 3 * 3 = 9
 0.1 * 3.0 == 0.3 == false                                   // general floating point math
 1.0 + 1.0 + 1.0 == 3.0 == true                              // integral floating point math
 0.1 + 0.1 + 0.1 == 0.3 == false                             // general floating point math
+5.linlin(0, 10, -4.3, 100).round == 48                      // linear to linear mapping
+5.linexp(0, 10, 4.3, 100).round == 21                       // linear to exponential mapping
+5.explin(0.1, 10, -4.3, 100).round == 84                    // exponential to linear mapping
+5.expexp(0.1, 10, 4.3, 100).round == 62                     // exponential to exponential mapping
+5.lincurve(0, 10, -4.3, 100, -3).round == 81                // linear to parametric curve mapping
+5.curvelin(0, 10, -4.3, 100, -3).round == 18                // parametric curve to liner mapping
 
 'IdentityDictionary'
 IdentityDictionary.superclass == Dictionary                 // identity dictionaries are dictionaries
@@ -474,8 +480,9 @@ x = { }; x.isFunction                                       // blocks are object
 { 'x'.postln }.value == 'x'                                 // simple block usage
 { | p1 p2| p1 ++ ' & ' ++ p2 }.value('x', 'y') == "x & y"   // block with argument passing
 { | x | x + 1 }.def.sourceCode == "{ | x | x + 1 }"         // the FunctionDef can be retrieved
-({ | x | x * 2 } <> { | x | x + 3 }).value(4) == 14         // function composition
+({ | x | x * 2 } <> { | x | x + 3 }).value(4) == 14         // function composition, right to left
 { | x | x = nil }.value(42).isNil                           // arguments are mutable
+{ |f| 10.do { |i| (i == 5).if { f.value(5) } } }.block == 5 // non-local return
 
 'List'
 List.new.isKindOf(Collection) == true                       // c.f. Collection
@@ -658,6 +665,10 @@ List.exprand(4, 1, 9).first.isInteger.not                   // list of random nu
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
 List.rand(4, 1, 9).asArray.class == Array                   // as array
 [3, [1, 2, 1], 1].convertRhythm == List[0.75, 1.5, 0.75]    // variant of Mikael Laurson's notation
+[10, 20].obtain(2, 30) == 30                                // at, or default value for out of range index
+23.obtain(0, nil) == 23                                     // obtain is defined at Object
+[10, 20].instill(2, -30, nil) == [10, 20, -30]              // atPut, or extends array if required
+23.instill(1, 3.141, nil) == [23, 3.141]                    // instill is defined at Object
 
 'Set'
 Set.new.isKindOf(Collection) == true                        // c.f. Collection
