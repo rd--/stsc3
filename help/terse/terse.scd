@@ -648,6 +648,7 @@ var c = [3, 2, 1]; c.sort ; c == [1, 2, 3]                  // sort is in place 
 [1, 3, 5, 7, 9].find([5, 7, 9]) == 2                        // locate index of subsequence
 [1, 3, 5, 7, 9].indexOf(5) == 2                             // index of element (compared using ==)
 [1, 3, 5, 7, 9].first == 1                                  // first element of
+[].first == nil                                             // first element of empty array is nil
 var a = (1 .. 9); a.first == a[0]                           // zero-indexed
 [1, 3, 5, 7, 9].last == 9                                   // last element of
 var a = (1 .. 9); a.last == a[8]                            // zero-indexed
@@ -669,6 +670,7 @@ List.rand(4, 1, 9).asArray.class == Array                   // as array
 23.obtain(0, nil) == 23                                     // obtain is defined at Object
 [10, 20].instill(2, -30, nil) == [10, 20, -30]              // atPut, or extends array if required
 23.instill(1, 3.141, nil) == [23, 3.141]                    // instill is defined at Object
+[1, 3, 2, 5, 4].order == [0, 2, 1, 4, 3]                    // indices that would sort recievr
 
 'Set'
 Set.new.isKindOf(Collection) == true                        // c.f. Collection

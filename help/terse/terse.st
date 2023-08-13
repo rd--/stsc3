@@ -225,6 +225,8 @@ true asInteger > false asInteger
 (ByteArray readHexFrom: '737472696e67') asString = 'string'
 ((ByteArray new: 4) atAllPut: 15) hex = '0f0f0f0f'
 'string' asByteArray asArray = #(115 116 114 105 110 103)
+#(1 2 3) asByteArray ~= #(1 2 3) "ByteArray and Array of equal elements are not equal"
+#(1 2 3) asByteArray hasEqualElements: #(1 2 3) "ByteArray and Array of equal elements"
 
 'Character'
 $ = Character space
@@ -403,6 +405,7 @@ Duration zero seconds = 0
 (11 to: 20) collect: [ :i | i printStringRoman ] = #('XI' 'XII' 'XIII' 'XIV' 'XV' 'XVI' 'XVII' 'XVIII' 'XIX' 'XX')
 (50 to: 160 by: 11) collect: [ :i | i printStringRoman ] = #('L' 'LXI' 'LXXII' 'LXXXIII' 'XCIV' 'CV' 'CXVI' 'CXXVII' 'CXXXVIII' 'CXLIX' 'CLX')
 (#('I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IX' 'X') collect: [ :s | s romanNumber ]) = (1 to: 10) asArray
+Integer lowBitPerByteTable asBag sortedCounts = {128->1 . 64->2 . 32->3 . 16->4 . 8->5 . 4->6 . 2->7 . 1->8}
 
 'Interval'
 (Interval from: 5 to: 10) class = Interval "create interval object"
@@ -426,6 +429,8 @@ Duration zero seconds = 0
 (5 to: 1) asArray = #()
 (5 downTo: 1) asArray = #(5 4 3 2 1)
 (5 downTo: 1 by: 2) asArray = #(5 3 1)
+(1 to: 5) first = 1 "first element of interval"
+(1 to: 0) first = 1 "first element of empty interval"
 
 'Iteration'
 | n | n := 0. 4 timesRepeat: [ n := n + 1 ]. n = 4 "times repeat loop (int)"
@@ -488,6 +493,14 @@ Float pi radiansToDegrees = 180 "radiansToDegrees"
 -8r27 = -23 "negative octal (base 8) integer literal"
 -10r23 = -23 "negative decimal (base 10) integer literal"
 -16r17 = -23 "negative hexadecimal (base 16) integer literal"
+
+'ReadStream'
+(ReadStream on: #()) next = nil "next at an empty read stream answers nil"
+
+'SequenceableCollection'
+#(1 2 3) join = '123'
+#(s t r) join = 'str'
+#('s' 't' 'r') join = 'str'
 
 'String'
 String isVariable "St-80 = true, Squeak = false"
