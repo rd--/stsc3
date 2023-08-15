@@ -270,6 +270,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [].isEmpty == true                                          // is collection empty
 [1, 2, 3] == [1, 2, 3]                                      // are collections equal
 [9, 4, 5, 7, 8, 6].size == 6                                // size of collection
+[3.141, 23, 'symbol'].collect { | k | k.size } = [0, 0, 0]  // size non collections answers zero
 [9, 4, 5, 7, 8, 6].maxItem == 9                             // maximum item in collection
 [9, 4, 5, 7, 8, 6].minItem == 4                             // minimum item in collection
 [9, 4, 5, 7, 8, 6].sum == 39                                // sum of collection (inject 0 +)
@@ -483,6 +484,37 @@ x = { }; x.isFunction                                       // blocks are object
 ({ | x | x * 2 } <> { | x | x + 3 }).value(4) == 14         // function composition, right to left
 { | x | x = nil }.value(42).isNil                           // arguments are mutable
 { |f| 10.do { |i| (i == 5).if { f.value(5) } } }.block == 5 // non-local return
+
+'J Concepts'
+(z = Array.iota(3, 2)) == [[0, 1], [2, 3], [4, 5]]
+z.bubble(0, 1) == [z]
+z.bubble(1, 1) == [[[0, 1]], [[2, 3]], [[4, 5]]]
+z.bubble(2, 1) == [[[0], [1]], [[2], [3]], [[4], [5]]]
+z.bubble(0, 0) == z.bubble(0, 1)
+z.bubble(0, 1).unbubble(0, 1) == z
+z.bubble(1, 1).unbubble(1, 1) == z
+z.bubble(2, 1).unbubble(2, 1) == z
+z.bubble(0, 2) == [[z]]
+z.bubble(0, 2).unbubble(0, 2) == z
+z.bubble(1, 2).unbubble(1, 2) != z
+z.bubble(2, 2).unbubble(2, 2) != z
+[[1, 2, 3], [[41, 52], 5, 6], 1, 2, 3].maxDepth == 3
+(0 .. 3).collect { | k | [[1, 2, 3], [[41, 52], 5, 6], 1, 2, 3].maxSizeAtDepth(k) } == [5, 3, 2, 1]
+(z = Array.iota(4, 5)).size == 4
+z.slice(nil, (1 .. 3)) == [[1, 2, 3], [6, 7, 8], [11, 12, 13], [16, 17, 18]]
+z.slice(2, (1 .. 3)) == [11, 12, 13]
+z.slice((2 .. 3), (0 .. 2)) == [[10, 11, 12], [15, 16, 17]]
+z.slice((1 .. 3), 3) == [8, 13, 18]
+z.slice(2, 3) == 13
+(z = Array.iota(3, 3, 3)).size == 3
+z.slice([0,1], [1,2], [0,2]) == [[[3, 5], [6, 8]], [[12, 14], [15, 17]]]
+z.slice(nil, nil, [0,2]) == [[[0, 2], [3, 5], [6, 8]], [[9, 11], [12, 14], [15, 17]], [[18, 20], [21, 23], [24, 26]]]
+z.slice(1) == [[9, 10, 11], [12, 13, 14], [15, 16, 17]]
+z.slice(nil, 1) == [[3, 4, 5], [12, 13, 14], [21, 22, 23]]
+z.slice(nil, nil, 1) == [[1, 4, 7], [10, 13, 16], [19, 22, 25]]
+z.slice(nil, 2, 1) == [7, 16, 25]
+z.slice(nil, 1, (1 .. 2)) == [[4, 5], [13, 14], [22, 23]]
+z.slice(1, [0,1]) == [[9, 10, 11], [12, 13, 14]]
 
 'List'
 List.new.isKindOf(Collection) == true                       // c.f. Collection
