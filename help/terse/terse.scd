@@ -474,15 +474,20 @@ File.use("/tmp/x", "r") { | f | f.getChar } == $x           // use file to read 
 File.delete("/tmp/x")                                       // delete file
 
 'Functions (Blocks)'
-x = { }; x.isFunction                                       // blocks are objects and may be assigned to a variable
+var x = { }; x.isFunction                                   // blocks are objects and may be assigned to a variable
 { nil; 1 }.value == 1                                       // value is last expression evaluated unless ^ (return)
+{ }.value == nil                                            // empty blocks answer nil
+{ var x; }.value == nil                                     // also with unused temporaries
+{ var x = 1; }.value == nil                                 // also with unused initialised temporaries
+{ 'x' }.value == 'x'                                        // apply no argument block
+{ | n | n * n }.value(23) == 529                            // apply one argument block
+{ | p q | p ++ " & " ++ q }.value("x", "y") == "x & y"      // apply two argument block
+{ | n | n * n }.value(23, 3.141) == 529                     // apply one argument block to two arguments
 { { 1 }.value }.value == 1                                  // blocks may be nested
 { | x | var y = x; y }.value(1) == 1                        // specification { arguments localvars expressions }
-{ 'x'.postln }.value == 'x'                                 // simple block usage
-{ | p1 p2| p1 ++ ' & ' ++ p2 }.value('x', 'y') == "x & y"   // block with argument passing
 { | x | x + 1 }.def.sourceCode == "{ | x | x + 1 }"         // the FunctionDef can be retrieved
 ({ | x | x * 2 } <> { | x | x + 3 }).value(4) == 14         // function composition, right to left
-{ | x | x = nil }.value(42).isNil                           // arguments are mutable
+{ | x | x = nil; x }.value(42).isNil                        // arguments are mutable
 { |f| 10.do { |i| (i == 5).if { f.value(5) } } }.block == 5 // non-local return
 
 'J Concepts'

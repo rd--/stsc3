@@ -168,6 +168,7 @@ Float inheritsFrom: Magnitude "non-immediate inheritance"
 [ 42 ] ~= 42
 | b | b := [ :x | x * 2 ]. b = b copy
 | b | b := [ :x | x * 2 ]. (b copy value: 2) = 4
+[ ] value = nil "empty blocks answer nil"
 
 'Booleans'
 true = true "constant"
