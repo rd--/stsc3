@@ -44,7 +44,11 @@ removeTrailingColon x = if last x == ':' then take (length x - 1) x else x
 isGetterOrSetter :: ClassDefinition -> MethodDefinition -> Bool
 isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (selectorIdentifier (methodSelector m)))
 
--- > downcaseFirstLetter "VariableName" == "variableName"
+{- | TitleCase to camelCase
+
+>>> downcaseFirstLetter "VariableName"
+"variableName"
+-}
 downcaseFirstLetter :: String -> String
 downcaseFirstLetter s =
   case s of
@@ -74,8 +78,14 @@ sc_variableInitializer_pp = sc_initializerDefinition_pp
 sc_programInitializerDefinition_pp :: ProgramInitializerDefinition -> String
 sc_programInitializerDefinition_pp = sc_initializerDefinition_pp
 
--- > sc_keywordSelector ["at:","put:"] == "atPut_"
--- > sc_keywordSelector ["Required"] == "required_"
+{- | Translate keyword
+
+>>> sc_keywordSelector ["at:","put:"]
+"atPut_"
+
+>>> sc_keywordSelector ["Required"]
+"required_"
+-}
 sc_keywordSelector :: [Identifier] -> Identifier
 sc_keywordSelector k =
   let remcadd_ s = downcaseFirstLetter (filter (/= ':') s ++ "_")
@@ -97,8 +107,14 @@ sc_binop_rewrite b =
     "," -> "++"
     _ -> b
 
--- > sc_patternSelector (stParse messagePattern "= x") == "=="
--- > sc_patternSelector (stParse messagePattern "Required") == "required"
+{- | Translate Pattern
+
+>>> sc_patternSelector (stParse messagePattern "= x")
+"=="
+
+>>> sc_patternSelector (stParse messagePattern "Required")
+"required"
+-}
 sc_patternSelector :: Pattern -> Identifier
 sc_patternSelector pat =
   case pat of
@@ -140,13 +156,23 @@ pp_inChars (x,y) s = x : s ++ [y]
 pp_inBraces :: String -> String
 pp_inBraces = pp_inChars ('{','}')
 
-{-
-> let p = sc_blockBody_pp . stParse blockBody
-> p ""
-> p "x"
-> p "x * 2"
-> p ":x | x * 2]"
-> p ":x :y | (x * x) + (y * y)]"
+{- | Translate block
+
+>>> let p = sc_blockBody_pp . stParse blockBody
+>>> p ""
+"{}"
+
+>>> p "x"
+"{x}"
+
+>>> p "x * 2"
+"{x * 2}"
+
+>>> p ":x | x * 2]"
+"{arg x; x * 2}"
+
+>>> p ":x :y | (x * x) + (y * y)]"
+"{arg x,y; (x * x) + (y * y)}"
 -}
 sc_blockBody_pp :: BlockBody -> String
 sc_blockBody_pp (BlockBody _ a t s) =
@@ -166,8 +192,9 @@ sc_statements_pp st =
 
 {- | Print ReturnStatement
 
-p = sc_returnStatement_pp . stParse returnStatement
-p "^self" == "^this"
+>>> let p = sc_returnStatement_pp . stParse returnStatement
+>>> p "^self"
+"^this"
 -}
 sc_returnStatement_pp :: ReturnStatement -> String
 sc_returnStatement_pp (ReturnStatement e) = printf "^%s" (sc_expression_pp e)
@@ -188,14 +215,27 @@ requiresParen m =
 
 {- | Binary messages must be parenthesised because keyword messages have higher precedence.
 
-> let p = sc_basicExpression_pp . stParse basicExpression
-> p "x + y" == "x + y"
-> p "x + y * z" == "x + y * z"
-> p "x y + z q" == "x .y + z .q"
-> p "x y + z min: a" == "( x .y + z ) .min(a)"
-> p "x * y + z min: 3" == "( x * y + z ) .min(3)"
-> p "x == 0 ifTrue: [y]" == "( x == 0 ) .ifTrue({y})"
-> p "Strength SymPreferred"
+>>> let p = sc_basicExpression_pp . stParse basicExpression
+>>> p "x + y"
+"x + y"
+
+>>> p "x + y * z"
+"x + y * z"
+
+>>> p "x y + z q"
+"x .y + z .q"
+
+>>> p "x y + z min: a"
+"( x .y + z ) .min_(a)"
+
+>>> p "x * y + z min: 3"
+"( x * y + z ) .min_(3)"
+
+>>> p "x == 0 ifTrue: [y]"
+"( x == 0 ) .ifTrue_({y})"
+
+>>> p "Strength SymPreferred"
+"Strength .symPreferred"
 -}
 sc_basicExpression_pp :: BasicExpression -> String
 sc_basicExpression_pp (BasicExpression p m c) =
@@ -207,9 +247,13 @@ sc_basicExpression_pp (BasicExpression p m c) =
 
 {- | In .stc keyword patterns bind more closely than binary patterns.
 
-> let p = sc_messages_pp . stParse messages
-> p "min: 2 * 3"
-> p "at: 0 put: x * 2"
+>>> let p = sc_messages_pp True . stParse messages
+>>> p "min: 2 * 3"
+".min_(2 * 3)"
+
+>>> p "at: 0 put: x * 2"
+".atPut_(0,x * 2)"
+
 > p "== 0 ifTrue: [error]" -- the initial binary operator needs to be parenthesised....
 -}
 sc_messages_pp :: Bool -> Messages -> String
@@ -228,7 +272,8 @@ sc_messages_pp rqp ms =
      This is required for translation.
      Other rewriting is defered.
 
-> sc_primary_pp (stParse primary "self") == "this"
+>>> sc_primary_pp (stParse primary "self")
+"this"
 -}
 sc_primary_pp :: Primary -> String
 sc_primary_pp pr =
@@ -241,18 +286,36 @@ sc_primary_pp pr =
     PrimaryExpression e -> printf "(%s)" (sc_expression_pp e)
     PrimaryArrayExpression a -> printf "{%s}" (intercalate " . " (map sc_basicExpression_pp a))
 
--- > sc_unaryMessage_pp (stParse unaryMessage "abs") == ".abs"
--- > sc_unaryMessage_pp (stParse unaryMessage "Required") == ".required"
+{- | Translate unary message
+
+>>> sc_unaryMessage_pp (stParse unaryMessage "abs")
+".abs"
+
+>>> sc_unaryMessage_pp (stParse unaryMessage "Required")
+".required"
+-}
 sc_unaryMessage_pp :: UnaryMessage -> String
 sc_unaryMessage_pp = ('.' :) . downcaseFirstLetter . selectorIdentifier . unaryMessageSelector
 
--- > sc_binaryMessage_pp (stParse binaryMessage "= 0") == "== 0"
--- > sc_binaryMessage_pp (stParse binaryMessage "+ 2") == "+ 2"
+{- | Translate binary message
+
+>>> sc_binaryMessage_pp (stParse binaryMessage "= 0")
+"== 0"
+
+>>> sc_binaryMessage_pp (stParse binaryMessage "+ 2")
+"+ 2"
+-}
 sc_binaryMessage_pp :: BinaryMessage -> String
 sc_binaryMessage_pp (BinaryMessage b a) = strjn [sc_binop_rewrite b,sc_binaryArgument_pp a]
 
--- > sc_keywordMessage_pp (stParse keywordMessage "at: 0") == ".at(0)"
--- > sc_keywordMessage_pp (stParse keywordMessage "at: 0 put: x") == ".atPut(0,x)"
+{- | Translate keyword message
+
+>>> sc_keywordMessage_pp (stParse keywordMessage "at: 0")
+".at_(0)"
+
+>>> sc_keywordMessage_pp (stParse keywordMessage "at: 0 put: x")
+".atPut_(0,x)"
+-}
 sc_keywordMessage_pp :: KeywordMessage -> String
 sc_keywordMessage_pp (KeywordMessage l) =
   let (ks,as) = unzip l

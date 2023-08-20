@@ -32,3 +32,11 @@ Tested with:
  [Cuis](http://cuis-smalltalk.org/) 5.0
 
 © [Rohan Drape](http://rohandrape.net/), 2019-2023, [Gpl](http://gnu.org/copyleft/)
+
+* * *
+
+```
+$ doctest Language/Smalltalk/Ansi/
+Examples: 174  Tried: 174  Errors: 0  Failures: 0
+$
+```
