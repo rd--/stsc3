@@ -63,7 +63,7 @@ sc_ClassDefinition_pp spl c =
   let l f x = if null x then "" else f x
   in unlines
      [printf "%s %s {" (St.className c) (maybe "" (\x -> printf " : %s" x) (St.superclassName c))
-     ,l (\x -> printf "var %s;" (strjnComma x)) (St.classInstanceVariableNames c)
+     ,l (\x -> printf (if spl then "| %s |" else "var %s;") (Ansi.Print.strjnWith (if spl then ' ' else ',') x)) (St.classInstanceVariableNames c)
      ,l (\x -> printf "classvar %s;" (strjnComma (map downcaseFirstLetter x))) (St.classVariableNames c)
      ,unlines (map (sc_methodDefinition_pp spl Nothing) (St.instanceMethods c))
      ,unlines (map (sc_methodDefinition_pp spl (Just '*')) (St.classMethods c))
@@ -220,14 +220,17 @@ sc_statements_pp spl st =
 sc_returnStatement_pp :: Bool -> St.ReturnStatement -> String
 sc_returnStatement_pp spl (St.ReturnStatement e) =
   if spl
-  then printf "%s.return" (sc_expression_pp spl e)
+  then let isNonLocalReturn = False
+       in if isNonLocalReturn
+          then printf "%s.return" (sc_expression_pp spl e)
+          else sc_expression_pp spl e
   else printf "^%s" (sc_expression_pp spl e)
 
 sc_expression_pp :: Bool -> St.Expression -> String
 sc_expression_pp spl = St.expressionCase (sc_assignment_pp spl) (sc_basicExpression_pp spl)
 
 sc_assignment_pp :: Bool -> St.Assignment -> String
-sc_assignment_pp spl (St.Assignment i e) = printf "%s = %s" (downcaseFirstLetter i) (sc_expression_pp spl e)
+sc_assignment_pp spl (St.Assignment i e) = printf "%s %s %s" (downcaseFirstLetter i) (if spl then ":=" else "=") (sc_expression_pp spl e)
 
 -- | Decide if Messages require the binary sequence to be parenthesised.
 requiresParen :: Maybe St.Messages -> Bool
