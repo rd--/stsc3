@@ -88,11 +88,13 @@ var n = 0; [1, 2, 3, 4].do { | x | n = n + x }; n == 10     // iterate over arra
 [1, 2, 3, 4].inject(0) { | z e | e - z } == 2               // left fold: (1 - 0)
 [1, 2, 3, 4].injectr(0) { | z e | e - z } == -2             // right fold
 [].isEmpty == true                                          // is array empty
-[1, 2, 3, 4].includes(3) == true                            // test if element is in array
+[1, 2, 3, 4].includes(3) == true                            // test if element is in array (true)
+(1 .. 7).includes(9) == false                               // test if element is in array (false)
+(1 .. 9).includesAll((3 .. 7)) == true                      // has all elements of another collection
+(1 .. 9).includesAny([0, 6]) == true                        // includes any element of a collection
 [1, 2, 3, 4].copyRange(1, 2) == [2, 3]                      // subarray
 [1, 2, 3, 4].every { | x | x < 5 } == true                  // test if all elements meet condition
 [1, 2, 3, 4].any { | x | x == 3 } == true                   // test if any elements meet condition
-[1, 2, 3, 4].includes(3) == true                            // has element
 [1, 2, 3, 4].put(0, '1') == ['1', 2, 3, 4]                  // set element at index
 [1, 2, 3, 4].reject { | x | x > 2 } == [1, 2]               // filter elements
 [1, 2, 3, 4].select { | x | x > 2 } == [3, 4]               // filter elements
@@ -187,8 +189,8 @@ Association.new('x', 1).class == Association                // associate key wit
 'Bag'
 Bag(4).class == Bag                                         // Bag, multi-set, counted-set
 [1, 2, 3, 3].asBag.contents.isDictionary                    // the contents of a Bag is a Dictionary
-[1, 2, 3, 3].asBag.itemCount(3) == 2                        // number of occurences of indicated item
-[1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1              // remove one occurence of indicated item from Bag
+[1, 2, 3, 3].asBag.itemCount(3) == 2                        // number of occurrences of indicated item
+[1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1              // remove one occurrence of indicated item from Bag
 [1, 2, 3, 3].asBag.includes(3)                              // predicate to determine if a Bag contains an item
 var n = 0; [1, 3, 2].asBag.do { |i| n = n.max(i) }; n == 3  // iterate over items in bag
 var n = 0; "xx".asBag.countsDo { |i c| n = n.max(c) }; n == 2 // iterate over items & counts in bag
@@ -270,7 +272,7 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [].isEmpty == true                                          // is collection empty
 [1, 2, 3] == [1, 2, 3]                                      // are collections equal
 [9, 4, 5, 7, 8, 6].size == 6                                // size of collection
-[3.141, 23, 'symbol'].collect { | k | k.size } = [0, 0, 0]  // size non collections answers zero
+[3.141, 23, 'symbol'].collect { | k | k.size } == [0, 0, 0] // size non collections answers zero
 [9, 4, 5, 7, 8, 6].maxItem == 9                             // maximum item in collection
 [9, 4, 5, 7, 8, 6].minItem == 4                             // minimum item in collection
 [9, 4, 5, 7, 8, 6].sum == 39                                // sum of collection (inject 0 +)
@@ -291,8 +293,8 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 (1 .. 4).powerset.size == 16                                // set of all subsets (size is 2 ** n)
-(1 .. 9).reject { | each | each.even } == (1, 3 .. 9)       // reject elements
-var a = (1 .. 9); a.removeAllSuchThat { | each | each.even }; a == (1, 3 .. 9) // reject in place
+a = (1 .. 9); a.reject { | each | each.even } == (1, 3 .. 9) // reject elements
+a.removeAllSuchThat { | each | each.even }; a == (1, 3 .. 9) // reject in place
 
 'Comments'
 "until end of line comment".isString                        // until end of line comment
@@ -365,7 +367,7 @@ d.includesKey('z') == true                                  // does dictionary h
 d.keys == Set.newFrom(['x', 'y', 'z'])                      // set of keys at dictionary
 var n = 0; d.keysDo { | x | n = n + d[x] }; n == 6          // run f at keys of dictionary
 d.keysValuesDo { | k v | (d[k] != v).if { 'x'.error } } == d// run f at keys & values of dictionary
-d.occurrencesOf(3) == 1                                     // number of occurences of value in dictionary
+d.occurrencesOf(3) == 1                                     // number of occurrences of value in dictionary
 { d.removeAt('x') == 1; d.add('x' -> 1) }.value.size == 3   // remove key (and return value of) from dictionary
 d.size == 3                                                 // size of dictionary (number of associations)
 d.values.sort { | i j | i <= j }.asArray == (1 .. 3)        // list of values at dictionary
@@ -518,7 +520,7 @@ z.slice([0,1], [1,2], [0,2]) == [[[4, 6], [7, 9]], [[13, 15], [16, 18]]]
 z.slice(nil, nil, [0,2]) == [[[1, 3], [4, 6], [7, 9]], [[10, 12], [13, 15], [16, 18]], [[19, 21], [22, 24], [25, 27]]]
 z.slice(1) == [[10, 11, 12], [13, 14, 15], [16, 17, 18]]
 z.slice(nil, 1) == [[4, 5, 6], [13, 14, 15], [22, 23, 24]]
-z.slice(nil, nil, 1) == [[1, 4, 7], [10, 13, 16], [19, 22, 25]]
+z.slice(nil, nil, 0) == [[1, 4, 7], [10, 13, 16], [19, 22, 25]]
 z.slice(nil, 2, 1) == [8, 17, 26]
 z.slice(nil, 1, (1 .. 2)) == [[5, 6], [14, 15], [23, 24]]
 z.slice(1, [0,1]) == [[10, 11, 12], [13, 14, 15]]
@@ -676,7 +678,7 @@ true.class == True                                          // constant (instanc
 
 'Routine'
 f = { | x | var y = x * 2, z = y.yield; f.value(z) }; true  // yield the receiver to the coroutine (received by next)
-r = Routine.new(f); r.class == Routine                      // a routine is instantiated on a function
+var r = Routine(f); r.class == Routine                      // a routine is instantiated on a function
 (1 .. 9).collect { | i | i -> r.next(i) }.at(6) == (7 -> 14)// sends value to coroutine (also resume, value, run)
 
 'SequenceableCollection'
