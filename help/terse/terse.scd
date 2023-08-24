@@ -291,6 +291,8 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 (1 .. 4).powerset.size == 16                                // set of all subsets (size is 2 ** n)
+(1 .. 9).reject { | each | each.even } == (1, 3 .. 9)       // reject elements
+var a = (1 .. 9); a.removeAllSuchThat { | each | each.even }; a == (1, 3 .. 9) // reject in place
 
 'Comments'
 "until end of line comment".isString                        // until end of line comment
