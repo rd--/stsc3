@@ -1,4 +1,4 @@
-;; sawed cymbals (jmcc) ; #10 ; graph rewrite
+(* sawed cymbals (jmcc) ; #10 ; graph rewrite *)
 var p = 15;
 { :tr |
 	var f1 = TRand(500, 2500, tr);

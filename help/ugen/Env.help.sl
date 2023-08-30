@@ -1,14 +1,14 @@
-;; Env ; asEnvGen
+(* Env ; asEnvGen *)
 var e = Env([440, 440, 324, 10000], [4, 2, 1], 2, nil, nil, 0);
 var f = e.asEnvGen(1);
 SinOsc(f, 0) * 0.1
 
-;; Env ; EnvGen
+(* Env ; EnvGen *)
 var e = Env([440, 440, 324, 10000], [4, 2, 1], 2, nil, nil, 0);
 var f = EnvGen(1, 1, 0, 1, 2, e.asArray);
 SinOsc(f, 0) * 0.1
 
-;; Env ; keywords
+(* Env ; keywords *)
 var e = Env(
 	levels: [440, 440, 324, 10000],
 	times: [4, 2, 1],
@@ -30,7 +30,7 @@ SinOsc(
 	phase: 0
 ) * 0.1
 
-;; ---- Env ; asEnvGenWithDoneAction
+(* ---- Env ; asEnvGenWithDoneAction *)
 var e = Env([440, 440, 324, 10000], [4, 2, 1], 2, nil, nil, 0);
 var f = e.asEnvGenWithDoneAction(1, 2);
 SinOsc(f, 0) * 0.1

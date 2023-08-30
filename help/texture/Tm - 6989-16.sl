@@ -1,4 +1,4 @@
-;; https://scsynth.org/t/6989/16 ; tm
+(* https://scsynth.org/t/6989/16 ; tm *)
 {
 	var num = 20;
 	var dur = 1 / 60;

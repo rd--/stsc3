@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0293
+(* https://sccode.org/1-4Qy ; f0 ; 0293 *)
 { :t :a |
 	var d;
 	{

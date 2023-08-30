@@ -1,13 +1,13 @@
-;; LfNoise2 ; fixed frequency
+(* LfNoise2 ; fixed frequency *)
 LfNoise2(1000) * 0.05
 
-;; LfNoise2 ; modulate frequency
+(* LfNoise2 ; modulate frequency *)
 LfNoise2(XLn(1000, 10000, 10)) * 0.05
 
-;; LfNoise2 ; modulate frequency
+(* LfNoise2 ; modulate frequency *)
 LfNoise2(XLn(1000, 10000, 10)) * 0.05
 
-;; LfNoise2 ; modulate parameters
+(* LfNoise2 ; modulate parameters *)
 var n = 23;
 var s = (1 .. n).collect { :i |
 	var lf = 3 * (1.1 ** i);

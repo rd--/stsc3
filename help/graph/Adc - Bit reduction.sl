@@ -1,4 +1,4 @@
-;; bit-reduction (adc)
+(* bit-reduction (adc) *)
 var f = LfNoise2(8) * 200 + 300;
 var nh = LfNoise2(3) * 10 + 20;
 var src = Blip(f, nh);

@@ -1,4 +1,4 @@
-;; zizle (jmcc) #SC3d1.5 ; graph rewrite
+(* zizle (jmcc) #SC3d1.5 ; graph rewrite *)
 { :tr |
 	var amp = { :f |
 		SinOsc(

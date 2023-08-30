@@ -1,4 +1,4 @@
-;; coolant ; jmcc #2 ; graph rewrite ; requires=XFadeTexture
+(* coolant ; jmcc #2 ; graph rewrite ; requires=XFadeTexture *)
 var o = OnePole(BrownNoise() * 0.002, 0.95);
 XFadeTexture({ :tr |
 	{

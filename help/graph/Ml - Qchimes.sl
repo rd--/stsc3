@@ -1,4 +1,4 @@
-;; event control ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68844.html (ml) ; requires=voicer
+(* event control ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68844.html (ml) ; requires=voicer *)
 var voiceFunc = { :e |
 	var numPartials = 40;
 	var baseFreq = (e.x * 25 + 48).MidiCps;

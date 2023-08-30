@@ -1,19 +1,19 @@
-;; Bezier ; reference sine tone
+(* Bezier ; reference sine tone *)
 SinOsc(440, 0) * 0.1
 
-;; Bezier ; Bézier curve oscillator ; bezier approximation of sin function
+(* Bezier ; Bézier curve oscillator ; bezier approximation of sin function *)
 Bezier(100, 0.001, 440, 0, [0, 0, 0.2, -1.3, 0.3, -1.3, 0.5, 0, 0.7, 1.3, 0.8, 1.3, 1, 0]) * 0.1
 
-;; Bezier ; mouse control of frequency
+(* Bezier ; mouse control of frequency *)
 var x = MouseX(40, 4000, 1, 0.2);
 Bezier(100, 0.001, x, 0, [0, 0, 0.2, -1.3, 0.3, -1.3, 0.5, 0, 0.7, 1.3, 0.8, 1.3, 1, 0]) * 0.1
 
-;; Bezier ; mouse control of frequency & one control point
+(* Bezier ; mouse control of frequency & one control point *)
 var x = MouseX(40, 4000, 1, 0.2);
 var y = MouseY(0.1, 0.2, 0, 0.2);
 Bezier(100, 0.001, x, 0, [0, 0, y, -1.3, 0.3, -1.3, 0.5, 0, 0.7, 1.3, 0.8, 1.3, 1, 0]) * 0.1
 
-;; Bezier ; dynamic shifting of control points, as oscillator
+(* Bezier ; dynamic shifting of control points, as oscillator *)
 var w = { :l :r |
 	LinLin(LfdNoise3(2), -1, 1, l, r)
 };
@@ -23,7 +23,7 @@ var w = { :l :r |
 	EqPan2(o, IRand(-1, 1)) * 0.1
 } !+ 4
 
-;; Bezier ; event control ; requires=voicer
+(* Bezier ; event control ; requires=voicer *)
 var voiceFunc = { :e |
 	var w = { :l :r |
 		LinLin(LfdNoise3(e.rx * 5), -1, 1, l, r)

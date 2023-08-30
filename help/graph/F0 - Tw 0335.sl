@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0335
+(* https://sccode.org/1-4Qy ; f0 ; 0335 *)
 var o = GrainFm(
 	1,
 	LfSaw([0.5, 0.6], 0),

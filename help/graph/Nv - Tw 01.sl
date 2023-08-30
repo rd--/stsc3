@@ -1,4 +1,4 @@
-;; http://sccode.org/1-V (nv) L1
+(* http://sccode.org/1-V (nv) L1 *)
 var a = { PinkNoise() } ! 2;
 var o = {
 	var f = LinExp(LfNoise1(Rand(0, 0.05)), -1, 1, 40, 15000);

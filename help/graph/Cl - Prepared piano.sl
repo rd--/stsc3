@@ -1,4 +1,4 @@
-;; prepared just piano ; colby leider ; modified by jmcc ; graph rewrite by rd
+(* prepared just piano ; colby leider ; modified by jmcc ; graph rewrite by rd *)
 var c = 4; (* number of combs *)
 var a = 4;	(* number of allpasses *)
 var v = 3; (* number of overlapped voices *)

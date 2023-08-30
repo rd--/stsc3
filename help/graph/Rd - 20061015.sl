@@ -1,4 +1,4 @@
-;; 20061015 ; rd ; requires=EnvBreakPoint
+(* 20061015 ; rd ; requires=EnvBreakPoint *)
 var ls = { :ts :bp |
 	EnvGen(1, 1, 0, ts, 2, EnvBreakPoint(bp, 0).asArray)
 };

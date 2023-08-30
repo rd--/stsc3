@@ -1,4 +1,4 @@
-;; why supercollider (jmcc) #0
+(* why supercollider (jmcc) #0 *)
 var s = {
 	Resonz(
 		Dust(0.2) * 50,

@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1454150378241548296 ; f0
+(* https://twitter.com/redFrik/status/1454150378241548296 ; f0 *)
 var a = { :r :i :n :q :p |
 	Rlpf(Impulse(r, p), Select(i % 5, [0, 3, 5, 7, 10] + n).MidiCps, q)
 };

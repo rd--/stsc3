@@ -1,4 +1,4 @@
-;; tw 0120 (f0) ; requires=kr
+(* tw 0120 (f0) ; requires=kr *)
 var z = LfTri(1 / [7, 8], 0) * LfTri(1 / 9, 0) * 99;
 var l = (60 .. 79).MidiCps;
 var f = Select(z, l);

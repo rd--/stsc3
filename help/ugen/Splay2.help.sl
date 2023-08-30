@@ -1,4 +1,4 @@
-;; Splay2 ; texture (Play)
+(* Splay2 ; texture (Play) *)
 { :tr |
 	var k = 7;
 	var o = SinOsc({ TiRand(40, 90, tr).MidiCps } ! k, 0);
@@ -6,7 +6,7 @@
 	Splay2(o * a)
 }.OverlapTexture(6, 3, 3)
 
-;; ---- Splay2 ; texture (Eval)
+(* ---- Splay2 ; texture (Eval) *)
 {
 	var k = 7;
 	var o = SinOsc({ IRand(40, 90).MidiCps } ! k, 0);

@@ -1,4 +1,4 @@
-;; modal space (jmcc) #8
+(* modal space (jmcc) #8 *)
 var b = [0, 2, 3.2, 5, 7, 9, 10].asLocalBuf;
 var k = DegreeToKey(b, MouseX(0, 15, 0, 0.1), 12);
 var c = { :n :r |

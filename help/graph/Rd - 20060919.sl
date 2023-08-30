@@ -1,4 +1,4 @@
-;; 20060919 ; rd
+(* 20060919 ; rd *)
 var fw = { :r |
 	var t = Dust(3);
 	var b0 = [

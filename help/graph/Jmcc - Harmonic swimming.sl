@@ -1,4 +1,4 @@
-;; harmonic swimming ; jmcc
+(* harmonic swimming ; jmcc *)
 var f = 50; (* fundamental frequency *)
 var p = 20; (* number of partials per channel *)
 var z = 0; (* start of oscil daisy chain *)

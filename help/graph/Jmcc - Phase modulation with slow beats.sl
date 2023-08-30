@@ -1,4 +1,4 @@
-;; phase modulation with slow beats ; jmcc #6 ; graph rewrite
+(* phase modulation with slow beats ; jmcc #6 ; graph rewrite *)
 var n = 4;
 var x = MouseX(100, 6000, 1, 0.2); (* controls random frequency of new events *)
 var y = MouseY(0, 2, 0, 0.2); (* controls modulation index *)

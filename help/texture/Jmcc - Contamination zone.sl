@@ -1,4 +1,4 @@
-;; contamination zone (jmcc) #9
+(* contamination zone (jmcc) #9 *)
 {
 	var f = ExpRand(800, 8000);
 	var pan = LfNoise1(1.Rand);

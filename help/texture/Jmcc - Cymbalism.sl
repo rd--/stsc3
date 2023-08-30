@@ -1,4 +1,4 @@
-;; cymbalism (jmcc) #2
+(* cymbalism (jmcc) #2 *)
 {
 	var p = 15;
 	var f1 = 500 + 2000.Rand;

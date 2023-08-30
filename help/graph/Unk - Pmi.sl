@@ -1,4 +1,4 @@
-;; pmi ; texture graph
+(* pmi ; texture graph *)
 { :tr |
 	var pm = TLine(0, TRand(0, 12, tr), TRand(1, 12, tr), tr);
 	LinPan2(

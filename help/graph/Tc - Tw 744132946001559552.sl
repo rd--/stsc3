@@ -1,4 +1,4 @@
-;; https://twitter.com/tadklimp/status/744132946001559552 (tc) ; requires=kr
+(* https://twitter.com/tadklimp/status/744132946001559552 (tc) ; requires=kr *)
 var n= 20.randomInteger(70);
 var d = Lag(LinExp(Dust(n ** 3 ! 2), 0, 1, 1, 10), 0.4).kr;
 var p = Pulse(

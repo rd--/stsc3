@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; tweet0003 ; texture variant ; requires=TLinRand
+(* https://sccode.org/1-4Qy ; f0 ; tweet0003 ; texture variant ; requires=TLinRand *)
 { :tr |
 	var t = SinOsc(
 		TRand(1, 999, tr),

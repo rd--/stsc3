@@ -1,4 +1,4 @@
-;; adc ; 8.1 ; http://www.audiosynth.com/files/SC2.2.16.sea.hqx
+(* adc ; 8.1 ; http://www.audiosynth.com/files/SC2.2.16.sea.hqx *)
 var tapData = [ (* Early reflection tap data (times, levels) *)
 	[0.0043, 0.841],
 	[0.0215, 0.504],

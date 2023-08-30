@@ -1,4 +1,4 @@
-;; hard sync sawtooth with lfo (jmcc) #6
+(* hard sync sawtooth with lfo (jmcc) #6 *)
 {
 	var f = Rand(30, 80).MidiCps;
 	var z = SyncSaw(

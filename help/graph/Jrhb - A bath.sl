@@ -1,4 +1,4 @@
-;; a bath (jrhb) ; requires=SelectX
+(* a bath (jrhb) ; requires=SelectX *)
 var above = MouseY(0, 2, 0, 0.2).RoundTo(1);
 var aside = MouseX(1, 1.6, 0, 0.2);
 var sources = [

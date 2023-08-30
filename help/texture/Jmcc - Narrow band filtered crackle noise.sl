@@ -1,4 +1,4 @@
-;; narrow band filtered crackle noise (jmcc) #2
+(* narrow band filtered crackle noise (jmcc) #2 *)
 {
 	var rf1 = 80 + 2000.Rand;
 	var rf = XLn(rf1, rf1 * 0.2.Rand2 + rf1, 9);

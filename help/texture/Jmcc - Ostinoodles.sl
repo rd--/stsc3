@@ -1,4 +1,4 @@
-;; ostinoodles (jmcc) #9
+(* ostinoodles (jmcc) #9 *)
 var Sequencer = { :s :tr |
 	Demand(tr, 0, Dseq(inf, s))
 };

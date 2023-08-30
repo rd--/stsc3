@@ -1,4 +1,4 @@
-;; tw 0134 (f0)
+(* tw 0134 (f0) *)
 var n = 50;
 var z = { :i |
 	var o1 = LfSaw(i + 1 / [3, 4], 0);

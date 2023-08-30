@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0202
+(* https://sccode.org/1-4Qy ; f0 ; 0202 *)
 { :t :i |
 	{
 		var b = 0.1;

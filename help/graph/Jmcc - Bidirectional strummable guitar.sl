@@ -1,4 +1,4 @@
-;; bidirectional strummable guitar (jmcc) #11 ; requires=kr
+(* bidirectional strummable guitar (jmcc) #11 ; requires=kr *)
 var pitch1 = [52, 57, 62, 67, 71, 76];
 var pitch2 = pitch1 + 7;
 var mousex = MouseX(0, 1, 0, 0.2);

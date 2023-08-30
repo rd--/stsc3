@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Q6 ; f0 ; risset ; requires=TLinRand
+(* https://sccode.org/1-4Q6 ; f0 ; risset ; requires=TLinRand *)
 { :tr |
 	var pan = TRand(-1, 1, tr);
 	var freq = TRand(90, 2000, tr);

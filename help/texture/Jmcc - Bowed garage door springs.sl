@@ -1,4 +1,4 @@
-;; bowed garage door springs (jmcc) #9
+(* bowed garage door springs (jmcc) #9 *)
 {
 	var exc = PinkNoise() * (LfNoise1(3.Rand) * 0.0008 + 0.0022);
 	var sig = RingzBank(

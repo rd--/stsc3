@@ -1,4 +1,4 @@
-;; BufRd ; requires=kr
+(* BufRd ; requires=kr *)
 var numFrames = 2 * 48000;
 var buf = BufAlloc(1, numFrames);
 var osc = SinOsc(LfNoise1(2).kr * 300 + 400, 0) * 0.1;

@@ -1,4 +1,4 @@
-;; jmcc ; http://www.iamas.ac.jp/~aka/dspss2004/materials/
+(* jmcc ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ *)
 var freq = 80;
 var trig = Impulse(4, 0) * 0.05;
 var m = Latch((WhiteNoise() * 3 + 3).RoundTo(0.5) + 1, trig);

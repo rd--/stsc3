@@ -1,4 +1,4 @@
-;; Atan2
+(* Atan2 *)
 var x = 10;
 var y = LfSaw(1/6, 0) * 100;
 var distance = Hypot(x, y);

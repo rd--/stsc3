@@ -1,4 +1,4 @@
-;; tremulate (jmcc) #1
+(* tremulate (jmcc) #1 *)
 {
 	var f = Rand(500, 900);
 	var r = Rand(30, 90);

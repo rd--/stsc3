@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0356 ; requires=BHiPass4,BLowPass4
+(* https://sccode.org/1-4Qy ; f0 ; 0356 ; requires=BHiPass4,BLowPass4 *)
 var b = [4, 16, 3];
 var o = LfTri(b, 0) * LfTri(b * b, 0);
 var f1 = 8 ** LfTri(b / 50, 0).RoundTo(1) * 99;

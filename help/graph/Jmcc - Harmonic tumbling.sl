@@ -1,4 +1,4 @@
-;; harmonic tumbling ; jmcc
+(* harmonic tumbling ; jmcc *)
 var f = 80; (* fundamental frequency *)
 var p = 10; (* number of partials per channel *)
 var z = 0.0; (* start of oscil daisy chain *)

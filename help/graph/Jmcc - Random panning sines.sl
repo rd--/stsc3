@@ -1,4 +1,4 @@
-;; random panning sines (jmcc) #4
+(* random panning sines (jmcc) #4 *)
 { :tr |
 	var n = 8;
 	{

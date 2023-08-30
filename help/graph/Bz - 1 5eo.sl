@@ -1,4 +1,4 @@
-;; https://sccode.org/1-5eo (bz) ; bohlen pierce scale ; graph edit ; requires=LfBrownNoise1
+(* https://sccode.org/1-5eo (bz) ; bohlen pierce scale ; graph edit ; requires=LfBrownNoise1 *)
 { :tr |
 	var dev = TRand(0.2, 0.4, tr);
 	var root = TChoose(tr, [30, 32, 35, 37]);

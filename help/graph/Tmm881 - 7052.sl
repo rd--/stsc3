@@ -1,4 +1,4 @@
-;; ---- https://scsynth.org/t/7052 ; tmm881 ; graph texture rewrite ; requires=XFadeTexture
+(* ---- https://scsynth.org/t/7052 ; tmm881 ; graph texture rewrite ; requires=XFadeTexture *)
 XFadeTexture({ :tr |
 	var freqMul = TRand(0.5, 2, tr);
 	var env = {

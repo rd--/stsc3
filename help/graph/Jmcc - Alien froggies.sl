@@ -1,4 +1,4 @@
-;; alien froggies (jmcc) #1
+(* alien froggies (jmcc) #1 *)
 { :tr |
 	var rate = 11;
 	var r = Fold(

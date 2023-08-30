@@ -1,4 +1,4 @@
-;; resonators harmonic series (jmcc) #2 ; just diatonic scale
+(* resonators harmonic series (jmcc) #2 ; just diatonic scale *)
 {
 	var p = 12;
 	var noise = BrownNoise() * 0.001;

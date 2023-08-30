@@ -1,4 +1,4 @@
-;; random pulsations (jmcc) #1
+(* random pulsations (jmcc) #1 *)
 {
 	var o1 = SinOsc(2000.Rand, 0) * 0.02;
 	var o2 = SinOsc(LinRand(8, 88, 0), 0);

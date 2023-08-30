@@ -1,4 +1,4 @@
-;; TGrains ; requires=buf
+(* TGrains ; requires=buf *)
 var buf = 0;
 var trRate = MouseY(2, 120, 1, 0.2);
 var tr = Impulse(trRate, 0);

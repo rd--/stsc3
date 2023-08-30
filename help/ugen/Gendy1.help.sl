@@ -1,4 +1,4 @@
-;; Gendy1 ; texture
+(* Gendy1 ; texture *)
 {
 	EqPan2(
 		SinOsc(
@@ -20,7 +20,7 @@
 	) * 0.1
 } !+ 10
 
-;; Gendy1 ; texture ; mouse control ; keywords ; requires=kr
+(* Gendy1 ; texture ; mouse control ; keywords ; requires=kr *)
 var n = 11;
 var f = {
 	var freq = Rand(50, 560.3);
@@ -42,7 +42,7 @@ var f = {
 };
 Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 
-;; ---- Gendy1 ; overlap texture (scheduled)
+(* ---- Gendy1 ; overlap texture (scheduled) *)
 {
 	var n = 11;
 	{

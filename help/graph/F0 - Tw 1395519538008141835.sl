@@ -1,4 +1,4 @@
-;; f0 ; <https://twitter.com/redFrik/status/1395519538008141835>
+(* f0 ; <https://twitter.com/redFrik/status/1395519538008141835> *)
 var c = DmdFor(0.004, 0, Dseries(inf, 1, [1, 2]) % DmdFor(8.192, 0, Dseq(inf, [1 .. 6] * 75)));
 var d = Hpf(MantissaMask(c, 3),5);
 var f = { :x | SinOscFb(x, 0).Max(0) };

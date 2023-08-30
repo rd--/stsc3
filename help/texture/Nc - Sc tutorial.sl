@@ -1,4 +1,4 @@
-;; https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1
+(* https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1 *)
 {
 	var n = 5 + 9.atRandom;
 	var mk = {

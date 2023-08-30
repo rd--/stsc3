@@ -1,4 +1,4 @@
-;; impulse sequencer (jmcc) Sc2
+(* impulse sequencer (jmcc) Sc2 *)
 var t = Impulse(8, 0);
 var seq = { :s | t * Demand(t, 0, Dseq(inf, s)) };
 var cSeq = seq([1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0]);

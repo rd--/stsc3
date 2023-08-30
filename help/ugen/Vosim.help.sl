@@ -1,10 +1,10 @@
-;; Vosim
+(* Vosim *)
 Splay2(Vosim(Impulse(110 + [-1, 0, 1], 0), MouseX([110, 220, 440], 880, 1, 0.2), [3, 5, 7], [0.77, 0.88, 0.99])) * 0.1
 
-;; Vosim
+(* Vosim *)
 Splay2(Vosim(Impulse(110 + [-1, 0, 1], 0), LinExp(LfNoise2([0.35, 0.25, 0.15]), -1, 1, [110, 220, 440], 880), [3, 5, 7], [0.77, 0.88, 0.99])) * 0.1
 
-;; Vosim
+(* Vosim *)
 { :tr |
 	{
 		Vosim(
@@ -16,7 +16,7 @@ Splay2(Vosim(Impulse(110 + [-1, 0, 1], 0), LinExp(LfNoise2([0.35, 0.25, 0.15]), 
 	} ! 2
 }.OverlapTexture(3, 5, 3) * 0.1
 
-;; Vosim
+(* Vosim *)
 var p = TRand(0, 1, Impulse([3, 7], 0));
 var t = Impulse([9, 27] * (1 + (p > 0.95)), 0);
 var f = TRand([40, 120, 220], [440, 990, 880], t);

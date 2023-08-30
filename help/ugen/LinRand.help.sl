@@ -1,4 +1,4 @@
-;; LinRand
+(* LinRand *)
 var minmax = 1;
 {
 	var freq = LinRand(200, 10000, minmax);

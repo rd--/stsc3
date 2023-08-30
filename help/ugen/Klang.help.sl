@@ -1,1 +1,1 @@
-;; ---- c.f. SinOscBank
+(* ---- c.f. SinOscBank *)

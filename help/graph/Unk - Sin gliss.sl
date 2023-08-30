@@ -1,4 +1,4 @@
-;; sin-gliss ; unknown
+(* sin-gliss ; unknown *)
 var t = 60;
 var ln = { :x |
 	XLine(x.first, x.second, t, 0)

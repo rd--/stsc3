@@ -1,4 +1,4 @@
-;; data space ; jmcc ; #2
+(* data space ; jmcc ; #2 *)
 {
 	var dt = Rand(0.25, 0.35);
 	var osc = { :n :m |

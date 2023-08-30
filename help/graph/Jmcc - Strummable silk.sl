@@ -1,4 +1,4 @@
-;; strummable silk (jmcc) #11
+(* strummable silk (jmcc) #11 *)
 var x = MouseX(0, 1, 0, 0.2);
 var str = { :ix |
 	var n = 15;

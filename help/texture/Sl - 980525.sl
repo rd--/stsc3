@@ -1,4 +1,4 @@
-;; Staffan Liljegren 980525 ; rd (edit)
+(* Staffan Liljegren 980525 ; rd (edit) *)
 { :currentTime |
 	(1 / 7).coin.ifFalse {
 		var chord = [[60, 63, 67], [65, 68, 72], [55, 58, 62]].atRandom;

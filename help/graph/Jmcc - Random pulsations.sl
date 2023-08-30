@@ -1,4 +1,4 @@
-;; random pulsations (jmcc) #1 ; graph rewrite
+(* random pulsations (jmcc) #1 ; graph rewrite *)
 { :tr |
 	var o1 = SinOsc(TRand(0, 2000, tr), 0);
 	var o2 = SinOsc(8 + TRand(0, 80, tr), 0);

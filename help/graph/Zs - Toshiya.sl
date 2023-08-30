@@ -1,4 +1,4 @@
-;; https://github.com/schollz/18000/blob/main/drone/toshiya.scd ; requires=kr
+(* https://github.com/schollz/18000/blob/main/drone/toshiya.scd ; requires=kr *)
 var hz = 440;
 var amp = 1.0;
 var note = hz.CpsMidi;

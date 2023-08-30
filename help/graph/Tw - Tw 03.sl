@@ -1,4 +1,4 @@
-;; sc-140 ; 03 ; Tim Walters ; sc140_sourcecode.txt
+(* sc-140 ; 03 ; Tim Walters ; sc140_sourcecode.txt *)
 var f = { :k |
 	(0 .. 7).collect { :i |
 		var e = Decay(Dust(1 / 4 ** i), SinOsc(0.1, 0) + 1 * k + i) * k * 999;

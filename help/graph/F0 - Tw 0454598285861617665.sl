@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/454598285861617665
+(* https://twitter.com/redFrik/status/454598285861617665 *)
 var b = [9 .. 1];
 var c = LfTri(3 ** LfTri(1 / b, b / 9), 0);
 var d = LfTri(1 / b, 0) % 1 / 9 + 0.01;

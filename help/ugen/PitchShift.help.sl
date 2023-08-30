@@ -1,4 +1,4 @@
-;; use PitchShift to granulate input ; upper left corner is normal playback ; x = pitch dispersion, y = time dispersion
+(* use PitchShift to granulate input ; upper left corner is normal playback ; x = pitch dispersion, y = time dispersion *)
 var grainSize = 0.1;
 var in = AudioIn([1, 2]) * 0.5;
 var x = MouseX(0, 1, 0, 0.2);

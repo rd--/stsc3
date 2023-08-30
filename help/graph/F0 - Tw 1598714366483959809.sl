@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1598714366483959809
+(* https://twitter.com/redFrik/status/1598714366483959809 *)
 var b = [1 .. 9];
 var l = SinOsc(9 ** SinOsc(1 / 99, 0) / b, 0);
 var p = LocalIn(9, 0);

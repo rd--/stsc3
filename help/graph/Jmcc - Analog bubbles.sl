@@ -1,4 +1,4 @@
-;; analog bubbles ; jmcc
+(* analog bubbles ; jmcc *)
 var f = MulAdd(
 	LfSaw(0.4, 0),
 	24,

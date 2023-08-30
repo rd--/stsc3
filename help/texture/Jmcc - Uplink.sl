@@ -1,4 +1,4 @@
-;; uplink (jmcc) #2
+(* uplink (jmcc) #2 *)
 {
 	var osc = {
 		var e = LfPulse(4.Rand, 0, 1.Rand) * 8000.Rand + 2000.Rand;

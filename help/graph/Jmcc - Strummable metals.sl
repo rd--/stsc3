@@ -1,4 +1,4 @@
-;; strummable metals ; use mouse to strum strings ; jmcc ; requires=kr
+(* strummable metals ; use mouse to strum strings ; jmcc ; requires=kr *)
 var mousex = MouseX(0, 1, 0, 0.2);
 var strFunc = { :i |
 	var trigger = Hpz1(mousex > (0.25 + (i * 0.07))).Abs;

@@ -1,4 +1,4 @@
-;; pentatonic pipes (jmcc) ; mousex on right half of screen causes pulsation ; requires=kr
+(* pentatonic pipes (jmcc) ; mousex on right half of screen causes pulsation ; requires=kr *)
 var n = 5;
 var mode = [0, 3, 5, 7, 10].asLocalBuf;
 var root = 36 + 12.atRandom;

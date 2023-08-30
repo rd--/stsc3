@@ -1,4 +1,4 @@
-;; blips 001 (jmcc) #SC3d1.5
+(* blips 001 (jmcc) #SC3d1.5 *)
 var blipProc = {
 	Blip(
 		XLn(ExpRand(0.25, 400), ExpRand(0.25, 400), 4),

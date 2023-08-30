@@ -1,4 +1,4 @@
-;; IRand
+(* IRand *)
 var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
 {
 	var degree = IRand(0, 7);
@@ -9,7 +9,7 @@ var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
 	Blip(mnn.MidiCps, numHarm) * 0.1
 } !^ 7
 
-;; ---- IRand ; texture (scheduled)
+(* ---- IRand ; texture (scheduled) *)
 var scale = [0, 2, 4, 5, 7, 9, 10, 12].asLocalBuf;
 {
 	{

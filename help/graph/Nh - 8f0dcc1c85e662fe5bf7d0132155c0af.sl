@@ -1,4 +1,4 @@
-;; https://gist.github.com/nhthn/8f0dcc1c85e662fe5bf7d0132155c0af (nh)
+(* https://gist.github.com/nhthn/8f0dcc1c85e662fe5bf7d0132155c0af (nh) *)
 var index = MouseY(1, 7000, 1, 0.2);
 var freq = MouseX(0.01, 40, 1, 0.2);
 var divide = 1;

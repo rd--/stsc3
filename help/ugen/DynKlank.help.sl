@@ -1,4 +1,4 @@
-;; DynRingzBank ; c.f. DynKlank
+(* DynRingzBank ; c.f. DynKlank *)
 var tr = Dust(25);
 var k = DynRingzBank(Trig(tr, SampleDur()), (1 .. 5) * 2700, { TRand(0.025, 0.04, tr) } ! 5, [0.1]);
 var n = k + (BrownNoise() * 0.075 * Trig(tr, TRand(0.01, 0.03, tr)));

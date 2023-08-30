@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1166129504747773954
+(* https://twitter.com/redFrik/status/1166129504747773954 *)
 var z = [0 .. 2];
 var f = z.collect { :i | i + 3.33 + LfTri(3 / 3333, 0) } % 3 * 33 * (3 / (3 * pi) + LfPulse(0.003 * 3, 0, 0.5));
 var q = LfTri(3 * 3 ** [3.3, 3] + (LfTri([3, pi], 0)), 3) * (LfPulse(pi, 0, 0.5) / 3 * LfTri(0.003, 0));

@@ -1,4 +1,4 @@
-;; 20061030 ; rd
+(* 20061030 ; rd *)
 var t = Dust([12, 18]);
 var f = LfNoise0(TRand(1, 64, t)) * [9000, 12000] + 9500;
 var o = Saw([

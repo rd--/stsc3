@@ -1,4 +1,4 @@
-;; contamination zone ; jmcc #9 ; graph rewrite
+(* contamination zone ; jmcc #9 ; graph rewrite *)
 var z = { :tr |
 	var f = TExpRand(800, 8000, tr);
 	var s = PinkNoise() * (LfNoise1(TRand(0, 3, tr)) * 0.0008 + 0.0022);

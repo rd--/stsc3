@@ -1,4 +1,4 @@
-;; lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html
+(* lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html *)
 var bus = 20;
 { :tr |
 	var freq = TRand(56, 64, tr);

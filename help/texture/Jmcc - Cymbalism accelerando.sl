@@ -1,4 +1,4 @@
-;; cymbalism accelerando (jmcc) #2
+(* cymbalism accelerando (jmcc) #2 *)
 {
 	var p = 15; (* number of partials per channel per 'cymbal' *)
 	var f1 = 500 + 2000.Rand;

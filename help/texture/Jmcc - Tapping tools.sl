@@ -1,4 +1,4 @@
-;; tapping tools (jmcc) #7
+(* tapping tools (jmcc) #7 *)
 {
 	var rate = XLn(64, 0.125, 60);
 	var exc = Decay(Impulse(LinRand(1, 20, 0) * rate, 0) * 0.03, 0.001);

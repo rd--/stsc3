@@ -1,4 +1,4 @@
-;; clustered sines (jmcc) #2
+(* clustered sines (jmcc) #2 *)
 {
 	var n = 80;
 	var f1 = Rand(100, 1100);

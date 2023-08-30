@@ -1,4 +1,4 @@
-;; Fm7 ; two of six
+(* Fm7 ; two of six *)
 var ctlMatrix = [
 	[XLn(300, 310, 4), 0, 1],
 	[XLn(300, 310, 8), 0, 1],
@@ -17,7 +17,7 @@ var modMatrix = [
 ];
 Fm7(ctlMatrix, modMatrix).first(2) * 0.1
 
-;; Fm7
+(* Fm7 *)
 var freq = LfNoise0(3).ExpRange(200, 310);
 var ctlMatrix = [
 	[freq, 0, 1],
@@ -31,7 +31,7 @@ var x = MouseX(0, 3, 0, 0.2);
 var modMatrix = { { LfNoise1(0.5).Max(0) } ! 6 * x } ! 6;
 Fm7(ctlMatrix, modMatrix).first(2) * -12.DbAmp
 
-;; Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing
+(* Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing *)
 var xMatrix = [
 	[
 		[0.0, -1/3, -1.0, 0.0],

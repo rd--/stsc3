@@ -1,4 +1,4 @@
-;; random sine waves (jmcc) #1
+(* random sine waves (jmcc) #1 *)
 {
 	EqPan2(
 		Release(FSinOsc(2000.Rand, 0), 2, 5, 2),

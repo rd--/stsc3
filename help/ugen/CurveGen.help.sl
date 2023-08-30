@@ -1,8 +1,8 @@
-;; CurveGen
+(* CurveGen *)
 var env = CurveGen(1, [0.5, 2], [9], [-4]);
 SinOsc(440 * env, 0) * 0.1
 
-;; CurveGen ; https://audiomasher.org/patch/Y3OOFF
+(* CurveGen ; https://audiomasher.org/patch/Y3OOFF *)
 var tenvx = { :tr :atk :hld :rel |
 	CurveGen(tr, [0, 1, 1, 0], [atk, hld, rel], [0, 0, -9])
 };

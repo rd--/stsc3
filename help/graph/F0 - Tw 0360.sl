@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0360
+(* https://sccode.org/1-4Qy ; f0 ; 0360 *)
 var t = SinOsc([7.992, 8], 0);
 var e = Perc(t, 0.005, 0.2, -4);
 var f = [1, 2].collect { :i |

@@ -1,4 +1,4 @@
-;; tw 0020 (f0)
+(* tw 0020 (f0) *)
 var a = { :freq |
 	LfPulse(freq, 0, 0.5)
 };

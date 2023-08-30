@@ -1,4 +1,4 @@
-;; LatoocarfianC ; randomly modulate all params
+(* LatoocarfianC ; randomly modulate all params *)
 LatoocarfianC(
 	SampleRate() / 4,
 	LfNoise2(2) * 1.5 + 1.5,
@@ -9,7 +9,7 @@ LatoocarfianC(
 	0.5
 ) * 0.1
 
-;; LatoocarfianC ; texture
+(* LatoocarfianC ; texture *)
 { :tr |
 	var freq = TRand(400, SampleRate() / 3, tr);
 	var a = TRand(-3, 3, tr);

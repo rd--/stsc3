@@ -1,4 +1,4 @@
-;; 20061008 ; rd ; requires=kr
+(* 20061008 ; rd ; requires=kr *)
 var t = Dust(9).kr;
 var u = PulseDivider(t, 9, 0);
 var k = DegreeToKey(

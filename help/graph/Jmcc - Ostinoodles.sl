@@ -1,4 +1,4 @@
-;; jmcc ; ostinoodles ; requires=TScramble ; requires=kr
+(* jmcc ; ostinoodles ; requires=TScramble ; requires=kr *)
 var z = { :tr |
 	var Sequencer = { :s :tr |
 		Demand(tr, 0, Dseq(inf, s))

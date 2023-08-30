@@ -1,4 +1,4 @@
-;; hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite
+(* hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite *)
 var txt = { :tr |
 	var f = (30 + TRand(0, 50, tr)).MidiCps;
 	SyncSaw(

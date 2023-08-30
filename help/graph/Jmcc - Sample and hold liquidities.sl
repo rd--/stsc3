@@ -1,4 +1,4 @@
-;; sample and hold liquidities (jmcc) #4
+(* sample and hold liquidities (jmcc) #4 *)
 var r = MouseX(1, 200, 1, 0.1);
 var t = r.Recip;
 var c = Impulse(r, 0) * 0.4;

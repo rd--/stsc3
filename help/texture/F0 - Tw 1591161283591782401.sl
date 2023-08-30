@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1591161283591782401
+(* https://twitter.com/redFrik/status/1591161283591782401 *)
 { :nextDelay |
 	var d = 1 / 12;
 	var b = [1 .. 8] / 4;

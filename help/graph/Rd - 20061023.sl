@@ -1,4 +1,4 @@
-;; 20061023 ; rd
+(* 20061023 ; rd *)
 var t = Impulse(
 	Slope(SinOsc(LfNoise0([0.5, 1.5]), 0)).Abs * [2, 3],
 	0

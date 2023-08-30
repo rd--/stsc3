@@ -1,4 +1,4 @@
-;; ---- MiClouds ; requires=keywords ; requires>#14
+(* ---- MiClouds ; requires=keywords ; requires>#14 *)
 var pit = LfNoise1(0.3) * 12;
 var pos = LfNoise2(0.4) * 0.5 + 0.5;
 var size = LfNoise1(0.3) * 0.5 + 0.5;

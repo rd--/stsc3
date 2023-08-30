@@ -1,4 +1,4 @@
-;; LinCongC ; texture
+(* LinCongC ; texture *)
 { :tr |
 	var freq = SampleRate() / 2;
 	var m = TiRand(0, 1000000, tr);

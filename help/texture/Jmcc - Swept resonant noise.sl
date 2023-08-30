@@ -1,4 +1,4 @@
-;; swept resonant noise (jmcc) #2
+(* swept resonant noise (jmcc) #2 *)
 {
 	var p = 10;(* number of partials *)
 	var n = WhiteNoise() * 0.007;

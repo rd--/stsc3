@@ -1,4 +1,4 @@
-;; saucer base (jmcc) #6
+(* saucer base (jmcc) #6 *)
 {
 	var b = 1000.Rand;
 	var c = 5000.Rand;

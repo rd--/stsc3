@@ -1,4 +1,4 @@
-;; https://twitter.com/n_peeq_t/status/1264595510217719809
+(* https://twitter.com/n_peeq_t/status/1264595510217719809 *)
 var b = 25;
 var s = Decay(Dust(5), 1) * SinOsc(b * SinOsc(b, 0) * b, 0);
 var f = Resonz(s, b ** 2 * LfNoise0(5).Abs + b, 0.1);

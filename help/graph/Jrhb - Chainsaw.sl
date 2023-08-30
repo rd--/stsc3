@@ -1,4 +1,4 @@
-;; chainsaw (jrhb)
+(* chainsaw (jrhb) *)
 var f = { :saw |
 	var rate = ExpRand(0.1, 2) ! 2;
 	var freq1 = 0.6.coin.if {

@@ -1,4 +1,4 @@
-;; https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) [Line 41]
+(* https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) [Line 41] *)
 var n = { :i |
 	var f = 1.9 ** i / 128;
 	var p = { PinkNoise() } ! 2;

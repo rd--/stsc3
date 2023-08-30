@@ -1,4 +1,4 @@
-;; string wander-cluster (jmcc) #6 ; with vibrato
+(* string wander-cluster (jmcc) #6 ; with vibrato *)
 {
 	var note1 = 50 + 50.IRand;
 	var note2 = Fold(note1 + 15.IRand - 7, 50, 120);

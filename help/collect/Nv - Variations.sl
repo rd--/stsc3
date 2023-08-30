@@ -1,4 +1,4 @@
-;; https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43 ; keyword parameters ; ?
+(* https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43 ; keyword parameters ; ? *)
 var f = { :i |
 	var x = Impulse(freq: 1, phase: i / 10) + Impulse(freq: 0, phase: 0);
 	var o = LfSaw(freq: [102, 101], iphase: 0);

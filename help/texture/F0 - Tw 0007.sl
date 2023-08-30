@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0007
+(* https://sccode.org/1-4Qy ; f0 ; 0007 *)
 {
 	var o = Pluck(
 		Crackle([1.9, 1.8]),

@@ -1,4 +1,4 @@
-;; forest sounds (pj)
+(* forest sounds (pj) *)
 var insects = {
 	var n1 = BrownNoise();
 	var n2 = LfNoise2(50);

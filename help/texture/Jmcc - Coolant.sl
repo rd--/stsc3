@@ -1,4 +1,4 @@
-;; coolant (jmcc) #2
+(* coolant (jmcc) #2 *)
 {
 	var p = 10;
 	var exc = OnePole(BrownNoise() * 0.002, 0.95);

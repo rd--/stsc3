@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0281
+(* https://sccode.org/1-4Qy ; f0 ; 0281 *)
 var b = 2 / [2 .. 9];
 var o = LfCub(b, 0) % LfCub(b / 5, 0);
 var p = b * [300, 303] - Lag2(LfCub(b / 9, 0) > 0 * 50, 0.1);

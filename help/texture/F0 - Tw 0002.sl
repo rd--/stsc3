@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0002
+(* https://sccode.org/1-4Qy ; f0 ; 0002 *)
 {
 	var o = Bpf(
 		Impulse(LinRand(0.5, 18.5, 0), 0),

@@ -1,4 +1,4 @@
-;; 20060925 ; rd
+(* 20060925 ; rd *)
 var t = Impulse((LfNoise0([3, 3.25]) * 16) + 18, 0);
 var o = Bpf(
 	WhiteNoise() * Decay2(t, 0.01, TRand(0.005, MouseY(0.01, 0.15, 0, 0.1), t)),

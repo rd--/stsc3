@@ -1,4 +1,4 @@
-;; wind metals (jmcc) ; graph rewrite
+(* wind metals (jmcc) ; graph rewrite *)
 { :tr |
 	var n = 6;
 	var exc = [

@@ -1,4 +1,4 @@
-;; pond life (jmcc) #1 ; graph rewrite ; requires=TLinRand
+(* pond life (jmcc) #1 ; graph rewrite ; requires=TLinRand *)
 { :tr |
 	var f = MulAdd(
 		SinOsc(TRand(20, 50, tr), 0),

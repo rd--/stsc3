@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0101
+(* https://sccode.org/1-4Qy ; f0 ; 0101 *)
 { :t :i |
 	var c = i % 8 + 1;
 	{

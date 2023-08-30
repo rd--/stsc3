@@ -1,4 +1,4 @@
-;; rocks on rails ; jmcc ; graph variant ; requires=TLinRand
+(* rocks on rails ; jmcc ; graph variant ; requires=TLinRand *)
 var p = 20; (* number of partials *)
 var n = 4; (* number of overlapping events *)
 { :tr |

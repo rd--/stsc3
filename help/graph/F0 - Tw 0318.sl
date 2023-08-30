@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0318
+(* https://sccode.org/1-4Qy ; f0 ; 0318 *)
 var b = [1 .. 3];
 Splay2(
 	MulAdd(

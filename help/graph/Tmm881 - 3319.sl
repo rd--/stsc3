@@ -1,4 +1,4 @@
-;; tmm881 ; https://scsynth.org/t/3319 ; (rd edit) ; requires=voicer
+(* tmm881 ; https://scsynth.org/t/3319 ; (rd edit) ; requires=voicer *)
 var vc = { :e |
 	var freq = (e.x * 25 + 48).MidiCps + [0, TRand(1, 4, e.w)];
 	var carriers = [SinOsc(freq, 0), Saw(freq), Pulse(freq, 0.5)];

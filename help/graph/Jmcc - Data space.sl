@@ -1,4 +1,4 @@
-;; data space (jmcc) #2 ; graph rewrite
+(* data space (jmcc) #2 ; graph rewrite *)
 { :tr |
 	var dt = TRand(0, 0.25, tr) + 0.1;
 	var osc = { :n :m |

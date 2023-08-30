@@ -1,4 +1,4 @@
-;; https://gist.github.com/nhthn/8f0dcc1c85e662fe5bf7d0132155c0af (nh)
+(* https://gist.github.com/nhthn/8f0dcc1c85e662fe5bf7d0132155c0af (nh) *)
 var freqScale = MouseY(0.01, 3, 1, 0.2);
 var snd = LocalIn(4, 0);
 var freq = 3000 * freqScale + ((Lpf(snd, 0.1) * 100) * [1000, 1500, 1200, 1100]);

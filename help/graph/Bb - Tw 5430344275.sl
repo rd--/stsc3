@@ -1,4 +1,4 @@
-;; https://twitter.com/earslap/status/5430344275
+(* https://twitter.com/earslap/status/5430344275 *)
 var n = { :freq | LfNoise0(freq) };
 var f = [60, 61];
 var l = n(6);

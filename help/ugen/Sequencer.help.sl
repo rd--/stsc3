@@ -1,8 +1,8 @@
-;; Sequencer
+(* Sequencer *)
 var freq = Sequencer([60, 62, 65, 69], Impulse(2, 0)).MidiCps;
 SinOsc(freq, 0) * 0.1
 
-;; Sequencer ; jmcc
+(* Sequencer ; jmcc *)
 var clock = Impulse(8, 0);
 var trig1 = ImpulseSequencer([0.4, 0.1, 0.2, 0.1], clock);
 var root = Sequencer([24, 26, 24, 22], PulseDivider(clock, 64, 0));
@@ -16,7 +16,7 @@ var freq = (Sequencer([33, 33, 35, 36, 45, 47, 38, 40, 33, 33, 35, 36, 47, 48, 5
 var z = VarSaw(freq * [1, 1.505], 0, MouseY(0, 1, 0, 0.2)) * Decay2(trig2, 0.005, 1.4);
 CombN(x + z * 0.5, 0.26, 0.26, 4).SoftClip
 
-;; Sequencer ; jmcc
+(* Sequencer ; jmcc *)
 var p = Drand(inf, [
 	Dseq(1, [0, 0, 1, 2, 7, 8, 9, 8, 10, 10, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 9, 8, 11, 11, 1, 2, 1, 2, 3, 4]),
 	Dseq(2, [0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4, 0, 0, 1, 2, 7, 8, 3, 4, 0, 0, 1, 2, 1, 2, 3, 4])
@@ -53,7 +53,7 @@ var w = SinOsc((root + 24 + 7).MidiCps, 0) * Decay2(trig5, 0.005, 0.2);
 var snd = (r * 0.1 + x + z + [y, w]) * 0.4;
 (CombN(snd, 0.51, 0.51, 4) * 0.4 + snd.reversed).SoftClip
 
-;; Sequencer ; jmcc
+(* Sequencer ; jmcc *)
 var z = 0, a = 0.1, b = 0.2, c = 0.4;
 var p = Dseq(1, [
 	Dseq(2, [c, z, z, z, z, z, z, z]),
@@ -73,18 +73,18 @@ var q = Drand(inf, [
 	Dseq(2, [c, z, z, z, a, z, z, z, b, z, b, z, a, z, c, z])
 ]);
 var clock = Impulse(9, 0);
-;; (* bass drum *)
+(* (* bass drum *) *)
 var trig1 = PulseDivider(clock, 16, 0);
 var r = SinOsc(80, 0) * Decay2(trig1, 0.005, 0.5) * 0.3;
-;; (* drum *)
+(* (* drum *) *)
 var trig2 = ImpulseSequencer([p], clock);
 var exc2 = WhiteNoise() * Decay2(trig2, 0.005, 0.05);
 var x = RingzBank(exc2, { Rand(80, 800) } ! 4, nil, { Rand(0.05, 0.2) } ! 4).Distort * 0.2;
-;; (* metallic *)
+(* (* metallic *) *)
 var trig3 = ImpulseSequencer([q], clock);
 var exc3 = WhiteNoise() * Decay2(trig3, 0.005, 0.05);
 var s = RingzBank(exc3, { Rand(3500, 4000) } ! 4, nil, { Rand(0.05, 0.2) } ! 4).Distort * 0.1;
-;; (* whine *)
+(* (* whine *) *)
 var exc4 = { GrayNoise() } ! 2 * 0.0007;
 var y = { :tr |
 	var env = SinOsc(TRand(1, 6, tr), { TRand(0, 2 * pi, tr) } ! 2) * 0.5 + 0.5;
@@ -96,7 +96,7 @@ var snd = x + (y * 0.5) + s + r;
 };
 snd
 
-;; Sequencer ; jmcc
+(* Sequencer ; jmcc *)
 var clock = Impulse(XLn(24, 1, 12), 0);
 var x = SinOsc(Sequencer(Dwhite(inf, 2000, 12000), clock), 0) * Decay2(clock, 0.002, 0.04);
 { CombN(x, 0.1, { ExpRand(0.02, 0.05) } ! 2, 2) * Ln(0.2, 0, 12) } !+ 2

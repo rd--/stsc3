@@ -1,4 +1,4 @@
-;; pulsing bottles ; jmcc
+(* pulsing bottles ; jmcc *)
 var n = 6; (* number of 'bottles' *)
 {
 	EqPan2(

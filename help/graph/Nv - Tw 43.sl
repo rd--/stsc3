@@ -1,4 +1,4 @@
-;; https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43
+(* https://swiki.hfbk-hamburg.de/MusicTechnology/899 (nv) L43 *)
 var f = { :i |
 	var x = Impulse(1, i / 10) + Impulse(0, 0);
 	var o = LfSaw([102, 101], 0);

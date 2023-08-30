@@ -1,4 +1,4 @@
-;; BLowPass
+(* BLowPass *)
 BLowPass(
 	WhiteNoise(),
 	MouseX(10, 20000, 1, 0.2),

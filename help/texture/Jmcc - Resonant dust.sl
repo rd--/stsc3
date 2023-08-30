@@ -1,4 +1,4 @@
-;; resonant dust (jmcc) #2
+(* resonant dust (jmcc) #2 *)
 {
 	var rf1 = 2000.Rand + 80;
 	var rf2 = rf1 + (0.5.Rand2 * rf1);

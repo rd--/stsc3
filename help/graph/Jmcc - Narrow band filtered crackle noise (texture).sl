@@ -1,4 +1,4 @@
-;; narrow band filtered crackle noise (jmcc) #2 ; graph rewrite
+(* narrow band filtered crackle noise (jmcc) #2 ; graph rewrite *)
 { :tr |
 	var rf1 = TRand(0, 2000, tr) + 80;
 	var rf2 = rf1 + (TRand(-0.2, 0.2, tr) * rf1);

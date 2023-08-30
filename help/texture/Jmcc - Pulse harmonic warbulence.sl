@@ -1,4 +1,4 @@
-;; pulse harmonic warbulence (jmcc) #12
+(* pulse harmonic warbulence (jmcc) #12 *)
 {
 	var f = Rand(24, 96).MidiCps;
 	var r = XLn(ExpRand(0.1, 20), ExpRand(0.1, 20), 25.6);

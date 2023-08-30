@@ -1,4 +1,4 @@
-;; https://twitter.com/SC2Sbot/status/1529852033251033088 (cg)
+(* https://twitter.com/SC2Sbot/status/1529852033251033088 (cg) *)
 Splay(
 	Integrator(
 		LfNoise0(7 ! 4).RoundTo(SinOsc(4, 0)),

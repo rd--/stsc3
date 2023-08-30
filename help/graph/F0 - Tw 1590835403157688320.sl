@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1590835403157688320
+(* https://twitter.com/redFrik/status/1590835403157688320 *)
 var b = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var g = 1 / b / 99;
 var z = Latch(

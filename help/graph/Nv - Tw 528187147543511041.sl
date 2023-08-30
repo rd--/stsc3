@@ -1,4 +1,4 @@
-;; https://twitter.com/headcube/status/528187147543511041 (nv)
+(* https://twitter.com/headcube/status/528187147543511041 (nv) *)
 var x = { :j |
 	var y = { :i |
 		var n = LfNoise0(0.25 ** (j - 1) / 8);

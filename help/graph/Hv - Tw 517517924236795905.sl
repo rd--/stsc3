@@ -1,4 +1,4 @@
-;; https://twitter.com/HernaniVillase/status/517517924236795905 ; rewrite (rd)
+(* https://twitter.com/HernaniVillase/status/517517924236795905 ; rewrite (rd) *)
 { :tr |
 	var f = TRand(97, 101, tr);
 	var o = LfTri(

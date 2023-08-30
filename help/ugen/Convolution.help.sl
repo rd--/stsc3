@@ -1,4 +1,4 @@
-;; Convolution
+(* Convolution *)
 var tr = Dust(100);
 var vc = {
 	var freq = TRand(2700, 2750, tr);

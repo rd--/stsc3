@@ -1,4 +1,4 @@
-;; Decay2 ; c.f. MultiTouchPad help file
+(* Decay2 ; c.f. MultiTouchPad help file *)
 var voiceFunc = { :e |
 	var impulseFreq = TChoose(e.w, [1, 2, 3, 4, 6, 8, 9]);
 	var oscFreq = TRand(80, 880, e.w);

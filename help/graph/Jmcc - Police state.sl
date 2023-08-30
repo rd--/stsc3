@@ -1,4 +1,4 @@
-;; police state ; jmcc
+(* police state ; jmcc *)
 var n = 4; (* number of sirens *)
 CombL(
 	{

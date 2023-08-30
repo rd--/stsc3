@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0247
+(* https://sccode.org/1-4Qy ; f0 ; 0247 *)
 (0 .. 137).collectTexture { :i |
 	var j = i // 100 + 1;
 	var o = Blip(

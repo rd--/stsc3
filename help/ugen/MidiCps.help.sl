@@ -1,10 +1,10 @@
-;; MidiCps
+(* MidiCps *)
 Saw(Ln(24, 108, 10).MidiCps) * 0.05
 
-;; MidiCps ; step
+(* MidiCps ; step *)
 Saw(Ln(24, 108, 10).RoundTo(1).MidiCps) * 0.05
 
-;; MidiCps ; keywords
+(* MidiCps ; keywords *)
 Saw(
 	Ln(
 		start: 24,
@@ -13,7 +13,7 @@ Saw(
 	).MidiCps
 ) * 0.05
 
-;; MidiCps ; step ; keywords
+(* MidiCps ; step ; keywords *)
 Saw(
 	Ln(
 		start: 24,

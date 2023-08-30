@@ -1,4 +1,4 @@
-;; 20060922 ; rd ; requires=Perc
+(* 20060922 ; rd ; requires=Perc *)
 var t0 = Impulse(1 / 0.3, 0);
 var t1 = [t0, TDelay(t0, 0.15)];
 var k = TRand(56, 57, t1);

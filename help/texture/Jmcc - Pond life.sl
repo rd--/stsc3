@@ -1,4 +1,4 @@
-;; pond life ; jmcc ; #1
+(* pond life ; jmcc ; #1 *)
 {
 	var f = MulAdd(
 		SinOsc(20 + 30.Rand, 0),

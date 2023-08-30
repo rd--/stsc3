@@ -1,4 +1,4 @@
-;; TLine ; https://scsynth.org/t/6371/12
+(* TLine ; https://scsynth.org/t/6371/12 *)
 var x = MouseX(10, 100, 1, 0.2);
 var y = MouseY(0.01, 0.05, 1, 0.2);
 {

@@ -1,4 +1,4 @@
-;; DwgPluckedStiff ; re-sounding
+(* DwgPluckedStiff ; re-sounding *)
 var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
 var t = TDmdFor(Dseq(inf, [1, 1, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 3, 4] * 0.175), 0, 1);
 var freq = [

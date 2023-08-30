@@ -1,4 +1,4 @@
-;; https://scsynth.org/t/7055 ; tmm881 ; rewrite for clarity &etc.
+(* https://scsynth.org/t/7055 ; tmm881 ; rewrite for clarity &etc. *)
 var mouse = [
 	MouseX(0, 1, 0, 0.2),
 	MouseY(0, 1, 0, 0.2)

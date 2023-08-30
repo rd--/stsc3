@@ -1,4 +1,4 @@
-;; berlin 1977 (jmcc) #4
+(* berlin 1977 (jmcc) #4 *)
 |
 	sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) },
 	sequR = { :s :tr | Demand(tr, 0, Dshuf(inf, s)) },

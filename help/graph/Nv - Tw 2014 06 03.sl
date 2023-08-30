@@ -1,4 +1,4 @@
-;; https://twitter.com/headcube/status/474064500564324352 (nv)
+(* https://twitter.com/headcube/status/474064500564324352 (nv) *)
 var k = 9; (* 9 => 5 udp *)
 var o = { :ix |
 	{

@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0319
+(* https://sccode.org/1-4Qy ; f0 ; 0319 *)
 var b = [1 .. 8];
 var c = SinOscFb(b / 16 / 16.16, 0) % 1;
 var f = b.withIndexCollect { :x :i | [x, i + 6 / 6000 + x] } * 60;

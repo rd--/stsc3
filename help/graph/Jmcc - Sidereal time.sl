@@ -1,4 +1,4 @@
-;; sidereal time (jmcc) #9
+(* sidereal time (jmcc) #9 *)
 var z = { :tr |
 	var p = 15;
 	var f = TxLine(TExpRand(40, 300, tr), TExpRand(40, 300, tr), 12, tr);

@@ -1,4 +1,4 @@
-;; 20060909 ; rd
+(* 20060909 ; rd *)
 var p = {
 	Resonz(
 		Pulse(

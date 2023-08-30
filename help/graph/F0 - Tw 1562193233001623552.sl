@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1562193233001623552 ; f0
+(* https://twitter.com/redFrik/status/1562193233001623552 ; f0 *)
 var c = SinOscFb(1 / 64, 0).RoundTo(1) * 10 + 50;
 var f = { :i |
 	var p = SinOscFb(

@@ -1,4 +1,4 @@
-;; LocalIn ; stereo cross channel feedback modulation ; mouse control
+(* LocalIn ; stereo cross channel feedback modulation ; mouse control *)
 var index = 5;
 var fb = [10, 5];
 var pan = 0;

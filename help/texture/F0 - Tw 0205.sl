@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0205
+(* https://sccode.org/1-4Qy ; f0 ; 0205 *)
 { :t :i |
 	var a = Wrap(i * 9, 99, 8000);
 	{

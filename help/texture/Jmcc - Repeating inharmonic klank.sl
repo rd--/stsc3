@@ -1,4 +1,4 @@
-;; repeating inharmonic klank ; jmcc #6 ; graph rewrite
+(* repeating inharmonic klank ; jmcc #6 ; graph rewrite *)
 var n = 4;
 {
 	var s = Decay(Dust(0.8) * 0.004, 3.4) * LfSaw(Rand(0, 40), 0);

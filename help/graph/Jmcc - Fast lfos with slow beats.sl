@@ -1,4 +1,4 @@
-;; fast lfos with slow beats
+(* fast lfos with slow beats *)
 { :tr |
 	var a0 = TRand(40, 240, tr);
 	var a1 = a0 + TRand(-1, 1, tr);

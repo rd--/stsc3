@@ -1,4 +1,4 @@
-;; plucked strings (jmcc)
+(* plucked strings (jmcc) *)
 { :tr |
 	var i = {
 		var s0 = Impulse(TRand(2, 2.2, tr), 0) * 0.3;

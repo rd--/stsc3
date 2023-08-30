@@ -1,4 +1,4 @@
-;; https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; tw ; tim walters
+(* https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; tw ; tim walters *)
 var s = { :k |
 	var f = { :i |
 		SinOsc(i, SinOsc((i + k) ** i, 0)

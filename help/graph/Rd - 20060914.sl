@@ -1,4 +1,4 @@
-;; 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
+(* 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv *)
 { :tr |
 	var chrd = { :m |
 		var ds = 3;

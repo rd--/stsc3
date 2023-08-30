@@ -1,4 +1,4 @@
-;; f0 ; https://twitter.com/redFrik/status/1136928201886904320
+(* f0 ; https://twitter.com/redFrik/status/1136928201886904320 *)
 var f = { :a |
 	var ix = a.key;
 	var osc:/2 = a.value;

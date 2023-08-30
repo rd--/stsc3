@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/1143262368392200192
+(* https://twitter.com/redFrik/status/1143262368392200192 *)
 var c = 4 / 4 / 4;
 var d = c * 4 / 44.4;
 var f = (VarSaw(d, c, -4.sin) * 4).Max(0).Ceil * 44 + 44;

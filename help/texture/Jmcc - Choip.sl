@@ -1,4 +1,4 @@
-;; choip (jmcc) #10
+(* choip (jmcc) #10 *)
 {
 	var t = 12;
 	var i = Impulse(XLn(ExpRand(1, 30), ExpRand(1, 30), t), 0);

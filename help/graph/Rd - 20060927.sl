@@ -1,4 +1,4 @@
-;; 200060927 ; rd ; texture
+(* 200060927 ; rd ; texture *)
 { :tr |
 	var e = Decay2(
 		Impulse({ TRand(10, 13, tr) } ! 2, 0),

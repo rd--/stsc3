@@ -1,4 +1,4 @@
-;; alien meadow ; jmcc ; #6
+(* alien meadow ; jmcc ; #6 *)
 {
 	var b = 5000.Rand;
 	var o1 = SinOsc(20.Rand, 0) * (0.1 * b) + b;

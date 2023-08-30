@@ -1,4 +1,4 @@
-;; Lag
+(* Lag *)
 var f1 = LinLin(SinOsc(0.05, 0), -1, 1, 220, 440);
 var o1 = SinOsc(f1, 0);
 var f2 = Lag(f1, 1);

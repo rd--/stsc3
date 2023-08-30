@@ -1,5 +1,5 @@
-;; BrownNoise
+(* BrownNoise *)
 { BrownNoise() } ! 2 * 0.05
 
-;; BrownNoise
+(* BrownNoise *)
 Hpz1({ BrownNoise() } ! 2) * 0.05

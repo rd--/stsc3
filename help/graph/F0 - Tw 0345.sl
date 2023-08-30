@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0345
+(* https://sccode.org/1-4Qy ; f0 ; 0345 *)
 var f = { :i |
 	var c = SinOsc(8 - i / 8, 0);
 	var p = SinOsc(1 + i, 0).Max(c);

@@ -1,4 +1,4 @@
-;; landon rose (jmcc) #8 ; simpler
+(* landon rose (jmcc) #8 ; simpler *)
 var ringTimes = [3, 3, 3, 3];
 var noteList = [
 	[32, 43, 54, 89],

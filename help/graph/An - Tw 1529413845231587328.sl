@@ -1,4 +1,4 @@
-;; https://twitter.com/alln4tural/status/1529413845231587328 (an) ; edit (rd)
+(* https://twitter.com/alln4tural/status/1529413845231587328 (an) ; edit (rd) *)
 (1 .. 3).collect { :k |
 	(1 .. 9).collect { :i |
 		var ph = [

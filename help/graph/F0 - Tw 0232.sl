@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0232 ; requires=pyramid
+(* https://sccode.org/1-4Qy ; f0 ; 0232 ; requires=pyramid *)
 var b = [4, 3];
 var q = 9.fibonacciArray.pyramid(1) * 99;
 var o = SinOsc(DmdFor(1 / b, 0, Dseq(inf, q)), 0);

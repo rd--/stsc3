@@ -1,4 +1,4 @@
-;; https://twitter.com/redFrik/status/582277939653439489
+(* https://twitter.com/redFrik/status/582277939653439489 *)
 var b = [0.999 .. 9];
 Splay2(
 	Hpf(

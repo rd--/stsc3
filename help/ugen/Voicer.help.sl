@@ -1,26 +1,26 @@
-;; SinOsc ; event control ; p-field
+(* SinOsc ; event control ; p-field *)
 Voicer(16, { :e |
 	SinOsc(e.p.UnitCps, 0) * e.w * e.z
 }).Splay2
 
-;; SinOsc ; event control ; x-field
+(* SinOsc ; event control ; x-field *)
 Voicer(16, { :e |
 	EqPan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.o * 2 - 1) * e.z * e.w
 }).Sum
 
-;; Blip ; event control ; shared parameter
+(* Blip ; event control ; shared parameter *)
 var nh = 1;
 Voicer(16, { :e |
 	Blip(e.p.UnitCps, nh) * e.w * e.z
 }).Splay2
 
-;; Blip ; event control ; i=o ii=rx iii=ry
+(* Blip ; event control ; i=o ii=rx iii=ry *)
 var f = { :e |
 	EqPan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.o * 2 - 1) * e.w * e.z * e.z
 };
 Voicer(16, f).sum
 
-;; blip ; event control ; keywords
+(* blip ; event control ; keywords *)
 var f = { :e |
 	EqPan2(
 		in: Blip(freq: e.p.UnitCps, numharm: e.y * 10 + 1),
@@ -29,7 +29,7 @@ var f = { :e |
 };
 Voicer(numVoices: 16, voiceFunc: f).Sum
 
-;; MembraneCircle ; event control ; note limited voice count ; keywords
+(* MembraneCircle ; event control ; note limited voice count ; keywords *)
 var f = { :e |
 	var loss = LinExp(in: e.y, srclo: 0, srchi: 1, dstlo: 0.99999, dsthi: 0.99950);
 	var wobble = SinOsc(freq: 2, phase: 0);
@@ -39,7 +39,7 @@ var f = { :e |
 };
 Voicer(numVoices: 6, voiceFunc: f).Sum
 
-;; pluck ; event control ; keywords
+(* pluck ; event control ; keywords *)
 var f = { :e |
 	var n = WhiteNoise() * e.z * 2;
 	var dlMax = 1 / 220;
@@ -51,7 +51,7 @@ var f = { :e |
 };
 Voicer(numVoices: 16, voiceFunc: f).Sum
 
-;; resonz ; pinkNoise ; event control ; keywords
+(* resonz ; pinkNoise ; event control ; keywords *)
 var f = { :e |
 	EqPan2(
 		in: Resonz(in: PinkNoise(), freq: (e.x * 24 + 48).MidiCps, bwr: e.y * 0.25) * 24,

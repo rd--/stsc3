@@ -1,32 +1,32 @@
-;; Adapt to and send
+(* Adapt to and send *)
 
-SinOsc(440 + SinOsc(1, 0), 0) * 0.1 ;; (Int + UGen) * Float
+SinOsc(440 + SinOsc(1, 0), 0) * 0.1 (* (Int + UGen) * Float *)
 
-SinOsc(SinOsc(1, 0) + 440, 0) * 0.1 ;; (UGen + Int) * Float
+SinOsc(SinOsc(1, 0) + 440, 0) * 0.1 (* (UGen + Int) * Float *)
 
-SinOsc([440, 441] + SinOsc(1, 0), 0) * 0.1 ;; ([Int] + UGen) * Float
+SinOsc([440, 441] + SinOsc(1, 0), 0) * 0.1 (* ([Int] + UGen) * Float *)
 
-SinOsc(440 + SinOsc([1, 2], 0), 0) * 0.1 ;; (Int + [UGen]) * Float
+SinOsc(440 + SinOsc([1, 2], 0), 0) * 0.1 (* (Int + [UGen]) * Float *)
 
-;; <! ; multiple root graphs (see drawing)
+(* <! ; multiple root graphs (see drawing) *)
 SinOsc(440, 0) <! Saw(1) * 0.1
 
-;; !^ = ! & Splay2
+(* !^ = ! & Splay2 *)
 { SinOsc(Rand(100, 900), 0) * Rand(0.01, 0.1) } !^ 12
 
-;; Process ; c.f. stc-fork-region (Emacs)
+(* Process ; c.f. stc-fork-region (Emacs) *)
 99.timesRepeat {
 	{ EqPan2(SinOsc(Rand(220, 440), 0), 1.Rand2) * Line(0.1, 0, 7, 2) }.play;
 	2.seconds.wait
 }
 
-;; Trailing closures, if:value:
+(* Trailing closures, if:value: *)
 0.5.coin.if { 't'.postln } { 'f'.postln }
 true.if { 't' } { 'f' } = 't'
 false.if { 't' } { 'f' } = 'f'
 
-;; Interval Range
+(* Interval Range *)
 (1 .. 5) = 1.to(5)
 
-;; Array Range
+(* Array Range *)
 [1 .. 5] = 1.to(5).asArray

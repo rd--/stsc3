@@ -1,4 +1,4 @@
-;; 20061027 ; rd
+(* 20061027 ; rd *)
 var h0 = {
 	var f = 40;
 	var h = HenonN(

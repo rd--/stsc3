@@ -1,4 +1,4 @@
-;; rocks on rails ; jmcc #2
+(* rocks on rails ; jmcc #2 *)
 var p = 20; (* number of partials *)
 var n = 4; (* number of overlapping events *)
 {

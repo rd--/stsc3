@@ -1,4 +1,4 @@
-;; https://twitter.com/luuma/status/656913884440301568
+(* https://twitter.com/luuma/status/656913884440301568 *)
 Dfm1(
 	Saw(11.series(100, 0.9)).mean,
 	PmOsc(100, 300, 0.4, 0).ExpRange(300, 9800),

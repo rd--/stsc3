@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0101 ; graph variant (rd)
+(* https://sccode.org/1-4Qy ; f0 ; 0101 ; graph variant (rd) *)
 var d = [0, 9, 17, 24, 30, 35, 39, 42, 44];
 var f = { :c |
 	var a = DelayN(InFb(2, 0), 1, 1);

@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; tweet0004 ; texture variant (rd)
+(* https://sccode.org/1-4Qy ; tweet0004 ; texture variant (rd) *)
 { :tr |
 	var z = TRand(6, 26, tr);
 	var y = LfTri(z, 0).Abs / 9 / z;

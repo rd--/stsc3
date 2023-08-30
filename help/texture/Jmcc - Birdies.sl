@@ -1,4 +1,4 @@
-;; birdies (jmcc) #6
+(* birdies (jmcc) #6 *)
 {
 	var p1 = MulAdd(
 		LfPulse(0.4 + 1.Rand, 0, 0.8.Rand + 0.1),

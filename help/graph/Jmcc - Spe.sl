@@ -1,4 +1,4 @@
-;; spe (jmcc)
+(* spe (jmcc) *)
 var t = Impulse(9, 0);
 var s = [0, 3, 2, 7, 8, 32, 16, 18, 0, 12, 24, 32];
 var f = (Demand(t, 0, Dseq(inf, s)) + 32).MidiCps;

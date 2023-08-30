@@ -1,4 +1,4 @@
-;; clustered sines ; jmcc #2 ; graph rewrite
+(* clustered sines ; jmcc #2 ; graph rewrite *)
 var n = 80; (* udp packet limit *)
 { :tr |
 	var f1 = TRand(100, 1100, tr);

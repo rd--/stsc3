@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0301 ; requires=kr
+(* https://sccode.org/1-4Qy ; f0 ; 0301 ; requires=kr *)
 var b = (0 .. 3).collect { :i |
 	DmdFor(
 		i + 1 / 9,

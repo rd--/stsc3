@@ -1,4 +1,4 @@
-;; sturmian sequencer iii (jrhb)
+(* sturmian sequencer iii (jrhb) *)
 var rules = [[0, 1], [0]];
 var rewrite = { :c :n |
 	var r = c;

@@ -1,4 +1,4 @@
-;; GrayNoise
+(* GrayNoise *)
 { :tr |
 	var amp = LfPulse(4, 0, 0.1) * 0.002;
 	var exc = Lpz1({ GrayNoise() } ! 2 * amp);

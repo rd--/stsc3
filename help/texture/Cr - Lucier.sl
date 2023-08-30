@@ -1,4 +1,4 @@
-;; lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html
+(* lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html *)
 {
 	var freq = Rand(56, 64);
 	var blocksize = 1 / ControlRate();

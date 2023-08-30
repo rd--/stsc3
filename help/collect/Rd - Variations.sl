@@ -1,4 +1,4 @@
-;; 20060909 ; rd
+(* 20060909 ; rd *)
 var p = {
 	var x = MouseX(0.001, 0.02, 1, 0.1);
 	var y = MouseY(120, 400, 1, 0.1);
@@ -25,7 +25,7 @@ var r = {
 };
 p() + q() + r()
 
-;; 20060911 ; rd
+(* 20060911 ; rd *)
 var t = Impulse(22, 0) * (SinOsc(0.5, 0) + 1);
 var x = MouseX(0.005, 0.12, 1, 0.1);
 var y = MouseY(0.01, 0.52, 1, 0.1);
@@ -38,7 +38,7 @@ var n = {
 var b = TRand(0, 1, Dust(8));
 (n !+ 3).Clip2(b) * 0.25
 
-;; 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv
+(* 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv *)
 { :tr |
 	var chrd = { :m |
 		var ds = 3;
@@ -57,7 +57,7 @@ var b = TRand(0, 1, Dust(8));
 	{ chrd(chd) } !+ 7
 }.OverlapTexture(21, 0, 3)
 
-;; 20060916 ; rd
+(* 20060916 ; rd *)
 var mkRead = { :l :t |
 	BufRd(1, l.asLocalBuf, TRand(0, 6, t), 0, 1)
 };
@@ -70,7 +70,7 @@ var mkNode = { :n |
 };
 (1 .. 4).collect(mkNode).sum * 0.25
 
-;; 20060917 ; rd ; requires=DustRange
+(* 20060917 ; rd ; requires=DustRange *)
 var b0 = [60, 71, 89, 65, 36, 57, 92, 97, 92, 97].asLocalBuf;
 var b1 = [71, 89, 60, 57, 65, 36, 95, 92, 93, 97].asLocalBuf;
 var clk = DustRange(0.2, 0.9);
@@ -82,7 +82,7 @@ var o1 = SinOsc(f1, 0) * env;
 var o2 = SinOsc(f2, 0) * env;
 o1 + o2 * 0.2
 
-;; 20060919 ; rd
+(* 20060919 ; rd *)
 var fw = { :r |
 	var t = Dust(3);
 	var r1 = TiRand(0, 6, t);
@@ -106,13 +106,13 @@ var fw = { :r |
 };
 fw(24) + fw(36)
 
-;; 20060920 ; rd
+(* 20060920 ; rd *)
 var x = MouseX(0.012, 0.19, 1, 0.1) + (LfNoise2(0.2) * 0.1 + 0.05);
 var f = Formlet(Blip(10, 12), LfNoise0([20, 40]) * 43 + 700, 0.005, x);
 var o = SinOsc(40, 0) * LfNoise0([5, 10]);
 f + o * Ln(0, 0.25, 2.5)
 
-;; 20060922 ; rd ; requires=Perc
+(* 20060922 ; rd ; requires=Perc *)
 var t0 = Impulse(1 / 0.30, 0);
 var t1 = TDelay(t0, 0.15);
 var t = [t0, t1];
@@ -125,7 +125,7 @@ var e = Perc(t, 0.01, 0.9, [-4, -4]);
 var f = SinOsc(c, 0) * i + m;
 SinOsc(f, 0) * e * 0.1
 
-;; 20060922 ; rd ; requires=Perc
+(* 20060922 ; rd ; requires=Perc *)
 var t0 = Impulse(1 / 0.30, 0);
 var t = [t0, TDelay(t0, 0.15)];
 var k = TRand(56, 57, t);
@@ -133,7 +133,7 @@ var m = (k + 1 + TRand(-1, 1, t)).MidiCps;
 var f = SinOsc(k.MidiCps, 0) * TRand(40, 480, t) + m;
 SinOsc(f, 0) * Perc(t, 0.01, 0.9, [-4, -4]) * 0.1
 
-;; 20060925 ; rd
+(* 20060925 ; rd *)
 var b = BufAlloc(1, 2048);
 var x = MouseX(100, 12000, 0, 0.1);
 var y = MouseY(0.01, 0.15, 0, 0.1);
@@ -143,13 +143,13 @@ var o = Bpf(WhiteNoise() * e, TRand(10, x, t), TRand(0, 1, t));
 var p = PvRandComb(Fft(b, o, 0.5, 0, 1, 0), TExpRand(0.15, 1, t), t);
 (o * 0.05) + Ifft(p, 0, 0)
 
-;; 20060927 ; rd ; requires=kr
+(* 20060927 ; rd ; requires=kr *)
 var e = Decay2(Impulse({ Rand(10, 13) } ! 2, 0), 0.001, 0.005);
 var f = { Rand(4, 7) } ! 2 * SinOsc({ Rand(10, 13) } ! 2, 0) * e;
 var r4 = { TRand(2220, 2227, Impulse(0.7, 0)) } ! 2;
 SinOsc(r4.kr, 0) * f.kr * 0.15
 
-;; 20061008 ; rd
+(* 20061008 ; rd *)
 var x = MouseX(15, 0, 0, 0.1);
 var y = MouseY(15, 27, 0, 0.1);
 var t = Dust(9).kr;
@@ -165,7 +165,7 @@ var r0 = TRand(0.0075, 0.125, u);
 var r1 = TRand(0.05, 0.15, u);
 m * 0.5 + AllpassC(m, 0.15, r0, r1)
 
-;; 20061008 ; rd ; requires=kr
+(* 20061008 ; rd ; requires=kr *)
 var t = Dust(9).kr;
 var u = PulseDivider(t, 9, 0);
 var d = TiRand(MouseX(15, 0, 0, 0.1), MouseY(15, 27, 0, 0.1), t);
@@ -174,14 +174,14 @@ var m = LfNoise1([3, 3.05]) * 0.04 + TChoose(t, [36, 48, 60, 72]) + k;
 var o = SinOsc(m.MidiCps, 0) * Decay2(t, 0.005, TRand(0.02, 0.15, t)) * 0.2;
 o * 0.5 + AllpassC(o, 0.15, TRand(0.0075, 0.125, u), TRand(0.05, 0.15, u))
 
-;; 20061017 ; rd
+(* 20061017 ; rd *)
 var o = SinOsc(LfNoise0([0.5, 1.5]), 0);
 var t = Impulse(Slope(o).Abs * [2, 3], 0);
 var x = MouseX(960, 3620, 1, 0.2);
 var y = MouseY(0.5, 2.0, 0, 0.2);
 Ringz(Decay2(t, 0.1, 0.2), TRand(x, 3940, t), TRand(0.005, 0.275, t) * y)
 
-;; 20061023 ; rd
+(* 20061023 ; rd *)
 var n1 = LfNoise0([0.5, 1.5]);
 var o = SinOsc(n1, 0);
 var a = Slope(o).Abs * [2, 3];
@@ -193,7 +193,7 @@ var n2 = TRand(x, 3940, t);
 var n3 = TRand(0.005, 0.275, t);
 Ringz(i, n2, n3 * y)
 
-;; 20061027 ; rd
+(* 20061027 ; rd *)
 var h0 = {
 	var a = LfNoise0(1) * 0.2 + 1.2;
 	var b = LfNoise0(1) * 0.15 + 0.15;

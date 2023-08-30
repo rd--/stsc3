@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0112
+(* https://sccode.org/1-4Qy ; f0 ; 0112 *)
 (1 .. 37).collectTexture { :i |
 	{
 		var lvl = Dseq(1, [12 .. 0] * (i % 63 + 99));

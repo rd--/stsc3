@@ -1,4 +1,4 @@
-;; pkt 28 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490
+(* pkt 28 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490 *)
 var n = 28;
 var x = { :i |
 	var a = LfSaw(i + 1 * 5, 0) * 0.5 * pi;

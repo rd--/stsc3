@@ -1,4 +1,4 @@
-;; red frik (f0) ; requires=kr
+(* red frik (f0) ; requires=kr *)
 var tr = Impulse(0.1, 0);
 var o1 = MulAdd(
 	SinOsc(TRand(0.3, 5, tr), 0),

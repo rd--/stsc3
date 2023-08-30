@@ -1,4 +1,4 @@
-;; https://sccode.org/1-4Qy ; f0 ; 0246
+(* https://sccode.org/1-4Qy ; f0 ; 0246 *)
 var b = [1 .. 9] * 1.5;
 var d = [2 / b, 3 / b];
 var e = LfPulse(d, 0, 0.5);

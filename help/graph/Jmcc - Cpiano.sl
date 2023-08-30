@@ -1,4 +1,4 @@
-;; cpiano (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/
+(* cpiano (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ *)
 var nc = 2;
 { :tr |
 	var dgr = DegreeToKey(
