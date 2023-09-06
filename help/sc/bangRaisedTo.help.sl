@@ -1,11 +1,10 @@
 # !^ -- duplicate and distribute
 
 - _anObject !^ anInteger_
-- _bangHat(anObject, anInteger)_
-
-≡ _(anObject ! anInteger).Splay2_
+- _p !^ q_ ⟹ bangRaisedTo(p, q)_
 
 Names the idiom of generating an array and distributing it across the stereo spectrum.
+_p !^ q_ is equivalent to _(p ! q).Splay2_.
 
 ```
 {

@@ -12,7 +12,7 @@ snd := Select(Lpf(snd.reversed, 10 * cutoff) * 3, [Pulse(440 * freq + (snd * ind
 snd := Rlpf(snd, 440 + (1000 * Clip(Lpf(Lpf(snd, 1), 1), 0, 1)), 0.1);
 snd := Sanitize(snd, 0);
 4.timesRepeat {
-	snd := snd + SinOsc(ExpRand(10, 800) * freq + Lpf(snd * index, 100), 0);
+	snd := snd + SinOsc(ExpRand(10, 800) * freq + Lpf(snd * index, 100), 0)
 };
 snd := snd <! LocalOut(snd);
 snd := snd.Splay2;
