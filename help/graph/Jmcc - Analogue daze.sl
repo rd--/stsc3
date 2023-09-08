@@ -1,5 +1,5 @@
 (* analogue daze (jmcc) #3 *)
-var pattern = [55, 63, 60, 63, 57, 65, 62, 65];
+var pattern = [55 63 60 63 57 65 62 65];
 var f = { :octave :clockRate :pwmRate :fltRate |
 	var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
 	var tr = Impulse(clockRate, 0);

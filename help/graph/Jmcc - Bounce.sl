@@ -3,7 +3,7 @@ var freq = 80;
 var trig = Impulse(4, 0) * 0.05;
 var m = Latch((WhiteNoise() * 3 + 3).RoundTo(0.5) + 1, trig);
 var o = VarSaw(
-	Lag(freq * m, 0.03) * [1, 1.004, 1.505, 1.499],
+	Lag(freq * m, 0.03) * [1 1.004 1.505 1.499],
 	0,
 	MouseY(0, 1, 0, 0.2)
 );

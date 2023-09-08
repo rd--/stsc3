@@ -11,10 +11,14 @@
 5 % 3 == 2                                                  // modulo
 5.0 % 3.0 == 2.0                                            // float modulo
 -5 == 5.neg                                                 // unary minus
-5.sign == 1                                                 // numeric sign (1, -1 or 0)
+[-5, 0, 5].collect { | each | each.sign } == [-1, 0, 1]     // numeric sign (1, -1 or 0)
 5.neg == -5                                                 // negate receiver
 1.25.trunc.asInteger == 1                                   // integer part of number
+-1.25.trunc.asInteger == -2                                 // except for negative numbers
+3.1.roundUp == 4                                            // round upwards (away from zero for positive)
+-3.1.roundUp == -3                                          // round upwards (towards zero for negative)
 1.25.frac == 0.25                                           // fractional part
+-2.25.frac == 0.75                                          // except for negative numbers
 5.reciprocal == (1/5)                                       // reciprocal function
 6 * 3.1 == 18.6                                             // auto convert to float
 5.squared == 25                                             // square function

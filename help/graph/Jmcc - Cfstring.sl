@@ -2,7 +2,7 @@
 var nc = 2;
 { :tr |
 	var dgr = DegreeToKey(
-		[0, 2, 4, 5, 7, 9, 11].asLocalBuf,
+		[0 2 4 5 7 9 11].asLocalBuf,
 		TRand(0, 12, tr),
 		12
 	);

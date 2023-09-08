@@ -15,5 +15,7 @@ var mkSig = { :ix |
 	EqPan2(CombL(x, 0.02, mkFreq().Recip, 3), Rand(-1, 1))
 };
 var g = (1 .. 4).collect(mkSig).sum;
-5.timesRepeat { g := rapf(g) };
+5.timesRepeat {
+	g := rapf(g)
+};
 LeakDc(g, 0.995)

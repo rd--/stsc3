@@ -1,8 +1,8 @@
 (* bowed string (jmcc) ; texture ; graph rewrite *)
 { :tr |
 	var root = 5;
-	var scale = [0, 2, 4, 5, 7, 9, 11] + root;
-	var oct = [24, 36, 48, 60, 72, 84];
+	var scale = [0 2 4 5 7 9 11] + root;
+	var oct = [24 36 48 60 72 84];
 	var f = (TChoose(tr, scale) + TChoose(tr, oct)).MidiCps;
 	var e = (LfNoise1(TExpRand(0.125, 0.5, tr)) * 0.6 + 0.4).Max(0);
 	var x = { BrownNoise() } ! 2 * 0.007 * e;
