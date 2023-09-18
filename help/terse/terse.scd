@@ -166,6 +166,9 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 [2, 3, 5, 6].indexInBetween(5.2) == 2.2                     // interpolated index for value (collection must be sorted)
 [2, 3, 5, 6].blendAt(2.2) == 5.2                            // interpolated value between indices
 [-1, 4].collect { | i | [2, 3, 5, 6].clipAt(i) } == [2, 6]  // clamp index to valid range
+(1 .. 5).slide(3, 1) == [1, 2, 3, 2, 3, 4, 3, 4, 5]         // adjacent elements given windowLength and stepSize
+(1 .. 6).slide(3, 2) == [1, 2, 3, 3, 4, 5]                  // 1-3, 3-5 (next would be 5-7)
+(1 .. 5).slide(4, 1) == [1, 2, 3, 4, 2, 3, 4, 5]            // 1-4, 2-5 (next would be 3-6)
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)

@@ -7,7 +7,7 @@ It includes a library for communicating with the _SuperCollider_ synthesiser.
 To play a synthesiser program select it and type _Ctrl-Enter_.
 
 ```
-;; https://sccode.org/1-4Qy ; f0 ; 0283
+(* https://sccode.org/1-4Qy ; f0 ; 0283 *)
 var b = 1 / (2 .. 6);
 var o1 = SinOscFb(
 	SinOscFb(b, 1) < b * 500 + 99,
