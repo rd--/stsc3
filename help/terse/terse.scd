@@ -169,6 +169,9 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 (1 .. 5).slide(3, 1) == [1, 2, 3, 2, 3, 4, 3, 4, 5]         // adjacent elements given windowLength and stepSize
 (1 .. 6).slide(3, 2) == [1, 2, 3, 3, 4, 5]                  // 1-3, 3-5 (next would be 5-7)
 (1 .. 5).slide(4, 1) == [1, 2, 3, 4, 2, 3, 4, 5]            // 1-4, 2-5 (next would be 3-6)
+(1 .. 5).dupEach(2) == [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]       // duplicate each element count times
+[1, 2, 3, 2, 3, 4].replace([2, 3], -2) == [1, -2, -2, 4]    // replace each occurrence of a subsequence with item
+[1, 2, 3, 2, 3].replace([2, 3], [7, 5]) == [1, 7, 5, 7, 5]  // splices in relacement subsequences
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
