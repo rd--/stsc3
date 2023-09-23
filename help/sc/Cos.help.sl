@@ -1,2 +1,0 @@
-# Cos -- cosine
-

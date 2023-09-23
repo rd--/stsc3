@@ -1,1 +1,0 @@
-# Cubed -- cubed value

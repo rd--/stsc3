@@ -1,1 +1,0 @@
-# ArcSin -- arc sine

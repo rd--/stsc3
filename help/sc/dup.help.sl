@@ -1,3 +1,0 @@
-# dup -- duplicate
-
-See also: !
