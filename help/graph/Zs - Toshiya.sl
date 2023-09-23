@@ -12,7 +12,9 @@ var osc = gen !+ 12 + Pan2(SinOsc((note - 12).MidiCps, LinLin(LfTri(0.5, 0), -1,
 var snd = MoogLadder(osc.Tanh, LinExp(Lag(LfNoise0(1 / 6), 6), -1, 1, hz * 2, hz * 10), 0);
 var z = DelayN(snd, 0.048, 0.048);
 var y = { CombL(z, 0.1, LfNoise1(Rand(0, 0.1)) * 0.04 + 0.05, 15) } !+ 7;
-4.timesRepeat { y := AllpassN(y, 0.050, [Rand(0, 0.050), Rand(0, 0.050)], 1) };
+4.timesRepeat {
+	y := AllpassN(y, 0.050, [Rand(0, 0.050), Rand(0, 0.050)], 1)
+};
 snd := snd + (LinLin(Lag(LfNoise0(1 / 10), 10), -1, 1, 0.01, 0.06) * y);
 snd := snd + [
 	Amplitude(snd, 0.01, 0.01),
