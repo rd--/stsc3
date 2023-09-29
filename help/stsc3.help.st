@@ -304,9 +304,9 @@ x := #(1 2 3 4 5) copy. x shuffle. x "=> random shuffle"
 (5 geom: 1 value: 3) = #(1 3 9 27 81).
 (#(1 2 3 4 5) nth: 3) = 3. "=> 3 ; Sc and St disagree about indexing, nth: is one-indexed at both"
 ({1. 2. 3} at: 2 put: -2) == -2. "=> true (at:put: returns the element put)"
-(#(1 2 3 4 5) rotateRight: 1) = #(5 1 2 3 4).
-(#(1 2 3 4 5) rotateLeft: 1) = #(2 3 4 5 1).
-(#(1 2 3 4 5) rotate: 1) = #(5 1 2 3 4).
+(#(1 2 3 4 5) rotatedRight: 1) = #(5 1 2 3 4).
+(#(1 2 3 4 5) rotatedLeft: 1) = #(2 3 4 5 1).
+(#(1 2 3 4 5) rotated: 1) = #(5 1 2 3 4).
 #(1 2 3 4) containsCollection = false.
 #(1 (2 3) 4) containsCollection = true.
 (#(1 3 5 7) indexOf: 5) = 3.
