@@ -302,15 +302,15 @@ LeakDc(Lpf((1 .. 8).collect(strFunc).sum, 12000), 0.995)
 (* theremin (jmcc) ; event control *)
 Voicer(16, { :e |
 	var freq = Lag(LinExp(e.y, 0, 1, 4000, 200), 0.8);
-	var a = SinOsc(freq + (freq * SinOsc(4 + 3 * e.rx, 0) * 0.02), 0) * e.x * 0.6 * Lag(e.w, 0.2);
-	Pan2(a, e.o * 0.25, 0.5 + e.z)
+	var a = SinOsc(freq + (freq * SinOsc(4 + 3 * e.j, 0) * 0.02), 0) * e.x * 0.6 * Lag(e.w, 0.2);
+	Pan2(a, e.i * 0.25, 0.5 + e.z)
 }).sum * 0.5
 
 (* tremulate (jmcc) ; event control ; requires=voicer *)
 var voiceFunc = { :e |
 	var s = SinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); (* just minor seventh chord *)
-	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.rx)).Max(0) * e.z;
-	Pan2(s, { Rand(-1, 1) } ! 4 + (e.o * 2 - 1), a * LagUd(e.w, 0, e.ry * 2)).sum
+	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.j)).Max(0) * e.z;
+	Pan2(s, { Rand(-1, 1) } ! 4 + (e.i * 2 - 1), a * LagUd(e.w, 0, e.k * 2)).sum
 };
 CombN(Voicer(16, voiceFunc).sum * 0.5, 0.1, 0.1, 1)
 

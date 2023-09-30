@@ -7,10 +7,10 @@ f := [ :e |
 		in: 0
 		trig: tr
 		pit: e x * 24 + 36
-		struct: (Latch in: e o trig: tr) * 0.75 + 0.25
+		struct: (Latch in: e i trig: tr) * 0.75 + 0.25
 		bright: e y * 0.65 + 0.15
-		damp: (Latch in: e rx trig: tr) negated + 0.7
-		pos: (Latch in: e ry trig: tr) + 0.25
+		damp: (Latch in: e j trig: tr) negated + 0.7
+		pos: (Latch in: e k trig: tr) + 0.25
 		model: 0
 		poly: 1
 		intern_exciter: 0

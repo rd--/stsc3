@@ -19,6 +19,6 @@ var voiceFunc = { :e |
 	var dcy = { Rand(0.5, 9) } ! numPartials;
 	var osc = DynRingzBank(sig, freq, amp, dcy);
 	var env = LagUd(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal; (* note .kr! *)
-	EqPan2(osc, e.o * 2 - 1) * env
+	EqPan2(osc, e.i * 2 - 1) * env
 };
 Voicer(16, voiceFunc).sum

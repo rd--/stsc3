@@ -29,15 +29,15 @@ Voicer(16, { :e |
 			PinkNoise(),
 			e.p.UnitCps,
 			e.y * 0.25) * 24,
-		e.o * 2 - 1
+		e.i * 2 - 1
 	) * e.z * e.w
 }).sum
 
 (* Resonz ; PinkNoise ; event control *)
 Voicer(16, { :e |
-	var env = Perc(e.w, 0.01, 1 + e.rx, -4);
+	var env = Perc(e.w, 0.01, 1 + e.j, -4);
 	var freq = e.p.UnitCps;
 	var rq = LinLin(e.y, 0, 1, 0.05, 0.25) / freq;
 	var scl = 900;
-	EqPan2(Resonz(PinkNoise(), freq, rq) * scl * e.z, e.o * 2 - 1) * env
+	EqPan2(Resonz(PinkNoise(), freq, rq) * scl * e.z, e.i * 2 - 1) * env
 }).sum
