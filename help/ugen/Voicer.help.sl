@@ -1,31 +1,30 @@
 (* SinOsc ; event control ; p-field *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	SinOsc(e.p.UnitCps, 0) * e.w * e.z
-}).Splay2
+}.Splay2
 
 (* SinOsc ; event control ; x-field *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	EqPan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.i * 2 - 1) * e.z * e.w
-}).Sum
+}.sum
 
 (* Blip ; event control ; shared parameter *)
 var nh = 1;
-Voicer(16, { :e |
+Voicer(16) { :e |
 	Blip(e.p.UnitCps, nh) * e.w * e.z
-}).Splay2
+}.Splay2
 
 (* Blip ; event control *)
-var f = { :e |
+Voicer(16) { :e |
 	EqPan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1) * e.w * e.z * e.z
-};
-Voicer(16, f).sum
+}.sum
 
 (* dictionary ; voicer *)
 (
 	w: SinOsc(1 / [5, 7], 0),
 	x: SinOsc(1 / [13, 17], 0)
 ).Voicer { :e |
-	SinOsc(e::x * 222 + 333, 0) * e::w
+	SinOsc(e.x * 222 + 333, 0) * e.w * 0.2
 }
 
 (* blip ; event control ; keywords *)
