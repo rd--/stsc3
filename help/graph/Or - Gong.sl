@@ -24,10 +24,9 @@ var dur = 7;
 		LinSeg(tr, [0, 0.003, 1, 0.3, 1, dur - 0.5, 0])
 	].product;
 	var sig = op1.Splay2;
-	Balance2(
+	EqBalance2(
 		sig.first,
 		sig.second,
-		TRand(-0.75, 0.75, tr),
-		0.7
-	)
+		TRand(-0.75, 0.75, tr)
+	) * 0.7
 }.OverlapTexture(dur, 0, 2)
