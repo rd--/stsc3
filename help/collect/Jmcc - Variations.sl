@@ -125,7 +125,7 @@ var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var d = [12.series(f, f), 12.geom(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12].transpose.concatenation;
+var d = [12.arithmeticSeries(f, f), 12.geometricSeries(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12].transposed.concatenation;
 var k = Klank(x, 1, 0, 1, d);
 (k * 0.1).SoftClip
 
@@ -605,7 +605,7 @@ var z = { :tr |
 z
 
 (* ---- scratchy ; jmcc ; left-to-right *)
-{ BrownNoise() }.dup(2).MulAdd(0.5, -0.49).Max(0).Mul(20).Rhpf(5000, 1)
+{ BrownNoise() }.duplicate(2).MulAdd(0.5, -0.49).Max(0).Mul(20).Rhpf(5000, 1)
 
 (* ---- slow beating sines (jmcc) #7 ; texture=xfade,4,4,inf *)
 var n = 20;

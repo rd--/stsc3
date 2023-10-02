@@ -9,7 +9,7 @@ XFadeTexture({ :tr |
 		SinOsc([[48, 49]] * freqMul, 0) * env(),
 		Saw(48 * 16 * freqMul) * env(),
 		Pulse(48 * 32 * freqMul, 0.5) * env()
-	].sum.transpose.sum;
+	].sum.transposed.sum;
 	var rev = FreeVerb(snd, 0.33, 0.5, 0.5) + snd;
 	CombC(rev, 0.2, 0.2, 1) + rev * 0.05
 }, 9, 2)

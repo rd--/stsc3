@@ -7,4 +7,4 @@ var s = { :k |
 	};
 	(1 .. 6).collect(f).sum
 };
-(GVerb((0 .. 15).collect(s).sum, 1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 512).transpose.sum
+(GVerb((0 .. 15).collect(s).sum, 1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 512).transposed.sum

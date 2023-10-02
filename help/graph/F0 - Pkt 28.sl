@@ -16,4 +16,4 @@ var x = { :i |
 	EqPan2(z, l) / n
 };
 var y = Limiter(LeakDc((1 .. n).collect(x).sum, 0.995), 1, 0.01);
-GVerb(y, 3, 5, 0.2, 0.8, 20, 0.1, 0.7, 0.5, 300).transpose.sum * 0.25
+GVerb(y, 3, 5, 0.2, 0.8, 20, 0.1, 0.7, 0.5, 300).transposed.sum * 0.25

@@ -26,7 +26,7 @@ Hpf(
 		9
 	),
 	200
-).sum.transpose.sum
+).sum.transposed.sum
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
 var f = LocalIn(2, 0).Tanh;
@@ -110,7 +110,7 @@ fundamentals.collect { :freq |
 
 (* http://earslap.com/article/recreating-the-thx-deep-note.html ; adding random wobbling to freqs, sorting randoms, lowpassing ; fundamentals are sorted, so higher frequencies drift more *)
 var numVoices = 30;
-var fundamentals = { 200.randomFloat(400) }.dup(numVoices).sorted;
+var fundamentals = { 200.randomFloat(400) }.duplicate(numVoices).sorted;
 fundamentals.withIndexCollect { :freq0 :index |
 	var freq = freq0 + (LfNoise2(0.5) * 3 * index);
 	EqPan2(
@@ -121,7 +121,7 @@ fundamentals.withIndexCollect { :freq0 :index |
 
 (* http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks ; requires=CurveGen *)
 var numVoices = 30;
-var fundamentals = { 200.randomFloat(400) }.dup(numVoices).sorted.reversed;
+var fundamentals = { 200.randomFloat(400) }.duplicate(numVoices).sorted.reversed;
 var finalPitches = ((1 .. numVoices).collect { :each |
 	(each / (numVoices / 6)).RoundTo(1) * 12
 } + 14.5).MidiCps;

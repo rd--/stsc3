@@ -18,4 +18,4 @@ var a = Blip(
 	].product,
 	200);
 var r = GVerb(Saw(322) * a, 10, 0.3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300);
-r.transpose.sum * 0.25
+r.transposed.sum * 0.25

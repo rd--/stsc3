@@ -13,4 +13,4 @@ Splay(
 		EqPan2(f(c() + 52 + n) * (12 * m().Neg).DbAmp, LfNoise2(500))
 	},
 	0.5, 1, 0, true
-).transpose.sum
+).transposed.sum

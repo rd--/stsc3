@@ -6,4 +6,4 @@ var f = DmdFor(1 / 5, 0, Dseq(1, y));
 GVerb(
 	VarSaw(f, 0, 0.9) * LfPulse(5, 0, 0.5).Lag(0.01),
 	99, 5, 0.5, 0.5, 15, 1, 0.7, 0.5, 300
-).transpose.sum / 15
+).transposed.sum / 15

@@ -12,24 +12,24 @@ Mixing sine oscillators in parallel:
 	var f = { FSinOsc(Rand(200, 1200), 0) }; (* function to create an oscillator at a random frequency *)
 	f !+ n / n * 0.1 (* array of n places, summed, scale amplitude *)
 
-Filling an Array and mixing it is a common idiom, `{ ... }.dup(n).sum`, which is implemented as the _!+_ operator.
+Filling an Array and mixing it is a common idiom, `{ ... }.duplicate(n).sum`, which is implemented as the _!+_ operator.
 
 One common structure used in reverbs is to mix several comb delays in parallel.  This example shows how you can use parallel structures to process a single input.
 
 	var n = 8;
 	(* variable to hold the input, use a noise burst as an input signal *)
 	var z = Decay2( (* exponential decay envelope *)
-		in: Impulse(0.5, 0), (* impulse to trigger the decay *)
-		attackTime: 0.01,
-		decayTime: 0.20
+		Impulse(0.5, 0), (* impulse to trigger the decay *)
+		0.01, (* attackTime *)
+		0.20 (* decayTime *)
 	) * PinkNoise() * 0.1; (* multiply envelope by pink noise *)
 	{
 		(* function to create comb delays with random delay times *)
 		CombC(
-			in: z, (* input signal *)
-			maxdelaytime: 0.1,
-			delaytime: Rand(0.01, 0.09), (* random delay time from 0.01 to 0.09 seconds *)
-			decaytime: 3
+			z, (* input signal *)
+			0.1, (* maximum delay time *)
+			Rand(0.01, 0.09), (* random delay time from 0.01 to 0.09 seconds *)
+			3 (* decaytime *)
 		)
 	} !+ n
 

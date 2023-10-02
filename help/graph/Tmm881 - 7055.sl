@@ -47,4 +47,4 @@ var tendencyMask = [
 	var rev = FreeVerb(dry, 0.33, 0.5, 0.5);
 	var del = CombC(dry, 0.2, 0.2, 1);
 	dry + rev + del * 0.2
-}.dup(4).sum.transpose.sum
+}.duplicate(4).sum.transposed.sum

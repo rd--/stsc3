@@ -7,5 +7,5 @@ Splay2(
 		1,
 		b / 9.9,
 		9
-	).transpose.sum * 0.9
+	).transposed.sum * 0.9
 )
