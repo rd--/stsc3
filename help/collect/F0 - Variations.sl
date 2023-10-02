@@ -84,8 +84,8 @@ var o = GrainFm(
 	trigger: LfSaw([0.5, 0.6], 0),
 	dur: 16,
 	carfreq: LfSaw(5, 0) * LfSaw(0.015, 0) + 1 * 98,
-	modfreq: (2 ** LfSaw(4, 0)).RoundTo(0.5) * 99,
-	index: 2 ** LfSaw(1 / [8, 9], 0) * 8,
+	modfreq: (2 ^ LfSaw(4, 0)).RoundTo(0.5) * 99,
+	index: 2 ^ LfSaw(1 / [8, 9], 0) * 8,
 	pan: 0,
 	envbufnum: -1,
 	maxGrains: 512
@@ -99,7 +99,7 @@ var c = 0.021;
 var d = LfTri(b / 999, 0) % 1;
 var m = LfTri(b * c, 0);
 var l = m * 7 + 20 + Dseq(inf, b % m * 5 + 6);
-var j = DmdFor(e / (12 ** m), 0, l);
+var j = DmdFor(e / (12 ^ m), 0, l);
 var k = DegreeToKey(b.asLocalBuf, j, 12);
 var o = SinOscFb(k.MidiCps, LfTri(c / b + 1 / 3, Decay2(Impulse([2 / 3, 1.5, 3, 1.5, 3], 0), c, d)) * d);
 FreeVerb(Splay2(o), 0.1, 1, 0.5) * 0.1
@@ -107,7 +107,7 @@ FreeVerb(Splay2(o), 0.1, 1, 0.5) * 0.1
 (* <https://twitter.com/redFrik/status/1452954849885163525> ; f0 *)
 var i = Rand(1, 64);
 var x = (SinOsc(i % 9.33, 0) * 5 + 5).Ceil;
-var t = SinOsc(2 ** (i % 11) * 150 / x, 0);
+var t = SinOsc(2 ^ (i % 11) * 150 / x, 0);
 var y = Hpz1(x).Abs > 0;
 var f = LinExp(t, -1, 1, Latch(LinExp(SinOsc(i % 4.4, 0), -1, 1, 9, 999), y), Latch(LinExp(SinOsc(i % pi, 0), -1, 1, 99, 9000), y));
-Pan2(Blip(f, t + 2) * (1 - t), SinOsc(0.1, i), Line(0.2, 0, 9, 2).Min(0.6) ** 2)
+Pan2(Blip(f, t + 2) * (1 - t), SinOsc(0.1, i), Line(0.2, 0, 9, 2).Min(0.6) ^ 2)

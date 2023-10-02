@@ -5,4 +5,4 @@ var f = { :i |
 	var d = 1 / Latch(in: 1.015 ** Sweep(trig: Impulse(freq: 0, phase: 0), rate: 1) * 64 % 1 + 1 * 200, trig: x);
 	Pluck(in: o, trig: x, maxdelaytime: 1, delaytime: d, decaytime: 4, coef: 0.2)
 };
-(0 .. 9).collect(f).mean * 0.1
+0..9.collect(f).mean * 0.1

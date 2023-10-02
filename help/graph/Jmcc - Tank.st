@@ -24,7 +24,7 @@ tank := [ :i |
 	l5 := AllpassN in: l4 maxdelaytime: 0.05 delaytime: [Rand lo: 0.03 hi: 0.15] dup decaytime: 2.
 	l6 := LeakDc in: l5 coef: 0.995.
 	l7 := l6 + i.
-	l7 mrg: (LocalOut channelsArray: l7)
+	l7 multipleRootGraph: (LocalOut channelsArray: l7)
 ].
 signal := (pling dup: 12) sum + bang.
 4 timesRepeat: [ signal := r_allpass value: signal ].

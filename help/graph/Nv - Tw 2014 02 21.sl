@@ -2,8 +2,8 @@
 var x = Impulse(0.05, 0);
 var f = {
 	20.timesRepeat {
-		var a = AllpassL(LeakDc(x, 0.995), 4, 8 ** LfNoise2(0.1) / 2, 8) * 1.2;
-		x := Lpf(a, 8 ** LfNoise2({ 0.1.Rand } ! 2) * 2500).Tanh
+		var a = AllpassL(LeakDc(x, 0.995), 4, 8 ^ LfNoise2(0.1) / 2, 8) * 1.2;
+		x := Lpf(a, 8 ^ LfNoise2({ 0.1.Rand } ! 2) * 2500).Tanh
 	};
 	x * 0.5
 };

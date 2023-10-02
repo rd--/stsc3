@@ -1,6 +1,6 @@
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var k = DmdFor(6.4, 0, Dseq(inf, [0.05, Drand(1, [0.04, 0.08])]));
-Splay(Integrator((LfNoise0(5 ! 3) * k).RoundTo(k / 10), 1).Sin.Sqrt.Tanh, 0.3, 1, 0, true)
+Splay(Integrator((LfNoise0([5, 5, 5]) * k).RoundTo(k / 10), 1).Sin.Sqrt.Tanh, 0.3, 1, 0, true)
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
 var x = LfNoise1(0.5 * LocalIn(1, 0) + 0.1) * 0.5 + 0.5;
@@ -11,7 +11,7 @@ s <! LocalOut(x)
 var q = [0, 3, 5, 7, 10];
 var t = Impulse(4, 0) * LfNoise0(500) > 0;
 var f = Demand(t, 0, Drand(inf, (q + 12 ++ q + 33).MidiCps));
-PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0) ! 2
+PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0).EqPan2(0)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var snd = Hpf(
@@ -54,31 +54,31 @@ var l = LfNoise0(6);
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var t = [0, 0, 0, 1, 5, 7, 10, 12, 12, 12] + 30;
 var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
-(BHiPass(LfNoise1(8) ** 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
+(BHiPass(LfNoise1(8) ^ 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 AllpassL(SinOsc(55,0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.004]), 2)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var i = { :freq | Impulse(freq, 0) };
-var ph = Integrator(Integrator(i(64).Lag(LfNoise1(2 ! 2) * 2 + 2) * 99, 0.9), 0.99).Fold2(pi);
+var ph = Integrator(Integrator(i(64).Lag(LfNoise1([2, 2]) * 2 + 2) * 99, 0.9), 0.99).Fold2(pi);
 SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var t = [0, 3, 5, 7, 10, 12] + 40;
 var p = DmdFor(1/4, 0, Drand(inf, (t + 12 ++ t).MidiCps));
 var b = TRand(1500, 2000, Impulse(16, 0)).Lag(0.1);
-Blip([b, b + p], 1).mean ! 2 ** 2
+Blip([b, b + p], 1).mean.EqPan2(0) ^ 2
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var i = Impulse(8, 0).Lag(0.3) ! 2;
+var i = Impulse(8, 0).Lag(0.3).EqPan2(0);
 10.timesRepeat {
 	i := LeakDc(AllpassC(i, 1, LfNoise0(8).Range(0.00001, 0.2), -0.15) * LfNoise0(8).Range(1, 3), 0.995).Tanh
 };
 i
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var v = Blip([20000, 20000 - 9], 1) * (LfNoise0(16) * 0.5 + 0.5 ** 9);
+var v = Blip([20000, 20000 - 9], 1) * (LfNoise0(16) * 0.5 + 0.5 ^ 9);
 42.timesRepeat {
 	v := LeakDc(AllpassC(v, 1, LfNoise0(5) * 0.05 + (0.05 + 0.001), 100), 0.995)
 };
@@ -89,10 +89,10 @@ var v = Blip([20000, 20000 - 9], 1) * (LfNoise0(16) * 0.5 + 0.5 ** 9);
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; requires=kr *)
 var x = DmdFor(1/8, 0, Drand(inf, [0, Drand(1, [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1])]));
-LeakDc(Brf(Saw(8) * Decay2(x, 0.01, 0.3).kr ** 1.5, x * 20 + [45.1, 45], 0.1), 0.995).Tanh
+LeakDc(Brf(Saw(8) * Decay2(x, 0.01, 0.3).kr ^ 1.5, x * 20 + [45.1, 45], 0.1), 0.995).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
-var v = Blip([60, 61], 5) * (LfNoise0(4).MulAdd(1, 0) ** 8);
+var v = Blip([60, 61], 5) * (LfNoise0(4).MulAdd(1, 0) ^ 8);
 12.timesRepeat {
 	v := LeakDc(CombC(v, 1, LfNoise0(1).MulAdd(0.05, 0.06).Lag(5000), 9), 0.995)
 };
@@ -122,7 +122,7 @@ fundamentals.withIndexCollect { :freq0 :index |
 (* http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks ; requires=CurveGen *)
 var numVoices = 30;
 var fundamentals = { 200.randomFloat(400) }.duplicate(numVoices).sorted.reversed;
-var finalPitches = ((1 .. numVoices).collect { :each |
+var finalPitches = (1..numVoices.collect { :each |
 	(each / (numVoices / 6)).RoundTo(1) * 12
 } + 14.5).MidiCps;
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
@@ -137,7 +137,7 @@ var voiceFunc = { :numTone |
 		Rand(-0.5, 0.5)
 	) * (1 - (1 / numTone)) * 1.5 / numVoices
 };
-var snd = (1 .. numVoices).collect(voiceFunc).sum;
+var snd = 1..numVoices.collect(voiceFunc).sum;
 Limiter(BLowPass(snd, 2000 + (outerEnv * 18000), 0.5) * (2 + outerEnv) * ampEnvelope, 1, 0.01)
 
 (* http://earslap.com/article/sctweeting.html *)
@@ -158,7 +158,7 @@ f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 (* http://earslap.com/article/sctweeting.html *)
 {
 	var a = LfNoise1(Rand(0, 0.2));
-	DelayC(Bpf(WhiteNoise() * Dust2(a * a * 4 ** 2).Lag(0.008), IRand(0, 10000) + 300, 0.09), 3, a * 1.5 + 1.5) * 45
+	DelayC(Bpf(WhiteNoise() * Dust2(a * a * 4 ^ 2).Lag(0.008), IRand(0, 10000) + 300, 0.09), 3, a * 1.5 + 1.5) * 45
 } !+ 80
 
 (* http://earslap.com/article/sctweeting.html *)

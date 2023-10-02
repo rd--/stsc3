@@ -68,7 +68,7 @@ var mkNode = { :n |
 	var a = mkRead([0.01, 0.05, 0.1, 0.15, 0.25, 0.35], t);
 	EqPan2(SinOsc(f, 0) * a, p)
 };
-(1 .. 4).collect(mkNode).sum * 0.25
+1..4.collect(mkNode).sum * 0.25
 
 (* 20060917 ; rd ; requires=DustRange *)
 var b0 = [60, 71, 89, 65, 36, 57, 92, 97, 92, 97].asLocalBuf;

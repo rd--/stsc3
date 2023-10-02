@@ -4,4 +4,4 @@ var f = { :i |
 	var e = LinSeg(1, [0, i * 2, 0, 0.01, 1, 2, 1, 25, 0]);
 	EqPan2(SinOsc(i + 1, ph) * 0.03, 1.Rand2) * e
 };
-(0 .. 98).collect(f).sum
+0..98.collect(f).sum

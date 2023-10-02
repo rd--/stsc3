@@ -1,6 +1,6 @@
 (* https://twitter.com/redFrik/status/1546903641575112715 ; requires=StandardL ; wait... *)
 var b = [0, 3.084, 5.028, 6.972, 10.056];
-var k = DegreeToKey(b.asLocalBuf, 2 ** StandardL(StandardL(b + 1 / 32, b + 1, 0.5, 0), b / 7 + 1, 0.5, 0) * 12, 12);
+var k = DegreeToKey(b.asLocalBuf, 2 ^ StandardL(StandardL(b + 1 / 32, b + 1, 0.5, 0), b / 7 + 1, 0.5, 0) * 12, 12);
 var f1 = (k + 36 - (StandardL(1 / 32, 1, 0.5, 0) > 0)).MidiCps;
 var f2 = StandardL(b / 8 + 8, b / 5 + 1, 0.5, 0);
 var fb = StandardL(1 / 3, b / 8 + 1, 0.5, 0) + 1 / 3;

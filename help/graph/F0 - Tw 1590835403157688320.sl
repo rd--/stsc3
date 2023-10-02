@@ -7,7 +7,7 @@ var z = Latch(
 );
 var r = Rlpf(
 	z,
-	9 ** SinOsc(g * 9, 0) * 999,
+	9 ^ SinOsc(g * 9, 0) * 999,
 	SinOsc(b / 77, 0) / 2 + 0.6
 );
 var x = SinOsc(999 * b.scramble / r, 0);
@@ -17,7 +17,7 @@ var w = Latch(
 );
 var y = Rlpf(
 	w,
-	9 ** SinOsc(g, 0) * 999,
+	9 ^ SinOsc(g, 0) * 999,
 	SinOsc(b / 88, 0) / 2 + 0.6
 );
-Splay2(7 ** SinOsc(g, 0) / 9 * x * y)
+Splay2(7 ^ SinOsc(g, 0) / 9 * x * y)

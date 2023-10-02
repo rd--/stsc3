@@ -23,17 +23,17 @@ var tendencyMask = [
 			Impulse(tendencyMask * modRate, 0)
 		)
 	} ! 2;
-	var dur = (1 .. 3).collect { :i |
+	var dur = 1..3.collect { :i |
 		Rand(0.25, 4) * mod[1][i] * (mouse + 0.1).atRandom
 	};
-	var triggerRate = (1 .. 3).collect { :i |
+	var triggerRate = 1..3.collect { :i |
 		Rand(0.25, 4) * mod[2][i] * (mouse / 10 + 0.1).atRandom
 	};
 	var freqMul = {
 		(mouse * 10 + 0.1).atRandom
 	} ! 3;
-	var dry = (1 .. 3).collect { :i |
-		var freqRange = 10 ** i * [22, 88] * freqMul[i];
+	var dry = 1..3.collect { :i |
+		var freqRange = 10 ^ i * [22, 88] * freqMul[i];
 		var freq = {
 			TRand(
 				freqRange[1],

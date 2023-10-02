@@ -12,5 +12,5 @@ var strFunc = { :i |
 	var string2 = CombL(pluck2, period2, period2, -4);
 	EqPan2(string1 + string2, i * 0.2 - 0.5)
 };
-var out = (1 .. pitch1.size).collect(strFunc).sum;
+var out = pitch1.indices.collect(strFunc).sum;
 LeakDc(Lpf(out, 12000), 0.995)

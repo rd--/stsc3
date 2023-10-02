@@ -6,5 +6,5 @@ var m = [24, 0, 3, 5, 7, 10, 36].collect { :i |
 	i + [36, 48, 36, 33, 60, 72]
 }.concatenation;
 var o = SinOscFb(Demand(t, 0, Dseq(inf, m.MidiCps) / g), SinOscFb(0.02, 0)) * e;
-var c = Rlpf(o, 3 ** SinOscFb(0.04, 0) + e * 2000, 3 ** SinOscFb(g / 9, 0) / 3) * 4;
+var c = Rlpf(o, 3 ^ SinOscFb(0.04, 0) + e * 2000, 3 ^ SinOscFb(g / 9, 0) / 3) * 4;
 (CombC([c.Tanh, c], 1, 1 / [2, 3], [4, 5]).sum / 8 + c).Tanh * 0.1

@@ -6,7 +6,7 @@ shiftRegister := [ :length :tr :in |
 	count := PulseCount trig: tr reset: 0.
 	rd := DmdOn trig: tr reset: 0 demandUGens: (Dbufrd bufnum: buf phase: count + length iota loop: 1) reversed.
 	wr := DmdOn trig: tr reset: 0 demandUGens: (Dbufwr bufnum: buf phase: count input: in loop: 1).
-	rd mrg: wr
+	rd multipleRootGraph: wr
 ].
 amp := 0.1.
 pulse := Impulse freq: 1 / 16 phase: 0.

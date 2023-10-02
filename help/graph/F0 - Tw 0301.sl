@@ -1,5 +1,5 @@
 (* https://sccode.org/1-4Qy ; f0 ; 0301 ; requires=kr *)
-var b = (0 .. 3).collect { :i |
+var b = 0..3.collect { :i |
 	DmdFor(
 		i + 1 / 9,
 		0,

@@ -5,10 +5,10 @@
 	var m = (i // 60 % 2 * -2 + j + 70 - (i // 12 + 1 % 2 * 12));
 	var f = m.MidiCps + [0, 2 / 3];
 	var d = i // 12 % 3 >> 1;
-	var c = (60.MidiCps / f) ** (1 / 3);
+	var c = (60.MidiCps / f) ^ (1 / 3);
 	var n = (d + [1, 1 / 30]).atWrap(i + 1);
 	{
-		var a = f * 1.5 ** SinOsc(
+		var a = f * 1.5 ^ SinOsc(
 			i % 2 * i // [3, 4] % 7 % 6 / 4 * 3 / (1 + d),
 			[i, i * 2]
 		);
