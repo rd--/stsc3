@@ -160,7 +160,7 @@ var carRatio = [1, 1 / 3] / modRatio;
 var carAmp = 0.1;
 SinOsc(freq * carRatio + modOsc, 0) * carAmp
 
-(* SinOsc ; SuperColldier derived temporaries syntax with initialiser expressions *)
+(* SinOsc ; SuperCollider derived temporaries syntax with initialiser expressions *)
 var freq = 440, phase = 0, amp = 0.1;
 SinOsc(freq, phase) * amp
 
