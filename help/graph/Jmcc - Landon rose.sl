@@ -5,4 +5,4 @@ var f = { :i |
 	var e = LinSeg(Impulse(0.125, [0 0.25 0.5 0.75][i]), [0 2 1 2 0]);
 	RingzBank(s, m[i].MidiCps, [1], [3]) * e
 };
-1..4.collect(f).sum
+1...4.collect(f).sum

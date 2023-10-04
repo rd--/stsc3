@@ -1,6 +1,6 @@
 (* https://twitter.com/redFrik/status/1125557217086857216 *)
 var scl = [0, 2.94, 4.98, 7.02, 9.96];
-var b = -7..6 + 0.7 * 2 / 666;
+var b = -7...6 + 0.7 * 2 / 666;
 var m = DegreeToKey(
 	scl.asLocalBuf,
 	LfTri(b, b) * LfTri(b, 0) * 9 + 9 % 32,

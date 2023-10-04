@@ -15,7 +15,7 @@ var f = { :i |
 	var mult = (-1 ^ i) * (0.5 / (i + 1));
 	SinOsc(440 * (i + 1), 0) * mult
 };
-Pan2(0..n.collect(f).sum, 0, 1 / n)
+Pan2((0 .. n).collect(f).sum, 0, 1 / n)
 
 (* tutorial 2.1 ; square *)
 var n = 9;
@@ -23,7 +23,7 @@ var f = { :i |
 	var harmonicnumber = 2 * i + 1;
 	SinOsc(440 * harmonicnumber, 0) / harmonicnumber
 };
-Pan2(0..n.collect(f).sum, 0, 1 / n)
+Pan2((0 .. n).collect(f).sum, 0, 1 / n)
 
 (* tutorial 2.1 ; triangle *)
 var n = 9;
@@ -32,7 +32,7 @@ var f = { :i |
 	var mult = (-1 ^ (harmonicnumber - 1 / 2)) * (1 / (harmonicnumber * harmonicnumber));
 	SinOsc(440 * harmonicnumber, 0) * mult
 };
-Pan2(0..n.collect(f).sum, 0, 1 / n)
+Pan2((0 .. n).collect(f).sum, 0, 1 / n)
 
 (* tutorial 2.1 ; bell spectra *)
 var rat = [0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];

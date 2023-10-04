@@ -4,7 +4,7 @@ var f = { :i |
 	var f = 4 ^ LfNoise0(1 / 16) * 300;
 	Rlpf(t, f, 0.005).Sin
 };
-var x = 0..8.collect(f).Splay2;
+var x = 0...8.collect(f).Splay2;
 2.timesRepeat {
 	x := FreeVerb2(x.first, x.second, 0.1, 1, 1)
 };

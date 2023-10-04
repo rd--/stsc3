@@ -1,5 +1,5 @@
 (* f0 ; https://twitter.com/redFrik/status/1374517800048291847 *)
-var b = 1..9;
+var b = 1...9;
 var f0 = Lag(VarSaw(0.003, b / 9, 0.5).RoundTo(1 / 3), 1.9) * 91 + 252;
 var w0 = VarSaw(b / 9 / 99, 0, 0.5) % 1;
 var f1 = 63 * b + VarSaw(0.49, b / 9, 0.5);

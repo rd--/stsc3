@@ -5,4 +5,4 @@ var f = { :c |
 	var o = SinOsc(c + 1 * 99 + [0, 2], a.reversed) / 4;
 	DelayN(o * LinSeg(Impulse(1 / 45, 0), [1, 9 - c + 16, 0]), d[c], d[c])
 };
-1..9.collect(f).sum
+1...9.collect(f).sum

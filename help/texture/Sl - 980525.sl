@@ -3,7 +3,7 @@
 	(1 / 7).coin.ifFalse {
 		var chord = [60 63 67; 65 68 72; 55 58 62].atRandom;
 		var iot = (1 / [3 5 7 11 13 17]).atRandom;
-		(iot * 0..2).do { :startTime |
+		(iot * 0...2).do { :startTime |
 			{
 				var note = (chord.atRandom - [0 12 24].atRandom).MidiCps;
 				var x = Decay(

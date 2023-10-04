@@ -7,7 +7,7 @@
 	var frequencies = (1 ..p).collect { :i |
 		i * freq0 + Rand(-0.5, 0.5)
 	};
-	var amplitudes = 1 / 1..p;
+	var amplitudes = 1 / (1 .. p);
 	var ringtimes = { Rand(0.5, 4.5) } ! p;
 	{
 		RingzBank(noise, frequencies, amplitudes, ringtimes)

@@ -14,4 +14,4 @@ var f = { :i |
 var o = SinOscFb((SinOscFb([1 .. 5], 1) * 3).RoundTo(1) + 5 * c, 1);
 var p = o * SinOscFb(12, 1).Max(1) * 3;
 var q = SinOscFb(c, 0.7) * (SinOscFb(3, 1).Min(0) / 3);
-0..11.collect(f).mean.Tanh + Splay2(p.Tanh / 9) + q
+0...11.collect(f).mean.Tanh + Splay2(p.Tanh / 9) + q

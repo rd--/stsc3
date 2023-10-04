@@ -1,5 +1,5 @@
 (* https://twitter.com/lukiss163/status/1619072788311973896 ; lnu *)
-var c = 0..8.collect { :n |
+var c = 0...8.collect { :n |
 	var d = Dust(1);
 	TRand(0.5, 2.5, d).Lag3(1 / 16) ^ n
 };

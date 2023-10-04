@@ -6,4 +6,4 @@ var f = { :i |
 	var d = 1 / Latch(z, x);
 	Pluck(o, x, 1, d, 4, 0.2)
 };
-0..9.collect(f).mean * 0.1
+0...9.collect(f).mean * 0.1

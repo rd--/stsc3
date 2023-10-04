@@ -11,4 +11,4 @@
 		)
 	}.playAt(t + 0.5);
 	[2, a + 3 / d % 9]
-}.scheduleInjecting(4..12)
+}.scheduleInjecting(4...12)

@@ -1,5 +1,5 @@
 (* f0 ; https://twitter.com/redFrik/status/1105496695637454848 ; requires=kr *)
-var b = 1..15 + 1 / 151;
+var b = 1...15 + 1 / 151;
 var w = (VarSaw(b, b, 1 / 5.15) * 1 + 1.5).Ceil;
 var s = Select((VarSaw(1/15, 1/5, b) * 5).Ceil + 5 / 5, [51 * 1.5, 51, 151]).kr;
 var x = Lag(s, b);

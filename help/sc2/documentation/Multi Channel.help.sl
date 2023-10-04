@@ -52,7 +52,7 @@ You can still create multiple Klanks by giving it an array of Ref'ed arrays.
 
 is equivalent to:
 
-	// ....
+	// ...
 
 ## Reducing channel expansion with Mix
 

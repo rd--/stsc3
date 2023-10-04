@@ -13,8 +13,8 @@ var a =
 a <! LocalOut(a)
 
 (* sc-140 ; 03 ; Tim Walters *)
-0..12.collect { :k | (* 15 -> 12 ; udp packet size *)
-	0..7.collect { :i |
+0...12.collect { :k | (* 15 -> 12 ; udp packet size *)
+	0...7.collect { :i |
 		var e = Decay(Dust(1 / 4 ^ i), SinOsc(0.1, 0) + 1 * k + i) * k * 999;
 		var ph = SinOsc(i * k ^ i / [4, 5], 0) * e;
 		SinOsc(i * k * k, ph)

@@ -1,6 +1,6 @@
-(* nv 52 https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; requires=crossedMultiply (⊗) *)
-var x = [[4, 4.5], [2, 3, 5, 6]];
-var z = x.crossedMultiply(x.crossedMultiply(x).allTuples);
+(* nv 52 https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; requires=*.x (⊗) *)
+var x = [4 4.5; 2 3 5 6];
+var z = x *.x (x *.x x).allTuples;
 var y = (z * 4).concatenation.clump(2) ++ [0];
 var f = DmdFor(1 / 5, 0, Dseq(1, y));
 GVerb(

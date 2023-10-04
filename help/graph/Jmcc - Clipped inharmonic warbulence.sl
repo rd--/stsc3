@@ -4,7 +4,7 @@ var z = { :tr |
 	var f = TRand(24, 96, tr).MidiCps;
 	var a = (500 / f).Min(1);
 	var n = 12; (* udp packet size *)
-	a * 1..n.collect { :i |
+	a * (1 .. n).collect { :i |
 		var g = TRand(0, n, tr) + 1;
 		var o1 = SinOsc(f * g, 0);
 		var o2 = SinOsc(

@@ -14,4 +14,4 @@ var strFunc = { :i |
 		i * 0.2 - 0.5
 	)
 };
-LeakDc(Lpf(1..8.collect(strFunc).sum, 12000), 0.995)
+LeakDc(Lpf(1...8.collect(strFunc).sum, 12000), 0.995)

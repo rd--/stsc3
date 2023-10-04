@@ -4,4 +4,4 @@ var f = { :i |
 	var e = LinSeg(1, [0, i * 3, 0, 0.01, 1, 2, 1, 9, 0]);
 	EqPan2(o, Rand(-1, 1)) * e
 };
-0..88.collect(f).sum (* 98 ; udp packet size *)
+0...88.collect(f).sum (* 98 ; udp packet size *)

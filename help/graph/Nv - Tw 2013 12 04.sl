@@ -5,4 +5,4 @@ var f = { :i |
 	var x = 0.5 ^ i * p;
 	var o = SinOsc(2, 0) + [4, 9];
 	CombC(x, 1, o * 0.001, 0) - x};
-1..9.collect(f).mean / 9
+1...9.collect(f).mean / 9

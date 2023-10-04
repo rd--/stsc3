@@ -8,4 +8,4 @@ var z = { :i |
 	var o3 = Blip(f0, i + [2, 3]) * m;
 	Ringz(o3, i + 1 * (n * 2 - 1), 0.1)
 };
-1..n.collect(z).mean / 5
+(1 .. n).collect(z).mean / 5

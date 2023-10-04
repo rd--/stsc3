@@ -152,7 +152,7 @@ c !+ 2 + s
 
 (* harmonic swimming (jmcc) #1 *)
 var l = Ln(0, -0.02, 60);
-1..20.collect { :h |
+1...20.collect { :h |
 	var n = LfNoise1({ Rand(-4, 4) } ! 2 + 6) * 0.02 + l;
 	SinOsc(50 * (h + 1), 0) * n.Max(0)
 }.sum
@@ -163,7 +163,7 @@ var o = { :h |
 	var e = Decay2(Dust(t) * 0.02, 0.005, Rand(0, 0.5));
 	SinOsc(80 * (h + 1), 0) * e
 };
-0..10.collect(o).sum
+0...10.collect(o).sum
 
 (* lfo modulation (jmcc) #1 *)
 var o = SinOsc(0.05, 0) * 80 + 160;
@@ -297,7 +297,7 @@ var strFunc = { :i |
 	var z = [{ 300 * i + LinRand(0, 8000, 0) } ! n, nil, { Rand(1, 4) } ! n].asKlankSpec;
 	Pan2(Klank(pluck, 1, 0, 1, z), i * 0.2 - 0.5, 1)
 };
-LeakDc(Lpf(1..8.collect(strFunc).sum, 12000), 0.995)
+LeakDc(Lpf(1...8.collect(strFunc).sum, 12000), 0.995)
 
 (* theremin (jmcc) ; event control *)
 Voicer(16, { :e |

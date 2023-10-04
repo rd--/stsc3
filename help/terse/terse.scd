@@ -172,6 +172,11 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 (1 .. 5).dupEach(2) == [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]       // duplicate each element count times
 [1, 2, 3, 2, 3, 4].replace([2, 3], -2) == [1, -2, -2, 4]    // replace each occurrence of a subsequence with item
 [1, 2, 3, 2, 3].replace([2, 3], [7, 5]) == [1, 7, 5, 7, 5]  // splices in relacement subsequences
+(1 .. 5) + (6 .. 9) == [7, 9, 11, 13, 11]
+(1 .. 5) +.s (6 .. 9) == [7, 9, 11, 13]
+(1 .. 5) +.f (6 .. 8) == [7, 9, 11, 11, 11]
+(1 .. 3) +.t (4 .. 6) == [(5 .. 7), (6 .. 8), (7 .. 9)]
+(1 .. 3) +.x (4 .. 6) == ((5 .. 7) ++ (6 .. 8) ++ (7 .. 9))
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
@@ -725,6 +730,7 @@ List.linrand(4, 1, 9).first.isInteger                       // list of random nu
 List.exprand(4, 1, 9).first.isInteger.not                   // list of random numbers (exponential distribution)
 [1, 2, 3].wrapAt(3) == 1                                    // index with wrap-around
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
+(-2 .. 4).collect { | i | (1 .. 3).foldAt(i) } == [3, 2, 1, 2, 3, 2, 1]
 List.rand(4, 1, 9).asArray.class == Array                   // as array
 [3, [1, 2, 1], 1].convertRhythm == List[0.75, 1.5, 0.75]    // variant of Mikael Laurson's notation
 [10, 20].obtain(2, 30) == 30                                // at, or default value for out of range index
