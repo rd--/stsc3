@@ -669,6 +669,12 @@ nil.isNil == true                                           // is nil
 "text".postln == "text"                                     // write text to post window (console)
 'sym'.postln == 'sym'                                       // write object to post window (console)
 
+'Prime numbers'
+17.isPrime == true                                          // is number prime
+17.indexOfPrime == 6 && { 18.indexOfPrime == nil }          // index of prime number in prime number sequence, or nil if not prime
+0.nthPrime == 2 && { 6.nthPrime == 17 }                     // zero index into the prime number sequence
+18.nextPrime == 19 && { 19.nextPrime == 19 }                // next prime number or self if prime
+
 'Pseudo variables'
 false.class == False                                        // constant (instance of False)
 nil.class == Nil                                            // constant (instance of Nil)
@@ -807,6 +813,12 @@ Symbol.superclass == Object                                 // Symbol is not a s
 var x; x == nil                                             // uninitialised variables are nil
 var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce multiple temporaries
 var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
+
+'Tuning'
+t = Tuning.at('wcAlpha')                                    // lookup tuning by name
+t.cents.keep(7).round == [0, 78, 156, 234, 312, 390, 468]   // tuning intervals in cents, includes zero (reference pitch)
+t.ratios.keep(4).round(0.001) == [1, 1.046, 1.094, 1.145]   // tuning interval as ratios, includes one (reference pitch)
+t.octaveRatio.round(0.001) == 1.966                         // tuning octave ratio
 
 'Collection access and mutation syntax'
 "text".copy[2].toUpper == $X                                // c[k] is syntax for c.at(k), lookup char in string
