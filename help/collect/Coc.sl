@@ -210,7 +210,7 @@ SinOsc(Latch(LfSaw(MouseX(0.1, 20, 0, 0.2), 0) * 500 + 600, Impulse(10, 0)), 0) 
 SinOsc(Latch(LfSaw(Line(0.1, 20, 60, 0), 0) * 500 + 600, Impulse(10, 0)), 0) * 0.1
 
 (* Rise fall pad ; requires=voicer *)
-var vc = { :e |
+Voicer(16) { :e |
 	var mnn = e.x * 24 + 48;
 	var freq = mnn.MidiCps;
 	var gate = e.w;
@@ -219,5 +219,4 @@ var vc = { :e |
 	var filterEnv = Adsr(gate, 1, 1.4, 0.05, 0.2, 0);
 	var ampEnv = Adsr(gate, 0.1, 0.01, 0.6, 1.5, 0) * e.z;
 	Pan2(Rlpf(osc1 + osc2, 3000 * filterEnv + freq, 1.5), e.i * 2 - 1, ampEnv)
-};
-Voicer(16, vc).sum
+}.sum

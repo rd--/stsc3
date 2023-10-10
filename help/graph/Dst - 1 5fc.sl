@@ -1,5 +1,5 @@
 (* https://sccode.org/1-5fc (dst) ; requires=voicer *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	var tr = Trig(e.w, e.y * 0.002 + 0.001);
 	var buf = [0, 7, 15.93, 5, 9.7, 12, 17.5, 13.1].asLocalBuf;
 	var samp = TExpRand(0.07, 0.5, tr);
@@ -19,4 +19,4 @@ Voicer(16, { :e |
 	var loc = EqPan2(sig, SinOsc(rate * 0.9 + Rand(-0.6, 0.6), 0));
 	var cmb = CombL(loc, 0.1, SinOsc(0.01, 0) * 0.03 + 0.07, 5) * 0.7;
 	XFade2(Lpf(cmb, 4800), loc, -0.5, 0.3)
-}).sum
+}.sum

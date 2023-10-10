@@ -61,7 +61,7 @@ Mul(
 Mul(CombN(Mul(SinOsc(MidiCps(MulAdd(LfSaw(0.4, 0), 24, MulAdd(LfSaw([8, 7.23], 0), 3, 80))), 0), 0.05), 0.2, 0.2, 4), 0.1)
 
 (* berlin 1977 (jmcc) #4 ; event control *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	var freq = (e.x * 24 + 48).MidiCps;
 	var env = Decay2(Trig(e.w, 0.001), 0.05 * e.y, 2 * e.y);
 	var amp = env * e.z + 0.02;
@@ -69,7 +69,7 @@ Voicer(16, { :e |
 	var pw = SinOsc(0.08, [0, 0.5 * pi]) * 0.45 + 0.5;
 	var s = Pulse(freq, pw) * amp;
 	CombC(Rlpf(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5) * LagUd(e.w, 0, 2 + e.y)
-}).sum
+}.sum
 
 (* berlin 1977 (jmcc) #4 ; var syntax *)
 var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
@@ -90,7 +90,7 @@ var s = Pulse(freq, pw) * amp;
 CombC(Rlpf(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5)
 
 (* bowed string (jmcc) ; voicer *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	var f = (e.x * 24 + 48).MidiCps;
 	var k = DynRingzBank(
 		{ BrownNoise() } ! 2 * e.z * LagUd(e.w, e.y * 0.1, e.y * 4),
@@ -99,7 +99,7 @@ Voicer(16, { :e |
 		{ Rand(1, 3) } ! 12
 	);
 	(k * 0.1).SoftClip
-}).sum * 0.2
+}.Splay2 * 0.2
 
 (* bowed string (jmcc) ; Rand *)
 var root = 5;
@@ -300,19 +300,19 @@ var strFunc = { :i |
 LeakDc(Lpf(1...8.collect(strFunc).sum, 12000), 0.995)
 
 (* theremin (jmcc) ; event control *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	var freq = Lag(LinExp(e.y, 0, 1, 4000, 200), 0.8);
 	var a = SinOsc(freq + (freq * SinOsc(4 + 3 * e.j, 0) * 0.02), 0) * e.x * 0.6 * Lag(e.w, 0.2);
 	Pan2(a, e.i * 0.25, 0.5 + e.z)
-}).sum * 0.5
+}.sum * 0.5
 
 (* tremulate (jmcc) ; event control ; requires=voicer *)
-var voiceFunc = { :e |
-	var s = SinOsc(e.x * 400 + 500 * [1.0, 1.2, 1.5, 1.8], 0); (* just minor seventh chord *)
+var s = Voicer(16) { :e |
+	var s = SinOsc(e.x * 400 + 500 * [1 1.2 1.5 1.8], 0); (* just minor seventh chord, 1:1 5:4 3:2 9:5 *)
 	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.j)).Max(0) * e.z;
 	Pan2(s, { Rand(-1, 1) } ! 4 + (e.i * 2 - 1), a * LagUd(e.w, 0, e.k * 2)).sum
-};
-CombN(Voicer(16, voiceFunc).sum * 0.5, 0.1, 0.1, 1)
+}.sum * 0.5;
+CombN(s, 0.1, 0.1, 1)
 
 (* uplink (jmcc) #2 ; texture=overlap,4,1,5,inf *)
 var osc = {

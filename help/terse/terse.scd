@@ -702,6 +702,9 @@ f = { | x | var y = x * 2, z = y.yield; f.value(z) }; true  // yield the receive
 var r = Routine(f); r.class == Routine                      // a routine is instantiated on a function
 (1 .. 9).collect { | i | i -> r.next(i) }.at(6) == (7 -> 14)// sends value to coroutine (also resume, value, run)
 
+'Scale'
+
+
 'SequenceableCollection'
 SequenceableCollection.allSubclasses.includes(List)         // sequencable collection class
 [1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences

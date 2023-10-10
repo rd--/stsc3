@@ -1,5 +1,5 @@
 (* https://schollz.com/blog/phasedistortion/ ; requires=voicer *)
-Voicer(16, { :e |
+Voicer(16) { :e |
 	var freq = (e.x * 36 + 48).MidiCps; (* e.p.unitCps *)
 	var amp = e.z;
 	var freqBase = freq;
@@ -12,5 +12,5 @@ Voicer(16, { :e |
 	var snd = Lag(SinOsc(0, pdres) * pdi, 1 / freqBase);
 	var env = Decay2(Trig(e.w, SampleDur()), 0.005, 10);
 	EqPan2(snd, e.i * 2 - 1) * env * amp
-}).sum
+}.sum
 

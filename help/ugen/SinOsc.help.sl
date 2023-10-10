@@ -48,7 +48,7 @@ var freq = 130;
 var squeezeStretch = LfTri(0.1, 0) * 5;
 var tri = LfTri(freq, 1) * 0.5 + 0.5;
 var pulse = LfPulse(freq, 0, 0.5) * 2 - 1;
-var outPhase = pulse * (tri ** (2 ** squeezeStretch));
+var outPhase = pulse * (tri ^ (2 ^ squeezeStretch));
 SinOsc(0, outPhase * pi) * 0.1
 
 (* SinOsc ; https://llllllll.co/t/45623/25 *)
@@ -207,7 +207,7 @@ var voiceFunc = { :e |
 	var panMod = SinOsc(panModRate, 0) * panModDepth;
 	var pitchMod = SinOsc(pitchModRate, 0) * pitchModDepth;
 	var mod = SinOsc(pitch * ratio, 0) * pitch * indexEnv;
-	var car = SinOsc(pitch * (2 ** (pitchMod / 1200)) + mod, 0) * volEnv * amp;
+	var car = SinOsc(pitch * (2 ^ (pitchMod / 1200)) + mod, 0) * volEnv * amp;
 	var filter = Lpf(car * volMod, LinExp(tone, 0, 1, 200, 20000));
 	EqPan2(filter, (panModDepth < 0.01).if { pan } { panMod })
 };
