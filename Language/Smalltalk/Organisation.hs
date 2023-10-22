@@ -8,6 +8,8 @@ module Language.Smalltalk.Organisation where
 import Data.Function {- base -}
 import Data.List {- base -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import Language.Smalltalk.Ansi {- stsc3 -}
 
 -- | Set of all categories in library.
@@ -19,7 +21,7 @@ classLibraryCategoryHierarchy :: ClassLibrary -> [(String, [String])]
 classLibraryCategoryHierarchy cl =
   let cp = map classCategoryPartsOrError cl
       grp = groupBy ((==) `on` fst)
-      jn l = (fst (head l), map snd l)
+      jn l = (fst (List.head_err l), map snd l)
       collate = map jn . grp
   in collate (nub (sort cp))
 

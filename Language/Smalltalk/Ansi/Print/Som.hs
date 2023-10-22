@@ -1,10 +1,12 @@
 -- | Print Ansi class definition value in Som format.
 module Language.Smalltalk.Ansi.Print.Som where {- stsc3 -}
 
-import Data.List {- base -}
 import Data.Maybe {- base -}
 
 import System.FilePath {- system -}
+
+import qualified Music.Theory.List as List {- hmt-base -}
+import qualified Music.Theory.String as String {- hmt-base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
@@ -42,13 +44,12 @@ If methods have source code print that rather than pretty-printing the definitio
 -}
 methodDefinitionPrintSom :: St.MethodDefinition -> String
 methodDefinitionPrintSom md =
-  let unlinesNoTrailingNewline = intercalate "\n"
-      St.MethodDefinition _ _ pat tmp stm prm _ src = md
+  let St.MethodDefinition _ _ pat tmp stm prm _ src = md
       ln =
         [unwords [St.pattern_pp pat, "=", "("]
         ,case src of
-            Just txt -> unlinesNoTrailingNewline (tail (lines txt))
-            Nothing -> unlinesNoTrailingNewline
+            Just txt -> String.unlinesNoTrailingNewline (List.tail_err (lines txt))
+            Nothing -> String.unlinesNoTrailingNewline
               [maybe "" St.temporaries_pp tmp
               ,maybe "" St.statements_pp stm]
         ,")"]

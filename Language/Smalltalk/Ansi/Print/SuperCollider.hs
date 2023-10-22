@@ -20,6 +20,8 @@ import Data.List {- base -}
 import qualified Numeric {- base -}
 import Text.Printf {- base -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Print as Ansi.Print {- stsc3 -}
 
@@ -89,7 +91,7 @@ sc_programInitializerDefinition_pp spl = sc_initializerDefinition_pp spl
 sc_keywordSelector :: Bool -> [St.Identifier] -> St.Identifier
 sc_keywordSelector spl k =
   let remcadd_ s = downcaseFirstLetter (filter (/= ':') s ++ (if spl then "" else "_"))
-      cap s = if length s > 1 then (toUpper (head s)) : tail s else s
+      cap s = if length s > 1 then (toUpper (List.head_err s)) : List.tail_err s else s
   in case k of
        [] -> error "sc_keywordSelector?"
        [k0] -> remcadd_ (downcaseFirstLetter k0)

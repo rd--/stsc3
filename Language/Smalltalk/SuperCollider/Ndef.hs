@@ -4,6 +4,8 @@ module Language.Smalltalk.SuperCollider.Ndef where
 import Data.Char {- base -}
 import Data.List {- base -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as St {- stsc3 -}
@@ -40,7 +42,7 @@ to_ndef ::  Expr -> Expr
 to_ndef expr =
   case expr of
     Identifier i ->
-      if isLower (head i) && i `notElem` scPseudoVariables then ndef_ref_rt i else Identifier i
+      if isLower (List.head_err i) && i `notElem` scPseudoVariables then ndef_ref_rt i else Identifier i
     Assignment p q ->
       implicitSend "Ndef" [symbolLiteral p, inLambda q]
     _ -> expr

@@ -7,6 +7,8 @@ import Text.Printf {- base -}
 
 import qualified Data.List.Split as Split {- split -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
@@ -226,8 +228,8 @@ or there could be a rewrite table with entries of the form ("at:put:", "put").
 stcSelectorJsForm :: String -> Bool -> Int -> String
 stcSelectorJsForm sel isBinOp arity =
   let parts = stcSelectorParts sel isBinOp arity -- performs arity check
-  in if isBinOp || all (== "value") (tail parts)
-     then head parts
+  in if isBinOp || all (== "value") (List.tail_err parts)
+     then List.head_err parts
      else if sel == "at:put:" then "put" else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
@@ -344,6 +346,6 @@ exprPrintScheme rw expr =
     Init c tmp stm ->
       concat [maybe "" (unlines . map ("; " ++) . lines) c
              ,if length stm == 1
-              then exprPrintScheme rw (first stm)
+              then exprPrintScheme rw (List.head_err stm)
               else exprTmpStmScheme rw tmp (stm, Nothing)]
 

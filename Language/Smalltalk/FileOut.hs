@@ -26,6 +26,8 @@ import Data.List {- base -}
 import Data.Maybe {- base -}
 import Text.Printf {- base -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import qualified Text.Parsec as P {- parsec -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
@@ -145,7 +147,7 @@ fileOutLibraryClassDef e x =
       ci = filter ((== "ClassInitializer") . fileOutEntryType) r
       cm = filter ((== "ClassMethodsFor") . fileOutEntryType) r
       im = filter ((== "InstanceMethodsFor") . fileOutEntryType) r
-      unlist l = if length l == 1 then Just (head l) else Nothing
+      unlist l = if length l == 1 then Just (List.head_err l) else Nothing
   in case (unlist cd) of
        Just cd1 -> Just (cd1,fromMaybe (FileOutClassComment x "No comment") (unlist cc), unlist ci,cm,im)
        _ -> Nothing
@@ -618,14 +620,14 @@ evalFileOutSegment s = maybe (Right s) Left (evalFileOutSegmentMaybe s)
 isComment :: FileOutSegment -> Bool
 isComment fo =
   case fo of
-    FileOutEvalSegment txt -> head txt == '"' && last txt == '"'
+    FileOutEvalSegment txt -> List.head_err txt == '"' && last txt == '"'
     _ -> False
 
 -- | Predicate to decide if a segment is a string.
 isString :: FileOutSegment -> Bool
 isString fo =
   case fo of
-    FileOutEvalSegment txt -> head txt == '\'' && last txt == '\''
+    FileOutEvalSegment txt -> List.head_err txt == '\'' && last txt == '\''
     _ -> False
 
 evalFileOut :: FileOut -> [Either FileOutEntry FileOutSegment]
