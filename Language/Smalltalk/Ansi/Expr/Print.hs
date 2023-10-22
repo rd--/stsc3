@@ -34,7 +34,9 @@ messagePrintStc elideApply (Message sel arg) =
   let isBinOp = St.isBinarySelector sel
       selId = St.selectorIdentifier sel
       selParts = stcSelectorParts selId isBinOp (length arg)
-      selStc = intercalate ":" (head selParts : takeWhile (/= "value") (tail selParts))
+      selStc = case uncons selParts of
+                 Nothing -> error "messagePrintStc"
+                 Just (h, t) -> intercalate ":" (h : takeWhile (/= "value") t)
   in case (selStc, arg) of
        (_,[]) -> printf ".%s" selStc
        ("apply",[Array p]) ->
@@ -341,5 +343,7 @@ exprPrintScheme rw expr =
     Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
     Init c tmp stm ->
       concat [maybe "" (unlines . map ("; " ++) . lines) c
-             ,if length stm == 1 then exprPrintScheme rw (head stm) else exprTmpStmScheme rw tmp (stm, Nothing)]
+             ,if length stm == 1
+              then exprPrintScheme rw (first stm)
+              else exprTmpStmScheme rw tmp (stm, Nothing)]
 
