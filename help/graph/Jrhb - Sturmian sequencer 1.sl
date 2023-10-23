@@ -20,4 +20,4 @@ var strFunc = { :i |
 		ExpRand(2 ^ i.negated * 0.1, 1.101)
 	).sum.Distort
 };
-0...6.collect(strFunc).Splay2 * 0.3
+0...6.collect(strFunc).Splay2 * 0.5
