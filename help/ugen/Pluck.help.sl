@@ -15,7 +15,7 @@ Voicer(16) { :e |
 	EqPan2(sig, e.i * 2 - 1)
 }.sum
 
-(* Pluck ; event control ; requires=voicer *)
+(* Pluck ; event control ; requires=record/voicer *)
 (
 	w: SinOsc(Rand((2 .. 9) / 11, 1), 0),
 	x: LfNoise2(Rand((9 .. 2) / 13, 1)).Range(0, (2 .. 9) / 17),

@@ -19,6 +19,11 @@ Voicer(16) { :e |
 	EqPan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1) * e.w * e.z * e.z
 }.sum
 
+(* PanAz ; event control *)
+Voicer(16) { :e |
+	PanAz(24, Blip(e.p.UnitCps, e.y * 3 + 1), e.i * 2 - 1, 1, 3, 0) * e.w * e.z * e.z
+}.sum
+
 (* dictionary ; voicer *)
 (
 	w: SinOsc(1 / [5, 7], 0),

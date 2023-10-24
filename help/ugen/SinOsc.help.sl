@@ -217,7 +217,7 @@ var feedbackSignal = LocalIn(2, 0);
 var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);
 var delaySignal = (fmSignal + (delayReturn * delayMix)) <! LocalOut(delayReturn * delayFeedback);
 var reverbMix = 0.5;
-FreeVerb(delaySignal, reverbMix, 0.8, 0.5);
+FreeVerb(delaySignal, reverbMix, 0.8, 0.5)
 
 (* alarm *)
 var tone = SinOsc([600, 800], 0);
