@@ -6,4 +6,4 @@ var f = { :e |
 	var env = Perc(e.w, 0.0001, 1 - e.z, -4) * (e.z + (e.y / 4));
 	EqPan2(MembraneCircle(PinkNoise() * env, tension, loss), e.i * 2 - 1)
 };
-Voicer(16, f).sum (* Cpu Load: Mac Studio M1 Max 2022: 16 voices = 33% *)
+Voicer(16, f).mixByNamedRule('16×2→1×2') (* Cpu Load: Mac Studio M1 Max 2022: 16 voices = 33% *)

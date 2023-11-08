@@ -11,16 +11,9 @@ var v = Voicer(16) { :e |
 		LagUd(e.w, 0, 3) * e.z
 	).sum
 };
-v.sum
+v.mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
 
 (* ---- notes.md ---- *)
-var halfIndices = [1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 1];
-var mainIndices = (halfIndices + 8) ++ (halfIndices + 16);
-var subIndices = (1 .. 32).collect { :each | each - 1 % 4 + 3 };
-var indexPairs = (1 .. 32).collect { :each |
-	[
-		each -> mainIndices[each],
-		each -> subIndices[each]
-	]
-}.concatenation;
-v.concatenation.mixBy(indexPairs)
+Silent(2) ++ (v * 2).mixByNamedRule('16×2→4×4').sum (* 4-subaudio speakers are at 3:6 *)
+Silent(8) ++ v.mixByNamedRule('16×2→2×8').sum (* 8-main speakers are at 9:16 *)
+Silent(8) ++ v.mixByNamedRule('16×2→2×8').concatenation (* 8-secondary are at 17:24 *)
