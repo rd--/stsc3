@@ -49,7 +49,7 @@ var f = { :e |
 	var env = Perc(trig: e.w, attackTime: 0.0001, releaseTime: 1 - e.z, curve: -4) * (e.z + (e.y / 4));
 	Pan2(in: MembraneCircle(excitation: PinkNoise() * env, tension: tension, loss: loss), pos: e.i * 2 - 1, level: 1)
 };
-Voicer(numVoices: 6, voiceFunc: f).Sum
+Voicer(numVoices: 6, voiceFunc: f).sum
 
 (* pluck ; event control ; keywords *)
 var f = { :e |

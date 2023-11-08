@@ -34,4 +34,4 @@ var voiceFunc = { :e |
 		EqPan2(o, e.i * 2 - 1) * e.z * LagUd(e.w, 0.01, e.y * 4)
 	} !+ 4
 };
-Voicer(4, voiceFunc).sum
+Voicer(16, voiceFunc).sum (* Cpu Load: Mac Studio M1 Max 2022: 16 voices = 85% *)

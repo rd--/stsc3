@@ -1,4 +1,4 @@
-(* dx7 ; data at local buffer ; event control *)
+(* Dx7 ; data at local buffer ; event control *)
 var voiceData = [
 	25 21 98 38 99  0 99  0 36 17 87  2  1 0 0 0 59  0  1 1 8;
 	66 69 60 35  0  0 98  0  0  0  4  0  0 0 0 1 90  0  1 0 8;

@@ -25,7 +25,7 @@ Files loaded in RAM can be processed in more ways because the entire file is acc
 Normal playback at same speed of recording:
 
 	var filename = 'floating_1'; (* the file's path name *)
-	var file = SfAcquire(filename, 1, [1]); (* create a SoundFile object *)
+	var file = SfAcquireMono(filename); (* create a SoundFile object *)
 	SfPlay(
 		file, (* sample buffer *)
 		1, (* playback rate *)
@@ -37,7 +37,7 @@ Normal playback at same speed of recording:
 Mouse controls playback rate:
 
 	var filename = 'floating_1'; (* the file's path name *)
-	var file = SfAcquire(filename, 1, [1]); (* create a SoundFile object *)
+	var file = SfAcquireMono(filename); (* create a SoundFile object *)
 	var rateMultiplier = MouseX(0.25, 4, 1, 0.2);
 	SfPlay(
 		file, (* sample buffer *)
