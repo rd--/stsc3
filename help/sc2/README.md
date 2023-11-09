@@ -165,9 +165,9 @@ Random:
 - [LinRand](?t=stsc3&e=help/sc2/help/unit-generators/LinRand.help.sl)
 - [NRand](?t=stsc3&e=help/sc2/help/unit-generators/NRand.help.sl)
 - [Rand](?t=stsc3&e=help/sc2/help/unit-generators/Rand.help.sl)
-- [TExpRand](?t=stsc3&e=help/sc2/help/unit-generators/TExpRand.help.sl)
-- [TiRand](?t=stsc3&e=help/sc2/help/unit-generators/TiRand.help.sl)
-- [TRand](?t=stsc3&e=help/sc2/help/unit-generators/TRand.help.sl)
+- [TrExpRand](?t=stsc3&e=help/sc2/help/unit-generators/TrExpRand.help.sl)
+- [TrIRand](?t=stsc3&e=help/sc2/help/unit-generators/TrIRand.help.sl)
+- [TrRand](?t=stsc3&e=help/sc2/help/unit-generators/TrRand.help.sl)
 
 Samples:
 

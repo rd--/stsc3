@@ -1,17 +1,17 @@
 (* data space (jmcc) #2 ; graph rewrite *)
 { :tr |
-	var dt = TRand(0, 0.25, tr) + 0.1;
+	var dt = TrRand(tr, 0, 0.25) + 0.1;
 	var osc = { :n :m |
 		var e = MulAdd(
-			LfPulse(TRand(0, m, tr), 0, TRand(0, 1, tr)),
-			TRand(0, 8000, tr),
-			TRand(0, 2000, tr)
+			LfPulse(TrRand(tr, 0, m), 0, TrRand(tr, 0, 1)),
+			TrRand(tr, 0, 8000),
+			TrRand(tr, 0, 2000)
 		);
-		LfPulse(TRand(0, n, tr), 0, TRand(0, 1, tr)) * e
+		LfPulse(TrRand(tr, 0, n), 0, TrRand(tr, 0, 1)) * e
 	};
 	var freq = osc(200, 40) + osc(20, 4) + osc(20, 4);
 	CombL(
-		EqPan2(LfPulse(freq, 0, 0.5), LfNoise0(TRand(0, 3, tr)) * 0.8),
+		EqPan2(LfPulse(freq, 0, 0.5), LfNoise0(TrRand(tr, 0, 3)) * 0.8),
 		dt,
 		dt,
 		3

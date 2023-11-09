@@ -4,9 +4,9 @@ SinOsc(110, 2 * pi * [0.75, 0]) * 0.1
 (* SinOsc *)
 {
 	var tr = Dust(1);
-	var freq = TRand(3785, 3800, tr);
-	var amp = SinOsc(TRand(10, 30, tr), 0) * 0.2;
-	var osc = SinOsc(freq, 0) * amp + SinOsc({ TRand(2.91, 3.02, tr) } ! 2 * freq, 0);
+	var freq = TrRand(tr, 3785, 3800);
+	var amp = SinOsc(TrRand(tr, 10, 30), 0) * 0.2;
+	var osc = SinOsc(freq, 0) * amp + SinOsc({ TrRand(tr, 2.91, 3.02) } ! 2 * freq, 0);
 	var env = Decay2(tr, 0.01, 1);
 	osc * env * 0.4
 } !+ 12
@@ -18,12 +18,12 @@ sig * 0.1
 
 (* SinOsc ; https://scsynth.org/t/5169/5 (dietcv) *)
 { :tr |
-	var syncEgTop = TRand(8, 20, tr);
+	var syncEgTop = TrRand(tr, 8, 20);
 	var syncRatio = 2;
-	var syncDcy = TRand(0.5, 2, tr);
-	var syncEnv = TxLine(syncEgTop / syncRatio, 1, syncDcy, tr);
+	var syncDcy = TrRand(tr, 0.5, 2);
+	var syncEnv = TrXLine(tr, syncEgTop / syncRatio, 1, syncDcy);
 	var gainEnv = Adsr(Trig(tr, syncDcy), 0.3, 0.3, 0.5, 0.1, -4);
-	var freq = { TChoose(tr, [45, 48, 52, 53, 57, 58, 60, 64, 65, 70]).MidiCps } ! 5;
+	var freq = { TrChoose(tr, [45, 48, 52, 53, 57, 58, 60, 64, 65, 70]).MidiCps } ! 5;
 	var in = LfTri(freq, 0);
 	var phase = Sweep(in, freq * syncRatio * syncEnv);
 	var synced = SinOsc(0, (phase % 1) * 2 * pi).Squared;
@@ -201,7 +201,7 @@ var voiceFunc = { :e |
 	var pitchModRate = 2;
 	var panModDepth = 0;
 	var panModRate = 2;
-	var indexEnv = TLine(index, 0.2, duration, gate);
+	var indexEnv = TrLine(gate, index, 0.2, duration);
 	var volEnv = Adsr(gate, attack, decay, sustain, release, -4);
 	var volMod = SinOsc(volModRate, 0) * volModDepth / 2 + 0.5;
 	var panMod = SinOsc(panModRate, 0) * panModDepth;

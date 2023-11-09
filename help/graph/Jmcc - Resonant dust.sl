@@ -1,8 +1,8 @@
 (* resonant dust (jmcc) #2 ; graph rewrite *)
 { :tr |
-	var rf1 = TRand(0, 2000, tr) + 80;
-	var rf2 = rf1 + (TRand(-0.5, 0.5, tr) * rf1);
-	var d = Dust(50 + TRand(0, 800, tr));
-	var s = Resonz(d, TxLine(rf1, rf2, 9, tr), 0.1);
+	var rf1 = TrRand(tr, 0, 2000) + 80;
+	var rf2 = rf1 + (TrRand(tr, -0.5, 0.5) * rf1);
+	var d = Dust(50 + TrRand(tr, 0, 800));
+	var s = Resonz(d, TrXLine(tr, rf1, rf2, 9), 0.1);
 	EqPan2(s, Rand(-1, 1)) * 0.3
 }.OverlapTexture(5, 2, 4)

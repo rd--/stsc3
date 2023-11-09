@@ -1,5 +1,5 @@
 (* hell is busy (jmcc) #1 ; graph rewrite *)
 { :tr |
-	var e = LfPulse(TRand(1, 11, tr), 0, TRand(0, 0.7, tr)) * 0.04;
-	EqPan2(SinOsc(TRand(400, 2400, tr), 0), TRand(-1, 1, tr)) * e
+	var e = LfPulse(TrRand(tr, 1, 11), 0, TrRand(tr, 0, 0.7)) * 0.04;
+	EqPan2(SinOsc(TrRand(tr, 400, 2400), 0), TrRand(tr, -1, 1)) * e
 }.OverlapTexture(4, 4, 8)

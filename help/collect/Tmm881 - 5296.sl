@@ -3,8 +3,8 @@
 
 (* https://scsynth.org/t/5296 ; tm881 *)
 {
-	var f = { Rand(33, 2000) } ! 2 * TRand(0.125, 4, Impulse(1 / 10, 0));
-	var t = Impulse(1 / 2 * TRand(0.125, 4, Impulse(1 / 5, 0)), 0);
+	var f = { Rand(33, 2000) } ! 2 * TrRand(Impulse(1 / 10, 0), 0.125, 4);
+	var t = Impulse(1 / 2 * TrRand(Impulse(1 / 5, 0), 0.125, 4), 0);
 	var a = Perc(t, 0.01, 1, -4);
 	FreeVerb(Saw(f) * a, 0.33, 0.5, 0.5)
 } !+ 32 * 0.1
@@ -13,7 +13,7 @@
 var a = Blip(
 	[
 		Rand(1, 30),
-		TRand(0.125, 4, Impulse([1 / 4, 1 / 7], 0)),
+		TrRand(Impulse([1 / 4, 1 / 7], 0), 0.125, 4),
 		XLn(Rand(0.125, 4), Rand(0.125, 4), 15)
 	].product,
 	200);

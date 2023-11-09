@@ -19,7 +19,7 @@ var b = DustRange(0.1, 0.1) * 0.5;
 var iot = 20 / SampleRate();
 var x = MouseX(1, 16, 1, 0.1);
 var d = DustRange(iot / x, iot * x);
-var s = TRand(-1, 1, d);
+var s = TrRand(d, -1, 1);
 Trig(d, SampleDur()) * s.Sign * 0.1
 
 (* ---- notes.md ---- *)

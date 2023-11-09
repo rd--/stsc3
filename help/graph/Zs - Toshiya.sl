@@ -3,7 +3,7 @@ var hz = 440;
 var amp = 1.0;
 var note = hz.CpsMidi;
 var gen = {
-	var sig = SinOsc((note + TChoose(Impulse(Rand(1 / 30, 1 / 5), 0), [0, 9, 4, 14, 5, 2, 17]).kr).MidiCps, 0);
+	var sig = SinOsc((note + TrChoose(Impulse(Rand(1 / 30, 1 / 5), 0), [0, 9, 4, 14, 5, 2, 17]).kr).MidiCps, 0);
 	sig := Lpf(sig, LinExp(SinOsc(Rand(1 / 30, 1 / 10), Rand(0, 2 * pi)), -1, 1, 20, 12000)) * 2;
 	sig := DelayC(sig, Rand(0.01, 0.03), (LfNoise1(Rand(5, 10)) * 0.01 + 0.02) / NRand(10, 20, 3));
 	EqPan2(sig, Lag(LfNoise0(1 / 3), 3)) / 12 * amp

@@ -14,9 +14,9 @@ SinOscFb(100 * SinOscFb(y, 0) + 200, x) * 0.1
 (* SinOscFb ; OverlapTexture *)
 { :tr |
 	var x = MouseX(0.15, 0.85, 0, 0.2);
-	var f0 = TChoose(tr, [110, 220, 440]);
+	var f0 = TrChoose(tr, [110, 220, 440]);
 	{
-		var freq = f0 + TRand(0, f0, tr);
+		var freq = f0 + TrRand(tr, 0, f0);
 		var fb = LinLin(LfNoise2(1), -1, 1, 0, x);
 		SinOscFb(freq, fb) * 0.1
 	} ! 16

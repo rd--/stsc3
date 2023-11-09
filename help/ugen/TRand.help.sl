@@ -1,14 +1,14 @@
-(* TRand *)
-var t = Impulse(7, 0) * SinOsc(331, 0);
-var e = Decay2(t, { TRand(0.01, 0.05, t) } ! 2, { TRand(0.05, 0.15, t) } ! 2);
-Rlpf(LfSaw(TRand(321, 333, t), 0), (LfNoise1(2) * 4 + 100).MidiCps, 1) * e
+(* TrRand *)
+var tr = Impulse(7, 0) * SinOsc(331, 0);
+var env = Decay2(tr, { TrRand(tr, 0.01, 0.05) } ! 2, { TrRand(tr, 0.05, 0.15) } ! 2);
+Rlpf(LfSaw(TrRand(tr, 321, 333), 0), (LfNoise1(2) * 4 + 100).MidiCps, 1) * env
 
-(* TRand *)
-var t = Dust(5);
-var f = TRand(200, 500, t);
+(* TrRand *)
+var tr = Dust(5);
+var f = TrRand(tr, 200, 500);
 SinOsc(f, 0) * 0.1
 
-(* TRand ; array input *)
-var t = Dust([5, 12]);
-var f = TRand([200, 1600], [500, 3000], t);
+(* TrRand ; array input *)
+var tr = Dust([5, 12]);
+var f = TrRand(tr, [200, 1600], [500, 3000]);
 SinOsc(f, 0) * 0.1

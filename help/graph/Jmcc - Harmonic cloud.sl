@@ -1,8 +1,8 @@
 (* https://soundcloud.com/soundaspureform/harmonic-cloud-1 ; jmcc ; roughguess *)
-var n = 36; (* 48 ; udp packet limit *)
+var n = 48;
 { :tr |
 	{
-		var f = TExpRand(64, 4000, tr).RoundTo(64);
-		Lpf(Saw({ TRand(-1, 1, tr) } ! 2 + f), TRand(1, 6, tr) * f) * 0.04
+		var f = TrExpRand(tr, 64, 4000).RoundTo(64);
+		Lpf(Saw({ TrRand(tr, -1, 1) } ! 2 + f), TrRand(tr, 1, 6) * f) * 0.04
 	} !+ n
 }.OverlapTexture(0.4, 1, 2)

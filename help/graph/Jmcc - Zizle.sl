@@ -2,20 +2,20 @@
 { :tr |
 	var amp = { :f |
 		SinOsc(
-			f * [TRand(0.7, 1.3, tr), 1],
-			{ TRand(0, 2 * pi, tr) } ! 2
+			f * [TrRand(tr, 0.7, 1.3), 1],
+			{ TrRand(tr, 0, 2 * pi) } ! 2
 		).sum * 0.1
 	};
 	var osc = SinOsc(
-		TRand(24, 108, tr).MidiCps,
-		TRand(0, 2 * pi, tr)
+		TrRand(tr, 24, 108).MidiCps,
+		TrRand(tr, 0, 2 * pi)
 	);
 	EqPan2(
 		[
 			osc,
-			amp(TExpRand(0.3, 8, tr)).Max(0),
-			amp(TExpRand(6, 24, tr)).Abs
+			amp(TrExpRand(tr, 0.3, 8)).Max(0),
+			amp(TrExpRand(tr, 6, 24)).Abs
 		].product,
-		TRand(-1, 1, tr)
+		TrRand(tr, -1, 1)
 	)
 }.OverlapTexture(4, 4, 12)

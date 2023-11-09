@@ -3,17 +3,17 @@
 	var p = 10;
 	var n = WhiteNoise() * 0.007;
 	var m = MulAdd(
-		SinOsc(0.1 + TRand(0, 0.2, tr), 0),
-		12 + TRand(0, 12, tr),
-		60 + TRand(-24, 24, tr)
+		SinOsc(0.1 + TrRand(tr, 0, 0.2), 0),
+		12 + TrRand(tr, 0, 12),
+		60 + TrRand(tr, -24, 24)
 	);
 	var sweep = Resonz(n, m.MidiCps, 0.1);
 	{
 		RingzBank(
 			sweep,
-			{ 80 + TRand(0, 10000, tr) } ! p,
+			{ 80 + TrRand(tr, 0, 10000) } ! p,
 			nil,
-			{ 0.5 + TRand(0, 2, tr) } ! p
+			{ 0.5 + TrRand(tr, 0, 2) } ! p
 		)
 	} ! 2
 }.OverlapTexture(4, 4, 5) * 0.25

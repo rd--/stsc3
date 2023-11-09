@@ -24,12 +24,17 @@ var dcy = LinExp(LfNoise2([3, 9]), -1, 1, 0.01, 0.2);
 Formlet(sig, frq, 0.005, dcy)
 
 (* Formlet ; bass percussion *)
-var i = Impulse(1, 0.5);
-Formlet(i, TRand(30, 50, i), TRand(0.01, 0.2, i), 2)
+var tr = Impulse(1, 0.5);
+Formlet(tr, TrRand(tr, 30, 50), TrRand(tr, 0.01, 0.2), 2)
 
 (* Formlet ; parameters randomised on trigger ; stereo *)
-var i = Impulse(LfNoise2([0.15, 0.6]) * 15 + 15, 0.5);
-Formlet(i, TRand(30, [150, 600], i), TRand(0.01, [0.15, 0.6], i), TRand(0.05, [0.15, 0.6], i)) * 0.25
+var tr = Impulse(LfNoise2([0.15, 0.6]) * 15 + 15, 0.5);
+Formlet(
+	tr,
+	TrRand(tr, 30, [150, 600]),
+	TrRand(tr, 0.01, [0.15, 0.6]),
+	TrRand(tr, 0.05, [0.15, 0.6])
+) * 0.25
 
 (* Formlet *)
 var amp = LfPulse(0.5, 0, 0.5);

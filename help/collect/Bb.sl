@@ -43,8 +43,13 @@ var k = Latch(f.first.Abs, Impulse(1 / 4, 0));
 f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var t = Impulse(8, 0) * LfNoise1(2);
-CombL((Saw([3, 4]) * Decay(t, 0.1)).Tanh, 1, TRand(0, 0.01, t).RoundTo(0.00015), TRand(-30, 30, t))
+var tr = Impulse(8, 0) * LfNoise1(2);
+CombL(
+	(Saw([3, 4]) * Decay(tr, 0.1)).Tanh,
+	1,
+	TrRand(tr, 0, 0.01).RoundTo(0.00015),
+	TrRand(tr, -30, 30)
+)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var f = [60, 61];
@@ -57,7 +62,7 @@ var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
 (BHiPass(LfNoise1(8) ^ 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-AllpassL(SinOsc(55,0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.004]), 2)
+AllpassL(SinOsc(55,0).Tanh, 0.4, TrExpRand(Impulse(8, 0), 0.0002, 0.4).RoundTo([0.002, 0.004]), 2)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var i = { :freq | Impulse(freq, 0) };
@@ -65,9 +70,9 @@ var ph = Integrator(Integrator(i(64).Lag(LfNoise1([2, 2]) * 2 + 2) * 99, 0.9), 0
 SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var t = [0, 3, 5, 7, 10, 12] + 40;
-var p = DmdFor(1/4, 0, Drand(inf, (t + 12 ++ t).MidiCps));
-var b = TRand(1500, 2000, Impulse(16, 0)).Lag(0.1);
+var t = [0 3 5 7 10 12] + 40;
+var p = DmdFor(1 / 4, 0, Drand(inf, (t + 12 ++ t).MidiCps));
+var b = TrRand(Impulse(16, 0), 1500, 2000).Lag(0.1);
 Blip([b, b + p], 1).mean.EqPan2(0) ^ 2
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
@@ -162,4 +167,4 @@ f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 } !+ 80
 
 (* http://earslap.com/article/sctweeting.html *)
-AllpassC(SinOsc(55, 0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.0004]), 2)
+AllpassC(SinOsc(55, 0).Tanh, 0.4, TrExpRand(Impulse(8, 0), 0.0002, 0.4).RoundTo([0.002, 0.0004]), 2)

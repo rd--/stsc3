@@ -1,23 +1,23 @@
 (* blips 001 (jmcc) #SC3d1.5 ; graph rewrite *)
 var z = { :tr |
 	var blips = {
-		var f = TxLine(
-			TExpRand(0.25, 400, tr),
-			TExpRand(0.25, 400, tr),
-			4,
-			tr
+		var f = TrXLine(
+			tr,
+			TrExpRand(tr, 0.25, 400),
+			TrExpRand(tr, 0.25, 400),
+			4
 		);
-		var nh = TxLine(
-			TExpRand(2, 100, tr),
-			TExpRand(2, 100, tr),
-			4,
-			tr
+		var nh = TrLine(
+			tr,
+			TrExpRand(tr, 2, 100),
+			TrExpRand(tr, 2, 100),
+			4
 		);
 		Blip(f, nh)
 	};
 	EqPan2(
 		blips() * blips(),
-		TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), 4, tr)
+		TrLine(tr, TrRand(tr, -1, 1), TrRand(tr, -1, 1), 4)
 	) * 0.3
 }.OverlapTexture(2, 1, 12).Distort;
 6.timesRepeat {

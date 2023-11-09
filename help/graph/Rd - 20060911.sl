@@ -12,8 +12,8 @@ var n = {
 			[0.05, LfNoise0(2), y, t].sum.Lpz2,
 			t
 		),
-		TExpRand([500, 900], 1600, t),
+		TrExpRand(t, [500, 900], 1600),
 		x
 	)
 };
-(n !+ 3).Clip2(TRand(0, 1, Dust(8))) * 0.25
+(n !+ 3).Clip2(TrRand(Dust(8), 0, 1)) * 0.25

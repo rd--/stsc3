@@ -1,7 +1,7 @@
 (* lucier (cr) ; http://www.listarc.bham.ac.uk/lists/sc-users/msg47539.html *)
-var bus = 20;
+var bus = 20; (* These may audible on large multi-channel systems *)
 { :tr |
-	var freq = TRand(56, 64, tr);
+	var freq = TrRand(tr, 56, 64);
 	var blocksize = 1 / ControlRate();
 	var mkDt = { :f | 1 / f - blocksize };
 	var stringDelay = mkDt(freq);
@@ -13,10 +13,10 @@ var bus = 20;
 	var mkAllpass = { :i :r :dt | Lpz1(AllpassC(i, maxDelay, r * stringDelay, dt)) };
 	var drv = InFb(1, bus);
 	var pk1R = mkDelay(drv, srcPos - pk1Pos);
-	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2, TRand(0.001, 0.11, tr));
+	var pk1L = mkAllpass(pk1R * -1, pk1Pos * 2, TrRand(tr, 0.001, 0.11));
 	var pk2L = mkDelay(pk1L, pk2Pos - pk1Pos) * 0.99;
 	var stringL = mkDelay(pk2L, 1 - pk2Pos);
-	var pk2R = mkAllpass(stringL * -1, 1 - pk2Pos, 2 + TRand(0.001, 0.11, tr)) * 0.99;
+	var pk2R = mkAllpass(stringL * -1, 1 - pk2Pos, 2 + TrRand(tr, 0.001, 0.11)) * 0.99;
 	var stringR = mkDelay(pk2R, pk2Pos - srcPos);
 	var source = {
 		var s = SinOsc(220, 0) * 0.01;

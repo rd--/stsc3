@@ -1,12 +1,12 @@
 (* https://twitter.com/HernaniVillase/status/517517924236795905 ; rewrite (rd) *)
 { :tr |
-	var f = TRand(97, 101, tr);
+	var f = TrRand(tr, 97, 101);
 	var o = LfTri(
-		{ TRand(0, 200, tr) + 216 } ! 8 + f,
-		{ TRand(0, pi * 2, tr) } ! 8
+		{ TrRand(tr, 0, 200) + 216 } ! 8 + f,
+		{ TrRand(tr, 0, pi * 2) } ! 8
 	);
 	var e = LfTri(
-		{ TRand(0, 0.01, tr) + 0.1 } ! 8,
+		{ TrRand(tr, 0, 0.01) + 0.1 } ! 8,
 		0
 	) * 0.1 + 0.01;
 	(o * e).Splay2

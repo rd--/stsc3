@@ -3,16 +3,16 @@ var nc = 2;
 { :tr |
 	var dgr = DegreeToKey(
 		[0 2 4 5 7 9 11].asLocalBuf,
-		TRand(0, 12, tr),
+		TrRand(tr, 0, 12),
 		12
 	);
 	var freq = (60 + dgr).MidiCps;
-	var pan = TRand(-0.25, 0.25, tr);
-	var amp = TRand(0.1, 0.2, tr);
-	var fc = LinExp(LfNoise1(TRand(0.25, 0.4, tr)), -1, 1, 500, 2000);
+	var pan = TrRand(tr, -0.25, 0.25);
+	var amp = TrRand(tr, 0.1, 0.2);
+	var fc = LinExp(LfNoise1(TrRand(tr, 0.25, 0.4)), -1, 1, 500, 2000);
 	var osc = {
 		LfSaw(
-			freq * [TRand(0.99, 1.01, tr), TRand(0.99, 1.01, tr)],
+			freq * [TrRand(tr, 0.99, 1.01), TrRand(tr, 0.99, 1.01)],
 			0)
 		* amp
 	} !+ 8;

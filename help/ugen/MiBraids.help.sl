@@ -31,7 +31,7 @@ MiBraids(pitch: 38, timbre: timbre, color: color, model: 40, trig: 0, resamp: 1,
 
 (* MiBraids ; trigger ; 28=plucked ; requires=keywords *)
 var trig = Dust(0.6);
-var pitch = TRand(45, 72, trig).RoundTo(1);
+var pitch = TrRand(trig, 45, 72).RoundTo(1);
 var timbre = 0.5;
 var color = LfNoise1(0.3) * 0.5 + 0.5;
 MiBraids(pitch: pitch, timbre: timbre, color: color, model: 28, trig: trig, resamp: 0, decim: 0, bits: 0, ws: 0) ! 2 * 0.1
@@ -45,6 +45,6 @@ MiBraids(pitch: pitch, timbre: timbre, color: color, model: 34, trig: trig, resa
 
 (* MiBraids ; 34=kick ; sample rate, bit reduction and distortion ; requires=keywords *)
 var trig = CoinGate(0.3, Impulse(4, 0));
-var decim = TRand(1, 32, trig);
+var decim = TrRand(trig, 1, 32);
 var ws = LinLin(LfTri(0.2, 0), -1, 1, 0,1);
 MiBraids(pitch: 40, timbre: 0.7, color: 0.7, model: 34, trig: trig, resamp: 2, decim: decim, bits: 3, ws: ws) ! 2 * 0.1
