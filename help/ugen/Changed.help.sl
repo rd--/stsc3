@@ -1,4 +1,4 @@
-(* Changed ; simple composition of Hpz1 and > (pseudo ugen) *)
+(* Changed ; simple composition of Hpz1 and > (ie. a Pseudo Ugen) *)
 var s = LfNoise0(2);
 var c = Changed(s, 0);
 var d = Decay2(c, 0.01, 0.5);

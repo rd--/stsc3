@@ -12,4 +12,5 @@ Voicer(16) { :e |
 		(snd * distort).Tanh / distort,
 		pan.Lag(0.1)
 	) * mul.Lag(0.1)
-}.sum
+}.mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
+

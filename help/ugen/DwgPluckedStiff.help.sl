@@ -1,9 +1,9 @@
 (* DwgPluckedStiff ; re-sounding *)
 var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
-var t = TDmdFor(Dseq(inf, [1, 1, 2, 1, 1, 1, 2, 3, 1, 1, 1, 1, 2, 3, 4] * 0.175), 0, 1);
+var t = TDmdFor(Dseq(inf, [1 1 2 1 1 1 2 3 1 1 1 1 2 3 4] * 0.175), 0, 1);
 var freq = [
-	sequ([60,62,63,58,48,55], t),
-	sequ([63,60,48,62,55,58], t)
+	sequ([60 62 63 58 48 55], t),
+	sequ([63 60 48 62 55 58], t)
 ].MidiCps;
 var amp = TRand(0.05, 0.65, t); (* pulse amplitude (0 - 1, def = 0.5) *)
 var gate = 1; (* synth release *)
