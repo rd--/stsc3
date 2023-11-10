@@ -10,14 +10,14 @@ var tendencyMask = [
 ];
 {
 	var modRate = {
-		TrRand(
-			Impulse(TrRand(Impulse(pi / 2, 0), pi / 2, pi), 0),
+		Rand(
+			Impulse(Rand(Impulse(pi / 2, 0), pi / 2, pi), 0),
 			pi / 2,
 			pi
 		)
 	} ! 3;
 	var mod = {
-		TrRand(
+		Rand(
 			Impulse(tendencyMask * modRate, 0),
 			tendencyMask * 0.125,
 			tendencyMask * 4
@@ -35,7 +35,7 @@ var tendencyMask = [
 	var dry = 1...3.collect { :i |
 		var freqRange = 10 ^ i * [22, 88] * freqMul[i];
 		var freq = {
-			TrRand(
+			Rand(
 				Impulse(triggerRate[i], 0),
 				freqRange[1],
 				freqRange[2]

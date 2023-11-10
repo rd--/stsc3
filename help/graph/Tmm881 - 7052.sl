@@ -1,8 +1,8 @@
 (* ---- https://scsynth.org/t/7052 ; tmm881 ; graph texture rewrite ; requires=XFadeTexture *)
 XFadeTexture({ :tr |
-	var freqMul = TrRand(tr, 0.5, 2);
+	var freqMul = Rand(tr, 0.5, 2);
 	var env = {
-		var freq = TrChoose(tr, [10, 5, 2.5]) * freqMul;
+		var freq = Choose(tr, [10, 5, 2.5]) * freqMul;
 		Perc([LfClipNoise(freq), LfNoise0(freq)], 0.01, 1, -4)
 	};
 	var snd = [

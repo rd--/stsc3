@@ -1,7 +1,7 @@
 (* https://sccode.org/1-5eo (bz) ; bohlen pierce scale ; graph edit ; requires=LfBrownNoise1 *)
 { :tr |
-	var dev = TrRand(tr, 0.2, 0.4);
-	var root = TrChoose(tr, [30, 32, 35, 37]);
+	var dev = Rand(tr, 0.2, 0.4);
+	var root = Choose(tr, [30, 32, 35, 37]);
 	var buffer = [
 		1, 9/7, 7/5, 5/3, 9/5, 15/7, 7/3, 25/9,
 		3, 27/7, 21/5, 15/3, 27/5, 45/7, 21/3, 75/9,

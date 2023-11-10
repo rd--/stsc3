@@ -1,6 +1,6 @@
 (* DynRingzBank *)
 var tr = Dust(25);
-var mkRand = { :lhs :rhs | Lag(TrRand(tr, lhs, rhs), 0.01) };
+var mkRand = { :lhs :rhs | Lag(Rand(tr, lhs, rhs), 0.01) };
 var k = DynRingzBank(
 	Trig(tr, SampleDur()),
 	(1 .. 5) * 2700,

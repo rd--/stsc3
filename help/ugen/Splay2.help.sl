@@ -1,8 +1,8 @@
 (* Splay2 ; texture (Play) *)
 { :tr |
 	var k = 7;
-	var o = SinOsc({ TrIRand(tr, 40, 90).MidiCps } ! k, 0);
-	var a = { TrRand(tr, 0.05, 0.1) } ! k;
+	var o = SinOsc({ IRand(tr, 40, 90).MidiCps } ! k, 0);
+	var a = { Rand(tr, 0.05, 0.1) } ! k;
 	Splay2(o * a)
 }.OverlapTexture(6, 3, 3)
 

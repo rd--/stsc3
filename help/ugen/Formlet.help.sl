@@ -25,15 +25,15 @@ Formlet(sig, frq, 0.005, dcy)
 
 (* Formlet ; bass percussion *)
 var tr = Impulse(1, 0.5);
-Formlet(tr, TrRand(tr, 30, 50), TrRand(tr, 0.01, 0.2), 2)
+Formlet(tr, Rand(tr, 30, 50), Rand(tr, 0.01, 0.2), 2)
 
 (* Formlet ; parameters randomised on trigger ; stereo *)
 var tr = Impulse(LfNoise2([0.15, 0.6]) * 15 + 15, 0.5);
 Formlet(
 	tr,
-	TrRand(tr, 30, [150, 600]),
-	TrRand(tr, 0.01, [0.15, 0.6]),
-	TrRand(tr, 0.05, [0.15, 0.6])
+	Rand(tr, 30, [150, 600]),
+	Rand(tr, 0.01, [0.15, 0.6]),
+	Rand(tr, 0.05, [0.15, 0.6])
 ) * 0.25
 
 (* Formlet *)

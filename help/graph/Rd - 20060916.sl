@@ -5,7 +5,7 @@ var f = { :n |
 		BufRd(
 			1,
 			l.asLocalBuf,
-			TrRand(tr, 0, 6),
+			Rand(tr, 0, 6),
 			0,
 			1
 		).Lag(LfNoise2(0.3).Range(0.01, 0.1))

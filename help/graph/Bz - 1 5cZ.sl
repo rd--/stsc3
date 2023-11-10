@@ -2,16 +2,16 @@
 { :tr |
 	var n = 16;
 	var sig = {
-		var q = TrRand(
+		var q = Rand(
 			tr,
-			TrRand(tr, 0.1, 0.5),
-			TrRand(tr, 0.1, 0.5)
+			Rand(tr, 0.1, 0.5),
+			Rand(tr, 0.1, 0.5)
 		);
-		var env = LfNoise1(TrRand(tr, 1, 2)) * TrRand(tr, 1, 2) + TrRand(tr, -2, 0);
+		var env = LfNoise1(Rand(tr, 1, 2)) * Rand(tr, 1, 2) + Rand(tr, -2, 0);
 		Bpf(
-			Dust2(TrRand(tr, 12, 160)) * env,
-			TrRand(tr, TrRand(tr, 100, 200), TrRand(tr, 200, 2500)),
+			Dust2(Rand(tr, 12, 160)) * env,
+			Rand(tr, Rand(tr, 100, 200), Rand(tr, 200, 2500)),
 			q) / q.Sqrt
 	} ! n;
-	((sig * TrRand(tr, 1, 2)).Tanh * 0.5).Splay2
+	((sig * Rand(tr, 1, 2)).Tanh * 0.5).Splay2
 }.OverlapTexture(4, 4, 4)

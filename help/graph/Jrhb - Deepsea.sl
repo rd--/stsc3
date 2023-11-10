@@ -2,9 +2,9 @@
 var amp = 0.1;
 var variation = 0.9;
 var tr = Dust(0.25);
-var n = TrRand(tr, 7, 46);
-var dt = 25.0 + TrRand(tr, -1.7, 1.7) + LfNoise2(2) * variation * 0.001;
-var freq = 901 + TrRand(tr, 0, 65);
+var n = Rand(tr, 7, 46);
+var dt = 25.0 + Rand(tr, -1.7, 1.7) + LfNoise2(2) * variation * 0.001;
+var freq = 901 + Rand(tr, 0, 65);
 var t = Impulse(dt.Recip, 0) * 100;
 var count = PulseCount(t, 0);
 var u = Bpf(
@@ -13,7 +13,7 @@ var u = Bpf(
 	0.2
 );
 var f1 = Bpf(
-	Pan2(u, TrRand(tr, -1, 1), amp * 10) * 5,
+	Pan2(u, Rand(tr, -1, 1), amp * 10) * 5,
 	700,
 	0.1
 );

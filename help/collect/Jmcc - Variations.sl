@@ -1,7 +1,7 @@
 (* alien froggies (jmcc) #1 ; left-to-right *)
 { :tr |
-	var r = tr.TrRand(-0.2, [0.1, 0.2]).Exp.Mul(11).Fold(1, 30);
-	r.Formant(tr.TrExpRand([200, 300], 3000), tr.TrRand([0, 1], 9).MulAdd(r, r)).Mul(0.05)
+	var r = tr.Rand(-0.2, [0.1, 0.2]).Exp.Mul(11).Fold(1, 30);
+	r.Formant(tr.ExpRand([200, 300], 3000), tr.Rand([0, 1], 9).MulAdd(r, r)).Mul(0.05)
 }.OverlapTexture(0.5, 0.25, 5)
 
 (* analog bubbles (jmcc) ; method notation *)
@@ -242,15 +242,15 @@ var n = 6;
 (* repeating harmonic klank (jmcc) ; requires=Klank *)
 { :tr |
 	var p = 8;
-	var s = Decay(Dust(0.8) * 0.01, 3.4) * LfSaw(TrRand(tr, 0, 40), 0); (* linrand *)
-	var f = TrChoose(tr, [400, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1500, 1600]);
+	var s = Decay(Dust(0.8) * 0.01, 3.4) * LfSaw(Rand(tr, 0, 40), 0); (* linrand *)
+	var f = Choose(tr, [400, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1500, 1600]);
 	{
 		Klank(
 			s, 1, 0, 1,
 			[
-				{ f * TrRand(tr, 1, 13) } ! p,
+				{ f * Rand(tr, 1, 13) } ! p,
 				[1],
-				{ TrRand(tr, 0.4, 3.4) } ! p
+				{ Rand(tr, 0.4, 3.4) } ! p
 			].asKlankSpec
 		)
 	} ! 2
@@ -452,7 +452,7 @@ CombN(
 
 (* ---- alien meadow (jmcc) #6 ; left-to-right *)
 { :tr |
-	var trRand = { :lo :hi | TrRand(tr, lo, hi) };
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
 	var z = trRand(0, 5000);
 	var f = SinOsc(trRand(0, 20), 0).MulAdd(0.1 * z, z);
 	var a = SinOsc(trRand(0, 20), 0).MulAdd(0.05, 0.05);
@@ -497,7 +497,7 @@ var b = { :f :m :a :g |
 
 (* ---- deep trip (jmcc) #9 ; graph rewrite ; left-to-right *)
 { :tr |
-	var trRand = { :lo :hi | TrRand(tr, lo, hi) };
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
 	var f = LfNoise1(trRand(0, 0.3)).MulAdd(60, 70).MidiCps;
 	var a = LfNoise2(f.Mul(trRand(0, 0.5))).Mul((LfNoise1(trRand(0, 8)).Mul(SinOsc(trRand(0, 40), 0)).Mul(0.1)).Max(0));
 	var s = SinOsc(f, 0).Mul(a).Pan2(LfNoise1(trRand(0, 5)), 1);
@@ -507,14 +507,14 @@ var b = { :f :m :a :g |
 
 (* ---- hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; left-to-right *)
 var txt = { :tr |
-	var f = TrRand(tr, 0, 50).MulAdd(1, 30).MidiCps;
-	SyncSaw([f, f + 0.2], SinOsc(0.2, { TrRand(tr, 0, pi).Mul(2) } ! 2).Mul(2).MulAdd(f, f * 3)).Mul(0.05)
+	var f = Rand(tr, 0, 50).MulAdd(1, 30).MidiCps;
+	SyncSaw([f, f + 0.2], SinOsc(0.2, { Rand(tr, 0, pi).Mul(2) } ! 2).Mul(2).MulAdd(f, f * 3)).Mul(0.05)
 }.OverlapTexture(4, 4, 4);
 txt.CombN(0.3, 0.3, 4) + txt.reversed
 
 (* ---- hell is busy (jmcc) #1 ; graph rewrite ; left-to-right *)
 { :tr |
-	var trRand = { :lo :hi | TrRand(tr, lo, hi) };
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
 	var e = LfPulse(trRand(1, 11), 0, trRand(0, 0.7)) * 0.04;
 	SinOsc(trRand(400, 2400), 0).Pan2(trRand(-1, 1), e)
 }.OverlapTexture(4, 4, 8)
@@ -545,20 +545,20 @@ var z = { :tr |
 			)
 		)
 	};
-	var root = 81 + TrRand(tr, 
+	var root = 81 + Rand(tr, 
 		lo: -6,
 		hi: 6,
 		trig: tr
 	);
 	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
-	var offset = TrRand(tr, 
+	var offset = Rand(tr, 
 		lo: -16,
 		hi: 16,
 		trig: tr
 	);
 	var sequence = DegreeToKey(
 		bufnum: major,
-		in: TrScramble(
+		in: Scramble(
 			trigger: tr,
 			inputs: [0, 1, 2, 3] + offset
 		),
@@ -596,7 +596,7 @@ var z = { :tr |
 	).kr * 0.1;
 	Pan2(
 		in: sig,
-		pos: TrRand(tr, 
+		pos: Rand(tr, 
 			lo: -1,
 			hi: 1,
 			trig: tr

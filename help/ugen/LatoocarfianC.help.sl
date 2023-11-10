@@ -11,10 +11,10 @@ LatoocarfianC(
 
 (* LatoocarfianC ; texture *)
 { :tr |
-	var freq = TrRand(tr, 400, SampleRate() / 3);
-	var a = TrRand(tr, -3, 3);
-	var b = TrRand(tr, -3, 3);
-	var c = TrRand(tr, 0.5, 1.5);
-	var d = TrRand(tr, 0.5, 1.5);
-	SinOsc(freq, 0) * 0.05 + Pan2(LatoocarfianC(freq, a, b, c, d, 0.5, 0.5), TrRand(tr, -1, 1), 0.05)
+	var freq = Rand(tr, 400, SampleRate() / 3);
+	var a = Rand(tr, -3, 3);
+	var b = Rand(tr, -3, 3);
+	var c = Rand(tr, 0.5, 1.5);
+	var d = Rand(tr, 0.5, 1.5);
+	SinOsc(freq, 0) * 0.05 + Pan2(LatoocarfianC(freq, a, b, c, d, 0.5, 0.5), Rand(tr, -1, 1), 0.05)
 }.OverlapTexture(1, 4, 8)

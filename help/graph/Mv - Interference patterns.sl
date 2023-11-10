@@ -11,9 +11,9 @@ var right = SinOsc(freqtransition - Lag(diff, difftime), 0);
 var env = Ln(0, level, fade);
 var brainwave = [left, right] * env;
 var tr = Dust(1 / 9);
-var freq = TrExpRand(tr, 285, 310);
-var amp = TrRand(tr, 0.1, 0.2);
-var sustain = TrRand(tr, 7, 14);
-var pan = TrRand(tr, -0.7, 0.7);
+var freq = ExpRand(tr, 285, 310);
+var amp = Rand(tr, 0.1, 0.2);
+var sustain = Rand(tr, 7, 14);
+var pan = Rand(tr, -0.7, 0.7);
 var sig = SinOsc(freq, 0) * amp * Decay2(tr, 0.01, sustain);
 brainwave + EqPan2(sig, pan)

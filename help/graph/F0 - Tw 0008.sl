@@ -2,7 +2,7 @@
 var x = LfNoise1([0.5, 0.5]);
 Formlet(
 	Crackle(LinLin(x, -1, 1, 1.8, 1.98)),
-	Lag(TrExpRand(x, 200, 2000), 2),
+	Lag(ExpRand(x, 200, 2000), 2),
 	LinLin(x, -1, 1, 0.0005, 0.001),
 	0.0012
 ) * 0.25

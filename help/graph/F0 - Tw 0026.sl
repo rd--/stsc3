@@ -6,9 +6,9 @@ var n = [
 var b = [0 2 4 5 7 9 11].asLocalBuf;
 var tr = Impulse(4, 0);
 var k = DegreeToKey(b, Demand(tr, 0, Dseq(inf, n)), 12);
-var e = Decay2(tr, 0.01, TrRand(tr, 0.15, 0.5));
+var e = Decay2(tr, 0.01, Rand(tr, 0.15, 0.5));
 {
-	var m = 48 + k + TrRand(tr, 0, 0.05);
-	var b = Blip(m.MidiCps, TrRand(tr, 1, 7)) * e * 8;
-	CombC(b.Tanh / 8, 1, 1, 8) * TrRand(tr, 0.05, 0.15)
+	var m = 48 + k + Rand(tr, 0, 0.05);
+	var b = Blip(m.MidiCps, Rand(tr, 1, 7)) * e * 8;
+	CombC(b.Tanh / 8, 1, 1, 8) * Rand(tr, 0.05, 0.15)
 } ! 2

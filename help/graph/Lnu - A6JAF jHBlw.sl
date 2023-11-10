@@ -4,7 +4,7 @@ var m = {
 };
 var v = LfTri(m(), 0) * 0.001 + 0.6;
 var c = {
-	TrChoose(CuspN(120 * m().Hypot(v.Tan) ^ v, 1, 1.9, 0), [0, 5.1, -4.7, -12, 7]).kr
+	Choose(CuspN(120 * m().Hypot(v.Tan) ^ v, 1, 1.9, 0), [0, 5.1, -4.7, -12, 7]).kr
 };
 var f = { :a |
 	Fm7Matrix(

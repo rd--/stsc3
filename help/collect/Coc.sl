@@ -11,8 +11,8 @@ Pan2(o, 0, 1) + d
 
 (* Nice use of Blip *)
 var t = Impulse(6, 0);
-var o = Blip(TrRand(t, 48, 72).MidiCps, TrRand(t, 1, 12)) * TrRand(t, -0.5, 0.4).Max(0);
-var p = Pan2(o, TrRand(t, -1.0, 1.0), Decay2(t, 0.1, 3) * 0.5);
+var o = Blip(Rand(t, 48, 72).MidiCps, Rand(t, 1, 12)) * Rand(t, -0.5, 0.4).Max(0);
+var p = Pan2(o, Rand(t, -1.0, 1.0), Decay2(t, 0.1, 3) * 0.5);
 p + CombL(p, 2.0, 4/6, 6)
 
 (* Interesting rising sounds *)
@@ -189,7 +189,7 @@ var totalPartials = 3;
 (* Ping pong *)
 var rate = 5;
 var trig = Impulse(5, 0);
-var freq = TrRand(trig, [36, 60], [72, 86]).MidiCps;
+var freq = Rand(trig, [36, 60], [72, 86]).MidiCps;
 var ratio = 2;
 var env = Decay2(trig, 0, 1.25 / rate);
 PmOsc(freq, freq * ratio, 3 + env * 4, 0) * env * 0.25

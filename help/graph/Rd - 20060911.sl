@@ -12,8 +12,8 @@ var n = {
 			[0.05, LfNoise0(2), y, t].sum.Lpz2,
 			t
 		),
-		TrExpRand(t, [500, 900], 1600),
+		ExpRand(t, [500, 900], 1600),
 		x
 	)
 };
-(n !+ 3).Clip2(TrRand(Dust(8), 0, 1)) * 0.25
+(n !+ 3).Clip2(Rand(Dust(8), 0, 1)) * 0.25

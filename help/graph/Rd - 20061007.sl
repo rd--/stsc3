@@ -3,7 +3,7 @@ var lwr = 48;
 var tr = { Dust(0.65) } ! 2;
 {
 	var n = LinLin(LfNoise2(0.1), -1, 1, lwr, 72);
-	var e = Decay2(tr, 0.05, TrRand(tr, 0.05, 0.75));
+	var e = Decay2(tr, 0.05, Rand(tr, 0.05, 0.75));
 	var x = PinkNoise() * e * 0.1;
 	var m = LfNoise2(0.1);
 	var f = Lag(n.MidiCps, 0.25);

@@ -14,10 +14,10 @@ var pDur = [1 0.9 0.65 0.55 0.325 0.35 0.25 0.2 0.15 0.1 0.075];
 {
 	var pFreq = pFreqArray.atRandom;
 	var tr = Impulse(0, 0) + Dust(1 / 13);
-	var freq = TrRand(tr, 220, 440);
-	var amp = TrRand(tr, 0.1, 0.2);
+	var freq = Rand(tr, 220, 440);
+	var amp = Rand(tr, 0.1, 0.2);
 	var dur = 13;
-	var pan = TrRand(tr, -1, 1);
+	var pan = Rand(tr, -1, 1);
 	var osc = (1 .. pFreq.size).collect { :index |
 		FSinOsc(
 			pFreq[index] * freq + pDetune[index],

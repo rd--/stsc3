@@ -1,6 +1,6 @@
 (* Resonz ; resonator *)
 { :tr |
-	Resonz(Pulse(TrRand(tr, 2, 7), 0.5), { TrExpRand(tr, 120, 2500) } ! 4, 0.005).Splay2
+	Resonz(Pulse(Rand(tr, 2, 7), 0.5), { ExpRand(tr, 120, 2500) } ! 4, 0.005).Splay2
 }.OverlapTexture(2, 4, 6)
 
 (* Resonz *)

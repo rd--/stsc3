@@ -1,7 +1,7 @@
 (* Decay2 ; c.f. MultiTouchPad help file *)
 Voicer(16) { :e |
-	var impulseFreq = TrChoose(e.w, [1 2 3 4 6 8 9]);
-	var oscFreq = TrRand(e.w, 80, 880);
+	var impulseFreq = Choose(e.w, [1 2 3 4 6 8 9]);
+	var oscFreq = Rand(e.w, 80, 880);
 	var mul = (1 - e.y) * e.w;
 	var pan = (e.x * 2) - 1;
 	var distort = e.z * 16;

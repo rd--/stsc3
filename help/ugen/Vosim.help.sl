@@ -22,22 +22,22 @@ Splay2(
 { :tr |
 	{
 		Vosim(
-			Impulse(110 + TrRand(tr, -1, 1), 0),
-			TrExpRand(tr, 110, 880),
-			TrChoose(tr, [3, 5, 7]),
-			TrChoose(tr, [0.77, 0.88, 0.99])
+			Impulse(110 + Rand(tr, -1, 1), 0),
+			ExpRand(tr, 110, 880),
+			Choose(tr, [3, 5, 7]),
+			Choose(tr, [0.77, 0.88, 0.99])
 		)
 	} ! 2
 }.OverlapTexture(3, 5, 3) * 0.1
 
 (* Vosim *)
-var p = TrRand(Impulse([3, 7], 0), 0, 1);
+var p = Rand(Impulse([3, 7], 0), 0, 1);
 var t = Impulse([9, 27] * (1 + (p > 0.95)), 0);
-var f = TrRand(t, [40, 120, 220], [440, 990, 880]);
-var n = TrRand(t, 2, [4, 8, 12]);
-var d = TrRand(t, [0.2, 0.4, 0.6], [0.6, 0.8, 1]);
-var a = TrRand(t, 0, [0.2, 0.6, 1]);
-var l = TrRand(t, -1, 1);
+var f = Rand(t, [40, 120, 220], [440, 990, 880]);
+var n = Rand(t, 2, [4, 8, 12]);
+var d = Rand(t, [0.2, 0.4, 0.6], [0.6, 0.8, 1]);
+var a = Rand(t, 0, [0.2, 0.6, 1]);
+var l = Rand(t, -1, 1);
 var x = MouseX(0.25, 2, 0, 0.2);
 var y = MouseY(0.25, 0.85, 0, 0.2);
 var z = 9;

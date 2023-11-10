@@ -1,8 +1,8 @@
 (* shift register (dm) ; https://sccode.org/1-590 ; erratic *)
 var amp = 0.1;
 var pulse = Impulse(1 / 16, 0);
-var rate = TrChoose(pulse, [3, 5, 10]);
-var trans = TrChoose(pulse, [0, 2, -2, 7, -5]);
+var rate = Choose(pulse, [3, 5, 10]);
+var trans = Choose(pulse, [0, 2, -2, 7, -5]);
 var trig = Trig1(CuspL(rate.kr * 3, 1, 1.9, 0), 0.001);
 var octave = Demand(PulseDivider(trig, 4, 0), 0, Drand(inf, [12, -12]));
 var note = Demand(trig, 0, Dseq(inf, [42, 46, 51, 54, 59, 63, 66].shuffled + trans.kr) + octave);
@@ -21,7 +21,7 @@ var chord = Demand(
 var chordCps = chord.MidiCps;
 var cf = Vibrato(chordCps, 6, 0.02, 0, 0, 0.04, 0.1, 0, 0);
 var mf = chordCps * LinLin(LfPulse(1 / 8, 0, 0.5), 0, 1, 1.01, 2.01);
-var sig = PmOsc(cf, mf, TrXLine(trig, 3, 0.0001, 0.2), 0);
+var sig = PmOsc(cf, mf, XLine(trig, 3, 0.0001, 0.2), 0);
 var cmp = (sig * AmpCompA(chordCps, 0, 0.32, 1) * amp).sum;
 XFade2(
 	[cmp, cmp],

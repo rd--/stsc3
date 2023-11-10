@@ -2,7 +2,7 @@
 { :tr |
 	var n = MoogFf(
 		ClipNoise() * 0.4,
-		LfPar({ TrRand(tr, 0, 0.3) } ! 2, 0) * 600 + 990,
+		LfPar({ Rand(tr, 0, 0.3) } ! 2, 0) * 600 + 990,
 		2,
 		0
 	);

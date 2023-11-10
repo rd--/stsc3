@@ -1,6 +1,6 @@
 (* DmdFor ; c.f. equivalent Demand graph ; (Duty) *)
 var tr = Dust(9);
-var n = Dseq(inf, [0, 2, 4, 5, 7, 9, 11, 12]) + (TrRand(tr, 3, 6).RoundTo(1) * 12);
+var n = Dseq(inf, [0, 2, 4, 5, 7, 9, 11, 12]) + (Rand(tr, 3, 6).RoundTo(1) * 12);
 var f = DmdFor(0.1, 0, n.MidiCps);
 var o = SinOsc([f, f + 0.7], 0);
 o.Cubed.Cubed * 0.1
@@ -11,10 +11,10 @@ var f = { :tr :trs |
 	var a = Decay2(
 		tr,
 		0.01,
-		TrRand(tr, 0.15, 0.35) * MouseY(0.5, 2, 0, 0.2)
-	) * TrRand(tr, 0.01, 0.2);
+		Rand(tr, 0.15, 0.35) * MouseY(0.5, 2, 0, 0.2)
+	) * Rand(tr, 0.01, 0.2);
 	var f = Demand(tr, 0, (n + trs).MidiCps);
-	var o = SinOsc([f, f + TrRand(tr, 0.7, 1.3)], 0);
+	var o = SinOsc([f, f + Rand(tr, 0.7, 1.3)], 0);
 	o.Cubed.Cubed * a
 };
 var d = Dseq(inf, [8, 3, 3, 2, 8, 4, 4]) / MouseX(9, 27, 1, 0.2);
