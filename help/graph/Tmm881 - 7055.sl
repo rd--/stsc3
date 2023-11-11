@@ -4,9 +4,9 @@ var mouse = [
 	MouseY(0, 1, 0, 0.2)
 ];
 var tendencyMask = [
-	XLn(0.5, 50, 300),
-	XLn(0.25, 25, 600),
-	XLn(0.125, 12.5, 900)
+	XLine(0.5, 50, 300),
+	XLine(0.25, 25, 600),
+	XLine(0.125, 12.5, 900)
 ];
 {
 	var modRate = {

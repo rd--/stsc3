@@ -22,9 +22,9 @@ The array in the freq input causes an Array of 2 Blips to be created:
 
 Multi channel expansion will propagate through the expression graph.  When a unit generator constructor is called with an array of inputs, it returns an array of instances. If that array is the input to another constructor, then another array is created, and so on.
 
-	Rlpf(Saw([100, 250]) * 0.05, XLn(8000, 400, 5), 0.05)
+	Rlpf(Saw([100, 250]) * 0.05, XLine(8000, 400, 5), 0.05)
 
-The _[100,250]_ array of frequency inputs to _Saw_ causes Saw to return an array of two Saws, that array causes _Rlpf_ to create two Rlpfs.  Both Rlpfs share a single instance of _XLn_.
+The _[100,250]_ array of frequency inputs to _Saw_ causes Saw to return an array of two Saws, that array causes _Rlpf_ to create two Rlpfs.  Both Rlpfs share a single instance of _XLine_.
 
 When a constructor is parameterized by two or more arrays, then the number of channels created is equal to the longest array, with parameters being pulled from each array in parallel.  The shorter arrays will wrap.
 
@@ -36,17 +36,17 @@ is equivalent to:
 
 	[Pulse(400, 0.5), Pulse(500, 0.1), Pulse(600, 0.5) ] * 0.1
 
-A more complex example based on the Saw example above is given below.  In this example, the XLn is expanded to two instances, one going from 8000 Hz to 400 Hz and the other going in the opposite direction from 500 Hz to 7000 Hz. These two XLns are 'married' to the two Saw oscillators and used to parameterize two copies of Rlpf. So on the left channel a 100 Hz Saw is filtered from 8000 Hz to 400 Hz and on the right channel a 250 Hz Saw is filtered from 500 Hz to 7000 Hz.
+A more complex example based on the Saw example above is given below.  In this example, the XLine is expanded to two instances, one going from 8000 Hz to 400 Hz and the other going in the opposite direction from 500 Hz to 7000 Hz. These two XLines are married to the two Saw oscillators and used to parameterize two copies of Rlpf. So on the left channel a 100 Hz Saw is filtered from 8000 Hz to 400 Hz and on the right channel a 250 Hz Saw is filtered from 500 Hz to 7000 Hz.
 
-	Rlpf(Saw([100, 250]) * 0.05, XLn([8000, 500], [400, 7000], 5), 0.05)
+	Rlpf(Saw([100, 250]) * 0.05, XLine([8000, 500], [400, 7000], 5), 0.05)
 
 ## Protecting arrays against expansion
 
-Some unit generators such as Klank require arrays of values as inputs. Since all arrays are expanded, you need to protect some arrays by a Ref object. A Ref instance is an object with a single slot named 'value' that serves as a holder of an object. Ref.new(object) one way to create a Ref, but there is a syntactic shortcut.  The backquote ` is a unary operator that is equivalent to calling Ref.new(something).  So to protect arrays that are inputs to a Klank or similar Ugens you write:
+Some unit generators such as Klank require arrays of values as inputs. Since all arrays are expanded, you need to protect some arrays by a Ref object. A Ref instance is an object with a single slot named _value_ that serves as a holder of an object. Ref.new(object) one way to create a Ref, but there is a syntactic shortcut.  The backquote ` is a unary operator that is equivalent to calling Ref.new(something).  So to protect arrays that are inputs to a Klank or similar Ugens you write:
 
 	// ...
 
-You can still create multiple Klanks by giving it an array of Ref'ed arrays.
+You can still create multiple Klanks by giving it an array of arrays each in a Ref.
 
 	// ...
 
@@ -72,7 +72,7 @@ is equivalent to:
 
 Currently it is not recursive. You cannot use Mix on arrays of arrays of arrays.
 
-Here's a final example illustrating multi channel expansion and Mix.  By changing the variable 'n' you can change the number of voices in the patch. How many voices can your machine handle?
+Here is a final example illustrating multi channel expansion and Mix.  By changing the variable 'n' you can change the number of voices in the patch. How many voices can your machine handle?
 
 	var n = 8 * 12; (* number of 'voices' *)
 	EqPan2( (* pan the voice to a stereo position *)

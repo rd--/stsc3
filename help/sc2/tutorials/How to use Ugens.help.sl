@@ -8,7 +8,7 @@ All of the Ugen classes are listed in the help file [Ugen_Ref_Sheet].  From ther
 
 ## 2.2 How to create a Ugen
 
-A unit generator is created by sending the 'ar' or 'kr' message to the unit generator's class object. The 'ar' message creates a unit generator that runs at audio rate. The 'kr' message creates a unit generator that runs at control rate. Control rate unit generators are used for low frequency or slowly changing control signals. Control rate unit generators produce only a single sample per block and therefore use less processing power than audio rate unit generators. Since block sizes are typically 64 samples, a control rate unit generator could theoretically be 1/64 the cost, however the savings is not quite that great due to setup overhead. The savings is significant though, so anytime a control rate ugen will serve, it should be used.
+A unit generator is created by sending the 'ar' or 'kr' message to the class object of the unit generator. The 'ar' message creates a unit generator that runs at audio rate. The 'kr' message creates a unit generator that runs at control rate. Control rate unit generators are used for low frequency or slowly changing control signals. Control rate unit generators produce only a single sample per block and therefore use less processing power than audio rate unit generators. Since block sizes are typically 64 samples, a control rate unit generator could theoretically be 1/64 the cost, however the savings is not quite that great due to setup overhead. The savings is significant though, so anytime a control rate ugen will serve, it should be used.
 
 Create an audio rate sine oscillator:
 
@@ -20,7 +20,7 @@ Create a control rate sine oscillator:
 
 The input parameters for a unit generator are given in the documentation for that class.
 
-In order to create sound, a Ugen must be created inside of a Synth's ugenGraphFunction.
+In order to create sound, a Ugen must be created inside of a Synth ugenGraphFunction.
 
 	{ SinOsc(800, 0) * 0.1 }.play
 
@@ -88,12 +88,12 @@ You can plug control rate Ugens into the mul and add inputs of an audio rate Uge
 
 ## 2.6 Modulation
 
-A unit generator's signal inputs can be other unit generators, scalars, or Arrays of unit generators and scalars. Using Arrays as inputs will be covered in the section on multiple channels.  Here we show some examples of using unit generators as inputs to other unit generators.
+The signal inputs of a unit generator can be other unit generators, scalars, or Arrays of unit generators and scalars. Using Arrays as inputs will be covered in the section on multiple channels.  Here we show some examples of using unit generators as inputs to other unit generators.
 
-This example modulates a sine oscillator's frequency with a linear function, a simple frequency sweep:
+This example modulates the frequency of a sine oscillator with a linear function, a simple frequency sweep:
 
 	SinOsc( (* create a sine oscillator *)
-		Ln( (* modulate the frequency with a Line unit generator *)
+		Line( (* modulate the frequency with a Line unit generator *)
 			2000, (* the line begins at 2000 *)
 			300, (* and ends at 300 *)
 			10 (* in 10 seconds *)
@@ -103,7 +103,7 @@ This example modulates a sine oscillator's frequency with a linear function, a s
 
 The short version of the above:
 
-	SinOsc(Ln(2000, 300, 10), 0) * 0.1
+	SinOsc(Line(2000, 300, 10), 0) * 0.1
 
 In the following example the frequency modulator is changed from a line to a sine oscillator.
 
@@ -119,14 +119,14 @@ In the following example the frequency modulator is changed from a line to a sin
 		0) (* zero phase *)
 	* 0.1 (* amplitude 0.1 *)
 
-Now we'll modulate the modulator to cause the frequency modulation to speed up over time, i.e. sweep the frequency of an _Lfo_
+Now we will modulate the modulator to cause the frequency modulation to speed up over time, i.e. sweep the frequency of an _Lfo_
 
 	SinOsc( (* create a sine oscillator *)
 		SinOsc(
 			(* modulate the frequency with another sine oscillator
 			make the freq modulator speed up exponentially
 			by modulating its frequency with another Ugen *)
-			XLn( (* make an exponential line generator *)
+			XLine( (* make an exponential line generator *)
 				0.5, (* begin at 0.5 Hz *)
 				100, (* end at 100 Hz *)
 				30 (* in 30 seconds *)
@@ -142,7 +142,7 @@ Now we'll modulate the modulator to cause the frequency modulation to speed up o
 
 The nested style used above can become hard to read, so often it is preferable to use variables to make it more readable.
 
-	var lfofreq = XLn( (* make an exponential line generator *)
+	var lfofreq = XLine( (* make an exponential line generator *)
 		0.5, (* begin at 0.5 Hz *)
 		100, (* end at 100 Hz *)
 		30 (* in 30 seconds *)

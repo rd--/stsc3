@@ -2,10 +2,10 @@
 LfNoise2(1000) * 0.05
 
 (* LfNoise2 ; modulate frequency *)
-LfNoise2(XLn(1000, 10000, 10)) * 0.05
+LfNoise2(XLine(1000, 10000, 10)) * 0.05
 
 (* LfNoise2 ; modulate frequency *)
-LfNoise2(XLn(1000, 10000, 10)) * 0.05
+LfNoise2(XLine(1000, 10000, 10)) * 0.05
 
 (* LfNoise2 ; modulate parameters *)
 var n = 23;
@@ -20,7 +20,7 @@ var s = (1 .. n).collect { :i |
 		(35 + (i / n * 3) + o1 + o2).MidiCps,
 		Rand(0, 1)
 	) ** 7;
-	var e = LfNoise2(ExpRand(0.05, 2)).Range(0, 0.1) * Ln(0, 1, i * 3 / 2);
+	var e = LfNoise2(ExpRand(0.05, 2)).Range(0, 0.1) * Line(0, 1, i * 3 / 2);
 	EqPan2(
 		o3 ** (i / 3),
 		LfSaw(LfNoise2(lf) / i, Rand(0, 1))

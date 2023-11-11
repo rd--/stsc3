@@ -5,7 +5,7 @@
 	var endNote1 = (note1 + 15.Rand - 7).Fold(50, 120);
 	var note2 = (note1 + 15.Rand - 7).Fold(50, 120);
 	var endNote2 = (endNote1 + 15.Rand - 7).Fold(50, 120);
-	var noteSweep = Ln(note2, endNote2, dur);
+	var noteSweep = Line(note2, endNote2, dur);
 	var dt = 1 / noteSweep.MidiCps;
 	var dc = 1 / note2.MidiCps * 1000;
 	EqPan2(CombC(WhiteNoise() * 0.005, 0.01, dt, dc), 1.Rand2)

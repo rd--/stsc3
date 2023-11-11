@@ -4,9 +4,9 @@
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
-		var freq = XLn(m, m + Rand(0.05, 0.5), d).MidiCps;
+		var freq = XLine(m, m + Rand(0.05, 0.5), d).MidiCps;
 		var env = Sine(1, du.max * ds) * Rand(0.005, 0.01);
-		var pos = XLn(1.Rand2, 1.Rand2, d);
+		var pos = XLine(1.Rand2, 1.Rand2, d);
 		var osc = SinOsc(freq, 0);
 		EqPan2(osc, pos).sum * env
 	};

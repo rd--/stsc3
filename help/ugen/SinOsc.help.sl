@@ -90,16 +90,16 @@ var o2 = SinOsc(440, pi);
 o1 + o2
 
 (* SinOsc ; modulate freq *)
-var f1 = XLn(1, 1000, 9);
+var f1 = XLine(1, 1000, 9);
 var f2 = SinOsc(f1, 0) * 200 + 800;
 SinOsc(f2, 0) * 0.25
 
 (* SinOsc ; modulate phase *)
-var ph = SinOsc(XLn(20, 8000, 10), 0) * 2 * pi;
+var ph = SinOsc(XLine(20, 8000, 10), 0) * 2 * pi;
 SinOsc(800, ph) * 0.1
 
 (* SinOsc ; phase input only *)
-var ph = SinOsc(XLn(20, 8000, 10), 0) * 2 * pi;
+var ph = SinOsc(XLine(20, 8000, 10), 0) * 2 * pi;
 SinOsc(0, ph) * 0.1
 
 (* SinOsc ; multiple channel expansion *)
@@ -116,7 +116,7 @@ SinOsc([220, 221, 440, 441], 0).Splay2 * 0.1
 SinOsc([[220, 221], [440, 441]], 0).sum * 0.1
 
 (* SinOsc ; http://earslap.com/article/combination-tones-and-the-nonlinearities-of-the-human-ear.html *)
-var freqSweep = Ln(4000, 1000, 10);
+var freqSweep = Line(4000, 1000, 10);
 SinOsc([freqSweep, freqSweep + 400], 0).mean
 
 (* SinOsc *)

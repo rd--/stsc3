@@ -1,4 +1,4 @@
-(* XLine *)
+(* XLine ; TxLine *)
 var tr = Impulse(0.25, 0);
 var gainEnv = Decay2(tr, 0.01, 1);
 EqPan2(

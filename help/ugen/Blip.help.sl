@@ -1,10 +1,10 @@
 (* Blip *)
-var ln = Ln(1, 20, 60);
+var ln = Line(1, 20, 60);
 var gate = LfPulse(ln, 0, 0.23) > 0;
 Blip(Rand(gate, 100, 1000), Rand(gate, 1, 10)) * Asr(gate, 0.01, 1 / ln, -4) * 0.25
 
 (* Blip *)
-var ln = Ln(1, 20, 60);
+var ln = Line(1, 20, 60);
 var tr = Impulse(ln, 0);
 Blip(Rand(tr, 100, 1000), Rand(tr, 1, 10)) * Perc(tr, 0.01, 1 / ln, -4) * 0.25
 

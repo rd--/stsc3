@@ -8,4 +8,4 @@ LfPar(LfPar(LfPar(0.2, 0) * 8 + 10, 0) * 400 + 800, 0) * 0.1
 LfPar(LfPar(0.2, 0) * 400 + 800, 0) * 0.1
 
 (* LfPar ; frequency sweep *)
-LfPar(XLn(100, 8000, 30), 0) * 0.1
+LfPar(XLine(100, 8000, 30), 0) * 0.1

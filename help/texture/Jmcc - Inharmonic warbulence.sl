@@ -2,7 +2,7 @@
 {
 	var f = Rand(24, 96).MidiCps;
 	var a = 1.Min(500 / f);
-	var r = XLn(ExpRand(0.1, 20), ExpRand(0.1, 20), 25.6);
+	var r = XLine(ExpRand(0.1, 20), ExpRand(0.1, 20), 25.6);
 	var n = 12;
 	var z = {
 		var g = Rand(1, n + 1);

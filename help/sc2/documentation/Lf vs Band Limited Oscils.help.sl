@@ -4,11 +4,11 @@ In different situations you will want to use different versions of these unit ge
 
 _LfPulse_ will alias at high frequencies.
 
-	LfPulse(XLn(1000, 8000, 5), 0, 0.1) * 0.2
+	LfPulse(XLine(1000, 8000, 5), 0, 0.1) * 0.2
 
 _Pulse_ is band limited and therefore smoother.
 
-	Pulse(XLn(1000, 8000, 5), 0.1) * 0.2
+	Pulse(XLine(1000, 8000, 5), 0.1) * 0.2
 
 Another pair of examples to compare, _Pulse_:
 
@@ -26,11 +26,11 @@ The same issues apply to _Saw_ and _LfSaw_.
 
 LfSaw will alias at high frequencies.
 
-	LfSaw(XLn(1000, 8000, 5), 0) * 0.2
+	LfSaw(XLine(1000, 8000, 5), 0) * 0.2
 
 Saw is band limited and therefore smoother.
 
-	Saw(XLn(1000, 8000, 5)) * 0.2
+	Saw(XLine(1000, 8000, 5)) * 0.2
 
 Another pair of examples to compare, Saw:
 

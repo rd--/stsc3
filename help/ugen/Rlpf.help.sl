@@ -6,7 +6,7 @@ var f = SinOsc(0.5, 0) * 40 + 220;
 Rlpf(WhiteNoise(), f, 0.1)
 
 (* Rlpf *)
-var f = SinOsc(XLn(0.7, 300, 20), 0) * 3600 + 4000;
+var f = SinOsc(XLine(0.7, 300, 20), 0) * 3600 + 4000;
 Rlpf(LfSaw(200, 0) * 0.1, f, 0.2)
 
 (* Rlpf *)

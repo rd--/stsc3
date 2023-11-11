@@ -1,12 +1,12 @@
 (* MidiCps *)
-Saw(Ln(24, 108, 10).MidiCps) * 0.05
+Saw(Line(24, 108, 10).MidiCps) * 0.05
 
 (* MidiCps ; step *)
-Saw(Ln(24, 108, 10).RoundTo(1).MidiCps) * 0.05
+Saw(Line(24, 108, 10).RoundTo(1).MidiCps) * 0.05
 
 (* MidiCps ; keywords *)
 Saw(
-	Ln(
+	Line(
 		start: 24,
 		end: 108,
 		dur: 10
@@ -15,7 +15,7 @@ Saw(
 
 (* MidiCps ; step ; keywords *)
 Saw(
-	Ln(
+	Line(
 		start: 24,
 		end: 108,
 		dur: 10

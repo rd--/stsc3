@@ -3,7 +3,7 @@
 	var p = 15; (* number of partials per channel per 'cymbal' *)
 	var f1 = 500 + 2000.Rand;
 	var f2 = 8000.Rand;
-	var tf = XLn(LinRand(0, 4, 0) + 0.5, 35.Rand + 0.5, 12);
+	var tf = XLine(LinRand(0, 4, 0) + 0.5, 35.Rand + 0.5, 12);
 	var t = Impulse(tf, 0);
 	{
 		RingzBank(

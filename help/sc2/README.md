@@ -80,8 +80,8 @@ Envelopes:
 - [Cutoff](?t=stsc3&e=help/sc2/help/unit-generators/Cutoff.help.sl)
 - [Decay2](?t=stsc3&e=help/sc2/help/unit-generators/Decay2.help.sl)
 - [Decay](?t=stsc3&e=help/sc2/help/unit-generators/Decay.help.sl)
-- [Ln](?t=stsc3&e=help/sc2/help/unit-generators/Ln.help.sl)
-- [XLn](?t=stsc3&e=help/sc2/help/unit-generators/XLn.help.sl)
+- [Line](?t=stsc3&e=help/sc2/help/unit-generators/Line.help.sl)
+- [XLine](?t=stsc3&e=help/sc2/help/unit-generators/XLine.help.sl)
 
 Events:
 

@@ -17,7 +17,7 @@
 	};
 	var s2 = {
 		var rnd = { ExpRand(4, 12) * [1, Rand(0.9, 1.1)] };
-		var rates = XLn(rnd(), rnd(), 12) * [1, -1].atRandom;
+		var rates = XLine(rnd(), rnd(), 12) * [1, -1].atRandom;
 		var sw = LfSaw(rates, 0) * Rand(2, 16) + Rand(40, 120);
 		var lfo = LfTri(ExpRand(0.25, 0.5) * [1, -1].atRandom, 0);
 		var freq = (lfo * LinRand(4, 30, 0) + sw).MidiCps;

@@ -8,6 +8,6 @@ var dur = transitionTime * 2 + sustainTime;
 	var f2 = 8000.Rand;
 	var frequencies = { f1 + f2.Rand } ! p;
 	var ringTimes = { 2 + 4.Rand } ! p;
-	var osc = LfSaw(XLn(600.Rand, 600.Rand, dur), 0) * 0.0005;
+	var osc = LfSaw(XLine(600.Rand, 600.Rand, dur), 0) * 0.0005;
 	RingzBank(osc, frequencies, nil, ringTimes)
 }.overlap(sustainTime, transitionTime, 6)

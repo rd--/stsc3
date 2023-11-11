@@ -11,10 +11,10 @@ SinOsc(230, 0) * Lag(LfPulse(MouseX(2.3, 23, 1, 0.2), 0, 0.5).Max(0), 0.01) * 0.
 LfPulse(50, 0, 0.5) * 0.05
 
 (* LfPulse ; modulating frequency *)
-LfPulse(XLn(1, 200, 10), 0, 0.2) * 0.05
+LfPulse(XLine(1, 200, 10), 0, 0.2) * 0.05
 
 (* LfPulse ; amplitude modulation *)
-LfPulse(XLn(1, 200, 10), 0, 0.2) * SinOsc(440, 0) * 0.1
+LfPulse(XLine(1, 200, 10), 0, 0.2) * SinOsc(440, 0) * 0.1
 
 (* LfPulse ; used as both oscillator and lfo *)
 LfPulse(LfPulse(3, 0, 0.3) * 200 + 200, 0, 0.2) * 0.05
