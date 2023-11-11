@@ -1,4 +1,13 @@
-(* Line ; https://scsynth.org/t/6371/12 *)
+(* TLine *)
+var tr = Impulse(1, 0);
+var f0 = Rand(tr, 220, 330);
+var f1 = Rand(tr, 110, 440);
+var dur = Rand(tr, 0.1, 1);
+var f = Line(tr, f0, f1, dur);
+var e = Sine(tr, dur) * 0.1;
+SinOsc(f, 0) * e
+
+(* TLine ; https://scsynth.org/t/6371/12 *)
 var x = MouseX(10, 100, 1, 0.2);
 var y = MouseY(0.01, 0.05, 1, 0.2);
 {

@@ -11,4 +11,4 @@ SinOsc(f, 0) * 0.1
 (* Rand ; array input *)
 var tr = Dust([5, 12]);
 var f = Rand(tr, [200, 1600], [500, 3000]);
-SinOsc(f, 0) * 0.1
+SinOsc(f.Lag(0.07), 0) * Rand(tr, 0.01, 0.15).Lag2(0.02)
