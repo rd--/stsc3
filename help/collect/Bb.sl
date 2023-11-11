@@ -54,7 +54,8 @@ CombL(
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var f = [60, 61];
 var l = LfNoise0(6);
-(BBandPass((LfNoise0(4).Max(l).Max(SinOsc(f * (l * 9).Ceil.Lag(0.1), 0) * 0.7)), f, LfNoise0(1).Abs / 2) * 700 * l.Lag(1)).Tanh
+var o = (LfNoise0(4).Max(l).Max(SinOsc(f * (l * 9).Ceiling.Lag(0.1), 0) * 0.7));
+(BBandPass(o, f, LfNoise0(1).Abs / 2) * 700 * l.Lag(1)).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var t = [0, 0, 0, 1, 5, 7, 10, 12, 12, 12] + 30;

@@ -1,7 +1,7 @@
 (* <https://twitter.com/redFrik/status/1452954849885163525> ; f0 ; reset (rd) *)
 var r = Impulse(1 / 9, 0);
 var i = Rand(r, 1, 64);
-var x = SinOsc(i % 9.33, 0).MulAdd(5, 5).Ceil;
+var x = SinOsc(i % 9.33, 0).MulAdd(5, 5).Ceiling;
 var t = SinOsc(2 ^ (i % 11) * 150 / x, 0);
 var y = Hpz1(x).Abs > 0;
 var f = t.ExpRange(
