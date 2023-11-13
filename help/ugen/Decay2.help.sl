@@ -15,17 +15,16 @@ Voicer(16) { :e |
 }.mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
 
 (* Decay2 ; c.f. MultiTouchPad help file *)
-{ :tr |
+var f = {
+	var tr = Dust(1);
 	var impulseFreq = Choose(tr, [1 2 3 4 6 8 9]);
 	var oscFreq = Rand(tr, 80, 880);
-	var mul = Rand(tr, 0.1, 0.4);
-	var pan = Rand(tr, -1, 1);
 	var distort = Rand(tr, 0.1, 8);
-	var decay = Rand(tr, 0.1, 1);
-	var trig = Impulse(impulseFreq, 0);
-	var snd = SinOsc(oscFreq, 0) * Decay2(trig, 0.01, 0.2 * decay);
+	var env = Decay2(Impulse(impulseFreq, 0), 0.01, 0.2 * Rand(tr, 0.1, 1));
+	var snd = SinOsc(oscFreq, 0) * env;
 	EqPan2(
 		(snd * distort).Tanh / distort,
-		pan.Lag(0.1)
-	) * mul.Lag(0.1)
-}.OverlapTexture(5, 5, 16).mixByNamedRule('16×2→1×2') (* 16×2→1×2 16×2→UoS *)
+		Rand(tr, -1, 1)
+	) * XLine(tr, Rand(tr, 0.1, 0.4), 0.01, 2)
+};
+(f ! 16).mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
