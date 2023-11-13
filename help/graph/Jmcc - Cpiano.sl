@@ -17,4 +17,4 @@ var nc = 2;
 		CombL(hammer, delayTime, delayTime, decayTime)
 	}.sum;
 	PanAz(nc, src, pan, 1, 2, 0.5)
-}.OverlapTexture(2, 0, 10)
+}.OverlapTexture(2, 0, 9).Mix

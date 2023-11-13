@@ -1,7 +1,7 @@
 (* Resonz ; resonator *)
 { :tr |
 	Resonz(Pulse(Rand(tr, 2, 7), 0.5), { ExpRand(tr, 120, 2500) } ! 4, 0.005).Splay2
-}.OverlapTexture(2, 4, 6)
+}.OverlapTexture(2, 4, 6).Mix
 
 (* Resonz *)
 Resonz(WhiteNoise() * 0.5, 2000, 0.1)
@@ -31,7 +31,7 @@ Voicer(16) { :e |
 			e.y * 0.25) * 24,
 		e.i * 2 - 1
 	) * e.z * e.w
-}.sum
+}.Mix
 
 (* Resonz ; PinkNoise ; event control *)
 Voicer(16) { :e |
@@ -40,4 +40,4 @@ Voicer(16) { :e |
 	var rq = LinLin(e.y, 0, 1, 0.05, 0.25) / freq;
 	var scl = 900;
 	EqPan2(Resonz(PinkNoise(), freq, rq) * scl * e.z, e.i * 2 - 1) * env
-}.sum
+}.Mix

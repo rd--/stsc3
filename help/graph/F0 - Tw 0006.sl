@@ -7,4 +7,4 @@
 		0
 	);
 	GVerb(n, 9, 9, 1, 0.5, 15, 1, 0.7, 0.5, 300).transposed.sum
-}.OverlapTexture(1, 9, 6)
+}.OverlapTexture(1, 9, 6).Mix

@@ -55,7 +55,7 @@ var b = Rand(Dust(8), 0, 1);
 	var mnn = scale.collect { :n | octaves.collect { :o | n + (o * 12) } }.concatenation;
 	var chd = { Choose(tr, mnn) } ! 6;
 	{ chrd(chd) } !+ 7
-}.OverlapTexture(21, 0, 3)
+}.OverlapTexture(21, 0, 3).Mix
 
 (* 20060916 ; rd *)
 var mkRead = { :l :t |

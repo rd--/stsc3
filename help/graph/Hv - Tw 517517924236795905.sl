@@ -10,4 +10,4 @@
 		0
 	) * 0.1 + 0.01;
 	(o * e).Splay2
-}.OverlapTexture(3, 5, 3)
+}.OverlapTexture(3, 5, 3).Mix

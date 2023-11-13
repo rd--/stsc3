@@ -18,4 +18,4 @@ var p = 15;
 			Ringz(s, f1 + Rand(tr, 0, f2), Rand(tr, 1, 5))
 		} !+ p
 	} ! 2
-}.OverlapTexture(4, 4, 3) * 0.1
+}.OverlapTexture(4, 4, 3).Mix * 0.1

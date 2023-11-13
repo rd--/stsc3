@@ -9,4 +9,4 @@
 		0.5
 	);
 	Bpf(p, IRand(tr, 0, 1200), 1)
-}.OverlapTexture(1, 23, 7)
+}.OverlapTexture(1, 23, 8).Mix

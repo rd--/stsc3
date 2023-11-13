@@ -5,4 +5,4 @@
 	{
 		Rlpf(TDmdFor(y, 0, y), z * 99 + y, 0.01) * (6 + y)
 	} ! 2
-}.OverlapTexture(1, 25, 4)
+}.OverlapTexture(1, 25, 4).Mix

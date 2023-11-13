@@ -22,4 +22,4 @@
 	{
 		chrd(chd)
 	} !+ 7
-}.OverlapTexture(21, 0, 3)
+}.OverlapTexture(21, 0, 3).Mix

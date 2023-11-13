@@ -19,4 +19,4 @@ var nc = 2;
 	var eg = Decay2(tr, 0.5, 1);
 	var out = eg * Rlpf(osc.Distort * 0.2, fc, 0.1);
 	PanAz(nc, out, [pan, pan + 0.3], 1, 2, 0.5).sum
-}.OverlapTexture(2, 0, 10)
+}.OverlapTexture(2, 0, 9).Mix

@@ -14,4 +14,4 @@
 			q) / q.Sqrt
 	} ! n;
 	((sig * Rand(tr, 1, 2)).Tanh * 0.5).Splay2
-}.OverlapTexture(4, 4, 4)
+}.OverlapTexture(4, 4, 4).Mix

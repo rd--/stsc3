@@ -6,4 +6,4 @@
 		Rand(tr, -1, 1),
 		0.05
 	)
-}.OverlapTexture(1, 2, 7)
+}.OverlapTexture(1, 2, 6).Mix

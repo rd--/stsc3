@@ -19,4 +19,4 @@
 		SinOsc(freq, 0) * amp,
 		Rand(tr, -1, 1)
 	)
-}.OverlapTexture(7, 4, 4)
+}.OverlapTexture(7, 4, 4).Mix

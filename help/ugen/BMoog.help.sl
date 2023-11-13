@@ -1,5 +1,5 @@
 (* BMoog ; requires=Voicer *)
-var v = Voicer(16) { :e |
+Voicer(16) { :e |
 	var md = IRand(e.w, 0, 2);
 	var f0 = LinExp(e.x, 0, 1, 12, 12000);
 	var sig = LfSaw([f0 * 0.99, f0 * 1.01], 0) * e.k * 0.4;
@@ -10,8 +10,7 @@ var v = Voicer(16) { :e |
 		e.i * 2 - 1,
 		LagUd(e.w, 0, 3) * e.z
 	).sum
-};
-v.mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
+}.Mix
 
 (* ---- notes.md ---- *)
 Silent(2) ++ (v * 2).mixByNamedRule('16×2→4×4').sum (* 4-subaudio speakers are at 3:6 *)

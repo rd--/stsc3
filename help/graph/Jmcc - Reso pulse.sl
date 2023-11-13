@@ -6,7 +6,7 @@ var left = Rlpf(
 		var l = [25, 30, 34, 37, 41, 42, 46, 49, 53, 54, 58, 61, 63, 66];
 		var f = Choose(tr, l).MidiCps;
 		LfPulse(f, 0, 0.2) + LfPulse(2 * f + Rand(tr, -0.5, 0.5), 0, 0.2)
-	}.OverlapTexture(4, 2, 4) * 0.02,
+	}.OverlapTexture(4, 2, 4).Mix * 0.02,
 	lfo, (* cutoff freq *)
 	MouseX(0.2, 0.02, 1, 0.2) (* filter bandwidth *)
 );

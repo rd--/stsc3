@@ -19,7 +19,7 @@ var z = { :tr |
 		blips() * blips(),
 		Line(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), 4)
 	) * 0.3
-}.OverlapTexture(2, 1, 12).Distort;
+}.OverlapTexture(2, 1, 12).Mix.Distort;
 6.timesRepeat {
 	z := AllpassN(z, 0.05, { Rand(0, 0.05) } ! 2, 4)
 };

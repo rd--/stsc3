@@ -12,5 +12,5 @@ var z = { :tr |
 			Ringz(t, ExpRand(tr, 100, 6000), Rand(tr, 2, 6))
 		} !+ p
 	} ! 2 * 0.1
-}.OverlapTexture(4, 4, 6);
+}.OverlapTexture(4, 4, 6).Mix;
 CombN(z, 0.6, Rand(0.1, 0.6), 8) + z.reversed

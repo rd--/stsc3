@@ -31,7 +31,7 @@ var bus = 20; (* These may audible on large multi-channel systems *)
 	var outR = pk2L + pk2R;
 	bus := bus + 1;
 	[outL, outR] <! lOut <! drv
-}.OverlapTexture(1, 5, 3) * 0.25
+}.OverlapTexture(1, 5, 3).Mix * 0.25
 
 (* ---- notes.md
 The OverlapTexture variant cannot use LocalIn & LocalOut since there can only be one pair per graph.

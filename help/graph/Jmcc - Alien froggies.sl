@@ -11,4 +11,4 @@
 		ExpRand(tr, [200, 300], 3000),
 		Rand(tr, [0, 1], 9) * r + r
 	) * 0.05
-}.OverlapTexture(0.5, 0.25, 5)
+}.OverlapTexture(0.5, 0.25, 5).Mix

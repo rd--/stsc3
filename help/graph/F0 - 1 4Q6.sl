@@ -13,4 +13,4 @@
 		SinOsc(freq * freqArray[i] + detuneArray[i], 0) * amp * env
 	};
 	EqPan2(src.sum, pan)
-}.OverlapTexture(9, 0, 7) * 0.1
+}.OverlapTexture(9, 0, 7).Mix * 0.1

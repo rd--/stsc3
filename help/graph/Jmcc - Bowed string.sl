@@ -13,4 +13,4 @@
 		{ Rand(tr, 1, 3) } ! 12
 	);
 	Pan2(k.SoftClip, Rand(tr, -1, 1), 0.1)
-}.OverlapTexture(5, 2, 9)
+}.OverlapTexture(5, 2, 9).Mix

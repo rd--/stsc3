@@ -4,7 +4,7 @@
 	var note = { (chord.atRandom - [0 12 24].atRandom).MidiCps } ! 2;
 	var x = Decay(tr, 1 + Rand(tr, 0.1, 0.3)) * BrownNoise() * 0.1;
 	CombC(x, 0.05, 1 / note, Rand(1, 3))
-}.OverlapTexture(4, 1, 9)
+}.OverlapTexture(4, 1, 9).Mix
 
 (* CombC ; noise burst as input signal ; function to create comb delays with random delay times *)
 var n = 8;

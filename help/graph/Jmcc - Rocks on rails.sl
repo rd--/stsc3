@@ -15,4 +15,4 @@ var n = 4; (* number of overlapping events *)
 		),
 		Line(Rand(tr, -1, 1), Rand(tr, -1, 1), 8) (* sweep pan *)
 	)
-}.OverlapTexture(2, 3, n) * 0.5
+}.OverlapTexture(2, 3, n).Mix * 0.5

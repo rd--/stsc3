@@ -11,4 +11,4 @@
 			{ Rand(tr, 0.4, 3.4) } ! p
 		)
 	} ! 2
-}.OverlapTexture(8, 2, 4)
+}.OverlapTexture(8, 2, 4).Mix

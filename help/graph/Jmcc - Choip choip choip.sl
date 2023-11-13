@@ -25,7 +25,7 @@ var z = { :tr |
 	);
 	var s = Decay2(i * l, 0.01, 0.2) * o;
 	EqPan2(s, Line(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), dur))
-}.OverlapTexture(dur - 2, 1, 8);
+}.OverlapTexture(dur - 2, 1, 8).Mix;
 4.timesRepeat {
 	z := AllpassN(z, 0.1, { Rand(0, 0.05) } ! 2, 4)
 };

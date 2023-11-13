@@ -29,7 +29,7 @@ sig * 0.1
 	var synced = SinOsc(0, (phase % 1) * 2 * pi).Squared;
 	var sig = synced * in * gainEnv;
 	sig.Splay2 * 0.2
-}.OverlapTexture(2, 0, 2)
+}.OverlapTexture(2, 0, 2).Mix
 
 (* https://scsynth.org/t/6264/2 *)
 var numPartials = 64;
@@ -211,7 +211,7 @@ var voiceFunc = { :e |
 	var filter = Lpf(car * volMod, LinExp(tone, 0, 1, 200, 20000));
 	EqPan2(filter, (panModDepth < 0.01).if { pan } { panMod })
 };
-var fmSignal = Voicer(16, voiceFunc).sum;
+var fmSignal = Voicer(16, voiceFunc).Mix;
 var delayMix = 0.5, delayTime = 0.3, delayFeedback = 0.3;
 var feedbackSignal = LocalIn(2, 0);
 var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);

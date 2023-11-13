@@ -17,4 +17,4 @@ LatoocarfianC(
 	var c = Rand(tr, 0.5, 1.5);
 	var d = Rand(tr, 0.5, 1.5);
 	SinOsc(freq, 0) * 0.05 + Pan2(LatoocarfianC(freq, a, b, c, d, 0.5, 0.5), Rand(tr, -1, 1), 0.05)
-}.OverlapTexture(1, 4, 8)
+}.OverlapTexture(1, 4, 8).Mix

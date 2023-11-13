@@ -8,4 +8,4 @@ var voiceFunc = { :e |
 	var b = LinLin(saw, 0, 1 - width, 0, 2 * pi).Sin;
 	Select2(trig, a, b).EqPan2(0) * e.w * e.z
 };
-Voicer(16, voiceFunc).sum * 0.2
+Voicer(16, voiceFunc).Mix * 0.2

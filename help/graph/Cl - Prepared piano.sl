@@ -22,4 +22,4 @@ var d = MouseY(0, 1, 0, 0.2) > 0.5; (* is pitch space discrete or continuous *)
 		y := AllpassN(y, 0.040, { Rand(tr, 0, 0.040) } ! 2, 8)
 	};
 	y
-}.OverlapTexture(5, 3, v)
+}.OverlapTexture(5, 3, v).Mix

@@ -16,7 +16,7 @@ var z = { :tr |
 	var freq = Sequencer(seq.MidiCps, trig);
 	var sig = LfTri(freq.kr, 0) * Decay2(trig, 0.004, 0.3).kr * 0.1;
 	EqPan2(sig, Rand(tr, -1, 1))
-}.OverlapTexture(6, 3, 6);
+}.OverlapTexture(6, 3, 6).Mix;
 6.timesRepeat {
 	z := AllpassN(z, 0.04, { Rand(0, 0.04) } ! 2, 16)
 };

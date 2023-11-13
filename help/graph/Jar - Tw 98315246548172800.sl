@@ -2,4 +2,4 @@
 { :tr |
 	var h = Choose(tr, [100, 800, 3000]);
 	{ SinOsc(ExpRand(tr, 60, h), 0) * 0.1 } !^ 40
-}.OverlapTexture(5, 7, 2)
+}.OverlapTexture(5, 7, 2).Mix

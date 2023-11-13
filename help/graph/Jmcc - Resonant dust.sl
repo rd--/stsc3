@@ -5,4 +5,4 @@
 	var d = Dust(50 + Rand(tr, 0, 800));
 	var s = Resonz(d, XLine(tr, rf1, rf2, 9), 0.1);
 	EqPan2(s, Rand(-1, 1)) * 0.3
-}.OverlapTexture(5, 2, 4)
+}.OverlapTexture(5, 2, 4).Mix

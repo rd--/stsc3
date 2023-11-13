@@ -13,7 +13,7 @@ Voicer(16) { :e |
 	var dl = (e.x.negated * 0.9 + 1) * dm;
 	var sig = Pluck(WhiteNoise() * e.z, e.w, dm, dl, 10, e.y / 3);
 	EqPan2(sig, e.i * 2 - 1)
-}.sum
+}.Mix
 
 (* Pluck ; event control ; requires=record/voicer *)
 (
@@ -26,4 +26,4 @@ Voicer(16) { :e |
 	var dl = (e.x.negated * 0.9 + 1) * dm;
 	var sig = Pluck(WhiteNoise() * e.z, e.w, dm, dl, 10, e.y / 3);
 	EqPan2(sig, e.y * 2 - 1) * 0.25
-}.sum
+}.Mix

@@ -10,4 +10,4 @@ var y = MouseY(0, 2, 0, 0.2); (* controls modulation index *)
 		a := SinOsc([f2, f2 + Rand(tr, -1, 1)], 0) * y + a
 	};
 	SinOsc([f1, f1 + Rand(tr, -1, 1)], a) * 0.1
-}.OverlapTexture(4, 4, n) * 0.25
+}.OverlapTexture(4, 4, n).Mix * 0.25

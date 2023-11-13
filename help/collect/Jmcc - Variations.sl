@@ -2,7 +2,16 @@
 { :tr |
 	var r = tr.Rand(-0.2, [0.1, 0.2]).Exp.Mul(11).Fold(1, 30);
 	r.Formant(tr.ExpRand([200, 300], 3000), tr.Rand([0, 1], 9).MulAdd(r, r)).Mul(0.05)
-}.OverlapTexture(0.5, 0.25, 5)
+}.OverlapTexture(0.5, 0.25, 5).Mix
+
+(* alien meadow (jmcc) #6 ; left-to-right *)
+{ :tr |
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
+	var z = trRand(0, 5000);
+	var f = SinOsc(trRand(0, 20), 0).MulAdd(0.1 * z, z);
+	var a = SinOsc(trRand(0, 20), 0).MulAdd(0.05, 0.05);
+	SinOsc(f, 0).Pan2(trRand(-1, 1), a)
+}.OverlapTexture(6, 2, 6).Mix
 
 (* analog bubbles (jmcc) ; method notation *)
 0.4
@@ -75,7 +84,7 @@ Voicer(16) { :e |
 	var pw = SinOsc(0.08, [0, 0.5 * pi]) * 0.45 + 0.5;
 	var s = Pulse(freq, pw) * amp;
 	CombC(Rlpf(s, filt, 0.15), 0.2, [0.2, 0.17], 1.5) * LagUd(e.w, 0, 2 + e.y)
-}.sum
+}.Mix
 
 (* berlin 1977 (jmcc) #4 ; var syntax *)
 var sequ = { :s :tr | Demand(tr, 0, Dseq(inf, s)) };
@@ -105,7 +114,7 @@ Voicer(16) { :e |
 		{ Rand(1, 3) } ! 12
 	);
 	(k * 0.1).SoftClip
-}.Splay2 * 0.2
+}.Mix * 0.1
 
 (* bowed string (jmcc) ; Rand *)
 var root = 5;
@@ -161,6 +170,26 @@ var s = Pan2(SinOsc(f, 0) * a, LfNoise1(Rand(0, 5)), 1);
 var c = { CombN(s, 0.5, { Rand(0, 0.2) + 0.3 } ! 2, 20) };
 c !+ 2 + s
 
+(* deep trip (jmcc) #9 ; graph rewrite ; left-to-right *)
+{ :tr |
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
+	var f = LfNoise1(trRand(0, 0.3)).MulAdd(60, 70).MidiCps;
+	var a = LfNoise2(f.Mul(trRand(0, 0.5))).Mul((LfNoise1(trRand(0, 8)).Mul(SinOsc(trRand(0, 40), 0)).Mul(0.1)).Max(0));
+	var s = SinOsc(f, 0).Mul(a).Pan2(LfNoise1(trRand(0, 5)), 1);
+	var c = { s.CombN(0.5, { trRand(0, 0.2) + 0.3 } ! 2, 20) };
+	c !+ 2 + s
+}.OverlapTexture(12, 4, 4).Mix
+
+(* hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; left-to-right *)
+var txt = { :tr |
+	var f = Rand(tr, 0, 50).MulAdd(1, 30).MidiCps;
+	SyncSaw(
+		[f, f + 0.2],
+		SinOsc(0.2, { Rand(tr, 0, pi).Mul(2) } ! 2).Mul(2).MulAdd(f, f * 3)
+	).Mul(0.05)
+}.OverlapTexture(4, 4, 4).Mix;
+txt.CombN(0.3, 0.3, 4) + txt.reversed
+
 (* harmonic swimming (jmcc) #1 *)
 var l = Line(0, -0.02, 60);
 1...20.collect { :h |
@@ -175,6 +204,13 @@ var o = { :h |
 	SinOsc(80 * (h + 1), 0) * e
 };
 0...10.collect(o).sum
+
+(* hell is busy (jmcc) #1 ; graph rewrite ; left-to-right *)
+{ :tr |
+	var trRand = { :lo :hi | Rand(tr, lo, hi) };
+	var e = LfPulse(trRand(1, 11), 0, trRand(0, 0.7)) * 0.04;
+	SinOsc(trRand(400, 2400), 0).Pan2(trRand(-1, 1), e)
+}.OverlapTexture(4, 4, 8).Mix
 
 (* lfo modulation (jmcc) #1 *)
 var o = SinOsc(0.05, 0) * 80 + 160;
@@ -254,7 +290,7 @@ var n = 6;
 			].asKlankSpec
 		)
 	} ! 2
-}.OverlapTexture(8, 2, 4)
+}.OverlapTexture(8, 2, 4).Mix
 
 (* ---- sample and hold liquidities (jmcc) #4 ; requires=keywords *)
 var r = MouseX(
@@ -324,14 +360,14 @@ Voicer(16) { :e |
 	var freq = Lag(LinExp(e.y, 0, 1, 4000, 200), 0.8);
 	var a = SinOsc(freq + (freq * SinOsc(4 + 3 * e.j, 0) * 0.02), 0) * e.x * 0.6 * Lag(e.w, 0.2);
 	Pan2(a, e.i * 0.25, 0.5 + e.z)
-}.sum * 0.5
+}.Mix * 0.5
 
 (* tremulate (jmcc) ; event control ; requires=voicer *)
 var s = Voicer(16) { :e |
 	var s = SinOsc(e.x * 400 + 500 * [1 1.2 1.5 1.8], 0); (* just minor seventh chord, 1:1 5:4 3:2 9:5 *)
 	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.j)).Max(0) * e.z;
 	Pan2(s, { Rand(-1, 1) } ! 4 + (e.i * 2 - 1), a * LagUd(e.w, 0, e.k * 2)).sum
-}.sum * 0.5;
+}.Mix * 0.5;
 CombN(s, 0.1, 0.1, 1)
 
 (* uplink (jmcc) #2 ; texture=overlap,4,1,5,inf *)
@@ -450,15 +486,6 @@ CombN(
 	decaytime: 4
 ) * 0.1 (* echoing sine wave *)
 
-(* ---- alien meadow (jmcc) #6 ; left-to-right *)
-{ :tr |
-	var trRand = { :lo :hi | Rand(tr, lo, hi) };
-	var z = trRand(0, 5000);
-	var f = SinOsc(trRand(0, 20), 0).MulAdd(0.1 * z, z);
-	var a = SinOsc(trRand(0, 20), 0).MulAdd(0.05, 0.05);
-	SinOsc(f, 0).Pan2(trRand(-1, 1), a)
-}.OverlapTexture(6, 2, 6)
-
 (* ---- analog bubbles (jmcc) #1 ; left-to-right *)
 0.4.LfSaw(0).Mul(24).Add([8, 7.23].LfSaw(0).MulAdd(3, 80)).MidiCps.SinOsc(0).Mul(0.04).CombN(0.2, 0.2, 4)
 
@@ -494,30 +521,6 @@ var b = { :f :m :a :g |
 
 (* ---- coolant (jmcc) ; filtermethods *)
 { BrownNoise().Mul(0.002).OnePole(0.95).RingzBank({ 40 + 2000.Rand } ! 10, [0.1], [1]) } ! 2
-
-(* ---- deep trip (jmcc) #9 ; graph rewrite ; left-to-right *)
-{ :tr |
-	var trRand = { :lo :hi | Rand(tr, lo, hi) };
-	var f = LfNoise1(trRand(0, 0.3)).MulAdd(60, 70).MidiCps;
-	var a = LfNoise2(f.Mul(trRand(0, 0.5))).Mul((LfNoise1(trRand(0, 8)).Mul(SinOsc(trRand(0, 40), 0)).Mul(0.1)).Max(0));
-	var s = SinOsc(f, 0).Mul(a).Pan2(LfNoise1(trRand(0, 5)), 1);
-	var c = { s.CombN(0.5, { trRand(0, 0.2) + 0.3 } ! 2, 20) };
-	c !+ 2 + s
-}.OverlapTexture(12, 4, 4)
-
-(* ---- hard sync sawtooth with lfo (jmcc) #6 ; graph-rewrite ; left-to-right *)
-var txt = { :tr |
-	var f = Rand(tr, 0, 50).MulAdd(1, 30).MidiCps;
-	SyncSaw([f, f + 0.2], SinOsc(0.2, { Rand(tr, 0, pi).Mul(2) } ! 2).Mul(2).MulAdd(f, f * 3)).Mul(0.05)
-}.OverlapTexture(4, 4, 4);
-txt.CombN(0.3, 0.3, 4) + txt.reversed
-
-(* ---- hell is busy (jmcc) #1 ; graph rewrite ; left-to-right *)
-{ :tr |
-	var trRand = { :lo :hi | Rand(tr, lo, hi) };
-	var e = LfPulse(trRand(1, 11), 0, trRand(0, 0.7)) * 0.04;
-	SinOsc(trRand(400, 2400), 0).Pan2(trRand(-1, 1), e)
-}.OverlapTexture(4, 4, 8)
 
 (* ---- modal space (jmcc) #8 ; left-to-right *)
 var b = [0, 2, 3.2, 5, 7, 9, 10].asLocalBuf;
@@ -603,7 +606,7 @@ var z = { :tr |
 		),
 		level: 1
 	)
-}.OverlapTexture(6, 3, 6);
+}.OverlapTexture(6, 3, 6).Mix;
 6.timesRepeat {
 	z := AllpassN(
 		in: z,

@@ -102,7 +102,7 @@ var y = { :tr |
 		[1],
 		{ Rand(tr, 0.2, 0.8) } ! 4
 	) * env
-}.OverlapTexture(4, 2, 2).ScaleNeg(MouseX(-1, 1, 0, 0.2));
+}.OverlapTexture(4, 2, 2).sum.ScaleNeg(MouseX(-1, 1, 0, 0.2));
 var snd = x + (y * 0.5) + s + r;
 6.timesRepeat {
 	snd := AllpassN(Lpz2(snd), 0.03, { Rand(0, 0.03) } ! 2, 5)

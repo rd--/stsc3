@@ -4,7 +4,7 @@
 	{
 		SinOsc(ExpRand(tr, h - (h / 256), h + (h / 256)), 0) * 0.025
 	} !^ 64
-}.OverlapTexture(1, 9, 5)
+}.OverlapTexture(1, 9, 5).Mix
 
 (* https://twitter.com/alln4tural/status/99846300173991936 ; graph rewrite *)
 { :tr |
@@ -12,7 +12,7 @@
 	{
 		SinOsc(ExpRand(tr, h - (h / 64), h + (h / 64)), 0) * 0.025
 	} !^ 8
-}.OverlapTexture(1, 9, 40)
+}.OverlapTexture(1, 9, 40).Mix
 
 (* https://twitter.com/alln4tural/status/1529413845231587328 (an) ; edit (rd) *)
 0...23.collect { :k |

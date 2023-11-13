@@ -16,4 +16,4 @@
 			{ 0.5 + Rand(tr, 0, 2) } ! p
 		)
 	} ! 2
-}.OverlapTexture(4, 4, 5) * 0.25
+}.OverlapTexture(4, 4, 5).Mix * 0.25

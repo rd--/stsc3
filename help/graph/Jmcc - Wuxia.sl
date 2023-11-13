@@ -19,4 +19,4 @@
 			Line(tr, pos, pos + Rand(tr, -2, 2), 4)
 		)
 	} !+ 5 * eg * amp
-}.OverlapTexture(8, 0.01, 2)
+}.OverlapTexture(8, 0.01, 2).Mix

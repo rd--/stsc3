@@ -6,7 +6,7 @@ var o = Choose(t, [SinOsc(f, 0), Saw(f * 2), Pulse(f * 0.5, 0.1)]);
 o * 0.1
 
 (* Choose ; sequences of different lengths *)
-var a = [[1, 2, 3], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6, 7]];
+var a = [1 2 3; 1 2 3 4 5; 1 2 3 4 5 6 7];
 var t1 = Impulse(1 / 5, 0);
 var t2 = Impulse(5, 0);
 var m = Choose(t1, a.collect { :x | Demand(t2, 0, Dseq(inf, x)) });

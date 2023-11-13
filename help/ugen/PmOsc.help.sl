@@ -23,7 +23,7 @@ var dur = 6;
 	var l = Line(tr, l1, l2, dur);
 	var pm = Line(tr, 0, pme, dur);
 	EqPan2(PmOsc(cf, mf, pm, 0), l)
-}.OverlapTexture(2, 2, 4) * 0.05
+}.OverlapTexture(2, 2, 4).Mix * 0.05
 
 (* PmOsc ; event control *)
 var s = Voicer(16) { :e |

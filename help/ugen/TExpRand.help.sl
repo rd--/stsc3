@@ -7,4 +7,4 @@
 		) * 0.Max(SinOsc(ExpRand(tr, 1, 15),0) * 0.05),
 		Rand(tr, -1, 1)
 	)
-}.OverlapTexture(4, 4, 4)
+}.OverlapTexture(4, 4, 4).Mix

@@ -24,4 +24,4 @@ var a = [
 	);
 	var e = Decay2(i, 0.004, d);
 	EqPan2(f, LfNoise1(Rand(tr, 0, 1))) * e
-}.OverlapTexture(12, 3, 6) * 0.2
+}.OverlapTexture(12, 3, 6).Mix * 0.2

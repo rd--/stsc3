@@ -8,4 +8,4 @@
 	var f = { Rand(tr, 4, 7) } ! 2 * SinOsc({ Rand(tr, 10, 13) } ! 2, 0) * e;
 	var r = { Rand(Impulse(0.7, 0), 2220, 2227) } ! 2;
 	SinOsc(r, 0) * f * 0.15
-}.OverlapTexture(2, 4, 2)
+}.OverlapTexture(2, 4, 2).Mix

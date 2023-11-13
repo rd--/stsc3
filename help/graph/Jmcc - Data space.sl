@@ -16,4 +16,4 @@
 		dt,
 		3
 	) * 0.04
-}.OverlapTexture(6, 1, 4)
+}.OverlapTexture(6, 1, 4).Mix

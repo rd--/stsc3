@@ -8,4 +8,4 @@
 		CombN(s, 0.5, { Rand(tr, 0, 0.2) + 0.3 } ! 2, 20)
 	};
 	c !+ 2 + s
-}.OverlapTexture(12, 4, 4)
+}.OverlapTexture(12, 4, 4).Mix

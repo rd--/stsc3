@@ -12,4 +12,4 @@
 		LfPulse(osc() + osc(), 0, 0.5) * 0.04,
 		Rand(tr, 0, 0.8)
 	)
-}.OverlapTexture(4, 1, 5)
+}.OverlapTexture(4, 1, 5).Mix

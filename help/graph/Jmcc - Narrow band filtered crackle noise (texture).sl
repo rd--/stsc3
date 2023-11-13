@@ -5,4 +5,4 @@
 	var rf = XLine(tr, rf1, rf2, 9);
 	var c = Crackle(1.97 + Rand(tr, 0, 0.03));
 	EqPan2(Resonz(c, rf, 0.2), Rand(tr, -1, 1))
-}.OverlapTexture(2, 5, 4) * 0.15 (* c.f. 5, 2, 5 *)
+}.OverlapTexture(2, 5, 4).Mix * 0.15 (* c.f. 5, 2, 5 *)

@@ -14,7 +14,7 @@ var voiceFunc = { :e |
 	var dx7 = Dx7(buf, e.w, 0, 0, 0, e.x * 24 + 48, e.z, (8192 * (e.x - x0)), 0, 0, 0);
 	Pan2(dx7, e.i * 2 - 1, 1)
 };
-Voicer(16, voiceFunc).mixByNamedRule('16×2→1×2')
+Voicer(16, voiceFunc).Mix
 
 (* Dx7 ; data at local buffer, random notes *)
 var voiceData = [

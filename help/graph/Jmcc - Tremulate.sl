@@ -6,4 +6,4 @@ var voiceFunc = { :tr |
 	var e = (LfNoise2(r !! 4) * 0.1).Max(0);
 	EqPan2(o * e, { Rand(-1, 1) } ! 4).sum
 };
-CombN(OverlapTexture(voiceFunc, 2, 0.5, 2), 0.1, 0.1, 1)
+CombN(OverlapTexture(voiceFunc, 2, 0.5, 2).Mix, 0.1, 0.1, 1)

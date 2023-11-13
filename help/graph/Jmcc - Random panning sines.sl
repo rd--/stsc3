@@ -7,4 +7,4 @@
 		var amp = LfNoise1(0.4 + Rand(tr, 0, 0.8)) * 0.4 + 0.5;
 		EqPan2(osc, pos) * amp
 	} !+ n * 0.1 / n
-}.OverlapTexture(8, 8, 2)
+}.OverlapTexture(8, 8, 2).Mix

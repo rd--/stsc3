@@ -12,4 +12,4 @@
 			1 - t
 		)
 	} ! 2
-}.OverlapTexture(15, 1, 7)
+}.OverlapTexture(15, 1, 8).Mix

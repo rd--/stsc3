@@ -8,7 +8,7 @@ var z = { :tr |
 		var m = SinOsc(r * Rand(tr, 0.9, 1.1), Rand(tr, 0, 2 * pi)) * 0.1 - 0.05;
 		EqPan2(SinOsc(f * i + f, 0) * m.Max(0), Rand(tr, -1, 1)) / (i + 1)
 	}.sum * p
-}.OverlapTexture(12.8, 6.4, 6);
+}.OverlapTexture(12.8, 6.4, 6).Mix;
 {
 	CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)
 } !+ 5 * 0.25

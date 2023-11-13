@@ -17,4 +17,4 @@ var voiceFunc = { :e |
 	var pan = e.i * 2 - 1;
 	EqPan2(soundMain.sum + soundHigh.sum, pan) * LagUd(e.w, 0.01, 4)
 };
-Voicer(16, voiceFunc).sum * 0.25
+Voicer(16, voiceFunc).Mix * 0.25

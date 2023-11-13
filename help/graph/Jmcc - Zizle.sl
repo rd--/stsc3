@@ -18,4 +18,4 @@
 		].product,
 		Rand(tr, -1, 1)
 	)
-}.OverlapTexture(4, 4, 12)
+}.OverlapTexture(4, 4, 12).Mix

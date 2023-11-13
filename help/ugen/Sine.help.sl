@@ -19,4 +19,4 @@ SinOsc(Rand(t, 220, 440), 0) * Sine(t, 1 / f) * a
 	var freq = { IRand(tr, 5, 23) } ! 2 * 17;
 	var dur = { IRand(tr, 3, 7) } ! 2;
 	SinOsc(freq, 0) * Sine(tr, dur) / 7
-}.OverlapTexture(3, 5, 7)
+}.OverlapTexture(3, 5, 8).Mix

@@ -9,6 +9,6 @@ var z = { :tr |
 		o.Distort * 0.2,
 		Rand(tr, -1, 1)
 	)
-}.OverlapTexture(10, 0.1, n);
+}.OverlapTexture(10, 0.1, n).Mix;
 z := z * LinXFade2(1, SinOsc(5, 0).Max(0), MouseX(0, 1, 0, 0.2) > 0.5).kr;
 CombN(z, 0.3, 0.3, 8) + z.reversed

@@ -6,7 +6,7 @@ Voicer(16) { :e |
 (* SinOsc ; event control ; x-field *)
 Voicer(16) { :e |
 	EqPan2(SinOsc((e.x * 24 + 48).MidiCps, 0), e.i * 2 - 1) * e.z * e.w
-}.sum
+}.Mix
 
 (* Blip ; event control ; shared parameter *)
 var nh = 1;
@@ -17,7 +17,7 @@ Voicer(16) { :e |
 (* Blip ; event control *)
 Voicer(16) { :e |
 	EqPan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1) * e.w * e.z * e.z
-}.sum
+}.Mix
 
 (* PanAz ; event control *)
 Voicer(16) { :e |

@@ -7,7 +7,7 @@ var z = { :tr |
 		Rlpf(r, SinOsc(Rand(tr, 0, 1), 0) * 0.7 * f + f, 0.1),
 		LfNoise1(Rand(tr, 0, 1))
 	) * LfPulse(Rand(tr, 0, 15), 0, Rand(tr, 0.2, 0.4))
-}.OverlapTexture(8, 3, 4);
+}.OverlapTexture(8, 3, 4).Mix;
 6.timesRepeat {
 	z := AllpassC(z, 0.040, { Rand(0, 0.04) } ! 2, 16)
 };

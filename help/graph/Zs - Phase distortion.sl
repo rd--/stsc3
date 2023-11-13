@@ -12,5 +12,5 @@ Voicer(16) { :e |
 	var snd = Lag(SinOsc(0, pdRes) * pdi, 1 / freqBase);
 	var env = Decay2(Trig(e.w, SampleDur()), 0.005, 10);
 	EqPan2(snd, e.i * 2 - 1) * env * amp
-}.sum
+}.Mix
 

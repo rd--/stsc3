@@ -10,4 +10,4 @@
 		) * Rand(tr, 0, 1)
 	} !+ 4;
 	EqPan2(r, Rand(tr, -1, 1))
-}.OverlapTexture(6, 0.01, 4)
+}.OverlapTexture(6, 0.01, 4).Mix

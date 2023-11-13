@@ -14,4 +14,4 @@
 		var t = Decay(i(), 0.1) * PinkNoise() * 0.1;
 		EqPan2(CombL(t, dt, dt, 4), Rand(tr, -1, 1))
 	} !+ 5
-}.OverlapTexture(7, 5, 3)
+}.OverlapTexture(7, 5, 3).Mix

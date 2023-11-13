@@ -10,4 +10,4 @@
 		SinOsc(f, 0) * e * 0.04,
 		Rand(tr, -1, 1)
 	)
-}.OverlapTexture(8, 8, 4)
+}.OverlapTexture(8, 8, 4).Mix

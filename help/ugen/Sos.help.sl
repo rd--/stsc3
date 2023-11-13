@@ -3,7 +3,7 @@ Voicer(16) { :e |
 	var b1 = LinLin(e.y, 0, 1, 1.45, 1.998);
 	var b2 = LinLin(e.x, 0, 1, -0.999, -0.9998);
 	EqPan2(Sos(Trig(K2A(e.w), 0), 0.0, 0.05, 0.0, b1, b2), e.i * 2 - 1) * 8
-}.sum
+}.Mix
 
 (* Sos *)
 Voicer(16) { :e |
@@ -17,4 +17,4 @@ Voicer(16) { :e |
 	var s3 = s2 + DelayC(Rhpf (s1 * 0.9, freq * 0.99999, rq * 0.999), 0.02, 0.01223);
 	var s4 = Decay2(s3, 0.4, 0.3) * s2;
 	EqPan2(s4, e.i * 2 - 1) * e.z * 0.25
-}.sum
+}.Mix

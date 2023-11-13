@@ -29,4 +29,4 @@ var dur = 7;
 		sig.second,
 		Rand(tr, -0.75, 0.75)
 	) * 0.7
-}.OverlapTexture(dur, 0, 2)
+}.OverlapTexture(dur, 0, 2).Mix

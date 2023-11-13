@@ -19,5 +19,5 @@ Voicer(16) { :e |
 	var loc = EqPan2(sig, SinOsc(rate * 0.9 + Rand(-0.6, 0.6), 0));
 	var cmb = CombL(loc, 0.1, SinOsc(0.01, 0) * 0.03 + 0.07, 5) * 0.7;
 	XFade2(Lpf(cmb, 4800), loc, -0.5, 0.3)
-}.mixByNamedRule('16×2→UoS') (* 16×2→1×2 16×2→UoS *)
+}.Mix
 

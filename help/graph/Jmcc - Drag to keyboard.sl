@@ -10,4 +10,4 @@
 		sr * p3,
 		0.1
 	)
-}.OverlapTexture(4, 4, 2)
+}.OverlapTexture(4, 4, 2).Mix
