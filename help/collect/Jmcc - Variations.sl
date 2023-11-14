@@ -523,7 +523,7 @@ var b = { :f :m :a :g |
 { BrownNoise().Mul(0.002).OnePole(0.95).RingzBank({ 40 + 2000.Rand } ! 10, [0.1], [1]) } ! 2
 
 (* ---- modal space (jmcc) #8 ; left-to-right *)
-var b = [0, 2, 3.2, 5, 7, 9, 10].asLocalBuf;
+var b = [0 2 3.2 5 7 9 10].asLocalBuf;
 var k = DegreeToKey(b, MouseX(0, 15, 0, 0.1), 12);
 var c = { :n :r |
 	var o = SinOsc((k + r + (n * 0.04)).MidiCps, 0).Mul(0.1);

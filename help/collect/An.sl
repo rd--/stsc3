@@ -1,6 +1,6 @@
 (* https://twitter.com/alln4tural/status/99846300173991936 ; graph rewrite *)
 { :tr |
-	var h = Choose(tr, [33, 38, 40]).MidiCps * (2 ^ Choose(tr, [0 .. 5]));
+	var h = Choose(tr, [33 38 40]).MidiCps * (2 ^ Choose(tr, [0 .. 5]));
 	{
 		SinOsc(ExpRand(tr, h - (h / 256), h + (h / 256)), 0) * 0.025
 	} !^ 64
@@ -8,7 +8,7 @@
 
 (* https://twitter.com/alln4tural/status/99846300173991936 ; graph rewrite *)
 { :tr |
-	var h = Choose(tr, [33, 38, 40]).MidiCps * (2 ^ Choose(tr, [0 .. 4]));
+	var h = Choose(tr, [33 38 40]).MidiCps * (2 ^ Choose(tr, [0 .. 4]));
 	{
 		SinOsc(ExpRand(tr, h - (h / 64), h + (h / 64)), 0) * 0.025
 	} !^ 8

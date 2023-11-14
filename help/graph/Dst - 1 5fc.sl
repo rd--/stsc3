@@ -1,7 +1,7 @@
 (* https://sccode.org/1-5fc (dst) ; requires=voicer *)
 Voicer(16) { :e |
 	var tr = Trig(e.w, e.y * 0.002 + 0.001);
-	var buf = [0, 7, 15.93, 5, 9.7, 12, 17.5, 13.1].asLocalBuf;
+	var buf = [0 7 15.93 5 9.7 12 17.5 13.1].asLocalBuf;
 	var samp = ExpRand(tr, 0.07, 0.5);
 	var root = Choose(tr, [23, 30, 35, 37]);
 	var atk = ExpRand(tr, 0.04, 0.3);

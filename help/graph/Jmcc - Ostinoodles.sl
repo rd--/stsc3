@@ -4,11 +4,11 @@ var z = { :tr |
 		Demand(tr, 0, Dseq(inf, s))
 	};
 	var root = 81 + Rand(tr, -6, 6);
-	var major = [0, 2, 4, 5, 7, 9, 11].asLocalBuf;
+	var major = [0 2 4 5 7 9 11].asLocalBuf;
 	var offset = Rand(tr, -16, 16);
 	var seq = DegreeToKey(
 		major,
-		Scramble(tr, [0, 1, 2, 3] + offset),
+		Scramble(tr, [0 .. 3] + offset),
 		12
 	) + root;
 	var f = XLine(tr, ExpRand(tr, 4, 24), ExpRand(tr, 4, 24), 12);

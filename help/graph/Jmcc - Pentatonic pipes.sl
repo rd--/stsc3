@@ -1,6 +1,6 @@
 (* pentatonic pipes (jmcc) ; mousex on right half of screen causes pulsation ; requires=kr *)
 var n = 5;
-var mode = [0, 3, 5, 7, 10].asLocalBuf;
+var mode = [0 3 5 7 10].asLocalBuf;
 var root = 36 + 12.atRandom;
 var z = { :tr |
 	var m = DegreeToKey(mode, Rand(tr, 0, 20), 12) + root;
