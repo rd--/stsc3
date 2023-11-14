@@ -25,9 +25,9 @@ Voicer(16) { :e |
 	) * mul.Lag(0.1)
 }.Mix
 
-(* Decay2 ; c.f. MultiTouchPad help file ; requires=kr *)
+(* Decay2 ; c.f. MultiTouchPad help file *)
 {
-	var tr = Dust(1 / 9).kr;
+	var tr = Dust(1 / 9);
 	var impulseFreq = Choose(tr, [1 2 3 4 6 8 9]);
 	var oscFreq = Rand(tr, 20, 880);
 	var distort = Rand(tr, 0.1, 8);

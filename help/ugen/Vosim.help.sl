@@ -24,8 +24,8 @@ Splay2(
 		Vosim(
 			Impulse(110 + Rand(tr, -1, 1), 0),
 			ExpRand(tr, 110, 880),
-			Choose(tr, [3, 5, 7]),
-			Choose(tr, [0.77, 0.88, 0.99])
+			Choose(tr, [3 5 7]),
+			Choose(tr, [0.77 0.88 0.99])
 		)
 	} ! 2
 }.OverlapTexture(3, 5, 3).Mix * 0.1

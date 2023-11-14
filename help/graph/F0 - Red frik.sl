@@ -1,4 +1,4 @@
-(* red frik (f0) ; requires=kr *)
+(* red frik (f0) *)
 var tr = Impulse(0.1, 0);
 var o1 = MulAdd(
 	SinOsc(Rand(tr, 0.3, 5), 0),
@@ -12,6 +12,6 @@ var o2 = MulAdd(
 );
 Rhpf(
 	{ BrownNoise() } ! 2,
-	Rand(tr, 0.3, 3).kr,
-	o2.kr
+	Rand(tr, 0.3, 3),
+	o2
 ) * 0.1

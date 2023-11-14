@@ -46,6 +46,21 @@ var p = Saw([3, 4]) * (Saw(1) * 32 + 128) + DmdFor(1, 0, (Dseq(1, [0, 8, 1, 5]) 
 var o = SinOsc(Saw(3) * 64 + 99, p) / 9;
 CombN(o, 1 / 4, 1 / 2.125, SinOsc(0.005, 1.5 * pi).Range(0, 6)).transposed.sum
 
+(* tw 0120 (f0) ; requires=kr *)
+var z = LfTri(1 / [7, 8], 0) * LfTri(1 / 9, 0) * 99;
+var l = (60 .. 79).MidiCps;
+var f = Select(z, l);
+var w = LfTri(1 / [3, 4], 0) % 1;
+var o = VarSaw(f.kr, 0, w.kr);
+CombN(o, 1, 1 / [5, 6], 8) / 8
+
+(* tw 0121 (f0) ; requires=kr *)
+var z = SinOsc(1 / [8, 7], 0) * SinOsc(1 / 30, 0) * 9;
+var l = (0 .. 7) * 6 + 56;
+var m = SinOsc(1 / [4, 3], 0);
+var o = SinOsc(Select(z, l).kr.MidiCps, 0) * m;
+CombN(o, 1, 1 / [6, 5], 9).Tanh * 0.1
+
 (* tw 0134 (f0) *)
 var n = 50;
 var z = { :i |
@@ -56,6 +71,12 @@ var z = { :i |
 	)
 };
 (1 .. n).collect(z).mean / 5
+
+(* https://sccode.org/1-4Qy ; f0 ; 0233 ; requires=kr *)
+var b = 1 / [1 4 6 8 11];
+var c = LfTri(b / 98, 0);
+var q = Dseq(inf, Select(LfTri(b / 99, 0) + c * 5, 1 / b + 59).kr).MidiCps;
+Splay2(LfTri(DmdFor(b, c, q) + c, 0) / 2)
 
 (* https://sccode.org/1-4Qy ; f0 ; 0246 ; requires=DynRingzBank *)
 var b = [1 .. 9] * 1.5;
@@ -91,6 +112,19 @@ var o = GrainFm(
 	maxGrains: 512
 );
 (o / 2).Tanh
+
+(* f0 ; https://twitter.com/redFrik/status/1105496695637454848 ; requires=kr *)
+var b = (1 .. 15) + 1 / 151;
+var w = (VarSaw(b, b, 1 / 5.15) * 1 + 1.5).Ceiling;
+var s = Select((VarSaw(1/15, 1/5, b) * 5).Ceiling + 5 / 5, [51 * 1.5, 51, 151]).kr;
+var x = Lag(s, b);
+var y = VarSaw(5 + b, 0, 0.5);
+var z = VarSaw(b, b, b) * b / 5 + [1.5, 5, 1];
+var m = VarSaw(5 - b, b, b) * 5 + 5;
+var o = VarSaw(w * x + y * z, b, VarSaw(b, 0, 0.5) + 5 / 15) * (m > 1.515);
+var f = 1515 ^ (VarSaw(1 - b / 5, 0, 0.5) / 15 + 1 + b);
+var rq = 1.5 ^ VarSaw(b, 0, 0.5) / 5;
+BLowPass(o, f, rq).Splay2 / 5
 
 (* https://twitter.com/redFrik/status/1254441448327479299 ; f0 ; rd (edit) *)
 var b = [1 3 5 8 10];
