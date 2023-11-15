@@ -165,7 +165,7 @@ var k = Klank(x, 1, 0, 1, d);
 (* coolant (jmcc) ; Ringz *)
 var o = OnePole(BrownNoise() * 0.01, 0.95);
 var f = { Ringz(o, Rand(40, 2040), 1) * 0.1 };
-Splay(f ! 10)
+f !^ 10
 
 (* deep trip (jmcc) #9 ; texture=overlap,12,4,4,inf *)
 var f = (LfNoise1(Rand(0, 0.3)) * 60 + 70).MidiCps;

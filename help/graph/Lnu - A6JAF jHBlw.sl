@@ -19,7 +19,7 @@ var f = { :a |
 		m() ! 6 ! 6
 	).SoftClip.sum
 };
-Splay(
+Splay2(
 	[0 3.1 7.05 10 -9 17].collect { :n |
 		EqPan2(
 			f(c() + 52 + n) * (12 * m().Neg).DbAmp,

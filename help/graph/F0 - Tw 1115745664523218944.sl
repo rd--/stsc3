@@ -10,4 +10,4 @@ var z = CombC(
 	7 - b / 12 * (SinOsc(c < 0.6, 0) % 1 + 0.1),
 	2 ^ (SinOsc(SinOsc(0.1, 0) * 0.1, b) * 9)
 );
-Hpf(Splay(z), 9).Tanh / 5
+Hpf(z.Splay, 9).Tanh / 5

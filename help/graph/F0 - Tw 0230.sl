@@ -2,4 +2,4 @@
 var b = (1 .. 9) / 16;
 var e = Ringz(LfSaw(b, 0), b * 999, 1.25);
 var d = 1 / (b * 999) * (LfTri(b / 120, b * 2) % 1);
-Splay(CombC(PinkNoise() * e, 1, d, 3)) / 99
+CombC(PinkNoise() * e, 1, d, 3).Splay / 99

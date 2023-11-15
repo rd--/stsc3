@@ -22,4 +22,4 @@ var oscArray = (1 .. segments).collect { :index |
 	var amp = Lag(Wrap(grey, 0, 1), 0.01) / segments;
 	SinOsc(freqArray[index], 0) * amp
 };
-Splay(oscArray) * 5
+oscArray.Splay * 5

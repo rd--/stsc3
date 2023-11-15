@@ -1,6 +1,6 @@
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var k = DmdFor(6.4, 0, Dseq(inf, [0.05, Drand(1, [0.04, 0.08])]));
-Splay(Integrator((LfNoise0([5, 5, 5]) * k).RoundTo(k / 10), 1).Sin.Sqrt.Tanh, 0.3, 1, 0, true)
+Splay2(Integrator((LfNoise0([5, 5, 5]) * k).RoundTo(k / 10), 1).Sin.Sqrt.Tanh, 0.3, 1, 0, true)
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
 var x = LfNoise1(0.5 * LocalIn(1, 0) + 0.1) * 0.5 + 0.5;

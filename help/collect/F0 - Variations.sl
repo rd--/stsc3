@@ -123,14 +123,12 @@ var o = GrainFm(
 (* https://sccode.org/1-4Qy ; f0 ; tweet0350 ; Splay *)
 var b = (9 .. 1) / 99;
 var o = LfSaw(LfSaw(b, b) + 1 * 99, b) * (LfSaw(LfSaw(b, 0) > b, 0) > 0.9);
-Splay(
-	CombN(
-		GVerb(o, 99, 1, b * 9, b, 15, 1, 0.7, 0.5, 300) / 19,
-		1,
-		b / 9.9,
-		9
-	).transposed.sum * 0.9
-)
+CombN(
+	GVerb(o, 99, 1, b * 9, b, 15, 1, 0.7, 0.5, 300) / 19,
+	1,
+	b / 9.9,
+	9
+).transposed.sum.Splay * 0.9
 
 (* f0 ; https://twitter.com/redFrik/status/1105496695637454848 ; requires=kr *)
 var b = (1 .. 15) + 1 / 151;
@@ -155,7 +153,7 @@ var l = m * 7 + 20 + Dseq(inf, b % m * 5 + 6);
 var j = DmdFor(e / (12 ^ m), 0, l);
 var k = DegreeToKey(b.asLocalBuf, j, 12);
 var o = SinOscFb(k.MidiCps, LfTri(c / b + 1 / 3, Decay2(Impulse([2 / 3, 1.5, 3, 1.5, 3], 0), c, d)) * d);
-FreeVerb(Splay(o), 0.1, 1, 0.5) * 0.1
+FreeVerb(o.Splay, 0.1, 1, 0.5) * 0.1
 
 (* <https://twitter.com/redFrik/status/1452954849885163525> ; f0 *)
 var i = Rand(1, 64);

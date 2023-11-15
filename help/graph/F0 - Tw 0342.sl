@@ -4,4 +4,4 @@ var c = LfSaw(b, 0) % 1;
 var f = (2 ^ LfSaw(b, 0) * 256).RoundTo(64);
 var e = Rlpf(LfSaw(1 / b / 32, 0), 500, 1.01 - c);
 var o = SinOscFb(f, c) * e;
-Splay(Clip(o, 0, 1) / 2)
+Clip(o, 0, 1).Splay / 2

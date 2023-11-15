@@ -13,7 +13,7 @@ var reset = LfNoise2(k * 2 / (mouseX + 1)).kr;
 var select = (0 .. k).collect { :i | mouseX > i };
 var note = { Choose(reset, [0 2 3 5 7 9 10]) + Choose(reset, [48 60]) } ! k;
 var osc = SinOsc(note.MidiCps, 0) * select * 0.05;
-Splay(osc)
+osc.Splay
 
 (* Mouse control of Impulse frequency *)
 Impulse([4 5 9] * MouseX(0.01, 150, 2, 0.2), 0).Splay2 * 0.2

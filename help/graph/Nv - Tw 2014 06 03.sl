@@ -9,4 +9,4 @@ var z = {
 	var f = (1 .. 8).collect(o).product * 86;
 	Pluck(Bpf(f, f, 1).Sin, Saw(440), 1 , 1 / f, 9, 0.5)
 };
-Splay(z ! k) * 0.2
+z !^ k * 0.2

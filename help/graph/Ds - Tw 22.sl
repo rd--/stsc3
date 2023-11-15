@@ -6,4 +6,4 @@ var n = [
 	75025 121393 196418 317811 514229 832040 1346269 2178309
 ];
 var a = DmdFor(0.1, 0, Dseq(inf, Wrap(n, 20, 55).MidiCps));
-Hpf(LeakDc(Splay(LfCub([-1, a, a / 3, -2], 0)), 0.995) * 9, 440).Clip2(1) / 9
+Hpf(LeakDc(LfCub([-1, a, a / 3, -2], 0).Splay, 0.995) * 9, 440).Clip2(1) / 9

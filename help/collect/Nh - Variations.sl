@@ -10,5 +10,5 @@ snd := Select(PulseDivider(Bpf(snd, 0.1, 0.1), 1000, 0), [
 snd := LeakDc(Sanitize(snd, 0).Clip2(1), 0.995);
 snd := [2, 3, 4, 1].collect { :index | snd[index] };
 snd := snd <! LocalOut(snd.Clip2(1));
-snd := Splay(snd, 0.5, 1, 0, true);
+snd := Splay2(snd, 0.5, 1, 0, true);
 snd.Clip2(1) * -12.DbAmp

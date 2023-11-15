@@ -5,7 +5,7 @@ var f = SelectX(
 	SinOscFb(0.1, 0) % (SinOscFb(b, 0)) * c,
 	Dc([58 46 85 79 68 68 46 69 100].MidiCps)
 );
-Splay(SinOscFb(f, SinOscFb(1 / c, 0))) / 3
+SinOscFb(f, SinOscFb(1 / c, 0)).Splay / 3
 
 (* ---- ; calculations
 ':.UODD.Ed'.ascii == [58, 46, 85, 79, 68, 68, 46, 69, 100]
