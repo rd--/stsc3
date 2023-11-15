@@ -8,8 +8,16 @@ SparseMatrixMixer(24, SinOsc([220, 221], 0) * 0.1, [1 9 1; 2 13 1])
 {
 	SparseMatrixMixer(
 		24,
-		{ SinOsc(Rand(220, 550), 0) } ! 4,
-		{ [(1 .. 4).atRandom, (1 .. 24).atRandom, Rand(0.05, 0.15)] } ! 6
+		{
+			SinOsc(Rand(220, 550), 0)
+		} ! 4,
+		{
+			[
+				(1 .. 4).atRandom,
+				(1 .. 24).atRandom,
+				0.01 + 0.05.randomFloat
+			]
+		} ! 6
 	)
 }.OverlapTexture(6, 5, 4).sum
 
