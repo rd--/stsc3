@@ -27,4 +27,4 @@ Splay(
 		)
 	},
 	0.5, 1, 0, true
-).transposed.sum
+).transposed.Mix

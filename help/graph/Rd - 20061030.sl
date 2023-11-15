@@ -5,5 +5,5 @@ var o = Saw([
 	f,
 	f * Rand(tr, 0.750, 0.7505),
 	f * Rand(tr, 0.975, 1.025)
-]).sum;
+]).Mix;
 (o * Rand(tr, 0.0, 0.5)).Clip2(0.75) * 0.15

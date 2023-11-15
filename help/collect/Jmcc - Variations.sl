@@ -145,7 +145,11 @@ var scale = [0, 2, 4, 5, 7, 9, 11] + root;
 var oct = [24, 36, 48, 60, 72, 84];
 var f = (scale.atRandom + oct.atRandom).MidiCps;
 var x = { BrownNoise() } ! 2 * 0.007 * (LfNoise1(ExpRand(0.125, 0.5)) * 0.6 + 0.4).Max(0);
-var d = [12.arithmeticSeries(f, f), 12.geometricSeries(1, Rand(0.7, 0.9)), { Rand(1, 3) } ! 12].transposed.concatenation;
+var d = [
+	12.arithmeticSeries(f, f),
+	12.geometricSeries(1, Rand(0.7, 0.9)),
+	{ Rand(1, 3) } ! 12
+].transposed.concatenation;
 var k = Klank(x, 1, 0, 1, d);
 (k * 0.1).SoftClip
 
@@ -159,9 +163,9 @@ var k = Klank(x, 1, 0, 1, d);
 { RingzBank(OnePole(BrownNoise() * 0.002, 0.95), { 40 + 2000.Rand } ! 10, [0.1], [1]) } ! 2
 
 (* coolant (jmcc) ; Ringz *)
-var o = OnePole(BrownNoise() * 0.002, 0.95);
+var o = OnePole(BrownNoise() * 0.01, 0.95);
 var f = { Ringz(o, Rand(40, 2040), 1) * 0.1 };
-Splay2(f ! 10)
+Splay(f ! 10)
 
 (* deep trip (jmcc) #9 ; texture=overlap,12,4,4,inf *)
 var f = (LfNoise1(Rand(0, 0.3)) * 60 + 70).MidiCps;
@@ -192,7 +196,7 @@ txt.CombN(0.3, 0.3, 4) + txt.reversed
 
 (* harmonic swimming (jmcc) #1 *)
 var l = Line(0, -0.02, 60);
-1...20.collect { :h |
+(1 .. 20).collect { :h |
 	var n = LfNoise1({ Rand(-4, 4) } ! 2 + 6) * 0.02 + l;
 	SinOsc(50 * (h + 1), 0) * n.Max(0)
 }.sum
@@ -203,7 +207,7 @@ var o = { :h |
 	var e = Decay2(Dust(t) * 0.02, 0.005, Rand(0, 0.5));
 	SinOsc(80 * (h + 1), 0) * e
 };
-0...10.collect(o).sum
+(0 .. 10).collect(o).sum
 
 (* hell is busy (jmcc) #1 ; graph rewrite ; left-to-right *)
 { :tr |
@@ -353,7 +357,7 @@ var strFunc = { :i |
 	var z = [{ 300 * i + LinRand(0, 8000, 0) } ! n, nil, { Rand(1, 4) } ! n].asKlankSpec;
 	Pan2(Klank(pluck, 1, 0, 1, z), i * 0.2 - 0.5, 1)
 };
-LeakDc(Lpf(1...8.collect(strFunc).sum, 12000), 0.995)
+LeakDc(Lpf((1 .. 8).collect(strFunc).sum, 12000), 0.995)
 
 (* theremin (jmcc) ; event control *)
 Voicer(16) { :e |

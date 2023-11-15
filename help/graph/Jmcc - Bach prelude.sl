@@ -15,7 +15,7 @@ var p2 = [
 	60 60 60 60 60 60 60 60 60 60 60 60 60 60 60 60
 ];
 var p = p1.collect { :x |
-	var y = x ++ x[3, 4, 5];
+	var y = x ++ x[3 4 5];
 	[y, y].concatenation
 }.concatenation ++ p2.concatenation;
 var tr = Impulse(5, 0);

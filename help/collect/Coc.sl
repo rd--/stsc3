@@ -16,9 +16,9 @@ var p = Pan2(o, Rand(t, -1.0, 1.0), Decay2(t, 0.1, 3) * 0.5);
 p + CombL(p, 2.0, 4/6, 6)
 
 (* Interesting rising sounds *)
-1...5.collect { :c |
+(1 .. 5).collect { :c |
 	Pan2(SinOsc(LfSaw((c * 0.2 + 1) / 3, 0) * 500 + 700, 0), LfNoise0(1), 0.05)
-}.sum
+}.Mix
 
 (* Use of Dust with rising sounds ; Rand *)
 {
@@ -27,12 +27,12 @@ p + CombL(p, 2.0, 4/6, 6)
 } !+ 20
 
 (* Pretty nice but inessential ; Rand *)
-1...12.collect { :i |
+(1 .. 12).collect { :i |
 	var freq = MouseX(Rand(0.1, 5), Rand(3, 20), 0, 0.2);
 	var amp = LfNoise0(MouseX(Rand(1, 6), Rand(1, 6), 0, 0.2)).Max(0);
 	var osc = SinOsc(SinOsc(freq, 0) * MouseY(10, 50, 0, 0.2) + Rand(200, 5000), 0) * amp;
 	Pan2(osc, 1.Rand2, 0.03)
-}.sum
+}.Mix
 
 (* Random impulses *)
 {
@@ -77,7 +77,7 @@ var sync = 5;
 var f = { :frq :num |
 	SinOsc(frq, 0) * Decay2(Impulse(num / sync, 0), 0.01, 1)
 };
-[f(100, 3), f(300, 7), f(500, 5), f(700, 2), f(900, 9), f(1100, 6), f(1300, 1)].Splay2 * 0.2
+[f(100, 3), f(300, 7), f(500, 5), f(700, 2), f(900, 9), f(1100, 6), f(1300, 1)].Splay * 0.2
 
 (* Synchronised impulses, structured *)
 var sync = 5;
@@ -85,13 +85,13 @@ var freq = [1, 3, 5, 7, 9, 11, 13];
 var numer = [3, 7, 5, 2, 9, 6, 1];
 freq.indices.collect { :i |
 	SinOsc(freq[i] * 100, 0) * Decay2(Impulse(numer[i] / sync, 0), 0.01, 1)
-}.Splay2 * 0.2
+}.Splay * 0.2
 
 (* Nice buzzing effect *)
 var speed = 14;
 var f = SinOsc(1000, 0) * 150 + 300;
 var t = Impulse(1 / 3, 0);
-1...12.collect { :n |
+(1 .. 12).collect { :n |
 	SinOsc(f * n, 0) * (LfNoise1(Rand(speed, speed * 2)) * 0.5 + 0.5) / n
 }.sum * 0.1
 
@@ -99,30 +99,30 @@ var t = Impulse(1 / 3, 0);
 var f = 100;
 var t = Impulse(1 / 3, 0);
 var dt = [1.4, 1.1, 2, 1, 1.8, 2.9, 4, 0.3, 1, 3.6, 2.3, 1.1];
-1...12.collect { :n |
+(1 .. 12).collect { :n |
 	SinOsc(f * n, 0) * Decay2(t, 0.01, dt[n]) / n
 }.sum * 0.1
 
 (* Lovely bells *)
 var t = Impulse(1 / 3, 0);
 var m = { Rand(1, 3) } ! 2;
-var env = Decay2(t, 0.01 * m, 1 * m) / 1...6;
-SinOsc([60, 64, 67, 71, 74, 78].MidiCps, 0).sum * env * 0.1
+var env = Decay2(t, 0.01 * m, 1 * m) / (1 .. 6);
+SinOsc([60 64 67 71 74 78].MidiCps, 0).sum * env * 0.1
 
 (* Interesting drone *)
-var freq = [40, 42, 43, 45, 47, 48, 41, 42].MidiCps;
+var freq = [40 42 43 45 47 48 41 42].MidiCps;
 var amp = LfNoise1({ Rand(0.1, 0.5) } ! 8) * 0.5 + 0.5;
-Pan2(SinOsc(freq, 0), { 1.Rand2 } ! 8, amp).sum * 0.1
+Pan2(SinOsc(freq, 0), { 1.Rand2 } ! 8, amp).Mix * 0.1
 
 (* Great inharmonic spectrum *)
-var freq = [72, 135, 173, 239, 267, 306, 355, 473, 512, 572, 626];
-var amp = [0.25, 0.11, 0.12, 0.04, 0.1, 0.15, 0.05, 0.01, 0.03, 0.02, 0.12] * 0.2;
-Splay2(SinOsc(freq, 0) * amp)
+var freq = [72 135 173 239 267 306 355 473 512 572 626];
+var amp = [0.25 0.11 0.12 0.04 0.1 0.15 0.05 0.01 0.03 0.02 0.12] * 0.2;
+Splay(SinOsc(freq, 0) * amp)
 
 (* Random bells, let it run for a while *)
 var k = 12;
 var tr = Dust(3 / 7);
-Splay2({
+Splay({
 	SinOsc(Rand(50, 4000), 0) * Decay2(tr, 0.01, Rand(0.2, 3)) * Rand(0.1, 1)
 } ! k) / k
 
@@ -136,24 +136,24 @@ var harmonics = 16;
 (* Worth experimenting with *)
 var tr = Dust(3 / 7);
 var f0 = Rand(100, 400);
-1...16.collect { :partial |
+(1 .. 16).collect { :partial |
 	var env = Asr(tr, 0, 5, [0]) / partial;
 	var amp = LfNoise1(Rand(5, 12)).Max(0);
 	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, env * amp)
-}.sum * 0.5
+}.Mix * 0.5
 
 (* Multiple sines *)
-var speeds = 1...11 / 20;
+var speeds = (1 .. 11) / 20;
 var f0 = (MouseX(0, 36, 0, 0.2).RoundTo(7) + 24).MidiCps;
 var harmonics = 16;
 (1 .. harmonics).collect { :partial |
 	Pan2(SinOsc(f0 * partial, 0), 1.Rand2, SinOsc(speeds.atRandom, 0).Max(0))
-}.sum / harmonics * 0.5
+}.Mix / harmonics * 0.5
 
 (* More bells *)
 var env = Decay2(Dust(1 / 3), 0.01, 2) * 0.1;
 var osc = SinOsc({ Rand(300, 1200) } ! 12, 0);
-Pan2(osc, { 1.Rand2 } ! 12, env).sum
+Pan2(osc, { 1.Rand2 } ! 12, env).Mix
 
 (* Pink noise, frequencies emerge *)
 Rlpf(PinkNoise() * 0.3, { LfNoise0(12) } ! 2 * 500 + 500, 0.2)
@@ -199,7 +199,7 @@ var i = Latch(LfSaw(MouseX(1.1, 30, 0, 0.2), 0) * 5 + 5, Impulse(10, 0));
 PmOsc(300, 356, i, 0) * 0.1
 
 (* Envelope used also for the index *)
-var f = Latch((SinOsc([100, 200, 300, 550], 0) * 100 + 110).sum, Impulse(7, 0));
+var f = Latch((SinOsc([100 200 300 550], 0) * 100 + 110).sum, Impulse(7, 0));
 var e = Decay2(Impulse(7, 0), 0.02, 0.2);
 PmOsc(f, f * [1.25, MouseX(1, 3, 0, 0.2)], e * [5, MouseY(3, 9, 0, 0.2)], 0) * e * 0.1
 

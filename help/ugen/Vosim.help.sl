@@ -1,5 +1,5 @@
 (* Vosim ; mouse control of frequency *)
-Splay2(
+Splay(
 	Vosim(
 		Impulse(110 + [-1 0 1], 0),
 		MouseX([110 220 440], 880, 1, 0.2),
@@ -9,7 +9,7 @@ Splay2(
 ) * 0.1
 
 (* Vosim ; noise modulation of frequency *)
-Splay2(
+Splay(
 	Vosim(
 		Impulse(110 + [-1 0 1], 0),
 		LinExp(LfNoise2([0.35 0.25 0.15]), -1, 1, [110 220 440], 880),
@@ -46,7 +46,7 @@ var decay = d * y * LinLin(LfNoise2(z), -1, 1, 0.25, 2);
 EqPan2(
 	(Vosim(t, freq, n, decay) * a).sum,
 	l
-).sum * 0.25
+).Mix * 0.25
 
 (* Vosim ; requires=voicer *)
 Voicer(16) { :e |

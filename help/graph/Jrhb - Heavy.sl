@@ -9,13 +9,12 @@ var n = 180;
 	var freq = primes.LinLin(primes.min, primes.max, 200, 10000) * 0.5.randomFloat(1.5);
 	var amp = { 0.4.randomFloat } ! freq.size;
 	var decay = { 2.4.randomFloat } ! freq.size;
-	(Dust([4, 14, 40]) * [1, 0.4, 0.1] * 0.002).collect { :tr |
+	(Dust([4 14 40]) * [1 0.4 0.1] * 0.02).collect { :tr |
 		RingzBank(
 			tr,
 			freq,
 			amp,
 			decay
 		)
-	}.Splay2
-} !+ 2
-
+	}.Splay
+} !> 2

@@ -8,4 +8,4 @@ var f = { :i |
 	var a5 = SinOscFb(1 / 9, 1 / 9);
 	SinOscFb(a4, a5) / 9
 };
-1...9.collect(f).sum.EqPan2(0) * 0.35
+(1 .. 9).collect(f).sum.EqPan2(0) * 0.35

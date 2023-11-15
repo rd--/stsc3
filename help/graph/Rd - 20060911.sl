@@ -16,4 +16,4 @@ var n = {
 		x
 	)
 };
-(n !+ 3).Clip2(Rand(Dust(8), 0, 1)) * 0.25
+(n !> 3).Clip2(Rand(Dust(8), 0, 1)) * 0.25

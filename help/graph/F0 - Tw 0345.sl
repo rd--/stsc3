@@ -6,4 +6,4 @@ var f = { :i |
 	var r = SinOsc(q, c + 1 / 4);
 	p * r
 };
-0...7.collect(f).Splay2 / 2
+(0 .. 7).collect(f:/1).Splay / 2

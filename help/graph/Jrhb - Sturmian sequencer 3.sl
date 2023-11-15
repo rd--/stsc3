@@ -16,4 +16,4 @@ var strFunc = { :i |
 	var dt = 1 / SampleRate() / (n - i + 1) * x;
 	TDmdFor(dt, 0, Dseq(inf, str - 0.5))
 };
-(1 .. n).collect(strFunc).Splay2 * 0.3
+(1 .. n).collect(strFunc).Splay * 0.3

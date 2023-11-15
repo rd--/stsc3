@@ -19,7 +19,7 @@ var gen = {
 	)
 };
 var src = gen !+ 3;
-XFade2(src.Splay2, Lpf(src, freq), Line(0, pos, posLagTime), 1)
+XFade2(src.Splay, Lpf(src, freq), Line(0, pos, posLagTime), 1)
 
 (* StaticLoss ; requries=WaveLoss *)
 var amp = 1, freq = 1200, rq = 1, db = -45, gate = 1, pan = -0.5;

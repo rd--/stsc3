@@ -1,5 +1,5 @@
 (* https://twitter.com/redFrik/status/1590835403157688320 *)
-var b = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+var b = [1 .. 9];
 var g = 1 / b / 99;
 var z = Latch(
 	WhiteNoise().RoundTo(0.5) + 2,
@@ -20,4 +20,4 @@ var y = Rlpf(
 	9 ^ SinOsc(g, 0) * 999,
 	SinOsc(b / 88, 0) / 2 + 0.6
 );
-Splay2(7 ^ SinOsc(g, 0) / 9 * x * y)
+Splay(7 ^ SinOsc(g, 0) / 9 * x * y)

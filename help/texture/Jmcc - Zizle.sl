@@ -5,5 +5,8 @@
 	};
 	var a1 = a(ExpRand(0.3, 0.8)).Max(0);
 	var a2 = a(ExpRand(6, 24)).Abs;
-	EqPan2(SinOsc(Rand(24, 108).MidiCps, 2 * pi.Rand) * a1 * a2, 1.Rand2)
+	EqPan2(
+		SinOsc(Rand(24, 108).MidiCps, 2 * pi.Rand) * a1 * a2,
+		Rand(-1, 1)
+	)
 }.overlap(4, 4, 12)

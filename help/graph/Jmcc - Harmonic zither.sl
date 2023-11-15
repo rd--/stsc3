@@ -9,4 +9,4 @@ var stringFunc = { :i |
 	var string = CombL(pluck, period, period, 8);
 	EqPan2(string, i - 1 * panSpacing - 0.75)
 };
-LeakDc(Lpf(pitch.indices.collect(stringFunc).sum, 12000), 0.995)
+LeakDc(Lpf(pitch.indices.collect(stringFunc).Mix, 12000), 0.995)

@@ -20,7 +20,7 @@ SinOscFb(100 * SinOscFb(y, 0) + 200, x) * 0.1
 		var fb = LinLin(LfNoise2(1), -1, 1, 0, x);
 		SinOscFb(freq, fb) * 0.1
 	} ! 16
-}.OverlapTexture(2, 6, 3).Splay2
+}.OverlapTexture(2, 6, 3).Mix
 
 (* ---- SinOscFb ; overlap (scheduled) *)
 {

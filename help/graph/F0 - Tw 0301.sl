@@ -6,4 +6,4 @@ var b = (0 .. 3).collect { :i |
 		ControlIn(1, i + 1 % 4) + Dseq(inf, 8.fibonacciArray) % 9
 	).kr
 };
-Splay2(CombN(SinOsc(b * 99, b * 2), 1, 1 / 3, 1) / 2) <! ControlOut(0, b)
+CombN(SinOsc(b * 99, b * 2), 1, 1 / 3, 1).Splay / 2 <! ControlOut(0, b)

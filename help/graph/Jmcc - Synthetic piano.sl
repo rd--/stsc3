@@ -3,8 +3,8 @@
 	var n = Rand(36, 90);
 	var e = Decay2(Impulse(Rand(0.1, 0.5), 1.Rand) * 0.1, 0.008, 0.04);
 	var c = { :i |
-		var dt = 1 / (n + [-0.05, 0, 0.04][i]).MidiCps;
+		var dt = 1 / (n + [-0.05 0 0.04][i]).MidiCps;
 		CombL(LfNoise2(3000) * e, dt, dt, 6)
 	};
-	EqPan2(1...3.collect(c).sum, n - 36 / 27 - 1)
-} !+ 3
+	EqPan2((1 .. 3).collect(c:/1).sum, n - 36 / 27 - 1)
+} !> 3

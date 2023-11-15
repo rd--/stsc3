@@ -2,7 +2,7 @@
 var a = { :freq |
 	LfPulse(freq, 0, 0.5)
 };
-var b = 0...3;
+var b = (0 .. 3);
 var a1 = a(b / 32) + 1 / 8;
 var a2 = a(a1) + 1 * b;
 var a3 = a(b / 64);

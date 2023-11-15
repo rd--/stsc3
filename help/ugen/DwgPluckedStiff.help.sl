@@ -13,4 +13,4 @@ var inp = amp * LfClipNoise(2000) * Decay2(tr, 0.001, Rand(tr, 0.05, 0.150)) * L
 var release = Rand(tr, 0.05, 0.15); (* release time (seconds, def = 0.1) *)
 var fB = Rand(tr, 1, 4); (* inharmonicity factor (def = 2.0) *)
 var ps = DwgPluckedStiff(freq, amp, gate, pos, c1, c3, inp, release, fB);
-Pan2(ps, Rand(tr, -1, 1), 0.1).sum
+Pan2(ps, Rand(tr, -1, 1), 0.1).Mix

@@ -18,7 +18,7 @@ var modMatrix = [
 Fm7(ctlMatrix, modMatrix).first(2) * 0.1
 
 (* Fm7 ; three set of six output channels (18 channels) *)
-var genFm = {
+{
 	var freq = LfNoise0(3).ExpRange(200, 310);
 	var ctlMatrix = [
 		[freq, 0, 1],
@@ -35,8 +35,7 @@ var genFm = {
 		} ! 6 * x
 	} ! 6;
 	Fm7Matrix(ctlMatrix, modMatrix) * -12.DbAmp
-};
-Silent(8) ++ (genFm ! 3).concatenation
+} !> 3
 
 (* Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing *)
 var xMatrix = [

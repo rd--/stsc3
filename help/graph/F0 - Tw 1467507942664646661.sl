@@ -1,5 +1,5 @@
 (* https://twitter.com/redFrik/status/1467507942664646661 ; requires=FbSineC *)
-var b = [3, 4, 5, 6, 7, 8, 1, 2];
+var b = [3 4 5 6 7 8 1 2];
 var fb1 = { :freq | FbSineC(freq, 1, 0.1, 1.1, 0.5, 0.1, 0.1) };
 var d = fb1(b / 12) > 0 / 80 + 1.051;
 var c = fb1(1 / b) + 1;
@@ -21,4 +21,4 @@ var q = FbSineC(
 	2,
 	0.1
 );
-(3 ^ fb1(1 / b) / 5 * p + (q / 12) + (Hpf(fb1(32) < 0, 3) * fb1(b * 70 / d) * fb1(1 / 2))).Splay2 / 2
+(3 ^ fb1(1 / b) / 5 * p + (q / 12) + (Hpf(fb1(32) < 0, 3) * fb1(b * 70 / d) * fb1(1 / 2))).Splay / 2

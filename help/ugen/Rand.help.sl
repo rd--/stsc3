@@ -2,7 +2,10 @@
 SinOsc(Rand(220, 440), 0) * 0.1
 
 (* Rand *)
-SinOsc({ Rand(220, 440) } ! 7, 0).Splay2 * 0.1
+SinOsc(
+	{ Rand(220, 440) } ! 7,
+	0
+).Splay * 0.1
 
 (* Rand *)
 var f1 = Rand(220, 600);

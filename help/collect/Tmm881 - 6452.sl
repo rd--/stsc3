@@ -4,11 +4,11 @@ Pan2(SinGrain(tr, 0.05, Rand(tr, 322, 3222)) * 0.1, 0, 1)
 
 (* https://scsynth.org/t/6452 *)
 var tr = Impulse(100 * Line(0.1, 10, 15, 2), 0);
-Pan2(GrainSin(2, tr, 1, Rand(tr, 322, 3222), WhiteNoise() * 0.6, -1, 2048), 0, 1 / 64).transposed.sum
+Pan2(GrainSin(2, tr, 1, Rand(tr, 322, 3222), WhiteNoise() * 0.3, -1, 2048), 0, 1 / 64).transposed.Mix
 
 (* https://scsynth.org/t/6452 *)
 var tr = Impulse(100 * Line(0.1, 10, 30, 2), 0);
-Pan2(GrainFm(2, tr, 10, Rand(tr, 322, 3222), Rand(tr, 322, 3222), 1, WhiteNoise() * 0.6, -1, 128), 0, 1 / 64).sum
+Pan2(GrainFm(2, tr, 10, Rand(tr, 322, 3222), Rand(tr, 322, 3222), 1, WhiteNoise() * 0.4, -1, 128), 0, 1 / 64).Mix
 
 (* https://scsynth.org/t/6452 *)
 var tr = Impulse(100 * Line(0.1, 10, 60, 2), 0);
@@ -16,7 +16,7 @@ Pan2(GrainFm(2, tr, 10, Rand(tr, 322, 3222), Rand(tr, 322, 3222, Impulse(100, 0)
 
 (* https://scsynth.org/t/6452 *)
 var tr = Impulse(1 * Line(0.1, 10, 90, 2), 0);
-Pan2(GrainFm(2, tr, 0.1, Rand(tr, 322, 3222), Rand(tr, 322, 3222), 1, WhiteNoise() * 0.6, -1, 128), 0, 1 / 64).sum
+Pan2(GrainFm(2, tr, 0.1, Rand(tr, 322, 3222), Rand(tr, 322, 3222), 1, WhiteNoise() * 0.6, -1, 128), 0, 1 / 64).Mix
 
 (* https://scsynth.org/t/6452 *)
 var o1 = Saw([2000, 200, 1000, 4000]) * Perc(Impulse(5 * [2, 0.5, 0.25, 0.125], 0), 0.01, 1, -4);

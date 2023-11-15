@@ -35,8 +35,8 @@ var f = { :i |
 Pan2((0 .. n).collect(f).sum, 0, 1 / n)
 
 (* tutorial 2.1 ; bell spectra *)
-var rat = [0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
-var amp = [0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1] * 0.1;
+var rat = [0.5 1 1.19 1.56 2 2.51 2.66 3.01 4.1];
+var amp = [0.25 1 0.8 0.5 0.9 0.4 0.3 0.6 0.1] * 0.1;
 SinOsc(500 * rat, 0).sum * amp
 
 (* tutorial 2.4 ; fm *)
@@ -64,26 +64,32 @@ var conversion = 2 * pi / SampleRate();
 SinOsc(440, (modfreq * modindex * conversion * SinOsc(modfreq, 0))) * 0.25
 
 (* tutorial 2.5 ; chorus *)
-Saw([440, 443 ,437]).sum * 0.1
+Saw([440 443 437]).sum * 0.1
 
 (* tutorial 2.5 ; am, fm, chorus *)
-var src = Saw([440, 443, 437] + (SinOsc(100, 0) * 100));
-var amp = LfSaw(Line(3, 17, 3, 0),0) * 0.5 + 0.5 * Line(1, 0, 10, 0);
-Resonz(src, XLine(10000, 10, 10, 0), Line(1, 0.05, 10, 0)).sum * amp
+var src = Saw([440 443 437] + (SinOsc(100, 0) * 100));
+var amp = LfSaw(Line(3, 17, 3),0) * 0.5 + 0.5 * Line(1, 0, 10);
+Resonz(src, XLine(10000, 10, 10), Line(1, 0.05, 10)).sum * amp
 
 (* tutorial 2.5 ; bell patch ; requires=kr *)
 var spectrum = [0.5, 1, 1.19, 1.56, 2, 2.51, 2.66, 3.01, 4.1];
 var amplitudes = [0.25, 1, 0.8, 0.5, 0.9, 0.4, 0.3, 0.6, 0.1];
-var numpartials = spectrum.size;
-var modfreqs1 = { Rand(1, 5) } ! numpartials;
-var modfreqs2 = { Rand(0.1, 3) } ! numpartials;
-var decaytimes = 1.to(numpartials).collect { :i | Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numpartials)))) };
-var partial = { :i |
-	var freq = spectrum[i] + (SinOsc(modfreqs1[i], 0) * 0.005) * 500;
-	var amp = 0.1 * Line(1, 0, decaytimes[i], 0) * (SinOsc(modfreqs2[i], 0) * 0.1 + 0.9 * amplitudes[i]);
-	Pan2(SinOsc(freq.kr, 0), Rand(-1, 1), amp.kr)
+var numPartials = spectrum.size;
+var modFreqs1 = { Rand(1, 5) } ! numPartials;
+var modFreqs2 = { Rand(0.1, 3) } ! numPartials;
+var decayTimes = (1 .. numPartials).collect { :i |
+	Rand(2.5, 2.5 + (5 * (1.0 - (i - 1 / numPartials))))
 };
-1.to(numpartials).collect(partial).sum
+var partial = { :i |
+	var freq = spectrum[i] + (SinOsc(modFreqs1[i], 0) * 0.005) * 500;
+	var amp = 0.1 * Line(
+		1,
+		0,
+		decayTimes[i]
+	) * (SinOsc(modFreqs2[i], 0) * 0.1 + 0.9 * amplitudes[i]);
+	Pan2(SinOsc(freq, 0), Rand(-1, 1), amp)
+};
+(1 .. numPartials).collect(partial:/1).Mix
 
 (* tutorial 3.4 *)
 SinOsc(Stepper(Impulse(10, 0), 0, 1, 10, 1, 1) * 100, 0) * 0.1

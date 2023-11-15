@@ -106,14 +106,14 @@ SinOsc(0, ph) * 0.1
 SinOsc([220, 221], 0) * 0.1
 
 (* SinOsc ; multiple channel expansion ; named variable *)
-var freq = [220, 221];
+var freq = [220 221];
 SinOsc(freq, 0) * 0.1
 
 (* SinOsc ; mix to two channel *)
-SinOsc([220, 221, 440, 441], 0).Splay2 * 0.1
+SinOsc([220 221 440 441], 0).Splay * 0.1
 
 (* SinOsc ; nested mce *)
-SinOsc([[220, 221], [440, 441]], 0).sum * 0.1
+SinOsc([220 221; 440 441], 0).Mix * 0.1
 
 (* SinOsc ; http://earslap.com/article/combination-tones-and-the-nonlinearities-of-the-human-ear.html *)
 var freqSweep = Line(4000, 1000, 10);

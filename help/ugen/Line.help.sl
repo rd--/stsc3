@@ -21,9 +21,9 @@ var chord = { :m0 |
 	o.sum
 };
 var octaves = 12 * (5 .. 7);
-octaves.collect(chord).sum * 0.2
+octaves.collect(chord).Mix * 0.2
 
-(* Line ; note Line is an existing class in Squeak... *)
+(* Line ; note Line is an existing class in Squeak *)
 var f = Line(200, 17000, 5);
 SinOsc(f, 0) * 0.05
 

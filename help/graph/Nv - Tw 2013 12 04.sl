@@ -4,5 +4,6 @@ var f = { :i |
 	var p = Pluck(a, a, 1, 1 / i / (3 - LfPulse(1 / i, 0, 0.5)) / 30, 9, 0.9 / i);
 	var x = 0.5 ^ i * p;
 	var o = SinOsc(2, 0) + [4, 9];
-	CombC(x, 1, o * 0.001, 0) - x};
-1...9.collect(f).mean / 9
+	CombC(x, 1, o * 0.001, 0) - x
+};
+(1 .. 9).collect(f).Mix / 55

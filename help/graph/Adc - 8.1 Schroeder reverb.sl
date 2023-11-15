@@ -37,9 +37,9 @@ var revMonoInput = input.isArray.if {
 var delayWriter = DelayWrite(buffer, revMonoInput);
 var tapsOut = 0, combsOut = 0, allPassIo = 0;
 tapData.do { :params |
-	tapsOut := tapsOut + (DelayTap(buffer, params.first) * params.second);
+	tapsOut := tapsOut + (DelayTap(buffer, params.first) * params.second)
 };
-1...6.do { :index |
+(1 .. 6).do { :index |
 	combsOut := combsOut + (
 		CombC(
 			revMonoInput + tapsOut, (* tapsOut could be scaled *)

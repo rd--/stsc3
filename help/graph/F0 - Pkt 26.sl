@@ -14,4 +14,4 @@ var x = { :i |
 	var z = LeakDc(VarSaw(o, t, 0.5), 0.995);
 	EqPan2(z, VarSaw(0.02, t, 0.5)) / n
 };
-(1 .. n).collect(x).sum * 0.25
+(1 .. n).collect(x).Mix * 0.35

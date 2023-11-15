@@ -10,5 +10,5 @@ var c = Hpf(LfSaw(5, 0.1), MouseX(2, 200, 1, 0.2));
 SinOsc(c * 200 + 400, 0) * 0.1
 
 (* Hpf *)
-var n = Hpf(PinkNoise(), [3000, 11000]);
-Pan2(n, SinOsc([1 / 7, 1 / 13], [0, pi]), 0.1).sum
+var n = Hpf(PinkNoise(), [3000 11000]);
+Pan2(n, SinOsc([1 / 7, 1 / 13], [0, pi]), 0.1).Mix

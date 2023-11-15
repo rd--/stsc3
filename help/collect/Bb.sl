@@ -26,7 +26,7 @@ Hpf(
 		9
 	),
 	200
-).sum.transposed.sum
+).sum.transposed.Mix
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
 var f = LocalIn(2, 0).Tanh;

@@ -6,7 +6,7 @@ var shuheiKawachi = { :x :y :a :b |
 		(((a.Sqrt * x + y) / b).Cos * ((x - (a.Sqrt * y * y)) / b).Cos)
 	].sum
 };
-var segments = 45; (* 50 ; udp *)
+var segments = 50;
 var xMajor = 0;
 var yMajor = 10;
 var rMajor = 30.1;
@@ -22,4 +22,4 @@ var oscArray = (1 .. segments).collect { :index |
 	var amp = Lag(Wrap(grey, 0, 1), 0.01) / segments;
 	SinOsc(freqArray[index], 0) * amp
 };
-Splay2(oscArray) * 5
+Splay(oscArray) * 5

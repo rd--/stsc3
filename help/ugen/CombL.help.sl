@@ -8,7 +8,7 @@ EqPan2(
 		4
 	),
 	{ Rand(-1, 1) } ! n
-).sum
+).Mix
 
 (* CombL ; exterior duplication *)
 var n = 8;

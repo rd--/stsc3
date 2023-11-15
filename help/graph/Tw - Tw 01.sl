@@ -5,6 +5,6 @@ var s = { :k |
 		/
 		(Decay(Impulse((0.5 ^ i) / k, 0), [i, i + 1]) * k))
 	};
-	1...6.collect(f).sum
+	(1 .. 6).collect(f).sum
 };
-(GVerb(0...15.collect(s).sum, 1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 512).transposed.sum
+(GVerb((0 .. 15).collect(s).sum, 1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300) / 512).transposed.Mix

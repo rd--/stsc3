@@ -5,4 +5,4 @@ var vc = {
 	var amp = Rand(tr, 0.1, 0.2);
 	Hpf(amp * Convolution(Saw(freq), tr, 512), 10000)
 };
-Splay2(vc ! 4)
+Splay(vc ! 4)

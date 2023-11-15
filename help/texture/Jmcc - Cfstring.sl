@@ -18,5 +18,5 @@ var nc = 2;
 	} !+ 8;
 	var eg = Decay2(Impulse(0, 0), 0.5, 1);
 	var out = eg * Rlpf(osc.Distort * 0.2, fc, 0.1);
-	PanAz(nc, out, [pan, pan + 0.3], 1, 2, 0.5).sum
+	PanAz(nc, out, [pan, pan + 0.3], 1, 2, 0.5).Mix
 }.overlap(2, 0, 10)

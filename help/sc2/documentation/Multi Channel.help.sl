@@ -60,7 +60,7 @@ _sum_ provides the means for reducing multi channel arrays to a single channel. 
 
 Mix is more efficient than using + since it can perform multiple additions at a time.  But the main advantage is that it can deal with situations where the number of channels is arbitrary or determined at runtime.
 
-	Pulse([400, 501, 600], [0.5, 0.1]).sum * 0.1 (* three channels of Pulse are mixed to one channel *)
+	Pulse([400 501 600], [0.5 0.1]).sum * 0.1 (* three channels of Pulse are mixed to one channel *)
 
 Multi channel expansion works differently for Mix. Mix takes one input which is an array (one not protected by a Ref). That array does not cause copies of Mix to be made. All elements of the array are mixed together in a single Mix object.  On the other hand if the array contains one or more arrays then multi channel expansion is performed one level down. This allows you to mix an array of stereo (two element) arrays resulting in one two channel array. For example:
 
@@ -74,7 +74,7 @@ Currently it is not recursive. You cannot use Mix on arrays of arrays of arrays.
 
 Here is a final example illustrating multi channel expansion and Mix.  By changing the variable 'n' you can change the number of voices in the patch. How many voices can your machine handle?
 
-	var n = 8 * 12; (* number of 'voices' *)
+	var n = 16 * 1; (* number of 'voices' *)
 	EqPan2( (* pan the voice to a stereo position *)
 		CombL( (* a comb filter used as a string resonator *)
 			Dust( (* random impulses as an excitation function *)
@@ -85,4 +85,4 @@ Here is a final example illustrating multi channel expansion and Mix.  By changi
 			4 (* decay time in seconds *)
 		),
 		{ 1.Rand2 } ! n (* give each voice a different pan position *)
-	).sum
+	).Mix

@@ -1,7 +1,7 @@
 (* SinOsc ; event control ; p-field *)
 Voicer(16) { :e |
 	SinOsc(e.p.UnitCps, 0) * e.w * e.z
-}.Splay2
+}.Splay
 
 (* SinOsc ; event control ; x-field *)
 Voicer(16) { :e |
@@ -12,7 +12,7 @@ Voicer(16) { :e |
 var nh = 1;
 Voicer(16) { :e |
 	Blip(e.p.UnitCps, nh) * e.w * e.z
-}.Splay2
+}.Splay
 
 (* Blip ; event control *)
 Voicer(16) { :e |
@@ -22,7 +22,7 @@ Voicer(16) { :e |
 (* PanAz ; event control *)
 Voicer(16) { :e |
 	PanAz(24, Blip(e.p.UnitCps, e.y * 3 + 1), e.i * 2 - 1, 1, 3, 0) * e.w * e.z * e.z
-}.sum
+}.Mix
 
 (* dictionary ; voicer *)
 (
@@ -49,7 +49,7 @@ var f = { :e |
 	var env = Perc(trig: e.w, attackTime: 0.0001, releaseTime: 1 - e.z, curve: -4) * (e.z + (e.y / 4));
 	Pan2(in: MembraneCircle(excitation: PinkNoise() * env, tension: tension, loss: loss), pos: e.i * 2 - 1, level: 1)
 };
-Voicer(numVoices: 6, voiceFunc: f).sum
+Voicer(numVoices: 6, voiceFunc: f).Mix
 
 (* pluck ; event control ; keywords *)
 var f = { :e |

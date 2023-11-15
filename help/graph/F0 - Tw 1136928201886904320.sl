@@ -10,4 +10,4 @@ var f = { :a |
 	var y = Bpf(x, ix * 99 + 400, 0.001) * (osc(0.04, ix) + 1 * 9);
 	Splay2(x + y) / 3
 };
-[0 -> LfTri:/2, 1 -> LfSaw:/2, 2 -> LfPar:/2].collect(f).sum
+[0 -> LfTri:/2, 1 -> LfSaw:/2, 2 -> LfPar:/2].collect(f:/1).Mix

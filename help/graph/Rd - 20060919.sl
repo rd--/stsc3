@@ -19,4 +19,4 @@ var fw = { :r |
 		Blip((r + f + Rand(tr, -0.0001, 0.0001)).MidiCps, 12)
 	].sum * Decay2(tr, 0.3, 1.2) * 0.1
 };
-fw(24) + fw(36)
+[24 36].collect(fw:/1).Mix

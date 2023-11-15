@@ -1,5 +1,5 @@
 (* <https://twitter.com/redFrik/status/1452318302768963589> ; f0 *)
-var b = 2 * pi * [4, 3, 1, 2, 5] / 5;
+var b = 2 * pi * [4 3 1 2 5] / 5;
 var m = 2 ^ SinOsc(1 / 50, b) * 99;
 var c = m.RoundTo(50);
 var t = b / (2 * pi) + SinOsc(b / 50, SinOsc(SinOsc(1 / 99, pi).Max(0), 0) ^ (2 * pi)).Max(0);

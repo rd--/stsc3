@@ -15,5 +15,5 @@ snd := Sanitize(snd, 0);
 	snd := snd + SinOsc(ExpRand(10, 800) * freq + Lpf(snd * index, 100), 0)
 };
 snd := snd <! LocalOut(snd);
-snd := snd.Splay2;
+snd := snd.Splay;
 snd.Clip2(1) * -12.DbAmp

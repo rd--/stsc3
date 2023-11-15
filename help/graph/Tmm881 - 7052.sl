@@ -1,5 +1,5 @@
 (* ---- https://scsynth.org/t/7052 ; tmm881 ; graph texture rewrite ; requires=XFadeTexture *)
-XFadeTexture({ :tr |
+{ :tr |
 	var freqMul = Rand(tr, 0.5, 2);
 	var env = {
 		var freq = Choose(tr, [10, 5, 2.5]) * freqMul;
@@ -9,7 +9,7 @@ XFadeTexture({ :tr |
 		SinOsc([[48, 49]] * freqMul, 0) * env(),
 		Saw(48 * 16 * freqMul) * env(),
 		Pulse(48 * 32 * freqMul, 0.5) * env()
-	].sum.transposed.sum;
+	].sum.transposed.Mix;
 	var rev = FreeVerb(snd, 0.33, 0.5, 0.5) + snd;
 	CombC(rev, 0.2, 0.2, 1) + rev * 0.05
-}, 9, 2)
+}.XFadeTexture(9, 2)

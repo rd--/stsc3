@@ -23,16 +23,16 @@ var tendencyMask = [
 			tendencyMask * 4
 		)
 	} ! 2;
-	var dur = 1...3.collect { :i |
+	var dur = (1 .. 3).collect { :i |
 		Rand(0.25, 4) * mod[1][i] * (mouse + 0.1).atRandom
 	};
-	var triggerRate = 1...3.collect { :i |
+	var triggerRate = (1 .. 3).collect { :i |
 		Rand(0.25, 4) * mod[2][i] * (mouse / 10 + 0.1).atRandom
 	};
 	var freqMul = {
 		(mouse * 10 + 0.1).atRandom
 	} ! 3;
-	var dry = 1...3.collect { :i |
+	var dry = (1 .. 3).collect { :i |
 		var freqRange = 10 ^ i * [22, 88] * freqMul[i];
 		var freq = {
 			Rand(
@@ -47,4 +47,4 @@ var tendencyMask = [
 	var rev = FreeVerb(dry, 0.33, 0.5, 0.5);
 	var del = CombC(dry, 0.2, 0.2, 1);
 	dry + rev + del * 0.2
-}.duplicate(4).sum.transposed.sum
+}.duplicate(4).sum.transposed.Mix

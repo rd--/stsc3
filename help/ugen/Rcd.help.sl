@@ -1,6 +1,6 @@
 (* Rcd ; div16 *)
 var trig = LfPulse(8, 0, 0.001);
-var freqs = 0...7.collect { :i | (i + 1) * 100 };
+var freqs = (0 .. 7).collect { :i | (i + 1) * 100 };
 var rotate = 0;
 var div = 1;
 var pulses = Rcd(trig, rotate, 0, div, 0, 0, 0, 0, 0);
@@ -8,8 +8,8 @@ var out = Ringz(pulses, freqs, [2, 1, 0.5, 0.3, 0.2, 0.3, 0.5, 1]) * 0.05;
 Splay2(out)
 
 (* Rcd ; rotation *)
-var freqs = 0...7.collect { :i | (i + 1) * 100 };
-var decays = 0...7.collect { :i | 8 / (i + 1) };
+var freqs = (0 .. 7).collect { :i | (i + 1) * 100 };
+var decays = (0 .. 7).collect { :i | 8 / (i + 1) };
 var trig = LfPulse(5, 0, 0.005);
 var rotate = LfNoise0(0.3) * 8 + 8;
 var reset = 0;
@@ -21,16 +21,16 @@ Splay2(out * 0.7).Tanh + metronome
 
 (* Rcd ; using 'reset' *)
 var clock = LfPulse(8, 0, 0.001);
-var freqs = 0...7.collect { :i | (i * 4 + 50).MidiCps };
+var freqs = (0 .. 7).collect { :i | (i * 4 + 50).MidiCps };
 var rotate = 4;
 var reset = CoinGate(0.05, clock);
 var pulses = Rcd(clock, rotate, reset, 0, 0, 0, 0, 0, 0);
 var out = Ringz(pulses, freqs, [1, 1, 0.5, 0.2, 0.2, 0.3, 0.5, 1]) * 0.05;
 Splay2(out)
 
-(* Rcd ; auto-reset on ... *)
-var freqs = 0...7.collect { :i | (i + 1) * 100 };
-var decays = 0...7.collect { :i | 1 / (i + 1) };
+(* Rcd ; auto-reset on *)
+var freqs = (0 .. 7).collect { :i | (i + 1) * 100 };
+var decays = (0 .. 7).collect { :i | 1 / (i + 1) };
 var clock = LfPulse(8, 0, 0.001);
 var rotate = 7;
 var spread = 1;
@@ -39,9 +39,9 @@ var pulses = Rcd(clock, rotate, 0, 0, spread, 1, len, 0, 0);
 var out = Ringz(pulses, freqs, decays) * 0.05;
 Splay2(out)
 
-(* Rcd ; ... and off *)
-var freqs = 0...7.collect { :i | (i + 1) * 100 };
-var decays = 0...7.collect { :i | 1 / (i + 1) };
+(* Rcd ; auto-reset off *)
+var freqs = (0 .. 7).collect { :i | (i + 1) * 100 };
+var decays = (0 .. 7).collect { :i | 1 / (i + 1) };
 var clock = LfPulse(8, 0, 0.001);
 var rotate = 7;
 var spread = 1;
@@ -50,7 +50,7 @@ var out = Ringz(pulses, freqs, decays) * 0.05;
 Splay2(out)
 
 (* Rcd ; gates *)
-var freqs = 0...7.collect { :i | (i * 5 + 50).MidiCps };
+var freqs = (0 .. 7).collect { :i | (i * 5 + 50).MidiCps };
 var amps = [1, 0.5, 0.3, 0.3, 0.3, 0.2, 0.2, 0.2];
 var trig = LfPulse(7, 0, 0.01);
 var rotate = -2;

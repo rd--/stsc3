@@ -76,7 +76,7 @@ var z = { :i |
 var b = 1 / [1 4 6 8 11];
 var c = LfTri(b / 98, 0);
 var q = Dseq(inf, Select(LfTri(b / 99, 0) + c * 5, 1 / b + 59).kr).MidiCps;
-Splay2(LfTri(DmdFor(b, c, q) + c, 0) / 2)
+Splay(LfTri(DmdFor(b, c, q) + c, 0) / 3)
 
 (* https://sccode.org/1-4Qy ; f0 ; 0246 ; requires=DynRingzBank *)
 var b = [1 .. 9] * 1.5;
@@ -97,7 +97,14 @@ var o3 = SinOscFb(1 / (13 .. 3), 0) + 133 * b;
 var o4 = SinOscFb(b, 1) % 1;
 var o5 = SinOscFb(b / 333, o4) % 1;
 var o6 = SinOscFb(o3, o5);
-Splay2(o1 * o2 / 13 + o6) / 3
+Splay(o1 * o2 / 13 + o6) / 3
+
+(* https://sccode.org/1-4Qy ; f0 ; 0333 ; Splay/Stereo *)
+(0 .. 7).collect { :i |
+	var b = i + 2 * 99;
+	var f = SinOscFb(i + 1 / 150, 0).RoundTo(1) + 1 + i * 99 + SinOscFb([3, 2], 0);
+	(Formant(f, b, b) * SinOscFb(i + 1 / 130, 0).Max(0)).Tanh
+}.sum.Splay / 7
 
 (* https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords *)
 var o = GrainFm(
@@ -113,6 +120,18 @@ var o = GrainFm(
 );
 (o / 2).Tanh
 
+(* https://sccode.org/1-4Qy ; f0 ; tweet0350 ; Splay *)
+var b = (9 .. 1) / 99;
+var o = LfSaw(LfSaw(b, b) + 1 * 99, b) * (LfSaw(LfSaw(b, 0) > b, 0) > 0.9);
+Splay(
+	CombN(
+		GVerb(o, 99, 1, b * 9, b, 15, 1, 0.7, 0.5, 300) / 19,
+		1,
+		b / 9.9,
+		9
+	).transposed.sum * 0.9
+)
+
 (* f0 ; https://twitter.com/redFrik/status/1105496695637454848 ; requires=kr *)
 var b = (1 .. 15) + 1 / 151;
 var w = (VarSaw(b, b, 1 / 5.15) * 1 + 1.5).Ceiling;
@@ -124,7 +143,7 @@ var m = VarSaw(5 - b, b, b) * 5 + 5;
 var o = VarSaw(w * x + y * z, b, VarSaw(b, 0, 0.5) + 5 / 15) * (m > 1.515);
 var f = 1515 ^ (VarSaw(1 - b / 5, 0, 0.5) / 15 + 1 + b);
 var rq = 1.5 ^ VarSaw(b, 0, 0.5) / 5;
-BLowPass(o, f, rq).Splay2 / 5
+BLowPass(o, f, rq).Splay / 5
 
 (* https://twitter.com/redFrik/status/1254441448327479299 ; f0 ; rd (edit) *)
 var b = [1 3 5 8 10];
@@ -136,7 +155,7 @@ var l = m * 7 + 20 + Dseq(inf, b % m * 5 + 6);
 var j = DmdFor(e / (12 ^ m), 0, l);
 var k = DegreeToKey(b.asLocalBuf, j, 12);
 var o = SinOscFb(k.MidiCps, LfTri(c / b + 1 / 3, Decay2(Impulse([2 / 3, 1.5, 3, 1.5, 3], 0), c, d)) * d);
-FreeVerb(Splay2(o), 0.1, 1, 0.5) * 0.1
+FreeVerb(Splay(o), 0.1, 1, 0.5) * 0.1
 
 (* <https://twitter.com/redFrik/status/1452954849885163525> ; f0 *)
 var i = Rand(1, 64);

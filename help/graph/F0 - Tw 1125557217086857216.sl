@@ -9,4 +9,4 @@ var m = DegreeToKey(
 var e = AmpComp(m, 440, 1 / 3) * LfTri(b, b) * b * 9;
 var o = VarSaw(m.MidiCps, 0, LfTri(b, 0) + 1 / 2) * e;
 var s = Rlpf(o, Lag2(m, 1 / b % 1) * 3, 1);
-AllpassN(s, 0.3, 0.2 - b, 3).Splay2.Tanh
+AllpassN(s, 0.3, 0.2 - b, 3).Splay.Tanh

@@ -19,5 +19,5 @@ var c = [
 	c,
 	PitchShift(c, 0.5, 0.5, 0, 0.5),
 	PitchShift(c, 0.5, (5 ^ f(0.005)).RoundTo(1), 0.05, 0.05)
-].sum
+].Mix
 

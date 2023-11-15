@@ -1,4 +1,4 @@
-(* https://twitter.com/redFrik/status/1235224072579100675 ; ? *)
+(* ---- CRASH? ---- https://twitter.com/redFrik/status/1235224072579100675 *)
 var f = 9;
 var e = (f % pi).Floor;
 var b = [0 .. 8] - 1 + pi.Tanh * pi * pi;

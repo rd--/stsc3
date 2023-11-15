@@ -20,4 +20,4 @@ var osc = VarSaw(
 	0,
 	MouseY(0, 1, 0, 0.2)
 ) * Decay2(tr, 0.005, 1.4);
-CombN(osc.clump(2).sum * 0.5, 0.375, 0.375, 4).SoftClip
+CombN(osc.clump(2).Mix * 0.5, 0.375, 0.375, 4).SoftClip

@@ -1,5 +1,5 @@
 (* https://sccode.org/1-4Qy ; f0 ; 0112 *)
-1...37.collectTexture { :i |
+(1 .. 37).collectTexture { :i |
 	{
 		var lvl = Dseq(1, (12 .. 0) * (i % 63 + 99));
 		var freq = DmdFor(1 / 12, 0, lvl) * [1, 1.01];

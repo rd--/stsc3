@@ -40,4 +40,4 @@ var ps = [-12 -5 0 2 4 5 7 12];
 		1 / cd * Rand(tr, 2, 17)
 	) * ca;
 	EqPan2(k.sum, Rand(tr, -1, 1))
-} !+ 7
+} !> 7

@@ -5,5 +5,4 @@ var n = { :i |
 	var b = 4 ^ LfNoise2(1.2 ^ i / 16);
 	Bpf(p, b * 300, 0.15) * (5 ^ LfNoise2(f) / (i + 8) * 20)
 };
-1...15.collect(n).Splay2.transposed.sum
-
+(1 .. 15).collect(n).Splay2.transposed.Mix

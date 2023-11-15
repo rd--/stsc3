@@ -7,5 +7,5 @@ var o = VarSaw(
 	0,
 	MouseY(0, 1, 0, 0.2)
 );
-var z = (o * Decay2(trig, 0.005, 1.4)).clump(2).sum;
+var z = (o * Decay2(trig, 0.005, 1.4)).clump(2).Mix;
 CombN(z * 0.5, 0.375, 0.375, 4).SoftClip

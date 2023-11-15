@@ -8,7 +8,7 @@
 	var durArray = [1 0.9 0.65 0.55 0.325 0.35 0.25 0.2 0.15 0.1 0.075];
 	var freqArray = [0.56 0.56 0.92 0.92 1.19 1.7 2 2.74 3 3.76 4.07];
 	var detuneArray = [0 1 0 1.7 0 0 0 0 0 0 0];
-	var src = 1...11.collect { :i |
+	var src = (1 .. 11).collect { :i |
 		var env = Perc(tr, 0.005, dur * durArray[i], -4.5) * ampArray[i];
 		SinOsc(freq * freqArray[i] + detuneArray[i], 0) * amp * env
 	};
