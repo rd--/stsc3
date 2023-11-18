@@ -9,4 +9,4 @@ var carrier = SelectX(isVoiced, [voicedCarrier, PinkNoise()]);
 var filterQ = Rand(Dust(0.5), 10, 100);
 var srcAmp = Amplitude(Bpf(src, bandFreqs, 1 / filterQ), 0.01, 0.05);
 var snd = Bpf(carrier, bandFreqs, 0.05) * srcAmp;
-Pan2(snd.sum, 0, numBands / 4)
+EqPan2(snd.sum, 0) * numBands / 4

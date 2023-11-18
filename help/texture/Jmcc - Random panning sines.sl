@@ -2,7 +2,7 @@
 {
 	var n = 8;
 	{
-		EqPan2(
+		EqPan(
 			SinOsc(80 + LinRand(0, 2000, 0), 0),
 			LfNoise1(0.4 + 0.8.Rand)
 		) * LfNoise1(0.4 + 0.8.Rand).MulAdd(0.4, 0.5)

@@ -8,9 +8,9 @@
 		var env = Sine(1, du.max * ds) * Rand(0.005, 0.01);
 		var pos = XLine(1.Rand2, 1.Rand2, d);
 		var osc = SinOsc(freq, 0);
-		EqPan2(osc, pos).sum * env
+		EqPan(osc, pos).sum * env
 	};
 	var mnn = ([4 5 6 7] * 12) +.x [0 2 4 5 7 9 11];
 	var chd = { mnn.atRandom } ! 6;
-	{ chd.chord } !> 9
+	{ chd.chord } !+ 9
 }.overlap(21, 0, 3)

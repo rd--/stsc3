@@ -7,7 +7,7 @@ var blipProc = {
 };
 {
 	if(0.8.coin) {
-		var z = EqPan2(
+		var z = EqPan(
 			blipProc() * blipProc(),
 			Line(1.Rand2, 1.Rand2, 4)
 		).Distort * 0.3;

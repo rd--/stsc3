@@ -5,5 +5,5 @@
 		LfPulse(20.Rand, 0, 1.Rand) * e
 	};
 	var freq = osc() + osc();
-	EqPan2(LfPulse(freq, 0, 0.5), 0.8.Rand2) * 0.04
+	EqPan(LfPulse(freq, 0, 0.5), 0.8.Rand2) * 0.04
 }.overlap(4, 1, 5)

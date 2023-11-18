@@ -6,4 +6,4 @@ var y = BrownNoise();
 var t = Dust(2.4);
 var f = LinLin(eggcrate(x, y), -1, 1, Choose(t, p), Choose(t, p));
 var a = LinLin(x, -1, 1, 0, 0.1);
-Pan2(SinOsc(f.kr, 0), y.kr, a.kr)
+EqPan(SinOsc(f.kr, 0), y.kr) * a.kr

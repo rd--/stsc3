@@ -11,7 +11,7 @@
 	};
 	var freq = osc(200.0, 40.0) + osc(20.0, 4.0) + osc(20.0, 4.0);
 	CombL(
-		EqPan2(
+		EqPan(
 			LfPulse(freq, 0, 0.5),
 			LfNoise0(3.Rand) * 0.8
 		) * 0.04, dt, dt, 3

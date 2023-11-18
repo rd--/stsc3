@@ -14,7 +14,10 @@ var r = { :i |
 	var l6 = LeakDc(l5, 0.995) + i;
 	l6 <! LocalOut(l6)
 };
-var z = p !+ 12 + Pan2(Decay2(Dust(0.01), 0.04, 0.3) * BrownNoise(), 0, 1);
+var z = p !+ 12 + EqPan2(
+	Decay2(Dust(0.01), 0.04, 0.3) * BrownNoise(),
+	0
+);
 4.timesRepeat {
 	z := AllpassN(z, 0.03, { Rand(0.005, 0.02) } ! 2, 1)
 };

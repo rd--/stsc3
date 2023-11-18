@@ -9,4 +9,4 @@ var k = DynRingzBank(
 );
 var n = k + (BrownNoise() * 0.075 * Trig(tr, mkRand(0.01, 0.03)));
 var f = Lpf(Hpf(n, mkRand(6000, 750)), mkRand(4000, 5500));
-Pan2(f, mkRand(-0.5, 0.5), 1)
+EqPan(f, mkRand(-1, 1))

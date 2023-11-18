@@ -6,7 +6,7 @@
 		500 + LinRand(0, 2000, 0)
 	);
 	var e = LfPulse(3 / (1 + 8.Rand), 0, 0.2 + 0.3.Rand);
-	EqPan2(
+	EqPan(
 		SinOsc(f, 0) * e,
 		1.Rand2
 	) * 0.04

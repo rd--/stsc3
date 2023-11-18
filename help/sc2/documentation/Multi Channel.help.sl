@@ -8,9 +8,9 @@ Multiple channels of audio are represented as Arrays.
 
 Each channel sent to Synth.play will go out a different speaker, so your limit here is two for a stereo output. If you have a supported multi channel sound card then you can output as many channels as the card supports.
 
-Some Ugens create arrays of outputs. The _EqPan2_ Ugen returns an array of OutputProxys in order to implement multichannel output. An OutputProxy is just a place holder for an output of a multichannel Ugen.
+Some Ugens create arrays of outputs. The _EqPan_ Ugen returns an array of OutputProxys in order to implement multichannel output. An OutputProxy is just a place holder for an output of a multichannel Ugen.
 
-	EqPan2(PinkNoise(), SinOsc(1, 0)) * 0.1
+	EqPan(PinkNoise(), SinOsc(1 / 7, 0)) * 0.1
 
 When an array is given as an input to a unit generator it causes an array of multiple copies of that unit generator to be made, each with a different value from the input array. This is called multi channel expansion. All but a few special unit generators perform multi channel expansion.  Only Arrays are expanded, no other type of Collection, not even subclasses of Array.
 
@@ -75,7 +75,7 @@ Currently it is not recursive. You cannot use Mix on arrays of arrays of arrays.
 Here is a final example illustrating multi channel expansion and Mix.  By changing the variable 'n' you can change the number of voices in the patch. How many voices can your machine handle?
 
 	var n = 16 * 1; (* number of 'voices' *)
-	EqPan2( (* pan the voice to a stereo position *)
+	EqPan( (* pan the voice *)
 		CombL( (* a comb filter used as a string resonator *)
 			Dust( (* random impulses as an excitation function *)
 				{ Rand(0.9, 1.1) } ! n (* array expands Dust to n channels, one impulse per second on average *)
@@ -85,4 +85,4 @@ Here is a final example illustrating multi channel expansion and Mix.  By changi
 			4 (* decay time in seconds *)
 		),
 		{ 1.Rand2 } ! n (* give each voice a different pan position *)
-	).Mix
+	).sum

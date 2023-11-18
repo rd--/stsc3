@@ -20,6 +20,9 @@ var h1 = {
 			MouseY(0.2, 0.3, 0, 0.1), 0, 0).Range(p, p * 2),
 		LfNoise0(32).Range(1, 32)
 	);
-	EqPan2(o, n.Range(-0.75, 0.75)) * n.Range(0.55, 0.85) * 0.35
+	EqPan(
+		o,
+		n.Range(-0.75, 0.75)
+	) * n.Range(0.55, 0.85) * 0.35
  };
 h0() + h1()

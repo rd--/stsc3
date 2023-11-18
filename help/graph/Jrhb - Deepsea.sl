@@ -13,7 +13,7 @@ var u = Bpf(
 	0.2
 );
 var f1 = Bpf(
-	Pan2(u, Rand(tr, -1, 1), amp * 10) * 5,
+	EqPan(u, Rand(tr, -1, 1)) * amp * 50,
 	700,
 	0.1
 );

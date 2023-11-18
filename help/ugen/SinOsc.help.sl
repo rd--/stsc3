@@ -9,7 +9,7 @@ SinOsc(110, 2 * pi * [0.75, 0]) * 0.1
 	var osc = SinOsc(freq, 0) * amp + SinOsc({ Rand(tr, 2.91, 3.02) } ! 2 * freq, 0);
 	var env = Decay2(tr, 0.01, 1);
 	osc * env * 0.4
-} !+ 12
+} !> 12
 
 (* SinOsc ; two oscillators ; frequencies approach 500 from opposite directions *)
 var lfo = MouseX(1, 0, 0, 0.2);
@@ -172,7 +172,7 @@ SinOsc(freq, phase) * amp
 var n = 16;
 {
 	var amp = 0.Max(SinOsc(ExpRand(0.1, 1), Rand(0, 2 * pi))) / n / 2;
-	EqPan2(
+	EqPan(
 		SinOsc(ExpRand(100, 1000), 0) * amp,
 		Rand(-1, 1)
 	)

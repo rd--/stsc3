@@ -7,7 +7,7 @@
 		nil,
 		{ Rand(0.2, 12) } ! 4
 	).Abs * [-1, 1].atRandom;
-	var z = EqPan2(sig, LfNoise1(1.Rand));
+	var z = EqPan(sig, LfNoise1(1.Rand));
 	6.timesRepeat {
 		z := AllpassN(z, 0.04, { 0.04.Rand } ! 2, 16)
 	};

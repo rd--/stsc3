@@ -2,7 +2,7 @@
 var n = 4; (* number of sirens *)
 CombL(
 	{
-		EqPan2(
+		EqPan(
 			SinOsc(
 				MulAdd(
 					SinOsc(0.1.Rand + 0.02, 2 * pi.Rand),

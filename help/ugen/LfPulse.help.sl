@@ -31,7 +31,7 @@ var snd = LfPulse(freq, 0, 0.5);
 snd := Hpf(snd * 3, MouseX(5000, 7000, 1, 0.2));
 snd := Lpf(snd, MouseY(9000, 11000, 1, 0.2));
 snd := snd + SinOsc(freqBass, 0);
-Pan2(snd, pan, amp)
+EqPan2(snd, pan) * amp
 
 (* ---- LfPulse ; jmcc ; process (Eval) *)
 {

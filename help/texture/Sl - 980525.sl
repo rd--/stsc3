@@ -11,7 +11,7 @@
 					Rand(0.1 + 0.2)
 				) * BrownNoise();
 				var y = CombC(x, 0.05, 1 / note, Rand(2, 3));
-				Release(EqPan2(y, Rand(-1, 1)), 0, 3, 3)
+				Release(EqPan(y, Rand(-1, 1)), 0, 3, 3)
 			}.playAt(currentTime + startTime)
 		}
 	};

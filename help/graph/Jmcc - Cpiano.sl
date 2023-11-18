@@ -1,5 +1,4 @@
 (* cpiano (jmcc) ; graph rewrite ; http://www.iamas.ac.jp/~aka/dspss2004/materials/ *)
-var nc = 2;
 { :tr |
 	var dgr = DegreeToKey(
 		[0 2 4 5 7 9 11].asLocalBuf,
@@ -16,5 +15,5 @@ var nc = 2;
 		var decayTime = Rand(tr, 3, 6);
 		CombL(hammer, delayTime, delayTime, decayTime)
 	}.sum;
-	PanAz(nc, src, pan, 1, 2, 0.5)
+	EqPan2(src, pan) / 2
 }.OverlapTexture(2, 0, 9).Mix

@@ -9,7 +9,7 @@ var f = t.ExpRange(
 	Latch(LinExp(SinOsc(i % pi, 0), -1, 1, 99, 9000), y)
 );
 var e = Line(r, 0.2, 0, 9).Min(0.6) ^ 2;
-EqPan2(
+EqPan(
 	Blip(f, t + 2) * (1 - t),
 	SinOsc(0.1, i)
 ) * e

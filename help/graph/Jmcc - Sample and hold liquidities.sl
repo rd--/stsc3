@@ -3,7 +3,8 @@ var r = MouseX(1, 200, 1, 0.1);
 var t = r.Recip;
 var c = Impulse(r, 0) * 0.4;
 var cf = MouseY(100, 8000, 1, 0.1);
-var f = Latch(WhiteNoise() * cf * 0.5 + cf, c);
-var p = Latch(WhiteNoise(), c);
-var i = Pan2(SinOsc(f, 0), p, Decay2(c, 0.1 * t, 0.9 * t));
+var i = EqPan(
+	SinOsc(Latch(WhiteNoise() * cf * 0.5 + cf, c), 0),
+	Latch(WhiteNoise(), c)
+) * Decay2(c, 0.1 * t, 0.9 * t);
 CombN(i, 0.3, 0.3, 2)

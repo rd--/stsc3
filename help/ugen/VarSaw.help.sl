@@ -8,7 +8,7 @@ var w0 = Rand(tr, 0, 0.35);
 var w1 = Rand(tr, 0.65, 1);
 var w = Phasor(tr, (w1 - w0) / SampleRate(), w0, w1, 0);
 var o = VarSaw(Rand(tr, 36, 72).MidiCps, 0, w) * Decay2(tr, 0.1, d);
-Pan2(o, Rand(tr, -1, 1), 0.1)
+EqPan(o, Rand(tr, -1, 1)) / 7
 
 (* VarSaw (Jmcc) *)
 var f0 = 80;

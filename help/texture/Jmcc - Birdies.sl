@@ -17,5 +17,5 @@
 	);
 	var freq = Lag(sw, 0.05);
 	var amp = Lag(p3, 0.3);
-	EqPan2(SinOsc(freq, 0) * amp, 1.Rand2) * 0.02
+	EqPan(SinOsc(freq, 0) * amp, Rand(-1, 1)) * 0.02
 }.overlap(7, 4, 4)

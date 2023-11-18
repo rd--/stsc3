@@ -20,4 +20,4 @@ var p = p1.collect { :x |
 }.concatenation ++ p2.concatenation;
 var tr = Impulse(5, 0);
 var freq = Demand(tr, 0, Dseq(1, p.MidiCps));
-Pan2(FreeVerb(Lpf(Saw(Lag(freq, 0.03)), 1000), 0.3, 0.5, 0.35), 0, 0.2)
+EqPan2(FreeVerb(Lpf(Saw(Lag(freq, 0.03)), 1000), 0.3, 0.5, 0.35), 0) / 5

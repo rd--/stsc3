@@ -13,7 +13,7 @@ EqPan2(
 (* CombL ; exterior duplication *)
 var n = 8;
 {
-	EqPan2(
+	EqPan(
 		CombL(
 			Dust(1) * 0.3,
 			0.01,

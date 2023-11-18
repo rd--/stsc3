@@ -12,5 +12,5 @@
 		12.geometricSeries(1, Rand(tr, 0.7, 0.9)),
 		{ Rand(tr, 1, 3) } ! 12
 	);
-	Pan2(k.SoftClip, Rand(tr, -1, 1), 0.1)
+	EqPan2(k.SoftClip, Rand(tr, -1, 1)) / 10
 }.OverlapTexture(5, 2, 9).Mix

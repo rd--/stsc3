@@ -1,6 +1,6 @@
 (* Gendy1 ; texture *)
 {
-	EqPan2(
+	EqPan(
 		SinOsc(
 			Gendy1(
 				IRand(0, 6),
@@ -42,7 +42,7 @@ var f = {
 };
 Resonz(f !+ n, MouseX(100, 2000, 0, 0.2), MouseY(0.01, 1.0, 0, 0.2))
 
-(* ---- Gendy1 ; overlap texture (scheduled) *)
+(* ---- Gendy1 ; overlap texture (scheduled) ; requires=keyword *)
 {
 	var n = 11;
 	{

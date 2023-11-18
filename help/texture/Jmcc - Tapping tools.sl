@@ -8,7 +8,7 @@
 		nil,
 		{ 0.01 + 0.1.Rand } ! 4
 	);
-	var z = Release(EqPan2(flt, 1.Rand2) * 0.25, 1, 4, 1);
+	var z = Release(EqPan(flt, 1.Rand2) * 0.25, 1, 4, 1);
 	3.timesRepeat {
 		z := AllpassN(z, 0.05, { 0.05.Rand } ! 2, 2)
 	};

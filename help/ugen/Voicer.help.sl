@@ -22,7 +22,7 @@ Voicer(16) { :e |
 (* PanAz ; event control *)
 Voicer(16) { :e |
 	PanAz(24, Blip(e.p.UnitCps, e.y * 3 + 1), e.i * 2 - 1, 1, 3, 0) * e.w * e.z * e.z
-}.Mix
+}.sum
 
 (* dictionary ; voicer *)
 (
