@@ -1,5 +1,5 @@
 (* event control ; https://www.listarc.bham.ac.uk/lists/sc-users/msg68844.html (ml) ; requires=voicer,kr *)
-var voiceFunc = { :e |
+Voicer(16) { :e |
 	var numPartials = 40;
 	var baseFreq = (e.x * 25 + 48).MidiCps;
 	var sig = Decay(K2A(e.w) * 0.1, 0.001) * PinkNoise();
@@ -20,5 +20,4 @@ var voiceFunc = { :e |
 	var osc = DynRingzBank(sig, freq, amp, dcy);
 	var env = LagUd(e.w * e.z, 0.5, 8).kr * 0.1 * numPartials.reciprocal; (* note .kr! *)
 	EqPan2(osc, e.i * 2 - 1) * env
-};
-Voicer(16, voiceFunc).Mix
+}.Mix

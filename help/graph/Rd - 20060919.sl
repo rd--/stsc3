@@ -1,5 +1,5 @@
 (* 20060919 ; rd *)
-var fw = { :r |
+[24 36].collect { :r |
 	var tr = Dust(3);
 	var b0 = [
 		40 47 42 40 50
@@ -18,5 +18,4 @@ var fw = { :r |
 		Blip((r + f).MidiCps, 12),
 		Blip((r + f + Rand(tr, -0.0001, 0.0001)).MidiCps, 12)
 	].sum * Decay2(tr, 0.3, 1.2) * 0.1
-};
-[24 36].collect(fw:/1).Mix
+}.Mix

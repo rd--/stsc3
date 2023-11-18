@@ -1,5 +1,5 @@
 (* https://swiki.hfbk-hamburg.de/MusicTechnology/899 ; tw (tim walters) *)
-var nd = (1 .. 8).collect { :k |
+(1 .. 8).collect { :k |
 	var x = { :f :m :j |
 		SinOsc(f + (m * 4 * j), m) * LfNoise1(j + 1 / f * 4) / 2
 	};
@@ -8,5 +8,4 @@ var nd = (1 .. 8).collect { :k |
 		y := x(i * k * [4, 8], y, i)
 	};
 	y
-};
-nd.Mix / 4
+}.Mix / 4

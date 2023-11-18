@@ -1,5 +1,5 @@
 (* vibraphone simulation ; Kevin Larke ; Real Time Vibraphone Pitch and Timbre Classification ; requires=voicer *)
-var voiceFunc = { :e |
+Voicer(16) { :e |
 	var freq = e.p.UnitCps;
 	var detune = e.y * 15;
 	var freqs = freq * [1, 4, 10, 13.75 + detune];
@@ -16,5 +16,4 @@ var voiceFunc = { :e |
 	var soundHigh = XLine(e.w, 0.3 * (velocity + zero), zero, 0.02) * SinOsc(hiFreqs, 0); (* hi frequency onset *)
 	var pan = e.i * 2 - 1;
 	EqPan2(soundMain.sum + soundHigh.sum, pan) * LagUd(e.w, 0.01, 4)
-};
-Voicer(16, voiceFunc).Mix * 0.25
+}.Mix * 0.25

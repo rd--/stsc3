@@ -12,9 +12,9 @@ var str = { :ix |
 		[1],
 		{ Rand(0.3, 1) } ! n
 	);
-	EqPan2(metal, ix - 1 * 0.2 - 0.5)
+	EqPan(metal, ix - 1 * 0.2 - 0.5)
 };
-var s = LeakDc(Lpf((1 .. 8).collect(str).Mix, 12000), 0.995);
+var s = LeakDc(Lpf((1 .. 8).collect(str).sum, 12000), 0.995);
 6.timesRepeat {
 	s := AllpassN(s, 0.1, { 0.05.Rand } ! 2, 4)
 };
