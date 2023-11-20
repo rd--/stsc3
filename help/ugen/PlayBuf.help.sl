@@ -32,3 +32,14 @@ var soundFile = SfAcquireMono('floating_1');
 var sampleLoop = PlayBuf(1, soundFile, 0.5, 0, 0, 1, 0);
 var ampMod = (sampleLoop * MouseY(0, 1, 0, 0.2)) + MouseY(1, 0, 0, 0.2);
 SinOsc([100 149.8], sampleLoop * MouseX(0, 7, 0, 0.1)) * ampMod * 0.2
+
+(* PlayBuf ; shuffler *)
+var trigger = Dust(256);
+var dur = Rand(trigger, 0.05, 0.15);
+var w = TrigAllocator(64, 1, trigger, dur);
+var numChannels = 1;
+var soundFile = SfAcquireMono('floating_1');
+var rate = MouseY(0.5, 2, 0, 0.2) + Rand(w, -0.05, 0.05);
+var startPos = MouseX(0, BufFrames(soundFile), 0, 0.2) + Rand(w, -0.025, 0.025);
+var env = Sine(w, dur);
+(EqPan(PlayBuf(numChannels, soundFile, rate, w, startPos, 1, 0), Rand(w, -1, 1)) * env).Mix

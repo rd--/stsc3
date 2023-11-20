@@ -1,12 +1,12 @@
 (* TGrains ; requires=SfAcquire *)
+var numChannels = 2;
 var sf = SfAcquireMono('crotale-d6');
-var trRate = MouseY(2, 120, 1, 0.2);
-var tr = Impulse(trRate, 0);
+var triggerRate = MouseY(2, 120, 1, 0.2);
+var trigger = Impulse(triggerRate, 0);
 var rate = 1.2 ^ (WhiteNoise() * 3).RoundTo(1);
 var centerPos = MouseX(0, SfDur(sf), 0, 0.2);
-var dur = 1.2 / trRate;
-var nc = 2;
-TGrains(nc, tr, sf, rate, centerPos, dur, WhiteNoise(), 1 / 2, 4)
-
-(* ---- notes.md ---- *)
-{ Dc(0) } ! 8 ++ TGrains(8, tr, sf, rate, centerPos, dur, WhiteNoise(), 0.1, 4)
+var dur = 1.2 / triggerRate;
+var pan = Rand(trigger, -1, 1);
+var amp = 1 / 2;
+var interp = 4;
+TGrains(numChannels, trigger, sf, rate, centerPos, dur, pan, amp, interp)
