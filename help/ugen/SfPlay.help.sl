@@ -24,15 +24,20 @@ var r = 10;
 };
 SfPlay(sf, r, 1, [0, 18000], 1)
 
-(* SfPlay ; floating dust (adc) ; https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00736.html *)
+(* SfPlay ; floating dust (adc) ; https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00736.html ; panning edit (rd) *)
 var sf = SfAcquireMono('floating_1');
 (0 .. 9).collect { :n |
 	var r = 0.1 ^ (n - 1);
 	(0 .. n).collect { :i |
-		r := SfPlay(sf, r, 1, 0, 1) * (n - 2 < i).if { 0.5 } { 0.1 ^ (n * 0.9 - 3.5 - i) }
+		var a = (n - 2 < i).if {
+			0.5
+		} {
+			0.1 ^ (n * 0.9 - 3.5 - i)
+		};
+		r := SfPlay(sf, r, 1, 0, 1) * a
 	};
-	r
-}.sum
+	EqPan2(r, Rand(-1, 1))
+}.Mix
 
 (* SfPlay ; 2 min (adc) ; https://www.listarc.cal.bham.ac.uk/lists/sc-users-2002/msg00736.html *)
 var sf = SfAcquireMono('floating_1');

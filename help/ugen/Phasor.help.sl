@@ -28,4 +28,4 @@ var raisedCosWindow = raisedCos(modPhase, index);
 var carPhase = Phasor(Dc(0), rate * SampleDur(), 0, 1, 0);
 var car = (carPhase * 2.pi + (mod * index)).Sin;
 var sig = car * raisedCosWindow;
-LeakDc(sig, 0.995) ! 2 * 0.1
+LeakDc(sig, 0.995) * 0.1
