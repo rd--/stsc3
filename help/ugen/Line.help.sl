@@ -8,7 +8,8 @@ SinOsc(Line(200, 17000, 5), 0) * 0.1
 SinOsc(Line(200, [209, 211], 5), 0) * 0.1
 
 (* Line *)
-var chord = { :m0 |
+var octaves = 12 * (5 .. 7);
+octaves.collect { :m0 |
 	var m1 = m0 + [0, 4.078, 7.019, 11.097];
 	var m2 = m0 + [0, 4.980, 7.921, 10.863];
 	var du = 90;
@@ -19,9 +20,7 @@ var chord = { :m0 |
 		) * Line(0.1.Rand, 0.1.Rand, du)
 	};
 	o.sum
-};
-var octaves = 12 * (5 .. 7);
-octaves.collect(chord).Mix * 0.2
+}.Mix * 0.2
 
 (* Line ; note Line is an existing class in Squeak *)
 var f = Line(200, 17000, 5);

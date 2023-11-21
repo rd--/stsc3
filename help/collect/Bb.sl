@@ -8,10 +8,10 @@ var s = PitchShift(PitchShift(Pulse([90, 90.01], x), 10, x * 4, x, 0), 10, 4 - (
 s <! LocalOut(x)
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
-var q = [0, 3, 5, 7, 10];
+var q = [0 3 5 7 10];
 var t = Impulse(4, 0) * LfNoise0(500) > 0;
 var f = Demand(t, 0, Drand(inf, (q + 12 ++ q + 33).MidiCps));
-PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0).EqPan2(0)
+PitchShift(Saw(f) * Decay(t, 3), 7, 2, 0, 0)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var snd = Hpf(
@@ -68,16 +68,16 @@ AllpassL(SinOsc(55,0).Tanh, 0.4, ExpRand(Impulse(8, 0), 0.0002, 0.4).RoundTo([0.
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var i = { :freq | Impulse(freq, 0) };
 var ph = Integrator(Integrator(i(64).Lag(LfNoise1([2, 2]) * 2 + 2) * 99, 0.9), 0.99).Fold2(pi);
-SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph)
+SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph) / 3
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var t = [0 3 5 7 10 12] + 40;
 var p = DmdFor(1 / 4, 0, Drand(inf, (t + 12 ++ t).MidiCps));
 var b = Rand(Impulse(16, 0), 1500, 2000).Lag(0.1);
-Blip([b, b + p], 1).mean.EqPan2(0) ^ 2
+Blip([b, b + p], 1).mean ^ 2
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var i = Impulse(8, 0).Lag(0.3).EqPan2(0);
+var i = Impulse(8, 0).Lag(0.3);
 10.timesRepeat {
 	i := LeakDc(AllpassC(i, 1, LfNoise0(8).Range(0.00001, 0.2), -0.15) * LfNoise0(8).Range(1, 3), 0.995).Tanh
 };
@@ -108,9 +108,9 @@ Limiter(v, 0.9, 1)
 var numVoices = 30;
 var fundamentals = { Rand(200, 400) } ! numVoices;
 fundamentals.collect { :freq |
-	EqPan2(
+	EqPan(
 		Saw(freq),
-		Rand(-0.5, 0.5)
+		Rand(-1, 1)
 	) * numVoices.reciprocal
 }.sum
 
@@ -119,9 +119,9 @@ var numVoices = 30;
 var fundamentals = { 200.randomFloat(400) }.duplicate(numVoices).sorted;
 fundamentals.withIndexCollect { :freq0 :index |
 	var freq = freq0 + (LfNoise2(0.5) * 3 * index);
-	EqPan2(
+	EqPan(
 		BLowPass(Saw(freq), freq * 5, 0.5),
-		Rand(-0.5, 0.5)
+		Rand(-1, 1)
 	) * numVoices.reciprocal
 }.sum
 
@@ -133,17 +133,16 @@ var finalPitches = ((1 .. numVoices).collect { :each |
 } + 14.5).MidiCps;
 var outerEnv = CurveGen(1, [0, 0.1, 1], [8, 4], [2, 4]);
 var ampEnvelope = CurveGen(1, [0, 1, 1, 0], [3, 21, 3], [2, 0, -4]);
-var voiceFunc = { :numTone |
+var snd = (1 .. numVoices).collect { :numTone |
 	var initRandomFreq = fundamentals[numTone] + (LfNoise2(0.5) * 6 * (numVoices - numTone));
 	var destinationFreq = finalPitches[numTone] + (LfNoise2(0.1) * numTone / 3);
 	var sweepEnv = CurveGen(1, [0, Rand(0.1, 0.2), 1], [Rand(5.5, 6), Rand(8.5, 9)], [Rand(2, 3), Rand(4, 5)]);
 	var freq = ((1 - sweepEnv) * initRandomFreq) + (sweepEnv * destinationFreq);
-	EqPan2(
+	EqPan(
 		BLowPass(Saw(freq), freq * 6, 0.6),
-		Rand(-0.5, 0.5)
+		Rand(-1, 1)
 	) * (1 - (1 / numTone)) * 1.5 / numVoices
-};
-var snd = (1 .. numVoices).collect(voiceFunc).sum;
+}.sum;
 Limiter(BLowPass(snd, 2000 + (outerEnv * 18000), 0.5) * (2 + outerEnv) * ampEnvelope, 1, 0.01)
 
 (* http://earslap.com/article/sctweeting.html *)

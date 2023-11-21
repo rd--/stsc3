@@ -182,7 +182,7 @@ var n = 16;
 SinOsc([[440], [441]], 0).sum * 0.1
 
 (* ---- SinOsc ; fm ; https://github.com/Thrifleganger/VisualSynth ; requires=Voicer *)
-var voiceFunc = { :e |
+var fmSignal = Voicer(16) { :e |
 	var index = e.y * 3;
 	var pitch = e.x * 24 + 48;
 	var ratio = 3.5;
@@ -210,8 +210,7 @@ var voiceFunc = { :e |
 	var car = SinOsc(pitch * (2 ^ (pitchMod / 1200)) + mod, 0) * volEnv * amp;
 	var filter = Lpf(car * volMod, LinExp(tone, 0, 1, 200, 20000));
 	EqPan2(filter, (panModDepth < 0.01).if { pan } { panMod })
-};
-var fmSignal = Voicer(16, voiceFunc).Mix;
+}.Mix;
 var delayMix = 0.5, delayTime = 0.3, delayFeedback = 0.3;
 var feedbackSignal = LocalIn(2, 0);
 var delayReturn = DelayL(fmSignal + feedbackSignal, 5, delayTime);

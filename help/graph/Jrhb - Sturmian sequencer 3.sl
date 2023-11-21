@@ -11,9 +11,8 @@ var rewrite = { :c :n |
 };
 var n = 9;
 var x = MouseX(1, SampleRate(), 1, 0.2);
-var strFunc = { :i |
+(1 .. n).collect { :i |
 	var str = rewrite([0], i + 5);
 	var dt = 1 / SampleRate() / (n - i + 1) * x;
 	TDmdFor(dt, 0, Dseq(inf, str - 0.5))
-};
-(1 .. n).collect(strFunc).Splay * 0.3
+}.Splay * 0.3

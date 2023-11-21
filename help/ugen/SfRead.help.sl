@@ -12,7 +12,7 @@ var sf = SfAcquireStereo('piano-c5');
 	var rt = mnn.MidiRatio * SfRateScale(sf);
 	var ph = Phasor(tr, rt, 0, SfFrames(sf), 0);
 	SfRead(sf, ph, 0, 2)
-} !+ 6 / 4
+} !> 6 / 4
 
 (* SfRead ; phasor as phase input ; harp *)
 var sf = SfAcquireStereo('harp-a4');
@@ -22,18 +22,14 @@ var sf = SfAcquireStereo('harp-a4');
 	var rt = mnn.MidiRatio * SfRateScale(sf);
 	var ph = Phasor(tr, rt, 0, SfFrames(sf), 0);
 	SfRead(sf, ph, 0, 2)
-} !+ 6 / 9
+} !> 6 / 9
 
 (* SfRead ; phasor as phase input ; mono sound file ; multiple voices *)
 var sf = SfAcquireMono('crotale-d6');
-var vc = {
+{
 	var tr = Impulse(2 ^ Rand(1, 3) / SfDur(sf), 0).kr;
 	var mnn = IRand(tr, -3, 0) * 12 + Choose(tr, [0, 2.1, 4.9, 7, 9.2]);
 	var rt = mnn.MidiRatio * SfRateScale(sf);
 	var ph = Phasor(tr, rt, 0, SfFrames(sf), 0);
 	SfRead(sf, ph, 0, 2) / 4
-};
-vc !+ 6
-
-(* ---- notes.md ---- *)
-Silent(8) ++ (vc ! 6)
+} !^ 6

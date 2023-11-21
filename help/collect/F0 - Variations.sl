@@ -1,5 +1,5 @@
 (* pkt 07 (f0) ; https://fredrikolofsson.com/f0blog/pact-februari/ ; helper *)
-var sinosc = { :f :l :r | LinExp(SinOsc(f, 0), -1, 1, l, r) };
+var sinOsc = { :f :l :r | LinExp(SinOsc(f, 0), -1, 1, l, r) };
 GVerb(
 	LeakDc(
 		SinOsc(
@@ -10,22 +10,22 @@ GVerb(
 							SinOsc(
 								SinOsc(1, 0) *
 								2 +
-								sinosc(1/2, 1, 2),
+								sinOsc(1/2, 1, 2),
 								0) *
 							8 +
-							sinosc(1/4, 4, 8),
+							sinOsc(1/4, 4, 8),
 							0) *
 						32 +
-						sinosc(1/8, 16, 32),
+						sinOsc(1/8, 16, 32),
 						0) *
 					128 +
-					sinosc(1/16, 64, 128),
+					sinOsc(1/16, 64, 128),
 					0) *
 				512 +
-				sinosc(1/32, 256, 512),
+				sinOsc(1/32, 256, 512),
 				0) *
 			2048 +
-			sinosc(1/64, 1024, 2048),
+			sinOsc(1/64, 1024, 2048),
 			0) * 0.1,
 		0.995),
 	16, 8, 0.75, 0.5, 15, 1, 0.7, 0.5, 300)
@@ -63,14 +63,13 @@ CombN(o, 1, 1 / [6, 5], 9).Tanh * 0.1
 
 (* tw 0134 (f0) *)
 var n = 50;
-var z = { :i |
+(1 .. n).collect { :i |
 	Ringz(
 		Blip(LfSaw(i + 1 / [3, 4], 0) > (LfSaw(i + 1 / 8, 0) + 1) * (n / 2) + n, i + [2, 3]) *
 		LfSaw(i + 1 / n, i / (n / 2)), i + 1 * (n * 2 - 1),
 		0.1
 	)
-};
-(1 .. n).collect(z).mean / 5
+}.mean / 5
 
 (* https://sccode.org/1-4Qy ; f0 ; 0233 ; requires=kr *)
 var b = 1 / [1 4 6 8 11];
@@ -105,20 +104,6 @@ Splay(o1 * o2 / 13 + o6) / 3
 	var f = SinOscFb(i + 1 / 150, 0).RoundTo(1) + 1 + i * 99 + SinOscFb([3, 2], 0);
 	(Formant(f, b, b) * SinOscFb(i + 1 / 130, 0).Max(0)).Tanh
 }.sum.Splay / 7
-
-(* https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords *)
-var o = GrainFm(
-	numChan: 1,
-	trigger: LfSaw([0.5, 0.6], 0),
-	dur: 16,
-	carfreq: LfSaw(5, 0) * LfSaw(0.015, 0) + 1 * 98,
-	modfreq: (2 ^ LfSaw(4, 0)).RoundTo(0.5) * 99,
-	index: 2 ^ LfSaw(1 / [8, 9], 0) * 8,
-	pan: 0,
-	envbufnum: -1,
-	maxGrains: 512
-);
-(o / 2).Tanh
 
 (* https://sccode.org/1-4Qy ; f0 ; tweet0350 ; Splay *)
 var b = (9 .. 1) / 99;
@@ -161,4 +146,21 @@ var x = (SinOsc(i % 9.33, 0) * 5 + 5).Ceiling;
 var t = SinOsc(2 ^ (i % 11) * 150 / x, 0);
 var y = Hpz1(x).Abs > 0;
 var f = LinExp(t, -1, 1, Latch(LinExp(SinOsc(i % 4.4, 0), -1, 1, 9, 999), y), Latch(LinExp(SinOsc(i % pi, 0), -1, 1, 99, 9000), y));
-Pan2(Blip(f, t + 2) * (1 - t), SinOsc(0.1, i), Line(0.2, 0, 9, 2).Min(0.6) ^ 2)
+EqPan(
+	Blip(f, t + 2) * (1 - t),
+	SinOsc(0.1, i)
+) * (Line(0.2, 0, 9, 2).Min(0.6) ^ 2)
+
+(* ---- https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords *)
+var o = GrainFm(
+	numChan: 1,
+	trigger: LfSaw([0.5, 0.6], 0),
+	dur: 16,
+	carfreq: LfSaw(5, 0) * LfSaw(0.015, 0) + 1 * 98,
+	modfreq: (2 ^ LfSaw(4, 0)).RoundTo(0.5) * 99,
+	index: 2 ^ LfSaw(1 / [8, 9], 0) * 8,
+	pan: 0,
+	envbufnum: -1,
+	maxGrains: 512
+);
+(o / 2).Tanh

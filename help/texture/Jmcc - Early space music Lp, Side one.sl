@@ -8,7 +8,7 @@
 			var ff = f * (SinOsc(ExpRand(4, 6), 0) * 0.008 + 1);
 			LfSaw([ff * Rand(0.99, 1.01), ff * Rand(0.99, 1.01)], 0) * 0.01
 		};
-		var x = Lpz2(Lpz2(z !+ 10));
+		var x = Lpz2(Lpz2(z:/0 !+ 10));
 		(0.3.coin & { f < 1400 }).ifTrue {
 			var ff = SinOsc(Rand(0.3, 0.8), 0) * f * Rand(0.5, 3) + (f * Rand(4, 12));
 			x := Rlpf(x, ff, 0.1)
@@ -23,6 +23,6 @@
 		var freq = (lfo * LinRand(4, 30, 0) + sw).MidiCps;
 		CombN(SinOsc(freq, 0) * 0.02, 0.3, Rand(0.15, 0.3), 4)
 	};
-	var z = [s1, s2].atRandom.value;
+	var z = [s1:/0, s2:/0].atRandom.value;
 	CombN(z, 0.5, [0.5, 0.47], 7) + z.reversed
 }.overlap(4, 4, 6)

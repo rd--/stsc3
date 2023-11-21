@@ -10,7 +10,7 @@ var rewrite = { :c :n |
 	r
 };
 var n = 7;
-var strFunc = { :i |
+(0 .. n - 1).collect { :i |
 	var str = rewrite([0], i + 6);
 	var dt = 2 ^ (n - i).negated * 20;
 	var trig = TDmdFor(dt, 0, Dseq(1, str));
@@ -21,5 +21,4 @@ var strFunc = { :i |
 		freq * [1, 1.1, 1.2],
 		ExpRand(2 ^ i.negated * 0.1, 0.5)
 	).sum.Distort
-};
-(0 .. n - 1).collect(strFunc).Splay * 0.5
+}.Splay * 0.5

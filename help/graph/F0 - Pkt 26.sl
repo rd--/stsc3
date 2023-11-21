@@ -1,6 +1,6 @@
 (* pkt 26 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490 *)
 var n = 8;
-var x = { :i |
+(1 .. n).collect { :i |
 	var t = i / n;
 	var a = VarSaw(0.02, t, 0.5) * 7.5;
 	var b = VarSaw(0.16, t, 2/3) * a.Abs + 300;
@@ -13,5 +13,4 @@ var x = { :i |
 	var o = SinOsc(h, f * pi) * d + b;
 	var z = LeakDc(VarSaw(o, t, 0.5), 0.995);
 	EqPan2(z, VarSaw(0.02, t, 0.5)) / n
-};
-(1 .. n).collect(x).Mix * 0.35
+}.Mix * 0.35

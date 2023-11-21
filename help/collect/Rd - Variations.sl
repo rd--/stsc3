@@ -16,12 +16,13 @@ var q = {
 var r = {
 	var x = MouseX(0.75, 1.25, 1, 0.1);
 	var y = MouseY(0.25, 1, 1, 0.1);
-	var f = {
-		var fr = Rand(50, 59) * x;
-		var am = Rand(0.04, 0.16) * y;
-		SinOsc(fr, 0) * am
-	};
-	{ f !+ 16 } ! 2
+	{
+		{
+			var fr = Rand(50, 59) * x;
+			var am = Rand(0.04, 0.16) * y;
+			SinOsc(fr, 0) * am
+		} !+ 16
+	} ! 2
 };
 p() + q() + r()
 
@@ -29,14 +30,13 @@ p() + q() + r()
 var t = Impulse(22, 0) * (SinOsc(0.5, 0) + 1);
 var x = MouseX(0.005, 0.12, 1, 0.1);
 var y = MouseY(0.01, 0.52, 1, 0.1);
-var n = {
+var z = {
 	var n1 = LfNoise0(2);
 	var n2 = CoinGate(0.05 + n1 + (y * 0.4) + (t * 0.5), t * 0.5);
 	var n3 = ExpRand(t, [500, 900], 1600);
 	Ringz(n2, n3, x)
-};
-var b = Rand(Dust(8), 0, 1);
-(n !+ 3).Clip2(b) * 0.25
+} !> 3;
+z.Clip2(Rand(Dust(8), 0, 1)) * 0.25
 
 (* 20060914 ; rd ; graph rewrite ; requires=Sine ; requires=arrayedEnv *)
 { :tr |
@@ -61,14 +61,13 @@ var b = Rand(Dust(8), 0, 1);
 var mkRead = { :l :t |
 	BufRd(1, l.asLocalBuf, Rand(t, 0, 6), 0, 1)
 };
-var mkNode = { :n |
+(1 .. 4).collect { :n |
 	var t = Dust(1.6);
 	var f = mkRead([60, 62, 64, 65, 67, 69], t).MidiCps;
 	var p = mkRead([-1, -0.5, 0, 0.25, 0.75, 1], t);
 	var a = mkRead([0.01, 0.05, 0.1, 0.15, 0.25, 0.35], t);
 	EqPan2(SinOsc(f, 0) * a, p)
-};
-(1 .. 4).collect(mkNode:/1).Mix * 0.25
+}.Mix * 0.25
 
 (* 20060917 ; rd ; requires=DustRange *)
 var b0 = [60 71 89 65 36 57 92 97 92 97].asLocalBuf;
@@ -98,10 +97,10 @@ var fw = { :r |
 	var r1 = IRand(t, 0, 6);
 	var r2 = Rand(t, -0.0001, 0.0001);
 	var b0 = [
-		40, 47, 42, 40, 50,
-		43, 35, 43, 40, 47,
-		45, 35, 43, 42, 59,
-		48, 40, 47, 52, 45
+		40 47 42 40 50
+		43 35 43 40 47
+		45 35 43 42 59
+		48 40 47 52 45
 	].asLocalBuf;
 	var b1 = [
 		40, 40, 42, 47, 50,
@@ -222,6 +221,6 @@ var h1 = {
 	var g = n1.Range(0.55, 0.85);
 	var f = 40;
 	var o = Blip(HenonN(f, a, b, 0, 0).Range(p, p * 2), h);
-	EqPan2(o, l) * g * 0.35
+	EqPan(o, l) * g * 0.35
  };
 h0() + h1()

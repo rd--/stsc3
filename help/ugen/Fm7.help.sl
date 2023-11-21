@@ -34,7 +34,7 @@ Fm7(ctlMatrix, modMatrix).first(2) * 0.1
 			LfNoise1(0.5).Max(0)
 		} ! 6 * x
 	} ! 6;
-	Fm7Matrix(ctlMatrix, modMatrix) * -12.DbAmp
+	Fm7Matrix(ctlMatrix, modMatrix) * -18.DbAmp
 } !> 3
 
 (* Fm7 ; an algorithmically generated graph courtesy f0 ; note one-indexing *)

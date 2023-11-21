@@ -1,6 +1,6 @@
 (* pkt 28 (f0) ; http://www.fredrikolofsson.com/f0blog/?q=node/490 *)
 var n = 28;
-var x = { :i |
+var z = (1 .. n).collect { :i |
 	var a = LfSaw(i + 1 * 5, 0) * 0.5 * pi;
 	var b = SinOsc(i + 1 * 0.001, 0) * 0.5;
 	var c = LfSaw(0.2 + b, i / n) * 0.4;
@@ -15,5 +15,5 @@ var x = { :i |
 	var l = LinLin(i, 0, n - 1, -0.925, 0.925);
 	EqPan2(z, l) / n
 };
-var y = Limiter(LeakDc((1 .. n).collect(x:/1).sum, 0.995), 1, 0.01);
+var y = Limiter(LeakDc(z.sum, 0.995), 1, 0.01);
 GVerb(y, 3, 5, 0.2, 0.8, 20, 0.1, 0.7, 0.5, 300).transposed.Mix * 0.25

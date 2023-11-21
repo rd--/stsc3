@@ -41,5 +41,8 @@ var numChannels = 1;
 var soundFile = SfAcquireMono('floating_1');
 var rate = MouseY(0.5, 2, 0, 0.2) + Rand(w, -0.05, 0.05);
 var startPos = MouseX(0, BufFrames(soundFile), 0, 0.2) + Rand(w, -0.025, 0.025);
-var env = Sine(w, dur);
-(EqPan(PlayBuf(numChannels, soundFile, rate, w, startPos, 1, 0), Rand(w, -1, 1)) * env).Mix
+var env = Sine(w, dur) / 5;
+EqPan(
+	PlayBuf(numChannels, soundFile, rate, w, startPos, 1, 0) * env,
+	MouseX(-0.75, 0.75, 0, 0.2) + Rand(w, -0.25, 0.25)
+).sum

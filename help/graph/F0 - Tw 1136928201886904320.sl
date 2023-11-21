@@ -1,5 +1,9 @@
 (* f0 ; https://twitter.com/redFrik/status/1136928201886904320 *)
-var f = { :a |
+[
+	0 -> LfTri:/2,
+	1 -> LfSaw:/2,
+	2 -> LfPar:/2
+].collect { :a |
 	var ix = a.key;
 	var osc:/2 = a.value;
 	var b = [4, 2, 1, 3, 5];
@@ -9,5 +13,4 @@ var f = { :a |
 	var x = AllpassC(s, 1, Wrap(c, 0.5, 1), 2);
 	var y = Bpf(x, ix * 99 + 400, 0.001) * (osc(0.04, ix) + 1 * 9);
 	Splay2(x + y) / 3
-};
-[0 -> LfTri:/2, 1 -> LfSaw:/2, 2 -> LfPar:/2].collect(f:/1).Mix
+}.Mix
