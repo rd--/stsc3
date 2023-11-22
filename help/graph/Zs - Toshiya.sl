@@ -2,7 +2,7 @@
 var f0 = 440;
 var mnn0 = f0.CpsMidi;
 var amp = 1.0;
-var gen = {
+var osc = {
 	var mnn = Choose(Impulse(Rand(1 / 30, 1 / 5), 0), [0 9 4 14 5 2 17]);
 	var sig = SinOsc((mnn0 + mnn).MidiCps, 0);
 	sig := Lpf(
@@ -15,8 +15,7 @@ var gen = {
 		(LfNoise1(Rand(5, 10)) * 0.01 + 0.02) / NRand(10, 20, 3)
 	);
 	EqPan(sig, Lag(LfNoise0(1 / 3), 3)) / 12 * amp
-};
-var osc = gen !+ 12 + EqPan(
+} !+ 12 + EqPan(
 	SinOsc((mnn0 - 12).MidiCps, LinLin(LfTri(0.5, 0), -1, 1, 0.2, 0.8)) / 12 * amp,
 	SinOsc(0.1, 0) * 0.2
 );

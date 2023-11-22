@@ -8,4 +8,4 @@ var tr = { Dust(0.65) } ! 2;
 	var m = LfNoise2(0.1);
 	var f = Lag(n.MidiCps, 0.25);
 	CombC(x, lwr.MidiCps.Recip, f.Recip, LinLin(m, -1, 1, 1, 8))
-} !+ 12 * 0.1
+} !> 12 * 0.1
