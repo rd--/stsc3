@@ -12,8 +12,8 @@
 		r:/0 ! k * 8 + 8 / 86,
 		-1,
 		12,
-		r ! k / 4,
+		r:/0 ! k / 4,
 		4
 	);
-	LeakDc(FreeVerb(w, r ! k, r ! k + 0.5, r ! k), 0.995).Splay2.Tanh
+	LeakDc(FreeVerb(w, r:/0 ! k, r:/0 ! k + 0.5, r:/0 ! k), 0.995).Splay2.Tanh
 }.overlap(4, 5, 2)
