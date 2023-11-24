@@ -11,6 +11,20 @@ var e = Env([440 440 324 10000], [4 2 1], 2, nil, nil, 0);
 var f = EnvGen(1, 1, 0, 1, 2, e.asArray);
 SinOsc(f, 0) * 0.1
 
+(* Env ; circle *)
+var env = Env([6000 700 100], [1 1], ['exp', 'lin'], nil, nil, 0).circle(0, 'lin');
+SinOsc(
+	env.asEnvGen(1),
+	0
+) * 0.1 + Impulse(1, 0)
+
+(* Env ; circle *)
+var env = Env([6000 700 100], [1 1], ['exp', 'lin'], nil, nil, 0).circle(1, 'lin');
+SinOsc(
+	env.asEnvGen(MouseX(-1, 1, 0, 0.2)),
+	0
+) * 0.1 + Impulse(1, 0)
+
 (* Env ; requires=keywords *)
 var e = Env(
 	levels: [440, 440, 324, 10000],
