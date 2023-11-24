@@ -1,4 +1,4 @@
-(* https://twitter.com/lukiss163/status/1619072788311973896 ; lnu *)
+(* https://twitter.com/lukiss163/status/1619072788311973896 ; Lnu *)
 var c = (0 .. 8).collect { :n |
 	var d = Dust(1);
 	Rand(d, 0.5, 2.5).Lag3(1 / 16) ^ n
