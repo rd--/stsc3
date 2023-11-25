@@ -54,7 +54,7 @@ Splay(
 		0.2,
 		m.Abs / 2048
 	),
-	m[3] * 2 / 3
+	m[3]
 ) / 2
 
 (* Stretching again ; https://github.com/lukiss/Losers-Union-SC-Research *)
@@ -127,7 +127,7 @@ Splay(
 		),
 		0.995
 	)
-).Tanh / 2
+).Tanh * 2 / 3
 
 (* Grains, Daily ; https://github.com/lukiss/Losers-Union-SC-Research *)
 var m = { :lo :hi |
@@ -136,9 +136,10 @@ var m = { :lo :hi |
 var f = {
 	StandardL(m(1, 128), m(1, 3), 0.5, 0).ExpRange(40, 5000)
 };
+var n = 8;
 LeakDc(
 	GrainFm(
-		system.scSynth.mainOutputs,
+		n,
 		Impulse(f() / m(0.5, 8), 0),
 		m(0.1, 4) / f(),
 		f(),
@@ -147,7 +148,7 @@ LeakDc(
 		StandardL(f() / 2, 1, 0.5, 0) / 2,
 		-1,
 		1024
-	),
+	).Splay,
 	0.995
 ).SoftClip / 2
 
@@ -180,14 +181,23 @@ o
 
 (* Suspect jazz ; https://github.com/lukiss/Losers-Union-SC-Research *)
 var x = HenonL(1 + LfdNoise1(3).ExpRange(0.01, 1) * 8, 1.4, 0.3, 0, 0).Fold2(1);
-var t = (0 .. 8).collect { :n | PulseDivider(x, 8, 7 - n) };
+var t = (0 .. 8).collect { :n |
+	PulseDivider(x, 8, 7 - n)
+};
 var d = 1.5 + x.ExpRange(0.01, 1);
-var e = { :c | Perc(t, 0.004, d, c) };
+var e = { :c |
+	Perc(t, 0.004, d, c)
+};
 var c = [0 3 7 -2];
 var f = Demand(
 	t,
 	0,
-	Drand(inf, c) + Dxrand(inf, 48 + (0 .. 2).collect { :o | o * 12 + c }.concatenation)
+	[
+		Drand(inf, c),
+		Dxrand(inf, 48 + (0 .. 2).collect { :o |
+			o * 12 + c
+		}.concatenation)
+	].sum
 ).MidiCps;
 var o = SinOsc(
 	(BrownNoise() * 0.015 + 1) * f,
@@ -211,7 +221,9 @@ Splay(
 
 (* Something awfully old ; https://github.com/lukiss/Losers-Union-SC-Research ; requires=kr *)
 var a = LocalBuf(1, 8 * 2048);
-var f = { LfdNoise3(0.001 ! 7).Tan.Abs.kr };
+var f = {
+	LfdNoise3(0.001 ! 7).Tan.Abs.kr
+};
 Splay(
 	LeakDc(
 		CombC(
@@ -252,21 +264,20 @@ var f = Ddup(
 	LfPar(0.05, 0) * d / [3 7 5 1],
 	Dseq(inf, [9 .. 42].degreeToKey([0 1 3 5 7 8 10], 12)).MidiCps
 );
-Splay(
-	LeakDc(
-		GrainFm(
-			system.scSynth.mainOutputs,
-			TDmdFor(1 / d, 0, 1),
-			2 + LfPar(0.3, 0) / d * 2,
-			[2 3],
-			f,
-			f % d / 12,
-			LfPar(440, 0) / 2,
-			-1, (* Cannot be LocalBuf, Env.perc.discretize *)
-			512
-		) * 0.23,
-		0.995
-	)
+var n = 8;
+LeakDc(
+	GrainFm(
+		n,
+		TDmdFor(1 / d, 0, 1),
+		2 + LfPar(0.3, 0) / d * 2,
+		[2 3],
+		f,
+		f % d / 12,
+		LfPar(440, 0) / 2,
+		-1, (* Cannot be LocalBuf, Env.perc.discretize *)
+		512
+	).Splay * 0.23,
+	0.995
 ).sum
 
 (* 12 May 2020 ; https://github.com/lukiss/Losers-Union-SC-Research *)
@@ -338,18 +349,20 @@ var l = { :mul |
 	(LfdNoise3(0.05 ! n) * mul).Abs
 };
 var d = {
-	Demand(
-		Impulse(1 / (30 .. 53).atRandom, 0),
-		0,
-		Dxrand(inf, (7 .. 53).degreeToKey([0 1 4 5 7 9 10], 12).MidiCps)
-	)
+	{
+		Demand(
+			Impulse(1 / (30 .. 53).atRandom, 0),
+			0,
+			Dxrand(inf, (7 .. 53).degreeToKey([0 1 4 5 7 9 10], 12).MidiCps)
+		)
+	} ! n
 };
 Splay(
 	Hpf(
 		CombC(
 			PmOsc(
-				d:/0 ! n,
-				d:/0 ! n,
+				d(),
+				d(),
 				l(2),
 				l(0.5)
 			) * (l(0.25) + 1 / 4),
@@ -394,8 +407,9 @@ Normalizer(
 ).Fold2(0.8)
 
 (* 22 Nov. 2021 ; https://github.com/lukiss/Losers-Union-SC-Research *)
+var k = 1 / 100000;
 var n = {
-	1 + ((0.00001 * (1 .. 7))).scramble
+	1 + ((k * (1 .. 7))).scramble
 };
 Splay(
 	VarSaw(
@@ -405,7 +419,24 @@ Splay(
 	) * (LfSaw(5 / 3, 0) * (LfSaw(7 / 3 * n().Neg, 0).Tan)).Abs
 ).Tanh
 
-(* 12 Juli 2019 ; https://github.com/lukiss/Losers-Union-SC-Research *)
+(* 12 Juli 2019 ; https://github.com/lukiss/Losers-Union-SC-Research ; rd edit *)
+var f = { :freq :mul |
+	var z = LfdNoise3(freq) * mul;
+	z.Ring1(z % 0.01).Hypot(z)
+};
+var o = Formant(
+	f(f(3, 13), 220),
+	f(f(2, 10), f(f(3, 13), 2320)),
+	f(f(3, 5), 2500)
+);
+var a = Excess(
+	f(f(2, 12), 1),
+	f(f(1, 14), f(4.4, 0.5) + 0.3)
+);
+(o * a).EqPan2(0).SoftClip
+
+(* 12 Juli 2019 ; https://github.com/lukiss/Losers-Union-SC-Research ; rd edit *)
+var k = 8;
 var f = { :freq :mul |
 	var z = LfdNoise3(freq) * mul;
 	z.Ring1(z % 0.01).Hypot(z)
@@ -417,11 +448,11 @@ var o = Formant(
 );
 var a = {
 	Excess(
-		f(f(2, 12), 1),
+		f(f(2 / k, 12), 1),
 		f(f(1, 14), f(4.4, 0.5) + 0.3)
 	)
-} ! 2;
-(o * a).SoftClip
+} ! k;
+(o * a).Splay.SoftClip / k.sqrt
 
 (* 5 Sep. 2020 ; https://github.com/lukiss/Losers-Union-SC-Research ; requires=kr *)
 var l = {
@@ -567,6 +598,4 @@ var f = l(12, 999);
 var e = Env(a, a / a.sum / f, a.Neg * 9, nil, nil, 0).circle(0, 'lin').asEnvGen(1);
 var g = Perc(e > 0.1, 0.005, 0.9 / f, -4);
 var p = (1 - g).LinLin(0, 1, -1, 1);
-Splay(
-	(XFade2(e, (e * f).Sin, p, 1) + g).Tanh
-)
+(XFade2(e, (e * f).Sin, p, 1) + g).Tanh.Splay
