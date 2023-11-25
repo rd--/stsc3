@@ -696,6 +696,8 @@ true.class == True                                          // constant (instanc
 #[1, 2, 3, 4, 5].wchoose(#[1, 2, 3, 4, 5] / 15).isInteger   // weighted random element of collection (weights sum to 1)
 { 3.rrand(9) }.dup(9).minItem >= 3                          // random integer in range
 { 0.3.rrand(0.9) }.dup(23).maxItem < 0.9                    // random float in range
+([0, 1, 2, 3, 4, 4, 3, 2].asRandomTable * 100).round == [0, 23, 35, 44, 53, 61, 72, 88]
+([0, 1, 2, 3, 2].asRandomTable * 100).round == [0, 30, 47, 60, 80]
 
 'Routine'
 f = { | x | var y = x * 2, z = y.yield; f.value(z) }; true  // yield the receiver to the coroutine (received by next)
