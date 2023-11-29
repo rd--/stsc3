@@ -1,5 +1,5 @@
 (* Feedback loop ; https://github.com/lukiss/Losers-Union-SC-Research *)
-var i = LocalIn(2, 0);
+var i = LocalIn(2, [0 0]);
 var o = Splay2(
 	LeakDc(
 		DelayC(
@@ -127,7 +127,7 @@ Splay(
 		),
 		0.995
 	)
-).Tanh * 2 / 3
+).Tanh / 3
 
 (* Grains, Daily ; https://github.com/lukiss/Losers-Union-SC-Research *)
 var m = { :lo :hi |
@@ -536,7 +536,7 @@ var a = ((LfSaw(c.Tan / m(), 0).Abs ^ e.Max(0)).Log10.Sin.Abs ^ 10).Tanh;
 Splay(
 	SinOsc(c.Log10 * c, 0) * a,
 	SinOsc(m() * m(), 0) * 0.5
-)
+) / 23
 
 (* 27 Oktober 2022 ; https://github.com/lukiss/Losers-Union-SC-Research *)
 var a = [41 73 123 196];
