@@ -110,7 +110,7 @@ var freq = [220 221];
 SinOsc(freq, 0) * 0.1
 
 (* SinOsc ; mix to two channel *)
-SinOsc([220 221 440 441], 0).Splay * 0.1
+SinOsc([220 221 440 441], 0).Splay2 * 0.1
 
 (* SinOsc ; nested mce *)
 SinOsc([220 221; 440 441], 0).Mix * 0.1
