@@ -4,5 +4,5 @@
 	EqPan(
 		SinOsc(Rand(500, 900) * [1.0 1.2 1.5 1.8], 0) * amp,
 		{ 1.Rand2 } ! 4
-	).sum.CombN(0.1, 0.1, 1)
+	).Sum.CombN(0.1, 0.1, 1)
 }.xfade(2, 0.5)

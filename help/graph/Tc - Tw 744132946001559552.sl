@@ -5,4 +5,4 @@ var p = Pulse(
 	{ { Rand(0.2, n) } ! 2 } ! n * d,
 	{ Rand(0, pi) } ! n
 ) * n.reciprocal;
-p.sum
+p.Sum

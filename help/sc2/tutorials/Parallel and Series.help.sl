@@ -12,7 +12,7 @@ Mixing sine oscillators in parallel:
 	var f = { FSinOsc(Rand(200, 1200), 0) }; (* function to create an oscillator at a random frequency *)
 	{ f ! 2 } !> n / n * 0.1 (* stereo duplicate, array of n places, mixed, scale amplitude *)
 
-Filling an Array and summing it is a common idiom, `{ ... }.duplicate(n).sum`, which is implemented as the _!+_ operator.  The operator _!>_ uses _Mix_ in place of _sum_.
+Filling an Array and summing it is a common idiom, `{ ... }.duplicate(n).Sum`, which is implemented as the _!+_ operator.  The operator _!>_ uses _Mix_ in place of _Sum_.
 
 One common structure used in reverbs is to mix several comb delays in parallel.  This example shows how you can use parallel structures to process a single input.
 

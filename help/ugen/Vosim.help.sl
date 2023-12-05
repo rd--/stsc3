@@ -40,7 +40,7 @@ var z = 9;
 var freq = f * x * LinLin(LfNoise2(z), -1, 1, 0.25, 2);
 var decay = d * y * LinLin(LfNoise2(z), -1, 1, 0.25, 2);
 EqPan2(
-	(Vosim(t, freq, n, decay) * a).sum,
+	(Vosim(t, freq, n, decay) * a).Sum,
 	l
 ).Mix * 0.25
 

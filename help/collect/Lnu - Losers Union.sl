@@ -197,11 +197,11 @@ var f = Demand(
 		Dxrand(inf, 48 + (0 .. 2).collect { :o |
 			o * 12 + c
 		}.concatenation)
-	].sum
+	].Sum
 ).MidiCps;
 var o = SinOsc(
 	(BrownNoise() * 0.015 + 1) * f,
-	(BrownNoise() / 4 * SinOsc([3.25 0.5 2] * f, 0) * e(-28)).sum
+	(BrownNoise() / 4 * SinOsc([3.25 0.5 2] * f, 0) * e(-28)).Sum
 ) * e(-6) * (SinOsc(d + 2, 0) * 0.25 + 0.5);
 Splay(o, 3 / 4)
 
@@ -278,7 +278,7 @@ LeakDc(
 		512
 	).Splay * 0.23,
 	0.995
-).sum
+).Sum
 
 (* 12 May 2020 ; https://github.com/lukiss/Losers-Union-SC-Research *)
 var l = { :freq :mul |
@@ -519,11 +519,11 @@ var m = {
 var c = (0 .. 9).collect { :n |
 	m() ^ n
 };
-var n = c / c.sum;
+var n = c / c.Sum;
 var e = TChoose(
 	Dust(1 + m()),
 	[
-		c.sum,
+		c.Sum,
 		n,
 		c.RoundTo(32),
 		n.Atan2(m()),
@@ -547,7 +547,7 @@ var f = SinOsc(440, 0);
 };
 Splay(
 	LeakDc(f.Tanh, 0.995),
-	SinOsc(f.sum.Abs, 0)
+	SinOsc(f.Sum.Abs, 0)
 )
 
 (* 23 Mars ; https://github.com/lukiss/Losers-Union-SC-Research *)
@@ -595,7 +595,7 @@ var l = { :lo :hi |
 };
 var a = { l(0.001, 1) } ! 6;
 var f = l(12, 999);
-var e = Env(a, a / a.sum / f, a.Neg * 9, nil, nil, 0).circle(0, 'lin').asEnvGen(1);
+var e = Env(a, a / a.Sum / f, a.Neg * 9, nil, nil, 0).circle(0, 'lin').asEnvGen(1);
 var g = Perc(e > 0.1, 0.005, 0.9 / f, -4);
 var p = (1 - g).LinLin(0, 1, -1, 1);
 (XFade2(e, (e * f).Sin, p, 1) + g).Tanh.Splay

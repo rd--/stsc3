@@ -10,5 +10,5 @@ var z = [
 	a(LfSaw(1 / 9, 0) + 1, 5 ^ LfSaw(b / 9, 0), 82, x * 3, b * 3) / 8,
 	a(3, LfSaw(x * 2, 0.5) * 88, 63, x * 7, 0) / 4
 ];
-var o = z.sum.Splay;
-o + GVerb(o.sum / 9, 50, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300)
+var o = z.Sum.Splay;
+o + GVerb(o.Sum / 9, 50, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300)

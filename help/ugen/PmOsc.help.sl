@@ -32,5 +32,5 @@ var s = Voicer(16) { :e |
 	var mfreq = LinLin(LfPulse(1 / 8, 0, 0.5), 0, 1, 1.01, 2.01) * cps;
 	var ix = XLine(e.w, 3, 0.001, 0.2);
 	PmOsc(cpsv, mfreq, ix, 0) * e.z * e.w
-}.sum;
+}.Sum;
 XFade2(s, GVerb(Bpf(s, 90.MidiCps, 1), 50, 5, 0.5, 0.5, 15, 0, 0.7, 0.5, 300), 0.2, 1)

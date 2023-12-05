@@ -4,5 +4,5 @@
 		SinOsc(i, SinOsc((i + k) ^ i, 0)
 		/
 		(Decay(Impulse((0.5 ^ i) / k, 0), [i, i + 1]) * k))
-	}.sum
-}.sum.GVerb(1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300).transposed.Mix / 512
+	}.Sum
+}.Sum.GVerb(1, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300).transposed.Mix / 512

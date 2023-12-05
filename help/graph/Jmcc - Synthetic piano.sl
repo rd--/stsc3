@@ -6,5 +6,5 @@
 		var dt = 1 / (n + [-0.05 0 0.04][i]).MidiCps;
 		CombL(LfNoise2(3000) * e, dt, dt, 6)
 	};
-	EqPan2(z.sum, n - 36 / 27 - 1)
+	EqPan2(z.Sum, n - 36 / 27 - 1)
 } !> 3

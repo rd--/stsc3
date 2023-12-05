@@ -26,7 +26,7 @@ Hpf(
 		9
 	),
 	200
-).sum.transposed.Mix
+).Sum.transposed.Mix
 
 (* http://earslap.com/weblog/music-release-laconicism.html ; wait *)
 var f = LocalIn(2, 0).Tanh;
@@ -112,7 +112,7 @@ fundamentals.collect { :freq |
 		Saw(freq),
 		Rand(-1, 1)
 	) * numVoices.reciprocal
-}.sum
+}.Sum
 
 (* http://earslap.com/article/recreating-the-thx-deep-note.html ; adding random wobbling to freqs, sorting randoms, lowpassing ; fundamentals are sorted, so higher frequencies drift more *)
 var numVoices = 30;
@@ -123,7 +123,7 @@ fundamentals.withIndexCollect { :freq0 :index |
 		BLowPass(Saw(freq), freq * 5, 0.5),
 		Rand(-1, 1)
 	) * numVoices.reciprocal
-}.sum
+}.Sum
 
 (* http://earslap.com/article/recreating-the-thx-deep-note.html ; inverting init sort, louder bass, final volume envelope, some little tweaks ; requires=CurveGen *)
 var numVoices = 30;
@@ -142,13 +142,13 @@ var snd = (1 .. numVoices).collect { :numTone |
 		BLowPass(Saw(freq), freq * 6, 0.6),
 		Rand(-1, 1)
 	) * (1 - (1 / numTone)) * 1.5 / numVoices
-}.sum;
+}.Sum;
 Limiter(BLowPass(snd, 2000 + (outerEnv * 18000), 0.5) * (2 + outerEnv) * ampEnvelope, 1, 0.01)
 
 (* http://earslap.com/article/sctweeting.html *)
 var a = LocalIn(1, 0);
 var x = SinOsc((Decay(Impulse([4, 4.005], 0), 1000 * a.Abs) * 50), a).Distort;
-x <! LocalOut(x.sum)
+x <! LocalOut(x.Sum)
 
 (* http://earslap.com/article/sctweeting.html ; wait to start *)
 var f = LocalIn(2, 0).Tanh;

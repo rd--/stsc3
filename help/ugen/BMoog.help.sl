@@ -9,10 +9,5 @@ Voicer(16) { :e |
 		CombN(flt, 0.5, [0.4, 0.35], 2) * 0.4 + (flt * 0.5),
 		e.i * 2 - 1,
 		LagUd(e.w, 0, 3) * e.z
-	).sum
+	).Sum
 }.Mix
-
-(* ---- notes.md ---- *)
-Silent(2) ++ (v * 2).mixByNamedRule('16×2→4×4').sum (* 4-subaudio speakers are at 3:6 *)
-Silent(8) ++ v.mixByNamedRule('16×2→2×8').sum (* 8-main speakers are at 9:16 *)
-Silent(8) ++ v.mixByNamedRule('16×2→2×8').concatenation (* 8-secondary are at 17:24 *)

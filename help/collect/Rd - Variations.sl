@@ -48,7 +48,7 @@ z.Clip2(Rand(Dust(8), 0, 1)) * 0.25
 		var env = Sine(tr, du.max * ds) * Rand(tr, 0.005, 0.01);
 		var pos = XLine(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), d);
 		var osc = SinOsc(freq, 0);
-		EqPan2(osc, pos).sum * env
+		EqPan2(osc, pos).Sum * env
 	};
 	var scale = [0, 2, 4, 5, 7, 9, 11];
 	var octaves = [4, 5, 6, 7];

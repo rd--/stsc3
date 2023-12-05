@@ -22,7 +22,7 @@ var rvb = { :in |
 	};
 	echo + (0.3 * z)
 };
-var out = LfPulse(freq * [1, 3/2, 2], 0, 0.3).sum;
+var out = LfPulse(freq * [1, 3/2, 2], 0, 0.3).Sum;
 out := Rlpf(out, ffreq, 0.3) * env;
 out := Rlpf(out, ffreq, 0.3) * env;
 out := LeakDc(rvb(out * 0.02), 0.995);

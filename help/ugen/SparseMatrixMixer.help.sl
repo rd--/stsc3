@@ -5,11 +5,11 @@ SparseMatrixMixer(2, SinOsc([220, 221], 0) * 0.1, [1 1 1; 2 2 1])
 SparseMatrixMixer(24, SinOsc([220, 221], 0) * 0.1, [1 9 1; 2 13 1])
 
 (* SparseMatrixMixer ; randomly copy from 4-channel input to 24-channel output *)
-{
+{ :tr |
 	SparseMatrixMixer(
 		24,
 		{
-			SinOsc(Rand(220, 550), 0)
+			SinOsc(Rand(tr, 220, 550), 0)
 		} ! 4,
 		{
 			[
@@ -19,7 +19,7 @@ SparseMatrixMixer(24, SinOsc([220, 221], 0) * 0.1, [1 9 1; 2 13 1])
 			]
 		} ! 6
 	)
-}.OverlapTexture(6, 5, 4).sum
+}.OverlapTexture(6, 5, 4).Sum
 
 (* SparseMatrixMixer ; displace 4-channel input by two places at 6-channel output *)
 SparseMatrixMixer(6, SinOsc([32 .. 35], 0) * 0.25, [1 3 1; 2 4 1; 3 5 1; 4 6 1])

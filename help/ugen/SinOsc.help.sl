@@ -41,7 +41,7 @@ var ampArray = (spectrum.log2 * tilt).DbAmp;
 var freq0 = 110;
 var freq = freq0 * spectrum * tension;
 var sig = SinOsc(freq, { Rand(0, 2 * pi) } ! numPartials);
-(sig * ampArray).sum / numPartials
+(sig * ampArray).Sum / numPartials
 
 (* SinOsc ; https://scsynth.org/t/6256/5 ; bipolar version *)
 var freq = 130;
@@ -179,7 +179,7 @@ var n = 16;
 } !+ n
 
 (* ---- SinOsc ; mce ; two out ; each single channel ; hence mono *)
-SinOsc([[440], [441]], 0).sum * 0.1
+SinOsc([[440], [441]], 0).Sum * 0.1
 
 (* ---- SinOsc ; fm ; https://github.com/Thrifleganger/VisualSynth ; requires=Voicer *)
 var fmSignal = Voicer(16) { :e |

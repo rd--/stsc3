@@ -4,7 +4,7 @@
 		SinOsc(
 			f * [Rand(tr, 0.7, 1.3), 1],
 			{ Rand(tr, 0, 2 * pi) } ! 2
-		).sum * 0.1
+		).Sum * 0.1
 	};
 	var osc = SinOsc(
 		Rand(tr, 24, 108).MidiCps,

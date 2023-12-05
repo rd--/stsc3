@@ -13,6 +13,6 @@
 	[p, q].collect { :freqArray |
 		freqArray.collect { :freq |
 			SinOsc(freq, Rand(tr, 0, 2 * pi))
-		}.sum
+		}.Sum
 	} * 0.1 / n
 }.OverlapTexture(4, 4, 2).Mix

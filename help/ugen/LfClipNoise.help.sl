@@ -9,5 +9,5 @@
 		Saw(freq * [2, 3]),
 		Pulse(freq * [3, 4], 0.5)
 	] * mul;
-	FreeVerb(snd.sum, 0.33, 0.5, 0.5)
+	FreeVerb(snd.Sum, 0.33, 0.5, 0.5)
 }.overlap(7, 7, 3)

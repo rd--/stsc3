@@ -27,6 +27,6 @@ var g = { :func :n |
 	};
 	r
 };
-var freq3 = g(f, 4).value(LfSaw(0.2 * [1, 1.1], 0)).ExpRange(6, 11000);
-var osc = Bpf(Saw(freq3).product, [70, 800, 9000, 5242], 0.2).sum;
+var freq3 = g(f:/1, 4).value(LfSaw(0.2 * [1, 1.1], 0)).ExpRange(6, 11000);
+var osc = Bpf(Saw(freq3).product, [70, 800, 9000, 5242], 0.2).Sum;
 [osc, osc] * 0.3

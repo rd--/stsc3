@@ -13,7 +13,7 @@ var z = { :tr |
 		) * 0.08 - 0.04;
 		var o = (o1 * o2.Max(0)).Max(0);
 		EqPan2(o, Rand(tr, -1, 1)) * 2 / g
-	}.sum
+	}.Sum
 }.OverlapTexture(12.8, 6.4, 6).Mix;
 {
 	CombN(LeakDc(z, 0.995), 0.3, { Rand(0.1, 0.3) } ! 2, 20)

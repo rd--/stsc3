@@ -45,4 +45,4 @@ var env = Sine(w, dur) / 5;
 EqPan(
 	PlayBuf(numChannels, soundFile, rate, w, startPos, 1, 0) * env,
 	MouseX(-0.75, 0.75, 0, 0.2) + Rand(w, -0.25, 0.25)
-).sum
+).Sum

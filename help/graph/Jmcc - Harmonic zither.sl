@@ -9,4 +9,4 @@ var strings = pitch.indices.collect { :i |
 	var string = CombL(pluck, period, period, 8);
 	EqPan(string, i - 1 * panSpacing - 0.75)
 };
-LeakDc(Lpf(strings.sum, 12000), 0.995)
+LeakDc(Lpf(strings.Sum, 12000), 0.995)

@@ -33,7 +33,7 @@ GrainFm(k, tr, 0.1, carFreq, modFreq, 1, pan, -1, 128).Splay / 99
 (* https://scsynth.org/t/6452 *)
 var o1 = Saw([2000 200 1000 4000]) * Perc(Impulse(5 * [2 0.5 0.25 0.125], 0), 0.01, 1, -4);
 var o2 = SinOsc(128, 0) * Perc(Impulse(5 * 0.125, 0), 0.01, 1, -4);
-(o1.sum + o2) / 5
+(o1.Sum + o2) / 5
 
 (* https://scsynth.org/t/6452 *)
 var f = { :p |

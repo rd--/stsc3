@@ -4,6 +4,6 @@
 		var n = LfNoise0(0.25 ^ (j - 1) / 8);
 		var p = LfPulse(2 ^ (i - 1) / 8, 0, 0.5);
 		1 / 4 ^ (i - 1) * (n > 0 - p).Abs
-	}.sum * 30;
+	}.Sum * 30;
 	EqPan2(Rlpf(Pulse(f, 0.3), Lag(f.Sqrt, 2) * 30, 0.5), 0) * 0.2
 }.Mix * 0.25

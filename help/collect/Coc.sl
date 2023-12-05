@@ -70,7 +70,7 @@ var sync = 5;
 	SinOsc(900, 0) * Decay2(Impulse(9 / sync, 0), 0.01, 1),
 	SinOsc(1100, 0) * Decay2(Impulse(6 / sync, 0), 0.01, 1),
 	SinOsc(1300, 0) * Decay2(Impulse(1 / sync, 0), 0.01, 1)
-].sum * 0.1
+].Sum * 0.1
 
 (* Synched impulses, abstracted *)
 var sync = 5;
@@ -93,7 +93,7 @@ var f = SinOsc(1000, 0) * 150 + 300;
 var t = Impulse(1 / 3, 0);
 (1 .. 12).collect { :n |
 	SinOsc(f * n, 0) * (LfNoise1(Rand(speed, speed * 2)) * 0.5 + 0.5) / n
-}.sum * 0.1
+}.Sum * 0.1
 
 (* Additive sawtooth *)
 var f = 100;
@@ -101,13 +101,13 @@ var t = Impulse(1 / 3, 0);
 var dt = [1.4, 1.1, 2, 1, 1.8, 2.9, 4, 0.3, 1, 3.6, 2.3, 1.1];
 (1 .. 12).collect { :n |
 	SinOsc(f * n, 0) * Decay2(t, 0.01, dt[n]) / n
-}.sum * 0.1
+}.Sum * 0.1
 
 (* Lovely bells *)
 var t = Impulse(1 / 3, 0);
 var m = { Rand(1, 3) } ! 2;
 var env = Decay2(t, 0.01 * m, 1 * m) / (1 .. 6);
-SinOsc([60 64 67 71 74 78].MidiCps, 0).sum * env * 0.1
+SinOsc([60 64 67 71 74 78].MidiCps, 0).Sum * env * 0.1
 
 (* Interesting drone *)
 var freq = [40 42 43 45 47 48 41 42].MidiCps;
@@ -199,7 +199,10 @@ var i = Latch(LfSaw(MouseX(1.1, 30, 0, 0.2), 0) * 5 + 5, Impulse(10, 0));
 PmOsc(300, 356, i, 0) * 0.1
 
 (* Envelope used also for the index *)
-var f = Latch((SinOsc([100 200 300 550], 0) * 100 + 110).sum, Impulse(7, 0));
+var f = Latch(
+	(SinOsc([100 200 300 550], 0) * 100 + 110).Sum,
+	Impulse(7, 0)
+);
 var e = Decay2(Impulse(7, 0), 0.02, 0.2);
 PmOsc(f, f * [1.25, MouseX(1, 3, 0, 0.2)], e * [5, MouseY(3, 9, 0, 0.2)], 0) * e * 0.1
 

@@ -25,5 +25,5 @@ var s = (1 .. n).collect { :i |
 		o3 ^ (i / 3),
 		LfSaw(LfNoise2(lf) / i, Rand(0, 1))
 	) * e
-}.sum;
+}.Sum;
 FreeVerb2(s.first, s.second, 1 / 3, 0.5, 0.5)

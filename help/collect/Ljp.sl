@@ -1,8 +1,8 @@
 (* ascension ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #1 *)
-Pan2(Rlpf(PinkNoise(), Phasor(1, (1 .. 8) / 200, 20, 20000, 0), 0.05).sum, 0, 0.1)
+Pan2(Rlpf(PinkNoise(), Phasor(1, (1 .. 8) / 200, 20, 20000, 0), 0.05).Sum, 0, 0.1)
 
 (* nostalgic sci-fi music ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #2 *)
-CombC(SinOsc(LfNoise2([1, 1, 1, 1] * 0.1) * 440 + ([1, 2] * 440), 0).sum * 0.01, 0.2, [0.13, 0.2], 15)
+CombC(SinOsc(LfNoise2([1, 1, 1, 1] * 0.1) * 440 + ([1, 2] * 440), 0).Sum * 0.01, 0.2, [0.13, 0.2], 15)
 
 (* busy forest ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #3 *)
 CombC(Formant(LfNoise0([1, 0.7]) * 8 + 9, LfNoise0([1, 0.7]) * 4000 + 4000, 200) * 0.3, 0.2, 0.2, 1)
@@ -11,7 +11,7 @@ CombC(Formant(LfNoise0([1, 0.7]) * 8 + 9, LfNoise0([1, 0.7]) * 4000 + 4000, 200)
 Pan2(Saw(LfNoise1(1) * 1000 + 1200) * FSinOsc(SampleRate() / 2, 1), 0, 0.3)
 
 (* hedge trimmer ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #5 *)
-Pan2(Bpf(PinkNoise(), (1 .. 64) * (LfNoise2(4) * 30 + 100), 0.01).sum, 0, 0.6)
+Pan2(Bpf(PinkNoise(), (1 .. 64) * (LfNoise2(4) * 30 + 100), 0.01).Sum, 0, 0.6)
 
 (* spectral harp ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #6 *)
 var p = SinOsc(1760, 0) * [0.01, 0.01];
@@ -72,41 +72,41 @@ p + CombC(p, 0.4, LfNoise0(2) * 0.4 + 0.4, -10000)
 
 (* trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13a *)
 var p = [1, 3, 5];
-Pan2(SinOsc(800 * (SinOsc(p * 0.1, 0) / p).RoundTo(1 / 6).sum, 0), 0, 0.2)
+Pan2(SinOsc(800 * (SinOsc(p * 0.1, 0) / p).RoundTo(1 / 6).Sum, 0), 0, 0.2)
 
 (* trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13b *)
 var p = [1, 2] + 0.01;
-Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 6), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 6), 0.002).Sum, 0), 0, 0.2)
 
 (* trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13c *)
 var p = [0.5, 1, 2];
-Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1000 * Lag((LfSaw(p * 0.4, 0) / p).RoundTo(1 / 8), 0.002).Sum, 0), 0, 0.2)
 
 (* trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13d *)
 var p = [1, 2] + 0.04;
-Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).Sum, 0), 0, 0.2)
 
 (* trills ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #13e *)
 var p = [1, 4] + 0.01;
-Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).sum, 0), 0, 0.2)
+Pan2(SinOsc(1400 * Lag((LfTri(p * 0.2, 0) / p).RoundTo(1 / 8), 0.002).Sum, 0), 0, 0.2)
 
 (* short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14a *)
 Pan2(SinOsc(Lpf(Stepper(Impulse(80, 0), 0, 1, 512, 84, 0), 1000) * 20, 0), 0, 0.2)
 
 (* short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14b *)
-Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 12, [3, 4, 10], 1), 1000) * 100, 0).sum, 0, 0.2)
+Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 12, [3, 4, 10], 1), 1000) * 100, 0).Sum, 0, 0.2)
 
 (* short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14c *)
-Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 16, [4, 7, 10, 12], 1), 1000) * 70, 0).sum, 0, 0.2)
+Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 16, [4, 7, 10, 12], 1), 1000) * 70, 0).Sum, 0, 0.2)
 
 (* short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14d *)
-Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 16, [3, 7, 10, 11], 1), 1000) * 90, 0).sum, 0, 0.2)
+Pan2(SinOsc(Lpf(Stepper(Impulse(10, 0), 0, 1, 16, [3, 7, 10, 11], 1), 1000) * 90, 0).Sum, 0, 0.2)
 
 (* short-loops ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #14e *)
-Pan2(SinOsc(Rlpf(Stepper(Impulse(8, 0), 0, 1, 8, [1, 2, 3], 1), 1000, 0.01) * 200, 0).sum, 0, 0.1)
+Pan2(SinOsc(Rlpf(Stepper(Impulse(8, 0), 0, 1, 8, [1, 2, 3], 1), 1000, 0.01) * 200, 0).Sum, 0, 0.1)
 
 (* saw scratching ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #15 *)
-Pan2(CombC(LfSaw([0.49, 1, 1.51, 1.89] * 200, 0) * 0.1, 1, Clip(Rlpf(LfNoise2(0.1) * 0.4 + 0.6, 10, 1.1), 0.21, 1), 15).sum, 0, 1)
+Pan2(CombC(LfSaw([0.49, 1, 1.51, 1.89] * 200, 0) * 0.1, 1, Clip(Rlpf(LfNoise2(0.1) * 0.4 + 0.6, 10, 1.1), 0.21, 1), 15).Sum, 0, 1)
 
 (* shifty feedback ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #16a *)
 Pan2(CombC(SinOsc(100, 0), 2, LfTri(1.1389, 0) * 0.5 + 1.4, 80), 0, 0.1)

@@ -10,7 +10,7 @@
 		[
 			Rand(tr, 0, Rand(tr, 500, 8000)),
 			ExpRand(tr, 60, 4000)
-		].sum
+		].Sum
 	} ! n;
 	var dt = { Rand(tr, 0.1, 2) } ! n;
 	var s = RingzBank(exc, f, [1], dt) * 0.1;

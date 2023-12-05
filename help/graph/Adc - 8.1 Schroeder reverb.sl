@@ -30,7 +30,7 @@ var input = 0.5.coin.if { (* Audio input signal *)
 };
 var buffer = BufAlloc(1, 48000 * 0.1).BufClear; (* A buffer for the early reflections delay line *)
 var revMonoInput = input.isArray.if {
-	input.sum / input.size (* Reverb input must be mono *)
+	input.Sum / input.size (* Reverb input must be mono *)
 } {
 	input
 };
@@ -61,4 +61,4 @@ allPassIo := combsOut;
 [
 	[ input * (1 - revBalance), input * (1 - revBalance)],
 	((tapsOut + allPassIo) * revBalance)
-].sum <! delayWriter
+].Sum <! delayWriter

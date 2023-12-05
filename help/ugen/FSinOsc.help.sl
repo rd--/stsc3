@@ -23,6 +23,6 @@ var pDur = [1 0.9 0.65 0.55 0.325 0.35 0.25 0.2 0.15 0.1 0.075];
 			pFreq[index] * freq + pDetune[index],
 			0
 		) * Perc(tr, 0.01, pDur[index] * dur, -4) * pAmp[index] * (amp / 11)
-	}.sum;
+	}.Sum;
 	EqPan2(osc, pan)
 } !> 5

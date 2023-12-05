@@ -15,5 +15,5 @@ Voicer(16) { :e |
 	var soundMain = XLine(e.w, zero, 1, 1 / freqs) * XLine(e.w, 1, zero, decays * 4) * sound * mod;
 	var soundHigh = XLine(e.w, 0.3 * (velocity + zero), zero, 0.02) * SinOsc(hiFreqs, 0); (* hi frequency onset *)
 	var pan = e.i * 2 - 1;
-	EqPan2(soundMain.sum + soundHigh.sum, pan) * LagUd(e.w, 0.01, 4)
+	EqPan2(soundMain.Sum + soundHigh.Sum, pan) * LagUd(e.w, 0.01, 4)
 }.Mix * 0.25

@@ -20,11 +20,19 @@ Voicer(16) { :e |
 }.Mix
 
 (* PanAz ; event control *)
+var nc = 2;
 Voicer(16) { :e |
-	PanAz(24, Blip(e.p.UnitCps, e.y * 3 + 1), e.i * 2 - 1, 1, 3, 0) * e.w * e.z * e.z
-}.sum
+	PanAz(
+		nc,
+		Blip(e.p.UnitCps, e.y * 3 + 1),
+		e.i * 2 - 1,
+		1,
+		3,
+		0
+	) * e.w * e.z * e.z
+}.Sum
 
-(* dictionary ; voicer *)
+(* Dictionary ; Voicer *)
 (
 	w: SinOsc(1 / [5, 7], 0),
 	x: SinOsc(1 / [13, 17], 0)
@@ -42,7 +50,7 @@ var f = { :e |
 Voicer(numVoices: 16, voiceFunc: f).Sum
 
 (* MembraneCircle ; event control ; note limited voice count ; keywords *)
-var f = { :e |
+ f = { :e |
 	var loss = LinExp(in: e.y, srclo: 0, srchi: 1, dstlo: 0.99999, dsthi: 0.99950);
 	var wobble = SinOsc(freq: 2, phase: 0);
 	var tension = LinExp(in: e.x, srclo: 0, srchi: 1, dstlo: 0.01, dsthi: 0.1) + (wobble * 0.0001);

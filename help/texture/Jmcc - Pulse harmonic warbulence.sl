@@ -11,7 +11,7 @@
 			SinOsc(f * i, 0) * m * (1 / i),
 			1.Rand2
 		)
-	}.sum * p;
+	}.Sum * p;
 	{
 		CombN(z, 0.3, { Rand(0.1, 0.3) } ! 2, 8)
 	} !+ 5 * 0.5

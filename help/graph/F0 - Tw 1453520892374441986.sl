@@ -9,4 +9,4 @@ var f = Latch(z, t % SinOsc(99 ^ SinOsc(1 / 64, 0), 0));
 var g = SinOsc(SinOsc(1 / 16, 0) * 3 + 12, 0) + 1 / 2 * (SinOsc(1 / 8, c) * 50 + 51);
 var h = Latch(g, t * SinOsc(1 / 4, 0));
 var o = Blip(f, h).Splay / 3;
-o + GVerb(o.sum / 3 / 3, 30, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300)
+o + GVerb(o.Sum / 3 / 3, 30, 3, 0.5, 0.5, 15, 1, 0.7, 0.5, 300)

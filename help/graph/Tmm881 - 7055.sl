@@ -43,8 +43,8 @@ var tendencyMask = [
 		} ! 2;
 		var tr = Impulse(triggerRate[i], 0);
 		GrainFm(2, tr, dur[i], freq[1], freq[2], 1, WhiteNoise() * 0.6, -1, 512) * 0.1
-	}.sum;
+	}.Sum;
 	var rev = FreeVerb(dry, 0.33, 0.5, 0.5);
 	var del = CombC(dry, 0.2, 0.2, 1);
 	dry + rev + del * 0.2
-}.duplicate(4).sum.transposed.Mix
+}.duplicate(4).Sum.transposed.Mix

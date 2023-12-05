@@ -15,5 +15,5 @@
 		}
 	};
 	var fp = { Rand(tr, 220, 660) } ! np;
-	fp.collect(prt(Rand(tr, 4, 7), Rand(tr, 0.01, 0.05))).sum
+	fp.collect(prt(Rand(tr, 4, 7), Rand(tr, 0.01, 0.05))).Sum
 } !> 5

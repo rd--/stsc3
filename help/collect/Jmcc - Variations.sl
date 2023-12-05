@@ -196,7 +196,7 @@ var l = Line(0, -0.02, 60);
 (1 .. 20).collect { :h |
 	var n = LfNoise1({ Rand(-4, 4) } ! 2 + 6) * 0.02 + l;
 	SinOsc(50 * (h + 1), 0) * n.Max(0)
-}.sum
+}.Sum
 
 (* harmonic tumbling (jmcc) #1 *)
 var t = XLine([10, 11], 0.1, 60, 0);
@@ -267,7 +267,7 @@ Voicer(16) { :e |
 var s = Voicer(16) { :e |
 	var s = SinOsc(e.x * 400 + 500 * [1 1.2 1.5 1.8], 0); (* just minor seventh chord, 1:1 5:4 3:2 9:5 *)
 	var a = LfNoise2({ Rand(30, 90) } ! 4 * (0.75 + e.j)).Max(0) * e.z;
-	Pan2(s, { Rand(-1, 1) } ! 4 + (e.i * 2 - 1), a * LagUd(e.w, 0, e.k * 2)).sum
+	Pan2(s, { Rand(-1, 1) } ! 4 + (e.i * 2 - 1), a * LagUd(e.w, 0, e.k * 2)).Sum
 }.Mix * 0.5;
 CombN(s, 0.1, 0.1, 1)
 
@@ -307,7 +307,7 @@ var y = z * 0.6;
 {
 	[y, y].collect { :i |
 		CombL(i, 0.06, LfNoise1(0.3.Rand) * 0.025 + 0.035, 1)
-	}.sum
+	}.Sum
 } ! 2 + z
 
 (* wind metals (jmcc) ; texture=overlap,5,2,12,inf *)
@@ -319,7 +319,7 @@ var s = RingzBank(exc, f, nil, dt) * 0.1;
 s.SoftClip
 
 (* zizle (jmcc) #SC3d1.5 ; texture=overlap,4,4,12,inf *)
-var a = { :f | (SinOsc(f * [Rand(0.7, 1.3), 1], { Rand(0, 2 * pi) } ! 2) * 0.1).sum };
+var a = { :f | (SinOsc(f * [Rand(0.7, 1.3), 1], { Rand(0, 2 * pi) } ! 2) * 0.1).Sum };
 var o = SinOsc(Rand(24, 108).MidiCps, Rand(0, 2 * pi));
 var s = o * a(ExpRand(0.3, 8)).Max(0) * a(ExpRand(6, 24)).Abs;
 EqPan(s, Rand(-1, 1))
@@ -364,7 +364,7 @@ var b = { :f :m :a :g |
 [
 	{ b(14, 400, 500, 0.06) } ! 2,
 	{ b(20, 800, 1000, 0.10) } ! 2
-].sum
+].Sum
 
 (* ---- birdies (jmcc) #6 ; muladd *)
 {
@@ -597,7 +597,7 @@ var strings = (1 .. 8).collect { :i |
 	var n = 15;
 	var z = [{ 300 * i + LinRand(0, 8000, 0) } ! n, nil, { Rand(1, 4) } ! n].asKlankSpec;
 	Pan2(Klank(pluck, 1, 0, 1, z), i * 0.2 - 0.5, 1)
-}.sum;
+}.Sum;
 LeakDc(
 	Lpf(string, 12000),
 	0.995

@@ -14,6 +14,6 @@
 		var delayTime = (freq * detune).reciprocal;
 		var decayTime = Rand(tr, 3, 6);
 		CombL(hammer, delayTime, delayTime, decayTime)
-	}.sum;
+	}.Sum;
 	EqPan2(src, pan) / 2
 }.OverlapTexture(2, 0, 9).Mix

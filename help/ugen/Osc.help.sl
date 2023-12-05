@@ -12,5 +12,5 @@ var c = 4096.sineTable(1 / (1 .. 128), [0]).normalize.asWavetable.asLocalBuf;
 			0
 		) * 0.01 + 1 * [82 123 196 147 41 55],
 		0
-	).sum
+	).Sum
 } !^ 3 / 17

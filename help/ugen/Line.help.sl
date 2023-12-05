@@ -19,7 +19,7 @@ octaves.collect { :m0 |
 			Line(1.Rand2, 1.Rand2, du)
 		) * Line(0.1.Rand, 0.1.Rand, du)
 	};
-	o.sum
+	o.Sum
 }.Mix * 0.2
 
 (* Line ; note Line is an existing class in Squeak *)
