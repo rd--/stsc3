@@ -11,10 +11,7 @@ var r = Choose(
 	[c.Sum, n, c.RoundTo(32), n.Atan2(m), c.Sin, c.Tan, n.Hypot(c)]
 );
 var e = ((LfSaw(c.Tan / m, 0).Abs ^ r.Max(0)).Log10.Sin.Abs ^ 10).Tanh;
-Splay2(
+Splay(
 	o * e,
-	SinOsc(m * m, 0),
-	1,
-	0,
-	true
+	SinOsc(m * m, 0)
 )

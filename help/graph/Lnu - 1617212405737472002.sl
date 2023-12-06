@@ -32,7 +32,7 @@ var c = [
 	15 20 25 31 36 42 47 51 56 61 67 72 78 83 87 92 97 103;
 	16 21 25 31 36 42 47 52 57 61 67 72 78 83 88 93 97 103
 ].atRandom;
-Splay2(
+Splay(
 	LeakDc(
 		[
 			c.MidiCps.collect { :freq |
@@ -43,8 +43,5 @@ Splay2(
 		].product,
 		0.995
 	),
-	SinOsc(1 / c.first, 0),
-	1,
-	0,
-	true
+	SinOsc(1 / c.first, 0)
 )
