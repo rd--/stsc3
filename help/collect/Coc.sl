@@ -13,7 +13,7 @@ Pan2(o, 0, 1) + d
 var t = Impulse(6, 0);
 var o = Blip(Rand(t, 48, 72).MidiCps, Rand(t, 1, 12)) * Rand(t, -0.5, 0.4).Max(0);
 var p = Pan2(o, Rand(t, -1.0, 1.0), Decay2(t, 0.1, 3) * 0.5);
-p + CombL(p, 2.0, 4/6, 6)
+p + CombL(p, 2.0, 4 / 6, 6)
 
 (* Interesting rising sounds *)
 (1 .. 5).collect { :c |

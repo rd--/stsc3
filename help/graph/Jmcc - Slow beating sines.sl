@@ -4,15 +4,15 @@
 	var p = [];
 	var q = [];
 	n.timesRepeat {
-		var freq = Rand(tr, 24, 84).MidiCps;
+		var freq = TRand(24, 84, tr).MidiCps;
 		var d = 5;
 		p.add(freq);
-		{ p.add(freq + Rand(tr, d.negated, d)) } ! 2;
-		{ q.add(freq + Rand(tr, d.negated, d)) } ! 3
+		{ p.add(freq + TRand(d.negated, d, tr)) } ! 2;
+		{ q.add(freq + TRand(d.negated, d, tr)) } ! 3
 	};
 	[p, q].collect { :freqArray |
 		freqArray.collect { :freq |
-			SinOsc(freq, Rand(tr, 0, 2 * pi))
+			SinOsc(freq, TRand(0, 2 * pi, tr))
 		}.Sum
 	} * 0.1 / n
 }.OverlapTexture(4, 4, 2).Mix

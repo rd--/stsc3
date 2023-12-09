@@ -5,7 +5,7 @@
 		BufRd(
 			1,
 			l.asLocalBuf,
-			Rand(tr, 0, 6),
+			TRand(0, 6, tr),
 			0,
 			1
 		).Lag(LfNoise2(0.3).Range(0.01, 0.1))

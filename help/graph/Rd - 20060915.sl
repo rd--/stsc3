@@ -5,15 +5,15 @@
 	var prt = { :d :a |
 		{ :cf |
 			var rln = { :r :a :b |
-				Line(tr, a + Rand(tr, 0, r), b, d)
+				TLine(a + TRand(0, r, tr), b, d, tr)
 			};
 			var f = [
 				cf,
-				Rand(tr, cf, cf + 2)
+				TRand(cf, cf + 2, tr)
 			] + (SinOsc(rln(1, 5, 0.01), 0) * rln(10, 20, 0));
-			SinOsc(f, 0) * Decay2(tr, Rand(tr, 0.1, 0.2), d) * a
+			SinOsc(f, 0) * Decay2(tr, TRand(0.1, 0.2, tr), d) * a
 		}
 	};
-	var fp = { Rand(tr, 220, 660) } ! np;
-	fp.collect(prt(Rand(tr, 4, 7), Rand(tr, 0.01, 0.05))).Sum
+	var fp = { TRand(220, 660, tr) } ! np;
+	fp.collect(prt(TRand(4, 7, tr), TRand(0.01, 0.05, tr))).Sum
 } !> 5

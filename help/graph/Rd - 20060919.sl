@@ -13,9 +13,9 @@
 		42 35 48 47 43
 		40 59 45 47 52
 	].asLocalBuf;
-	var f = BufRd(1, [b0, b1], IRand(tr, 0, 6), 0, 2);
+	var f = BufRd(1, [b0, b1], TiRand(0, 6, tr), 0, 2);
 	[
 		Blip((r + f).MidiCps, 12),
-		Blip((r + f + Rand(tr, -0.0001, 0.0001)).MidiCps, 12)
+		Blip((r + f + TRand(-0.0001, 0.0001, tr)).MidiCps, 12)
 	].Sum * Decay2(tr, 0.3, 1.2) * 0.1
 }.Mix

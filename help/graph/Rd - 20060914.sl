@@ -5,9 +5,9 @@
 		var du = [5 4 5 7 4 5];
 		var d = du * ds;
 		EqPan2(
-			SinOsc(XLine(tr, m, m + Rand(tr, 0.05, 0.5), d).MidiCps, 0),
-			XLine(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), d)
-		).Sum * Sine(tr, du.max * ds) * Rand(tr, 0.005, 0.01)
+			SinOsc(TxLine(m, m + TRand(0.05, 0.5, tr), d, tr).MidiCps, 0),
+			TxLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr)
+		).Sum * Sine(tr, du.max * ds) * TRand(0.005, 0.01, tr)
 	};
 	var scale = [0 2 4 5 7 9 11];
 	var octaves = [4 5 6 7];

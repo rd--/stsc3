@@ -1,8 +1,8 @@
 (* pmi ; texture graph *)
 { :tr |
-	var pm = Line(tr, 0, Rand(tr, 0, 12), Rand(tr, 1, 12));
+	var pm = TLine(0, TRand(0, 12, tr), TRand(1, 12, tr), tr);
 	EqPan2(
-		PmOsc(Rand(tr, 0, 2000), Rand(tr, 0, 800), pm, 0),
-		Rand(tr, -1, 1)
+		PmOsc(TRand(0, 2000, tr), TRand(0, 800, tr), pm, 0),
+		TRand(-1, 1, tr)
 	) / 20
 }.OverlapTexture(1, 2, 6).Mix

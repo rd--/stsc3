@@ -14,12 +14,12 @@ var d = MouseY(0, 1, 0, 0.2) > 0.5; (* is pitch space discrete or continuous *)
 		CombL(
 			y,
 			0.1,
-			Rand(tr, 1, 8).RoundTo(d) / Rand(tr, 1, 9).RoundTo(d) * 0.001,
+			TRand(1, 8, tr).RoundTo(d) / TRand(1, 9, tr).RoundTo(d) * 0.001,
 			5
 		)
 	} !+ c;
 	a.timesRepeat {
-		y := AllpassN(y, 0.040, { Rand(tr, 0, 0.040) } ! 2, 8)
+		y := AllpassN(y, 0.040, { TRand(0, 0.040, tr) } ! 2, 8)
 	};
 	y
 }.OverlapTexture(5, 3, v).Mix

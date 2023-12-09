@@ -1,13 +1,13 @@
 (* pond life (jmcc) #1 ; graph rewrite ; requires=LinRand *)
 { :tr |
 	var f = MulAdd(
-		SinOsc(Rand(tr, 20, 50), 0),
-		Rand(tr, 100, 400),
-		LinRand(tr, 500, 2500, 0)
+		SinOsc(TRand(20, 50, tr), 0),
+		TRand(100, 400, tr),
+		TLinRand(500, 2500, 0, tr)
 	);
-	var e = LfPulse(3 / Rand(tr, 1, 9), 0, Rand(tr, 0.2, 0.5));
+	var e = LfPulse(3 / TRand(1, 9, tr), 0, TRand(0.2, 0.5, tr));
 	EqPan2(
 		SinOsc(f, 0) * e * 0.04,
-		Rand(tr, -1, 1)
+		TRand(-1, 1, tr)
 	)
 }.OverlapTexture(8, 8, 4).Mix

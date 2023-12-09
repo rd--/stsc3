@@ -2,29 +2,29 @@
 var dur = 12;
 var z = { :tr |
 	var i = Impulse(
-		XLine(
-			tr,
-			ExpRand(tr, 1, 30),
-			ExpRand(tr, 1, 30),
-			dur
+		TxLine(
+			TExpRand(1, 30, tr),
+			TExpRand(1, 30, tr),
+			dur,
+			tr
 		),
 		0
 	);
-	var f = XLine(
-		tr,
-		ExpRand(tr, 600, 8000),
-		ExpRand(tr, 600, 8000),
-		dur
+	var f = TxLine(
+		TExpRand(600, 8000, tr),
+		TExpRand(600, 8000, tr),
+		dur,
+		tr
 	);
 	var o = SinOsc(Decay2(i, 0.05, 0.5) * -0.9 * f + f, 0);
-	var l = XLine(
-		tr,
-		ExpRand(tr, 0.01, 0.5),
-		ExpRand(tr, 0.01, 0.5),
-		dur
+	var l = TxLine(
+		TExpRand(0.01, 0.5, tr),
+		TExpRand(0.01, 0.5, tr),
+		dur,
+		tr
 	);
 	var s = Decay2(i * l, 0.01, 0.2) * o;
-	EqPan2(s, Line(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), dur))
+	EqPan2(s, TLine(TRand(-1, 1, tr), TRand(-1, 1, tr), dur, tr))
 }.OverlapTexture(dur - 2, 1, 8).Mix;
 4.timesRepeat {
 	z := AllpassN(z, 0.1, { Rand(0, 0.05) } ! 2, 4)

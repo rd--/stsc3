@@ -2,20 +2,20 @@
 var p = 15;
 { :tr |
 	var i = Impulse(
-		XLine(
-			tr,
-			Rand(tr, 0, 4) + 0.5,
-			Rand(tr, 0, 35) + 0.5,
-			12
+		TxLine(
+			TRand(0, 4, tr) + 0.5,
+			TRand(0, 35, tr) + 0.5,
+			12,
+			tr
 		),
 		0
 	);
 	var s = Decay(i, 0.004) * WhiteNoise() * 0.03;
-	var f1 = Rand(tr, 500, 2500);
-	var f2 = Rand(tr, 0, 8000);
+	var f1 = TRand(500, 2500, tr);
+	var f2 = TRand(0, 8000, tr);
 	{
 		{
-			Ringz(s, f1 + Rand(tr, 0, f2), Rand(tr, 1, 5))
+			Ringz(s, f1 + TRand(0, f2, tr), TRand(1, 5, tr))
 		} !+ p
 	} ! 2
 }.OverlapTexture(4, 4, 3).Mix * 0.1

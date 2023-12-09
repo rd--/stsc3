@@ -33,11 +33,11 @@ var cd = [
 var ps = [-12 -5 0 2 4 5 7 12];
 {
 	var tr = Dust(1 / 3);
-	var fs = Select(IRand(tr, 0, 7), ps);
+	var fs = Select(TiRand(0, 7, tr), ps);
 	var k = Ringz(
-		Decay2(tr, 0.06, 0.01) * PinkNoise() * Rand(tr, 0, 1),
-		cf * fs.MidiRatio + Rand(tr, 0, 1),
-		1 / cd * Rand(tr, 2, 17)
+		Decay2(tr, 0.06, 0.01) * PinkNoise() * TRand(0, 1, tr),
+		cf * fs.MidiRatio + TRand(0, 1, tr),
+		1 / cd * TRand(2, 17, tr)
 	) * ca;
-	EqPan2(k.Sum, Rand(tr, -1, 1))
+	EqPan2(k.Sum, TRand(-1, 1, tr))
 } !> 7

@@ -2,13 +2,13 @@
 { :tr |
 	var rate = 11;
 	var r = Fold(
-		rate * Rand(tr, -0.2, [0.1, 0.2]).Exp,
+		rate * TRand(-0.2, [0.1, 0.2], tr).Exp,
 		1,
 		30
 	);
 	Formant(
 		r,
-		ExpRand(tr, [200, 300], 3000),
-		Rand(tr, [0, 1], 9) * r + r
+		TExpRand([200, 300], 3000, tr),
+		TRand([0, 1], 9, tr) * r + r
 	) * 0.05
 }.OverlapTexture(0.5, 0.25, 5).Mix

@@ -2,11 +2,11 @@
 { :tr |
 	var p = Pluck(
 		Crackle([1.9, 1.8]),
-		Impulse(IRand(tr, 1, 6), 0),
+		Impulse(TiRand(1, 6, tr), 0),
 		0.05,
-		LinRand(tr, 0, 0.05, 0),
+		TLinRand(0, 0.05, 0, tr),
 		1,
 		0.5
 	);
-	Bpf(p, IRand(tr, 0, 1200), 1)
+	Bpf(p, TiRand(0, 1200, tr), 1)
 }.OverlapTexture(1, 23, 8).Mix
