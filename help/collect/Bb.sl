@@ -47,8 +47,8 @@ var tr = Impulse(8, 0) * LfNoise1(2);
 CombL(
 	(Saw([3, 4]) * Decay(tr, 0.1)).Tanh,
 	1,
-	Rand(tr, 0, 0.01).RoundTo(0.00015),
-	Rand(tr, -30, 30)
+	TRand(0, 0.01, tr).RoundTo(0.00015),
+	TRand(-30, 30, tr)
 )
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
@@ -63,7 +63,7 @@ var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
 (BHiPass(LfNoise1(8) ^ 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-AllpassL(SinOsc(55,0).Tanh, 0.4, ExpRand(Impulse(8, 0), 0.0002, 0.4).RoundTo([0.002, 0.004]), 2)
+AllpassL(SinOsc(55,0).Tanh, 0.4, TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.004]), 2)
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var i = { :freq | Impulse(freq, 0) };
@@ -163,8 +163,21 @@ f <! LocalOut(f + CombC(Blip([4, 6], 100 * k + 50) * 0.9, 1, k * 0.3, 50 * f))
 (* http://earslap.com/article/sctweeting.html *)
 {
 	var a = LfNoise1(Rand(0, 0.2));
-	DelayC(Bpf(WhiteNoise() * Dust2(a * a * 4 ^ 2).Lag(0.008), IRand(0, 10000) + 300, 0.09), 3, a * 1.5 + 1.5) * 45
+	DelayC(
+		Bpf(
+			WhiteNoise() * Dust2(a * a * 4 ^ 2).Lag(0.008),
+			IRand(0, 10000) + 300,
+			0.09
+		),
+		3,
+		a * 1.5 + 1.5
+	) * 45
 } !+ 80
 
 (* http://earslap.com/article/sctweeting.html *)
-AllpassC(SinOsc(55, 0).Tanh, 0.4, ExpRand(Impulse(8, 0), 0.0002, 0.4).RoundTo([0.002, 0.0004]), 2)
+AllpassC(
+	SinOsc(55, 0).Tanh,
+	0.4,
+	TExpRand(0.0002, 0.4, Impulse(8, 0)).RoundTo([0.002, 0.0004]),
+	2
+)

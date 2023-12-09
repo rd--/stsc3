@@ -33,11 +33,11 @@ GVerb(
 
 (* red frik (f0) *)
 var tr = Impulse(0.1, 0);
-var o1 = SinOsc(Rand(tr, 0.3, 5), 0) * Rand(tr, 0, 0.5) + Rand(tr, 0.49, 0.56);
-var o2 = SinOsc(o1, 0) * Rand(tr, 0.3, 0.6) + Rand(tr, 0.3, 0.5);
+var o1 = SinOsc(TRand(0.3, 5, tr), 0) * TRand(0, 0.5, tr) + TRand(0.49, 0.56, tr);
+var o2 = SinOsc(o1, 0) * TRand(0.3, 0.6, tr) + TRand(0.3, 0.5, tr);
 Rhpf(
 	{ BrownNoise() } ! 2,
-	Rand(tr, 0.3, 3),
+	TRand(0.3, 3, tr),
 	o2
 ) * 0.1
 
@@ -149,7 +149,7 @@ var f = LinExp(t, -1, 1, Latch(LinExp(SinOsc(i % 4.4, 0), -1, 1, 9, 999), y), La
 EqPan(
 	Blip(f, t + 2) * (1 - t),
 	SinOsc(0.1, i)
-) * (Line(0.2, 0, 9, 2).Min(0.6) ^ 2)
+) * (Line(0.2, 0, 9).Min(0.6) ^ 2)
 
 (* ---- https://sccode.org/1-4Qy ; f0 ; 0335 ; with keywords *)
 var o = GrainFm(
