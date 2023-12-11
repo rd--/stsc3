@@ -1,9 +1,9 @@
 (* TLine *)
 var tr = Impulse(1, 0);
-var f0 = Rand(tr, 220, 330);
-var f1 = Rand(tr, 110, 440);
-var dur = Rand(tr, 0.1, 1);
-var f = Line(tr, f0, f1, dur);
+var f0 = TRand(220, 330, tr);
+var f1 = TRand(110, 440, tr);
+var dur = TRand(0.1, 1, tr);
+var f = TLine(f0, f1, dur, tr);
 var e = Sine(tr, dur) * 0.1;
 SinOsc(f, 0) * e
 

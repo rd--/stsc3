@@ -6,7 +6,7 @@ Integrator(LfPulse(3, 0.2, 0.0004), MouseX(0.996, 0.999, 1, 0.2)) * FSinOsc(700,
 
 (* Integrator ; as envelope *)
 var tr = LfPulse(MouseX(3, 21, 1, 0.2), 0.2, 0.0004);
-Integrator(tr, Rand(tr, 0.996, 0.999)) * FSinOsc(700, 0) * 0.1
+Integrator(tr, TRand(0.996, 0.999, tr)) * FSinOsc(700, 0) * 0.1
 
 (* Integrator ; https://nathan.ho.name/posts/feedback-integrator-networks/ ; blockSize=1 *)
 var n = 8;

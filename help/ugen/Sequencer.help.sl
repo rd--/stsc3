@@ -99,12 +99,12 @@ var s = RingzBank(exc3, { Rand(3500, 4000) } ! 4, nil, { Rand(0.05, 0.2) } ! 4).
 (* whine *)
 var exc4 = { GrayNoise() } ! 2 * 0.0007;
 var y = { :tr |
-	var env = SinOsc(Rand(tr, 1, 6), { Rand(tr, 0, 2 * pi) } ! 2) * 0.5 + 0.5;
+	var env = SinOsc(TRand(1, 6, tr), { TRand(0, 2.pi, tr) } ! 2) * 0.5 + 0.5;
 	DynRingzBank(
 		exc4,
-		{ IRand(tr, 200, 2500) } ! 4,
+		{ TiRand(200, 2500, tr) } ! 4,
 		[1],
-		{ Rand(tr, 0.2, 0.8) } ! 4
+		{ TRand(0.2, 0.8, tr) } ! 4
 	) * env
 }.OverlapTexture(4, 2, 2).Mix.ScaleNeg(MouseX(-1, 1, 0, 0.2));
 var snd = x + (y * 0.5) + s + r;

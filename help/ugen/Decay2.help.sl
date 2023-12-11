@@ -3,10 +3,10 @@
 	var tr = Dust(1);
 	var env = Decay2(
 		tr,
-		Rand(tr, 0.01, 0.2),
-		Rand(tr, 0.2, 1)
+		TRand(0.01, 0.2, tr),
+		TRand(0.2, 1, tr)
 	);
-	SinOsc(Rand(tr, 110, 330), 0) * env
+	SinOsc(TRand(110, 330, tr), 0) * env
 } !^ 5
 
 (* Decay2 ; c.f. MultiTouchPad help file *)
@@ -29,14 +29,14 @@ Voicer(16) { :e |
 {
 	var tr = Dust(1 / 9);
 	var impulseFreq = Choose(tr, [1 2 3 4 6 8 9]);
-	var oscFreq = Rand(tr, 20, 880);
-	var distort = Rand(tr, 0.1, 8);
-	var env = Decay2(Impulse(impulseFreq, 0), 0.01, 0.2 * Rand(tr, 0.1, 1));
+	var oscFreq = TRand(20, 880, tr);
+	var distort = TRand(0.1, 8, tr);
+	var env = Decay2(Impulse(impulseFreq, 0), 0.01, 0.2 * TRand(0.1, 1, tr));
 	var snd = SinOsc(oscFreq, 0) * env;
 	EqPan2(
 		(snd * distort).Tanh / distort,
-		Rand(tr, -1, 1)
-	) * XLine(Impulse(0, 0) + tr, Rand(tr, 0.2, 0.5), 0.001, Rand(tr, 3, 7))
+		TRand(-1, 1, tr)
+	) * TxLine(TRand(0.2, 0.5, tr), 0.001, TRand(3, 7, tr), Impulse(0, 0) + tr)
 } !> 16
 
 (* Decay2 *)

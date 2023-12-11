@@ -44,9 +44,9 @@ z.Clip2(Rand(Dust(8), 0, 1)) * 0.25
 		var ds = 3;
 		var du = [5, 4, 5, 7, 4, 5];
 		var d = du * ds;
-		var freq = XLine(tr, m, m + Rand(tr, 0.05, 0.5), d).MidiCps;
-		var env = Sine(tr, du.max * ds) * Rand(tr, 0.005, 0.01);
-		var pos = XLine(tr, Rand(tr, -1, 1), Rand(tr, -1, 1), d);
+		var freq = TxLine(m, m + TRand(0.05, 0.5, tr), d, tr).MidiCps;
+		var env = Sine(tr, du.max * ds) * TRand(0.005, 0.01, tr);
+		var pos = TxLine(TRand(-1, 1, tr), TRand(-1, 1, tr), d, tr);
 		var osc = SinOsc(freq, 0);
 		EqPan2(osc, pos).Sum * env
 	};

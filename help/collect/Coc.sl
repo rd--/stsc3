@@ -188,10 +188,10 @@ var totalPartials = 3;
 
 (* Ping pong *)
 var rate = 5;
-var trig = Impulse(5, 0);
-var freq = Rand(trig, [36, 60], [72, 86]).MidiCps;
+var tr = Impulse(5, 0);
+var freq = TRand([36, 60], [72, 86], tr).MidiCps;
 var ratio = 2;
-var env = Decay2(trig, 0, 1.25 / rate);
+var env = Decay2(tr, 0, 1.25 / rate);
 PmOsc(freq, freq * ratio, 3 + env * 4, 0) * env * 0.25
 
 (* Sample and hold *)

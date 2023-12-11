@@ -1,2 +1,2 @@
 (* TwoZero *)
-TwoZero(WhiteNoise(), XLine(20, 20000, 8, 0), 1) * 0.125
+TwoZero(WhiteNoise(), XLine(20, 20000, 8), 1) * 0.125

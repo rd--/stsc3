@@ -9,7 +9,7 @@ SparseMatrixMixer(24, SinOsc([220, 221], 0) * 0.1, [1 9 1; 2 13 1])
 	SparseMatrixMixer(
 		24,
 		{
-			SinOsc(Rand(tr, 220, 550), 0)
+			SinOsc(TRand(220, 550, tr), 0)
 		} ! 4,
 		{
 			[

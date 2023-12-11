@@ -14,7 +14,7 @@ var n = 7;
 	var str = rewrite([0], i + 6);
 	var dt = 2 ^ (n - i).negated * 20;
 	var trig = TDmdFor(dt, 0, Dseq(1, str));
-	var freq = ExpRand(trig, 200, (n - i) / n * 10100);
+	var freq = TExpRand(200, (n - i) / n * 10100, trig);
 	var trigFlt = Bpf(trig, LfNoise2(0.1) * 0.02 + 1 * freq, 0.2);
 	Ringz(
 		trigFlt,

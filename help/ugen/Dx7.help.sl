@@ -28,6 +28,6 @@ var voiceData = [
 var buf = voiceData.asLocalBuf;
 {
 	var tr = Dust(1 / 16).kr;
-	var dx7 = Dx7(buf, tr, 0, 0, 0, Rand(tr, 48, 72), Rand(tr, 0.1, 0.6), 0, 0, 0, 0);
-	EqPan2(dx7, Rand(tr, -1, 1))
+	var dx7 = Dx7(buf, tr, 0, 0, 0, TRand(48, 72, tr), TRand(0.1, 0.6, tr), 0, 0, 0, 0);
+	EqPan2(dx7, TRand(-1, 1, tr))
 } !> 16 * 0.25

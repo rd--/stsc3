@@ -6,7 +6,7 @@ Blip(Rand(gate, 100, 1000), Rand(gate, 1, 10)) * Asr(gate, 0.01, 1 / ln, -4) * 0
 (* Blip *)
 var ln = Line(1, 20, 60);
 var tr = Impulse(ln, 0);
-Blip(Rand(tr, 100, 1000), Rand(tr, 1, 10)) * Perc(tr, 0.01, 1 / ln, -4) * 0.25
+Blip(TRand(100, 1000, tr), TRand(1, 10, tr)) * Perc(tr, 0.01, 1 / ln, -4) * 0.25
 
 (* Blip *)
 Blip(

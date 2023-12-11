@@ -19,6 +19,11 @@ Voicer(16) { :e |
 	EqPan2(Blip(e.p.UnitCps, e.y * 10 + 1), e.i * 2 - 1) * e.w * e.z * e.z
 }.Mix
 
+(* Blip ; event control *)
+Voicer(16) { :e |
+	EqPan2(Blip(e.p.UnitCps, e.i * 10 + 1), e.j * 2 - 1) * e.w * e.z / 9
+}.Mix
+
 (* PanAz ; event control *)
 var nc = 2;
 Voicer(16) { :e |
