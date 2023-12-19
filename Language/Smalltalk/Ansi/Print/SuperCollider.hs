@@ -11,7 +11,6 @@ Notes:
 - Names that begin with an upper case letter that would be invalid in Sc are rewritten
   - class variable, unary and keyword names, assignment targets
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
-
 -}
 module Language.Smalltalk.Ansi.Print.SuperCollider where
 
@@ -54,7 +53,7 @@ isGetterOrSetter c m = isInstanceVar c (removeTrailingColon (St.selectorIdentifi
 downcaseFirstLetter :: String -> String
 downcaseFirstLetter s =
   case s of
-    l:s' -> (if isUpper l then toLower l else l) : s'
+    l : s' -> (if isUpper l then toLower l else l) : s'
     _ -> s
 
 makeVariablePublic :: String -> String
@@ -64,15 +63,16 @@ sc_ClassDefinition_pp :: Bool -> St.ClassDefinition -> String
 sc_ClassDefinition_pp spl c =
   let l f x = if null x then "" else f x
   in unlines
-     [printf "%s %s {" (St.className c) (maybe "" (\x -> printf " : %s" x) (St.superclassName c))
-     ,l (\x -> printf (if spl then "| %s |" else "var %s;") (Ansi.Print.strjnWith (if spl then ' ' else ',') x)) (St.classInstanceVariableNames c)
-     ,l (\x -> printf "classvar %s;" (strjnComma (map downcaseFirstLetter x))) (St.classVariableNames c)
-     ,unlines (map (sc_methodDefinition_pp spl Nothing) (St.instanceMethods c))
-     ,unlines (map (sc_methodDefinition_pp spl (Just '*')) (St.classMethods c))
-     ,"}"]
+      [ printf "%s %s {" (St.className c) (maybe "" (\x -> printf " : %s" x) (St.superclassName c))
+      , l (\x -> printf (if spl then "| %s |" else "var %s;") (Ansi.Print.strjnWith (if spl then ' ' else ',') x)) (St.classInstanceVariableNames c)
+      , l (\x -> printf "classvar %s;" (strjnComma (map downcaseFirstLetter x))) (St.classVariableNames c)
+      , unlines (map (sc_methodDefinition_pp spl Nothing) (St.instanceMethods c))
+      , unlines (map (sc_methodDefinition_pp spl (Just '*')) (St.classMethods c))
+      , "}"
+      ]
 
 sc_globalDefinition_pp :: Bool -> St.GlobalDefinition -> String
-sc_globalDefinition_pp spl (St.GlobalDefinition n i) = Ansi.Print.strjn [n,maybe "" (sc_variableInitializer_pp spl) i]
+sc_globalDefinition_pp spl (St.GlobalDefinition n i) = Ansi.Print.strjn [n, maybe "" (sc_variableInitializer_pp spl) i]
 
 sc_variableInitializer_pp :: Bool -> St.VariableInitializer -> String
 sc_variableInitializer_pp spl = sc_initializerDefinition_pp spl
@@ -93,9 +93,9 @@ sc_keywordSelector spl k =
   let remcadd_ s = downcaseFirstLetter (filter (/= ':') s ++ (if spl then "" else "_"))
       cap s = if length s > 1 then (toUpper (List.head_err s)) : List.tail_err s else s
   in case k of
-       [] -> error "sc_keywordSelector?"
-       [k0] -> remcadd_ (downcaseFirstLetter k0)
-       k0:kN -> remcadd_ (downcaseFirstLetter k0 ++ concatMap cap kN)
+      [] -> error "sc_keywordSelector?"
+      [k0] -> remcadd_ (downcaseFirstLetter k0)
+      k0 : kN -> remcadd_ (downcaseFirstLetter k0 ++ concatMap cap kN)
 
 {- | This rewrites the symbols "=" (to "==") "~=" (to "!=") and "," (to "++").
      These are required for translation.
@@ -128,14 +128,15 @@ sc_patternSelector spl pat =
 sc_methodDefinition_pp :: Bool -> Maybe Char -> St.MethodDefinition -> String
 sc_methodDefinition_pp spl maybeStar (St.MethodDefinition _ _ pat tmp stm prm _ _) =
   Ansi.Print.strjn
-  [maybe "" return maybeStar
-  ,sc_patternSelector spl pat
-  ,"{"
-  ,sc_patternArgs_pp spl pat
-  ,maybe "" Ansi.Print.primitive_pp prm
-  ,maybe "" (sc_temporaries_pp spl) tmp
-  ,maybe "" (sc_statements_pp spl) stm
-  ,"}"]
+    [ maybe "" return maybeStar
+    , sc_patternSelector spl pat
+    , "{"
+    , sc_patternArgs_pp spl pat
+    , maybe "" Ansi.Print.primitive_pp prm
+    , maybe "" (sc_temporaries_pp spl) tmp
+    , maybe "" (sc_statements_pp spl) stm
+    , "}"
+    ]
 
 sc_patternArgs_pp :: Bool -> St.Pattern -> String
 sc_patternArgs_pp spl pat =
@@ -144,14 +145,14 @@ sc_patternArgs_pp spl pat =
     St.BinaryPattern _ a -> printf (if spl then " :%s |" else "arg %s;") a
     St.KeywordPattern kp ->
       if spl
-      then printf " %s |" (Ansi.Print.strjn (map ((":" ++) . snd) kp))
-      else printf "arg %s;" (strjnComma (map snd kp))
+        then printf " %s |" (Ansi.Print.strjn (map ((":" ++) . snd) kp))
+        else printf "arg %s;" (strjnComma (map snd kp))
 
 sc_temporaries_pp :: Bool -> St.Temporaries -> String
 sc_temporaries_pp spl (St.Temporaries t) =
   if spl
-  then printf "| %s |" (Ansi.Print.strjn t)
-  else printf "var %s;" (strjnComma t)
+    then printf "| %s |" (Ansi.Print.strjn t)
+    else printf "var %s;" (strjnComma t)
 
 sc_comment_pp :: St.Comment -> String
 sc_comment_pp = unlines . map (";; " ++) . lines
@@ -159,16 +160,17 @@ sc_comment_pp = unlines . map (";; " ++) . lines
 sc_initializerDefinition_pp :: Bool -> St.InitializerDefinition -> String
 sc_initializerDefinition_pp spl (St.InitializerDefinition c t s) =
   Ansi.Print.strjnWith
-  ';'
-  [maybe "" sc_comment_pp c
-  ,maybe "" (sc_temporaries_pp spl) t
-  ,maybe "" (sc_statements_pp spl) s]
+    ';'
+    [ maybe "" sc_comment_pp c
+    , maybe "" (sc_temporaries_pp spl) t
+    , maybe "" (sc_statements_pp spl) s
+    ]
 
-pp_inChars :: (Char,Char) -> String -> String
-pp_inChars (x,y) s = x : s ++ [y]
+pp_inChars :: (Char, Char) -> String -> String
+pp_inChars (x, y) s = x : s ++ [y]
 
 pp_inBraces :: String -> String
-pp_inBraces = pp_inChars ('{','}')
+pp_inBraces = pp_inChars ('{', '}')
 
 {- | Translate block
 
@@ -197,12 +199,17 @@ pp_inBraces = pp_inChars ('{','}')
 sc_blockBody_pp :: Bool -> St.BlockBody -> String
 sc_blockBody_pp spl (St.BlockBody _ a t s) =
   pp_inBraces $
-  Ansi.Print.strjn
-  [maybe "" (printf (if spl then " %s |" else "arg %s;") .
-              (if spl then Ansi.Print.strjn else strjnComma) .
-              map (sc_blockArgument_pp spl)) a
-  ,maybe "" (sc_temporaries_pp spl) t
-  ,maybe "" (sc_statements_pp spl) s]
+    Ansi.Print.strjn
+      [ maybe
+          ""
+          ( printf (if spl then " %s |" else "arg %s;")
+              . (if spl then Ansi.Print.strjn else strjnComma)
+              . map (sc_blockArgument_pp spl)
+          )
+          a
+      , maybe "" (sc_temporaries_pp spl) t
+      , maybe "" (sc_statements_pp spl) s
+      ]
 
 sc_blockArgument_pp :: Bool -> St.BlockArgument -> String
 sc_blockArgument_pp spl = if spl then (":" ++) else id
@@ -211,7 +218,7 @@ sc_statements_pp :: Bool -> St.Statements -> String
 sc_statements_pp spl st =
   case st of
     St.StatementsReturn r -> sc_returnStatement_pp spl r
-    St.StatementsExpression e st' -> Ansi.Print.strjn [sc_expression_pp spl e,maybe "" ((";" ++) . sc_statements_pp spl) st']
+    St.StatementsExpression e st' -> Ansi.Print.strjn [sc_expression_pp spl e, maybe "" ((";" ++) . sc_statements_pp spl) st']
 
 {- | Print ReturnStatement
 
@@ -222,11 +229,12 @@ sc_statements_pp spl st =
 sc_returnStatement_pp :: Bool -> St.ReturnStatement -> String
 sc_returnStatement_pp spl (St.ReturnStatement e) =
   if spl
-  then let isNonLocalReturn = False
-       in if isNonLocalReturn
+    then
+      let isNonLocalReturn = False
+      in if isNonLocalReturn
           then printf "%s.return" (sc_expression_pp spl e)
           else sc_expression_pp spl e
-  else printf "^%s" (sc_expression_pp spl e)
+    else printf "^%s" (sc_expression_pp spl e)
 
 sc_expression_pp :: Bool -> St.Expression -> String
 sc_expression_pp spl = St.expressionCase (sc_assignment_pp spl) (sc_basicExpression_pp spl)
@@ -270,10 +278,11 @@ sc_basicExpression_pp :: Bool -> St.BasicExpression -> String
 sc_basicExpression_pp spl (St.BasicExpression p m c) =
   let rqp = requiresParen m
   in Ansi.Print.strjn
-     [if rqp then "(" else ""
-     ,sc_primary_pp spl p
-     ,maybe "" (sc_messages_pp spl rqp) m
-     ,maybe "" sc_cascadedMessages_pp c]
+      [ if rqp then "(" else ""
+      , sc_primary_pp spl p
+      , maybe "" (sc_messages_pp spl rqp) m
+      , maybe "" sc_cascadedMessages_pp c
+      ]
 
 {- | In .stc keyword patterns bind more closely than binary patterns.
 
@@ -291,17 +300,23 @@ sc_messages_pp spl rqp ms =
   case ms of
     St.MessagesUnary m1 m2 m3 ->
       Ansi.Print.strjn
-      (concat
-        ([map sc_unaryMessage_pp m1
-         ,maybe [] (map (sc_binaryMessage_pp spl)) m2
-         ,if rqp then [")"] else []
-         ,maybe [] (return . sc_keywordMessage_pp spl) m3]))
+        ( concat
+            ( [ map sc_unaryMessage_pp m1
+              , maybe [] (map (sc_binaryMessage_pp spl)) m2
+              , if rqp then [")"] else []
+              , maybe [] (return . sc_keywordMessage_pp spl) m3
+              ]
+            )
+        )
     St.MessagesBinary m1 m2 ->
       Ansi.Print.strjn
-      (concat
-        ([map (sc_binaryMessage_pp spl) m1
-         ,if rqp then [")"] else []
-         ,maybe [] (return . sc_keywordMessage_pp spl) m2]))
+        ( concat
+            ( [ map (sc_binaryMessage_pp spl) m1
+              , if rqp then [")"] else []
+              , maybe [] (return . sc_keywordMessage_pp spl) m2
+              ]
+            )
+        )
     St.MessagesKeyword m1 ->
       sc_keywordMessage_pp spl m1
 
@@ -344,7 +359,7 @@ sc_unaryMessage_pp = ('.' :) . downcaseFirstLetter . St.selectorIdentifier . St.
 "+ 2"
 -}
 sc_binaryMessage_pp :: Bool -> St.BinaryMessage -> String
-sc_binaryMessage_pp spl (St.BinaryMessage b a) = Ansi.Print.strjn [sc_binop_rewrite spl b,sc_binaryArgument_pp spl a]
+sc_binaryMessage_pp spl (St.BinaryMessage b a) = Ansi.Print.strjn [sc_binop_rewrite spl b, sc_binaryArgument_pp spl a]
 
 {- | Translate keyword message
 
@@ -356,19 +371,20 @@ sc_binaryMessage_pp spl (St.BinaryMessage b a) = Ansi.Print.strjn [sc_binop_rewr
 -}
 sc_keywordMessage_pp :: Bool -> St.KeywordMessage -> String
 sc_keywordMessage_pp spl (St.KeywordMessage l) =
-  let (ks,as) = unzip l
+  let (ks, as) = unzip l
   in printf ".%s(%s)" (sc_keywordSelector spl ks) (strjnComma (map (sc_keywordArgument_pp spl) as))
 
 sc_binaryArgument_pp :: Bool -> St.BinaryArgument -> String
 sc_binaryArgument_pp spl (St.BinaryArgument p m) =
-  Ansi.Print.strjn [sc_primary_pp spl p,maybe "" (Ansi.Print.strjn . map sc_unaryMessage_pp) m]
+  Ansi.Print.strjn [sc_primary_pp spl p, maybe "" (Ansi.Print.strjn . map sc_unaryMessage_pp) m]
 
 sc_keywordArgument_pp :: Bool -> St.KeywordArgument -> String
 sc_keywordArgument_pp spl (St.KeywordArgument p m1 m2) =
   Ansi.Print.strjn
-  [sc_primary_pp spl p
-  ,maybe "" (Ansi.Print.strjn . map sc_unaryMessage_pp) m1
-  ,maybe "" (Ansi.Print.strjn . map (sc_binaryMessage_pp spl)) m2]
+    [ sc_primary_pp spl p
+    , maybe "" (Ansi.Print.strjn . map sc_unaryMessage_pp) m1
+    , maybe "" (Ansi.Print.strjn . map (sc_binaryMessage_pp spl)) m2
+    ]
 
 sc_cascadedMessages_pp :: St.CascadedMessages -> String
 sc_cascadedMessages_pp = error "CascadedMessages?"

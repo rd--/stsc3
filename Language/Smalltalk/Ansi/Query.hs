@@ -2,24 +2,27 @@
 module Language.Smalltalk.Ansi.Query where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
+{- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Fold as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as St
 
 -- | Print simple summary of a Class definition.
 classDefinitionSummary :: St.ClassDefinition -> [String]
 classDefinitionSummary c =
   let m pre pp sel = maybe "" ((pre ++) . pp) (sel c)
       l pre pp sel = let w = sel c in if null w then "" else pre ++ unwords (pp w)
-  in filter (not . null)
-     [  "Class:               " ++ St.className c
-     ,m " Superclass:         " id St.superclassName
-     ,l " Instance variables: " id St.classInstanceVariableNames
-     ,l " Class variables:    " id St.classVariableNames
-     ,l " Instance methods:   " (map St.methodSignature) St.instanceMethods
-     ,l " Class methods:      " (map St.methodSignature) St.classMethods
-     ,m " Class initializer:  " St.initializerDefinition_pp St.classInitializer
-     ,m " Class category:     " id St.classCategory
-     ,m " Class comment:      " id St.classComment]
+  in filter
+      (not . null)
+      [ "Class:               " ++ St.className c
+      , m " Superclass:         " id St.superclassName
+      , l " Instance variables: " id St.classInstanceVariableNames
+      , l " Class variables:    " id St.classVariableNames
+      , l " Instance methods:   " (map St.methodSignature) St.instanceMethods
+      , l " Class methods:      " (map St.methodSignature) St.classMethods
+      , m " Class initializer:  " St.initializerDefinition_pp St.classInitializer
+      , m " Class category:     " id St.classCategory
+      , m " Class comment:      " id St.classComment
+      ]
 
 classDefinitionPrintSummary :: St.ClassDefinition -> IO ()
 classDefinitionPrintSummary = putStrLn . unlines . classDefinitionSummary

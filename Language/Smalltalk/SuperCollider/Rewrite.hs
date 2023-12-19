@@ -45,11 +45,10 @@ This transformation at the Sc Ast.
 
 - p.q(a,b)          => p.q([a,b])
 - p.q(x: a, b)      => p.q([\x: -> a,b])
-
 -}
 module Language.Smalltalk.SuperCollider.Rewrite where
 
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
@@ -59,29 +58,29 @@ import Language.Smalltalk.SuperCollider.Rewrite.Temporaries
 
 scExpressionRewrite :: ScExpression -> ScExpression
 scExpressionRewrite =
-  scExpressionRewritePrecedence .
-  scExpressionRewriteTemporaries
+  scExpressionRewritePrecedence
+    . scExpressionRewriteTemporaries
 
 scBlockBodyRewrite :: ScBlockBody -> ScBlockBody
 scBlockBodyRewrite =
-  scBlockBodyRewritePrecedence .
-  scBlockBodyRewriteTemporaries
+  scBlockBodyRewritePrecedence
+    . scBlockBodyRewriteTemporaries
 
 {- | Option to rewrite n-ary expressions as arrays.
      Else N-ary expressions will be an error on translation.
 -}
 scInitializerDefinitionRewrite :: ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionRewrite =
-  scInitializerDefinitionRewritePrecedence .
-  scInitializerDefinitionRewriteTemporaries
+  scInitializerDefinitionRewritePrecedence
+    . scInitializerDefinitionRewriteTemporaries
 
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
 scRewriteViewer :: String -> String
 scRewriteViewer =
-  Sc.scInitializerDefinitionPrint .
-  scInitializerDefinitionRewrite .
-  Sc.superColliderParserInitializerDefinition .
-  Sc.alexScanTokens
+  Sc.scInitializerDefinitionPrint
+    . scInitializerDefinitionRewrite
+    . Sc.superColliderParserInitializerDefinition
+    . Sc.alexScanTokens
 
 {-
 

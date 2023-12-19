@@ -4,7 +4,7 @@
 -}
 module Language.Smalltalk.SuperCollider.Rewrite.Precedence where
 
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
@@ -16,7 +16,7 @@ import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 scDotMessagesSplitAtNary :: [ScDotMessage] -> ([ScDotMessage], [ScDotMessage])
 scDotMessagesSplitAtNary m =
   case break scDotMessageIsNary m of
-    (lhs,k:rhs) -> (lhs ++ [k],rhs)
+    (lhs, k : rhs) -> (lhs ++ [k], rhs)
     _ -> error "scDotMessagesSplitAtNary?"
 
 scPrimaryRewritePrecedenceMaybe :: Bool -> ScPrimary -> ScPrimary
@@ -35,20 +35,26 @@ scBinaryArgumentRewritePrecedence (ScBinaryArgument p m) =
       ScBinaryArgument (scPrimaryRewritePrecedence p) Nothing
     Just x ->
       if not (scDotMessagesHaveNary x)
-      then ScBinaryArgument
-           (scPrimaryRewritePrecedence p)
-           (Just (map scDotMessageRewritePrecedence x))
-      else let (lhs,rhs) = scDotMessagesSplitAtNary x
-               rw = null rhs
-               dmRw = scDotMessageRewritePrecedenceMaybe rw
-           in (if rw then id else scBinaryArgumentRewritePrecedence)
-              (ScBinaryArgument
-                (ScPrimaryExpression
-                  (ScExprBasic
-                    (ScBasicExpression
-                      (scPrimaryRewritePrecedenceMaybe rw p)
-                      (Just (ScMessagesDot (map dmRw lhs) Nothing)))))
-                (Just (map dmRw rhs)))
+        then
+          ScBinaryArgument
+            (scPrimaryRewritePrecedence p)
+            (Just (map scDotMessageRewritePrecedence x))
+        else
+          let (lhs, rhs) = scDotMessagesSplitAtNary x
+              rw = null rhs
+              dmRw = scDotMessageRewritePrecedenceMaybe rw
+          in (if rw then id else scBinaryArgumentRewritePrecedence)
+              ( ScBinaryArgument
+                  ( ScPrimaryExpression
+                      ( ScExprBasic
+                          ( ScBasicExpression
+                              (scPrimaryRewritePrecedenceMaybe rw p)
+                              (Just (ScMessagesDot (map dmRw lhs) Nothing))
+                          )
+                      )
+                  )
+                  (Just (map dmRw rhs))
+              )
 
 scBinaryMessageRewritePrecedence :: ScBinaryMessage -> ScBinaryMessage
 scBinaryMessageRewritePrecedence (ScBinaryMessage i a) =
@@ -62,45 +68,62 @@ scBasicExpressionRewritePrecedence isInit (ScBasicExpression p m) =
       ScBasicExpression (scPrimaryRewritePrecedence p) Nothing
     Just (ScMessagesBinary b) ->
       ScBasicExpression
-      (scPrimaryRewritePrecedence p)
-      (Just (ScMessagesBinary (map scBinaryMessageRewritePrecedence b)))
+        (scPrimaryRewritePrecedence p)
+        (Just (ScMessagesBinary (map scBinaryMessageRewritePrecedence b)))
     Just (ScMessagesDot d Nothing) ->
       if (isInit && length d == 1) || not (scDotMessagesHaveNary d)
-      then ScBasicExpression
-           (scPrimaryRewritePrecedence p)
-           (Just (ScMessagesDot (map scDotMessageRewritePrecedence d) Nothing))
-      else let (lhs,rhs) = scDotMessagesSplitAtNary d
-               rw = null rhs
-               dmRw = scDotMessageRewritePrecedenceMaybe rw
-           in (if rw then id else scBasicExpressionRewritePrecedence isInit)
-              (ScBasicExpression
-               (ScPrimaryExpression
-                (ScExprBasic
-                 (ScBasicExpression
-                   (scPrimaryRewritePrecedenceMaybe rw p)
-                   (Just (ScMessagesDot (map dmRw lhs) Nothing)))))
-               (Just (ScMessagesDot (map dmRw rhs) Nothing)))
+        then
+          ScBasicExpression
+            (scPrimaryRewritePrecedence p)
+            (Just (ScMessagesDot (map scDotMessageRewritePrecedence d) Nothing))
+        else
+          let (lhs, rhs) = scDotMessagesSplitAtNary d
+              rw = null rhs
+              dmRw = scDotMessageRewritePrecedenceMaybe rw
+          in (if rw then id else scBasicExpressionRewritePrecedence isInit)
+              ( ScBasicExpression
+                  ( ScPrimaryExpression
+                      ( ScExprBasic
+                          ( ScBasicExpression
+                              (scPrimaryRewritePrecedenceMaybe rw p)
+                              (Just (ScMessagesDot (map dmRw lhs) Nothing))
+                          )
+                      )
+                  )
+                  (Just (ScMessagesDot (map dmRw rhs) Nothing))
+              )
     Just (ScMessagesDot d (Just b)) ->
       if not (scDotMessagesHaveNary d)
-      then ScBasicExpression
-           (scPrimaryRewritePrecedence p)
-           (Just
-             (ScMessagesDot
-               (map scDotMessageRewritePrecedence d)
-               (Just (map scBinaryMessageRewritePrecedence b))))
-      else let (lhs,rhs) = scDotMessagesSplitAtNary d
-               rw = null rhs
-               dmRw = scDotMessageRewritePrecedenceMaybe rw
-           in (if rw then id else scBasicExpressionRewritePrecedence False)
-              (ScBasicExpression
-                (ScPrimaryExpression
-                  (ScExprBasic
-                    (ScBasicExpression
-                     (scPrimaryRewritePrecedenceMaybe rw p)
-                      (Just (ScMessagesDot (map dmRw lhs) Nothing)))))
-                (Just (ScMessagesDot
-                        (map dmRw rhs)
-                        (Just (map (scBinaryMessageRewritePrecedenceMaybe rw) b)))))
+        then
+          ScBasicExpression
+            (scPrimaryRewritePrecedence p)
+            ( Just
+                ( ScMessagesDot
+                    (map scDotMessageRewritePrecedence d)
+                    (Just (map scBinaryMessageRewritePrecedence b))
+                )
+            )
+        else
+          let (lhs, rhs) = scDotMessagesSplitAtNary d
+              rw = null rhs
+              dmRw = scDotMessageRewritePrecedenceMaybe rw
+          in (if rw then id else scBasicExpressionRewritePrecedence False)
+              ( ScBasicExpression
+                  ( ScPrimaryExpression
+                      ( ScExprBasic
+                          ( ScBasicExpression
+                              (scPrimaryRewritePrecedenceMaybe rw p)
+                              (Just (ScMessagesDot (map dmRw lhs) Nothing))
+                          )
+                      )
+                  )
+                  ( Just
+                      ( ScMessagesDot
+                          (map dmRw rhs)
+                          (Just (map (scBinaryMessageRewritePrecedenceMaybe rw) b))
+                      )
+                  )
+              )
 
 scExpressionRewritePrecedence :: ScExpression -> ScExpression
 scExpressionRewritePrecedence e =
@@ -111,9 +134,9 @@ scExpressionRewritePrecedence e =
 scInitializerDefinitionRewritePrecedence :: ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionRewritePrecedence (ScInitializerDefinition cmt tmp stm) =
   ScInitializerDefinition
-  cmt
-  (fmap (map scTemporariesRewritePrecedence) tmp)
-  (fmap scStatementsRewritePrecedence stm)
+    cmt
+    (fmap (map scTemporariesRewritePrecedence) tmp)
+    (fmap scStatementsRewritePrecedence stm)
 
 scDotMessageRewritePrecedence :: ScDotMessage -> ScDotMessage
 scDotMessageRewritePrecedence (ScDotMessage i a) =
@@ -122,11 +145,11 @@ scDotMessageRewritePrecedence (ScDotMessage i a) =
 scMessagesRewritePrecedence :: ScMessages -> ScMessages
 scMessagesRewritePrecedence m =
   case m of
-    ScMessagesDot m1 m2 -> ScMessagesDot
-                           (map scDotMessageRewritePrecedence m1)
-                           (fmap (map scBinaryMessageRewritePrecedence) m2)
+    ScMessagesDot m1 m2 ->
+      ScMessagesDot
+        (map scDotMessageRewritePrecedence m1)
+        (fmap (map scBinaryMessageRewritePrecedence) m2)
     ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewritePrecedence m1)
-
 
 scReturnStatementRewritePrecedence :: ScReturnStatement -> ScReturnStatement
 scReturnStatementRewritePrecedence (ScReturnStatement x) =
@@ -136,12 +159,13 @@ scStatementsRewritePrecedence :: ScStatements -> ScStatements
 scStatementsRewritePrecedence s =
   case s of
     ScStatementsReturn x -> ScStatementsReturn (scReturnStatementRewritePrecedence x)
-    ScStatementsExpression x y -> ScStatementsExpression
-                                  (scExpressionRewritePrecedence x)
-                                  (fmap scStatementsRewritePrecedence y)
+    ScStatementsExpression x y ->
+      ScStatementsExpression
+        (scExpressionRewritePrecedence x)
+        (fmap scStatementsRewritePrecedence y)
 
 scTemporaryRewritePrecedence :: ScTemporary -> ScTemporary
-scTemporaryRewritePrecedence (i,e) = (i,fmap (scBasicExpressionRewritePrecedence True) e)
+scTemporaryRewritePrecedence (i, e) = (i, fmap (scBasicExpressionRewritePrecedence True) e)
 
 scTemporariesRewritePrecedence :: ScTemporaries -> ScTemporaries
 scTemporariesRewritePrecedence = map scTemporaryRewritePrecedence
@@ -164,10 +188,10 @@ scPrimaryRewritePrecedence p =
 -- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
 scRewritePrecedenceViewer :: String -> String
 scRewritePrecedenceViewer =
-  Sc.scInitializerDefinitionPrint .
-  scInitializerDefinitionRewritePrecedence .
-  Sc.superColliderParserInitializerDefinition .
-  Sc.alexScanTokens
+  Sc.scInitializerDefinitionPrint
+    . scInitializerDefinitionRewritePrecedence
+    . Sc.superColliderParserInitializerDefinition
+    . Sc.alexScanTokens
 
 {-
 

@@ -12,7 +12,6 @@ InitializerDefinition (3.4.3)
 BlockBody (3.4.4)
 Statements ReturnStatement Expression Assignment BasicExpression Primary Messages (3.4.5)
 Literal (3.4.6)
-
 -}
 module Language.Smalltalk.Ansi where
 
@@ -46,17 +45,18 @@ lexeme = Token.lexeme stLexer
 stLanguageDef :: Language.GenLanguageDef String () Identity.Identity
 stLanguageDef =
   Token.LanguageDef
-  {Token.commentStart = "\""
-  ,Token.commentEnd = "\""
-  ,Token.commentLine = "" -- NIL
-  ,Token.nestedComments = False
-  ,Token.identStart = letter
-  ,Token.identLetter = letter P.<|> P.digit
-  ,Token.opStart = binaryCharacter
-  ,Token.opLetter = binaryCharacter
-  ,Token.reservedNames = stReservedIdentifiers
-  ,Token.reservedOpNames = []
-  ,Token.caseSensitive = True}
+    { Token.commentStart = "\""
+    , Token.commentEnd = "\""
+    , Token.commentLine = "" -- NIL
+    , Token.nestedComments = False
+    , Token.identStart = letter
+    , Token.identLetter = letter P.<|> P.digit
+    , Token.opStart = binaryCharacter
+    , Token.opLetter = binaryCharacter
+    , Token.reservedNames = stReservedIdentifiers
+    , Token.reservedOpNames = []
+    , Token.caseSensitive = True
+    }
 
 -- | Lexer
 stLexer :: Token.GenTokenParser String () Identity.Identity
@@ -85,8 +85,7 @@ stParseInitial p =
 -- * 3.3.1 Program Definition
 
 -- | Sequence of program elements.
-data SmalltalkProgram =
-  SmalltalkProgram {programElements :: [ProgramElement]}
+data SmalltalkProgram = SmalltalkProgram {programElements :: [ProgramElement]}
   deriving (Eq, Show)
 
 {- | <<Smalltalk program>> ::= <<program element>>+ <<initialization ordering>>
@@ -120,7 +119,7 @@ maybeProgramElement = (P.eof >> return Nothing) P.<|> fmap Just programElement
 data ProgramElement
   = ProgramGlobal GlobalDefinition
   | ProgramInitializer ProgramInitializerDefinition
-  deriving (Eq,Show)
+  deriving (Eq, Show)
 
 {- | <<program element>> ::= <<class definition>>
                            | <<global definition>>
@@ -129,34 +128,40 @@ data ProgramElement
 -}
 programElement :: P ProgramElement
 programElement =
-  P.choice [fmap ProgramInitializer programInitializerDefinition
-           ,fmap ProgramGlobal globalDefinition]
+  P.choice
+    [ fmap ProgramInitializer programInitializerDefinition
+    , fmap ProgramGlobal globalDefinition
+    ]
 
 nonEmptyProgramElement :: P ProgramElement
 nonEmptyProgramElement =
-  P.choice [fmap ProgramInitializer nonEmptyProgramInitializerDefinition
-           ,fmap ProgramGlobal globalDefinition]
+  P.choice
+    [ fmap ProgramInitializer nonEmptyProgramInitializerDefinition
+    , fmap ProgramGlobal globalDefinition
+    ]
 
 -- * 3.3.2 Class Definition
 
-data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable deriving (Eq,Show)
+data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable deriving (Eq, Show)
 
-data InstanceState = InstanceState Indexable [Identifier] deriving (Eq,Show)
+data InstanceState = InstanceState Indexable [Identifier] deriving (Eq, Show)
 
 {- | Smalltalk has conventions regarding identifier case, but not strict rules.
 In .stc it would be nice to allow p.Q to mean Q(p), ie. distinguishing between q and Q.
 The types here are used to indicate where there is an ordinary case for a particular identifier.
 -}
 type LowercaseIdentifier = Identifier
+
 type UppercaseIdentifier = Identifier
 
 -- | Table relating subclass kind identifiers to Indexable values.
 subclassKindTable :: [(LowercaseIdentifier, Indexable)]
 subclassKindTable =
-  [("subclass:", NonIndexable)
-  ,("variableSubclass:", ObjectIndexable)
-  ,("variableByteSubclass:", ByteIndexable)
-  ,("variableWordSubclass:", WordIndexable)]
+  [ ("subclass:", NonIndexable)
+  , ("variableSubclass:", ObjectIndexable)
+  , ("variableByteSubclass:", ByteIndexable)
+  , ("variableWordSubclass:", WordIndexable)
+  ]
 
 subclassKindToIndexable :: LowercaseIdentifier -> Indexable
 subclassKindToIndexable = maybe (error "subclassKindToIndexable") id . flip lookup subclassKindTable
@@ -175,19 +180,19 @@ noInstanceState = InstanceState NonIndexable []
 superclassName is empty (Nothing) if the class is the base class (i.e. Object or ProtoObject) else it is the name of the super class.
 An empty superclassName does not indicate that a "default" superclass should be selected.
 -}
-data ClassDefinition =
-  ClassDefinition
-  {className :: UppercaseIdentifier
-  ,superclassName :: Maybe UppercaseIdentifier
-  ,instanceState :: InstanceState
-  ,classInstanceVariableNames :: [LowercaseIdentifier]
-  ,classVariableNames :: [UppercaseIdentifier]
-  ,importedPoolNames :: [UppercaseIdentifier]
-  ,instanceMethods :: [MethodDefinition]
-  ,classMethods :: [MethodDefinition]
-  ,classInitializer :: Maybe InitializerDefinition
-  ,classCategory :: Maybe String -- Meta-data
-  ,classComment :: Maybe String} -- Meta-data
+data ClassDefinition = ClassDefinition
+  { className :: UppercaseIdentifier
+  , superclassName :: Maybe UppercaseIdentifier
+  , instanceState :: InstanceState
+  , classInstanceVariableNames :: [LowercaseIdentifier]
+  , classVariableNames :: [UppercaseIdentifier]
+  , importedPoolNames :: [UppercaseIdentifier]
+  , instanceMethods :: [MethodDefinition]
+  , classMethods :: [MethodDefinition]
+  , classInitializer :: Maybe InitializerDefinition
+  , classCategory :: Maybe String -- Meta-data
+  , classComment :: Maybe String -- Meta-data
+  }
   deriving (Eq, Show)
 
 -- | A class library is a collection of class definitions.
@@ -208,8 +213,8 @@ isMetaclassName x = " class" `isSuffixOf` x
 metaclassNameClassName :: UppercaseIdentifier -> UppercaseIdentifier
 metaclassNameClassName x =
   if isMetaclassName x
-  then take (length x - 6) x
-  else error ("metaclassNameClassName: not Metaclass: " ++ x)
+    then take (length x - 6) x
+    else error ("metaclassNameClassName: not Metaclass: " ++ x)
 
 {- | The name of the meta class, ie. the class name with a class suffix.
      Metaclasses do not have separate ClassDefinitions.
@@ -220,15 +225,26 @@ metaclassNameClassName x =
 classMetaclassName :: ClassDefinition -> UppercaseIdentifier
 classMetaclassName = metaclassName . className
 
--- | "Smalltalk implementations have traditionally open-coded certain
--- messages including those with the following selectors."
+{- | "Smalltalk implementations have traditionally open-coded certain
+messages including those with the following selectors."
+-}
 restrictedSelectors :: [LowercaseIdentifier]
 restrictedSelectors =
-  ["ifTrue:","ifTrue:ifFalse:","ifFalse:","ifFalse:ifTrue:"
-  ,"to:do:","to:by:do:"
-  ,"and:","or:","=="
-  ,"timesRepeat:"
-  ,"basicAt:","basicAt:put:","basicSize","basicNew:"]
+  [ "ifTrue:"
+  , "ifTrue:ifFalse:"
+  , "ifFalse:"
+  , "ifFalse:ifTrue:"
+  , "to:do:"
+  , "to:by:do:"
+  , "and:"
+  , "or:"
+  , "=="
+  , "timesRepeat:"
+  , "basicAt:"
+  , "basicAt:put:"
+  , "basicSize"
+  , "basicNew:"
+  ]
 
 -- | List of instance method categories in alphabetical order.
 classInstanceMethodCategories :: ClassDefinition -> [String]
@@ -266,14 +282,14 @@ classCategoryPartsOrError :: ClassDefinition -> ClassCategoryParts
 classCategoryPartsOrError = categoryParts . classCategoryOrError
 
 classDefinitionSetCategory :: Maybe String -> ClassDefinition -> ClassDefinition
-classDefinitionSetCategory cat cd = cd { classCategory = cat }
+classDefinitionSetCategory cat cd = cd {classCategory = cat}
 
 -- | Apply f to both class and instance methods.
 classDefinitionEditMethods :: ([MethodDefinition] -> [MethodDefinition]) -> ClassDefinition -> ClassDefinition
 classDefinitionEditMethods f cd =
   let im = instanceMethods cd
       cm = classMethods cd
-  in cd { instanceMethods = f im, classMethods = f cm }
+  in cd {instanceMethods = f im, classMethods = f cm}
 
 -- | Sort methods by name.
 classDefinitionSortMethods :: ClassDefinition -> ClassDefinition
@@ -288,8 +304,8 @@ classDefinitionFromMethods :: (UppercaseIdentifier, Maybe String, Maybe String) 
 classDefinitionFromMethods (nm, cat, cmt) mth =
   let (cm, im) = partition isClassMethod mth
   in if nub (map methodClassName mth) == [nm]
-     then ClassDefinition nm Nothing noInstanceState [] [] [] im cm Nothing cat cmt
-     else error "classDefinitionFromMethods: wrong method list?"
+      then ClassDefinition nm Nothing noInstanceState [] [] [] im cm Nothing cat cmt
+      else error "classDefinitionFromMethods: wrong method list?"
 
 classDefinitionHasMethod :: ClassDefinition -> MethodDescriptor -> Bool
 classDefinitionHasMethod cd for = any (isMethodFor for) (classDefinitionMethods cd)
@@ -302,12 +318,20 @@ classDefinitionExtendWithMethods cd mth =
       notFor = filter (/= nm) (map methodClassName mth)
       alreadyExist = filter (classDefinitionHasMethod cd) (map methodDescriptor mth)
   in if null mth
-     then cd
-     else if null notFor && null alreadyExist
-          then cd { instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm }
-          else error (concat ["classDefinitionExtendWithMethods: wrong method list for: ", nm
-                             ," of: ", unwords (map methodSignature mth)
-                             ," because: " ++ show (notFor, alreadyExist)])
+      then cd
+      else
+        if null notFor && null alreadyExist
+          then cd {instanceMethods = instanceMethods cd ++ im, classMethods = classMethods cd ++ cm}
+          else
+            error
+              ( concat
+                  [ "classDefinitionExtendWithMethods: wrong method list for: "
+                  , nm
+                  , " of: "
+                  , unwords (map methodSignature mth)
+                  , " because: " ++ show (notFor, alreadyExist)
+                  ]
+              )
 
 -- | Checks that all methods already exist at class, c.f. classDefinitionExtendWithMethods
 classDefinitionReplaceMethods :: ClassDefinition -> [MethodDefinition] -> ClassDefinition
@@ -318,12 +342,20 @@ classDefinitionReplaceMethods cd mth =
       mthTbl = map (\m -> (methodDescriptor m, m)) mth
       replaceMethod m = fromMaybe m (lookup (methodDescriptor m) mthTbl)
   in if null mth
-     then cd
-     else if null notFor && null dontExist
-          then cd { instanceMethods = map replaceMethod (instanceMethods cd), classMethods = map replaceMethod (classMethods cd) }
-          else error (concat ["classDefinitionReplaceMethods: wrong method list for: ", nm
-                             ," of: ", unwords (map methodSignature mth)
-                             ," because: " ++ show (notFor, dontExist)])
+      then cd
+      else
+        if null notFor && null dontExist
+          then cd {instanceMethods = map replaceMethod (instanceMethods cd), classMethods = map replaceMethod (classMethods cd)}
+          else
+            error
+              ( concat
+                  [ "classDefinitionReplaceMethods: wrong method list for: "
+                  , nm
+                  , " of: "
+                  , unwords (map methodSignature mth)
+                  , " because: " ++ show (notFor, dontExist)
+                  ]
+              )
 
 classDefinitionMethods :: ClassDefinition -> [MethodDefinition]
 classDefinitionMethods cd = instanceMethods cd ++ classMethods cd
@@ -333,17 +365,18 @@ classDefinitionIsExtensionOrModification :: ClassDefinition -> Bool
 classDefinitionIsExtensionOrModification cd = Just (className cd) == superclassName cd
 
 type ClassDefinitionGraph =
-  (Graph.Graph
-  ,Graph.Vertex -> (ClassDefinition, UppercaseIdentifier, [UppercaseIdentifier])
-  ,UppercaseIdentifier -> Maybe Graph.Vertex)
+  ( Graph.Graph
+  , Graph.Vertex -> (ClassDefinition, UppercaseIdentifier, [UppercaseIdentifier])
+  , UppercaseIdentifier -> Maybe Graph.Vertex
+  )
 
 -- | Graph where each class definition is connected to it's superclass, iff that class is also in the list of definitions.
 classDefinitionsInheritanceGraph :: [ClassDefinition] -> ClassDefinitionGraph
 classDefinitionsInheritanceGraph l =
   let nd = map className l
       e cd = case superclassName cd of
-               Nothing -> []
-               Just sc -> if sc `elem` nd then [sc] else []
+        Nothing -> []
+        Just sc -> if sc `elem` nd then [sc] else []
   in Graph.graphFromEdges (zip3 l nd (map e l))
 
 classDefinitionGraphSort :: ClassDefinitionGraph -> [ClassDefinition]
@@ -352,8 +385,8 @@ classDefinitionGraphSort (g, f, _) = reverse (map ((\(cd, _, _) -> cd) . f) (Gra
 -- * 3.3.3 Global Variable Definition
 
 -- | 3.3.3
-data GlobalDefinition =
-  GlobalDefinition GlobalName (Maybe VariableInitializer)
+data GlobalDefinition
+  = GlobalDefinition GlobalName (Maybe VariableInitializer)
   deriving (Eq, Show)
 
 -- | <<global name>> ::= identifier
@@ -416,17 +449,20 @@ type MethodCategory = String
      The methodClass field indicates which class the method is held by.
      It will be ("Name", False) for instance methods and ("Name class", True) for class methods.
 -}
-data MethodDefinition =
-  MethodDefinition
-  {methodClass :: (UppercaseIdentifier, Bool) -- ^ Holder
-  ,methodCategory :: Maybe MethodCategory -- ^ Meta-data
-  ,methodPattern :: Pattern
-  ,methodTemporaries :: Maybe Temporaries
-  ,methodStatements :: Maybe Statements
-  ,methodPrimitive :: Maybe Primitive -- ^ Non-ansi
-  ,methodComment :: Maybe String
-  ,methodSource :: Maybe String}
-  deriving (Eq,Show)
+data MethodDefinition = MethodDefinition
+  { methodClass :: (UppercaseIdentifier, Bool)
+  -- ^ Holder
+  , methodCategory :: Maybe MethodCategory
+  -- ^ Meta-data
+  , methodPattern :: Pattern
+  , methodTemporaries :: Maybe Temporaries
+  , methodStatements :: Maybe Statements
+  , methodPrimitive :: Maybe Primitive
+  -- ^ Non-ansi
+  , methodComment :: Maybe String
+  , methodSource :: Maybe String
+  }
+  deriving (Eq, Show)
 
 -- | (isClassSide, selector)
 type MethodDescriptor = (Bool, Selector)
@@ -478,7 +514,7 @@ methodDefinitionPrimitiveCode =
 methodDefinitionEditSource :: (String -> String) -> MethodDefinition -> MethodDefinition
 methodDefinitionEditSource f md =
   let src = methodSource md
-  in md { methodSource = fmap f src }
+  in md {methodSource = fmap f src}
 
 methodDefinitionArguments :: MethodDefinition -> [LowercaseIdentifier]
 methodDefinitionArguments = patternArguments . methodPattern
@@ -590,15 +626,15 @@ methodSignature :: MethodDefinition -> LowercaseIdentifier
 methodSignature = selectorIdentifier . methodSelector
 
 -- | A method name is a (className,methodSignature)
-type MethodName = (UppercaseIdentifier,LowercaseIdentifier)
+type MethodName = (UppercaseIdentifier, LowercaseIdentifier)
 
 -- | Calculate MethodName from MethodDefinition.
 methodName :: MethodDefinition -> MethodName
-methodName m = (fst (methodClass m),methodSignature m)
+methodName m = (fst (methodClass m), methodSignature m)
 
 -- | Method name in traditional Smalltalk form, ie. ClassName>>methodSignature.
 methodNameIdentifier :: MethodName -> String
-methodNameIdentifier (cl,sg) = cl ++ ">>" ++ sg
+methodNameIdentifier (cl, sg) = cl ++ ">>" ++ sg
 
 {- | <message pattern> ::= <unary pattern> | <binary pattern> | <keyword pattern>
 
@@ -621,9 +657,12 @@ True
 -}
 messagePattern :: P Pattern
 messagePattern =
-  P.choice [P.try keywordPattern
-           ,P.try binaryPattern
-           ,unaryPattern] P.<?> "messagePattern"
+  P.choice
+    [ P.try keywordPattern
+    , P.try binaryPattern
+    , unaryPattern
+    ]
+    P.<?> "messagePattern"
 
 {- | <unary pattern> ::= unarySelector
 
@@ -659,9 +698,10 @@ KeywordPattern [("k1:","p1")]
 -}
 keywordPattern :: P Pattern
 keywordPattern = do
-  let f = do kw <- keyword
-             arg <- identifier
-             return (kw,arg)
+  let f = do
+        kw <- keyword
+        arg <- identifier
+        return (kw, arg)
   fmap KeywordPattern (P.many1 (P.try f))
 
 -- | 3.4.2
@@ -727,9 +767,9 @@ type Comment = String
 
 The value of an initializer with no <statements> is the binding of the reserved identifier 'nil'.
 -}
-data InitializerDefinition =
-  InitializerDefinition (Maybe Comment) (Maybe Temporaries) (Maybe Statements)
-  deriving (Eq,Show)
+data InitializerDefinition
+  = InitializerDefinition (Maybe Comment) (Maybe Temporaries) (Maybe Statements)
+  deriving (Eq, Show)
 
 {- | Construct a standard class initiliaze statement, i.e. "ClassName initialize"
 
@@ -760,8 +800,8 @@ initializerDefinition = do
 nonEmptyInitializerDefinition :: P InitializerDefinition
 nonEmptyInitializerDefinition = do
   InitializerDefinition c t s <- initializerDefinition
-  case (t,s) of
-    (Nothing,Nothing) -> P.unexpected "nonEmptyInitializerDefinition: empty"
+  case (t, s) of
+    (Nothing, Nothing) -> P.unexpected "nonEmptyInitializerDefinition: empty"
     _ -> return (InitializerDefinition c t s)
 
 -- | Set comment field.
@@ -786,13 +826,14 @@ blockConstructor = inBrackets blockBody
 {- | A block has optional arguments, optional temporaries and optional statements.
      The method name field is not assigned by the parser, see methodDefinitionAnnotateBlocks.
 -}
-data BlockBody =
-  BlockBody
-  {blockMethodName :: Maybe MethodName -- ^ Meta data
-  ,blockArguments :: Maybe [BlockArgument]
-  ,blockTemporaries :: Maybe Temporaries
-  ,blockStatements :: Maybe Statements}
-  deriving (Eq,Show)
+data BlockBody = BlockBody
+  { blockMethodName :: Maybe MethodName
+  -- ^ Meta data
+  , blockArguments :: Maybe [BlockArgument]
+  , blockTemporaries :: Maybe Temporaries
+  , blockStatements :: Maybe Statements
+  }
+  deriving (Eq, Show)
 
 {- | Does BlockBody end with a Return (non-local).
      Note this does not look to see if the block contains any nested non-local returns.
@@ -877,7 +918,7 @@ expressionSequenceToStatements stm =
         case e of
           [] -> error "expressionSequenceToStatements"
           [e0] -> StatementsExpression e0 stm
-          e0:eN -> StatementsExpression e0 (Just (f eN))
+          e0 : eN -> StatementsExpression e0 (Just (f eN))
   in f
 
 {- | '.' as lexeme (token)
@@ -907,13 +948,13 @@ statements = do
         e <- expression
         p <- P.optionMaybe period
         s <- case p of
-               Nothing -> return Nothing
-               Just _ -> P.optionMaybe statements
+          Nothing -> return Nothing
+          Just _ -> P.optionMaybe statements
         return (StatementsExpression e s)
-  P.choice [fmap StatementsReturn (returnStatement >>~ P.optional period),rhs]
+  P.choice [fmap StatementsReturn (returnStatement >>~ P.optional period), rhs]
 
 -- | 3.4.5.1 Return statement
-data ReturnStatement = ReturnStatement Expression deriving (Eq,Show)
+data ReturnStatement = ReturnStatement Expression deriving (Eq, Show)
 
 {- | <return statement> ::= returnOperator <expression>
 
@@ -985,8 +1026,8 @@ assignment = do
   return (Assignment a e)
 
 -- | 3.4.5.2
-data BasicExpression =
-  BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
+data BasicExpression
+  = BasicExpression Primary (Maybe Messages) (Maybe CascadedMessages)
   deriving (Eq, Show)
 
 {- | Construct simple unary message send to primary receiver
@@ -1055,7 +1096,7 @@ data Messages
   = MessagesUnary [UnaryMessage] (Maybe [BinaryMessage]) (Maybe KeywordMessage)
   | MessagesBinary [BinaryMessage] (Maybe KeywordMessage)
   | MessagesKeyword KeywordMessage
-  deriving (Eq,Show)
+  deriving (Eq, Show)
 
 inParentheses :: P t -> P t
 inParentheses = Token.parens stLexer
@@ -1081,11 +1122,16 @@ inBrackets = Token.brackets stLexer
 -}
 primary :: P Primary
 primary =
-  lexeme (P.choice [fmap PrimaryBlock blockConstructor
-                   ,fmap PrimaryExpression (inParentheses expression)
-                   ,fmap PrimaryArrayExpression (inBraces (P.sepEndBy basicExpression period)) -- allow ending period?
-                   ,fmap PrimaryIdentifier identifier
-                   ,fmap PrimaryLiteral literal] P.<?> "primary")
+  lexeme
+    ( P.choice
+        [ fmap PrimaryBlock blockConstructor
+        , fmap PrimaryExpression (inParentheses expression)
+        , fmap PrimaryArrayExpression (inBraces (P.sepEndBy basicExpression period)) -- allow ending period?
+        , fmap PrimaryIdentifier identifier
+        , fmap PrimaryLiteral literal
+        ]
+        P.<?> "primary"
+    )
 
 {- | <unary message>+ <binary message>* [<keyword message>]
 
@@ -1134,23 +1180,23 @@ binaryMessages = do
 > p "x perform: #y: with: z" -- error
 -}
 messages :: P Messages
-messages = P.choice [P.try binaryMessages,P.try (fmap MessagesKeyword keywordMessage),unaryMessages]
+messages = P.choice [P.try binaryMessages, P.try (fmap MessagesKeyword keywordMessage), unaryMessages]
 
-data UnaryMessage = UnaryMessage LowercaseIdentifier deriving (Eq,Show)
+data UnaryMessage = UnaryMessage LowercaseIdentifier deriving (Eq, Show)
 
 unaryMessageSelector :: UnaryMessage -> Selector
 unaryMessageSelector (UnaryMessage u) = UnarySelector u
 
-data BinaryMessage =
-  BinaryMessage BinaryIdentifier BinaryArgument
-  deriving (Eq,Show)
+data BinaryMessage
+  = BinaryMessage BinaryIdentifier BinaryArgument
+  deriving (Eq, Show)
 
 binaryMessageSelector :: BinaryMessage -> Selector
 binaryMessageSelector (BinaryMessage b _) = BinarySelector b
 
-data KeywordMessage =
-  KeywordMessage [(Keyword,KeywordArgument)]
-  deriving (Eq,Show)
+data KeywordMessage
+  = KeywordMessage [(Keyword, KeywordArgument)]
+  deriving (Eq, Show)
 
 -- | Keyword selector from KeywordMessage.
 keywordMessageSelector :: KeywordMessage -> Selector
@@ -1177,8 +1223,8 @@ binaryMessage = do
   arg <- binaryArgument
   return (BinaryMessage sel arg)
 
-data BinaryArgument =
-  BinaryArgument Primary (Maybe [UnaryMessage])
+data BinaryArgument
+  = BinaryArgument Primary (Maybe [UnaryMessage])
   deriving (Eq, Show)
 
 {- | <binary argument> ::= <primary> <unary message>*
@@ -1204,13 +1250,14 @@ binaryArgument = do
 -}
 keywordMessage :: P KeywordMessage
 keywordMessage = do
-  let f = do kw <- keyword
-             arg <- keywordArgument
-             return (kw,arg)
+  let f = do
+        kw <- keyword
+        arg <- keywordArgument
+        return (kw, arg)
   fmap KeywordMessage (P.many1 f)
 
-data KeywordArgument =
-  KeywordArgument Primary (Maybe [UnaryMessage]) (Maybe [BinaryMessage])
+data KeywordArgument
+  = KeywordArgument Primary (Maybe [UnaryMessage]) (Maybe [BinaryMessage])
   deriving (Eq, Show)
 
 {- | <keyword argument> ::= <primary> <unary message>* <binary message>*
@@ -1553,6 +1600,7 @@ type OrdinaryIdentifier = String
 -}
 ordinaryIdentifier :: P OrdinaryIdentifier
 ordinaryIdentifier = Token.identifier stLexer
+
 --  if token `elem` stReservedIdentifiers then P.unexpected ("reservedIdentifier: " ++ token) else return token
 
 underscore :: P Char
@@ -1864,7 +1912,7 @@ UnarySelector "p"
 unarySelector :: P Selector
 unarySelector =
   (identifier >>= \u -> P.notFollowedBy (P.char ':') >> return (UnarySelector u))
-  P.<?> "unarySelector"
+    P.<?> "unarySelector"
 
 data Selector
   = UnarySelector LowercaseIdentifier
@@ -1988,7 +2036,7 @@ keywordSelector = lexeme keywordSelectorNotLexeme
 > stParse separator "" -- FAIL
 -}
 separator :: P String
-separator = fmap concat (P.many1 (fmap return P.space  P.<|> comment) P.<?> "separator")
+separator = fmap concat (P.many1 (fmap return P.space P.<|> comment) P.<?> "separator")
 
 -- * Primitive
 
@@ -2001,7 +2049,7 @@ Primitive {primitiveLabel = NumberLiteral (Int 63)}
 >>> stParse primitive "<primitive: VMpr_ByteString_at>"
 Primitive {primitiveLabel = SymbolLiteral "VMpr_ByteString_at"}
 -}
-data Primitive = Primitive { primitiveLabel :: Literal } deriving (Eq, Show)
+data Primitive = Primitive {primitiveLabel :: Literal} deriving (Eq, Show)
 
 -- | Primitive with integer label.
 primitiveOf :: Integer -> Primitive

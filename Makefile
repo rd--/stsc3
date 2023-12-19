@@ -17,3 +17,6 @@ push-all:
 
 remote-update:
 	ssh rd@rohandrape.net "(cd rohandrape.net/pub/stsc3 ; git pull)"
+
+indent:
+	fourmolu -i Language

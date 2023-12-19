@@ -71,27 +71,29 @@ classDefinition = do
           Just "nil" -> Nothing
           Nothing -> Just "Object"
           _ -> somSuperclassName
-  (instanceVariableNames,instanceMethods,classVariableNames,classMethods) <- St.inParentheses (classBody className)
-  return (St.ClassDefinition
-          className
-          superclassName
-          St.noInstanceState
-          instanceVariableNames
-          classVariableNames
-          []
-          (map Annotate.methodDefinitionAnnotateBlocks instanceMethods)
-          (map Annotate.methodDefinitionAnnotateBlocks classMethods)
-          Nothing
-          Nothing
-          Nothing)
+  (instanceVariableNames, instanceMethods, classVariableNames, classMethods) <- St.inParentheses (classBody className)
+  return
+    ( St.ClassDefinition
+        className
+        superclassName
+        St.noInstanceState
+        instanceVariableNames
+        classVariableNames
+        []
+        (map Annotate.methodDefinitionAnnotateBlocks instanceMethods)
+        (map Annotate.methodDefinitionAnnotateBlocks classMethods)
+        Nothing
+        Nothing
+        Nothing
+    )
 
 -- | Instance fields and methods, optionally class fields and methods.
 classBody :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition], [St.Identifier], [St.MethodDefinition])
 classBody cl = do
   iv <- P.option [] St.temporariesIdentifierSequence
   im <- P.many (methodDefinition (cl, False))
-  (cv,cm) <- P.option ([],[]) (classSide (St.metaclassName cl))
-  return (iv,im,cv,cm)
+  (cv, cm) <- P.option ([], []) (classSide (St.metaclassName cl))
+  return (iv, im, cv, cm)
 
 -- | Class fields and class methods.
 classSide :: St.Identifier -> St.P ([St.Identifier], [St.MethodDefinition])
@@ -99,11 +101,11 @@ classSide cl = do
   _ <- separator
   t <- P.option [] St.temporariesIdentifierSequence
   m <- P.many (methodDefinition (cl, True))
-  return (t,m)
+  return (t, m)
 
 -- | Method block.  Arguments are given by the methodPattern.  Primitives have a label.
-data MethodBlock =
-  MethodBlock (Maybe St.Temporaries) (Maybe St.Statements) (Maybe St.Primitive)
+data MethodBlock
+  = MethodBlock (Maybe St.Temporaries) (Maybe St.Statements) (Maybe St.Primitive)
   deriving (Eq, Show)
 
 {- | Method definition.
@@ -182,7 +184,7 @@ escapedChar :: St.P Char
 escapedChar = do
   d <- P.char '\\'
   c <- P.oneOf "tbnrf'\\0"
-  return (read ['\'',d,c,'\''])
+  return (read ['\'', d, c, '\''])
 
 {- | Any character that is not one of the characters that are escaped at escapedChar.
      Som also requires that newlines be allowed in strings, so these are excluded.
@@ -226,28 +228,32 @@ somEscapedString = St.stParse escapedStringBody
 -- | The list of standard (required) Som classes.
 somStandardClassList :: [St.Identifier]
 somStandardClassList =
-  ["Array"
-  ,"Block1","Block2","Block3","Block"
-  ,"Boolean"
-  ,"Class"
-  ,"Dictionary"
-  ,"Double"
-  ,"False"
-  ,"HashEntry"
-  ,"Hashtable"
-  ,"Integer"
-  ,"Metaclass"
-  ,"Method"
-  ,"Nil"
-  ,"Object"
-  ,"Pair"
-  ,"Primitive"
-  ,"Set"
-  ,"String"
-  ,"Symbol"
-  ,"System"
-  ,"True"
-  ,"Vector"]
+  [ "Array"
+  , "Block1"
+  , "Block2"
+  , "Block3"
+  , "Block"
+  , "Boolean"
+  , "Class"
+  , "Dictionary"
+  , "Double"
+  , "False"
+  , "HashEntry"
+  , "Hashtable"
+  , "Integer"
+  , "Metaclass"
+  , "Method"
+  , "Nil"
+  , "Object"
+  , "Pair"
+  , "Primitive"
+  , "Set"
+  , "String"
+  , "Symbol"
+  , "System"
+  , "True"
+  , "Vector"
+  ]
 
 -- * IO
 

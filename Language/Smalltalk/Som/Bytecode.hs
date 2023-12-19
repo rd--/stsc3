@@ -1,12 +1,22 @@
 module Language.Smalltalk.Som.Bytecode where
 
-data Bytecode =
-  Halt |
-  Dup |
-  PushLocal | PushArgument | PushField | PushBlock | PushConstant | PushGlobal |
-  Pop | PopLocal | PopArgument | PopField |
-  Send | SuperSend |
-  ReturnLocal | ReturnNonLocal
+data Bytecode
+  = Halt
+  | Dup
+  | PushLocal
+  | PushArgument
+  | PushField
+  | PushBlock
+  | PushConstant
+  | PushGlobal
+  | Pop
+  | PopLocal
+  | PopArgument
+  | PopField
+  | Send
+  | SuperSend
+  | ReturnLocal
+  | ReturnNonLocal
   deriving (Eq, Enum, Bounded, Ord, Show)
 
 bytecodeLength :: Bytecode -> Int

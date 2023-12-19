@@ -36,9 +36,9 @@ assignmentRewritePrimary rw (Assignment k expr) =
 basicExpressionRewritePrimary :: (Primary -> Primary) -> BasicExpression -> BasicExpression
 basicExpressionRewritePrimary rw (BasicExpression p m cm) =
   BasicExpression
-  (primaryRewritePrimary rw p)
-  (fmap (messagesRewritePrimary rw) m)
-  (fmap (cascadedMessagesRewritePrimary rw) cm)
+    (primaryRewritePrimary rw p)
+    (fmap (messagesRewritePrimary rw) m)
+    (fmap (cascadedMessagesRewritePrimary rw) cm)
 
 primaryRewritePrimary :: (Primary -> Primary) -> Primary -> Primary
 primaryRewritePrimary rw p =

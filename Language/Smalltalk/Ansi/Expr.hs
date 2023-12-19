@@ -10,13 +10,13 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
      If the selector is Binary there must be one parameter.
      If the selector is Keyword there must be as many parameters as the selector indicates.
 -}
-data Message =
-  Message St.Selector [Expr]
+data Message
+  = Message St.Selector [Expr]
   deriving (Eq, Show)
 
 -- | Lambda terms may store their Smalltalk definitions (either blocks or methods)
-data LambdaDefinition =
-    BlockLambda St.BlockBody
+data LambdaDefinition
+  = BlockLambda St.BlockBody
   | MethodLambda St.MethodDefinition
   | NullLambda
   deriving (Eq, Show)
@@ -44,8 +44,8 @@ lambdaDefinitionShow ld =
      Programs are written as Init, which is not allowed to have a return statement.
      Cascades are written as Lambda, see cascadeLambda.
 -}
-data Expr =
-    Identifier St.Identifier
+data Expr
+  = Identifier St.Identifier
   | Literal St.Literal
   | Assignment St.Identifier Expr
   | Send Expr Message
@@ -98,7 +98,7 @@ exprIsBinaryMessageSend expr =
 exprIsKeywordMessageSend :: Expr -> Bool
 exprIsKeywordMessageSend expr =
   case expr of
-    Send _lhs (Message (St.KeywordSelector _) (_:_)) -> True
+    Send _lhs (Message (St.KeywordSelector _) (_ : _)) -> True
     _ -> False
 
 -- | Is Expr a unary message send.
@@ -121,19 +121,19 @@ blockBodyExpr :: St.BlockBody -> Expr
 blockBodyExpr blockBody =
   let St.BlockBody _ arg tmp stm = blockBody
   in Lambda
-     (BlockLambda blockBody)
-     (maybe [] id arg)
-     (maybe [] St.temporariesIdentifiers tmp)
-     (maybe ([], Nothing) statementsExprList stm)
+      (BlockLambda blockBody)
+      (maybe [] id arg)
+      (maybe [] St.temporariesIdentifiers tmp)
+      (maybe ([], Nothing) statementsExprList stm)
 
 methodDefinitionExpr :: St.MethodDefinition -> Expr
 methodDefinitionExpr methodDefinition =
   let (St.MethodDefinition _ _ pat tmp stm _ _ _) = methodDefinition
   in Lambda
-     (MethodLambda methodDefinition)
-     (St.patternArguments pat)
-     (maybe [] St.temporariesIdentifiers tmp)
-     (maybe ([], Nothing) statementsExprList stm)
+      (MethodLambda methodDefinition)
+      (St.patternArguments pat)
+      (maybe [] St.temporariesIdentifiers tmp)
+      (maybe ([], Nothing) statementsExprList stm)
 
 unaryMessagesExpr :: Expr -> [St.UnaryMessage] -> Expr
 unaryMessagesExpr e u =
@@ -159,11 +159,11 @@ unaryKeywordMessagesExpr e u = keywordMessageExpr (unaryMessagesExpr e u)
 
 keywordArgumentExpr :: St.KeywordArgument -> Expr
 keywordArgumentExpr (St.KeywordArgument p mu mb) =
-  case (mu,mb) of
-    (Nothing,Nothing) -> primaryExpr p
-    (Just u,Just b) -> unaryBinaryMessagesExpr (primaryExpr p) u b
-    (Just u,Nothing) -> unaryMessagesExpr (primaryExpr p) u
-    (Nothing,Just b) -> binaryMessagesExpr (primaryExpr p) b
+  case (mu, mb) of
+    (Nothing, Nothing) -> primaryExpr p
+    (Just u, Just b) -> unaryBinaryMessagesExpr (primaryExpr p) u b
+    (Just u, Nothing) -> unaryMessagesExpr (primaryExpr p) u
+    (Nothing, Just b) -> binaryMessagesExpr (primaryExpr p) b
 
 keywordMessageExpr :: Expr -> St.KeywordMessage -> Expr
 keywordMessageExpr e (St.KeywordMessage k) =
@@ -213,17 +213,17 @@ basicExpressionExpr (St.BasicExpression p m c) =
     Just m' ->
       let e = messagesExpr (primaryExpr p) m'
       in case c of
-        Nothing -> e
-        Just c' ->
-          case e of
-            Send e' m'' -> keywordSend (cascadeLambda m'' c') "value:" [e']
-            _ -> error "basicExpressionExpr: cascade a non-Send?"
+          Nothing -> e
+          Just c' ->
+            case e of
+              Send e' m'' -> keywordSend (cascadeLambda m'' c') "value:" [e']
+              _ -> error "basicExpressionExpr: cascade a non-Send?"
 
 expressionExpr :: St.Expression -> Expr
 expressionExpr e =
   case e of
-     St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
-     St.ExprBasic e' -> basicExpressionExpr e'
+    St.ExprAssignment (St.Assignment i e') -> Assignment i (expressionExpr e')
+    St.ExprBasic e' -> basicExpressionExpr e'
 
 statementsExprList :: St.Statements -> ([Expr], Maybe Expr)
 statementsExprList =
@@ -240,9 +240,9 @@ statementsExprListNoReturn stm =
 initializerDefinitionExpr :: St.InitializerDefinition -> Expr
 initializerDefinitionExpr (St.InitializerDefinition cmt tmp stm) =
   Init
-  cmt
-  (maybe [] St.temporariesIdentifiers tmp)
-  (maybe [] statementsExprListNoReturn stm)
+    cmt
+    (maybe [] St.temporariesIdentifiers tmp)
+    (maybe [] statementsExprListNoReturn stm)
 
 -- * Expr operators
 

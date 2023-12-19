@@ -30,7 +30,7 @@ ScMessages occurs in ScBasicExpression.
 module Language.Smalltalk.SuperCollider.Rewrite.Keyword where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
@@ -66,9 +66,9 @@ scDotMessageRewriteKeyword (ScDotMessage m a) =
 scInitializerDefinitionRewriteKeyword :: ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionRewriteKeyword (ScInitializerDefinition cmt tmp stm) =
   ScInitializerDefinition
-  cmt
-  (fmap (map scTemporariesRewriteKeyword) tmp)
-  (fmap scStatementsRewriteKeyword stm)
+    cmt
+    (fmap (map scTemporariesRewriteKeyword) tmp)
+    (fmap scStatementsRewriteKeyword stm)
 
 scExpressionRewriteKeyword :: ScExpression -> ScExpression
 scExpressionRewriteKeyword e =
@@ -77,7 +77,7 @@ scExpressionRewriteKeyword e =
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteKeyword x)
 
 scTemporaryRewriteKeyword :: ScTemporary -> ScTemporary
-scTemporaryRewriteKeyword (i,e) = (i,fmap scBasicExpressionRewriteKeyword e)
+scTemporaryRewriteKeyword (i, e) = (i, fmap scBasicExpressionRewriteKeyword e)
 
 scTemporariesRewriteKeyword :: ScTemporaries -> ScTemporaries
 scTemporariesRewriteKeyword = map scTemporaryRewriteKeyword
@@ -90,9 +90,10 @@ scStatementsRewriteKeyword :: ScStatements -> ScStatements
 scStatementsRewriteKeyword s =
   case s of
     ScStatementsReturn x -> ScStatementsReturn (scReturnStatementRewriteKeyword x)
-    ScStatementsExpression x y -> ScStatementsExpression
-                                  (scExpressionRewriteKeyword x)
-                                  (fmap scStatementsRewriteKeyword y)
+    ScStatementsExpression x y ->
+      ScStatementsExpression
+        (scExpressionRewriteKeyword x)
+        (fmap scStatementsRewriteKeyword y)
 
 scBlockBodyRewriteKeyword :: ScBlockBody -> ScBlockBody
 scBlockBodyRewriteKeyword (ScBlockBody a t s) =
@@ -123,18 +124,19 @@ scBinaryMessageRewriteKeyword (ScBinaryMessage i a) =
 scMessagesRewriteKeyword :: ScMessages -> ScMessages
 scMessagesRewriteKeyword m =
   case m of
-    ScMessagesDot m1 m2 -> ScMessagesDot
-                           (map scDotMessageRewriteKeyword m1)
-                           (fmap (map scBinaryMessageRewriteKeyword) m2)
+    ScMessagesDot m1 m2 ->
+      ScMessagesDot
+        (map scDotMessageRewriteKeyword m1)
+        (fmap (map scBinaryMessageRewriteKeyword) m2)
     ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteKeyword m1)
 
 -- | Viewer for keyword rewriter. Reads, rewrites and prints Sc expression.
 scRewriteKeywordViewer :: String -> String
 scRewriteKeywordViewer =
-  Sc.scInitializerDefinitionPrint .
-  scInitializerDefinitionRewriteKeyword .
-  Sc.superColliderParserInitializerDefinition .
-  Sc.alexScanTokens
+  Sc.scInitializerDefinitionPrint
+    . scInitializerDefinitionRewriteKeyword
+    . Sc.superColliderParserInitializerDefinition
+    . Sc.alexScanTokens
 
 {-
 

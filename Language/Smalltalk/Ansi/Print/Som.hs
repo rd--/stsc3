@@ -1,5 +1,5 @@
 -- | Print Ansi class definition value in Som format.
-module Language.Smalltalk.Ansi.Print.Som where {- stsc3 -}
+module Language.Smalltalk.Ansi.Print.Som {- stsc3 -} where
 
 import Data.Maybe {- base -}
 
@@ -25,17 +25,20 @@ classDefinitionPrintSom cd =
       cm = St.classMethods cd
       cmt txt = unlines ["comment = (^'", txt, "')"]
       ln =
-        [unwords [St.className cd, "=", fromMaybe (if St.className cd == "Object" then "nil" else "Object") (St.superclassName cd), "("]
-        ,somVariablesPrint (St.classInstanceVariableNames cd)
-        ,unlines (map methodDefinitionPrintSom (St.instanceMethods cd))
-        ,if null cv && null cm
-         then ""
-         else unlines
-              ["----------------------------"
-              ,somVariablesPrint cv
-              ,unlines (map methodDefinitionPrintSom cm)
-              ,cmt (fromMaybe "" (St.classComment cd))]
-        ,")"]
+        [ unwords [St.className cd, "=", fromMaybe (if St.className cd == "Object" then "nil" else "Object") (St.superclassName cd), "("]
+        , somVariablesPrint (St.classInstanceVariableNames cd)
+        , unlines (map methodDefinitionPrintSom (St.instanceMethods cd))
+        , if null cv && null cm
+            then ""
+            else
+              unlines
+                [ "----------------------------"
+                , somVariablesPrint cv
+                , unlines (map methodDefinitionPrintSom cm)
+                , cmt (fromMaybe "" (St.classComment cd))
+                ]
+        , ")"
+        ]
   in unlines (filter (not . null) ln)
 
 {- | Print method definition in Som format.
@@ -46,16 +49,19 @@ methodDefinitionPrintSom :: St.MethodDefinition -> String
 methodDefinitionPrintSom md =
   let St.MethodDefinition _ _ pat tmp stm prm _ src = md
       ln =
-        [unwords [St.pattern_pp pat, "=", "("]
-        ,case src of
+        [ unwords [St.pattern_pp pat, "=", "("]
+        , case src of
             Just txt -> String.unlinesNoTrailingNewline (List.tail_err (lines txt))
-            Nothing -> String.unlinesNoTrailingNewline
-              [maybe "" St.temporaries_pp tmp
-              ,maybe "" St.statements_pp stm]
-        ,")"]
+            Nothing ->
+              String.unlinesNoTrailingNewline
+                [ maybe "" St.temporaries_pp tmp
+                , maybe "" St.statements_pp stm
+                ]
+        , ")"
+        ]
   in case (prm, src) of
-       (Just _, Nothing) -> St.pattern_pp pat ++ " = primitive"
-       _ -> unlines (filter (not . null) ln)
+      (Just _, Nothing) -> St.pattern_pp pat ++ " = primitive"
+      _ -> unlines (filter (not . null) ln)
 
 writeSomClassDefinition :: FilePath -> St.ClassDefinition -> IO ()
 writeSomClassDefinition dir cd = writeFile (dir </> St.className cd <.> "som") (classDefinitionPrintSom cd)

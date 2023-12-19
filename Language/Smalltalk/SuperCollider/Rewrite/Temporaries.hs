@@ -9,14 +9,14 @@ module Language.Smalltalk.SuperCollider.Rewrite.Temporaries where
 import Data.Maybe {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 -- | Get initialiser lifted to an Assignment expression.
 scTemporaryInitialiser :: ScTemporary -> Maybe ScExpression
-scTemporaryInitialiser (k,v) =
+scTemporaryInitialiser (k, v) =
   let f e = ScExprAssignment k (ScExprBasic (scBasicExpressionRewriteTemporaries e))
   in fmap f v
 
@@ -24,36 +24,37 @@ scTemporariesPartition :: [ScTemporaries] -> ([St.Identifier], [ScExpression])
 scTemporariesPartition tmp =
   let tmpNames = map fst (concat tmp)
       tmpExpr = mapMaybe scTemporaryInitialiser (concat tmp)
-  in (tmpNames,tmpExpr)
+  in (tmpNames, tmpExpr)
 
 scTmpStmRwTmp :: Maybe [ScTemporaries] -> Maybe ScStatements -> (Maybe [ScTemporaries], Maybe ScStatements)
 scTmpStmRwTmp tmpMaybe stmMaybe =
   let stmRw = fmap scStatementsRewriteTemporaries stmMaybe
   in case tmpMaybe of
-       Nothing -> (Nothing, stmRw)
-       Just tmp ->
-         let (tmpNames,tmpExpr) = scTemporariesPartition tmp
-             idToTmp k = (k,Nothing)
-             maybeTmp = if null tmpNames
-                        then error "scTmpStmRwTmp"
-                        else Just [map idToTmp tmpNames]
-             tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
-         in case tmpExpr of
-           [] -> (maybeTmp, stmRw)
-           _ -> (maybeTmp, Just (scExpressionSequenceToStatements stmRw tmpExprRw))
+      Nothing -> (Nothing, stmRw)
+      Just tmp ->
+        let (tmpNames, tmpExpr) = scTemporariesPartition tmp
+            idToTmp k = (k, Nothing)
+            maybeTmp =
+              if null tmpNames
+                then error "scTmpStmRwTmp"
+                else Just [map idToTmp tmpNames]
+            tmpExprRw = map scExpressionRewriteTemporaries tmpExpr
+        in case tmpExpr of
+            [] -> (maybeTmp, stmRw)
+            _ -> (maybeTmp, Just (scExpressionSequenceToStatements stmRw tmpExprRw))
 
 scBlockBodyRewriteTemporaries :: ScBlockBody -> ScBlockBody
 scBlockBodyRewriteTemporaries (ScBlockBody arg tmpMaybe stmMaybe) =
-  let (tmp,stm) = scTmpStmRwTmp tmpMaybe stmMaybe
+  let (tmp, stm) = scTmpStmRwTmp tmpMaybe stmMaybe
   in ScBlockBody arg tmp stm
 
 scStatementsRewriteTemporaries :: ScStatements -> ScStatements
 scStatementsRewriteTemporaries s =
-    case s of
-      ScStatementsReturn (ScReturnStatement e) ->
-        ScStatementsReturn (ScReturnStatement (scExpressionRewriteTemporaries e))
-      ScStatementsExpression e s' ->
-        ScStatementsExpression
+  case s of
+    ScStatementsReturn (ScReturnStatement e) ->
+      ScStatementsReturn (ScReturnStatement (scExpressionRewriteTemporaries e))
+    ScStatementsExpression e s' ->
+      ScStatementsExpression
         (scExpressionRewriteTemporaries e)
         (fmap scStatementsRewriteTemporaries s')
 
@@ -72,14 +73,15 @@ scBinaryMessageRewriteTemporaries (ScBinaryMessage i a) =
 scMessagesRewriteTemporaries :: ScMessages -> ScMessages
 scMessagesRewriteTemporaries m =
   case m of
-    ScMessagesDot m1 m2 -> ScMessagesDot
-                           (map scDotMessageRewriteTemporaries m1)
-                           (fmap (map scBinaryMessageRewriteTemporaries) m2)
+    ScMessagesDot m1 m2 ->
+      ScMessagesDot
+        (map scDotMessageRewriteTemporaries m1)
+        (fmap (map scBinaryMessageRewriteTemporaries) m2)
     ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteTemporaries m1)
 
 scBasicExpressionRewriteTemporaries :: ScBasicExpression -> ScBasicExpression
 scBasicExpressionRewriteTemporaries (ScBasicExpression p m) =
-      ScBasicExpression (scPrimaryRewriteTemporaries p) (fmap scMessagesRewriteTemporaries m)
+  ScBasicExpression (scPrimaryRewriteTemporaries p) (fmap scMessagesRewriteTemporaries m)
 
 scExpressionRewriteTemporaries :: ScExpression -> ScExpression
 scExpressionRewriteTemporaries e =
@@ -89,7 +91,7 @@ scExpressionRewriteTemporaries e =
 
 scInitializerDefinitionRewriteTemporaries :: ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionRewriteTemporaries (ScInitializerDefinition cmt tmpMaybe stmMaybe) =
-  let (tmp,stm) = scTmpStmRwTmp tmpMaybe stmMaybe
+  let (tmp, stm) = scTmpStmRwTmp tmpMaybe stmMaybe
   in ScInitializerDefinition cmt tmp stm
 
 scPrimaryRewriteTemporaries :: ScPrimary -> ScPrimary
@@ -106,10 +108,10 @@ scPrimaryRewriteTemporaries p =
 -- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
 scRewriteTemporariesViewer :: String -> String
 scRewriteTemporariesViewer =
-  Sc.scInitializerDefinitionPrint .
-  scInitializerDefinitionRewriteTemporaries .
-  Sc.superColliderParserInitializerDefinition .
-  Sc.alexScanTokens
+  Sc.scInitializerDefinitionPrint
+    . scInitializerDefinitionRewriteTemporaries
+    . Sc.superColliderParserInitializerDefinition
+    . Sc.alexScanTokens
 
 {-
 rw = scRewriteTemporariesViewer

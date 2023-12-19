@@ -15,7 +15,7 @@ import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as Print {- stsc3 -}
 
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Lexer {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Parser as Parser {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Rewrite as Rewrite {- stsc3 -}
@@ -27,42 +27,53 @@ import qualified Language.Smalltalk.SuperCollider.Rewrite as Rewrite {- stsc3 -}
 scDotMessagesForSmalltalk :: [ScDotMessage] -> ([ScDotMessage], Maybe ScDotMessage)
 scDotMessagesForSmalltalk m =
   if scDotMessagesHaveNary m
-  then case break scDotMessageIsNary m of
-         (lhs,[]) -> (lhs,Nothing)
-         (lhs,[k]) -> (lhs,Just k)
-         r -> error ("scDotMessagesForSmalltalk: " ++ show (m, r))
-  else (m,Nothing)
+    then case break scDotMessageIsNary m of
+      (lhs, []) -> (lhs, Nothing)
+      (lhs, [k]) -> (lhs, Just k)
+      r -> error ("scDotMessagesForSmalltalk: " ++ show (m, r))
+    else (m, Nothing)
 
 scFloatConstant :: St.Identifier -> St.Primary
 scFloatConstant x =
   St.PrimaryExpression
-  (St.ExprBasic
-    (St.BasicExpression
-      (St.PrimaryIdentifier "Float")
-      (Just (St.MessagesUnary [St.UnaryMessage x] Nothing Nothing))
-      Nothing))
+    ( St.ExprBasic
+        ( St.BasicExpression
+            (St.PrimaryIdentifier "Float")
+            (Just (St.MessagesUnary [St.UnaryMessage x] Nothing Nothing))
+            Nothing
+        )
+    )
 
 -- | The Sc implicit message send x(...) is translated as (x apply: {...})
 scImplicitMessageSendSt :: St.Identifier -> [ScBasicExpression] -> St.Primary
 scImplicitMessageSendSt x a =
   St.PrimaryExpression
-  (St.ExprBasic
-    (St.BasicExpression
-      (St.PrimaryIdentifier x)
-      (Just (St.MessagesKeyword
-              (St.KeywordMessage
-                [("apply:"
-                 ,St.KeywordArgument (St.PrimaryArrayExpression (map scBasicExpressionSt a)) Nothing Nothing)])))
-      Nothing))
+    ( St.ExprBasic
+        ( St.BasicExpression
+            (St.PrimaryIdentifier x)
+            ( Just
+                ( St.MessagesKeyword
+                    ( St.KeywordMessage
+                        [
+                          ( "apply:"
+                          , St.KeywordArgument (St.PrimaryArrayExpression (map scBasicExpressionSt a)) Nothing Nothing
+                          )
+                        ]
+                    )
+                )
+            )
+            Nothing
+        )
+    )
 
 scPrimarySt :: ScPrimary -> St.Primary
 scPrimarySt p =
   case p of
     ScPrimaryIdentifier x ->
-        case x of
-          "pi" -> scFloatConstant "pi"
-          "inf" -> scFloatConstant "infinity"
-          _ -> St.PrimaryIdentifier x
+      case x of
+        "pi" -> scFloatConstant "pi"
+        "inf" -> scFloatConstant "infinity"
+        _ -> St.PrimaryIdentifier x
     ScPrimaryLiteral x -> St.PrimaryLiteral x
     ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
     ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
@@ -80,7 +91,7 @@ scBinaryArgumentSt (ScBinaryArgument p m) =
     Nothing -> St.BinaryArgument (scPrimarySt p) Nothing
     Just d ->
       case scDotMessagesForSmalltalk d of
-        (u,Nothing) -> St.BinaryArgument (scPrimarySt p) (Just (map scDotMessageUnarySt u))
+        (u, Nothing) -> St.BinaryArgument (scPrimarySt p) (Just (map scDotMessageUnarySt u))
         _ -> error ("scBinaryArgumentSt: " ++ show (ScBinaryArgument p m))
 
 scBinaryMessageSt :: ScBinaryMessage -> St.BinaryMessage
@@ -89,9 +100,9 @@ scBinaryMessageSt (ScBinaryMessage i a) = St.BinaryMessage i (scBinaryArgumentSt
 scArgumentSt :: ScBasicExpression -> St.KeywordArgument
 scArgumentSt e =
   St.KeywordArgument
-  (St.basicExpressionToPrimary (scBasicExpressionSt e))
-  Nothing
-  Nothing
+    (St.basicExpressionToPrimary (scBasicExpressionSt e))
+    Nothing
+    Nothing
 
 -- | The implicit extension keyword, currently "value", perhaps should be "with"
 scImplicitKeywordName :: String
@@ -107,13 +118,15 @@ scDotMessageKeywordSt (ScDotMessage nm arg) =
       nmParts = Split.splitOn ":" nm
       nmSize = length nmParts
       argSize = length arg
-      messageParts = if extendWithImplicit && nmSize < argSize
-                     then take argSize (nmParts ++ repeat scImplicitKeywordName)
-                     else nmParts
+      messageParts =
+        if extendWithImplicit && nmSize < argSize
+          then take argSize (nmParts ++ repeat scImplicitKeywordName)
+          else nmParts
   in if null arg
-     then error "scDotMessageKeywordSt: Unary"
-     else if length messageParts == argSize
-          then St.KeywordMessage (zipWith (\i j -> (i ++ ":",scArgumentSt j)) messageParts arg)
+      then error "scDotMessageKeywordSt: Unary"
+      else
+        if length messageParts == argSize
+          then St.KeywordMessage (zipWith (\i j -> (i ++ ":", scArgumentSt j)) messageParts arg)
           else error "scDotMessageKeywordSt: N-ary messages name degree mismatch"
 
 scDotMessageUnarySt :: ScDotMessage -> St.UnaryMessage
@@ -127,17 +140,18 @@ scMessagesSt m =
   case m of
     ScMessagesDot m1 m2 ->
       case scDotMessagesForSmalltalk m1 of
-        ([],Just k) -> St.MessagesKeyword (scDotMessageKeywordSt k)
-        (u,k) -> St.MessagesUnary
-                 (map scDotMessageUnarySt u)
-                 (fmap (map scBinaryMessageSt) m2)
-                 (fmap scDotMessageKeywordSt k)
+        ([], Just k) -> St.MessagesKeyword (scDotMessageKeywordSt k)
+        (u, k) ->
+          St.MessagesUnary
+            (map scDotMessageUnarySt u)
+            (fmap (map scBinaryMessageSt) m2)
+            (fmap scDotMessageKeywordSt k)
     ScMessagesBinary m1 -> St.MessagesBinary (map scBinaryMessageSt m1) Nothing
 
 scTemporarySt :: ScTemporary -> St.Identifier
 scTemporarySt t =
   case t of
-    (i,Nothing) -> i
+    (i, Nothing) -> i
     _ -> error "scTemporarySt"
 
 -- | Temporaries must be in correct form.
@@ -171,7 +185,7 @@ scExpressionSt e =
 
 scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
 scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
-   St.InitializerDefinition cmt (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+  St.InitializerDefinition cmt (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
 
 -- * C-Smalltalk translator
 
@@ -181,7 +195,7 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 > stcLeadingComment ";; a\n;; comment\nthen\na\nprogram\n"
 -}
 stcLeadingComment :: String -> (String, String)
-stcLeadingComment = bimap (unlines  . map (drop 3)) unlines . span (isPrefixOf ";; ") . lines
+stcLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf ";; ") . lines
 
 {- | In Spl f(x, y) and x.f(y) are interchangeable.
 In particular f may be a "constructor" procedure.
@@ -233,19 +247,19 @@ stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
 -- | Parse .stc and translate to Init Expr.
 stcToExpr :: String -> Expr.Expr
 stcToExpr =
-  Expr.initializerDefinitionExpr .
-  stcParseInitializerDefinition
+  Expr.initializerDefinitionExpr
+    . stcParseInitializerDefinition
 
 -- | exprPrintJs of stcToExpr
 stcToJs :: Maybe String -> String -> String
-stcToJs maybePrefix =  Expr.exprPrintJs (Expr.jsRenamerFromTable maybePrefix Expr.jsDefaultRenamingTable) . stcToExpr
+stcToJs maybePrefix = Expr.exprPrintJs (Expr.jsRenamerFromTable maybePrefix Expr.jsDefaultRenamingTable) . stcToExpr
 
 -- | exprPrintScheme of stcToExpr
 stcToScheme :: String -> String
-stcToScheme =  Expr.exprPrintScheme (Expr.jsRenamerFromTable Nothing Expr.jsDefaultRenamingTable) . stcToExpr
+stcToScheme = Expr.exprPrintScheme (Expr.jsRenamerFromTable Nothing Expr.jsDefaultRenamingTable) . stcToExpr
 
 stcToAst :: String -> String
-stcToAst =  show . stcToExpr
+stcToAst = show . stcToExpr
 
 -- | Statements list of .stc Init Expr.
 stcToExprStm :: String -> [Expr.Expr]
@@ -292,22 +306,24 @@ scMethodDefinitionToSt cl_nm md =
       blk_args = maybe [] (map fst) (blockArguments blk)
       md_nm = methodName md
       is_constructor = is_cl && md_nm == "constructor"
-      pat = if is_constructor
-            then case blk_args of
-                   [] -> St.UnaryPattern "new"
-                   args -> St.KeywordPattern (zip (map (++ ":") args) args)
-            else case blk_args of
-                   [] -> St.UnaryPattern md_nm
-                   [arg] -> if St.isBinaryIdentifier md_nm
-                                 then St.BinaryPattern md_nm arg
-                                 else St.KeywordPattern [(md_nm, arg)]
-                   args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
+      pat =
+        if is_constructor
+          then case blk_args of
+            [] -> St.UnaryPattern "new"
+            args -> St.KeywordPattern (zip (map (++ ":") args) args)
+          else case blk_args of
+            [] -> St.UnaryPattern md_nm
+            [arg] ->
+              if St.isBinaryIdentifier md_nm
+                then St.BinaryPattern md_nm arg
+                else St.KeywordPattern [(md_nm, arg)]
+            args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
       tmp = fmap scTemporariesSt (blockTemporaries blk)
       stm = fmap scStatementsSt (blockStatements blk)
       st_md = St.MethodDefinition (st_cl_nm, is_cl) Nothing pat tmp stm Nothing Nothing Nothing
   in if is_constructor
-     then [st_md, stPrimaryFactoryMethod (st_cl_nm, is_cl) (if null blk_args then "new" else concatMap (++ ":") blk_args)]
-     else [st_md]
+      then [st_md, stPrimaryFactoryMethod (st_cl_nm, is_cl) (if null blk_args then "new" else concatMap (++ ":") blk_args)]
+      else [st_md]
 
 -- | Translate Sc class to St.
 scClassDefinitionToSt :: ScClassDefinition -> St.ClassDefinition
@@ -315,17 +331,17 @@ scClassDefinitionToSt cd =
   let nm = className cd
       (cm, im) = scClassDefinitionPartitionMethods cd
   in St.ClassDefinition
-     nm
-     (superclassName cd)
-     St.noInstanceState
-     (maybe [] (map fst) (classInstanceVariableNames cd))
-     (maybe [] (map fst) (classVariableNames cd))
-     []
-     (concatMap (scMethodDefinitionToSt nm) im)
-     (concatMap (scMethodDefinitionToSt nm) cm)
-     Nothing
-     (classCategory cd)
-     (classComment cd)
+      nm
+      (superclassName cd)
+      St.noInstanceState
+      (maybe [] (map fst) (classInstanceVariableNames cd))
+      (maybe [] (map fst) (classVariableNames cd))
+      []
+      (concatMap (scMethodDefinitionToSt nm) im)
+      (concatMap (scMethodDefinitionToSt nm) cm)
+      Nothing
+      (classCategory cd)
+      (classComment cd)
 
 {-
 

@@ -10,7 +10,7 @@ import qualified Data.List.Split as Split {- split -}
 import qualified Music.Theory.List as List {- hmt-base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import           Language.Smalltalk.Ansi.Expr {- stsc3 -}
+import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
 
@@ -25,8 +25,8 @@ stcSelectorParts sel isBinOp arity =
   let parts = if isBinOp then [sel] else Split.splitOn ":" sel
       degree = if isBinOp then 1 else length parts - 1
   in if arity /= degree
-     then error (show ("stcSelectorParts: illegal arity", sel, arity))
-     else if isBinOp || arity == 0 then parts else init parts
+      then error (show ("stcSelectorParts: illegal arity", sel, arity))
+      else if isBinOp || arity == 0 then parts else init parts
 
 {- | The apply message is elided in .stc, it's singular array argument is unpacked.
      It is an option here so the .stc printer can also print .sc code.
@@ -37,19 +37,19 @@ messagePrintStc elideApply (Message sel arg) =
       selId = St.selectorIdentifier sel
       selParts = stcSelectorParts selId isBinOp (length arg)
       selStc = case uncons selParts of
-                 Nothing -> error "messagePrintStc"
-                 Just (h, t) -> intercalate ":" (h : takeWhile (/= "value") t)
+        Nothing -> error "messagePrintStc"
+        Just (h, t) -> intercalate ":" (h : takeWhile (/= "value") t)
   in case (selStc, arg) of
-       (_,[]) -> printf ".%s" selStc
-       ("apply",[Array p]) ->
-         if elideApply
-         then printf "(%s)" (intercalate ", " (map (exprPrintStc elideApply) p))
-         else printf ".apply([%s])" (intercalate ", " (map (exprPrintStc elideApply) p))
-       (_,[arg1]) ->
-         let p1 = exprPrintStc elideApply arg1
-         in if isBinOp then printf " %s %s" selId p1 else printf ".%s(%s)" selStc p1
-       _ ->
-         printf ".%s(%s)" selStc (intercalate ", " (map (exprPrintStc elideApply) arg))
+      (_, []) -> printf ".%s" selStc
+      ("apply", [Array p]) ->
+        if elideApply
+          then printf "(%s)" (intercalate ", " (map (exprPrintStc elideApply) p))
+          else printf ".apply([%s])" (intercalate ", " (map (exprPrintStc elideApply) p))
+      (_, [arg1]) ->
+        let p1 = exprPrintStc elideApply arg1
+        in if isBinOp then printf " %s %s" selId p1 else printf ".%s(%s)" selStc p1
+      _ ->
+        printf ".%s(%s)" selStc (intercalate ", " (map (exprPrintStc elideApply) arg))
 
 primitive_pp :: LambdaDefinition -> String
 primitive_pp = maybe "" ((++ " ") . St.primitive_pp) . lambdaDefinitionPrimitive
@@ -66,19 +66,19 @@ exprPrintStc elideApply expr =
     Send e m ->
       let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
       in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
-    Lambda ld arg tmp (e,r) ->
+    Lambda ld arg tmp (e, r) ->
       let r' = maybe [] (return . printf "^%s" . exprPrintStc elideApply) r
           x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
       in case (arg, tmp) of
-        ([],[]) -> printf "{ %s }" x
-        (_,[]) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
-        _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
+          ([], []) -> printf "{ %s }" x
+          (_, []) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
+          _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
     Init c tmp e ->
-      let x = intercalate "; "  (map (exprPrintStc elideApply) e)
+      let x = intercalate "; " (map (exprPrintStc elideApply) e)
           r = case (tmp, e) of
-                ([],_) ->  x
-                _ -> printf "var %s; %s" (intercalate ", " tmp) x
+            ([], _) -> x
+            _ -> printf "var %s; %s" (intercalate ", " tmp) x
       in maybe "" St.sc_comment_pp c ++ r
 
 -- * St
@@ -87,13 +87,14 @@ messagePrintSt :: Message -> String
 messagePrintSt (Message sel arg) =
   let selId = St.selectorIdentifier sel
   in if null arg
-     then " " ++ selId
-     else let isBinOp = St.isBinarySelector sel
-              selParts = map (\x -> x ++ ":") (stcSelectorParts selId isBinOp (length arg))
-              interleave p = concat . zipWith (\i j -> [i, j]) p
-          in if isBinOp
-             then printf " %s %s" selId (exprPrintSt (arg !! 0))
-             else " " ++ unwords (interleave selParts (map exprPrintSt arg))
+      then " " ++ selId
+      else
+        let isBinOp = St.isBinarySelector sel
+            selParts = map (\x -> x ++ ":") (stcSelectorParts selId isBinOp (length arg))
+            interleave p = concat . zipWith (\i j -> [i, j]) p
+        in if isBinOp
+            then printf " %s %s" selId (exprPrintSt (arg !! 0))
+            else " " ++ unwords (interleave selParts (map exprPrintSt arg))
 
 {- | In St precedence is unary then binary then keyword, in Stc it is unary & keyword then binary.
      Parenthesise all keyword and binary sends.
@@ -108,19 +109,19 @@ exprPrintSt expr =
     Send e m ->
       let template = if exprIsUnaryMessageSend expr then "%s%s" else "(%s%s)"
       in printf template (exprPrintSt e) (messagePrintSt m)
-    Lambda _ arg tmp (e,r) ->
+    Lambda _ arg tmp (e, r) ->
       let r' = maybe [] (return . ('^' :) . exprPrintSt) r
           x = intercalate ". " (map (exprPrintSt) e ++ r')
-      in case (map (':' : ) arg, tmp) of
-        ([],[]) -> printf "[ %s ]" x
-        (arg',[]) -> printf "[ %s | %s ]" (unwords arg') x
-        (arg',_) -> printf "[ %s | | %s | %s ]" (unwords arg') (unwords tmp) x
+      in case (map (':' :) arg, tmp) of
+          ([], []) -> printf "[ %s ]" x
+          (arg', []) -> printf "[ %s | %s ]" (unwords arg') x
+          (arg', _) -> printf "[ %s | | %s | %s ]" (unwords arg') (unwords tmp) x
     Array e -> printf "{ %s }" (intercalate ". " (map (exprPrintSt) e))
     Init c tmp e ->
-      let x = intercalate ". "  (map (exprPrintSt) e)
+      let x = intercalate ". " (map (exprPrintSt) e)
           r = case (tmp, e) of
-                ([],_) ->  x
-                _ -> printf "| %s | %s" (unwords tmp) x
+            ([], _) -> x
+            _ -> printf "| %s | %s" (unwords tmp) x
       in maybe "" St.comment_pp c ++ r
 
 -- * S-Expression
@@ -133,7 +134,7 @@ messagePrintLisp (Message s e) =
     _ -> printf "(~ %s %s)" (St.selectorIdentifier s) (unwords (map exprPrintLisp e))
 
 commentPrintLisp :: St.Comment -> String
-commentPrintLisp = unlines . map ("; " ++ ) . lines
+commentPrintLisp = unlines . map ("; " ++) . lines
 
 {- | S-expression printer.
      The message constructor is '~'.
@@ -153,19 +154,19 @@ exprPrintLisp expr =
     Literal l -> St.literal_pp l
     Assignment i e -> printf "(:= %s %s)" i (exprPrintLisp e)
     Send e m -> printf "(. %s %s)" (exprPrintLisp e) (messagePrintLisp m)
-    Lambda _ arg tmp (e,r) ->
+    Lambda _ arg tmp (e, r) ->
       let r' = maybe [] (return . printf "(^ %s)" . exprPrintLisp) r
           x = unwords (map exprPrintLisp e ++ r')
       in case (arg, tmp) of
-        ([],[]) -> printf "(\\ %s)" x
-        (_,[]) -> printf "(\\ (: %s) %s)" (unwords arg) x
-        _ -> printf "(\\ (: %s) (| %s) %s)" (unwords arg) (unwords tmp) x
+          ([], []) -> printf "(\\ %s)" x
+          (_, []) -> printf "(\\ (: %s) %s)" (unwords arg) x
+          _ -> printf "(\\ (: %s) (| %s) %s)" (unwords arg) (unwords tmp) x
     Array e -> printf "(%% %s)" (unwords (map exprPrintLisp e))
     Init c tmp e ->
       let x = unwords (map exprPrintLisp e)
           r = case (tmp, e) of
-            ([],[e0]) -> exprPrintLisp e0
-            ([],_) -> printf "(>> %s)" x
+            ([], [e0]) -> exprPrintLisp e0
+            ([], _) -> printf "(>> %s)" x
             _ -> printf "(>> (| %s) %s)" (unwords tmp) x
       in maybe "" commentPrintLisp c ++ r
 
@@ -177,20 +178,54 @@ This table gives names to standard operators, however it is not generic, c.f. js
 -}
 jsDefaultRenamingTable :: [(String, String)]
 jsDefaultRenamingTable =
-  [("+", "Add"), ("-", "Sub"), ("*", "Mul"), ("/", "Fdiv"), ("%", "Mod"), ("**", "Pow")
-  ,(">", "Gt"), ("<", "Lt"), (">=", "Ge"), ("<=", "Le"), ("=", "Eq"), ("~=", "Neq")
-  ,("&", "BitAnd"), ("|", "BitOr"), ("<<", "ShiftLeft"), (">>", "ShiftLeft")
-  ,("++", "append")]
+  [ ("+", "Add")
+  , ("-", "Sub")
+  , ("*", "Mul")
+  , ("/", "Fdiv")
+  , ("%", "Mod")
+  , ("**", "Pow")
+  , (">", "Gt")
+  , ("<", "Lt")
+  , (">=", "Ge")
+  , ("<=", "Le")
+  , ("=", "Eq")
+  , ("~=", "Neq")
+  , ("&", "BitAnd")
+  , ("|", "BitOr")
+  , ("<<", "ShiftLeft")
+  , (">>", "ShiftLeft")
+  , ("++", "append")
+  ]
 
 -- | Table giving generic names to operator characters (.sl names).
 jsCharNameTable :: [(Char, String)]
 jsCharNameTable =
-  [('~', "tilde"), ('`', "backtick")
-  ,('!', "bang"), ('@', "at"), ('#', "hash"), ('$', "dollar"), ('%', "percent"), ('^', "caret"), ('&', "ampersand"), ('*', "times")
-  ,('_', "underscore"), ('-', "minus"), ('+', "plus"), ('=', "equals")
-  ,('|', "verticalline"), ('\\', "backslash")
-  ,(':', "colon"), (';', "semicolon"), ('"', "quotationmark"), ('\'', "apostrophe")
-  ,('<', "lessThan"), (',', "comma"), ('>', "greaterThan"), ('.', "fullstop"), ('?', "query"), ('/', "dividedBy")
+  [ ('~', "tilde")
+  , ('`', "backtick")
+  , ('!', "bang")
+  , ('@', "at")
+  , ('#', "hash")
+  , ('$', "dollar")
+  , ('%', "percent")
+  , ('^', "caret")
+  , ('&', "ampersand")
+  , ('*', "times")
+  , ('_', "underscore")
+  , ('-', "minus")
+  , ('+', "plus")
+  , ('=', "equals")
+  , ('|', "verticalline")
+  , ('\\', "backslash")
+  , (':', "colon")
+  , (';', "semicolon")
+  , ('"', "quotationmark")
+  , ('\'', "apostrophe")
+  , ('<', "lessThan")
+  , (',', "comma")
+  , ('>', "greaterThan")
+  , ('.', "fullstop")
+  , ('?', "query")
+  , ('/', "dividedBy")
   ]
 
 {- | A generic renamer.
@@ -202,8 +237,8 @@ jsOperatorGenericRename operator =
   let f aChar = lookup aChar jsCharNameTable
       answer = map f operator
   in if any isNothing answer
-     then Nothing
-     else Just (concatMap fromJust answer)
+      then Nothing
+      else Just (concatMap fromJust answer)
 
 -- | Generic renaming of the entries in the jsDefaultRenamingTable.
 jsCharRenamingTable :: [(String, String)]
@@ -229,8 +264,8 @@ stcSelectorJsForm :: String -> Bool -> Int -> String
 stcSelectorJsForm sel isBinOp arity =
   let parts = stcSelectorParts sel isBinOp arity -- performs arity check
   in if isBinOp || all (== "value") (List.tail_err parts)
-     then List.head_err parts
-     else if sel == "at:put:" then "put" else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
+      then List.head_err parts
+      else if sel == "at:put:" then "put" else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =
@@ -243,7 +278,7 @@ literalPrintJs l =
 
 {- | Print Js notation of Expr.
 
-import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Translate {\- stsc3 -\}
 rw = exprPrintJs (jsRenamerFromTable (Just "sc.") jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]
@@ -267,8 +302,8 @@ exprPrintJs rw expr =
       case (rcv, stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg), arg) of
         (_, "apply", [Array p]) ->
           let rcv' = case rcv of
-                       Identifier msg -> Identifier (rw msg)
-                       _ -> rcv
+                Identifier msg -> Identifier (rw msg)
+                _ -> rcv
           in printf "%s(%s)" (exprPrintJs rw rcv') (intercalate ", " (map (exprPrintJs rw) p))
         (_, "value", _) -> printf "(%s)(%s)" (exprPrintJs rw rcv) (intercalate ", " (map (exprPrintJs rw) arg))
         (Identifier "Float", "pi", []) -> (rw "pi")
@@ -279,17 +314,17 @@ exprPrintJs rw expr =
           (stm', ret) = if null stm then ([], Nothing) else (take (numStm - 1) stm, Just (last stm))
           ret' = maybe [] (return . printf "return %s;" . exprPrintJs rw) ret
       in printf
-         "function(%s) { %s %s }"
-         (intercalate ", " arg)
-         (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
-         (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm' ++ ret'))
+          "function(%s) { %s %s }"
+          (intercalate ", " arg)
+          (if null tmp then "" else printf "var %s;" (intercalate ", " tmp))
+          (if null stm then "return null;" else intercalate "; " (map (exprPrintJs rw) stm' ++ ret'))
     Lambda {} -> error "exprPrintJs: nonLocalReturn"
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintJs rw) e))
     Init c tmp e ->
-      let x = intercalate "; "  (map (exprPrintJs rw) e)
+      let x = intercalate "; " (map (exprPrintJs rw) e)
           r = case (tmp, e) of
-                ([],_) ->  x
-                _ -> printf "var %s; %s" (intercalate ", " tmp) x
+            ([], _) -> x
+            _ -> printf "var %s; %s" (intercalate ", " tmp) x
       in maybe "" St.sc_comment_pp c ++ r
 
 -- * Scheme
@@ -308,13 +343,13 @@ exprTmpStmScheme :: (St.Identifier -> St.Identifier) -> [St.Identifier] -> ([Exp
 exprTmpStmScheme rw tmp (stm, ret) =
   let stm' = stm ++ maybe [] return ret
   in printf
-     "(let (%s) %s))"
-     (if null tmp then "" else unwords (map (\nm -> printf "(%s 'undefined)" nm) tmp))
-     (if null stm' then "'()" else unwords (map (exprPrintScheme rw) stm'))
+      "(let (%s) %s))"
+      (if null tmp then "" else unwords (map (\nm -> printf "(%s 'undefined)" nm) tmp))
+      (if null stm' then "'()" else unwords (map (exprPrintScheme rw) stm'))
 
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
-import Language.Smalltalk.SuperCollider.Translate {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Translate {\- stsc3 -\}
 rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]
@@ -344,8 +379,9 @@ exprPrintScheme rw expr =
     Lambda _ arg tmp stm -> printf "(lambda (%s) %s" (unwords arg) (exprTmpStmScheme rw tmp stm)
     Array e -> printf "(list %s)" (unwords (map (exprPrintScheme rw) e))
     Init c tmp stm ->
-      concat [maybe "" (unlines . map ("; " ++) . lines) c
-             ,if length stm == 1
-              then exprPrintScheme rw (List.head_err stm)
-              else exprTmpStmScheme rw tmp (stm, Nothing)]
-
+      concat
+        [ maybe "" (unlines . map ("; " ++) . lines) c
+        , if length stm == 1
+            then exprPrintScheme rw (List.head_err stm)
+            else exprTmpStmScheme rw tmp (stm, Nothing)
+        ]
