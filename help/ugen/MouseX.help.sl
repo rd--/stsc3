@@ -16,4 +16,4 @@ var osc = SinOsc(note.MidiCps, 0) * select * 0.05;
 osc.Splay
 
 (* Mouse control of Impulse frequency *)
-Impulse([4 5 9] * MouseX(0.01, 150, 2, 0.2), 0).Splay2 * 0.2
+Impulse([4 5 9] * MouseX(0.01, 150, 1, 0.2), 0).Splay2 * 0.2

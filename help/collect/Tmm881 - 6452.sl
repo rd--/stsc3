@@ -9,11 +9,11 @@ GrainSin(k, tr, Line(1, 0.25, 15), TRand(322, 3222, tr), TRand(-1, 1, tr), -1, 2
 
 (* https://scsynth.org/t/6452 ; rd edit *)
 var k = 8;
-var tr = Impulse(100 * Line(0.1, 5, 30), 0);
+var tr = Impulse(Line(1, 50, 30), 0);
 GrainFm(
 	8,
 	tr,
-	10,
+	TRand(1, 10, tr),
 	TRand(322, 3222, tr),
 	TRand(322, 3222, tr),
 	1,
