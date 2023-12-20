@@ -33,7 +33,7 @@ nextId = (
 )
 
 play: anObject = (
-	self playUsingUdpWithTemporaryFile: anObject
+	self playUsingBinarySyndef: anObject "playUsingUdpWithTemporaryFile"
 )
 
 playFile: fileName = (
@@ -81,7 +81,7 @@ prepareInput: anObject = (
 
 reset = (
 	"Reset Sc synthesiser."
-	Sc3 resetUsingUdp
+	Sc3 resetUsingExternalCommand. "resetUsingUdp"
 )
 
 resetUsingExternalCommand = (

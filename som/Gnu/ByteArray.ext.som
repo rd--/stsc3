@@ -39,6 +39,14 @@ readHexFrom: aStream = (
 		self at: i put: (v1 bitShift: 4) + v2]
 )
 
+sendTcpToHost: hostAddress port: portNumber = (
+	| socket datagram |
+	socket := StreamSocket remote: hostAddress port: portNumber local: nil port: 0.
+	socket int32: self size; flush.
+	socket nextPutAll: self; flush.
+	socket close.
+)
+
 sendUdpToHost: hostAddress port: portNumber = (
 	| socket datagram |
 	socket := DatagramSocket remote: hostAddress port: portNumber local: nil port: 0.

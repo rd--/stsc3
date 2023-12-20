@@ -164,6 +164,14 @@ evaluating stsc3 expressions.  Input and output is via `stsc3-buffer'."
        (save-selected-window
          (set-window-point window (point-max)))))))
 
+(defun stsc3-prettier ()
+  "Unicode symbols"
+  (setq
+   prettify-symbols-alist
+   '(("->" . ?→) ; U+2190 → Rightwards Arrow
+     (":=" . ?←) ; U+2190 ← Leftwards Arrow (U+2254 ≔ Colon Equals)
+     )))
+
 (defvar stsc3-mode-map nil
   "Smalltalk SuperCollider keymap.")
 

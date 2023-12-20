@@ -27,7 +27,7 @@ putOscOn: aStream = (
 sendToHost: hostAddress atPort: portNumber = (
 	"Send my binary encoding over Udp."
 	| socket |
-	socket := Socket newUDP.
+	socket := Socket newUDP. "UDP -> TCP"
 	socket sendUDPData: self encode toHost: hostAddress port: portNumber.
 	socket close
 )

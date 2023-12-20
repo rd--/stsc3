@@ -1,4 +1,4 @@
-CcEvent = Object (
+ContinuousEvent = Object (
 
 | voice data |
 
@@ -34,16 +34,16 @@ z = (
 	^data at: 4
 )
 
-o = (
+i = (
 	"Typically orientation control"
 	^data at: 5
 )
 
-rx = (
+j = (
 	^data at: 6
 )
 
-ry = (
+k = (
 	^data at: 7
 )
 
@@ -52,31 +52,15 @@ p = (
 	^data at: 8
 )
 
-px = (
-	^data at: 9
-)
-
-i = (
-	^data at: 5
-)
-
-ii = (
-	^data at: 6
-)
-
-iii = (
-	^data at: 7
-)
-
 ----------------------------
 
 voice: anInteger from: aCollection = (
-	"Create continuous controller event object from sequence of control signals"
+	"Create continuous event object from sequence of control signals"
 	^self new voice: anInteger; data: (Array newFrom: aCollection); yourself
 )
 
 comment = (
-	^'Continuous Controller Event'
+	^'Continuous Event'
 )
 
 )
