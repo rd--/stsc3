@@ -36,9 +36,9 @@ SinOsc(2, SinOsc(6003, 0) * ({ LfNoise2(1) } ! 2 * 200 + 201)) * 0.1
 (* Fm curio ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #7e *)
 SinOsc(0, SinOsc(9005, 0) * ({ LfNoise2(1) } ! 2 * 100 + 101)) * 0.1
 
-(* blizzard ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #8 *)
+(* blizzard ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #8 ; edit (rd) *)
 var f = 0.2 ! 8;
-Pan2(Bpf(PinkNoise() *0.2, LfNoise1(f) * 1000 + 1040, LfNoise1(f) * 0.3 + 0.31), 0, 1)
+Bpf(PinkNoise() * 0.2, LfNoise1(f) * 1000 + 1040, LfNoise1(f) * 0.3 + 0.31).Splay
 
 (* fey emissions ; https://w2.mat.ucsb.edu/l.putnam/sc3one/index.html #9 *)
 var d = { Dust(2) } ! 2;

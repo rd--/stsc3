@@ -1,8 +1,8 @@
 (* Hpf *)
-Hpf(Saw(200) * 0.1, SinOsc(XLine(0.7, 300, 20, 0), 0) * 3600 + 4000)
+Hpf(Saw(200) * 0.1, SinOsc(XLine(0.7, 300, 20), 0) * 3600 + 4000)
 
 (* Hpf *)
-var c = Hpf(LfSaw(5, 0), SinOsc(XLine(0.07, 30, 20, 0), 0) * 35 + 40);
+var c = Hpf(LfSaw(5, 0), SinOsc(XLine(0.07, 30, 20), 0) * 35 + 40);
 SinOsc(c * 200 + 500, 0) * 0.1
 
 (* Hpf *)

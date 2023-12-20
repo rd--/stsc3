@@ -111,7 +111,7 @@ var c = { :freq |
 };
 var d = (c(c(p.arcTan) ^ 2 * 4) ^ 4 * 8).Abs;
 var t = c(c(d / p.arcTan).RoundTo(1 / d) ^ 4 * d * 8).Sin;
-var f = Rand(t, 0, 64).Ceiling.MidiCps;
+var f = TRand(0, 64, t).Ceiling.MidiCps;
 Splay(
 	LeakDc(
 		Pluck(
@@ -379,7 +379,7 @@ var t = {
 	TDmdFor(Drand(inf, (1 .. 8) / 16), 0, 1)
 };
 var r = { :lo :hi |
-	Rand(t(), lo, hi)
+	TRand(lo, hi, t())
 };
 Normalizer(
 	CompanderD(
@@ -612,7 +612,7 @@ var t = (n.Lag3(0.1) > 0);
 var p = PlayBuf(
 	1,
 	b,
-	(1 - n.RoundTo(1 / 16)) / Rand(t, 1, z / 100).Lag3(0.001),
+	(1 - n.RoundTo(1 / 16)) / TRand(1, z / 100, t).Lag3(0.001),
 	t,
 	z,
 	1,
@@ -628,7 +628,7 @@ EqPan2(
 		),
 		0.995
 	).SoftClip,
-	Rand(t, -1, 1)
+	TRand(-1, 1, t)
 ) <! RecordBuf(b, z, t, 1 - t, t, 1, t, 0, n)
 
 (* Cheap Singing Synth ; simpler (rd) ; https://github.com/lukiss/Losers-Union-SC-Research *)

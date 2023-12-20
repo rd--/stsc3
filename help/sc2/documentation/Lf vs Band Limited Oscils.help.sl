@@ -18,9 +18,11 @@ and _LfPulse_:
 
 	LfPulse(SinOsc(0.75, 0) * 5800 + 6000, 0, 0.1) * 0.2
 
-LfPulse is better to use as a low frequency controller because it is truely a rectangular wave.
+LfPulse is better to use as a low frequency controller because it is truly a rectangular wave,
+plot the below to see the difference,
+note also the opposite values for width:
 
-	;; Synth.plot({ [LfPulse.ar(1000,0.3,0.7),Pulse.ar(1000,0.3,0.7)] })
+	[LfPulse(100, 0, 0.3), Pulse(100, 0.7)] * 0.1
 
 The same issues apply to _Saw_ and _LfSaw_.
 
@@ -40,6 +42,10 @@ and LfSaw:
 
 	LfSaw(SinOsc(0.75, 0) * 5800 + 6000, 0) * 0.2
 
-LfSaw is better to use as a low frequency controller because it is truely a sawtooth shape.
+LfSaw is better to use as a low frequency controller because it is truely a sawtooth shape,
+plot the below to see the difference,
+note also phase offset for LfSaw,
+and that it is ascending where Saw is descending,
+and amplitude difference:
 
-	;; Synth.plot({ [LfSaw(1000,0.7),Saw(1000,0.7)] })
+	[LfSaw(100, 1), Saw(100)] * 0.1

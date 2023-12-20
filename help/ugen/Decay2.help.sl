@@ -12,7 +12,7 @@
 (* Decay2 ; c.f. MultiTouchPad help file *)
 Voicer(16) { :e |
 	var impulseFreq = Choose(e.w, [1 2 3 4 6 8 9]);
-	var oscFreq = Rand(e.w, 80, 880);
+	var oscFreq = TRand(80, 880, e.w);
 	var mul = (1 - e.y) * e.w;
 	var pan = (e.x * 2) - 1;
 	var distort = e.z * 16;
@@ -50,4 +50,4 @@ SinOsc([222, 2222], 0) * Decay2(tr, 0.01, [0.5, 0.1]) * [0.2, 0.1]
 	var tr = Tr1(lfo);
 	var env = Decay2(tr, 0.01, Rand(0.1, 0.5));
 	SinOsc(Rand(1111, 2222), 0) * env * Rand(0.01, 0.1)
-} !> 24
+} !^ 24

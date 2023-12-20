@@ -1,4 +1,4 @@
-(* shift register (dm) ; https://sccode.org/1-590 ; erratic ? *)
+(* ---- shift register (dm) ; https://sccode.org/1-590 ; erratic ? *)
 var amp = 0.1;
 var pulse = Impulse(1 / 16, 0);
 var rate = Choose(pulse, [3, 5, 10]);

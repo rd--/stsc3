@@ -46,35 +46,39 @@ The output signal level of most unit generators that generate audio is from -1 t
 
 A 200 Hz sine wave:
 
-	{ FSinOsc(200, 0) * 0.1 }.plot
+	{ FSinOsc(200, 0) * 0.1 }.plotUgenGraph(0.01)
 
 White noise:
 
-	{ WhiteNoise() * 0.1 }.plot
+	{ WhiteNoise() * 0.1 }.plotUgenGraph(0.01)
 
 Brown noise:
 
-	{ BrownNoise() * 0.1 }.plot
+	{ BrownNoise() * 0.1 }.plotUgenGraph(0.01)
 
 Pink noise is capable of -1 to +1 but is statistically unlikely to acheive it
 
-	{ PinkNoise() * 0.1 }.plot
+	{ PinkNoise() * 0.1 }.plotUgenGraph(0.01)
 
 500 Hz pulse wave with a 30% duty cycle:
 
-	{ LfPulse(500, 0, 0.3) * 0.1 }.plot
+	{ LfPulse(500, 0, 0.3) * 0.1 }.plotUgenGraph(0.01)
 
-The output signal level of Ugens that process their input such as filters and delays depend on the level of the input and the settings of the Ugen's particular controls.
+The output signal level of Ugens that process their input such as filters and delays depend on the level of the input and the settings of the particular controls of the Ugen.
 
 ## 2.5 Mul and Add inputs
 
-Many unit generators have inputs named mul and add which allow you to multiply and add signals to that Ugen's output. Using mul and add is more efficient that using an explicit * or + operator.  Also it is often desirable to scale and offset the values of control Ugens to match some specific range for purposes of modulation.  The values for mul and add default to 1 and 0 respectively, which leaves the output unchanged.  With these defaults, the multiply and add are optimized out and there is no computational cost for them.
+Many unit generators have inputs named mul and add which allow you to multiply and add signals to the output of that Ugen. Using mul and add is more efficient that using an explicit * or + operator.  Also it is often desirable to scale and offset the values of control Ugens to match some specific range for purposes of modulation.  The values for mul and add default to 1 and 0 respectively, which leaves the output unchanged.  With these defaults, the multiply and add are optimized out and there is no computational cost for them.  Plot the below to see multiply and add operators changing the output range of an oscillator:
 
-	{ FSinOsc(200) },plot (* a 200 Hz sine wave *)
-	{ FSinOsc(200) * 0.2 },plot (* 200 Hz sine wave with mul=0.2 *)
-	{ FSinOsc(200) * 0.2 + 0.2 },plot (* 200 Hz sine wave with mul=0.2 and add=0.2 *)
-	{ FSinOsc(200) * 0.5 + 0.5 },plot (* 200 Hz sine wave with mul=0.5 and add=0.5 *)
-	{ FSinOsc(200) * 0.5 + -0.5 },plot (* 200 Hz sine wave with mul=0.5 and add=-0.5 *)
+	FSinOsc(200, 0) (* a 200 Hz sine wave *)
+
+	FSinOsc(200, 0) * 0.2 (* 200 Hz sine wave with mul=0.2 *)
+
+	FSinOsc(200, 0) * 0.2 + 0.2 (* 200 Hz sine wave with mul=0.2 and add=0.2 *)
+
+	FSinOsc(200, 0) * 0.5 + 0.5 (* 200 Hz sine wave with mul=0.5 and add=0.5 *)
+
+	FSinOsc(200, 0) * 0.5 + -0.5 (* 200 Hz sine wave with mul=0.5 and add=-0.5 *)
 
 Add can be used to mix signals.  This example is equivalent to one given in 2.3 above.  The noise generator is plugged into the add input of FSinOsc
 
@@ -142,13 +146,13 @@ Now we will modulate the modulator to cause the frequency modulation to speed up
 
 The nested style used above can become hard to read, so often it is preferable to use variables to make it more readable.
 
-	var lfofreq = XLine( (* make an exponential line generator *)
+	var lfoFreq = XLine( (* make an exponential line generator *)
 		0.5, (* begin at 0.5 Hz *)
 		100, (* end at 100 Hz *)
 		30 (* in 30 seconds *)
 	);
 	var freq = SinOsc( (* modulate the frequency with another sine oscillator *)
-		lfofreq, (* use exponential line to modulate the lfo freq *)
+		lfoFreq, (* use exponential line to modulate the lfo freq *)
 		0) (* zero phase *)
 	* 300 (* mul = 300 *)
 	+ 700; (* add = 700 *)

@@ -58,7 +58,7 @@ var o = (LfNoise0(4).Max(l).Max(SinOsc(f * (l * 9).Ceiling.Lag(0.1), 0) * 0.7));
 (BBandPass(o, f, LfNoise0(1).Abs / 2) * 700 * l.Lag(1)).Tanh
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)
-var t = [0, 0, 0, 1, 5, 7, 10, 12, 12, 12] + 30;
+var t = [0 0 0 1 5 7 10 12 12 12] + 30;
 var a = DmdFor(1/8, 0, Drand(inf, t + 24 ++ t ++ t));
 (BHiPass(LfNoise1(8) ^ 6, [a, a + 7].MidiCps, a / 3000) * (67 - a)).Tanh
 
@@ -73,7 +73,7 @@ SinOsc(LagUd(Impulse(2, 0), 0, 0.4) * 360, ph) / 3
 (* http://earslap.com/weblog/music-release-laconicism.html *)
 var t = [0 3 5 7 10 12] + 40;
 var p = DmdFor(1 / 4, 0, Drand(inf, (t + 12 ++ t).MidiCps));
-var b = Rand(Impulse(16, 0), 1500, 2000).Lag(0.1);
+var b = TRand(1500, 2000, Impulse(16, 0)).Lag(0.1);
 Blip([b, b + p], 1).mean ^ 2
 
 (* http://earslap.com/weblog/music-release-laconicism.html *)

@@ -16,7 +16,7 @@ However, most examples in the manual have parentheses around the code which allo
 		{ Dust(0.5) * 0.3 }, (* wind chimes *)
 		{ Impulse(SinOsc(0.05 + 0.1.Rand, 2 * pi.Rand) * 5 + 5.2, 0) * 0.3 } (* races *)
 	].atRandom; (* choose one at random to use for all voices *)
-	{ (* n strings tuned randomly to MIDI keys 60-90 *)
+	{ (* n strings tuned randomly to Midi keys 60-90 *)
 		var delayTime = 1 / (60 + 30.IRand).MidiCps; (* calculate delay based on a random note *)
 		EqPan(
 			CombL( (* used as a string resonator *)

@@ -24,7 +24,7 @@ Multi channel expansion will propagate through the expression graph.  When a uni
 
 	Rlpf(Saw([100, 250]) * 0.05, XLine(8000, 400, 5), 0.05)
 
-The _[100,250]_ array of frequency inputs to _Saw_ causes Saw to return an array of two Saws, that array causes _Rlpf_ to create two Rlpfs.  Both Rlpfs share a single instance of _XLine_.
+The _[100, 250]_ array of frequency inputs to _Saw_ causes Saw to return an array of two Saws, that array causes _Rlpf_ to create two Rlpfs.  Both Rlpfs share a single instance of _XLine_.
 
 When a constructor is parameterized by two or more arrays, then the number of channels created is equal to the longest array, with parameters being pulled from each array in parallel.  The shorter arrays will wrap.
 

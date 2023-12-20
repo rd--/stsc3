@@ -4,7 +4,7 @@ Saw(Line(24, 108, 10).MidiCps) * 0.05
 (* MidiCps ; step *)
 Saw(Line(24, 108, 10).RoundTo(1).MidiCps) * 0.05
 
-(* MidiCps ; keywords *)
+(* ---- MidiCps ; requires=keywords *)
 Saw(
 	Line(
 		start: 24,
@@ -13,7 +13,7 @@ Saw(
 	).MidiCps
 ) * 0.05
 
-(* MidiCps ; step ; keywords *)
+(* MidiCps ; step ; requires=keywords *)
 Saw(
 	Line(
 		start: 24,

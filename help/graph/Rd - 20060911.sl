@@ -12,8 +12,8 @@ var z = {
 			[0.05, LfNoise0(2), y, t].sum.Lpz2,
 			t
 		),
-		ExpRand(t, [500 900], 1600),
+		TExpRand([500 900], 1600, t),
 		x
 	)
 } !> 3;
-z.Clip2(Rand(Dust(8), 0, 1)) * 0.25
+z.Clip2(TRand(0, 1, Dust(8))) * 0.25

@@ -2,7 +2,7 @@
 FbSineC(SampleRate() / 4, 1, 0.1, 1.1, 0.5, 0.1, 0.1) * 0.1
 
 (* FbSineC ; increase feedback *)
-FbSineC(SampleRate(), 1, Line(0.01, 4, 10, 0), 1, 0.1, 0.1, 0.1) * 0.1
+FbSineC(SampleRate(), 1, Line(0.01, 4, 10), 1, 0.1, 0.1, 0.1) * 0.1
 
 (* FbSineC ; increase phase multiplier *)
 FbSineC(SampleRate(), 1, 0, XLine(1, 2, 10), 0.1, 0.1, 0.1) * 0.1

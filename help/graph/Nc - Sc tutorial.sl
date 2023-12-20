@@ -1,6 +1,6 @@
 (* https://composerprogrammer.com/teaching/supercollider/sctutorial/tutorial.html 1.1 *)
 var n = 11;
-var mk = {
+var g = {
 	var freq = Rand(50, 560.3);
 	var numcps = Rand(2, 20);
 	var knum = SinOsc(ExpRand(0.02, 0.2), 0) * (numcps / 2) + (numcps / 2);
@@ -17,7 +17,7 @@ var mk = {
 		knum
 	);
 	EqPan(gen, Rand(-1, 1)) * 0.5 / n.sqrt
-};
+} !+ n;
 var x = MouseX(100, 2000, 0, 0.2);
 var y = MouseY(0.01, 1.0, 0, 0.2);
-Resonz(mk !+ n, x, y) * 0.5
+Resonz(g, x, y) * 0.5

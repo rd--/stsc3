@@ -1,6 +1,6 @@
 # 1. How to use the Synth class
 
-In this tutorial you'll find out what you can do with the Synth class.
+In this tutorial you will find out what you can do with the Synth class.
 
 ## 1.1 How to play a sound
 
@@ -28,25 +28,25 @@ Now the same example with lots and lots of comments:
 
 ## 1.2 How to plot output.
 
-A Synth can do more things than just play a sound.  You can plot a Synth's output using the 'plot' method.  We'll plot 10 milliseconds or 0.01 seconds of the sine wave.
+A Synth can do more things than just play a sound.  You can plot the output of a Synth  using the 'plot' method.  We will plot 10 milliseconds or 0.01 seconds of the sine wave.
 
-	;; { SinOsc(800, 0) * 0.1) }.plot
+	SinOsc(80, 0) * 0.1
 
 Notice that there are eight cycles of the sine wave plotted.  800 cycles/second * 0.01 seconds = 8 cycles
 
-A plot is held in a buffer in RAM so don't try to plot an hour long piece (that would be about 1.2 gigabytes for stereo 32 bit floats at 44.1 Khz).
+A plot is held in a buffer in RAM so do not try to plot an hour long piece (that would be about 1.2 gigabytes for stereo 32 bit floats at 44.1 Khz).
 
 ## 1.3 How to watch output in real time.
 
-More exciting than a plot of your output is to watch it in real time.  You can do this with the Synth 'scope' method.  The second argument is the duration seen in the scope. We'll use 0.01 seconds again.
+More exciting than a plot of your output is to watch it in real time.  You can do this with the Synth 'scope' method.  The second argument is the duration seen in the scope. We will use 0.01 seconds again.
 
-This time we'll look at some BrownNoise since that changes more than a sine wave.  BrownNoise takes two arguments, a multiply and an add. We'll set the multiply to 0.1 just like with the SinOsc example and leave the add input at its default of zero.
+This time we will look at some BrownNoise since that changes more than a sine wave.  BrownNoise takes two arguments, a multiply and an add. We wll set the multiply to 0.1 just like with the SinOsc example and leave the add input at its default of zero.
 
-	;; { BrownNoise() * 0.1 }.plot
+	{ BrownNoise() * 0.1 }.plotUgenGraph(0.01)
 
-Now let's see a 0.2 seconds window which is 20 times longer than the above.
+Now let us see a 0.2 seconds window which is 20 times longer than the above.
 
-	;; { BrownNoise() * 0.1 }.plot(0.2)
+	{ BrownNoise() * 0.1 }.plotUgenGraph(0.2)
 
 ## 1.4 How to create a buffer of samples
 
@@ -56,7 +56,7 @@ You can write your output samples to a buffer. Buffers of audio are represented 
 
 ## 1.5 How to write output to disk
 
-The Synth 'write' method lets you write output to a sound file in non real time.  The write method takes three more arguments than 'play'. The first is the path name of the file. Second is a Symbol giving the header format or type of sound file to write.  The third additional argument is the sample format. See the SoundFile help file for a list of all the formats available. We'll use 'AIFF' for the header format and '16 big endian signed' for the sample format.
+The Synth 'write' method lets you write output to a sound file in non real time.  The write method takes three more arguments than 'play'. The first is the path name of the file. Second is a Symbol giving the header format or type of sound file to write.  The third additional argument is the sample format. See the SoundFile help file for a list of all the formats available. We will use 'AIFF' for the header format and '16 big endian signed' for the sample format.
 
 	;; ...
 

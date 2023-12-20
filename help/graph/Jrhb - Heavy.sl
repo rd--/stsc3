@@ -5,7 +5,7 @@ var n = 180;
 		(1 .. index).collect { :each |
 			each.nthPrime
 		}.scramble.keepAtMost(8)
-	}.concatenation.Set.Array;
+	}.concatenation.asSet.asArray;
 	var freq = primes.LinLin(primes.min, primes.max, 200, 10000) * 0.5.randomFloat(1.5);
 	var amp = { 0.4.randomFloat } ! freq.size;
 	var decay = { 2.4.randomFloat } ! freq.size;

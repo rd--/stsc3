@@ -25,7 +25,7 @@ SinOsc(
 	0
 ) * 0.1 + Impulse(1, 0)
 
-(* Env ; requires=keywords *)
+(* ---- Env ; requires=keywords *)
 var e = Env(
 	levels: [440, 440, 324, 10000],
 	times: [4, 2, 1],
