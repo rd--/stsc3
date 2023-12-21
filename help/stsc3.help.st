@@ -658,7 +658,7 @@ FileStream stdout nextPutAll: 'Hello, World'; cr; flush. "write to stdout"
 "Stream"
 
 {
-(String streamContents: [ :aStream | 'hello there!' printOn: aStream ]) = '''hello there!'''.
+(String streamContents: [ :aStream | 'hello there!\n' printOn: aStream ]) = '''hello there!'''.
 (ByteArray streamContents: [ :aStream | aStream int32: ScGraph scgf ]) asArray = #(83 67 103 102).
 (ByteArray streamContents: [ :aStream | aStream float32: 3.141 ]) asArray = #(64 73 6 37).
 } allSatisfy: #yourself
