@@ -36,7 +36,7 @@ Tested with:
 * * *
 
 ```
-$ doctest Language/Smalltalk/Ansi/
-Examples: 174  Tried: 174  Errors: 0  Failures: 0
+$ make doctest
+Examples: 206  Tried: 206  Errors: 0  Failures: 0
 $
 ```

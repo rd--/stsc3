@@ -20,3 +20,6 @@ remote-update:
 
 indent:
 	fourmolu -i Language
+
+doctest:
+	(cd Language/Smalltalk ; doctest -Wno-x-partial -Wno-incomplete-uni-patterns *.hs Ansi Som)

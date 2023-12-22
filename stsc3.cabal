@@ -24,7 +24,7 @@ library
                         parsec,
                         split
   default-language:     Haskell2010
-  ghc-options:          -Wall -fwarn-tabs
+  ghc-options:          -Wall -Wno-x-partial -Wno-incomplete-uni-patterns
   build-tool-depends:   alex:alex,
                         happy:happy
   exposed-modules:      Language.Smalltalk.Ansi,
