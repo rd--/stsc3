@@ -647,6 +647,28 @@ nil.isNil == true                                           // is nil
 -10r23 == -23                                               // negative decimal (base 10) integer literal
 -16r17 == -23                                               // negative hexadecimal (base 16) integer literal
 
+'Patterns'
+(Pseries(0, 1, 6) % 3).asStream.all == [0, 1, 2, 0, 1, 2]            // binary operator
+Pclump(2, Pseries(1, 2, 4)).asStream.all == [[1, 3], [5, 7]]         // clump items
+Pclutch(Pseries(3, 2, 4), Pseq([1, 0, 1], 2)).asStream.all == [3, 3, 5, 7, 7, 9]
+Pcollect(_.sqrt, Pseq([1, 4, 9])).asStream.all == [1, 2, 3]          // collect
+Pdrop(7, Pseries(1, 1, 9)).asStream.all == [8, 9]                    // drop
+Pdup(2, Pseries(1, 2, 3)).asStream.all == [1, 1, 3, 3, 5, 5]         // repeat items
+Pgeom(1, 2, 5).asStream.all == [1, 2, 4, 8, 16]                      // geometric series
+Place([1, [2, 5], [3, 6]], 2).asStream.all == [1, 2, 3, 1, 5, 6]     // lace (interleave)
+Pn(Pseries(1, 2, 3), 2).asStream.all == [1, 3, 5, 1, 3, 5]           // repeat pattern
+Ppatlace([Pseries(3, 2, 3), Pgeom(2, 2, 3)], 3).asStream.all == [2, 3, 5, 4, 7, 8]
+Preject(_.odd, Pseries(1, 1, 5)).asStream.all == [2, 4]              // reject
+Pseed(1234, Pwhite(1, 9, 3)).asStream.nextN(6) == [5, 7, 9, 5, 7, 9] // seed enclosed random number generator
+Pselect(_.even, Pseries(1, 1, 5)).asStream.all == [2, 4]             // select
+Pseq([1, 2, 3], 2).asStream.all == [1, 2, 3, 1, 2, 3]                // sequence (repeat count)
+Pser([1, 2, 3], 5).asStream.all == [1, 2, 3, 1, 2]                   // sequence (item count)
+Pseries(1, 2, 5).asStream.all == [1, 3, 5, 7, 9]                     // arithmetic series
+Pslide((1 .. 4), 2, 3, 1).asStream.all == [1, 2, 3, 2, 3, 4]         // sliding window
+Pswitch([5, Pn(4, 2)], Pseq([0, 1], 2)).asStream.all == [5, 4, 4, 5, 4, 4]
+Pswitch1([5, Pn(4, 2)], Pseq([0, 1], 2)).asStream.all == [5, 4, 5, 4]
+Ptuple([Pseries(3, 2, 3), Pgeom(2, 2, 3)], 1).asStream.all == [[3, 2], [5, 4], [7, 8]]
+
 'Point'
 200 @ 100 == Point.new(200, 100)                            // obtain a new point
 (200 @ 100).x == 200                                        // x coordinate
@@ -705,11 +727,14 @@ var r = Routine(f); r.class == Routine                      // a routine is inst
 (1 .. 9).collect { | i | i -> r.next(i) }.at(6) == (7 -> 14)// sends value to coroutine (also resume, value, run)
 
 'Scale'
-
+Scale.major.degrees == [0, 2, 4, 5, 7, 9, 11]               // lookup scale by name, scale degrees
+Scale.major.pitchesPerOctave == 12                          // pitches per octave
+Scale.major.name == "Major"                                 // scale name
 
 'SequenceableCollection'
 SequenceableCollection.allSubclasses.includes(List)         // sequencable collection class
 [1, 3, 2] ++ [4, 5] == [1, 3, 2, 4, 5]                      // append sequences
+[[1,2],[3,4]] +++ [[5,6],[7,8]] == [[1,2,5,6],[3,4,7,8]]    // append matrices
 [1, 3, 2, 4, 5].reverse == [5, 4, 2, 3, 1]                  // reverse sequence
 [1, 3, 2, 4, 5].sort == [1, 2, 3, 4, 5]                     // sort using default comparison
 [1, 3, 2, 4, 5].sort { | i j | i > j }.first == 5           // sort using provided comparison
