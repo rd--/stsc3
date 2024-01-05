@@ -32,7 +32,10 @@ data Token
   | QuotedChar Char -- 3.5.8
   | QuotedString String -- 3.5.8
   | HashedString String -- 3.5.9
-  deriving (-- | UnarySelector String -- 3.5.10
-            -- | QuotedSelector String -- 3.5.10 - #Selector
-            -- | KeywordSelector String -- 3.5.10 - Keyword+
-            Eq, Show)
+  deriving
+    ( -- | UnarySelector String -- 3.5.10
+      -- | QuotedSelector String -- 3.5.10 - #Selector
+      -- | KeywordSelector String -- 3.5.10 - Keyword+
+      Eq
+    , Show
+    )

@@ -1,5 +1,5 @@
--- | Token type for SuperCollider (modified from Language.Smalltalk.Ansi.Token)
-module Language.Smalltalk.SuperCollider.Token where
+-- | Token type for Spl (modified from Language.Smalltalk.Ansi.Token)
+module Language.Smalltalk.Spl.Token where
 
 data Token
   = LeftBracket
@@ -9,12 +9,12 @@ data Token
   | Comma
   | SemiColon
   | Colon
+  | ArityQualifier
   | VerticalBar
   | LeftBrace
   | RightBrace
   | LeftParen
   | RightParen
-  | HashLeftBracket
   | NilIdentifier
   | TrueIdentifier
   | FalseIdentifier
@@ -26,15 +26,13 @@ data Token
   | ReturnOperator
   | EqualsOperator
   | AssignmentOperator
-  | ClassExtensionOperator
-  | ClassMethodOperator
   | Float Double
   | Integer Integer
-  | QuotedChar Char
-  | QuotedString String
-  | HashedString String
+  | DoubleQuotedString String
+  | SingleQuotedString String
   | Comment String
   | Arg
   | Var
+  | Let
   | ClassVar
   deriving (Eq, Show)

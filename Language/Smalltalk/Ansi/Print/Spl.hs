@@ -12,7 +12,7 @@ Notes:
   - class variable, unary and keyword names, assignment targets
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 -}
-module Language.Smalltalk.Ansi.Print.SuperCollider where
+module Language.Smalltalk.Ansi.Print.Spl where
 
 import Data.Char {- base -}
 import Data.List {- base -}

@@ -3,6 +3,7 @@ module Language.Smalltalk.Ansi.Query where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 {- stsc3 -}
+
 import qualified Language.Smalltalk.Ansi.Fold as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St
 

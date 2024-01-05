@@ -12,16 +12,16 @@ import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
-import qualified Language.Smalltalk.FileOut as FileOut {- stsc -}
-import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
+import qualified Language.Smalltalk.FileOut as FileOut {- stsc3 -}
+import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
-import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
+--import qualified Language.Smalltalk.Spl.Ast as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ndef as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Translate as Sc {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program, using Parsec parser.
 st_cat_parsec :: String -> String
@@ -41,13 +41,17 @@ st_cat which fn = do
 stc_cat_fragments :: FilePath -> IO ()
 stc_cat_fragments fn = do
   txt_fragments <- Help.read_file_fragments fn
-  let expr_fragments = map (Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens) txt_fragments
+  let parse = Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens
+      expr_fragments = map parse txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
+{-
 -- | Parse class library file, a sequence of class definitions.
 stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
 stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
+-}
 
+{-
 {- | Read and print library.
 
 stc_cat_library "/home/rohan/sw/stsc3/help/expr/library.sc"
@@ -64,17 +68,18 @@ stc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.ale
 
 {- | Read and print extensions.
 
-stc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
-stc_cat_extensions "/home/rohan/sw/sc3-rdl/sc/RExtensions.sc"
+> stc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
+> stc_cat_extensions "/home/rohan/sw/sc3-rdl/sc/Bag.ext.sc"
 -}
 stc_cat_extensions :: FilePath -> IO ()
 stc_cat_extensions fn =
   let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . stc_parse_class_extension_seq
   in rw =<< readFile fn
+-}
 
 {- | Read and re-print Som class definition file.
 
-> som_cat "/home/rohan/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Object.som"
+> som_cat "/home/rohan/opt/src/SOM-st/SOM/Smalltalk/Object.som"
 -}
 som_cat :: FilePath -> IO ()
 som_cat fn =
@@ -83,7 +88,7 @@ som_cat fn =
 
 {- | Read Som class definition and write in FileOut format.
 
-> cd_som_to_fileout True "/home/rohan/opt/src/Smalltalk/SOM-st/SOM/Smalltalk/Array.som" "/dev/stdout"
+> cd_som_to_fileout True "/home/rohan/opt/src/SOM-st/SOM/Smalltalk/Array.som" "/dev/stdout"
 -}
 cd_som_to_fileout :: Bool -> FilePath -> FilePath -> IO ()
 cd_som_to_fileout do_sort som_fn fileout_fn = do
@@ -163,23 +168,23 @@ stc_to_js fn = do
 
 opt_def :: [Opt.OptUsr]
 opt_def =
-  [("category","Uncategorised","string","set class category")
-  ,("sort","False","bool","sort methods in class")
-  ,("tidy","False","bool","tidy method source")
+  [ ("category", "Uncategorised", "string", "set class category")
+  , ("sort", "False", "bool", "sort methods in class")
+  , ("tidy", "False", "bool", "tidy method source")
   ]
 
 help :: [String]
 help =
-    ["stsc3 command [arguments]"
-    ," rewrite ndef"
-    ," som cat <som-file>"
-    ," stc cat { fragment | library | extensions } <supercollider-file...>"
-    ," st cat { parsec | happy } <smalltalk-file...>"
-    ," translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
-    ," translate directory [opt] som fileout <input-directory> <output-file>"
-    ," translate library [opt] fileout som <input-file> <output-directory>"
-    ," translate [ stream ] stc { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
-    ]
+  [ "stsc3 command [arguments]"
+  , " rewrite ndef"
+  , " som cat <som-file>"
+  , " stc cat { fragment | library | extensions } <supercollider-file...>"
+  , " st cat { parsec | happy } <smalltalk-file...>"
+  , " translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
+  , " translate directory [opt] som fileout <input-directory> <output-file>"
+  , " translate library [opt] fileout som <input-file> <output-directory>"
+  , " translate [ stream ] stc { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
+  ]
 
 main :: IO ()
 main = do
@@ -193,19 +198,57 @@ main = do
           ("stc", "ast") -> Sc.stcToAst
           _ -> error "stsc3: unknown translation"
   case a of
-    ["rewrite","ndef"] -> interact Sc.stcUgenToNdef
-    "som":"cat":fn_seq -> mapM_ (\fn -> putStrLn fn >> som_cat fn) fn_seq
-    "stc":"cat":"fragment":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_fragments fn) fn_seq
-    "stc":"cat":"library":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_library fn) fn_seq
-    "stc":"cat":"extensions":fn_seq -> mapM_ (\fn -> putStrLn fn >> stc_cat_extensions fn) fn_seq
-    "st":"cat":which:fn_seq -> mapM_ (\fn -> putStrLn fn >> st_cat which fn) fn_seq
-    ["translate", in_ty, out_ty] -> interact (trs in_ty out_ty)
-    ["translate", in_ty, out_ty, inFile, outFile] -> Music.Theory.Io.interactWithFiles inFile outFile (trs in_ty out_ty)
-    ["translate", "class", "fileout", "som", fileout_fn, som_fn] -> cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
-    ["translate", "class", "som", "fileout", som_fn, fileout_fn] -> cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
-    ["translate", "class", "som", "som", input_fn, output_fn] -> cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
-    ["translate", "directory", "som", "fileout", som_dir, fileout_fn] -> dir_som_to_fileout (Opt.opt_get o "category") som_dir fileout_fn
-    ["translate", "extensions", "fileout", "som", fileout_fn, som_fn] -> ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
-    ["translate", "library", "fileout", "som", fileout_fn, som_dir] -> lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
-    ["translate", "stream", in_ty, out_ty] -> Music.Theory.Io.interactWithStdio (trs in_ty out_ty)
-    _ -> putStrLn (unlines help)
+    ["rewrite", "ndef"] ->
+      interact Sc.stcUgenToNdef
+    "som" : "cat" : fn_seq ->
+      mapM_
+        ( \fn ->
+            putStrLn fn >> som_cat fn
+        )
+        fn_seq
+    "stc" : "cat" : "fragment" : fn_seq ->
+      mapM_
+        ( \fn ->
+            putStrLn fn >> stc_cat_fragments fn
+        )
+        fn_seq
+{-
+    "stc" : "cat" : "library" : fn_seq ->
+      mapM_
+        ( \fn ->
+            putStrLn fn >> stc_cat_library fn
+        )
+        fn_seq
+    "stc" : "cat" : "extensions" : fn_seq ->
+      mapM_
+        ( \fn ->
+            putStrLn fn >> stc_cat_extensions fn
+        )
+        fn_seq
+-}
+    "st" : "cat" : which : fn_seq ->
+      mapM_
+        ( \fn ->
+            putStrLn fn >> st_cat which fn
+        )
+        fn_seq
+    ["translate", in_ty, out_ty] ->
+      interact (trs in_ty out_ty)
+    ["translate", in_ty, out_ty, inFile, outFile] ->
+      Music.Theory.Io.interactWithFiles inFile outFile (trs in_ty out_ty)
+    ["translate", "class", "fileout", "som", fileout_fn, som_fn] ->
+      cd_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate", "class", "som", "fileout", som_fn, fileout_fn] ->
+      cd_som_to_fileout (Opt.opt_read o "sort") som_fn fileout_fn
+    ["translate", "class", "som", "som", input_fn, output_fn] ->
+      cd_som_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") input_fn output_fn
+    ["translate", "directory", "som", "fileout", som_dir, fileout_fn] ->
+      dir_som_to_fileout (Opt.opt_get o "category") som_dir fileout_fn
+    ["translate", "extensions", "fileout", "som", fileout_fn, som_fn] ->
+      ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
+    ["translate", "library", "fileout", "som", fileout_fn, som_dir] ->
+      lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
+    ["translate", "stream", in_ty, out_ty] ->
+      Music.Theory.Io.interactWithStdio (trs in_ty out_ty)
+    _ ->
+      putStrLn (unlines help)

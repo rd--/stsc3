@@ -12,7 +12,7 @@ import qualified Music.Theory.List as List {- hmt-base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.Spl as St {- stsc3 -}
 
 -- * .stc
 
@@ -278,7 +278,7 @@ literalPrintJs l =
 
 {- | Print Js notation of Expr.
 
-import Language.Smalltalk.SuperCollider.Translate {\- stsc3 -\}
+import Language.Smalltalk.Spl.Translate {\- stsc3 -\}
 rw = exprPrintJs (jsRenamerFromTable (Just "sc.") jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]
@@ -349,7 +349,7 @@ exprTmpStmScheme rw tmp (stm, ret) =
 
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
-import Language.Smalltalk.SuperCollider.Translate {\- stsc3 -\}
+import Language.Smalltalk.Spl.Translate {\- stsc3 -\}
 rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
 map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 map rw ["p + q * r", "p % q >= r"]

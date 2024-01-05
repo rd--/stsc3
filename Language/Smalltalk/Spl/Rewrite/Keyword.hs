@@ -13,7 +13,7 @@ Rewrite Keyword messages to have a single association array as argument.
 .ar(440, phase: 0)       => ar: {440. #phase -> 0}
 .ar(freq: 440, phase: 0) => ar: {#freq: -> 440. #phase: -> 0}
 
-For the more general case of translating a SuperCollider like notation to a Smalltalk like notation:
+For the more general case of translating a Spl like notation to a Smalltalk like notation:
 
 Generate Smalltalk methods for each allowed arity with optional signature.
 
@@ -27,13 +27,13 @@ Generate Smalltalk methods for each allowed arity with optional signature.
 ScDotMessage occurs in ScMessages and in ScBinaryArgument, which occurs in ScMessages.
 ScMessages occurs in ScBasicExpression.
 -}
-module Language.Smalltalk.SuperCollider.Rewrite.Keyword where
-
+module Language.Smalltalk.Spl.Rewrite.Keyword where
+{-
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
 
 -- | Translate ScKeywordArgument (k:v) to Association (k -> v)
 scKeywordAssoc :: St.Keyword -> ScBasicExpression -> ScBasicExpression
@@ -146,4 +146,5 @@ rw "p.q(r)" == "p.q([r])"
 rw "p.q(r:s)" == "p.q([\\r: -> s])"
 rw "p.q(r:s.t)" == "p.q([\\r: -> (s.t)])"
 
+-}
 -}

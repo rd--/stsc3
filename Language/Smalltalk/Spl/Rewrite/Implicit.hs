@@ -1,8 +1,8 @@
 -- | Implicit message re-writing.
-module Language.Smalltalk.SuperCollider.Rewrite.Implicit where
+module Language.Smalltalk.Spl.Rewrite.Implicit where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
 
 -- | Construct a dot message given receiver, selector and arguments.
 sc_dot_message_basic_expression :: St.Identifier -> St.Identifier -> [ScBasicExpression] -> ScBasicExpression

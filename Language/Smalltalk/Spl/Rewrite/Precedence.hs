@@ -2,12 +2,12 @@
      The rewriting here is quite intricate.
      It goes to a little trouble to not introduce unnecessary parentheses.
 -}
-module Language.Smalltalk.SuperCollider.Rewrite.Precedence where
+module Language.Smalltalk.Spl.Rewrite.Precedence where
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
 
 {- | This is for parenthesising.
      It places the initial nary selector at the end of the lhs, not the start of the rhs.
@@ -181,36 +181,63 @@ scPrimaryRewritePrecedence p =
     ScPrimaryLiteral _ -> p
     ScPrimaryBlock x -> ScPrimaryBlock (scBlockBodyRewritePrecedence x)
     ScPrimaryExpression x -> ScPrimaryExpression (scExpressionRewritePrecedence x)
-    ScPrimaryArrayExpression x -> ScPrimaryArrayExpression (map (scBasicExpressionRewritePrecedence True) x)
-    ScPrimaryDictionaryExpression x -> ScPrimaryDictionaryExpression (map (\(k, v) -> (k, scBasicExpressionRewritePrecedence True v)) x)
-    ScPrimaryImplicitMessageSend x a -> ScPrimaryImplicitMessageSend x (map (scBasicExpressionRewritePrecedence True) a)
+    ScPrimaryArrayExpression x ->
+      ScPrimaryArrayExpression
+      (map (scBasicExpressionRewritePrecedence True) x)
+    ScPrimaryDictionaryExpression x ->
+      ScPrimaryDictionaryExpression
+      (map (\(k, v) -> (k, scBasicExpressionRewritePrecedence True v)) x)
+    ScPrimaryImplicitMessageSend x a ->
+      ScPrimaryImplicitMessageSend x (map (scBasicExpressionRewritePrecedence True) a)
 
--- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
+{- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
+
+>>> let rw = scRewritePrecedenceViewer
+>>> rw "p.q(a).r"
+"(p.q(a)).r\n"
+
+>>> rw "p.q.r(a).s(b).t"
+"(((p.q.r(a))).s(b)).t\n"
+
+>>> rw "p.q(a) + r"
+"(p.q(a)) + r\n"
+
+>>> rw "p.q(a).r + s"
+"(p.q(a)).r + s\n"
+
+>>> rw "p + q.r(a)"
+"p + (q.r(a))\n"
+
+>>> rw "p.q(i)"
+"p.q(i)\n"
+
+>>> rw "p.q(i).r"
+"(p.q(i)).r\n"
+
+>>> rw "p.q(i).r(j)"
+"(p.q(i)).r(j)\n"
+
+>>> rw "p.q + r"
+"p.q + r\n" -- unary no parens
+
+>>> rw "p.q(i) + r"
+"(p.q(i)) + r\n" -- parens ; singular requires if initial of binary, c.f. p.q()
+
+>>> rw "p + q.r(i)"
+"p + (q.r(i))\n" -- parens ; also it subsequent of binary (ie. in binary requires paren)
+
+>>> rw "p.q(r + s.t(i))"
+"p.q(r + (s.t(i)))\n" -- Binary within Unary/Nary
+
+>>> rw "p.q(r.s(i).t).u(j)"
+"(p.q((r.s(i)).t)).u(j)\n"
+
+>>> rw "p.q(r.s(i).t).u(j) + k"
+"((p.q((r.s(i)).t)).u(j)) + k\n"
+-}
 scRewritePrecedenceViewer :: String -> String
 scRewritePrecedenceViewer =
   Sc.scInitializerDefinitionPrint
     . scInitializerDefinitionRewritePrecedence
     . Sc.superColliderParserInitializerDefinition
     . Sc.alexScanTokens
-
-{-
-
-rw = scRewritePrecedenceViewer
-rw "p.q(a).r" == "(p.q(a)).r\n"
-rw "p.q.r(a).s(b).t" == "(((p.q.r(a))).s(b)).t\n"
-rw "p.q(a) + r" == "(p.q(a)) + r\n"
-rw "p.q(a).r + s" == "(p.q(a)).r + s\n"
-rw "p + q.r(a)" == "p + (q.r(a))\n"
-rw "p.q(i)"== "p.q(i)\n"
-rw "p.q(i).r" == "(p.q(i)).r\n"
-rw "p.q(i).r(j)" == "(p.q(i)).r(j)\n"
-rw "p.q + r" == "p.q + r\n" -- unary no parens
-rw "p.q(i) + r" == "(p.q(i)) + r\n" -- parens ; singular requires if initial of binary, c.f. p.q()
-rw "p + q.r(i)" == "p + (q.r(i))\n" -- parens ; also it subsequent of binary (ie. in binary requires paren)
-rw "p.q(r + s.t(i))" == "p.q(r + (s.t(i)))\n" -- Binary within Unary/Nary
-rw "p.q(r.s(i).t).u(j)" == "(p.q((r.s(i)).t)).u(j)\n"
-rw "p.q(r.s(i).t).u(j) + k" == "((p.q((r.s(i)).t)).u(j)) + k\n"
-
-rd = Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens
-
--}

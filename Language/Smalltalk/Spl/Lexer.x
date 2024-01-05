@@ -1,7 +1,7 @@
 {
-module Language.Smalltalk.SuperCollider.Lexer where
+module Language.Smalltalk.Spl.Lexer where
 
-import Language.Smalltalk.SuperCollider.Token
+import Language.Smalltalk.Spl.Token
 }
 
 %wrapper "basic"
@@ -13,7 +13,7 @@ $underscore            = _                                    -- 3.5.1 nonCaseLe
 $letter                = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit         = [a-z A-Z _ 0-9]
 $letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
-$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~]         -- !@%&*-+=|<>?/~
+$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~\^]     -- !@%&*-+=|<>?/~
 $graphic               = $printable # $white
 
 @decimal               = $digit+
@@ -23,7 +23,6 @@ $graphic               = $printable # $white
 tokens :-
 
   $white+                                ;
-  ";;" $printable+                       ;
   "(*" ($printable # \*)* "*)"           ;
 
   "["                                    { \_ -> LeftBracket }
@@ -31,6 +30,7 @@ tokens :-
   "."                                    { \_ -> Dot }
   ".."                                    { \_ -> DotDot }
   ":"                                    { \_ -> Colon }
+  ":/"                                   { \_ -> ArityQualifier }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }
   "|"                                    { \_ -> VerticalBar }
@@ -38,21 +38,17 @@ tokens :-
   "}"                                    { \_ -> RightBrace }
   "("                                    { \_ -> LeftParen }
   ")"                                    { \_ -> RightParen }
-  "#["                                   { \_ -> HashLeftBracket }
 
   "nil"                                  { \_ -> NilIdentifier }
   "true"                                 { \_ -> TrueIdentifier }
   "false"                                { \_ -> FalseIdentifier }
-  "self"                                 { \_ -> SelfIdentifier }
   "arg"                                  { \_ -> Arg }
   "var"                                  { \_ -> Var }
+  "let"                                  { \_ -> Let }
   "classvar"                             { \_ -> ClassVar }
 
-  "^"                                    { \_ -> ReturnOperator }
   "="                                    { \_ -> EqualsOperator }
   ":="                                   { \_ -> AssignmentOperator }
-  "*"                                    { \_ -> ClassMethodOperator }
-  "+"                                    { \_ -> ClassExtensionOperator }
 
   $letter $letterordigit*                { \s -> Identifier s }
   $letter $letterordigit* ":"            { \s -> Keyword (init s) }
@@ -60,10 +56,8 @@ tokens :-
   $binaryChar+                           { \s -> BinarySelector s }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
-  "$" [$graphic \ ]                      { \s -> QuotedChar (s !! 1) }
-  \" ($printable # \")* \"               { \s -> QuotedString (removeOuter 1 s) }
-  \' ($printable # \')* \'               { \s -> HashedString (removeOuter 1 s) }
-  \\ $letter $letterordigit*             { \s -> HashedString (tail s) }
+  \" ($printable # \")* \"               { \s -> DoubleQuotedString (removeOuter 1 s) }
+  \' ($printable # \')* \'               { \s -> SingleQuotedString (removeOuter 1 s) }
 
 {
 removeOuter :: Int -> [t] -> [t]

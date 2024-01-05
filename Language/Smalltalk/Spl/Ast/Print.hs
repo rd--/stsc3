@@ -1,5 +1,5 @@
--- | Printer for abstract syntax tree (Ast) for SuperCollider (Sc).
-module Language.Smalltalk.SuperCollider.Ast.Print where
+-- | Printer for abstract syntax tree (Ast) for Spl (Sc).
+module Language.Smalltalk.Spl.Ast.Print where
 
 import Data.List {- base -}
 import Data.Maybe {- base -}
@@ -7,7 +7,7 @@ import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
 
 maybePrint :: (a -> String) -> Maybe a -> String
 maybePrint f x = maybe "" f x

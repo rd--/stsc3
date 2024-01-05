@@ -1,6 +1,8 @@
-{- | An abstract syntax tree (Ast) for SuperCollider (Sc).
+{- | An abstract syntax tree (Ast) for Spl (Sc).
 
-This Ast initially was for Sc, however it is now for C-Smalltalk (Stc).
+This Ast initially was for SuperCollider (.sc),
+then it was for C-Smalltalk (.stc),
+now it is for Spl (.sl)
 
 This follows the structure of the ANSI Smalltalk (St) Ast.
 
@@ -25,7 +27,7 @@ In St "(x y: a) z" sends y:a to x and sends z to the result, in Sc this is writt
 
 The Sc expression "x.y(a).z.y(b) + c" would be written "(((x y: a) z) y: b) + c" in St.
 -}
-module Language.Smalltalk.SuperCollider.Ast where
+module Language.Smalltalk.Spl.Ast where
 
 import Data.List {- base -}
 
@@ -137,6 +139,9 @@ data ScBasicExpression
   = ScBasicExpression ScPrimary (Maybe ScMessages)
   deriving (Eq, Show)
 
+scPrimaryToBasicExpression :: ScPrimary -> ScBasicExpression
+scPrimaryToBasicExpression p = ScBasicExpression p Nothing
+
 {- | If the expression consists only of a primary, return that.
      If the expression has messages make a PrimaryExpression node.
 -}
@@ -155,6 +160,9 @@ scExpressionToPrimary e =
 
 scIdentifierToBasicExpression :: St.Identifier -> ScBasicExpression
 scIdentifierToBasicExpression i = ScBasicExpression (ScPrimaryIdentifier i) Nothing
+
+scLiteralToBasicExpression :: St.Literal -> ScBasicExpression
+scLiteralToBasicExpression l = ScBasicExpression (ScPrimaryLiteral l) Nothing
 
 scIdentifierToExpression :: St.Identifier -> ScExpression
 scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
@@ -203,6 +211,11 @@ data ScPrimary
   | ScPrimaryDictionaryExpression [(St.LowercaseIdentifier, ScBasicExpression)]
   | ScPrimaryImplicitMessageSend St.Identifier [ScBasicExpression]
   deriving (Eq, Show)
+
+scMatrixExpression :: [[ScBasicExpression]] -> ScPrimary
+scMatrixExpression =
+  ScPrimaryArrayExpression
+  . map (scPrimaryToBasicExpression . ScPrimaryArrayExpression)
 
 -- | 3.4.5.3
 data ScMessages

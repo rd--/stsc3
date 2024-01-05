@@ -1,18 +1,18 @@
 {- | Temporaries re-writing
 
-SuperCollider allows assignment at variable declarations.
+Spl allows assignment at variable declarations.
 The Identifiers from the sequence are collected as Temporaries.
 Initialisation expressions are prepended as Assignments to the list of Statements.
 -}
-module Language.Smalltalk.SuperCollider.Rewrite.Temporaries where
+module Language.Smalltalk.Spl.Rewrite.Temporaries where
 
 import Data.Maybe {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
 
 -- | Get initialiser lifted to an Assignment expression.
 scTemporaryInitialiser :: ScTemporary -> Maybe ScExpression
