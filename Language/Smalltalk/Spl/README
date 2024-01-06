@@ -17,3 +17,12 @@ The block form does not allow either nested comments or the * character.
 right recursion, but you should always use left recursion, because it
 can parse a sequence of any number of elements with bounded stack
 space."
+
+* * *
+
+Parses all graphs at ~/sw/slp/help/SuperColldider/Graph (371) except:
+
+- Dcv - Time varying feedback delay network.sl: ctl::
+- Jl - Pwm Crossfade.sl: var [f1, f2]
+- Jmcc - Bach prelude.sl: x[3 4 5]
+- Mk - 2206.sl: ctl::

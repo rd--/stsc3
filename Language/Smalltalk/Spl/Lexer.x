@@ -16,6 +16,7 @@ $letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
 $binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~\^]     -- !@%&*-+=|<>?/~
 $graphic               = $printable # $white
 
+@identifier            = $letter $letterordigit*
 @decimal               = $digit+
 @integer               = \-? @decimal
 @float                 = \-? @decimal \. @decimal
@@ -30,7 +31,7 @@ tokens :-
   "."                                    { \_ -> Dot }
   ".."                                    { \_ -> DotDot }
   ":"                                    { \_ -> Colon }
-  ":/"                                   { \_ -> ArityQualifier }
+  "::"                                   { \_ -> ColonColon }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }
   "|"                                    { \_ -> VerticalBar }
@@ -50,9 +51,10 @@ tokens :-
   "="                                    { \_ -> EqualsOperator }
   ":="                                   { \_ -> AssignmentOperator }
 
-  $letter $letterordigit*                { \s -> Identifier s }
+  @identifier                            { \s -> Identifier s }
+  @identifier ":/" @integer              { \s -> ArityQualifiedIdentifier s }
   $letter $letterordigit* ":"            { \s -> Keyword (init s) }
-  $letter $letterordigitorcolon* ":"     { \s -> KeywordSelector s }
+--  $letter $letterordigitorcolon* ":"     { \s -> KeywordSelector s }
   $binaryChar+                           { \s -> BinarySelector s }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }

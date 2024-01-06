@@ -98,7 +98,10 @@ scBinaryArgumentSt (ScBinaryArgument p m) =
         _ -> error ("scBinaryArgumentSt: " ++ show (ScBinaryArgument p m))
 
 scBinaryMessageSt :: ScBinaryMessage -> St.BinaryMessage
-scBinaryMessageSt (ScBinaryMessage i a) = St.BinaryMessage i (scBinaryArgumentSt a)
+scBinaryMessageSt (ScBinaryMessage (i, x) a) =
+  case x of
+    Nothing -> St.BinaryMessage i (scBinaryArgumentSt a)
+    Just x' -> St.BinaryMessage (i ++ "." ++ x') (scBinaryArgumentSt a)
 
 scArgumentSt :: ScBasicExpression -> St.KeywordArgument
 scArgumentSt e =
@@ -474,5 +477,7 @@ scClassDefinitionToSt cd =
 > stcToSt "p.q:r(i)" -- error ; this is an error in Sc and is reported here but with an odd message
 
 > stcToSt "p.q()" -- error ; this was dis-allowed for stcToSt ; it's not neccesary in Sc but it is allowed
+
+> stcToSt "x::y"
 
 -}

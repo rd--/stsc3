@@ -246,7 +246,7 @@ scDotMessageFromKeywordParam initialSelector (initialParam, keywordParam) =
   in ScDotMessage selector param
 
 data ScBinaryMessage
-  = ScBinaryMessage St.BinaryIdentifier ScBinaryArgument
+  = ScBinaryMessage (St.BinaryIdentifier, Maybe St.Identifier) ScBinaryArgument
   deriving (Eq, Show)
 
 data ScBinaryArgument

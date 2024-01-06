@@ -9,7 +9,7 @@ data Token
   | Comma
   | SemiColon
   | Colon
-  | ArityQualifier
+  | ColonColon
   | VerticalBar
   | LeftBrace
   | RightBrace
@@ -20,9 +20,10 @@ data Token
   | FalseIdentifier
   | SelfIdentifier
   | Identifier String
+  | ArityQualifiedIdentifier String
   | Keyword String
   | BinarySelector String
-  | KeywordSelector String
+--  | KeywordSelector String
   | ReturnOperator
   | EqualsOperator
   | AssignmentOperator

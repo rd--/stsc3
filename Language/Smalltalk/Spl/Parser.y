@@ -21,7 +21,7 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       ','             { Comma }
       ';'             { SemiColon }
       ':'             { Colon }
-      ':/'            { ArityQualifier }
+      '::'            { ColonColon }
       '|'             { VerticalBar }
       '{'             { LeftBrace }
       '}'             { RightBrace }
@@ -40,6 +40,7 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       '='             { EqualsOperator }
 
       identifier      { Identifier $$ }
+      arityQualifiedIdentifier      { ArityQualifiedIdentifier $$ }
       keyword         { Keyword $$ }
       binaryselector  { BinarySelector $$ }
 --      keywordselector { KeywordSelector $$ }
@@ -90,11 +91,12 @@ methoddefinition_seq :: { [ScMethodDefinition] }
         | methoddefinition methoddefinition_seq { $1 : $2 }
 -}
 
-binaryoperator :: { String }
-        : binaryselector                        { $1 }
+binaryoperator :: { (String, Maybe String) }
+        : binaryselector                        { ($1, Nothing) }
+        | binaryselector '.' identifier         { ($1, Just $3) }
+        | '='                                   { ("=", Nothing) }
 --        | '+'                                   { "+" }
 --        | '*'                                   { "*" }
-        | '='                                   { "=" }
 
 {-
 methoddefinition :: { ScMethodDefinition }
@@ -128,11 +130,15 @@ variables :: { [ScVariable] }
 expression :: { ScExpression }
         : identifier ':=' expression           { ScExprAssignment $1 $3 }
         | syntax_atput                         { ScExprBasic $1 }
+        | syntax_quotedAt                      { ScExprBasic $1 }
         | basicexpression                      { ScExprBasic $1 }
 
 syntax_atput :: { ScBasicExpression }
         : primary '[' basicexpression ']'
           ':=' basicexpression                 { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
+
+syntax_quotedAt :: { ScBasicExpression }
+        : primary '::' identifier { scConstructDotMessageSend $1 "at" [scLiteralToBasicExpression (St.StringLiteral ("'" ++ $3 ++ "'"))] }
 
 basicexpression :: { ScBasicExpression }
         : primary maybe_messages               { ScBasicExpression $1 $2 }
@@ -175,7 +181,7 @@ dotmessage :: { ScDotMessage }
         | '.' identifier blockexpression_seq   { ScDotMessage $2 $3}
         | '.' identifier message_param         { ScDotMessage $2 $3}
         | '.' identifier message_param blockexpression_seq { ScDotMessage $2 ($3 ++ $4) }
-        | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
+--        | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
         | syntax_at                            { $1 }
 
 blockexpression :: { ScBasicExpression }
@@ -191,12 +197,14 @@ syntax_at :: { ScDotMessage }
 message_param :: { [ScBasicExpression] }
         : '(' basicexpression_seq ')'          { $2 }
 
+{-
 keywordmessage_param :: { (ScBasicExpression, [(St.Identifier, ScBasicExpression)]) }
         : '('
           basicexpression
           ','
           nonemptykeywordexpression_seq
           ')'                                  { ($2, $4) }
+-}
 
 basicexpression_seq :: { [ScBasicExpression] }
         : basicexpression                         { [$1] }
@@ -236,9 +244,6 @@ reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }
         | true                                 { "true" }
         | false                                { "false" }
-
-arityQualifiedIdentifier :: { St.Identifier }
-        : identifier ':/' integer              { $1 ++ "_" ++ (show $3) }
 
 vectorexpression :: { [ScBasicExpression] }
         : vectoritem vectoritem                { [$1, $2] }
@@ -303,8 +308,12 @@ temporary_seq :: { ScTemporaries }
         | temporary ',' temporary_seq          { $1 : $3 }
 
 temporary :: { ScTemporary }
-        :  identifier                          { ($1,Nothing) }
-        |  identifier '=' basicexpression      { ($1,Just $3) }
+        :  identifierOrArityQualifiedIdentifier                     { ($1,Nothing) }
+        |  identifierOrArityQualifiedIdentifier '=' basicexpression { ($1,Just $3) }
+
+identifierOrArityQualifiedIdentifier :: { St.Identifier }
+        :  identifier                          { $1 }
+        |  arityQualifiedIdentifier            { $1 }
 
 maybe_statements :: { Maybe ScStatements }
         : {- empty -}                           { Nothing }
