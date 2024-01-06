@@ -37,6 +37,6 @@ Tested with:
 
 ```
 $ make doctest
-Examples: 206  Tried: 206  Errors: 0  Failures: 0
+Examples: 225  Tried: 225  Errors: 0  Failures: 0
 $
 ```

@@ -98,7 +98,7 @@ exprIsBinaryMessageSend expr =
 exprIsKeywordMessageSend :: Expr -> Bool
 exprIsKeywordMessageSend expr =
   case expr of
-    Send _lhs (Message (St.KeywordSelector _) (_ : _)) -> True
+    Send _lhs (Message (St.KeywordSelector _ _) (_ : _)) -> True
     _ -> False
 
 -- | Is Expr a unary message send.
@@ -167,7 +167,7 @@ keywordArgumentExpr (St.KeywordArgument p mu mb) =
 
 keywordMessageExpr :: Expr -> St.KeywordMessage -> Expr
 keywordMessageExpr e (St.KeywordMessage k) =
-  let s = St.KeywordSelector (concatMap fst k)
+  let s = St.asKeywordSelector (concatMap fst k)
       p = map (keywordArgumentExpr . snd) k
   in Send e (Message s p)
 
@@ -270,7 +270,7 @@ symbolLiteral = Literal . St.SymbolLiteral
 
 -- | e.k(l)
 keywordSend :: Expr -> St.Symbol -> [Expr] -> Expr
-keywordSend e k l = Send e (Message (St.KeywordSelector k) l)
+keywordSend e k l = Send e (Message (St.asKeywordSelector k) l)
 
 -- | e(l) -> e.apply([l])
 implicitSend :: St.Identifier -> [Expr] -> Expr
@@ -286,7 +286,7 @@ inLambda x = Lambda NullLambda [] [] ([x], Nothing)
 expr_get_if_implicit :: Expr -> Maybe (St.Identifier, [Expr])
 expr_get_if_implicit e =
   case e of
-    Send (Identifier rcv) (Message (St.KeywordSelector "apply:") [Array arg]) -> Just (rcv, arg)
+    Send (Identifier rcv) (Message (St.KeywordSelector "apply:" 1) [Array arg]) -> Just (rcv, arg)
     _ -> Nothing
 
 -- | If Expr is an implicit send and if the receiver has a selector in the rewriting table, rewrite as keyword send.

@@ -586,17 +586,17 @@ BinarySelector "|"
 BinarySelector "+"
 
 >>> patternSelector (p "new: x")
-KeywordSelector "new:"
+KeywordSelector "new:" 1
 
 >>> patternSelector (p "freq: f phase: p")
-KeywordSelector "freq:phase:"
+KeywordSelector "freq:phase:" 2
 -}
 patternSelector :: Pattern -> Selector
 patternSelector pat =
   case pat of
     UnaryPattern u -> UnarySelector u
     BinaryPattern b _ -> BinarySelector b
-    KeywordPattern kp -> KeywordSelector (concatMap fst kp)
+    KeywordPattern kp -> KeywordSelector (concatMap fst kp) (length kp)
 
 {- | Derive argument list from Pattern.
 
@@ -1200,7 +1200,7 @@ data KeywordMessage
 
 -- | Keyword selector from KeywordMessage.
 keywordMessageSelector :: KeywordMessage -> Selector
-keywordMessageSelector (KeywordMessage l) = KeywordSelector (concatMap fst l)
+keywordMessageSelector (KeywordMessage l) = KeywordSelector (concatMap fst l) (length l)
 
 {- | <unary message> ::= unarySelector
 
@@ -1319,21 +1319,46 @@ integerLiteral = NumberLiteral . Int
 
 {- | Parse literal.
 
-> p = stParse literal
-> p "123"
-> p "-123"
-> p "123.456"
-> p "-123.456"
-> p "'x'" == StringLiteral "x"
-> p "$x" == CharacterLiteral 'x'
-> p "#'xyz'" == SymbolLiteral "xyz"
-> p "#abs" == SelectorLiteral (UnarySelector "abs")
-> p "#m:" == SelectorLiteral (KeywordSelector "m:")
-> p "#freq:iphase:" == SelectorLiteral (KeywordSelector "freq:iphase:")
-> p "#+" == SelectorLiteral (BinarySelector "+")
-> p "#(1 2.0 'x' $x #'xyz' #abs #freq:iphase: #+)"
+>>> p = stParse literal
+>>> p "123"
+NumberLiteral (Int 123)
+
+>>> p "-123"
+NumberLiteral (Int (-123))
+
+>>> p "123.456"
+NumberLiteral (Float 123.456)
+
+>>> p "-123.456"
+NumberLiteral (Float (-123.456))
+
+>>> p "'x'"
+StringLiteral "x"
+
+>>> p "$x"
+CharacterLiteral 'x'
+
+>>> p "#'xyz'"
+SymbolLiteral "xyz"
+
+>>> p "#abs"
+SelectorLiteral (UnarySelector "abs")
+
+>>> p "#m:"
+SelectorLiteral (KeywordSelector "m:" 1)
+
+>>> p "#freq:iphase:"
+SelectorLiteral (KeywordSelector "freq:iphase:" 2)
+
+>>> p "#+"
+SelectorLiteral (BinarySelector "+")
+
+> p "#(1 2.0 'x') $x #'xyz' #abs #freq:iphase: #+)"
+
 > p "#(-12 -7 -5 0 2 5)"
+
 > p "#(x y: #z: 1)"
+
 > p "x"
 -}
 literal :: P Literal
@@ -1341,11 +1366,20 @@ literal = P.choice [numberLiteral, stringLiteral, characterLiteral, P.try arrayL
 
 {- | <number literal> ::= ['-'] <number>
 
-> stParse numberLiteral "123"
-> stParse numberLiteral "123.456"
-> stParse numberLiteral "-123"
-> stParse numberLiteral "-123.456"
-> stParse numberLiteral "1e-2"
+>>> stParse numberLiteral "123"
+NumberLiteral (Int 123)
+
+>>> stParse numberLiteral "123.456"
+NumberLiteral (Float 123.456)
+
+>>> stParse numberLiteral "-123"
+NumberLiteral (Int (-123))
+
+>>> stParse numberLiteral "-123.456"
+NumberLiteral (Float (-123.456))
+
+>>> stParse numberLiteral "1e-2"
+NumberLiteral (Float 1.0e-2)
 -}
 numberLiteral :: P Literal
 numberLiteral = do
@@ -1367,7 +1401,9 @@ numberFloat = numberCase fromIntegral id
 
 {- | <number> ::= integer | float | scaledDecimal
 
-> map (stParse number) (words "1 1.2")
+>>> map (stParse number) (words "1 1.2")
+[Int 1,Float 1.2]
+
 > map (stParse number) (words "-1 -1.2") -- FAIL
 -}
 number :: P Number
@@ -1474,7 +1510,7 @@ Left (NumberLiteral (Float 2.0))
 Right "nil"
 
 >>> p "(1 2.0 nil symbol keyword: #hashedKeyword: -1)"
-Left (ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0)),Right "nil",Left (SymbolLiteral "symbol"),Left (SymbolLiteral "keyword:"),Left (SelectorLiteral (KeywordSelector "hashedKeyword:")),Left (NumberLiteral (Int (-1)))])
+Left (ArrayLiteral [Left (NumberLiteral (Int 1)),Left (NumberLiteral (Float 2.0)),Right "nil",Left (SymbolLiteral "symbol"),Left (SymbolLiteral "keyword:"),Left (SelectorLiteral (KeywordSelector "hashedKeyword:" 1)),Left (NumberLiteral (Int (-1)))])
 
 >>> p "x"
 Left (SymbolLiteral "x")
@@ -1483,10 +1519,10 @@ Left (SymbolLiteral "x")
 Left (SymbolLiteral "x:")
 
 >>> p "#x:"
-Left (SelectorLiteral (KeywordSelector "x:"))
+Left (SelectorLiteral (KeywordSelector "x:" 1))
 
 >>> stParse (P.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
-[Left (NumberLiteral (Int 1)),Left (StringLiteral "2"),Left (NumberLiteral (Float 3.14)),Left (SymbolLiteral "x"),Left (SymbolLiteral "y"),Left (NumberLiteral (Int (-1))),Left (SelectorLiteral (KeywordSelector "z:")),Left (NumberLiteral (Int (-2)))]
+[Left (NumberLiteral (Int 1)),Left (StringLiteral "2"),Left (NumberLiteral (Float 3.14)),Left (SymbolLiteral "x"),Left (SymbolLiteral "y"),Left (NumberLiteral (Int (-1))),Left (SelectorLiteral (KeywordSelector "z:" 1)),Left (NumberLiteral (Int (-2)))]
 -}
 arrayElement :: P (Either Literal Identifier)
 arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> interiorArrayLiteral P.<|> interiorSymbol) -- lexeme
@@ -1917,8 +1953,11 @@ unarySelector =
 data Selector
   = UnarySelector LowercaseIdentifier
   | BinarySelector BinaryIdentifier
-  | KeywordSelector LowercaseIdentifier
+  | KeywordSelector LowercaseIdentifier Int
   deriving (Eq, Ord, Show)
+
+asKeywordSelector :: LowercaseIdentifier -> Selector
+asKeywordSelector x = KeywordSelector x (length (filter (== ':') x))
 
 -- | Is Selector an infix binary operator.
 isBinarySelector :: Selector -> Bool
@@ -1933,7 +1972,7 @@ selectorIdentifier s =
   case s of
     UnarySelector x -> x
     BinarySelector x -> x
-    KeywordSelector x -> x
+    KeywordSelector x _ -> x
 
 {- | Split KeywordSelector into it's components.
 
@@ -1947,18 +1986,22 @@ selectorIdentifier s =
 []
 -}
 keywordSelectorElements :: LowercaseIdentifier -> [LowercaseIdentifier]
-keywordSelectorElements = takeWhile (not . null) . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
+keywordSelectorElements =
+  takeWhile (not . null)
+  . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
 
-{- | Determine arity of selector
+{- | Determine arity of selector.
+The arity does not include the receiver.
 
-> map selectorArity [UnarySelector "abs",BinarySelector "+",KeywordSelector "at:put:"] == [0,1,2]
+>>> map selectorArity [UnarySelector "abs",BinarySelector "+",KeywordSelector "at:put:" 2]
+[0,1,2]
 -}
 selectorArity :: Selector -> Int
 selectorArity s =
   case s of
     UnarySelector _ -> 0
     BinarySelector _ -> 1
-    KeywordSelector x -> length (filter (== ':') x)
+    KeywordSelector _ x -> x
 
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
@@ -1967,10 +2010,10 @@ selectorArity s =
 UnarySelector "abs"
 
 >>> p "#freq:"
-KeywordSelector "freq:"
+KeywordSelector "freq:" 1
 
 >>> p "#freq:iphase:"
-KeywordSelector "freq:iphase:"
+KeywordSelector "freq:iphase:" 2
 
 >>> p "#+"
 BinarySelector "+"
@@ -1992,18 +2035,19 @@ quotedSelector =
 
 >>> let p = stParse keywordSelector
 >>> p "freq:"
-KeywordSelector "freq:"
+KeywordSelector "freq:" 1
 
 >>> p "freq:iphase:"
-KeywordSelector "freq:iphase:"
+KeywordSelector "freq:iphase:" 2
 
 >>> p "p: q:"
-KeywordSelector "p:"
+KeywordSelector "p:" 1
 
 > p "freq:iphase:x" -- error
 -}
 keywordSelectorNotLexeme :: P Selector
-keywordSelectorNotLexeme = fmap (KeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
+keywordSelectorNotLexeme =
+  fmap (asKeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
 
 keywordSelector :: P Selector
 keywordSelector = lexeme keywordSelectorNotLexeme

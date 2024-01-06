@@ -18,7 +18,8 @@ import qualified Language.Smalltalk.Ansi.Print.Spl as St {- stsc3 -}
 
 {- | Check that selector has correct arity, and split into parts.
 
-> zipWith3 stcSelectorParts (words "* + pi apply: at:put:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+>>> zipWith3 stcSelectorParts (words "* + pi apply: at:put:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+[["*"],["+"],["pi"],["apply"],["at","put"]]
 -}
 stcSelectorParts :: String -> Bool -> Int -> [String]
 stcSelectorParts sel isBinOp arity =
@@ -71,8 +72,8 @@ exprPrintStc elideApply expr =
           x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
       in case (arg, tmp) of
           ([], []) -> printf "{ %s }" x
-          (_, []) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
-          _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
+          (_, []) -> printf "{ :%s | %s }" (intercalate ", " arg) x
+          _ -> printf "{ :%s | | %s | %s }" (intercalate ", " arg) (intercalate ", " tmp) x
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
     Init c tmp e ->
       let x = intercalate "; " (map (exprPrintStc elideApply) e)
@@ -200,32 +201,32 @@ jsDefaultRenamingTable =
 -- | Table giving generic names to operator characters (.sl names).
 jsCharNameTable :: [(Char, String)]
 jsCharNameTable =
-  [ ('~', "tilde")
-  , ('`', "backtick")
-  , ('!', "bang")
-  , ('@', "at")
-  , ('#', "hash")
-  , ('$', "dollar")
-  , ('%', "percent")
-  , ('^', "caret")
-  , ('&', "ampersand")
-  , ('*', "times")
-  , ('_', "underscore")
-  , ('-', "minus")
+  [ ('!', "bang") -- exclamationMark exclamationPoint
+  , ('"', "doubleQuote") -- quotationMark
+  , ('#', "hash") -- numberSign
+  , ('$', "dollar") -- dollarSign
+  , ('%', "modulo") -- percent
+  , ('&', "and") -- ampersand
+  , ('*', "times") -- asterisk
   , ('+', "plus")
-  , ('=', "equals")
-  , ('|', "verticalline")
-  , ('\\', "backslash")
+  , (',', "comma")
+  , ('-', "minus") -- hyphen
+  , ('.', "dot") -- period fullstop
+  , ('/', "dividedBy") -- slash
   , (':', "colon")
   , (';', "semicolon")
-  , ('"', "quotationmark")
-  , ('\'', "apostrophe")
   , ('<', "lessThan")
-  , (',', "comma")
+  , ('=', "equals")
   , ('>', "greaterThan")
-  , ('.', "fullstop")
-  , ('?', "query")
-  , ('/', "dividedBy")
+  , ('?', "query") -- questionMark
+  , ('@', "commercialAt") -- atSign
+  , ('\'', "singleQuote") -- apostrophe
+  , ('\\', "backslash")
+  , ('^', "raisedTo") -- caret circumflex hat
+  , ('_', "underscore")
+  , ('`', "backtick")
+  , ('|', "or") -- verticalBar
+  , ('~', "tilde")
   ]
 
 {- | A generic renamer.
@@ -257,15 +258,20 @@ jsRenamerFromTable maybePrefix tbl nm = fromMaybe "" maybePrefix ++ fromMaybe nm
 There could also be a more general rewrite rule, so that "at:put:" was returned as "atPut",
 or there could be a rewrite table with entries of the form ("at:put:", "put").
 
-> zipWith3 stcSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
-> stcSelectorJsForm "at:put:" False 2 == "put"
+>>> zipWith3 stcSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+["*","+","pi","apply","value"]
+
+>>> stcSelectorJsForm "at:put:" False 2
+"put"
 -}
 stcSelectorJsForm :: String -> Bool -> Int -> String
 stcSelectorJsForm sel isBinOp arity =
   let parts = stcSelectorParts sel isBinOp arity -- performs arity check
   in if isBinOp || all (== "value") (List.tail_err parts)
       then List.head_err parts
-      else if sel == "at:put:" then "put" else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
+      else if sel == "at:put:"
+           then "put"
+           else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =
@@ -278,16 +284,34 @@ literalPrintJs l =
 
 {- | Print Js notation of Expr.
 
-import Language.Smalltalk.Spl.Translate {\- stsc3 -\}
-rw = exprPrintJs (jsRenamerFromTable (Just "sc.") jsDefaultRenamingTable) . stcToExpr
-map rw (words "q.p q.p(r) q.p(r,s) p(q)")
-map rw ["p + q * r", "p % q >= r"]
-map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
-map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; (x * x) + (y * y) }.value(3, 5)"]
-map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
-map rw (words "inf pi nil twoPi")
-rw ";; c\nx := 6; x.postln"
-rw "p:q:r(1, 2, 3)" -- interior colons not allowed
+>>> import Language.Smalltalk.Spl.Translate
+>>> let rw = exprPrintJs (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
+>>> map rw (words "q.p q.p(r) q.p(r,s) p(q)")
+["p(q)","p(q, r)","p(q, r, s)","p(q)"]
+
+>>> map rw ["p + q * r", "p % q >= r"]
+["Mul(Add(p, q), r)","Ge(Mod(p, q), r)"]
+
+>>> map rw ["{}", "{ :x | x * x }"]
+["function() {  return null; }","function(x) {  return Mul(x, x); }"]
+
+>>> rw "{ :x | let y = x * x; x + y }"
+"function(x) { var y; y = Mul(x, x); return Add(x, y); }"
+
+>>> map rw ["{}.value", "{ :x | x * x }.value(3)"]
+["(function() {  return null; })()","(function(x) {  return Mul(x, x); })(3)"]
+
+>>> rw "{ :x :y | (x * x) + (y * y) }.value(3, 5)"
+"(function(x, y) {  return Add(Mul(x, x), Mul(y, y)); })(3, 5)"
+
+>>> map rw (words "1 2.3 'x' [5,6]")
+["1","2.3","'x'","[5, 6]"]
+
+>>> map rw (words "inf pi nil twoPi")
+["inf","pi","null","twoPi"]
+
+>>> rw "(* c *)\nx := 6; x.postln"
+"// c\nx = 6; postln(x)"
 -}
 exprPrintJs :: (St.Identifier -> St.Identifier) -> Expr -> String
 exprPrintJs rw expr =
@@ -325,7 +349,7 @@ exprPrintJs rw expr =
           r = case (tmp, e) of
             ([], _) -> x
             _ -> printf "var %s; %s" (intercalate ", " tmp) x
-      in maybe "" St.sc_comment_pp c ++ r
+      in maybe "" ("// " ++) c ++ r
 
 -- * Scheme
 
@@ -349,16 +373,34 @@ exprTmpStmScheme rw tmp (stm, ret) =
 
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
-import Language.Smalltalk.Spl.Translate {\- stsc3 -\}
-rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
-map rw (words "q.p q.p(r) q.p(r,s) p(q)")
-map rw ["p + q * r", "p % q >= r"]
-map rw ["{}", "{ arg x; x * x }", "{ arg x; var y = x * x; x + y }"]
-map rw ["{}.value", "{ arg x; x * x }.value(3)", "{ arg x, y; var z = (x * x) + (y * y); z }.value(3, 5)"]
-map rw (words "1 2.3 \"4\" $c 'x' #[5,6]")
-map rw (words "inf pi nil twoPi")
-rw "// c\nvar x = 6; x.postln"
-rw "p:q:r(1, 2, 3)" -- interior colons not allowed
+>>> import Language.Smalltalk.Spl.Translate
+>>> let rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
+>>> map rw (words "q.p q.p(r) q.p(r,s) p(q)")
+["(p q)","(p q r)","(p q r s)","(p q)"]
+
+>>> map rw ["p + q * r", "p % q >= r"]
+["(Mul (Add p q) r)","(Ge (Mod p q) r)"]
+
+>>> map rw ["{}", "{ :x | x * x }"]
+["(lambda () (let () '()))","(lambda (x) (let () (Mul x x)))"]
+
+>>> rw "{ :x | let y = x * x; x + y }"
+"(lambda (x) (let ((y 'undefined)) (set! y (Mul x x)) (Add x y)))"
+
+>>> map rw ["{}.value", "{ :x | x * x }.value(3)"]
+["((lambda () (let () '())) )","((lambda (x) (let () (Mul x x))) 3)"]
+
+>>> rw "{ :x :y | let z = (x * x) + (y * y); z }.value(3, 5)"
+"((lambda (x y) (let ((z 'undefined)) (set! z (Add (Mul x x) (Mul y y))) z)) 3 5)"
+
+>>> map rw (words "1 2.3 'x' [5,6]")
+["1","2.3","\"x\"","(list 5 6)"]
+
+>>> map rw (words "inf pi nil twoPi")
+["inf","pi","'()","twoPi"]
+
+>>> rw "(* c *)\nlet x = 6; x.postln"
+"; c\n(let ((x 'undefined)) (set! x 6) (postln x)))"
 -}
 exprPrintScheme :: (St.Identifier -> St.Identifier) -> Expr -> String
 exprPrintScheme rw expr =

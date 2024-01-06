@@ -22,4 +22,4 @@ indent:
 	fourmolu -i Language cmd
 
 doctest:
-	(cd Language/Smalltalk ; doctest -Wno-x-partial -Wno-incomplete-uni-patterns *.hs Ansi Som)
+	(cd Language/Smalltalk ; doctest -Wno-x-partial -Wno-incomplete-uni-patterns *.hs Ansi/*.hs Ansi/Print/*.hs Som/*.hs)

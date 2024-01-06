@@ -155,7 +155,7 @@ sc_temporaries_pp spl (St.Temporaries t) =
     else printf "var %s;" (strjnComma t)
 
 sc_comment_pp :: St.Comment -> String
-sc_comment_pp = unlines . map (";; " ++) . lines
+sc_comment_pp x = "(* " ++ x ++ " *)"
 
 sc_initializerDefinition_pp :: Bool -> St.InitializerDefinition -> String
 sc_initializerDefinition_pp spl (St.InitializerDefinition c t s) =
@@ -416,4 +416,4 @@ sc_selector_pp sel =
   case sel of
     St.UnarySelector u -> u
     St.BinarySelector b -> b
-    St.KeywordSelector k -> k
+    St.KeywordSelector k _ -> k

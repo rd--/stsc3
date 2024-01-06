@@ -1,10 +1,12 @@
-{- | An abstract syntax tree (Ast) for Spl (Sc).
+{- | An abstract syntax tree (Ast) for Spl.
 
 This Ast initially was for SuperCollider (.sc),
 then it was for C-Smalltalk (.stc),
-now it is for Spl (.sl)
+now it is for Spl (.sl).
 
-This follows the structure of the ANSI Smalltalk (St) Ast.
+It follows the structure of the ANSI Smalltalk (St) Ast.
+
+This was correct for Sc but is not particularly helpful for Spl.
 
 ScTemporaries (3.4.2)
 ScBlockBody (3.4.4)
@@ -14,8 +16,11 @@ The most important differences are:
 
 - in Sc Unary and Nary messages have the same syntax and equal precedence
 - in Sc Temporaries can introduce bindings
-- in Sc Block parameters are passed as a Dictionary and allow default values
-- in Sc it is not possible to infer the arity of a Block from it's call site
+
+Additionally in Sc:
+
+- Block parameters are passed as a Dictionary and allow default values
+- it is not possible to infer the arity of a Block from it's call site
   - in all of the following x may have any arity
   - .x .x() .x(nil) .x(y:nil) .x(y,z)
 

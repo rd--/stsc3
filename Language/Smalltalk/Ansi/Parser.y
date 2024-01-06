@@ -230,7 +230,7 @@ literal :: { St.Literal }
 selectorliteral :: { St.Selector }
         : '#' identifier                        { St.UnarySelector $2 }
         | '#' binaryoperator                    { St.BinarySelector $2 }
-        | '#' keyword                           { St.KeywordSelector $2 }
+        | '#' keyword                           { St.asKeywordSelector $2 }
 
 maybe_arrayliteral :: { [Either St.Literal St.Identifier] }
         : {- empty -}                           { [] }

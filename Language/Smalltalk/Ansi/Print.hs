@@ -236,4 +236,4 @@ selector_pp sel =
   case sel of
     UnarySelector u -> u
     BinarySelector b -> b
-    KeywordSelector k -> k
+    KeywordSelector k _ -> k
