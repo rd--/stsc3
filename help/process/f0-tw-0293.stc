@@ -1,13 +1,19 @@
-// https://sccode.org/1-4Qy ; f0 ; 0293
-var f = { :a |
-	var d;
-	{
-		var i = a.first;
-		var b = Saw(i);
-		d = 1 / i;
-		Release(Pan2(SinOscFb(DmdFor(d, 0, Dseq(1, a * 99 / 2)), b), b, 1 / 5), 0.02, 8, 0.02)
-	}.play;
+(* https://sccode.org/1-4Qy ; f0 ; 0293 *)
+let f = { :a |
+	let i = a.first;
+	let b = Saw(i);
+	let d = 1 / i;
+	Release(
+		Pan2(
+			SinOscFb(
+				DmdFor(d, 0, Dseq(1, a * 99 / 2)),
+				b
+			),
+			b, 1 / 5
+		),
+		0.02, 8, 0.02
+	).play;
 	2.seconds.wait;
 	f(a + 3 / d % 9)
 };
-f(4.to(12))
+f([4 .. 12])

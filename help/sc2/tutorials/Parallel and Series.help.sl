@@ -8,17 +8,17 @@ As discussed in the previous section Mix can be used to mix parallel structures.
 
 Mixing sine oscillators in parallel:
 
-	var n = 16; (* number of structures to make *)
-	var f = { FSinOsc(Rand(200, 1200), 0) }; (* function to create an oscillator at a random frequency *)
+	let n = 16; (* number of structures to make *)
+	let f = { FSinOsc(Rand(200, 1200), 0) }; (* function to create an oscillator at a random frequency *)
 	{ f:/0 ! 2 } !> n / n * 0.1 (* stereo duplicate, array of n places, mixed, scale amplitude *)
 
 Filling an Array and summing it is a common idiom, `{ ... }.duplicate(n).Sum`, which is implemented as the _!+_ operator.  The operator _!>_ uses _Mix_ in place of _Sum_.
 
 One common structure used in reverbs is to mix several comb delays in parallel.  This example shows how you can use parallel structures to process a single input.
 
-	var n = 8;
+	let n = 8;
 	(* variable to hold the input, use a noise burst as an input signal *)
-	var z = Decay2( (* exponential decay envelope *)
+	let z = Decay2( (* exponential decay envelope *)
 		Impulse(0.5, 0), (* impulse to trigger the decay *)
 		0.01, (* attackTime *)
 		0.20 (* decayTime *)
@@ -37,8 +37,8 @@ One common structure used in reverbs is to mix several comb delays in parallel. 
 
 Another structure used in reverbs is a series of allpass delays.  A series or chain of unit generators can be created by using a loop with an induction variable.  In the following loop the variable _z_ gets reassigned each time through the loop creating a chain of allpass delays. The first time though the loop the variable _z_ is the input signal generator.  _Z_ is then assigned to the allpass delay, so that the next time through the loop the next allpass delay will have the previous allpass delay as its input.
 
-	var n = 8;
-	var z = Decay2(
+	let n = 8;
+	let z = Decay2(
 		Impulse(0.5, 0),
 		0.01,
 		0.20
@@ -59,8 +59,8 @@ Another structure used in reverbs is a series of allpass delays.  A series or ch
 Patches can be constructed conditionally at runtime.  The following example uses conditional code to randomly construct a patch each time.
 
 	(* frequency control *)
-	var freq = [LfNoise0(3), FSinOsc(3, 0)].atRandom * 500 + 800;
+	let freq = [LfNoise0(3), FSinOsc(3, 0)].atRandom * 500 + 800;
 	(* amplitude control *)
-	var amp = [LfNoise1(2.2).Max(0) * 0.5, FSinOsc(2.2, 0) * 0.25 + 0.25].atRandom;
+	let amp = [LfNoise1(2.2).Max(0) * 0.5, FSinOsc(2.2, 0) * 0.25 + 0.25].atRandom;
 	(* sound source *)
 	[SinOsc(freq, 0), Blip(freq, 8)].atRandom * amp * 0.2

@@ -74,7 +74,7 @@ Currently it is not recursive. You cannot use Sum on arrays of arrays of arrays.
 
 Here is a final example illustrating multi channel expansion and Sum.  By changing the variable 'n' you can change the number of voices in the patch. How many voices can your machine handle?
 
-	var n = 16 * 1; (* number of 'voices' *)
+	let n = 16 * 1; (* number of 'voices' *)
 	EqPan( (* pan the voice *)
 		CombL( (* a comb filter used as a string resonator *)
 			Dust( (* random impulses as an excitation function *)

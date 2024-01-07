@@ -22,7 +22,7 @@ The input parameters for a unit generator are given in the documentation for tha
 
 In order to create sound, a Ugen must be created inside of a Synth ugenGraphFunction.
 
-	{ SinOsc(800, 0) * 0.1 }.play
+	(SinOsc(800, 0) * 0.1).play
 
 ## 2.3 Doing math with Ugens
 
@@ -30,15 +30,15 @@ You can do math operations on unit generators and the result will be another uni
 
 Add signals, use play command:
 
-	(FSinOsc(800, 0) * 0.2) + (BrownNoise() * 0.2)
+	(SinOsc(800, 0) * 0.2) + (BrownNoise() * 0.2)
 
 With _{ }.play_ written in, use evaluate command:
 
-	{ (FSinOsc(800, 0) * 0.2) + (BrownNoise() * 0.2) }.play
+	(SinOsc(800, 0) * 0.2 + (BrownNoise() * 0.2)).play
 
 Multiply signals:
 
-	(FSinOsc(800, 0) * 0.4) * (BrownNoise() * 0.5)
+	(SinOsc(800, 0) * 0.4) * (BrownNoise() * 0.5)
 
 ## 2.4 Signal level
 
@@ -46,23 +46,23 @@ The output signal level of most unit generators that generate audio is from -1 t
 
 A 200 Hz sine wave:
 
-	{ FSinOsc(200, 0) * 0.1 }.plotUgenGraph(0.01)
+	(FSinOsc(200, 0) * 0.1).plot(0.01)
 
 White noise:
 
-	{ WhiteNoise() * 0.1 }.plotUgenGraph(0.01)
+	(WhiteNoise() * 0.1).plot(0.01)
 
 Brown noise:
 
-	{ BrownNoise() * 0.1 }.plotUgenGraph(0.01)
+	(BrownNoise() * 0.1).plot(0.01)
 
 Pink noise is capable of -1 to +1 but is statistically unlikely to acheive it
 
-	{ PinkNoise() * 0.1 }.plotUgenGraph(0.01)
+	(PinkNoise() * 0.1).plot(0.01)
 
 500 Hz pulse wave with a 30% duty cycle:
 
-	{ LfPulse(500, 0, 0.3) * 0.1 }.plotUgenGraph(0.01)
+	(LfPulse(500, 0, 0.3) * 0.1).plot(0.01)
 
 The output signal level of Ugens that process their input such as filters and delays depend on the level of the input and the settings of the particular controls of the Ugen.
 
@@ -146,12 +146,12 @@ Now we will modulate the modulator to cause the frequency modulation to speed up
 
 The nested style used above can become hard to read, so often it is preferable to use variables to make it more readable.
 
-	var lfoFreq = XLine( (* make an exponential line generator *)
+	let lfoFreq = XLine( (* make an exponential line generator *)
 		0.5, (* begin at 0.5 Hz *)
 		100, (* end at 100 Hz *)
 		30 (* in 30 seconds *)
 	);
-	var freq = SinOsc( (* modulate the frequency with another sine oscillator *)
+	let freq = SinOsc( (* modulate the frequency with another sine oscillator *)
 		lfoFreq, (* use exponential line to modulate the lfo freq *)
 		0) (* zero phase *)
 	* 300 (* mul = 300 *)

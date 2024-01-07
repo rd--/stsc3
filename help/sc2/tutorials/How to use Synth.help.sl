@@ -8,13 +8,13 @@ This first example explains in detail how to play a very simple sound, an 800 He
 
 First the uncommented version:
 
-	{ SinOsc(800, 0) * 0.1 }.play
+	(SinOsc(800, 0) * 0.1).play
 
 Now the same example with lots and lots of comments:
 
 	(* A UGen graph is a network of connected unit generators.
 	For this example the 'network' only has a single unit generator. *)
-	{
+	(
 		(* Function are defined within curly braces.
 		This function contains the code to create a graph of ugens.
 		In this case we'll only create a single sine oscillator. *)
@@ -24,7 +24,7 @@ Now the same example with lots and lots of comments:
 		* 0.1 (* multiply the sine wave by 0.1 *)
 		(* A function returns the value of its last expression.
 		This function only has one expression, the call to SinOsc. *)
-	}.play (* Close curly brace marks end of function definition. *)
+	).play (* Close curly brace marks end of function definition. *)
 
 ## 1.2 How to plot output.
 
@@ -42,11 +42,11 @@ More exciting than a plot of your output is to watch it in real time.  You can d
 
 This time we will look at some BrownNoise since that changes more than a sine wave.  BrownNoise takes two arguments, a multiply and an add. We wll set the multiply to 0.1 just like with the SinOsc example and leave the add input at its default of zero.
 
-	{ BrownNoise() * 0.1 }.plotUgenGraph(0.01)
+	BrownNoise().Mul(0.1).plot(0.01)
 
 Now let us see a 0.2 seconds window which is 20 times longer than the above.
 
-	{ BrownNoise() * 0.1 }.plotUgenGraph(0.2)
+	BrownNoise().Mul(0.1).plot(0.2)
 
 ## 1.4 How to create a buffer of samples
 
