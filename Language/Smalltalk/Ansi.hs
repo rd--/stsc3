@@ -1988,7 +1988,7 @@ selectorIdentifier s =
 keywordSelectorElements :: LowercaseIdentifier -> [LowercaseIdentifier]
 keywordSelectorElements =
   takeWhile (not . null)
-  . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
+    . (Split.split . Split.keepDelimsR . Split.onSublist) ":"
 
 {- | Determine arity of selector.
 The arity does not include the receiver.

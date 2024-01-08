@@ -32,7 +32,7 @@ import Data.List {- base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
 -- | Identifier with perhaps an initializer expression.
-type ScTemporary = (St.LowercaseIdentifier,Maybe ScBasicExpression)
+type ScTemporary = (St.LowercaseIdentifier, Maybe ScBasicExpression)
 
 -- | Comments are text strings.
 type ScComment = String
@@ -48,16 +48,16 @@ Class and instance variables must be written in one sequence, without qualifiers
 In Sc class and instance variables may indicate that getter and setter methods are to be automatically generated.
 These instructions would be given in the Ast as booleans attached to the variable name (implicitGetter, implicitSetter, variableName).
 -}
-data ScClassDefinition =
-  ScClassDefinition
-  {className :: St.UppercaseIdentifier
-  ,superclassName :: Maybe St.UppercaseIdentifier
-  ,classInstanceVariableNames :: Maybe [ScVariable]
-  ,classVariableNames :: Maybe [ScVariable]
-  ,methods :: [ScMethodDefinition]
-  ,classCategory :: Maybe String
-  ,classComment :: Maybe ScComment}
-  deriving (Eq,Show)
+data ScClassDefinition = ScClassDefinition
+  { className :: St.UppercaseIdentifier
+  , superclassName :: Maybe St.UppercaseIdentifier
+  , classInstanceVariableNames :: Maybe [ScVariable]
+  , classVariableNames :: Maybe [ScVariable]
+  , methods :: [ScMethodDefinition]
+  , classCategory :: Maybe String
+  , classComment :: Maybe ScComment
+  }
+  deriving (Eq, Show)
 
 -- | Partition methods into (class-methods, instance-methods).
 scClassDefinitionPartitionMethods :: ScClassDefinition -> ([ScMethodDefinition], [ScMethodDefinition])
@@ -67,41 +67,41 @@ scClassDefinitionPartitionMethods = partition isClassMethod . methods
 scClassDefinitionLookupInstanceMethod :: ScClassDefinition -> St.LowercaseIdentifier -> Maybe ScMethodDefinition
 scClassDefinitionLookupInstanceMethod cd nm = find (\m -> not (isClassMethod m) && methodName m == nm) (methods cd)
 
-data ScClassExtension =
-  ScClassExtension
-  {extendClass :: St.UppercaseIdentifier
-  ,withMethods :: [ScMethodDefinition]}
-  deriving (Eq,Show)
+data ScClassExtension = ScClassExtension
+  { extendClass :: St.UppercaseIdentifier
+  , withMethods :: [ScMethodDefinition]
+  }
+  deriving (Eq, Show)
 
 -- | 3.4.2
-data ScMethodDefinition =
-  ScMethodDefinition
-  {isClassMethod :: Bool
-  ,methodName :: St.LowercaseIdentifier
-  ,methodBody :: ScBlockBody
-  ,methodCategory :: Maybe String
-  ,methodComment :: Maybe ScComment}
-  deriving (Eq,Show)
+data ScMethodDefinition = ScMethodDefinition
+  { isClassMethod :: Bool
+  , methodName :: St.LowercaseIdentifier
+  , methodBody :: ScBlockBody
+  , methodCategory :: Maybe String
+  , methodComment :: Maybe ScComment
+  }
+  deriving (Eq, Show)
 
 -- | 3.4.2. Sequence of temporaries, single var statement.
 type ScTemporaries = [ScTemporary]
 
 -- | 3.4.3
-data ScInitializerDefinition =
-  ScInitializerDefinition (Maybe ScComment) (Maybe [ScTemporaries]) (Maybe ScStatements)
-  deriving (Eq,Show)
+data ScInitializerDefinition
+  = ScInitializerDefinition (Maybe ScComment) (Maybe [ScTemporaries]) (Maybe ScStatements)
+  deriving (Eq, Show)
 
 -- | Set comment field
 scInitializerDefinitionSetComment :: ScComment -> ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionSetComment c (ScInitializerDefinition _ t s) = ScInitializerDefinition (Just c) t s
 
 -- | 3.4.4
-data ScBlockBody =
-  ScBlockBody
-  {blockArguments :: Maybe [ScBlockArgument]
-  ,blockTemporaries :: Maybe [ScTemporaries]
-  ,blockStatements :: Maybe ScStatements}
-  deriving (Eq,Show)
+data ScBlockBody = ScBlockBody
+  { blockArguments :: Maybe [ScBlockArgument]
+  , blockTemporaries :: Maybe [ScTemporaries]
+  , blockStatements :: Maybe ScStatements
+  }
+  deriving (Eq, Show)
 
 type ScBlockArgument = ScVariable
 
@@ -109,12 +109,12 @@ type ScBlockArgument = ScVariable
 data ScStatements
   = ScStatementsReturn ScReturnStatement
   | ScStatementsExpression ScExpression (Maybe ScStatements)
-  deriving (Eq,Show)
+  deriving (Eq, Show)
 
 -- | 3.4.5.1
-data ScReturnStatement =
-  ScReturnStatement ScExpression
-  deriving (Eq,Show)
+data ScReturnStatement
+  = ScReturnStatement ScExpression
+  deriving (Eq, Show)
 
 -- | Prepend a list of expressions, as statements, to an existing statement.
 scExpressionSequenceToStatements :: Maybe ScStatements -> [ScExpression] -> ScStatements
@@ -123,18 +123,18 @@ scExpressionSequenceToStatements stm =
         case e of
           [] -> error "scExpressionSequenceToStatements"
           [e0] -> ScStatementsExpression e0 stm
-          e0:eN -> ScStatementsExpression e0 (Just (f eN))
+          e0 : eN -> ScStatementsExpression e0 (Just (f eN))
   in f
 
 -- | 3.4.5.2 Expressions
-data ScExpression =
-    ScExprAssignment St.LowercaseIdentifier ScExpression
+data ScExpression
+  = ScExprAssignment St.LowercaseIdentifier ScExpression
   | ScExprBasic ScBasicExpression
   deriving (Eq, Show)
 
 -- | 3.4.5.2
-data ScBasicExpression =
-    ScBasicExpression ScPrimary (Maybe ScMessages)
+data ScBasicExpression
+  = ScBasicExpression ScPrimary (Maybe ScMessages)
   deriving (Eq, Show)
 
 {- | If the expression consists only of a primary, return that.
@@ -166,7 +166,7 @@ scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
 scConstructDotMessage :: St.LowercaseIdentifier -> [ScBasicExpression] -> ScMessages
 scConstructDotMessage selector arguments = ScMessagesDot [ScDotMessage selector arguments] Nothing
 
-scConstructDotMessageSend :: ScPrimary -> St.LowercaseIdentifier -> [ScBasicExpression]  -> ScBasicExpression
+scConstructDotMessageSend :: ScPrimary -> St.LowercaseIdentifier -> [ScBasicExpression] -> ScBasicExpression
 scConstructDotMessageSend receiver selector arguments =
   ScBasicExpression receiver (Just (scConstructDotMessage selector arguments))
 
@@ -185,15 +185,16 @@ scPrimaryKeywordMessageSend receiver parameters =
 scIntervalRange :: ScExpression -> ScExpression -> ScPrimary
 scIntervalRange from to =
   scPrimaryKeywordMessageSend
-  (ScPrimaryExpression from)
-  [("to", ScBasicExpression (ScPrimaryExpression to) Nothing)]
+    (ScPrimaryExpression from)
+    [("to", ScBasicExpression (ScPrimaryExpression to) Nothing)]
 
 scFromThenTo :: ScExpression -> ScExpression -> ScExpression -> ScPrimary
 scFromThenTo from andThen to =
   scPrimaryKeywordMessageSend
-  (ScPrimaryExpression from)
-  [("then", ScBasicExpression (ScPrimaryExpression andThen) Nothing)
-  ,("to", ScBasicExpression (ScPrimaryExpression to) Nothing)]
+    (ScPrimaryExpression from)
+    [ ("then", ScBasicExpression (ScPrimaryExpression andThen) Nothing)
+    , ("to", ScBasicExpression (ScPrimaryExpression to) Nothing)
+    ]
 
 scArrayRange :: ScExpression -> ScExpression -> ScPrimary
 scArrayRange from to = scBasicExpressionToPrimary (scConstructDotMessageSend (scIntervalRange from to) "asArray" [])
@@ -215,14 +216,14 @@ data ScPrimary
 data ScMessages
   = ScMessagesDot [ScDotMessage] (Maybe [ScBinaryMessage])
   | ScMessagesBinary [ScBinaryMessage]
-  deriving (Eq,Show)
+  deriving (Eq, Show)
 
 {- | Sc allows x.y() although this is a kind of nonsense.
      Here we allow x.y as a unary message and x.y(z...) for n-ary messages where n >= 1.
      Ie. an empty parameter list here indicates a unary message.
 -}
-data ScDotMessage =
-  ScDotMessage St.LowercaseIdentifier [ScBasicExpression]
+data ScDotMessage
+  = ScDotMessage St.LowercaseIdentifier [ScBasicExpression]
   deriving (Eq, Show)
 
 -- | Does message have parameters, i.e. written as .q()
@@ -239,12 +240,12 @@ scDotMessageFromKeywordParam initialSelector (initialParam, keywordParam) =
       param = initialParam : map snd keywordParam
   in ScDotMessage selector param
 
-data ScBinaryMessage =
-  ScBinaryMessage St.BinaryIdentifier ScBinaryArgument
+data ScBinaryMessage
+  = ScBinaryMessage St.BinaryIdentifier ScBinaryArgument
   deriving (Eq, Show)
 
-data ScBinaryArgument =
-  ScBinaryArgument ScPrimary (Maybe [ScDotMessage])
+data ScBinaryArgument
+  = ScBinaryArgument ScPrimary (Maybe [ScDotMessage])
   deriving (Eq, Show)
 
 -- | List of Sc pseudo variables.  In addition to the St set it has, pi and inf.

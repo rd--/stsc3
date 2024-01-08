@@ -269,9 +269,10 @@ stcSelectorJsForm sel isBinOp arity =
   let parts = stcSelectorParts sel isBinOp arity -- performs arity check
   in if isBinOp || all (== "value") (List.tail_err parts)
       then List.head_err parts
-      else if sel == "at:put:"
-           then "put"
-           else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
+      else
+        if sel == "at:put:"
+          then "put"
+          else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =

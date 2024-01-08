@@ -16,7 +16,7 @@ import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.FileOut as FileOut {- stsc3 -}
 import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
---import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
+-- import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
@@ -212,20 +212,20 @@ main = do
             putStrLn fn >> stc_cat_fragments fn
         )
         fn_seq
-{-
-    "stc" : "cat" : "library" : fn_seq ->
-      mapM_
-        ( \fn ->
-            putStrLn fn >> stc_cat_library fn
-        )
-        fn_seq
-    "stc" : "cat" : "extensions" : fn_seq ->
-      mapM_
-        ( \fn ->
-            putStrLn fn >> stc_cat_extensions fn
-        )
-        fn_seq
--}
+    {-
+        "stc" : "cat" : "library" : fn_seq ->
+          mapM_
+            ( \fn ->
+                putStrLn fn >> stc_cat_library fn
+            )
+            fn_seq
+        "stc" : "cat" : "extensions" : fn_seq ->
+          mapM_
+            ( \fn ->
+                putStrLn fn >> stc_cat_extensions fn
+            )
+            fn_seq
+    -}
     "st" : "cat" : which : fn_seq ->
       mapM_
         ( \fn ->

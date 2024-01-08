@@ -7,7 +7,7 @@ import Text.Printf {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
 
 maybePrint :: (a -> String) -> Maybe a -> String
 maybePrint f x = maybe "" f x
@@ -39,9 +39,10 @@ scJoin = concat
 scBlockBodyPrint :: ScBlockBody -> String
 scBlockBodyPrint (ScBlockBody arg tmp stm) =
   scJoin
-  [maybePrint scBlockArgumentsPrint arg
-  ,maybePrint (scJoin . map scTemporariesPrint) tmp
-  ,maybePrint scStatementsPrint stm]
+    [ maybePrint scBlockArgumentsPrint arg
+    , maybePrint (scJoin . map scTemporariesPrint) tmp
+    , maybePrint scStatementsPrint stm
+    ]
 
 scVariablePrint :: ScVariable -> String
 scVariablePrint (name, maybeValue) =
@@ -57,20 +58,20 @@ scStatementsPrint s =
   case s of
     ScStatementsReturn (ScReturnStatement e) -> "^" ++ scExpressionPrint e
     ScStatementsExpression e Nothing -> scExpressionPrint e
-    ScStatementsExpression e (Just x) -> scJoin [scExpressionPrint e,"; ",scStatementsPrint x]
+    ScStatementsExpression e (Just x) -> scJoin [scExpressionPrint e, "; ", scStatementsPrint x]
 
 scTemporaryPrint :: ScTemporary -> String
-scTemporaryPrint (x,y) =
+scTemporaryPrint (x, y) =
   case y of
     Nothing -> x
-    Just z -> scJoin [x," = ",scBasicExpressionPrint z]
+    Just z -> scJoin [x, " = ", scBasicExpressionPrint z]
 
 scTemporariesPrint :: ScTemporaries -> String
-scTemporariesPrint tmp = scJoin ["var ",intercalate ", " (map scTemporaryPrint tmp),"; "]
+scTemporariesPrint tmp = scJoin ["var ", intercalate ", " (map scTemporaryPrint tmp), "; "]
 
 scBasicExpressionPrint :: ScBasicExpression -> String
 scBasicExpressionPrint (ScBasicExpression p m) =
-  scJoin [scPrimaryPrint p,maybePrint scMessagesPrint m]
+  scJoin [scPrimaryPrint p, maybePrint scMessagesPrint m]
 
 scBasicExpressionSeqPrint :: [ScBasicExpression] -> String
 scBasicExpressionSeqPrint = intercalate ", " . map scBasicExpressionPrint
@@ -78,13 +79,15 @@ scBasicExpressionSeqPrint = intercalate ", " . map scBasicExpressionPrint
 scMessagesPrint :: ScMessages -> String
 scMessagesPrint m =
   case m of
-    ScMessagesDot m1 m2 -> scJoin
-                           [scJoin (map scDotMessagePrint m1)
-                           ,maybePrint scBinaryMessagesPrint m2]
+    ScMessagesDot m1 m2 ->
+      scJoin
+        [ scJoin (map scDotMessagePrint m1)
+        , maybePrint scBinaryMessagesPrint m2
+        ]
     ScMessagesBinary m1 -> scBinaryMessagesPrint m1
 
 scDotMessagePrint :: ScDotMessage -> String
-scDotMessagePrint (ScDotMessage i a) = scJoin [".",i,if null a then "" else inParen (scBasicExpressionSeqPrint a)]
+scDotMessagePrint (ScDotMessage i a) = scJoin [".", i, if null a then "" else inParen (scBasicExpressionSeqPrint a)]
 
 inParen :: String -> String
 inParen x = "(" ++ x ++ ")"
@@ -103,14 +106,14 @@ scKeywordArgumentsPrint = inParen . intercalate ", " . map scKeywordArgumentPrin
 -}
 
 scBinaryMessagePrint :: ScBinaryMessage -> String
-scBinaryMessagePrint (ScBinaryMessage i a) = scJoin [" ",i," ",scBinaryArgumentPrint a]
+scBinaryMessagePrint (ScBinaryMessage i a) = scJoin [" ", i, " ", scBinaryArgumentPrint a]
 
 scBinaryMessagesPrint :: [ScBinaryMessage] -> String
 scBinaryMessagesPrint = scJoin . map scBinaryMessagePrint
 
 scBinaryArgumentPrint :: ScBinaryArgument -> String
 scBinaryArgumentPrint (ScBinaryArgument p m) =
-  scJoin [scPrimaryPrint p,maybePrint (scJoin . map scDotMessagePrint) m]
+  scJoin [scPrimaryPrint p, maybePrint (scJoin . map scDotMessagePrint) m]
 
 {-
 -- > scKeywordArgumentPrint (ScKeywordArgument (Just "mul:") (ScBasicExpression (ScPrimaryIdentifier "x") Nothing))
@@ -122,7 +125,7 @@ scKeywordArgumentPrint (ScKeywordArgument k e) =
 scExpressionPrint :: ScExpression -> String
 scExpressionPrint e =
   case e of
-    ScExprAssignment i e1 -> scJoin [i," = ",scExpressionPrint e1]
+    ScExprAssignment i e1 -> scJoin [i, " = ", scExpressionPrint e1]
     ScExprBasic e1 -> scBasicExpressionPrint e1
 
 {- | Prefix each line of comment with //.
@@ -142,27 +145,33 @@ scInitializerDefinitionPrint (ScInitializerDefinition cmt tmp stm) =
 scMethodDefinitionPrint :: ScMethodDefinition -> String
 scMethodDefinitionPrint (ScMethodDefinition classSide name body _ comment) =
   unwords
-  [maybe "" scBracketCommentPrint comment
-  ,if classSide then "* " ++ name else name
-  ,inBraces (scBlockBodyPrint body)]
+    [ maybe "" scBracketCommentPrint comment
+    , if classSide then "* " ++ name else name
+    , inBraces (scBlockBodyPrint body)
+    ]
 
 scClassDefinitionPrint :: ScClassDefinition -> String
 scClassDefinitionPrint (ScClassDefinition nm sc iv cv mt _ cmt) =
   scJoin
-  [fromMaybe "" cmt
-  ,scJoin [nm, maybePrint (" : " ++) sc]
-  ," "
-  ,inBraces
-    (scJoin
-     [maybePrint (\l -> printf "classvar %s; " (intercalate ", " (map scVariablePrint l))) cv
-     ,maybePrint (\l -> printf "var %s; " (intercalate ", " (map scVariablePrint l))) iv
-     ,unwords (map scMethodDefinitionPrint mt)])]
+    [ fromMaybe "" cmt
+    , scJoin [nm, maybePrint (" : " ++) sc]
+    , " "
+    , inBraces
+        ( scJoin
+            [ maybePrint (\l -> printf "classvar %s; " (intercalate ", " (map scVariablePrint l))) cv
+            , maybePrint (\l -> printf "var %s; " (intercalate ", " (map scVariablePrint l))) iv
+            , unwords (map scMethodDefinitionPrint mt)
+            ]
+        )
+    ]
 
 scClassExtensionPrint :: ScClassExtension -> String
 scClassExtensionPrint (ScClassExtension nm mt) =
   scJoin
-  ["+ " ++ nm
-  ," "
-  ,inBraces
-    (scJoin
-     [unwords (map scMethodDefinitionPrint mt)])]
+    [ "+ " ++ nm
+    , " "
+    , inBraces
+        ( scJoin
+            [unwords (map scMethodDefinitionPrint mt)]
+        )
+    ]

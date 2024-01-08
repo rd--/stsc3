@@ -157,10 +157,11 @@ sc_temporaries_pp spl (St.Temporaries t) =
 sc_comment_pp :: Bool -> St.Comment -> String
 sc_comment_pp spl x =
   if null x
-  then ""
-  else if spl
-       then "(* " ++ x ++ " *)"
-       else "// " ++ x
+    then ""
+    else
+      if spl
+        then "(* " ++ x ++ " *)"
+        else "// " ++ x
 
 sc_initializerDefinition_pp :: Bool -> St.InitializerDefinition -> String
 sc_initializerDefinition_pp spl (St.InitializerDefinition c t s) =
