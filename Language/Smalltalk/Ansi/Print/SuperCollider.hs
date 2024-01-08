@@ -12,7 +12,7 @@ Notes:
   - class variable, unary and keyword names, assignment targets
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 -}
-module Language.Smalltalk.Ansi.Print.Spl where
+module Language.Smalltalk.Ansi.Print.SuperCollider where
 
 import Data.Char {- base -}
 import Data.List {- base -}
@@ -154,14 +154,19 @@ sc_temporaries_pp spl (St.Temporaries t) =
     then printf "| %s |" (Ansi.Print.strjn t)
     else printf "var %s;" (strjnComma t)
 
-sc_comment_pp :: St.Comment -> String
-sc_comment_pp x = "(* " ++ x ++ " *)"
+sc_comment_pp :: Bool -> St.Comment -> String
+sc_comment_pp spl x =
+  if null x
+  then ""
+  else if spl
+       then "(* " ++ x ++ " *)"
+       else "// " ++ x
 
 sc_initializerDefinition_pp :: Bool -> St.InitializerDefinition -> String
 sc_initializerDefinition_pp spl (St.InitializerDefinition c t s) =
   Ansi.Print.strjnWith
     ';'
-    [ maybe "" sc_comment_pp c
+    [ maybe "" (sc_comment_pp spl) c
     , maybe "" (sc_temporaries_pp spl) t
     , maybe "" (sc_statements_pp spl) s
     ]

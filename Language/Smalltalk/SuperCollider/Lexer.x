@@ -1,7 +1,7 @@
 {
-module Language.Smalltalk.Spl.Lexer where
+module Language.Smalltalk.SuperCollider.Lexer where
 
-import Language.Smalltalk.Spl.Token
+import Language.Smalltalk.SuperCollider.Token
 }
 
 %wrapper "basic"
@@ -13,10 +13,9 @@ $underscore            = _                                    -- 3.5.1 nonCaseLe
 $letter                = [a-z A-Z _]                          -- 3.5.1 letter
 $letterordigit         = [a-z A-Z _ 0-9]
 $letterordigitorcolon  = [a-z A-Z _ 0-9 \:]
-$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~\^]     -- !@%&*-+=|<>?/~
+$binaryChar            = [\!\@\%\&\*\-\+\=\|\<\>\?\/]         -- !@%&*-+=|<>?/
 $graphic               = $printable # $white
 
-@identifier            = $letter $letterordigit*
 @decimal               = $digit+
 @integer               = \-? @decimal
 @float                 = \-? @decimal \. @decimal
@@ -24,14 +23,13 @@ $graphic               = $printable # $white
 tokens :-
 
   $white+                                ;
-  "(*" ($printable # \*)* "*)"           ;
+  "//" $printable+                       ;
 
   "["                                    { \_ -> LeftBracket }
   "]"                                    { \_ -> RightBracket }
   "."                                    { \_ -> Dot }
-  ".."                                    { \_ -> DotDot }
+  ".."                                   { \_ -> DotDot }
   ":"                                    { \_ -> Colon }
-  "::"                                   { \_ -> ColonColon }
   ";"                                    { \_ -> SemiColon }
   ","                                    { \_ -> Comma }
   "|"                                    { \_ -> VerticalBar }
@@ -39,29 +37,34 @@ tokens :-
   "}"                                    { \_ -> RightBrace }
   "("                                    { \_ -> LeftParen }
   ")"                                    { \_ -> RightParen }
+  "#["                                   { \_ -> HashLeftBracket }
 
   "nil"                                  { \_ -> NilIdentifier }
   "true"                                 { \_ -> TrueIdentifier }
   "false"                                { \_ -> FalseIdentifier }
+  "self"                                 { \_ -> SelfIdentifier }
   "arg"                                  { \_ -> Arg }
   "var"                                  { \_ -> Var }
-  "let"                                  { \_ -> Let }
   "classvar"                             { \_ -> ClassVar }
 
-  "="                                    { \_ -> EqualsOperator }
-  ":="                                   { \_ -> AssignmentOperator }
+  "^"                                    { \_ -> ReturnOperator }
+  "="                                    { \_ -> AssignmentOperator }
+  "*"                                    { \_ -> ClassMethodOperator }
+  "+"                                    { \_ -> ClassExtensionOperator }
 
-  @identifier                            { \s -> Identifier s }
-  @identifier ":/" @integer              { \s -> ArityQualifiedIdentifier s }
+  $letter $letterordigit*                { \s -> Identifier s }
   $letter $letterordigit* ":"            { \s -> Keyword (init s) }
---  $letter $letterordigitorcolon* ":"     { \s -> KeywordSelector s }
+  $letter $letterordigitorcolon* ":"     { \s -> KeywordSelector s }
   $binaryChar+                           { \s -> BinarySelector s }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
-  \" ($printable # \")* \"               { \s -> DoubleQuotedString (removeOuter 1 s) }
-  \' ($printable # \')* \'               { \s -> SingleQuotedString (removeOuter 1 s) }
+  "$" [$graphic \ ]                      { \s -> QuotedChar (s !! 1) }
+  \" ($printable # \")* \"               { \s -> QuotedString (removeOuter 1 s) }
+  \' ($printable # \')* \'               { \s -> HashedString (removeOuter 1 s) }
+  \\ $letter $letterordigit*             { \s -> HashedString (tail s) }
+  "/*" ($printable # \*)* "*/"           { \s -> Comment (removeOuter 2 s) }
 
 {
 removeOuter :: Int -> [t] -> [t]
-removeOuter k x = take (length x - k - k) (drop k x)
+removeOuter k x = take (length x - k - 1) (drop k x)
 }

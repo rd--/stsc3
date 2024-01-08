@@ -16,12 +16,12 @@ import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.FileOut as FileOut {- stsc3 -}
 import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
---import qualified Language.Smalltalk.Spl.Ast as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Ndef as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Translate as Sc {- stsc3 -}
+--import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program, using Parsec parser.
 st_cat_parsec :: String -> String

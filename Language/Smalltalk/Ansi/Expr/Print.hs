@@ -12,7 +12,7 @@ import qualified Music.Theory.List as List {- hmt-base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print.Spl as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
 
 -- * .stc
 
@@ -80,7 +80,7 @@ exprPrintStc elideApply expr =
           r = case (tmp, e) of
             ([], _) -> x
             _ -> printf "var %s; %s" (intercalate ", " tmp) x
-      in maybe "" St.sc_comment_pp c ++ r
+      in maybe "" (St.sc_comment_pp False) c ++ r
 
 -- * St
 

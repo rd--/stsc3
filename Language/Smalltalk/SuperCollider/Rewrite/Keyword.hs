@@ -13,7 +13,7 @@ Rewrite Keyword messages to have a single association array as argument.
 .ar(440, phase: 0)       => ar: {440. #phase -> 0}
 .ar(freq: 440, phase: 0) => ar: {#freq: -> 440. #phase: -> 0}
 
-For the more general case of translating a Spl like notation to a Smalltalk like notation:
+For the more general case of translating a SuperCollider like notation to a Smalltalk like notation:
 
 Generate Smalltalk methods for each allowed arity with optional signature.
 
@@ -27,13 +27,13 @@ Generate Smalltalk methods for each allowed arity with optional signature.
 ScDotMessage occurs in ScMessages and in ScBinaryArgument, which occurs in ScMessages.
 ScMessages occurs in ScBasicExpression.
 -}
-module Language.Smalltalk.Spl.Rewrite.Keyword where
-{-
+module Language.Smalltalk.SuperCollider.Rewrite.Keyword where
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import Language.Smalltalk.Spl.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Sc {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
 
 -- | Translate ScKeywordArgument (k:v) to Association (k -> v)
 scKeywordAssoc :: St.Keyword -> ScBasicExpression -> ScBasicExpression
@@ -66,9 +66,9 @@ scDotMessageRewriteKeyword (ScDotMessage m a) =
 scInitializerDefinitionRewriteKeyword :: ScInitializerDefinition -> ScInitializerDefinition
 scInitializerDefinitionRewriteKeyword (ScInitializerDefinition cmt tmp stm) =
   ScInitializerDefinition
-    cmt
-    (fmap (map scTemporariesRewriteKeyword) tmp)
-    (fmap scStatementsRewriteKeyword stm)
+  cmt
+  (fmap (map scTemporariesRewriteKeyword) tmp)
+  (fmap scStatementsRewriteKeyword stm)
 
 scExpressionRewriteKeyword :: ScExpression -> ScExpression
 scExpressionRewriteKeyword e =
@@ -77,7 +77,7 @@ scExpressionRewriteKeyword e =
     ScExprBasic x -> ScExprBasic (scBasicExpressionRewriteKeyword x)
 
 scTemporaryRewriteKeyword :: ScTemporary -> ScTemporary
-scTemporaryRewriteKeyword (i, e) = (i, fmap scBasicExpressionRewriteKeyword e)
+scTemporaryRewriteKeyword (i,e) = (i,fmap scBasicExpressionRewriteKeyword e)
 
 scTemporariesRewriteKeyword :: ScTemporaries -> ScTemporaries
 scTemporariesRewriteKeyword = map scTemporaryRewriteKeyword
@@ -90,10 +90,9 @@ scStatementsRewriteKeyword :: ScStatements -> ScStatements
 scStatementsRewriteKeyword s =
   case s of
     ScStatementsReturn x -> ScStatementsReturn (scReturnStatementRewriteKeyword x)
-    ScStatementsExpression x y ->
-      ScStatementsExpression
-        (scExpressionRewriteKeyword x)
-        (fmap scStatementsRewriteKeyword y)
+    ScStatementsExpression x y -> ScStatementsExpression
+                                  (scExpressionRewriteKeyword x)
+                                  (fmap scStatementsRewriteKeyword y)
 
 scBlockBodyRewriteKeyword :: ScBlockBody -> ScBlockBody
 scBlockBodyRewriteKeyword (ScBlockBody a t s) =
@@ -124,19 +123,18 @@ scBinaryMessageRewriteKeyword (ScBinaryMessage i a) =
 scMessagesRewriteKeyword :: ScMessages -> ScMessages
 scMessagesRewriteKeyword m =
   case m of
-    ScMessagesDot m1 m2 ->
-      ScMessagesDot
-        (map scDotMessageRewriteKeyword m1)
-        (fmap (map scBinaryMessageRewriteKeyword) m2)
+    ScMessagesDot m1 m2 -> ScMessagesDot
+                           (map scDotMessageRewriteKeyword m1)
+                           (fmap (map scBinaryMessageRewriteKeyword) m2)
     ScMessagesBinary m1 -> ScMessagesBinary (map scBinaryMessageRewriteKeyword m1)
 
 -- | Viewer for keyword rewriter. Reads, rewrites and prints Sc expression.
 scRewriteKeywordViewer :: String -> String
 scRewriteKeywordViewer =
-  Sc.scInitializerDefinitionPrint
-    . scInitializerDefinitionRewriteKeyword
-    . Sc.superColliderParserInitializerDefinition
-    . Sc.alexScanTokens
+  Sc.scInitializerDefinitionPrint .
+  scInitializerDefinitionRewriteKeyword .
+  Sc.superColliderParserInitializerDefinition .
+  Sc.alexScanTokens
 
 {-
 
@@ -146,5 +144,4 @@ rw "p.q(r)" == "p.q([r])"
 rw "p.q(r:s)" == "p.q([\\r: -> s])"
 rw "p.q(r:s.t)" == "p.q([\\r: -> (s.t)])"
 
--}
 -}

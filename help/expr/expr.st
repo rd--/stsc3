@@ -202,11 +202,11 @@ four := [:x| x + 1] value: 3
 
 'Initializer Definition'
 
-|a b| a := 1 . ^ a + b .
+|a b| a := 1 . a + b
 SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
 SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
-|a b c| a := 1 . b := 2 . c := 3 . ^ a + b + c .
-|a b c| a := [1] . b := [2] . c := [3] . ^ a value + b value + c value .
+|a b c| a := 1 . b := 2 . c := 3 . a + b + c
+|a b c| a := [1] . b := [2] . c := [3] . a value + b value + c value
 [:x | x * x] value: Float pi * 2
 
 'Block Constructor'
@@ -219,21 +219,20 @@ SinOsc freq: (69 midiCps) phase: 0 mul: 0.1
 
 'Statements'
 
-^p
-^p.
 p
+p.
 p q
 (p q)
-p. ^q
-^ 440 * (2 ** ((self - 69) * (1 / 12)))
+p. q
+440 * (2 ** ((self - 69) * (1 / 12)))
 p. q.
 
 'Return Statement'
 
-^1
-^p
-^a value + b value + c value
-^self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]
+[^1]
+[^p]
+[^a value + b value + c value]
+[^self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]]
 [[^0] value. Transcript show: 'x'] value
 
 'Method block body'

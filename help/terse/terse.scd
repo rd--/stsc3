@@ -172,11 +172,7 @@ var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in
 (1 .. 5).dupEach(2) == [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]       // duplicate each element count times
 [1, 2, 3, 2, 3, 4].replace([2, 3], -2) == [1, -2, -2, 4]    // replace each occurrence of a subsequence with item
 [1, 2, 3, 2, 3].replace([2, 3], [7, 5]) == [1, 7, 5, 7, 5]  // splices in relacement subsequences
-(1 .. 5) + (6 .. 9) == [7, 9, 11, 13, 11]
-(1 .. 5) +.s (6 .. 9) == [7, 9, 11, 13]
-(1 .. 5) +.f (6 .. 8) == [7, 9, 11, 11, 11]
-(1 .. 3) +.t (4 .. 6) == [(5 .. 7), (6 .. 8), (7 .. 9)]
-(1 .. 3) +.x (4 .. 6) == ((5 .. 7) ++ (6 .. 8) ++ (7 .. 9))
+(1 .. 5) + (6 .. 9) == [7, 9, 11, 13, 11]                   // sequence math (extending)
 
 'Assignment'
 var x; x == nil                                             // variable declaration (default value is nil)
@@ -308,8 +304,8 @@ Collection.allSubclasses.includes(Set)                      // collection class
 [1, 2, 3, 4, 5].wchoose([1, 2, 3, 4, 5] / 15) <= 5          // weighted random element of collection (weights sum to 1)
 [1, 2].powerset == [[], [1], [2], [1, 2]]                   // set of all subsets
 (1 .. 4).powerset.size == 16                                // set of all subsets (size is 2 ** n)
-a = (1 .. 9); a.reject { | each | each.even } == (1, 3 .. 9) // reject elements
-a.removeAllSuchThat { | each | each.even }; a == (1, 3 .. 9) // reject in place
+a = (1 .. 5); a.reject { | each | each.even } == [1, 3, 5]  // reject elements
+a.removeAllSuchThat { | each | each.even }; a == [1, 3, 5]  // reject in place
 
 'Comments'
 "until end of line comment".isString                        // until end of line comment
@@ -637,15 +633,7 @@ nil.isNil == true                                           // is nil
 
 'Numbers'
 23.isInteger                                                // decimal integer literal
-2r10111 == 23                                               // binary (base 2) integer literal
-8r27 == 23                                                  // octal (base 8) integer literal
-10r23 == 23                                                 // decimal (base 10) integer literal
-16r17 == 23                                                 // hexadecimal (base 16) integer literal
 -23.isInteger                                               // negative decimal integer literal
--2r10111 == -23                                             // negative binary (base 2) integer literal
--8r27 == -23                                                // negative octal (base 8) integer literal
--10r23 == -23                                               // negative decimal (base 10) integer literal
--16r17 == -23                                               // negative hexadecimal (base 16) integer literal
 
 'Patterns'
 (Pseries(0, 1, 6) % 3).asStream.all == [0, 1, 2, 0, 1, 2]            // binary operator
@@ -768,7 +756,7 @@ List.exprand(4, 1, 9).first.isInteger.not                   // list of random nu
 [1, 2, 3].foldAt(3) == 2                                    // index with fold-around
 (-2 .. 4).collect { | i | (1 .. 3).foldAt(i) } == [3, 2, 1, 2, 3, 2, 1]
 List.rand(4, 1, 9).asArray.class == Array                   // as array
-[3, [1, 2, 1], 1].convertRhythm == List[0.75, 1.5, 0.75]    // variant of Mikael Laurson's notation
+[3, [1, 2, 1], 1].convertRhythm.asArray == [0.75, 1.5, 0.75]// variant of Mikael Laurson's notation
 [10, 20].obtain(2, 30) == 30                                // at, or default value for out of range index
 23.obtain(0, nil) == 23                                     // obtain is defined at Object
 [10, 20].instill(2, -30, nil) == [10, 20, -30]              // atPut, or extends array if required
@@ -871,6 +859,22 @@ Point.new.x_(9).x == 9                                      // p.x = y is syntax
 { nil.shouldNotImplement }.try { true }                     // flag message should not be implemented
 { nil.subclassResponsibility }.try { true }                 // flag message as abstract
 { nil.primitiveFailed }.try { true }                        // system primitive failed
+
+'Numbers - Base Prefixes'
+2r10111 == 23                                               // binary (base 2) integer literal
+8r27 == 23                                                  // octal (base 8) integer literal
+10r23 == 23                                                 // decimal (base 10) integer literal
+16r17 == 23                                                 // hexadecimal (base 16) integer literal
+-2r10111 == -23                                             // negative binary (base 2) integer literal
+-8r27 == -23                                                // negative octal (base 8) integer literal
+-10r23 == -23                                               // negative decimal (base 10) integer literal
+-16r17 == -23                                               // negative hexadecimal (base 16) integer literal
+
+'Operator Adverbs'
+(1 .. 5) +.s (6 .. 9) == [7, 9, 11, 13]                     // sequence math with adverb (short)
+(1 .. 5) +.f (6 .. 8) == [7, 9, 11, 11, 11]                 // sequence math with adverb (fold)
+(1 .. 3) +.t (4 .. 6) == [(5 .. 7), (6 .. 8), (7 .. 9)]     // sequence math with adverb (table)
+(1 .. 3) +.x (4 .. 6) == ((5 .. 7) ++ (6 .. 8) ++ (7 .. 9)) // sequence math with adverb (concat table)
 
 'Debugging - Printing - !'
 "Text".error == "Text"                                      // print error string

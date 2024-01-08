@@ -1,15 +1,15 @@
 {
-module Language.Smalltalk.Spl.Parser where
+module Language.Smalltalk.SuperCollider.Parser where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import           Language.Smalltalk.Spl.Ast {- stsc3 -}
-import           Language.Smalltalk.Spl.Lexer {- stsc3 -}
-import           Language.Smalltalk.Spl.Token {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Lexer {- stsc3 -}
+import           Language.Smalltalk.SuperCollider.Token {- stsc3 -}
 }
 
 %name superColliderParserInitializerDefinition initializerdefinition
---%name superColliderParserClassDefinitionSeq classdefinition_seq
---%name superColliderParserClassExtensionSeq classextension_seq
+%name superColliderParserClassDefinitionSeq classdefinition_seq
+%name superColliderParserClassExtensionSeq classextension_seq
 %tokentype { Token }
 %error { parseError }
 
@@ -21,34 +21,36 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       ','             { Comma }
       ';'             { SemiColon }
       ':'             { Colon }
-      '::'            { ColonColon }
       '|'             { VerticalBar }
       '{'             { LeftBrace }
       '}'             { RightBrace }
       '('             { LeftParen }
       ')'             { RightParen }
+      '#['            { HashLeftBracket }
 
       nil             { NilIdentifier }
       true            { TrueIdentifier }
       false           { FalseIdentifier }
+      self            { SelfIdentifier }
       arg             { Arg }
       var             { Var }
-      let             { Let }
---      classvar        { ClassVar }
+      classvar        { ClassVar }
 
-      ':='            { AssignmentOperator }
-      '='             { EqualsOperator }
+      '='             { AssignmentOperator }
+      '^'             { ReturnOperator }
+      '+'             { ClassExtensionOperator }
+      '*'             { ClassMethodOperator }
 
       identifier      { Identifier $$ }
-      arityQualifiedIdentifier      { ArityQualifiedIdentifier $$ }
       keyword         { Keyword $$ }
       binaryselector  { BinarySelector $$ }
---      keywordselector { KeywordSelector $$ }
+      keywordselector { KeywordSelector $$ }
       float           { Float $$ }
       integer         { Integer $$ }
-      doublequotedstring { DoubleQuotedString $$ }
-      singlequotedstring { SingleQuotedString $$ }
---      comment         { Comment $$ }
+      quotedchar      { QuotedChar $$ }
+      quotedstring    { QuotedString $$ }
+      hashedstring    { HashedString $$ }
+      comment         { Comment $$ }
 
 %%
 
@@ -56,9 +58,8 @@ initializerdefinition :: { ScInitializerDefinition }
         : maybe_temporaries_seq
           maybe_statements                     { ScInitializerDefinition Nothing $1 $2 }
 
-{-
 classextension_seq :: { [ScClassExtension] }
-        :                                      { [] }
+        : {- empty -}                          { [] }
         | classextension classextension_seq    { $1 : $2 }
 
 classextension :: { ScClassExtension }
@@ -67,7 +68,7 @@ classextension :: { ScClassExtension }
           '}'                                  { ScClassExtension $2 $4 }
 
 classdefinition_seq :: { [ScClassDefinition] }
-        :                                      { [] }
+        : {- empty -}                          { [] }
         | classdefinition classdefinition_seq  { $1 : $2 }
 
 maybe_comment :: { Maybe String }
@@ -83,22 +84,19 @@ classdefinition :: { ScClassDefinition }
           '}'                                   { ScClassDefinition $2 $3 $6 $5 $7 Nothing $1 }
 
 maybe_superclass :: { Maybe St.Identifier }
-        :                                       { Just "Object" }
+        : {- empty -}                           { Just "Object" }
         | ':' identifier                        { (if $2 == "nil" then Nothing else Just $2) }
 
 methoddefinition_seq :: { [ScMethodDefinition] }
-        :                                       { [] }
+        : {- empty -}                           { [] }
         | methoddefinition methoddefinition_seq { $1 : $2 }
--}
 
-binaryoperator :: { (String, Maybe String) }
-        : binaryselector                        { ($1, Nothing) }
-        | binaryselector '.' identifier         { ($1, Just $3) }
-        | '='                                   { ("=", Nothing) }
---        | '+'                                   { "+" }
---        | '*'                                   { "*" }
+binaryoperator :: { String }
+        : binaryselector                        { $1 }
+        | '+'                                   { "+" }
+        | '*'                                   { "*" }
+        | '|'                                   { "|" }
 
-{-
 methoddefinition :: { ScMethodDefinition }
         : '*' identifier '{'
           maybe_comment
@@ -124,21 +122,15 @@ maybe_variables :: { Maybe [ScVariable] }
 
 variables :: { [ScVariable] }
         : var defaultvar_seq ';'               { $2 }
-        | let defaultvar_seq ';'               { $2 }
--}
 
 expression :: { ScExpression }
-        : identifier ':=' expression           { ScExprAssignment $1 $3 }
+        : identifier '=' expression            { ScExprAssignment $1 $3 }
         | syntax_atput                         { ScExprBasic $1 }
-        | syntax_quotedAt                      { ScExprBasic $1 }
         | basicexpression                      { ScExprBasic $1 }
 
 syntax_atput :: { ScBasicExpression }
         : primary '[' basicexpression ']'
-          ':=' basicexpression                 { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
-
-syntax_quotedAt :: { ScBasicExpression }
-        : primary '::' identifier { scConstructDotMessageSend $1 "at" [scLiteralToBasicExpression (St.StringLiteral ("'" ++ $3 ++ "'"))] }
+          '=' basicexpression                  { ScBasicExpression $1 (Just (scConstructDotMessage "at:put" [$3, $6])) }
 
 basicexpression :: { ScBasicExpression }
         : primary maybe_messages               { ScBasicExpression $1 $2 }
@@ -181,7 +173,7 @@ dotmessage :: { ScDotMessage }
         | '.' identifier blockexpression_seq   { ScDotMessage $2 $3}
         | '.' identifier message_param         { ScDotMessage $2 $3}
         | '.' identifier message_param blockexpression_seq { ScDotMessage $2 ($3 ++ $4) }
---        | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
+        | '.' identifier keywordmessage_param  { scDotMessageFromKeywordParam $2 $3 }
         | syntax_at                            { $1 }
 
 blockexpression :: { ScBasicExpression }
@@ -197,14 +189,12 @@ syntax_at :: { ScDotMessage }
 message_param :: { [ScBasicExpression] }
         : '(' basicexpression_seq ')'          { $2 }
 
-{-
 keywordmessage_param :: { (ScBasicExpression, [(St.Identifier, ScBasicExpression)]) }
         : '('
           basicexpression
           ','
           nonemptykeywordexpression_seq
           ')'                                  { ($2, $4) }
--}
 
 basicexpression_seq :: { [ScBasicExpression] }
         : basicexpression                         { [$1] }
@@ -226,36 +216,23 @@ binaryargument :: { ScBinaryArgument }
 
 primary :: { ScPrimary }
         : identifier                           { ScPrimaryIdentifier $1 }
-        | arityQualifiedIdentifier             { ScPrimaryIdentifier $1 }
         | reservedidentifier                   { ScPrimaryIdentifier $1 }
         | literal                              { ScPrimaryLiteral $1 }
         | '{' blockbody '}'                    { ScPrimaryBlock $2 }
         | '(' expression ')'                   { ScPrimaryExpression $2 }
         | '[' arrayexpression ']'              { ScPrimaryArrayExpression $2 }
-        | '[' vectorexpression ']'             { ScPrimaryArrayExpression $2 }
-        | '[' matrixexpression ']'             { scMatrixExpression $2 }
 	| '(' expression '..' expression ')'   { scIntervalRange $2 $4 }
+	| '(' expression ',' expression '..' expression ')' { scFromThenTo $2 $4 $6 }
 	| '[' expression '..' expression ']'   { scArrayRange $2 $4 }
         | identifier '(' arrayexpression ')'   { ScPrimaryImplicitMessageSend $1 $3 }
-        | identifier '(' arrayexpression ')' blockexpression_seq { ScPrimaryImplicitMessageSend $1 ($3 ++ $5) }
---        | identifier '(' nonemptykeywordexpression_seq ')' { scPrimaryKeywordMessageSend (ScPrimaryIdentifier $1) $3 }
+        | identifier
+          '(' nonemptykeywordexpression_seq ')' { scPrimaryKeywordMessageSend (ScPrimaryIdentifier $1) $3 }
 
 reservedidentifier :: { St.Identifier }
         : nil                                  { "nil" }
         | true                                 { "true" }
         | false                                { "false" }
-
-vectorexpression :: { [ScBasicExpression] }
-        : vectoritem vectoritem                { [$1, $2] }
-        | vectoritem vectorexpression          { $1 : $2 }
-
-vectoritem :: { ScBasicExpression }
-        : identifier                           { scIdentifierToBasicExpression $1 }
-        | literal                              { scLiteralToBasicExpression $1 }
-
-matrixexpression :: { [[ScBasicExpression]] }
-        : vectorexpression ';' vectorexpression { [$1, $3] }
-        | vectorexpression ';' matrixexpression { $1 : $3 }
+        | self                                 { "self" }
 
 arrayexpression :: { [ScBasicExpression] }
         : {- empty -}                          { [] }
@@ -273,22 +250,16 @@ maybe_arguments :: { Maybe [ScBlockArgument] }
 
 arguments :: { [ScBlockArgument] }
         : arg defaultvar_seq ';'               { $2 }
-        | argname_seq '|'               { $1 }
+        | '|' defaultvar_seq '|'               { $2 }
 
 defaultvar_seq :: { [ScBlockArgument] }
         : defaultvar                           { [$1] }
+        | defaultvar defaultvar_seq            { $1 : $2 }
         | defaultvar ',' defaultvar_seq        { $1 : $3 }
 
 defaultvar :: { ScBlockArgument }
         :  identifier                          { ($1,Nothing) }
         |  identifier '=' literal              { ($1,Just $3) }
-
-argname_seq :: { [ScBlockArgument] }
-        : argname                              { [$1] }
-        | argname argname_seq                  { $1 : $2 }
-
-argname :: { ScBlockArgument }
-        :  ':' identifier                      { ($2,Nothing) }
 
 maybe_temporaries_seq :: { Maybe [ScTemporaries] }
         : {- empty -}                          { Nothing }
@@ -300,36 +271,35 @@ temporaries_seq :: { [ScTemporaries] }
 
 temporaries :: { ScTemporaries }
         : var temporary_seq ';'                { $2 }
-        | let temporary_seq ';'                { $2 }
-        | '|' temporary_seq ';' '|'            { $2 }
 
 temporary_seq :: { ScTemporaries }
         : temporary                            { [$1] }
         | temporary ',' temporary_seq          { $1 : $3 }
 
 temporary :: { ScTemporary }
-        :  identifierOrArityQualifiedIdentifier                     { ($1,Nothing) }
-        |  identifierOrArityQualifiedIdentifier '=' basicexpression { ($1,Just $3) }
-
-identifierOrArityQualifiedIdentifier :: { St.Identifier }
-        :  identifier                          { $1 }
-        |  arityQualifiedIdentifier            { $1 }
+        :  identifier                          { ($1,Nothing) }
+        |  identifier '=' basicexpression      { ($1,Just $3) }
 
 maybe_statements :: { Maybe ScStatements }
         : {- empty -}                           { Nothing }
         | statements                            { Just $1 }
 
 statements :: { ScStatements }
-        : expression                            { ScStatementsExpression $1 Nothing }
+        : returnstatement                       { $1 }
+        | expression optsemicolon               { ScStatementsExpression $1 Nothing }
         | expression ';' statements             { ScStatementsExpression $1 (Just $3) }
+
+returnstatement :: { ScStatements }
+        : '^' expression optsemicolon           { ScStatementsReturn (ScReturnStatement $2) }
 
 literal :: { St.Literal }
         : integer                               { St.NumberLiteral (St.Int $1) }
         | float                                 { St.NumberLiteral (St.Float $1) }
-        | doublequotedstring                    { St.StringLiteral $1 }
-        | singlequotedstring                    { St.StringLiteral $1 }
+        | quotedstring                          { St.StringLiteral $1 }
+        | quotedchar                            { St.CharacterLiteral $1 }
+        | hashedstring                          { St.SymbolLiteral $1 }
+        | '#[' arrayliteral ']'                 { St.ArrayLiteral $2 }
 
-{-
 arrayliteral :: { [Either St.Literal St.Identifier] }
         : {- empty -}                           { [] }
         | arrayliteral_elem                     { [$1] }
@@ -342,7 +312,6 @@ arrayliteral_elem :: { Either St.Literal St.Identifier }
 optsemicolon :: { () }
         : {- empty -}                           { () }
         | ';'                                   { () }
--}
 
 {
 parseError :: [Token] -> a
