@@ -106,7 +106,11 @@ scKeywordArgumentsPrint = inParen . intercalate ", " . map scKeywordArgumentPrin
 -}
 
 scBinaryMessagePrint :: ScBinaryMessage -> String
-scBinaryMessagePrint (ScBinaryMessage i a) = scJoin [" ", i, " ", scBinaryArgumentPrint a]
+scBinaryMessagePrint (ScBinaryMessage (i, x) a) =
+  let b = case x of
+        Nothing -> i
+        Just x' -> i ++ "." ++ x'
+  in scJoin [" ", b, " ", scBinaryArgumentPrint a]
 
 scBinaryMessagesPrint :: [ScBinaryMessage] -> String
 scBinaryMessagesPrint = scJoin . map scBinaryMessagePrint

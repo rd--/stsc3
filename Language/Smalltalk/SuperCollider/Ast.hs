@@ -132,6 +132,9 @@ data ScExpression
   | ScExprBasic ScBasicExpression
   deriving (Eq, Show)
 
+scPrimaryToBasicExpression :: ScPrimary -> ScBasicExpression
+scPrimaryToBasicExpression p = ScBasicExpression p Nothing
+
 -- | 3.4.5.2
 data ScBasicExpression
   = ScBasicExpression ScPrimary (Maybe ScMessages)
@@ -155,6 +158,9 @@ scExpressionToPrimary e =
 
 scIdentifierToBasicExpression :: St.Identifier -> ScBasicExpression
 scIdentifierToBasicExpression i = ScBasicExpression (ScPrimaryIdentifier i) Nothing
+
+scLiteralToBasicExpression :: St.Literal -> ScBasicExpression
+scLiteralToBasicExpression l = ScBasicExpression (ScPrimaryLiteral l) Nothing
 
 scIdentifierToExpression :: St.Identifier -> ScExpression
 scIdentifierToExpression = ScExprBasic . scIdentifierToBasicExpression
@@ -241,7 +247,7 @@ scDotMessageFromKeywordParam initialSelector (initialParam, keywordParam) =
   in ScDotMessage selector param
 
 data ScBinaryMessage
-  = ScBinaryMessage St.BinaryIdentifier ScBinaryArgument
+  = ScBinaryMessage (St.BinaryIdentifier, Maybe St.Identifier) ScBinaryArgument
   deriving (Eq, Show)
 
 data ScBinaryArgument

@@ -1,0 +1,28 @@
+The Stc parser should directly generate an Expr Ast.
+
+The comment rule is:
+
+Line comments, `;;`, are discarded
+
+Block comments, `(* *)`, are discarded.
+
+There should be a distinct comment format that is part of the Ast and may only appear as either:
+
+- class comments (preceding class definition)
+- method comments (first element of method body)
+
+The block form does not allow either nested comments or the * character.
+
+"Any kind of sequence can be defined using either left recursion or
+right recursion, but you should always use left recursion, because it
+can parse a sequence of any number of elements with bounded stack
+space."
+
+* * *
+
+Parses all graphs at ~/sw/slp/help/SuperColldider/Graph (371) except:
+
+- Dcv - Time varying feedback delay network.sl: ctl::
+- Jl - Pwm Crossfade.sl: var [f1, f2]
+- Jmcc - Bach prelude.sl: x[3 4 5]
+- Mk - 2206.sl: ctl::

@@ -10,15 +10,20 @@ import Data.List {- base -}
 
 import qualified Data.List.Split as Split {- split -}
 
+import qualified Music.Theory.List as List {- hmt-base -}
+
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Expr.Print as Expr {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print as Print {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Expr.Print as Expr.Print {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print as Ansi.Print {- stsc3 -}
 
 import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Lexer {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Parser {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Rewrite as Rewrite {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Lexer as Sc.Lexer {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Parser as Sc.Parser {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Rewrite as Sc.Rewrite {- stsc3 -}
+
+import qualified Language.Smalltalk.Spl.Lexer as Spl.Lexer {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
 
 {- | This is for translating, it allows either
      a Unary sequence with an optional ending n-ary message,
@@ -95,7 +100,10 @@ scBinaryArgumentSt (ScBinaryArgument p m) =
         _ -> error ("scBinaryArgumentSt: " ++ show (ScBinaryArgument p m))
 
 scBinaryMessageSt :: ScBinaryMessage -> St.BinaryMessage
-scBinaryMessageSt (ScBinaryMessage i a) = St.BinaryMessage i (scBinaryArgumentSt a)
+scBinaryMessageSt (ScBinaryMessage (i, x) a) =
+  case x of
+    Nothing -> St.BinaryMessage i (scBinaryArgumentSt a)
+    Just x' -> St.BinaryMessage (i ++ "." ++ x') (scBinaryArgumentSt a)
 
 scArgumentSt :: ScBasicExpression -> St.KeywordArgument
 scArgumentSt e =
@@ -191,48 +199,77 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 
 {- | Separate out any leading // prefixed comment
 
-> stcLeadingComment "only\na\nprogram\n"
-> stcLeadingComment "// a\n// comment\nthen\na\nprogram\n"
+>>> stcLeadingComment "only\na\nprogram\n"
+("","only\na\nprogram\n")
+
+>>> stcLeadingComment "// a\n// comment\nthen\na\nprogram\n"
+("a\ncomment\n","then\na\nprogram\n")
 -}
 stcLeadingComment :: String -> (String, String)
 stcLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
-
-{- | In Spl f(x, y) and x.f(y) are interchangeable.
-In particular f may be a "constructor" procedure.
-Stc implements methods for the required cases, following the usual St case rule.
-To translate Spl, all dot expressions where the selector is capitalised are rewritten.
-
-> splRewriteDotExpressions "m.MidiCps" == "m.midiCps"
--}
-splRewriteDotExpressions :: String -> String
-splRewriteDotExpressions txt =
-  case txt of
-    [] -> []
-    '.' : c : txt' -> if isUpper c then '.' : toLower c : splRewriteDotExpressions txt' else '.' : c : splRewriteDotExpressions txt'
-    c : txt' -> c : splRewriteDotExpressions txt'
-
-{- | Spl allows binary operator characters not allowed by St(/c).
-These are re-written to allowed operators.
--}
-splRewriteBinaryOperators :: String -> String
-splRewriteBinaryOperators txt =
-  case txt of
-    [] -> []
-    ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '|' : ' ' : splRewriteBinaryOperators txt'
-    ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
-    c : txt' -> c : splRewriteBinaryOperators txt'
 
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
   let (c, p) = stcLeadingComment s
-      p' = splRewriteBinaryOperators (splRewriteDotExpressions p)
-      eSc = scInitializerDefinitionSetComment c (Parser.superColliderParserInitializerDefinition (Lexer.alexScanTokens p'))
-  in scInitializerDefinitionSt (Rewrite.scInitializerDefinitionRewrite eSc)
+      eSc = scInitializerDefinitionSetComment c (Sc.Parser.superColliderParserInitializerDefinition (Sc.Lexer.alexScanTokens p))
+  in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
 
--- | Translate C-Smalltalk program text to Smalltalk.
+{- | Translate C-Smalltalk program text to Smalltalk.
+
+>>> stcToSt "(p - q).m"
+"(p - q) m .\n"
+
+>>> stcToSt "p(q.r(i).s).t(j) + k"
+"((p apply: {(q r: i) s}) t: j) + k .\n"
+
+>>> stcToSt "SinOsc(220,0.5)"
+"(SinOsc apply: {220. 0.5}) .\n"
+
+>>> stcToSt "x(i) + y(j,k)"
+"(x apply: {i}) + (y apply: {j. k}) .\n"
+
+>>> stcToSt "x(i, y(j, k))"
+"(x apply: {i. (y apply: {j. k})}) .\n"
+
+>>> stcToSt "p + q.r.s(a).t.u(b)"
+"p + (((q r s: a)) t u: b) .\n"
+
+>>> stcToSt "p + q.r + s.t(u) + v()"
+"p + q r + (s t: u) + (v apply: {}) .\n"
+
+>>> stcToSt "f.value(i, j)"
+"f value: i value: j .\n"
+
+>>> stcToSt "c.put(i, j)"
+"c put: i value: j .\n"
+
+>>> stcToSt "p(q.r(i).s).t + k"
+"(p apply: {(q r: i) s}) t + k .\n"
+
+>>> stcToSt "// commentary\nprogram"
+"\"commentary\n\" program .\n"
+
+>>> stcToSt "[1, 2, 3, 4, 5]"
+"{1. 2. 3. 4. 5} .\n"
+
+>>> stcToSt "p.if { q } { r }"
+"p if: [ q .\n ] value: [ r .\n ] .\n"
+
+>>> stcToSt "(x: p, y: q)"
+"(Dictionary newFromPairs: {x. p. y. q}) .\n"
+
+>>> stcToSt "p.q * x.f { y }"
+"p q * (x f: [ y .\n ]) .\n"
+
+>>> stcToSt "p +++ q"
+"p +++ q .\n"
+
+>>> stcToSt "f(x) { y }"
+"(f apply: {x. [ y .\n ]}) .\n"
+-}
 stcToSt :: String -> String
-stcToSt = Print.initializerDefinition_pp . stcParseInitializerDefinition
+stcToSt = Ansi.Print.initializerDefinition_pp . stcParseInitializerDefinition
 
 -- | Parse .stc and translate to Init Expr.
 stcToExpr :: String -> Expr.Expr
@@ -242,11 +279,15 @@ stcToExpr =
 
 -- | exprPrintJs of stcToExpr
 stcToJs :: Maybe String -> String -> String
-stcToJs maybePrefix = Expr.exprPrintJs (Expr.jsRenamerFromTable maybePrefix Expr.jsDefaultRenamingTable) . stcToExpr
+stcToJs maybePrefix =
+  Expr.Print.exprPrintJs (Expr.Print.jsRenamerFromTable maybePrefix Expr.Print.jsDefaultRenamingTable)
+  . stcToExpr
 
 -- | exprPrintScheme of stcToExpr
 stcToScheme :: String -> String
-stcToScheme = Expr.exprPrintScheme (Expr.jsRenamerFromTable Nothing Expr.jsDefaultRenamingTable) . stcToExpr
+stcToScheme =
+  Expr.Print.exprPrintScheme (Expr.Print.jsRenamerFromTable Nothing Expr.Print.jsDefaultRenamingTable)
+  . stcToExpr
 
 stcToAst :: String -> String
 stcToAst = show . stcToExpr
@@ -257,24 +298,139 @@ stcToExprStm = Expr.initStatements . stcToExpr
 
 {- | Parse and print .stc
 
-> stcToExprToStc "(a - b).c" == "(a - b).c"
+>>> stcToExprToStc "(a - b).c"
+"(a - b).c"
 -}
 stcToExprToStc :: String -> String
-stcToExprToStc = Expr.exprPrintStc True . stcToExpr
+stcToExprToStc = Expr.Print.exprPrintStc True . stcToExpr
 
 {- | Print .stc as .sc.  Apply is not implicit in .sc.
 
-> stcToSc "SinOsc(440, 0)" == "SinOsc.apply([440, 0])"
-> stcToSc "f(x, y)" == "f.apply([x, y])"
+>>> stcToSc "SinOsc(440, 0)"
+"SinOsc.apply([440, 0])"
+
+>>> stcToSc "f(x, y)"
+"f.apply([x, y])"
 -}
 stcToSc :: String -> String
-stcToSc = Expr.exprPrintStc False . stcToExpr
+stcToSc = Expr.Print.exprPrintStc False . stcToExpr
+
+-- * Spl
+
+{- | Separate out any leading single line block comment.
+
+>>> splLeadingComment "only\na\nprogram\n"
+("","only\na\nprogram\n")
+
+>>> splLeadingComment "(* a comment *)\nthen\na\nprogram\n"
+("a comment","then\na\nprogram\n")
+-}
+splLeadingComment :: String -> (String, String)
+splLeadingComment x =
+  let isComment str = "(* " `isPrefixOf` str && " *)" `isSuffixOf` str
+      removeComment str = List.dropRight 3 (drop 3 str)
+  in case lines x of
+      (l1 : l') -> if isComment l1 then (removeComment l1, unlines l') else ("", x)
+      _ -> ("", x)
+
+{- | Separate out any leading prefix comment
+
+>>> splLeadingPrefixComment ";;" ";; a\n;; comment\nthen\na\nprogram\n"
+("a\ncomment\n","then\na\nprogram\n")
+-}
+splLeadingPrefixComment :: String -> String -> (String, String)
+splLeadingPrefixComment prefix =
+  bimap (unlines . map (drop 3)) unlines
+    . span (isPrefixOf (prefix ++ " "))
+    . lines
+
+{- | In Spl f(x, y) and x.f(y) are interchangeable.
+In particular f may be a "constructor" procedure.
+Stc implements methods for the required cases, following the usual St case rule.
+To translate Spl, all dot expressions where the selector is capitalised are rewritten.
+
+>>> splRewriteDotExpressions "m.MidiCps"
+"m.midiCps"
+-}
+splRewriteDotExpressions :: String -> String
+splRewriteDotExpressions txt =
+  case txt of
+    [] -> []
+    '.' : c : txt' -> if isUpper c then '.' : toLower c : splRewriteDotExpressions txt' else '.' : c : splRewriteDotExpressions txt'
+    c : txt' -> c : splRewriteDotExpressions txt'
+
+{- | Spl allows binary operator characters not allowed by St(/c).
+These are re-written to allowed operators.
+
+>>> splRewriteBinaryOperators "{ } !^ 6"
+"{ } %~ 6"
+
+>>> splRewriteBinaryOperators "LfPar:/2"
+"LfPar"
+-}
+splRewriteBinaryOperators :: String -> String
+splRewriteBinaryOperators txt =
+  case txt of
+    [] -> []
+    ' ' : '<' : '!' : ' ' : txt' -> ' ' : '<' : '|' : ' ' : splRewriteBinaryOperators txt'
+    ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
+    c : txt' -> c : splRewriteBinaryOperators txt'
+
+splParseToSc :: String -> ScInitializerDefinition
+splParseToSc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
+
+{- | Parse Spl to St. -}
+splParseToSt :: String -> St.InitializerDefinition
+splParseToSt s =
+  let (c, p) = splLeadingComment s
+      p' = splRewriteBinaryOperators (splRewriteDotExpressions p)
+      eSc = scInitializerDefinitionSetComment c (splParseToSc p')
+  in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
+
+{- | Spl to St
+
+>>> splToSt "{ Rand(0, 1) } !^ 4"
+"[ (Rand apply: {0. 1}) .\n ] %~ 4 .\n"
+
+>>> splToSt "[1 2 3 4 5]"
+"{1. 2. 3. 4. 5} .\n"
+
+>>> splToSt "[1.2 3.4 5]"
+"{1.2. 3.4. 5} .\n"
+
+>>> splToSt "[p q r s t]"
+"{p. q. r. s. t} .\n"
+
+>>> splToSt "{ :x | x * x }"
+"[ :x | x * x .\n ] .\n"
+
+>>> splToSt "let x = 1; x"
+"| x |\n x := 1 .\n x .\n"
+
+>>> splToSt "x.F"
+"x f .\n"
+
+>>> splToSt "let x = 5; x := x + 1; x"
+"| x |\n x := 5 .\n x := x + 1 .\n x .\n"
+
+>>> splToSt "if(p) { q } { r }"
+"(if apply: {p. [ q .\n ]. [ r .\n ]}) .\n"
+
+>>> splToSt "[p ++ q, x ++ [y, z], a ++ [b c]]"
+"{p ++ q. x ++ {y. z}. a ++ {b. c}} .\n"
+
+>>> splToSt "[1 2 3; 4 5 6]"
+"{{1. 2. 3}. {4. 5. 6}} .\n"
+
+-}
+splToSt :: String -> String
+splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt
 
 -- * Method and Class definitions
 
 {- | Generate primaryFactoryMethod method for named class.
 
-> stPrimaryFactoryMethod "SinOsc class" "freq:phase:"
+> stPrimaryFactoryMethod ("SinOsc class", True) "freq:phase:"
 -}
 stPrimaryFactoryMethod :: (St.Identifier, Bool) -> String -> St.MethodDefinition
 stPrimaryFactoryMethod cl nm =
@@ -292,7 +448,7 @@ scMethodDefinitionToSt :: St.Identifier -> ScMethodDefinition -> [St.MethodDefin
 scMethodDefinitionToSt cl_nm md =
   let is_cl = isClassMethod md
       st_cl_nm = if is_cl then cl_nm ++ " class" else cl_nm
-      blk = Rewrite.scBlockBodyRewrite (methodBody md)
+      blk = Sc.Rewrite.scBlockBodyRewrite (methodBody md)
       blk_args = maybe [] (map fst) (blockArguments blk)
       md_nm = methodName md
       is_constructor = is_cl && md_nm == "constructor"
@@ -334,24 +490,6 @@ scClassDefinitionToSt cd =
       (classComment cd)
 
 {-
-
-rw = stcToSt
-rw "(p - q).m" == "(p - q) m .\n"
-rw "p(q.r(i).s).t(j) + k"
-rw "SinOsc(220,0.5)" == "(SinOsc apply: {220. 0.5}) .\n"
-rw "x(i) + y(j,k)" == "(x apply: {i}) + (y apply: {j. k}) .\n"
-rw "x(i, y(j, k))" == "(x apply: {i. (y apply: {j. k})}) .\n"
-rw "p + q.r.s(a).t.u(b)" == "p + (((q r s: a)) t u: b) .\n"
-rw "p + q.r + s.t(u) + v()" == "p + q r + (s t: u) + (v apply: {}) .\n"
-rw "p.q:r(i,j)" == "p q: i r: j .\n"
-rw "x + p.at:put(x, y)" == "x + (p at: x put: y) .\n"
-rw "f.value(i, j)" == "f value: i value: j .\n"
-rw "c.put(i, j)" == "c put: i value: j .\n"
-rw "p.q:r(i)" -- error ; arity mismatch
-rw "p.q:(i)" -- error ; message names may not have trailing colons
-rw "p.q(x: i)" -- error ; keywords are not allowed
-rw "p(q.r(i).s).t + k" == "(p apply: {(q r: i) s}) t + k .\n"
-rw "// commentary\nprogram" == "\"commentary\n\" program .\n"
 
 rw = scToSt
 scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"

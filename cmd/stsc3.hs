@@ -16,7 +16,7 @@ import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.FileOut as FileOut {- stsc3 -}
 import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
--- import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
+import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
 import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
@@ -45,13 +45,10 @@ stc_cat_fragments fn = do
       expr_fragments = map parse txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
 
-{-
 -- | Parse class library file, a sequence of class definitions.
 stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
 stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
--}
 
-{-
 {- | Read and print library.
 
 stc_cat_library "/home/rohan/sw/stsc3/help/expr/library.sc"
@@ -75,7 +72,6 @@ stc_cat_extensions :: FilePath -> IO ()
 stc_cat_extensions fn =
   let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . stc_parse_class_extension_seq
   in rw =<< readFile fn
--}
 
 {- | Read and re-print Som class definition file.
 
@@ -183,7 +179,7 @@ help =
   , " translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
   , " translate directory [opt] som fileout <input-directory> <output-file>"
   , " translate library [opt] fileout som <input-file> <output-directory>"
-  , " translate [ stream ] stc { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
+  , " translate [ stream ] { spl | stc } { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
   ]
 
 main :: IO ()
@@ -191,6 +187,7 @@ main = do
   (o, a) <- Opt.opt_get_arg True help opt_def
   let trs in_ty out_ty =
         case (in_ty, out_ty) of
+          ("spl", "st") -> Sc.splToSt
           ("stc", "st") -> Sc.stcToSt
           ("stc", "js") -> Sc.stcToJs (Just "sc.") -- Nothing
           ("stc", "sc") -> Sc.stcToSc
@@ -212,20 +209,18 @@ main = do
             putStrLn fn >> stc_cat_fragments fn
         )
         fn_seq
-    {-
-        "stc" : "cat" : "library" : fn_seq ->
+    "stc" : "cat" : "library" : fn_seq ->
           mapM_
             ( \fn ->
                 putStrLn fn >> stc_cat_library fn
             )
             fn_seq
-        "stc" : "cat" : "extensions" : fn_seq ->
+    "stc" : "cat" : "extensions" : fn_seq ->
           mapM_
             ( \fn ->
                 putStrLn fn >> stc_cat_extensions fn
             )
             fn_seq
-    -}
     "st" : "cat" : which : fn_seq ->
       mapM_
         ( \fn ->
