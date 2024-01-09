@@ -38,12 +38,17 @@ st_cat which fn = do
   putStrLn ((if which == "parsec" then st_cat_parsec else st_cat_happy) st)
 
 -- | Parse and then pretty print .stc program.
-stc_cat_fragments :: FilePath -> IO ()
-stc_cat_fragments fn = do
+cat_fragments :: (String -> Sc.ScInitializerDefinition) -> FilePath -> IO ()
+cat_fragments parse fn = do
   txt_fragments <- Help.read_file_fragments fn
-  let parse = Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens
-      expr_fragments = map parse txt_fragments
+  let expr_fragments = map parse txt_fragments
   mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
+
+stc_cat_fragments :: FilePath -> IO ()
+stc_cat_fragments = cat_fragments Sc.stcParseToSc
+
+spl_cat_fragments :: FilePath -> IO ()
+spl_cat_fragments = cat_fragments Sc.splParseToSc
 
 -- | Parse class library file, a sequence of class definitions.
 stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
@@ -174,7 +179,7 @@ help =
   [ "stsc3 command [arguments]"
   , " rewrite ndef"
   , " som cat <som-file>"
-  , " stc cat { fragment | library | extensions } <supercollider-file...>"
+  , " { spl | stc } cat { fragment | library | extensions } <supercollider-file...>"
   , " st cat { parsec | happy } <smalltalk-file...>"
   , " translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
   , " translate directory [opt] som fileout <input-directory> <output-file>"
@@ -203,10 +208,13 @@ main = do
             putStrLn fn >> som_cat fn
         )
         fn_seq
-    "stc" : "cat" : "fragment" : fn_seq ->
+    src : "cat" : "fragment" : fn_seq ->
       mapM_
         ( \fn ->
-            putStrLn fn >> stc_cat_fragments fn
+            case src of
+              "stc" -> putStrLn fn >> stc_cat_fragments fn
+              "spl" -> putStrLn fn >> spl_cat_fragments fn
+              _ -> error "stsc3: unknown source"
         )
         fn_seq
     "stc" : "cat" : "library" : fn_seq ->

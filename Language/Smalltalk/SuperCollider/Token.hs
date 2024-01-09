@@ -33,7 +33,6 @@ data Token
   | QuotedChar Char
   | QuotedString String
   | HashedString String
-  | Comment String
   | Arg
   | Var
   | ClassVar

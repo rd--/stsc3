@@ -208,11 +208,15 @@ scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
 stcLeadingComment :: String -> (String, String)
 stcLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
 
+-- | Stc parse
+stcParseToSc :: String -> ScInitializerDefinition
+stcParseToSc = Sc.Parser.superColliderParserInitializerDefinition . Sc.Lexer.alexScanTokens
+
 -- | Parse C-Smalltalk InitializerDefinition.
 stcParseInitializerDefinition :: String -> St.InitializerDefinition
 stcParseInitializerDefinition s =
   let (c, p) = stcLeadingComment s
-      eSc = scInitializerDefinitionSetComment c (Sc.Parser.superColliderParserInitializerDefinition (Sc.Lexer.alexScanTokens p))
+      eSc = scInitializerDefinitionSetComment c (stcParseToSc p)
   in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
 
 {- | Translate C-Smalltalk program text to Smalltalk.
@@ -267,6 +271,14 @@ stcParseInitializerDefinition s =
 
 >>> stcToSt "f(x) { y }"
 "(f apply: {x. [ y .\n ]}) .\n"
+
+>>> stcToSt "p. /* q */ r"
+"p r .\n"
+
+>>> stcToSt "f(p: x, q: y)"
+"(f p: x q: y) .\n"
+
+> stcToSt "f.m(p: x, q: y)" -- error
 -}
 stcToSt :: String -> String
 stcToSt = Ansi.Print.initializerDefinition_pp . stcParseInitializerDefinition
@@ -376,6 +388,7 @@ splRewriteBinaryOperators txt =
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
+-- | Spl parse to Sc
 splParseToSc :: String -> ScInitializerDefinition
 splParseToSc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
 
