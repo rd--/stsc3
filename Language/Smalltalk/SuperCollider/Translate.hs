@@ -278,6 +278,9 @@ stcParseInitializerDefinition s =
 >>> stcToSt "f(p: x, q: y)"
 "(f p: x q: y) .\n"
 
+>>> stcToSt "c.at(i, put: x)"
+"c at: i put: x .\n"
+
 > stcToSt "f.m(p: x, q: y)" -- error
 -}
 stcToSt :: String -> String

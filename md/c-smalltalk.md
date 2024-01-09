@@ -1,7 +1,7 @@
 # C-Smalltalk
 
 C-Smalltalk is a C-like notation for [Smalltalk](https://squeak.org/).
-C-Smalltalk is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) notation.
+It is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) notation.
 
 C-Smalltalk notation is an interesting complement to Smalltalk notation.
 

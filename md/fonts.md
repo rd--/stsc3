@@ -4,7 +4,7 @@ Parc Place, <http://www.kreativekorp.com/software/fonts/urbanrenewal/> (also Los
 
 Cream 10pt, <https://fontstruct.com/fontstructions/show/1693628/cream-10pt>
 
-smalltalk10, the font of the Smalltalk 80 system, <https://leahneukirchen.org/fonts/>
+Smalltalk10, the font of the Smalltalk 80 system, <https://leahneukirchen.org/fonts/>
 
 Comic Neue, <http://comicneue.com/>
 
