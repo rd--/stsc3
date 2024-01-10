@@ -53,14 +53,6 @@ jsStmIsVar stm =
 
 type VarAssign t = (St.Identifier, Expr)
 
-{-
-jsIsReturn :: JsStm -> Bool
-jsIsReturn stm =
-  case stm of
-    Js.JSReturn _ _ _ -> True
-    _ -> False
--}
-
 -- | ([VariableDeclaration], [Statement], Maybe ReturnExpression)
 jsStmSplitVar :: [JsStm] -> ([VarAssign t], [JsStm], Maybe JsExp)
 jsStmSplitVar stm =
