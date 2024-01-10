@@ -72,8 +72,8 @@ exprPrintStc elideApply expr =
           x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
       in case (arg, tmp) of
           ([], []) -> printf "{ %s }" x
-          (_, []) -> printf "{ :%s | %s }" (intercalate ", " arg) x
-          _ -> printf "{ :%s | | %s | %s }" (intercalate ", " arg) (intercalate ", " tmp) x
+          (_, []) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
+          _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
     Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
     Init c tmp e ->
       let x = intercalate "; " (map (exprPrintStc elideApply) e)
