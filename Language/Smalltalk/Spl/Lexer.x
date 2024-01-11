@@ -24,7 +24,7 @@ $graphic               = $printable # $white
 tokens :-
 
   $white+                                ;
-  "(*" ($printable # \*)* "*)"           ;
+  "{-" ($printable # \})* "-}"           ;
 
   "["                                    { \_ -> LeftBracket }
   "]"                                    { \_ -> RightBracket }

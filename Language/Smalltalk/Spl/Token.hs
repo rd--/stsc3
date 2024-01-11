@@ -29,6 +29,5 @@ data Token
   | Integer Integer
   | DoubleQuotedString String
   | SingleQuotedString String
-  | Comment String
   | Let
   deriving (Eq, Show)
