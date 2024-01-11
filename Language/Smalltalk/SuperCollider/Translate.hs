@@ -286,7 +286,11 @@ stcParseInitializerDefinition s =
 stcToSt :: String -> String
 stcToSt = Ansi.Print.initializerDefinition_pp . stcParseInitializerDefinition
 
--- | Parse .stc and translate to Init Expr.
+{- | Parse .stc and translate to Init Expr.
+
+>>> stcToExpr "60.MidiCps"
+Init (Just "") [] [Send (Literal (NumberLiteral (Int 60))) (Message (UnarySelector "MidiCps") [])]
+-}
 stcToExpr :: String -> Expr.Expr
 stcToExpr =
   Expr.initializerDefinitionExpr
