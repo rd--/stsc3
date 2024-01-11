@@ -37,8 +37,8 @@ jsStmToExpr stm =
     Js.JSMethodCall (Js.JSMemberDot rcv _ (Js.JSIdentifier _ msg)) _ arg _ _ ->
       let argList = jsCommaListElem arg
       in Send
-         (jsExpToExpr rcv)
-         (Message (jsGenKeywordSelector msg (length argList)) (map jsExpToExpr argList))
+          (jsExpToExpr rcv)
+          (Message (jsGenKeywordSelector msg (length argList)) (map jsExpToExpr argList))
     Js.JSVariable _ _ _ -> error "jsStmToExpr: var?"
     Js.JSReturn _ _ _ -> error "jsStmToExpr: return?"
     Js.JSAssignStatement (Js.JSIdentifier _ varName) (Js.JSAssign _) varInit _ ->
@@ -58,10 +58,10 @@ jsStmSplitVar :: [JsStm] -> ([VarAssign t], [JsStm], Maybe JsExp)
 jsStmSplitVar stm =
   let (var, postVar) = span jsStmIsVar stm
   in if any jsStmIsVar postVar
-     then error "jsStmSplitVar: var in postVar"
-     else case unsnoc postVar of
-            Just (inner, Js.JSReturn _ (Just e) _) -> (concatMap jsStmGetVar var, inner, Just e)
-            _ -> (concatMap jsStmGetVar var, postVar, Nothing)
+      then error "jsStmSplitVar: var in postVar"
+      else case unsnoc postVar of
+        Just (inner, Js.JSReturn _ (Just e) _) -> (concatMap jsStmGetVar var, inner, Just e)
+        _ -> (concatMap jsStmGetVar var, postVar, Nothing)
 
 jsStmGetVar :: JsStm -> [VarAssign t]
 jsStmGetVar stm =
@@ -109,10 +109,10 @@ jsExpToExpr js =
     Js.JSFunctionExpression _ Js.JSIdentNone _ arg _ (Js.JSBlock _ stm _) ->
       let (var, nonVar, ret) = jsStmSplitVar stm
       in Lambda
-         NullLambda
-         (map jsExprIdentifier (jsCommaListElem arg))
-         (map fst var)
-         ((mapMaybe maybeVarAssign var ++ map jsStmToExpr nonVar), fmap jsExpToExpr ret)
+          NullLambda
+          (map jsExprIdentifier (jsCommaListElem arg))
+          (map fst var)
+          ((mapMaybe maybeVarAssign var ++ map jsStmToExpr nonVar), fmap jsExpToExpr ret)
     Js.JSMemberSquare lhs _ rhs _ ->
       Send (jsExpToExpr lhs) (Message (St.KeywordSelector "at:" 1) [jsExpToExpr rhs])
     Js.JSUnaryExpression (Js.JSUnaryOpMinus _) e -> mkNegated e
@@ -134,7 +134,7 @@ jsArrayElementExpr e =
 jsUnquote :: String -> String
 jsUnquote s =
   case s of
-    _:x -> init x
+    _ : x -> init x
     _ -> error "jsUnquote"
 
 jsExprIdentifier :: JsExp -> String
@@ -166,30 +166,30 @@ jsCommaListElem l =
 jsBinOpString :: Js.JSBinOp -> String
 jsBinOpString op =
   case op of
-    Js.JSBinOpAnd        _ -> "&&"
-    Js.JSBinOpBitAnd     _ -> "&"
-    Js.JSBinOpBitOr      _ -> "|"
-    Js.JSBinOpBitXor     _ -> "^"
-    Js.JSBinOpDivide     _ -> "/"
-    Js.JSBinOpEq         _ -> "=="
-    Js.JSBinOpGe         _ -> ">="
-    Js.JSBinOpGt         _ -> ">"
-    Js.JSBinOpIn         _ -> "in"
+    Js.JSBinOpAnd _ -> "&&"
+    Js.JSBinOpBitAnd _ -> "&"
+    Js.JSBinOpBitOr _ -> "|"
+    Js.JSBinOpBitXor _ -> "^"
+    Js.JSBinOpDivide _ -> "/"
+    Js.JSBinOpEq _ -> "=="
+    Js.JSBinOpGe _ -> ">="
+    Js.JSBinOpGt _ -> ">"
+    Js.JSBinOpIn _ -> "in"
     Js.JSBinOpInstanceOf _ -> "instanceof"
-    Js.JSBinOpLe         _ -> "<="
-    Js.JSBinOpLsh        _ -> "<<"
-    Js.JSBinOpLt         _ -> "<"
-    Js.JSBinOpMinus      _ -> "-"
-    Js.JSBinOpMod        _ -> "%"
-    Js.JSBinOpNeq        _ -> "!="
-    Js.JSBinOpOf         _ -> "of"
-    Js.JSBinOpOr         _ -> "||"
-    Js.JSBinOpPlus       _ -> "+"
-    Js.JSBinOpRsh        _ -> ">>"
-    Js.JSBinOpStrictEq   _ -> "==="
-    Js.JSBinOpStrictNeq  _ -> "!=="
-    Js.JSBinOpTimes      _ -> "*"
-    Js.JSBinOpUrsh       _ -> ">>>"
+    Js.JSBinOpLe _ -> "<="
+    Js.JSBinOpLsh _ -> "<<"
+    Js.JSBinOpLt _ -> "<"
+    Js.JSBinOpMinus _ -> "-"
+    Js.JSBinOpMod _ -> "%"
+    Js.JSBinOpNeq _ -> "!="
+    Js.JSBinOpOf _ -> "of"
+    Js.JSBinOpOr _ -> "||"
+    Js.JSBinOpPlus _ -> "+"
+    Js.JSBinOpRsh _ -> ">>"
+    Js.JSBinOpStrictEq _ -> "==="
+    Js.JSBinOpStrictNeq _ -> "!=="
+    Js.JSBinOpTimes _ -> "*"
+    Js.JSBinOpUrsh _ -> ">>>"
 
 {- | Js to Stc
 
@@ -276,7 +276,6 @@ jsBinOpString op =
 
 >>> jsToStc "Math.abs(-3)"
 "Math.abs(3.0.negated)"
-
 -}
 jsToStc :: String -> String
 jsToStc = exprPrintStc True . jsAstToExpr . Js.readJs
@@ -288,7 +287,7 @@ main = interact jsToStc
 
 ```$ doctest 2021-11-19.hs
 Examples: 28  Tried: 28  Errors: 0  Failures: 0
-$
+\$
 ```
 
 -}

@@ -296,13 +296,13 @@ stcToExpr =
 stcToJs :: Maybe String -> String -> String
 stcToJs maybePrefix =
   Expr.Print.exprPrintJs (Expr.Print.jsRenamerFromTable maybePrefix Expr.Print.jsDefaultRenamingTable)
-  . stcToExpr
+    . stcToExpr
 
 -- | exprPrintScheme of stcToExpr
 stcToScheme :: String -> String
 stcToScheme =
   Expr.Print.exprPrintScheme (Expr.Print.jsRenamerFromTable Nothing Expr.Print.jsDefaultRenamingTable)
-  . stcToExpr
+    . stcToExpr
 
 stcToAst :: String -> String
 stcToAst = show . stcToExpr
@@ -395,13 +395,19 @@ splRewriteBinaryOperators txt =
 splParseToSc :: String -> ScInitializerDefinition
 splParseToSc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
 
-{- | Parse Spl to St. -}
+-- | Parse Spl to St.
 splParseToSt :: String -> St.InitializerDefinition
 splParseToSt s =
   let (c, p) = splLeadingComment s
       p' = splRewriteBinaryOperators (splRewriteDotExpressions p)
       eSc = scInitializerDefinitionSetComment c (splParseToSc p')
   in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
+
+-- | Parse .spl and translate to Init Expr.
+splToExpr :: String -> Expr.Expr
+splToExpr =
+  Expr.initializerDefinitionExpr
+    . splParseToSt
 
 {- | Spl to St
 
@@ -437,7 +443,6 @@ splParseToSt s =
 
 >>> splToSt "[1 2 3; 4 5 6]"
 "{{1. 2. 3}. {4. 5. 6}} .\n"
-
 -}
 splToSt :: String -> String
 splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt

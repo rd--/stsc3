@@ -218,17 +218,17 @@ main = do
         )
         fn_seq
     "stc" : "cat" : "library" : fn_seq ->
-          mapM_
-            ( \fn ->
-                putStrLn fn >> stc_cat_library fn
-            )
-            fn_seq
+      mapM_
+        ( \fn ->
+            putStrLn fn >> stc_cat_library fn
+        )
+        fn_seq
     "stc" : "cat" : "extensions" : fn_seq ->
-          mapM_
-            ( \fn ->
-                putStrLn fn >> stc_cat_extensions fn
-            )
-            fn_seq
+      mapM_
+        ( \fn ->
+            putStrLn fn >> stc_cat_extensions fn
+        )
+        fn_seq
     "st" : "cat" : which : fn_seq ->
       mapM_
         ( \fn ->
