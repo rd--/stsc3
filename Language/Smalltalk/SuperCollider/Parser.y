@@ -39,7 +39,6 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
       true { TrueIdentifier }
       var { Var }
 
-      ':=' { AssignmentOperator }
       '^' { ReturnOperator }
 
       binary_selector { BinarySelector $$ }

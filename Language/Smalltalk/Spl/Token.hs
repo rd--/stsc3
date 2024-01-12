@@ -2,14 +2,12 @@
 module Language.Smalltalk.Spl.Token where
 
 data Token
-  = ArgumentName String
-  | ArityQualifiedIdentifier String
+  = ArityQualifiedIdentifier String
   | BinarySelector String
   | Colon
   | ColonColon
   | ColonEquals
   | Comma
-  | DictionaryLabel String
   | Dot
   | DotDot
   | DoubleQuotedString String
