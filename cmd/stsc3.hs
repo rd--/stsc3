@@ -16,12 +16,12 @@ import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.FileOut as FileOut {- stsc3 -}
 import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 
-import qualified Language.Smalltalk.SuperCollider.Ast as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ndef as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast.Print as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
+--import qualified Language.Smalltalk.Stc.Ndef as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Translate as Stc {- stsc3 -}
 
 -- | Parse and then pretty print Smalltalk program, using Parsec parser.
 st_cat_parsec :: String -> String
@@ -38,21 +38,21 @@ st_cat which fn = do
   putStrLn ((if which == "parsec" then st_cat_parsec else st_cat_happy) st)
 
 -- | Parse and then pretty print .stc program.
-cat_fragments :: (String -> Sc.ScInitializerDefinition) -> FilePath -> IO ()
+cat_fragments :: (String -> Stc.StcInitializerDefinition) -> FilePath -> IO ()
 cat_fragments parse fn = do
   txt_fragments <- Help.read_file_fragments fn
   let expr_fragments = map parse txt_fragments
-  mapM_ (putStrLn . Sc.scInitializerDefinitionPrint) expr_fragments
+  mapM_ (putStrLn . Stc.stcInitializerDefinitionPrint) expr_fragments
 
 stc_cat_fragments :: FilePath -> IO ()
-stc_cat_fragments = cat_fragments Sc.stcParseToSc
+stc_cat_fragments = cat_fragments Stc.stcParseToStc
 
 spl_cat_fragments :: FilePath -> IO ()
-spl_cat_fragments = cat_fragments Sc.splParseToSc
+spl_cat_fragments = cat_fragments Stc.splParseToStc
 
 -- | Parse class library file, a sequence of class definitions.
-stc_parse_class_definition_seq :: String -> [Sc.ScClassDefinition]
-stc_parse_class_definition_seq = Sc.superColliderParserClassDefinitionSeq . Sc.alexScanTokens
+stc_parse_class_definition_seq :: String -> [Stc.StcClassDefinition]
+stc_parse_class_definition_seq = Stc.stcParserClassDefinitionSeq . Stc.alexScanTokens
 
 {- | Read and print library.
 
@@ -61,12 +61,12 @@ stc_cat_library "/home/rohan/rd/j/2022-04-08/before-pim.sc"
 -}
 stc_cat_library :: FilePath -> IO ()
 stc_cat_library fn =
-  let rw = putStrLn . unlines . map Sc.scClassDefinitionPrint . stc_parse_class_definition_seq
+  let rw = putStrLn . unlines . map Stc.stcClassDefinitionPrint . stc_parse_class_definition_seq
   in rw =<< readFile fn
 
 -- | Parse class extensions file, a sequence of class extensions.
-stc_parse_class_extension_seq :: String -> [Sc.ScClassExtension]
-stc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.alexScanTokens
+stc_parse_class_extension_seq :: String -> [Stc.StcClassExtension]
+stc_parse_class_extension_seq = Stc.stcParserClassExtensionSeq . Stc.alexScanTokens
 
 {- | Read and print extensions.
 
@@ -75,7 +75,7 @@ stc_parse_class_extension_seq = Sc.superColliderParserClassExtensionSeq . Sc.ale
 -}
 stc_cat_extensions :: FilePath -> IO ()
 stc_cat_extensions fn =
-  let rw = putStrLn . unlines . map Sc.scClassExtensionPrint . stc_parse_class_extension_seq
+  let rw = putStrLn . unlines . map Stc.stcClassExtensionPrint . stc_parse_class_extension_seq
   in rw =<< readFile fn
 
 {- | Read and re-print Som class definition file.
@@ -164,7 +164,7 @@ dir_som_to_fileout cat som_dir fileout_fn = do
 stc_to_js :: FilePath -> IO ()
 stc_to_js fn = do
   txt_fragments <- Help.read_file_fragments fn
-  mapM_ (putStrLn . Sc.stcToJs) txt_fragments
+  mapM_ (putStrLn . Stc.stcToJs) txt_fragments
 -}
 
 opt_def :: [Opt.OptUsr]
@@ -192,16 +192,15 @@ main = do
   (o, a) <- Opt.opt_get_arg True help opt_def
   let trs in_ty out_ty =
         case (in_ty, out_ty) of
-          ("spl", "st") -> Sc.splToSt
-          ("stc", "st") -> Sc.stcToSt
-          ("stc", "js") -> Sc.stcToJs (Just "sc.") -- Nothing
-          ("stc", "sc") -> Sc.stcToSc
-          ("stc", "scm") -> Sc.stcToScheme
-          ("stc", "ast") -> Sc.stcToAst
+          ("spl", "st") -> Stc.splToSt
+          ("stc", "st") -> Stc.stcToSt
+          ("stc", "js") -> Stc.stcToJs (Just "sc.") -- Nothing
+          ("stc", "stc") -> Stc.stcToStc
+          ("stc", "scm") -> Stc.stcToScheme
+          ("stc", "ast") -> Stc.stcToAst
           _ -> error "stsc3: unknown translation"
   case a of
-    ["rewrite", "ndef"] ->
-      interact Sc.stcUgenToNdef
+    -- ["rewrite", "ndef"] -> interact Stc.stcUgenToNdef
     "som" : "cat" : fn_seq ->
       mapM_
         ( \fn ->

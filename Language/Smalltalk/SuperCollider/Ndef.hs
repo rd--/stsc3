@@ -8,8 +8,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as St {- stsc3 -}
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Translate as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Translate as Stc {- stsc3 -}
 
 -- | x -> Ndef('x')
 ndef_ref :: St.Symbol -> Expr
@@ -38,6 +37,10 @@ with_assign_and_play l =
            ]
     _ -> error "with_assign_and_play?"
 
+-- | List of Sc pseudo variables.  In addition to the St set it has, pi and inf.
+scPseudoVariables :: [St.LowercaseIdentifier]
+scPseudoVariables = St.stReservedIdentifiers ++ ["inf", "pi"]
+
 -- | x = y -> Ndef('x', { y }) & x -> Ndef('x').
 to_ndef :: Expr -> Expr
 to_ndef expr =
@@ -58,4 +61,4 @@ stcUgenToNdef =
     . with_assign_and_play
     . initStatements
     . initializerDefinitionExpr
-    . Sc.stcParseInitializerDefinition
+    . Stc.stcParseToSt

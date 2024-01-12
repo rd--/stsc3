@@ -35,7 +35,7 @@ library
                         Language.Smalltalk.Ansi.Parser,
                         Language.Smalltalk.Ansi.Print,
                         Language.Smalltalk.Ansi.Print.Som,
-                        Language.Smalltalk.Ansi.Print.SuperCollider,
+                        Language.Smalltalk.Ansi.Print.Stc,
                         Language.Smalltalk.Ansi.Lexer,
                         Language.Smalltalk.Ansi.Query,
                         Language.Smalltalk.Ansi.Rewrite,
@@ -47,17 +47,18 @@ library
                         Language.Smalltalk.Spl.Lexer,
                         Language.Smalltalk.Spl.Parser,
                         Language.Smalltalk.Spl.Token,
-                        Language.Smalltalk.SuperCollider.Ast,
-                        Language.Smalltalk.SuperCollider.Ast.Print,
-                        Language.Smalltalk.SuperCollider.Lexer,
+                        Language.Smalltalk.Stc.Ast,
+                        Language.Smalltalk.Stc.Ast.Print,
+                        Language.Smalltalk.Stc.Lexer,
+                        Language.Smalltalk.Stc.Parser,
+                        Language.Smalltalk.Stc.Rewrite,
+                        Language.Smalltalk.Stc.Rewrite.Implicit,
+                        Language.Smalltalk.Stc.Rewrite.Precedence,
+                        Language.Smalltalk.Stc.Rewrite.Temporaries,
+                        Language.Smalltalk.Stc.Token,
+                        Language.Smalltalk.Stc.Translate
                         Language.Smalltalk.SuperCollider.Ndef,
-                        Language.Smalltalk.SuperCollider.Parser,
-                        Language.Smalltalk.SuperCollider.Rewrite,
-                        Language.Smalltalk.SuperCollider.Rewrite.Implicit,
-                        Language.Smalltalk.SuperCollider.Rewrite.Precedence,
-                        Language.Smalltalk.SuperCollider.Rewrite.Temporaries,
-                        Language.Smalltalk.SuperCollider.Token,
-                        Language.Smalltalk.SuperCollider.Translate
+                        Language.Smalltalk.SuperCollider.Parser
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,

@@ -6,6 +6,7 @@ clean:
 	(cd cmd ; make clean)
 	(cd Language/Smalltalk/Ansi ; make clean)
 	(cd Language/Smalltalk/Spl ; make clean)
+	(cd Language/Smalltalk/Stc ; make clean)
 	(cd som ; make clean)
 	(cd st ; make clean)
 	find . -name '*.o' -exec rm {} +

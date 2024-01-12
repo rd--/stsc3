@@ -6,9 +6,9 @@ The three main tasks are:
 - rewriting variable declarations
 - packaging method parameters into a dictionary (array of associations) (not required for .stc -> .st)
 
-The SuperCollider message precedence rule is Dot > Binary.
+The Stc message precedence rule is Dot > Binary.
 The Smalltalk message precedence rule is Unary > Binary > Keyword.
-A SuperCollider Dot message is either Unary or Keyword.
+A Stc Dot message is either Unary or Keyword.
 To translate, a Dot message sequence has parentheses inserted after each Keyword element.
 
 - p.q(a).r          => (p q: a) r                  <= p q: a r   ==> p q: (a r)
@@ -25,7 +25,7 @@ This transformation at the Sc Ast.
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))
 
-Temporary variables in SuperCollider may have initialisers and there may be multiple sets.
+Temporary variables in Stc may have initialisers and there may be multiple sets.
 These must be rewritten to as a single set of names and a sequence of assignments.
 
 - var p, q = a;     => |p q| q := a.
@@ -46,52 +46,52 @@ This transformation at the Sc Ast.
 - p.q(a,b)          => p.q([a,b])
 - p.q(x: a, b)      => p.q([\x: -> a,b])
 -}
-module Language.Smalltalk.SuperCollider.Rewrite where
+module Language.Smalltalk.Stc.Rewrite where
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Ast.Print as Sc
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc {- stsc3 -}
+import Language.Smalltalk.Stc.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast.Print as Sc
+import qualified Language.Smalltalk.Stc.Lexer as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Sc {- stsc3 -}
 
-import Language.Smalltalk.SuperCollider.Rewrite.Precedence
-import Language.Smalltalk.SuperCollider.Rewrite.Temporaries
+import Language.Smalltalk.Stc.Rewrite.Precedence
+import Language.Smalltalk.Stc.Rewrite.Temporaries
 
-scExpressionRewrite :: ScExpression -> ScExpression
-scExpressionRewrite =
-  scExpressionRewritePrecedence
-    . scExpressionRewriteTemporaries
+stcExpressionRewrite :: StcExpression -> StcExpression
+stcExpressionRewrite =
+  stcExpressionRewritePrecedence
+    . stcExpressionRewriteTemporaries
 
-scBlockBodyRewrite :: ScBlockBody -> ScBlockBody
-scBlockBodyRewrite =
-  scBlockBodyRewritePrecedence
-    . scBlockBodyRewriteTemporaries
+stcBlockBodyRewrite :: StcBlockBody -> StcBlockBody
+stcBlockBodyRewrite =
+  stcBlockBodyRewritePrecedence
+    . stcBlockBodyRewriteTemporaries
 
 {- | Option to rewrite n-ary expressions as arrays.
      Else N-ary expressions will be an error on translation.
 -}
-scInitializerDefinitionRewrite :: ScInitializerDefinition -> ScInitializerDefinition
-scInitializerDefinitionRewrite =
-  scInitializerDefinitionRewritePrecedence
-    . scInitializerDefinitionRewriteTemporaries
+stcInitializerDefinitionRewrite :: StcInitializerDefinition -> StcInitializerDefinition
+stcInitializerDefinitionRewrite =
+  stcInitializerDefinitionRewritePrecedence
+    . stcInitializerDefinitionRewriteTemporaries
 
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
-scRewriteViewer :: String -> String
-scRewriteViewer =
-  Sc.scInitializerDefinitionPrint
-    . scInitializerDefinitionRewrite
-    . Sc.superColliderParserInitializerDefinition
+stcRewriteViewer :: String -> String
+stcRewriteViewer =
+  Sc.stcInitializerDefinitionPrint
+    . stcInitializerDefinitionRewrite
+    . Sc.stcParserInitializerDefinition
     . Sc.alexScanTokens
 
 {-
 
-rw = scRewriteViewer False
+rw = stcRewriteViewer False
 rw "p.q" == "p.q\n"
 rw "p.q.r" == "p.q.r\n"
 rw "p.q + r" == "p.q + r\n"
 rw "p.q(x)" == "p.q(x)\n"
 rw "p.q(x) + r" == "(p.q(x)) + r\n"
 
-rw = scRewriteViewer True
+rw = stcRewriteViewer True
 rw "p.q(x)" == "p.q([x])" -- only one message, can be keyword
 rw "p.q(x).r(y)" == "(p.q([x])).r([y])" -- nested trailing
 rw "p.q(x) + r" == "(p.q([x])) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)

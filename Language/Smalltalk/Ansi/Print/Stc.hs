@@ -1,8 +1,8 @@
-{- | Printer from Ansi Smalltalk Ast to .stc / .spl
+{- | Printer from Ansi Smalltalk Ast to .stc & .spl & .sc
 
 Notes:
 
-- Translations are: self->this =->== ~=->!= ,->++
+- Translations are target specific: self->this =->== ~=->!= ,->++
 - Keyword selectors are rewritten to
   - remove : characters
   - start interior words with upper case letters
@@ -12,7 +12,7 @@ Notes:
   - class variable, unary and keyword names, assignment targets
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 -}
-module Language.Smalltalk.Ansi.Print.SuperCollider where
+module Language.Smalltalk.Ansi.Print.Stc where
 
 import Data.Char {- base -}
 import Data.List {- base -}

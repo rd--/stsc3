@@ -12,7 +12,7 @@ import qualified Music.Theory.List as List {- hmt-base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print.SuperCollider as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.Stc as St {- stsc3 -}
 
 -- * .stc
 

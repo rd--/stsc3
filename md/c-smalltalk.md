@@ -1,11 +1,9 @@
 # C-Smalltalk
 
 C-Smalltalk is a C-like notation for [Smalltalk](https://squeak.org/).
-It is, for the most part, a subset of the [SuperCollider](https://www.audiosynth.com/) notation.
+It is closely related to the [SuperCollider](https://www.audiosynth.com/) notation.
 
-C-Smalltalk notation is an interesting complement to Smalltalk notation.
-
-It supports:
+It is an interesting complement to Smalltalk notation, allowing:
 
 - a concise notation for performing a primary message at an object
 - a concise and uniform notation for chaining both unary and n-ary messages
@@ -112,6 +110,10 @@ This requires _q_ to have two arities.
 While many scheme-like languages will allow this, it can make systems more complicated.
 If translation is desired, unary and binary message selectors can be named so that they translate distinctly.
 
+## Assignment
+
+In Smalltalk _=_ is the equality operator, _p = q_ decides if _p_ and _q_ are equal.
+
 ## Notation for the _at:_ and _at:put:_ protocol
 
 The C-like notations _p[q]_ and _p[q] := r_ translate as _p at: q_ and _p at: q put: r_ respectively.
@@ -146,7 +148,7 @@ The method name and the names of the parameters together form the selector.
 
 In St there is only _collection at: aKey put: aValue_,
 written in Stc as either _collection.at(aKey, put: aValue)_ or _collection(at: aKey, put: aValue)_.
-The names of the paramters are not part of the name of the selector.
+The names of the parameters are not part of the name of the selector.
 
 The Stc notation for defining this method is _at:put: { arg aKey, aValue; ... }_.
 Since the arity of the method is known from the argument list, any non-initial parts of the selector, and also the trailing colon, can be elided.
@@ -179,3 +181,10 @@ however _arg c; c(...);_ is a common idiom where c is a class object.
 
 3: Implicit keyword message names are not a form of variable arity messages.
 _r.m(i)_ and _r.m(i, j)_ are distinct messages, _m:_ and _m:value:_.
+
+* * *
+
+In SuperCollider block parameters are passed as a Dictionary and allow default values.
+
+In SuperCollider it is not possible to infer the arity of a block from it's call site.
+In all of the following x may have any arity: .x .x() .x(nil) .x(y:nil) .x(y,z)

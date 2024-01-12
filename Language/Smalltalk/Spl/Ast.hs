@@ -1,8 +1,8 @@
 module Language.Smalltalk.Spl.Ast where
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
+import Language.Smalltalk.Stc.Ast as Stc {- stsc3 -}
 
-scMatrixExpression :: [[ScBasicExpression]] -> ScPrimary
-scMatrixExpression =
-  ScPrimaryArrayExpression
-    . map (scPrimaryToBasicExpression . ScPrimaryArrayExpression)
+splMatrixExpression :: [[Stc.StcBasicExpression]] -> Stc.StcPrimary
+splMatrixExpression =
+  Stc.StcPrimaryArrayExpression
+    . map (Stc.stcPrimaryToBasicExpression . Stc.StcPrimaryArrayExpression)

@@ -1,8 +1,8 @@
-{- | Translate from the C-Smalltalk(Stc) / SuperCollider (Sc) Ast to the Smalltalk (St) Ast.
-     Requires that the Sc Ast has been rewritten to have only constructs that can be translated to St.
-     See "Language.Smalltalk.SuperCollider.Rewrite"
+{- | Translate from the C-Smalltalk(Stc) Ast to the Smalltalk (St) Ast.
+     Requires that the Stc Ast has been rewritten to have only constructs that can be translated to St.
+     See "Language.Smalltalk.Stc.Rewrite"
 -}
-module Language.Smalltalk.SuperCollider.Translate where
+module Language.Smalltalk.Stc.Translate where
 
 import Data.Bifunctor {- base -}
 import Data.Char {- base -}
@@ -17,29 +17,31 @@ import qualified Language.Smalltalk.Ansi.Expr as Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as Expr.Print {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as Ansi.Print {- stsc3 -}
 
-import Language.Smalltalk.SuperCollider.Ast {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Lexer as Sc.Lexer {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Parser as Sc.Parser {- stsc3 -}
-import qualified Language.Smalltalk.SuperCollider.Rewrite as Sc.Rewrite {- stsc3 -}
+import Language.Smalltalk.Stc.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Lexer as Stc.Lexer {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Stc.Parser {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Rewrite as Stc.Rewrite {- stsc3 -}
 
 import qualified Language.Smalltalk.Spl.Lexer as Spl.Lexer {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
+
+import qualified Language.Smalltalk.SuperCollider.Parser as SuperCollider.Parser {- stsc3 -}
 
 {- | This is for translating, it allows either
      a Unary sequence with an optional ending n-ary message,
      or a single trailing n-ary.
 -}
-scDotMessagesForSmalltalk :: [ScDotMessage] -> ([ScDotMessage], Maybe ScDotMessage)
-scDotMessagesForSmalltalk m =
-  if scDotMessagesHaveNary m
-    then case break scDotMessageIsNary m of
+stcDotMessagesForSmalltalk :: [StcDotMessage] -> ([StcDotMessage], Maybe StcDotMessage)
+stcDotMessagesForSmalltalk m =
+  if stcDotMessagesHaveNary m
+    then case break stcDotMessageIsNary m of
       (lhs, []) -> (lhs, Nothing)
       (lhs, [k]) -> (lhs, Just k)
-      r -> error ("scDotMessagesForSmalltalk: " ++ show (m, r))
+      r -> error ("stcDotMessagesForSmalltalk: " ++ show (m, r))
     else (m, Nothing)
 
-scFloatConstant :: St.Identifier -> St.Primary
-scFloatConstant x =
+stcFloatConstant :: St.Identifier -> St.Primary
+stcFloatConstant x =
   St.PrimaryExpression
     ( St.ExprBasic
         ( St.BasicExpression
@@ -49,9 +51,9 @@ scFloatConstant x =
         )
     )
 
--- | The Sc implicit message send x(...) is translated as (x apply: {...})
-scImplicitMessageSendSt :: St.Identifier -> [ScBasicExpression] -> St.Primary
-scImplicitMessageSendSt x a =
+-- | The Stc implicit message send x(...) is translated as (x apply: {...})
+stcImplicitMessageSendSt :: St.Identifier -> [StcBasicExpression] -> St.Primary
+stcImplicitMessageSendSt x a =
   St.PrimaryExpression
     ( St.ExprBasic
         ( St.BasicExpression
@@ -61,7 +63,7 @@ scImplicitMessageSendSt x a =
                     ( St.KeywordMessage
                         [
                           ( "apply:"
-                          , St.KeywordArgument (St.PrimaryArrayExpression (map scBasicExpressionSt a)) Nothing Nothing
+                          , St.KeywordArgument (St.PrimaryArrayExpression (map stcBasicExpressionSt a)) Nothing Nothing
                           )
                         ]
                     )
@@ -71,131 +73,131 @@ scImplicitMessageSendSt x a =
         )
     )
 
-scPrimarySt :: ScPrimary -> St.Primary
-scPrimarySt p =
+stcPrimarySt :: StcPrimary -> St.Primary
+stcPrimarySt p =
   case p of
-    ScPrimaryIdentifier x ->
+    StcPrimaryIdentifier x ->
       case x of
-        "pi" -> scFloatConstant "pi"
-        "inf" -> scFloatConstant "infinity"
+        "pi" -> stcFloatConstant "pi"
+        "inf" -> stcFloatConstant "infinity"
         _ -> St.PrimaryIdentifier x
-    ScPrimaryLiteral x -> St.PrimaryLiteral x
-    ScPrimaryBlock x -> St.PrimaryBlock (scBlockBodySt x)
-    ScPrimaryExpression x -> St.PrimaryExpression (scExpressionSt x)
-    ScPrimaryArrayExpression x -> St.PrimaryArrayExpression (map scBasicExpressionSt x)
-    ScPrimaryDictionaryExpression x -> scPrimarySt (scBasicExpressionToPrimary (scDictionaryToBasicExpression x))
-    ScPrimaryImplicitMessageSend x a -> scImplicitMessageSendSt x a
+    StcPrimaryLiteral x -> St.PrimaryLiteral x
+    StcPrimaryBlock x -> St.PrimaryBlock (stcBlockBodySt x)
+    StcPrimaryExpression x -> St.PrimaryExpression (stcExpressionSt x)
+    StcPrimaryArrayExpression x -> St.PrimaryArrayExpression (map stcBasicExpressionSt x)
+    StcPrimaryDictionaryExpression x -> stcPrimarySt (stcBasicExpressionToPrimary (stcDictionaryToBasicExpression x))
+    StcPrimaryImplicitMessageSend x a -> stcImplicitMessageSendSt x a
 
-scBlockBodySt :: ScBlockBody -> St.BlockBody
-scBlockBodySt (ScBlockBody arg tmp stm) =
-  St.BlockBody Nothing (fmap (map fst) arg) (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+stcBlockBodySt :: StcBlockBody -> St.BlockBody
+stcBlockBodySt (StcBlockBody arg tmp stm) =
+  St.BlockBody Nothing (fmap (map fst) arg) (fmap stcTemporariesSt tmp) (fmap stcStatementsSt stm)
 
-scBinaryArgumentSt :: ScBinaryArgument -> St.BinaryArgument
-scBinaryArgumentSt (ScBinaryArgument p m) =
+stcBinaryArgumentSt :: StcBinaryArgument -> St.BinaryArgument
+stcBinaryArgumentSt (StcBinaryArgument p m) =
   case m of
-    Nothing -> St.BinaryArgument (scPrimarySt p) Nothing
+    Nothing -> St.BinaryArgument (stcPrimarySt p) Nothing
     Just d ->
-      case scDotMessagesForSmalltalk d of
-        (u, Nothing) -> St.BinaryArgument (scPrimarySt p) (Just (map scDotMessageUnarySt u))
-        _ -> error ("scBinaryArgumentSt: " ++ show (ScBinaryArgument p m))
+      case stcDotMessagesForSmalltalk d of
+        (u, Nothing) -> St.BinaryArgument (stcPrimarySt p) (Just (map stcDotMessageUnarySt u))
+        _ -> error ("stcBinaryArgumentSt: " ++ show (StcBinaryArgument p m))
 
-scBinaryMessageSt :: ScBinaryMessage -> St.BinaryMessage
-scBinaryMessageSt (ScBinaryMessage (i, x) a) =
+stcBinaryMessageSt :: StcBinaryMessage -> St.BinaryMessage
+stcBinaryMessageSt (StcBinaryMessage (i, x) a) =
   case x of
-    Nothing -> St.BinaryMessage i (scBinaryArgumentSt a)
-    Just x' -> St.BinaryMessage (i ++ "." ++ x') (scBinaryArgumentSt a)
+    Nothing -> St.BinaryMessage i (stcBinaryArgumentSt a)
+    Just x' -> St.BinaryMessage (i ++ "." ++ x') (stcBinaryArgumentSt a)
 
-scArgumentSt :: ScBasicExpression -> St.KeywordArgument
-scArgumentSt e =
+stcArgumentSt :: StcBasicExpression -> St.KeywordArgument
+stcArgumentSt e =
   St.KeywordArgument
-    (St.basicExpressionToPrimary (scBasicExpressionSt e))
+    (St.basicExpressionToPrimary (stcBasicExpressionSt e))
     Nothing
     Nothing
 
 -- | The implicit extension keyword, currently "value", perhaps should be "with"
-scImplicitKeywordName :: String
-scImplicitKeywordName = "value"
+stcImplicitKeywordName :: String
+stcImplicitKeywordName = "value"
 
 {- | For .stc to .st translation "c.at(i, put: j)" means "c at: i put: j".
      In addition "p.q(i, j)" is understood to mean "p q: i value: j".
      That is, if the message name has fewer parts than there are arguments, supply the implicit name "value" for the missing parts.
 -}
-scDotMessageKeywordSt :: ScDotMessage -> St.KeywordMessage
-scDotMessageKeywordSt (ScDotMessage nm arg) =
+stcDotMessageKeywordSt :: StcDotMessage -> St.KeywordMessage
+stcDotMessageKeywordSt (StcDotMessage nm arg) =
   let extendWithImplicit = True
       nmParts = Split.splitOn ":" nm
       nmSize = length nmParts
       argSize = length arg
       messageParts =
         if extendWithImplicit && nmSize < argSize
-          then take argSize (nmParts ++ repeat scImplicitKeywordName)
+          then take argSize (nmParts ++ repeat stcImplicitKeywordName)
           else nmParts
   in if null arg
-      then error "scDotMessageKeywordSt: Unary"
+      then error "stcDotMessageKeywordSt: Unary"
       else
         if length messageParts == argSize
-          then St.KeywordMessage (zipWith (\i j -> (i ++ ":", scArgumentSt j)) messageParts arg)
-          else error "scDotMessageKeywordSt: N-ary messages name degree mismatch"
+          then St.KeywordMessage (zipWith (\i j -> (i ++ ":", stcArgumentSt j)) messageParts arg)
+          else error "stcDotMessageKeywordSt: N-ary messages name degree mismatch"
 
-scDotMessageUnarySt :: ScDotMessage -> St.UnaryMessage
-scDotMessageUnarySt (ScDotMessage i a) =
+stcDotMessageUnarySt :: StcDotMessage -> St.UnaryMessage
+stcDotMessageUnarySt (StcDotMessage i a) =
   case a of
     [] -> St.UnaryMessage i
-    _ -> error ("scDotMessageUnarySt: argument: " ++ show a)
+    _ -> error ("stcDotMessageUnarySt: argument: " ++ show a)
 
-scMessagesSt :: ScMessages -> St.Messages
-scMessagesSt m =
+stcMessagesSt :: StcMessages -> St.Messages
+stcMessagesSt m =
   case m of
-    ScMessagesDot m1 m2 ->
-      case scDotMessagesForSmalltalk m1 of
-        ([], Just k) -> St.MessagesKeyword (scDotMessageKeywordSt k)
+    StcMessagesDot m1 m2 ->
+      case stcDotMessagesForSmalltalk m1 of
+        ([], Just k) -> St.MessagesKeyword (stcDotMessageKeywordSt k)
         (u, k) ->
           St.MessagesUnary
-            (map scDotMessageUnarySt u)
-            (fmap (map scBinaryMessageSt) m2)
-            (fmap scDotMessageKeywordSt k)
-    ScMessagesBinary m1 -> St.MessagesBinary (map scBinaryMessageSt m1) Nothing
+            (map stcDotMessageUnarySt u)
+            (fmap (map stcBinaryMessageSt) m2)
+            (fmap stcDotMessageKeywordSt k)
+    StcMessagesBinary m1 -> St.MessagesBinary (map stcBinaryMessageSt m1) Nothing
 
-scTemporarySt :: ScTemporary -> St.Identifier
-scTemporarySt t =
+stcTemporarySt :: StcTemporary -> St.Identifier
+stcTemporarySt t =
   case t of
     (i, Nothing) -> i
-    _ -> error "scTemporarySt"
+    _ -> error "stcTemporarySt"
 
 -- | Temporaries must be in correct form.
-scTemporariesSt :: [ScTemporaries] -> St.Temporaries
-scTemporariesSt t =
+stcTemporariesSt :: [StcTemporaries] -> St.Temporaries
+stcTemporariesSt t =
   case t of
-    [t1] -> St.Temporaries (map scTemporarySt t1)
-    _ -> error "scTemporariesSt"
+    [t1] -> St.Temporaries (map stcTemporarySt t1)
+    _ -> error "stcTemporariesSt"
 
-scReturnStatementSt :: ScReturnStatement -> St.ReturnStatement
-scReturnStatementSt (ScReturnStatement e) = St.ReturnStatement (scExpressionSt e)
+stcReturnStatementSt :: StcReturnStatement -> St.ReturnStatement
+stcReturnStatementSt (StcReturnStatement e) = St.ReturnStatement (stcExpressionSt e)
 
-scStatementsSt :: ScStatements -> St.Statements
-scStatementsSt stm =
+stcStatementsSt :: StcStatements -> St.Statements
+stcStatementsSt stm =
   case stm of
-    ScStatementsReturn x -> St.StatementsReturn (scReturnStatementSt x)
-    ScStatementsExpression x y -> St.StatementsExpression (scExpressionSt x) (fmap scStatementsSt y)
+    StcStatementsReturn x -> St.StatementsReturn (stcReturnStatementSt x)
+    StcStatementsExpression x y -> St.StatementsExpression (stcExpressionSt x) (fmap stcStatementsSt y)
 
-scReturnStatement :: ScReturnStatement -> St.ReturnStatement
-scReturnStatement (ScReturnStatement x) = St.ReturnStatement (scExpressionSt x)
+stcReturnStatement :: StcReturnStatement -> St.ReturnStatement
+stcReturnStatement (StcReturnStatement x) = St.ReturnStatement (stcExpressionSt x)
 
-scBasicExpressionSt :: ScBasicExpression -> St.BasicExpression
-scBasicExpressionSt (ScBasicExpression x y) =
-  St.BasicExpression (scPrimarySt x) (fmap scMessagesSt y) Nothing
+stcBasicExpressionSt :: StcBasicExpression -> St.BasicExpression
+stcBasicExpressionSt (StcBasicExpression x y) =
+  St.BasicExpression (stcPrimarySt x) (fmap stcMessagesSt y) Nothing
 
-scExpressionSt :: ScExpression -> St.Expression
-scExpressionSt e =
+stcExpressionSt :: StcExpression -> St.Expression
+stcExpressionSt e =
   case e of
-    ScExprAssignment i e1 -> St.ExprAssignment (St.Assignment i (scExpressionSt e1))
-    ScExprBasic e1 -> St.ExprBasic (scBasicExpressionSt e1)
+    StcExprAssignment i e1 -> St.ExprAssignment (St.Assignment i (stcExpressionSt e1))
+    StcExprBasic e1 -> St.ExprBasic (stcBasicExpressionSt e1)
 
-scInitializerDefinitionSt :: ScInitializerDefinition -> St.InitializerDefinition
-scInitializerDefinitionSt (ScInitializerDefinition cmt tmp stm) =
-  St.InitializerDefinition cmt (fmap scTemporariesSt tmp) (fmap scStatementsSt stm)
+stcInitializerDefinitionSt :: StcInitializerDefinition -> St.InitializerDefinition
+stcInitializerDefinitionSt (StcInitializerDefinition cmt tmp stm) =
+  St.InitializerDefinition cmt (fmap stcTemporariesSt tmp) (fmap stcStatementsSt stm)
 
--- * C-Smalltalk translator
+-- * C-Smalltalk (.stc) translator
 
 {- | Separate out any leading // prefixed comment
 
@@ -209,17 +211,31 @@ stcLeadingComment :: String -> (String, String)
 stcLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
 
 -- | Stc parse
-stcParseToSc :: String -> ScInitializerDefinition
-stcParseToSc = Sc.Parser.superColliderParserInitializerDefinition . Sc.Lexer.alexScanTokens
+stcParseToStc :: String -> StcInitializerDefinition
+stcParseToStc = Stc.Parser.stcParserInitializerDefinition . Stc.Lexer.alexScanTokens
+
+-- | Sc parse
+scParseToStc :: String -> StcInitializerDefinition
+scParseToStc = SuperCollider.Parser.scParserInitializerDefinition . Stc.Lexer.alexScanTokens
+
+parseToSt :: (String -> StcInitializerDefinition) -> String -> St.InitializerDefinition
+parseToSt f s =
+  let (c, p) = stcLeadingComment s
+      eStc = stcInitializerDefinitionSetComment c (f p)
+  in stcInitializerDefinitionSt (Stc.Rewrite.stcInitializerDefinitionRewrite eStc)
 
 -- | Parse C-Smalltalk InitializerDefinition.
-stcParseInitializerDefinition :: String -> St.InitializerDefinition
-stcParseInitializerDefinition s =
-  let (c, p) = stcLeadingComment s
-      eSc = scInitializerDefinitionSetComment c (stcParseToSc p)
-  in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
+stcParseToSt :: String -> St.InitializerDefinition
+stcParseToSt = parseToSt stcParseToStc
+
+-- | Parse SuperCollider InitializerDefinition.
+scParseToSt :: String -> St.InitializerDefinition
+scParseToSt = parseToSt scParseToStc
 
 {- | Translate C-Smalltalk program text to Smalltalk.
+
+>>> stcToSt "p := q"
+"p := q .\n"
 
 >>> stcToSt "(p - q).m"
 "(p - q) m .\n"
@@ -284,17 +300,21 @@ stcParseInitializerDefinition s =
 > stcToSt "f.m(p: x, q: y)" -- error
 -}
 stcToSt :: String -> String
-stcToSt = Ansi.Print.initializerDefinition_pp . stcParseInitializerDefinition
+stcToSt = Ansi.Print.initializerDefinition_pp . stcParseToSt
 
-{- | Parse .stc and translate to Init Expr.
+scToSt :: String -> String
+scToSt = Ansi.Print.initializerDefinition_pp . scParseToSt
+
+{- | Parse .stc and translate to Expr.Expr.
 
 >>> stcToExpr "60.MidiCps"
 Init (Just "") [] [Send (Literal (NumberLiteral (Int 60))) (Message (UnarySelector "MidiCps") [])]
 -}
 stcToExpr :: String -> Expr.Expr
-stcToExpr =
-  Expr.initializerDefinitionExpr
-    . stcParseInitializerDefinition
+stcToExpr = Expr.initializerDefinitionExpr . stcParseToSt
+
+scToExpr :: String -> Expr.Expr
+scToExpr = Expr.initializerDefinitionExpr . scParseToSt
 
 -- | exprPrintJs of stcToExpr
 stcToJs :: Maybe String -> String -> String
@@ -323,16 +343,16 @@ stcToExprStm = Expr.initStatements . stcToExpr
 stcToExprToStc :: String -> String
 stcToExprToStc = Expr.Print.exprPrintStc True . stcToExpr
 
-{- | Print .stc as .sc.  Apply is not implicit in .sc.
+{- | Print .stc as .stc.  Apply is not printed implicitly.
 
->>> stcToSc "SinOsc(440, 0)"
+>>> stcToStc "SinOsc(440, 0)"
 "SinOsc.apply([440, 0])"
 
->>> stcToSc "f(x, y)"
+>>> stcToStc "f(x, y)"
 "f.apply([x, y])"
 -}
-stcToSc :: String -> String
-stcToSc = Expr.Print.exprPrintStc False . stcToExpr
+stcToStc :: String -> String
+stcToStc = Expr.Print.exprPrintStc False . stcToExpr
 
 -- * Spl
 
@@ -395,17 +415,17 @@ splRewriteBinaryOperators txt =
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
--- | Spl parse to Sc
-splParseToSc :: String -> ScInitializerDefinition
-splParseToSc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
+-- | Spl parse to Stc
+splParseToStc :: String -> StcInitializerDefinition
+splParseToStc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
 
 -- | Parse Spl to St.
 splParseToSt :: String -> St.InitializerDefinition
 splParseToSt s =
   let (c, p) = splLeadingComment s
       p' = splRewriteBinaryOperators (splRewriteDotExpressions p)
-      eSc = scInitializerDefinitionSetComment c (splParseToSc p')
-  in scInitializerDefinitionSt (Sc.Rewrite.scInitializerDefinitionRewrite eSc)
+      eStc = stcInitializerDefinitionSetComment c (splParseToStc p')
+  in stcInitializerDefinitionSt (Stc.Rewrite.stcInitializerDefinitionRewrite eStc)
 
 -- | Parse .spl and translate to Init Expr.
 splToExpr :: String -> Expr.Expr
@@ -464,16 +484,16 @@ stPrimaryFactoryMethod cl nm =
       stm = St.StatementsReturn (St.ReturnStatement xpr)
   in St.MethodDefinition cl Nothing pat Nothing (Just stm) Nothing Nothing Nothing
 
-{- | Translate Sc method to St.
+{- | Translate Stc method to St.
 Rewrites temporaries and for precedence.
 The class method "constructor" is special.
 It's pattern is derived from it's arguments names, and it generates a primary factory method.
 -}
-scMethodDefinitionToSt :: St.Identifier -> ScMethodDefinition -> [St.MethodDefinition]
-scMethodDefinitionToSt cl_nm md =
+stcMethodDefinitionToSt :: St.Identifier -> StcMethodDefinition -> [St.MethodDefinition]
+stcMethodDefinitionToSt cl_nm md =
   let is_cl = isClassMethod md
       st_cl_nm = if is_cl then cl_nm ++ " class" else cl_nm
-      blk = Sc.Rewrite.scBlockBodyRewrite (methodBody md)
+      blk = Stc.Rewrite.stcBlockBodyRewrite (methodBody md)
       blk_args = maybe [] (map fst) (blockArguments blk)
       md_nm = methodName md
       is_constructor = is_cl && md_nm == "constructor"
@@ -489,18 +509,18 @@ scMethodDefinitionToSt cl_nm md =
                 then St.BinaryPattern md_nm arg
                 else St.KeywordPattern [(md_nm, arg)]
             args -> St.KeywordPattern (zip (St.keywordSelectorElements md_nm) args)
-      tmp = fmap scTemporariesSt (blockTemporaries blk)
-      stm = fmap scStatementsSt (blockStatements blk)
+      tmp = fmap stcTemporariesSt (blockTemporaries blk)
+      stm = fmap stcStatementsSt (blockStatements blk)
       st_md = St.MethodDefinition (st_cl_nm, is_cl) Nothing pat tmp stm Nothing Nothing Nothing
   in if is_constructor
       then [st_md, stPrimaryFactoryMethod (st_cl_nm, is_cl) (if null blk_args then "new" else concatMap (++ ":") blk_args)]
       else [st_md]
 
--- | Translate Sc class to St.
-scClassDefinitionToSt :: ScClassDefinition -> St.ClassDefinition
-scClassDefinitionToSt cd =
+-- | Translate Stc class to St.
+stcClassDefinitionToSt :: StcClassDefinition -> St.ClassDefinition
+stcClassDefinitionToSt cd =
   let nm = className cd
-      (cm, im) = scClassDefinitionPartitionMethods cd
+      (cm, im) = stcClassDefinitionPartitionMethods cd
   in St.ClassDefinition
       nm
       (superclassName cd)
@@ -508,17 +528,17 @@ scClassDefinitionToSt cd =
       (maybe [] (map fst) (classInstanceVariableNames cd))
       (maybe [] (map fst) (classVariableNames cd))
       []
-      (concatMap (scMethodDefinitionToSt nm) im)
-      (concatMap (scMethodDefinitionToSt nm) cm)
+      (concatMap (stcMethodDefinitionToSt nm) im)
+      (concatMap (stcMethodDefinitionToSt nm) cm)
       Nothing
       (classCategory cd)
       (classComment cd)
 
 {-
 
-rw = scToSt
-scToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"
-scToSt "p.q:r(i)" -- error ; this is an error in Sc and is reported here but with an odd message
-scToSt "p.q()" -- error ; this was dis-allowed for stcToSt ; it's not neccesary in Sc but it is allowed
+rw = stcToSt
+stcToSt "p.q(r: i)" == "p q: {#'r:' -> i} .\n"
+stcToSt "p.q:r(i)" -- error ; this is an error in Stc and is reported here but with an odd message
+stcToSt "p.q()" -- error ; this is dis-allowed
 
 -}

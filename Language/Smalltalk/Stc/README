@@ -1,0 +1,13 @@
+The Stc parser could directly generate an Expr Ast.
+
+Block comments do not allow either nested comments or the * character.
+
+There could be a distinct comment format that is part of the Ast and may only appear as either:
+
+- class comments (preceding class definition)
+- method comments (first element of method body)
+
+"Any kind of sequence can be defined using either left recursion or
+right recursion, but you should always use left recursion, because it
+can parse a sequence of any number of elements with bounded stack
+space."
