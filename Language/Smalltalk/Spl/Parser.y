@@ -148,13 +148,14 @@ primary :: { StcPrimary }
     | literal { StcPrimaryLiteral $1 }
     | '{' block_body '}' { StcPrimaryBlock $2 }
     | '(' expression ')' { StcPrimaryExpression $2 }
-    | '[' array_expression ']' { StcPrimaryArrayExpression $2 }
+    | '[' expression_seq ']' { StcPrimaryArrayExpression $2 }
+    | '(' tuple_expression_seq ')' { stcBasicExpressionToPrimary (stcConstructDotMessageSend (StcPrimaryArrayExpression $2) "asTuple" []) }
     | '[' vector_expression ']' { StcPrimaryArrayExpression $2 }
     | '[' matrix_expression ']' { splMatrixExpression $2 }
     | '(' expression '..' expression ')' { stcIntervalRange $2 $4 }
     | '[' expression '..' expression ']' { stcArrayRange $2 $4 }
-    | identifier '(' array_expression ')' { StcPrimaryImplicitMessageSend $1 $3 }
-    | identifier '(' array_expression ')' blockexpression_seq { StcPrimaryImplicitMessageSend $1 ($3 ++ $5) }
+    | identifier '(' expression_seq ')' { StcPrimaryImplicitMessageSend $1 $3 }
+    | identifier '(' expression_seq ')' blockexpression_seq { StcPrimaryImplicitMessageSend $1 ($3 ++ $5) }
 
 reserved_identifier :: { St.Identifier }
     : nil { "nil" }
@@ -173,10 +174,17 @@ matrix_expression :: { [[StcBasicExpression]] }
     : vector_expression ';' vector_expression { [$1, $3] }
     | vector_expression ';' matrix_expression { $1 : $3 }
 
-array_expression :: { [StcBasicExpression] }
+expression_seq :: { [StcBasicExpression] }
     : { [] }
-    | basic_expression { [$1] }
-    | basic_expression ',' array_expression { $1 : $3 }
+    | non_empty_expression_seq { $1 }
+
+non_empty_expression_seq :: { [StcBasicExpression] }
+    : basic_expression { [$1] }
+    | basic_expression ',' non_empty_expression_seq { $1 : $3 }
+
+tuple_expression_seq :: { [StcBasicExpression] }
+    : basic_expression ',' basic_expression { [$1, $3] }
+    | basic_expression ',' tuple_expression_seq { $1 : $3 }
 
 block_body :: { StcBlockBody }
     : maybe_arguments maybe_temporaries_seq maybe_statements { StcBlockBody $1 $2 $3 }

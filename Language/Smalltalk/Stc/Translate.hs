@@ -480,6 +480,12 @@ splToExpr =
 >>> splToSt "i + c::k + j" -- Quoted at syntax
 "i + (c at: '''k''') + j .\n"
 
+>>> splToSt "(1)" -- Parenthesised expression
+"(1) .\n"
+
+>>> splToSt "(1, 2)" -- Tuple expression
+"({1. 2} asTuple) .\n"
+
 -}
 splToSt :: String -> String
 splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt
