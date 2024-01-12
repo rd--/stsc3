@@ -435,10 +435,10 @@ splToExpr =
 
 {- | Spl to St
 
->>> splToSt "{ Rand(0, 1) } !^ 4"
+>>> splToSt "{ Rand(0, 1) } !^ 4" -- Hat operator
 "[ (Rand apply: {0. 1}) .\n ] %~ 4 .\n"
 
->>> splToSt "[1 2 3 4 5]"
+>>> splToSt "[1 2 3 4 5]" -- Vector syntax
 "{1. 2. 3. 4. 5} .\n"
 
 >>> splToSt "[1.2 3.4 5]"
@@ -447,16 +447,16 @@ splToExpr =
 >>> splToSt "[p q r s t]"
 "{p. q. r. s. t} .\n"
 
->>> splToSt "{ :x | x * x }"
+>>> splToSt "{ :x | x * x }" -- Block syntax
 "[ :x | x * x .\n ] .\n"
 
->>> splToSt "let x = 1; x"
+>>> splToSt "let x = 1; x" -- Let syntax
 "| x |\n x := 1 .\n x .\n"
 
 >>> splToSt "x.F"
 "x f .\n"
 
->>> splToSt "let x = 5; x := x + 1; x"
+>>> splToSt "let x = 5; x := x + 1; x" -- Assignment syntax
 "| x |\n x := 5 .\n x := x + 1 .\n x .\n"
 
 >>> splToSt "if(p) { q } { r }"
@@ -477,7 +477,8 @@ splToExpr =
 >>> splToSt "(k: v)" -- Dictionary
 "(Dictionary newFromPairs: {k. v}) .\n"
 
-> splToSt "f.p(1 * c::k)"
+>>> splToSt "i + c::k + j" -- Quoted at syntax
+"i + (c at: '''k''') + j .\n"
 
 -}
 splToSt :: String -> String

@@ -19,6 +19,8 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       '.' { Dot }
       '..' { DotDot }
       ':' { Colon }
+      '::' { ColonColon }
+      ':=' { ColonEquals }
       ';' { SemiColon }
       '=' { Equals }
       '[' { LeftBracket }
@@ -32,15 +34,12 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       nil { NilIdentifier }
       true { TrueIdentifier }
 
-      ':=' { AssignmentOperator }
-
       arity_qualified_identifier { ArityQualifiedIdentifier $$ }
       binary_selector { BinarySelector $$ }
       double_quoted_string { DoubleQuotedString $$ }
       float { Float $$ }
       identifier { Identifier $$ }
       integer { Integer $$ }
-      keyword { Keyword $$ }
       single_quoted_string { SingleQuotedString $$ }
 
 %%
@@ -65,23 +64,26 @@ expression :: { StcExpression }
 syntax_at_put :: { StcBasicExpression }
     : primary '[' basic_expression ']' ':=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
 
+syntax_quoted_at :: { StcBasicExpression }
+    : primary '::' identifier { stcConstructDotMessageSend $1 "at" [stcLiteralToBasicExpression (St.StringLiteral ("'" ++ $3 ++ "'"))] }
+
 basic_expression :: { StcBasicExpression }
     : primary maybe_messages { StcBasicExpression $1 $2 }
     | dictionary_expression maybe_messages { StcBasicExpression $1 $2 }
 
 dictionary_expression :: { StcPrimary }
-    : '(' keyword_expression_seq ')' { StcPrimaryDictionaryExpression $2 }
+    : '(' dictionary_item_seq ')' { StcPrimaryDictionaryExpression $2 }
 
-keyword_expression_seq :: { [(St.Identifier, StcBasicExpression)] }
+dictionary_item_seq :: { [(St.Identifier, StcBasicExpression)] }
     : { [] }
-    | nonemptykeyword_expression_seq { $1 }
+    | non_empty_dictionary_item_seq { $1 }
 
-nonemptykeyword_expression_seq :: { [(St.Identifier, StcBasicExpression)] }
-    : keyword_expression { [$1] }
-    | keyword_expression ',' keyword_expression_seq { $1 : $3 }
+non_empty_dictionary_item_seq :: { [(St.Identifier, StcBasicExpression)] }
+    : dictionary_item { [$1] }
+    | dictionary_item ',' dictionary_item_seq { $1 : $3 }
 
-keyword_expression :: { (St.Identifier, StcBasicExpression) }
-    : keyword basic_expression { ($1, $2) }
+dictionary_item :: { (St.Identifier, StcBasicExpression) }
+    : identifier ':' basic_expression { ($1, $3) }
 
 maybe_messages :: { Maybe StcMessages }
     : { Nothing }
@@ -138,7 +140,8 @@ binary_argument :: { StcBinaryArgument }
     : primary maybe_dot_message_seq { StcBinaryArgument $1 $2 }
 
 primary :: { StcPrimary }
-    : identifier { StcPrimaryIdentifier $1 }
+    : syntax_quoted_at { StcPrimaryExpression (StcExprBasic $1) }
+    | identifier { StcPrimaryIdentifier $1 }
     | arity_qualified_identifier { StcPrimaryIdentifier $1 }
     | binary_selector { StcPrimaryIdentifier $1 }
     | reserved_identifier { StcPrimaryIdentifier $1 }

@@ -12,7 +12,6 @@ $upper = A-Z -- 3.5.1 lowercaseAlphabetic
 $underscore = _ -- 3.5.1 nonCaseLetter
 $letter = [a-z A-Z _] -- 3.5.1 letter
 $letter_or_digit = [a-z A-Z _ 0-9]
-$letter_or_digit_or_colon = [a-z A-Z _ 0-9 \:]
 $binary_char = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~\^] -- !@%&*-+=|<>?/~
 $graphic = $printable # $white
 
@@ -33,6 +32,7 @@ tokens :-
   ".."                                   { \_ -> DotDot }
   ":"                                    { \_ -> Colon }
   "::"                                   { \_ -> ColonColon }
+  ":="                                   { \_ -> ColonEquals }
   ";"                                    { \_ -> SemiColon }
   "="                                    { \_ -> Equals }
   "["                                    { \_ -> LeftBracket }
@@ -46,11 +46,8 @@ tokens :-
   "nil"                                  { \_ -> NilIdentifier }
   "true"                                 { \_ -> TrueIdentifier }
 
-  ":="                                   { \_ -> AssignmentOperator }
-
   @identifier                            { \s -> Identifier s }
   @identifier ":/" @integer              { \s -> ArityQualifiedIdentifier s }
-  @identifier ":"                        { \s -> Keyword (init s) }
   $binary_char+                          { \s -> BinarySelector s }
   @float                                 { \s -> Float (read s) }
   @integer                               { \s -> Integer (read s) }
