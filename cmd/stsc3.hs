@@ -52,7 +52,7 @@ spl_cat_fragments = cat_fragments Stc.splParseToStc
 
 -- | Parse class library file, a sequence of class definitions.
 stc_parse_class_definition_seq :: String -> [Stc.StcClassDefinition]
-stc_parse_class_definition_seq = Stc.stcParserClassDefinitionSeq . Stc.alexScanTokens
+stc_parse_class_definition_seq = Stc.parseClassDefinitionSeq . Stc.alexScanTokens
 
 {- | Read and print library.
 
@@ -66,7 +66,7 @@ stc_cat_library fn =
 
 -- | Parse class extensions file, a sequence of class extensions.
 stc_parse_class_extension_seq :: String -> [Stc.StcClassExtension]
-stc_parse_class_extension_seq = Stc.stcParserClassExtensionSeq . Stc.alexScanTokens
+stc_parse_class_extension_seq = Stc.parseClassExtensionSeq . Stc.alexScanTokens
 
 {- | Read and print extensions.
 

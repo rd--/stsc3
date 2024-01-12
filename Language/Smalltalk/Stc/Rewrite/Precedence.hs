@@ -5,9 +5,9 @@
 module Language.Smalltalk.Stc.Rewrite.Precedence where
 
 import Language.Smalltalk.Stc.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast.Print as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
 
 {- | This is for parenthesising.
      It places the initial nary selector at the end of the lhs, not the start of the rhs.
@@ -188,10 +188,10 @@ stcPrimaryRewritePrecedence p =
 -- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
 stcRewritePrecedenceViewer :: String -> String
 stcRewritePrecedenceViewer =
-  Sc.stcInitializerDefinitionPrint
+  Stc.stcInitializerDefinitionPrint
     . stcInitializerDefinitionRewritePrecedence
-    . Sc.stcParserInitializerDefinition
-    . Sc.alexScanTokens
+    . Stc.parseInitializerDefinition
+    . Stc.alexScanTokens
 
 {-
 
@@ -211,6 +211,6 @@ rw "p.q(r + s.t(i))" == "p.q(r + (s.t(i)))\n" -- Binary within Unary/Nary
 rw "p.q(r.s(i).t).u(j)" == "(p.q((r.s(i)).t)).u(j)\n"
 rw "p.q(r.s(i).t).u(j) + k" == "((p.q((r.s(i)).t)).u(j)) + k\n"
 
-rd = Sc.superColliderParserInitializerDefinition . Sc.alexScanTokens
+rd = Stc.superColliderParserInitializerDefinition . Stc.alexScanTokens
 
 -}

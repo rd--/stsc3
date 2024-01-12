@@ -1,13 +1,21 @@
-The Stc parser could directly generate an Expr Ast.
+The SuperCollider parser uses the Stc Ast and Lexer.
 
-Block comments do not allow either nested comments or the * character.
+At present the only difference in the Parser is the assignment syntax.
 
-There could be a distinct comment format that is part of the Ast and may only appear as either:
-
-- class comments (preceding class definition)
-- method comments (first element of method body)
-
-"Any kind of sequence can be defined using either left recursion or
-right recursion, but you should always use left recursion, because it
-can parse a sequence of any number of elements with bounded stack
-space."
+```
+$ cd ~/sw/stsc3/Language/Smalltalk/
+$ diff Stc/Parser.y SuperCollider/Parser.y
+2c2
+< module Language.Smalltalk.Stc.Parser where
+---
+> module Language.Smalltalk.SuperCollider.Parser where
+116c116
+<     : identifier ':=' expression { StcExprAssignment $1 $3 }
+---
+>     : identifier '=' expression { StcExprAssignment $1 $3 }
+121c121
+<     : primary '[' basic_expression ']' ':=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
+---
+>     : primary '[' basic_expression ']' '=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
+$
+```

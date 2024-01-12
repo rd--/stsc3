@@ -8,13 +8,15 @@ import           Language.Smalltalk.Spl.Lexer {- stsc3 -}
 import           Language.Smalltalk.Spl.Token {- stsc3 -}
 }
 
-%name splParser initializer_definition
+%name parseInitializerDefinition initializer_definition
 %tokentype { Token }
 %error { parseError }
 
 %token
       '(' { LeftParen }
       ')' { RightParen }
+      '*' { Asterisk }
+      '+' { Plus }
       ',' { Comma }
       '.' { Dot }
       '..' { DotDot }
@@ -50,9 +52,15 @@ initializer_definition :: { StcInitializerDefinition }
     : maybe_temporaries_seq maybe_statements { StcInitializerDefinition Nothing $1 $2 }
 
 binary_operator :: { (String, Maybe String) }
-    : binary_selector { ($1, Nothing) }
-    | binary_selector '.' identifier { ($1, Just $3) }
+    : extended_binary_selector { ($1, Nothing) }
+    | extended_binary_selector '.' identifier { ($1, Just $3) }
     | '=' { ("=", Nothing) }
+
+extended_binary_selector :: { String }
+    : binary_selector { $1 }
+    | '+' { "+" }
+    | '*' { "*" }
+    | '|' { "|" }
 
 expression :: { StcExpression }
    : identifier ':=' expression { StcExprAssignment $1 $3 }

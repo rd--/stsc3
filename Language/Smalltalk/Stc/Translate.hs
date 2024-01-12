@@ -212,11 +212,11 @@ stcLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf "/
 
 -- | Stc parse
 stcParseToStc :: String -> StcInitializerDefinition
-stcParseToStc = Stc.Parser.stcParserInitializerDefinition . Stc.Lexer.alexScanTokens
+stcParseToStc = Stc.Parser.parseInitializerDefinition . Stc.Lexer.alexScanTokens
 
 -- | Sc parse
 scParseToStc :: String -> StcInitializerDefinition
-scParseToStc = SuperCollider.Parser.scParserInitializerDefinition . Stc.Lexer.alexScanTokens
+scParseToStc = SuperCollider.Parser.parseInitializerDefinition . Stc.Lexer.alexScanTokens
 
 parseToSt :: (String -> StcInitializerDefinition) -> String -> St.InitializerDefinition
 parseToSt f s =
@@ -417,7 +417,7 @@ splRewriteBinaryOperators txt =
 
 -- | Spl parse to Stc
 splParseToStc :: String -> StcInitializerDefinition
-splParseToStc = Spl.Parser.splParser . Spl.Lexer.alexScanTokens
+splParseToStc = Spl.Parser.parseInitializerDefinition . Spl.Lexer.alexScanTokens
 
 -- | Parse Spl to St.
 splParseToSt :: String -> St.InitializerDefinition

@@ -10,9 +10,9 @@ import Data.Maybe {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Stc.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Ast.Print as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast.Print as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
 
 -- | Get initialiser lifted to an Assignment expression.
 stcTemporaryInitialiser :: StcTemporary -> Maybe StcExpression
@@ -108,10 +108,10 @@ stcPrimaryRewriteTemporaries p =
 -- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
 stcRewriteTemporariesViewer :: String -> String
 stcRewriteTemporariesViewer =
-  Sc.stcInitializerDefinitionPrint
+  Stc.stcInitializerDefinitionPrint
     . stcInitializerDefinitionRewriteTemporaries
-    . Sc.stcParserInitializerDefinition
-    . Sc.alexScanTokens
+    . Stc.parseInitializerDefinition
+    . Stc.alexScanTokens
 
 {-
 rw = stcRewriteTemporariesViewer

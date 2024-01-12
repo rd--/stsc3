@@ -49,9 +49,9 @@ This transformation at the Sc Ast.
 module Language.Smalltalk.Stc.Rewrite where
 
 import Language.Smalltalk.Stc.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Ast.Print as Sc
-import qualified Language.Smalltalk.Stc.Lexer as Sc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Parser as Sc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Ast.Print as Stc
+import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
 
 import Language.Smalltalk.Stc.Rewrite.Precedence
 import Language.Smalltalk.Stc.Rewrite.Temporaries
@@ -77,10 +77,10 @@ stcInitializerDefinitionRewrite =
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
 stcRewriteViewer :: String -> String
 stcRewriteViewer =
-  Sc.stcInitializerDefinitionPrint
+  Stc.stcInitializerDefinitionPrint
     . stcInitializerDefinitionRewrite
-    . Sc.stcParserInitializerDefinition
-    . Sc.alexScanTokens
+    . Stc.parseInitializerDefinition
+    . Stc.alexScanTokens
 
 {-
 

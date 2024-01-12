@@ -7,9 +7,9 @@ import           Language.Smalltalk.Stc.Lexer {- stsc3 -}
 import           Language.Smalltalk.Stc.Token {- stsc3 -}
 }
 
-%name scParserInitializerDefinition initializer_definition
-%name scParserClassDefinitionSeq class_definition_seq
-%name scParserClassExtensionSeq class_extension_seq
+%name parseInitializerDefinition initializer_definition
+%name parseClassDefinitionSeq class_definition_seq
+%name parseClassExtensionSeq class_extension_seq
 %tokentype { Token }
 %error { parseError }
 
@@ -69,8 +69,7 @@ class_definition_seq :: { [StcClassDefinition] }
     | class_definition class_definition_seq { $1 : $2 }
 
 class_definition :: { StcClassDefinition }
-    : identifier maybe_super_class '{' maybe_class_variables maybe_variables method_definition_seq '}'
-          { StcClassDefinition $1 $2 $5 $4 $6 Nothing Nothing }
+    : identifier maybe_super_class '{' maybe_class_variables maybe_variables method_definition_seq '}' { StcClassDefinition $1 $2 $5 $4 $6 Nothing Nothing }
 
 maybe_super_class :: { Maybe St.Identifier }
     : { Just "Object" }
@@ -119,8 +118,7 @@ expression :: { StcExpression }
     | basic_expression { StcExprBasic $1 }
 
 syntax_at_put :: { StcBasicExpression }
-    : primary '[' basic_expression ']' '=' basic_expression
-      { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
+    : primary '[' basic_expression ']' '=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
 
 basic_expression :: { StcBasicExpression }
     : primary maybe_messages { StcBasicExpression $1 $2 }
@@ -189,8 +187,8 @@ maybe_binary_message_seq :: { Maybe [StcBinaryMessage] }
     | binary_message_seq { Just $1 }
 
 binary_message_seq :: { [StcBinaryMessage] }
-    : binary_message binary_message_seq      { $1 : $2 }
-    | binary_message                        { [$1] }
+    : binary_message binary_message_seq { $1 : $2 }
+    | binary_message { [$1] }
 
 binary_message :: { StcBinaryMessage }
     : binary_operator binary_argument { StcBinaryMessage $1 $2 }
@@ -239,8 +237,8 @@ default_var_seq :: { [StcBlockArgument] }
     | default_var ',' default_var_seq { $1 : $3 }
 
 default_var :: { StcBlockArgument }
-    :  identifier { ($1,Nothing) }
-    |  identifier '=' literal { ($1,Just $3) }
+    : identifier { ($1,Nothing) }
+    | identifier '=' literal { ($1,Just $3) }
 
 maybe_temporaries_seq :: { Maybe [StcTemporaries] }
     : { Nothing }

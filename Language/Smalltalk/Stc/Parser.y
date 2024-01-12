@@ -7,9 +7,9 @@ import           Language.Smalltalk.Stc.Lexer {- stsc3 -}
 import           Language.Smalltalk.Stc.Token {- stsc3 -}
 }
 
-%name stcParserInitializerDefinition initializer_definition
-%name stcParserClassDefinitionSeq class_definition_seq
-%name stcParserClassExtensionSeq class_extension_seq
+%name parseInitializerDefinition initializer_definition
+%name parseClassDefinitionSeq class_definition_seq
+%name parseClassExtensionSeq class_extension_seq
 %tokentype { Token }
 %error { parseError }
 
@@ -17,11 +17,14 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
       '#[' { HashLeftBracket }
       '(' { LeftParen }
       ')' { RightParen }
+      '*' { Asterisk }
+      '+' { Plus }
       ',' { Comma }
       '.' { Dot }
       '..' { DotDot }
       ':' { Colon }
       ';' { SemiColon }
+      '=' { Equals }
       '[' { LeftBracket }
       ']' { RightBracket }
       '{' { LeftBrace }
@@ -36,10 +39,7 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
       true { TrueIdentifier }
       var { Var }
 
-      '*' { Asterisk }
-      '+' { Plus }
       ':=' { AssignmentOperator }
-      '=' { Equals }
       '^' { ReturnOperator }
 
       binary_selector { BinarySelector $$ }
