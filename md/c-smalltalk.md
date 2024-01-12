@@ -110,9 +110,13 @@ This requires _q_ to have two arities.
 While many scheme-like languages will allow this, it can make systems more complicated.
 If translation is desired, unary and binary message selectors can be named so that they translate distinctly.
 
-## Assignment
+## Assignment & Equality
 
-In Smalltalk _=_ is the equality operator, _p = q_ decides if _p_ and _q_ are equal.
+In Smalltalk _:=_ is the assignment operator and _=_ is the equality operator.
+_p := q_ assigns the value q to the variable _p_.
+_p = q_ decides if _p_ and _q_ are equal.
+
+In SuperCollider these are _=_ and _==_ respectively.
 
 ## Notation for the _at:_ and _at:put:_ protocol
 
