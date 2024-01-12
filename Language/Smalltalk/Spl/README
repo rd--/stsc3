@@ -1,6 +1,14 @@
-Parses all graphs at ~/sw/slp/help/SuperColldider/Graph (371) except:
+Parsed all graphs at ~/sw/slp/help/SuperColldider/Graph (371) except the below, which were modified to pass.
 
-- Dcv - Time varying feedback delay network.sl: ctl::
-- Jl - Pwm Crossfade.sl: var [f1, f2]
-- Jmcc - Bach prelude.sl: x[3 4 5]
-- Mk - 2206.sl: ctl::
+- Dcv - Time varying feedback delay network.sl
+  + s.Neg -> [[]]
+  + ctl:: -> ''.kr()
+- Jl - Pwm Crossfade.sl
+  + let [f1, f2] -> let r
+- Jmcc - Bach prelude.sl
+  + x[3 4 5] -> x @* [3 4 5]
+- Mk - 2206.sl
+  + ctl:: -> ''.kr()
+
+p.q in vector_item introduces a shift/reduce conflict
+ctl::

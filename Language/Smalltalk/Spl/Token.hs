@@ -4,7 +4,6 @@ module Language.Smalltalk.Spl.Token where
 data Token
   = ArityQualifiedIdentifier String
   | AssignmentOperator
-  | Asterisk
   | BinarySelector String
   | Colon
   | ColonColon
@@ -23,7 +22,6 @@ data Token
   | LeftParen
   | Let
   | NilIdentifier
-  | Plus
   | RightBrace
   | RightBracket
   | RightParen

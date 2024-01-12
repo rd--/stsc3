@@ -32,7 +32,7 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
       '}' { RightBrace }
 
       arg { Arg }
-      classvar { ClassVar }
+      class_var { ClassVar }
       false { FalseIdentifier }
       nil { NilIdentifier }
       self { SelfIdentifier }
@@ -103,7 +103,7 @@ maybe_class_variables :: { Maybe [StcVariable] }
     | class_variables { Just $1 }
 
 class_variables :: { [StcVariable] }
-    : classvar default_var_seq ';' { $2 }
+    : class_var default_var_seq ';' { $2 }
 
 maybe_variables :: { Maybe [StcVariable] }
     : { Nothing }

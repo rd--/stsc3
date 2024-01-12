@@ -15,13 +15,10 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
 %token
       '(' { LeftParen }
       ')' { RightParen }
-      '*' { Asterisk }
-      '+' { Plus }
       ',' { Comma }
       '.' { Dot }
       '..' { DotDot }
       ':' { Colon }
-      '::' { ColonColon }
       ';' { SemiColon }
       '=' { Equals }
       '[' { LeftBracket }
@@ -58,21 +55,15 @@ binary_operator :: { (String, Maybe String) }
 
 extended_binary_selector :: { String }
     : binary_selector { $1 }
-    | '+' { "+" }
-    | '*' { "*" }
     | '|' { "|" }
 
 expression :: { StcExpression }
-   : identifier ':=' expression { StcExprAssignment $1 $3 }
+    : identifier ':=' expression { StcExprAssignment $1 $3 }
     | syntax_at_put { StcExprBasic $1 }
-    | syntax_quoted_at { StcExprBasic $1 }
     | basic_expression { StcExprBasic $1 }
 
 syntax_at_put :: { StcBasicExpression }
     : primary '[' basic_expression ']' ':=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
-
-syntax_quoted_at :: { StcBasicExpression }
-    : primary '::' identifier { stcConstructDotMessageSend $1 "at" [stcLiteralToBasicExpression (St.StringLiteral ("'" ++ $3 ++ "'"))] }
 
 basic_expression :: { StcBasicExpression }
     : primary maybe_messages { StcBasicExpression $1 $2 }
@@ -97,18 +88,18 @@ maybe_messages :: { Maybe StcMessages }
     | messages { Just $1 }
 
 messages :: { StcMessages }
-    : dotmessage_seq maybe_binary_message_seq { StcMessagesDot $1 $2 }
+    : dot_message_seq maybe_binary_message_seq { StcMessagesDot $1 $2 }
     | binary_message_seq { StcMessagesBinary $1 }
 
-maybe_dotmessage_seq :: { Maybe [StcDotMessage] }
+maybe_dot_message_seq :: { Maybe [StcDotMessage] }
     : { Nothing }
-    | dotmessage_seq { Just $1 }
+    | dot_message_seq { Just $1 }
 
-dotmessage_seq :: { [StcDotMessage] }
-    : dotmessage dotmessage_seq { $1 : $2 }
-    | dotmessage { [$1] }
+dot_message_seq :: { [StcDotMessage] }
+    : dot_message dot_message_seq { $1 : $2 }
+    | dot_message { [$1] }
 
-dotmessage :: { StcDotMessage }
+dot_message :: { StcDotMessage }
     : '.' identifier { StcDotMessage $2 []}
     | '.' identifier blockexpression_seq { StcDotMessage $2 $3}
     | '.' identifier message_param { StcDotMessage $2 $3}
@@ -144,12 +135,13 @@ binary_message :: { StcBinaryMessage }
     : binary_operator binary_argument { StcBinaryMessage $1 $2 }
 
 binary_argument :: { StcBinaryArgument }
-    : primary maybe_dotmessage_seq { StcBinaryArgument $1 $2 }
+    : primary maybe_dot_message_seq { StcBinaryArgument $1 $2 }
 
 primary :: { StcPrimary }
     : identifier { StcPrimaryIdentifier $1 }
     | arity_qualified_identifier { StcPrimaryIdentifier $1 }
-    | reservedidentifier { StcPrimaryIdentifier $1 }
+    | binary_selector { StcPrimaryIdentifier $1 }
+    | reserved_identifier { StcPrimaryIdentifier $1 }
     | literal { StcPrimaryLiteral $1 }
     | '{' block_body '}' { StcPrimaryBlock $2 }
     | '(' expression ')' { StcPrimaryExpression $2 }
@@ -161,7 +153,7 @@ primary :: { StcPrimary }
     | identifier '(' array_expression ')' { StcPrimaryImplicitMessageSend $1 $3 }
     | identifier '(' array_expression ')' blockexpression_seq { StcPrimaryImplicitMessageSend $1 ($3 ++ $5) }
 
-reservedidentifier :: { St.Identifier }
+reserved_identifier :: { St.Identifier }
     : nil { "nil" }
     | true { "true" }
     | false { "false" }
@@ -193,6 +185,7 @@ maybe_arguments :: { Maybe [StcBlockArgument] }
 arguments :: { [StcBlockArgument] }
     : arg_name_seq '|' { $1 }
 
+{-
 default_var_seq :: { [StcBlockArgument] }
     : default_var { [$1] }
     | default_var ',' default_var_seq { $1 : $3 }
@@ -200,6 +193,7 @@ default_var_seq :: { [StcBlockArgument] }
 default_var :: { StcBlockArgument }
     : identifier { ($1,Nothing) }
     | identifier '=' literal { ($1,Just $3) }
+-}
 
 arg_name_seq :: { [StcBlockArgument] }
     : arg_name { [$1] }
@@ -218,7 +212,11 @@ temporaries_seq :: { [StcTemporaries] }
 
 temporaries :: { StcTemporaries }
     : let temporary_seq ';' { $2 }
-    | '|' temporary_seq ';' '|'{ $2 }
+    | '|' temporary_name_seq '|'{ $2 }
+
+temporary_name_seq :: { StcTemporaries }
+    : identifier { [($1, Nothing)] }
+    | identifier temporary_name_seq { ($1, Nothing) : $2 }
 
 temporary_seq :: { StcTemporaries }
     : temporary { [$1] }

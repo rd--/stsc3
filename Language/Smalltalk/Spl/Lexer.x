@@ -28,8 +28,6 @@ tokens :-
 
   "("                                    { \_ -> LeftParen }
   ")"                                    { \_ -> RightParen }
-  "*"                                    { \_ -> Asterisk }
-  "+"                                    { \_ -> Plus }
   ","                                    { \_ -> Comma }
   "."                                    { \_ -> Dot }
   ".."                                   { \_ -> DotDot }

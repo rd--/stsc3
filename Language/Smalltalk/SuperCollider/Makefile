@@ -1,6 +1,5 @@
 all:
-	alex -i Lexer.x
 	happy -i Parser.y
 
 clean:
-	rm -f Lexer.hs Lexer.info Parser.hs Parser.info
+	rm -f Parser.hs Parser.info

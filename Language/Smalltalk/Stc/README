@@ -1,5 +1,3 @@
-The Stc parser could directly generate an Expr Ast.
-
 Block comments do not allow either nested comments or the * character.
 
 There could be a distinct comment format that is part of the Ast and may only appear as either:

@@ -415,7 +415,7 @@ splRewriteBinaryOperators txt =
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
--- | Spl parse to Stc
+{- | Spl parse to Stc -}
 splParseToStc :: String -> StcInitializerDefinition
 splParseToStc = Spl.Parser.parseInitializerDefinition . Spl.Lexer.alexScanTokens
 
@@ -465,8 +465,20 @@ splToExpr =
 >>> splToSt "[p ++ q, x ++ [y, z], a ++ [b c]]"
 "{p ++ q. x ++ {y. z}. a ++ {b. c}} .\n"
 
->>> splToSt "[1 2 3; 4 5 6]"
+>>> splToSt "[1 2 3; 4 5 6]" -- Matrix syntax
 "{{1. 2. 3}. {4. 5. 6}} .\n"
+
+>>> splToSt "f(+)" -- Operator identifier
+"(f apply: {+}) .\n"
+
+>>> splToSt "()" -- Empty dictionary
+"(Dictionary newFromPairs: {}) .\n"
+
+>>> splToSt "(k: v)" -- Dictionary
+"(Dictionary newFromPairs: {k. v}) .\n"
+
+> splToSt "f.p(1 * c::k)"
+
 -}
 splToSt :: String -> String
 splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt
