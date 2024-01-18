@@ -1,5 +1,5 @@
--- | Token type for ANSI Smalltalk
-module Language.Smalltalk.Ansi.Token where
+-- | Token type for Ansi Smalltalk
+module Language.Smalltalk.Ansi.Parser.Happy.Token where
 
 data Token
   = VerticalBar -- 3.4.2 |

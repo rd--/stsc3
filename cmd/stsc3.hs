@@ -8,8 +8,7 @@ import qualified Music.Theory.String as String {- hmt-base -}
 import qualified Sound.Sc3.Common.Help as Help {- hsc3 -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Lexer as St.Lexer {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Parser as St.Parser {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Parser.Happy as St.Happy {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
 
 import qualified Language.Smalltalk.Ansi.Print.Som as Som {- stsc3 -}
@@ -29,7 +28,7 @@ st_cat_parsec = St.smalltalkProgram_pp . St.stParse St.smalltalkProgram
 
 -- | Parse and then pretty print Smalltalk program, using Alex/Happy parser.
 st_cat_happy :: String -> String
-st_cat_happy = St.smalltalkProgram_pp . St.Parser.smalltalkParser . St.Lexer.alexScanTokens
+st_cat_happy = St.smalltalkProgram_pp . St.Happy.parseSmalltalkProgram
 
 -- | Parse and then pretty print Smalltalk program, using indicated parser.
 st_cat :: String -> FilePath -> IO ()

@@ -1,10 +1,10 @@
 {
-module Language.Smalltalk.Ansi.Parser where
+module Language.Smalltalk.Ansi.Parser.Happy.Parser where
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 
-import Language.Smalltalk.Ansi.Lexer {- stsc3 -}
-import Language.Smalltalk.Ansi.Token {- stsc3 -}
+import Language.Smalltalk.Ansi.Parser.Happy.Lexer {- stsc3 -}
+import Language.Smalltalk.Ansi.Parser.Happy.Token {- stsc3 -}
 }
 
 %name smalltalkParser

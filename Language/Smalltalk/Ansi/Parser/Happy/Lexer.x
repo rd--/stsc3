@@ -1,7 +1,7 @@
 {
-module Language.Smalltalk.Ansi.Lexer where
+module Language.Smalltalk.Ansi.Parser.Happy.Lexer where
 
-import Language.Smalltalk.Ansi.Token
+import Language.Smalltalk.Ansi.Parser.Happy.Token
 
 }
 
