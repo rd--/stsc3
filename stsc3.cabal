@@ -30,6 +30,7 @@ library
   exposed-modules:      Language.Smalltalk.Ansi,
                         Language.Smalltalk.Ansi.Annotate,
                         Language.Smalltalk.Ansi.Ast,
+                        Language.Smalltalk.Ansi.Ast.Helper,
                         Language.Smalltalk.Ansi.Expr,
                         Language.Smalltalk.Ansi.Expr.Print,
                         Language.Smalltalk.Ansi.Fold,
