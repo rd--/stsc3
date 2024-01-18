@@ -29,10 +29,12 @@ library
                         happy:happy
   exposed-modules:      Language.Smalltalk.Ansi,
                         Language.Smalltalk.Ansi.Annotate,
+                        Language.Smalltalk.Ansi.Ast,
                         Language.Smalltalk.Ansi.Expr,
                         Language.Smalltalk.Ansi.Expr.Print,
                         Language.Smalltalk.Ansi.Fold,
                         Language.Smalltalk.Ansi.Parser,
+                        Language.Smalltalk.Ansi.Parser.Parsec,
                         Language.Smalltalk.Ansi.Print,
                         Language.Smalltalk.Ansi.Print.Som,
                         Language.Smalltalk.Ansi.Print.Stc,
