@@ -12,19 +12,19 @@ First the uncommented version:
 
 Now the same example with lots and lots of comments:
 
-	(* A UGen graph is a network of connected unit generators.
-	For this example the 'network' only has a single unit generator. *)
+	{- A UGen graph is a network of connected unit generators. -}
+	{- For this example the 'network' only has a single unit generator. -}
 	(
-		(* Function are defined within curly braces.
-		This function contains the code to create a graph of ugens.
-		In this case we'll only create a single sine oscillator. *)
-		SinOsc( (* SinOsc creates an audio rate oscillator. It takes two arguments: *)
-			800, (* set its frequency to 800 Hertz *)
-			0) (* set its phase to 0 radians *)
-		* 0.1 (* multiply the sine wave by 0.1 *)
-		(* A function returns the value of its last expression.
-		This function only has one expression, the call to SinOsc. *)
-	).play (* Close curly brace marks end of function definition. *)
+		{- Function are defined within curly braces. -}
+		{- This function contains the code to create a graph of ugens. -}
+		{- In this case we will only create a single sine oscillator. -}
+		SinOsc( {- SinOsc creates an audio rate oscillator. It takes two arguments: -}
+			800, {- set the frequency to 800 Hertz -}
+			0) {- set the phase to 0 radians -}
+		* 0.1 {- multiply the sine wave by 0.1 -}
+		{- A function returns the value of its last expression. -}
+		{- This function only has one expression, the call to SinOsc. -}
+	).play {- Close curly brace marks end of function definition. -}
 
 ## 1.2 How to plot output.
 
@@ -52,35 +52,35 @@ Now let us see a 0.2 seconds window which is 20 times longer than the above.
 
 You can write your output samples to a buffer. Buffers of audio are represented by the class Signal.  The Synth 'collect' method returns an instance of Signal which is filled with the Synth output for the duration specified.  This lets you do non real time operations on the sound.
 
-	;; ...
+	-- ...
 
 ## 1.5 How to write output to disk
 
 The Synth 'write' method lets you write output to a sound file in non real time.  The write method takes three more arguments than 'play'. The first is the path name of the file. Second is a Symbol giving the header format or type of sound file to write.  The third additional argument is the sample format. See the SoundFile help file for a list of all the formats available. We will use 'AIFF' for the header format and '16 big endian signed' for the sample format.
 
-	;; ...
+	-- ...
 
 It happens that 'AIFF' and '16 big endian signed' are the default values for the sound file format arguments, so they may be left off if that is what you want.
 
-	;; ...
+	-- ...
 
 ## 1.6 How to play a sound file from disk
 
 The SoundFile 'play' method will stream a file off of disk.  The first argument is the pathname.  The following example assumes the existence of the file "sine800" created in the previous example.
 
-	;; ...
+	-- ...
 
 If you want to loop the file, set the loop flag to true.
 
-	;; ...
+	-- ...
 
 ## 1.7 How to write output to disk while playing
 
 You can write a sound to disk in real time while you monitor it by using the Synth 'record' method. This method has the same arguments as 'write'.
 
-	;; ...
+	-- ...
 
 Synth 'record' has the same defaults for the file format that Synth 'write' does, so if you want a 16 bit AIFF file then you can leave those arguments off.
 
-	;; ...
+	-- ...
 

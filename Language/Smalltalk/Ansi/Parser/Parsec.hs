@@ -1,4 +1,4 @@
-{- | Parsec parser for a subset of ANSI Smalltalk. -}
+-- | Parsec parser for a subset of ANSI Smalltalk.
 module Language.Smalltalk.Ansi.Parser.Parsec where
 
 import Control.Monad {- base -}
@@ -305,6 +305,7 @@ temporary_variable_list :: P [LowercaseIdentifier]
 temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 
 -- * 3.4.3
+
 {- | <initializer definition> ::= [<temporaries>] [<statements>]
 
 > p = stParse initializerDefinition
@@ -708,13 +709,15 @@ SelectorLiteral (BinarySelector "+")
 > p "x"
 -}
 literal :: P Literal
-literal = P.choice
-  [ numberLiteral
-  , stringLiteral
-  , characterLiteral
-  , P.try arrayLiteral
-  , P.try symbolLiteral
-  , selectorLiteral ] -- lexeme
+literal =
+  P.choice
+    [ numberLiteral
+    , stringLiteral
+    , characterLiteral
+    , P.try arrayLiteral
+    , P.try symbolLiteral
+    , selectorLiteral -- lexeme
+    ]
 
 {- | <number literal> ::= ['-'] <number>
 

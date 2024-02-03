@@ -16,7 +16,7 @@ Play audio from channels 1 & 2.  The array [1, 2] causes multichannel expansion 
 
 The DiskIn unit generator can stream audio from a disk file. It can be used in a number of ways.  For more information look at the DiskIn help file.
 
-	;; ...
+	-- ...
 
 ## 6.3 How to play audio files in RAM
 
@@ -24,25 +24,25 @@ Files loaded in RAM can be processed in more ways because the entire file is acc
 
 Normal playback at same speed of recording:
 
-	let filename = 'floating_1'; (* the file's path name *)
-	let file = SfAcquireMono(filename); (* create a SoundFile object *)
+	let filename = 'floating_1'; {- the path name of the file -}
+	let file = SfAcquireMono(filename); {- create a SoundFile object -}
 	SfPlay(
-		file, (* sample buffer *)
-		1, (* playback rate *)
-		1, (* trigger playback *)
-		0, (* starting offset sample *)
-		1 (* loop *)
+		file, {- sample buffer -}
+		1, {- playback rate -}
+		1, {- trigger playback -}
+		0, {- starting offset sample -}
+		1 {- loop -}
 	)
 
 Mouse controls playback rate:
 
-	let filename = 'floating_1'; (* the file's path name *)
-	let file = SfAcquireMono(filename); (* create a SoundFile object *)
+	let filename = 'floating_1'; {- the file's path name -}
+	let file = SfAcquireMono(filename); {- create a SoundFile object -}
 	let rateMultiplier = MouseX(0.25, 4, 1, 0.2);
 	SfPlay(
-		file, (* sample buffer *)
-		rateMultiplier, (* playback rate *)
-		1, (* trigger playback *)
-		0, (* starting offset sample *)
-		1 (* loop *)
+		file, {- sample buffer -}
+		rateMultiplier, {- playback rate -}
+		1, {- trigger playback -}
+		0, {- starting offset sample -}
+		1 {- loop -}
 	)

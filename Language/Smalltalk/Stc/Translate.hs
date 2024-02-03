@@ -415,7 +415,7 @@ splRewriteBinaryOperators txt =
     ' ' : '!' : ' ' : txt' -> ' ' : '%' : '%' : ' ' : splRewriteBinaryOperators txt'
     c : txt' -> c : splRewriteBinaryOperators txt'
 
-{- | Spl parse to Stc -}
+-- | Spl parse to Stc
 splParseToStc :: String -> StcInitializerDefinition
 splParseToStc = Spl.Parser.parseInitializerDefinition . Spl.Lexer.alexScanTokens
 
@@ -485,7 +485,6 @@ splToExpr =
 
 >>> splToSt "(1, 2)" -- Tuple expression
 "({1. 2} asTuple) .\n"
-
 -}
 splToSt :: String -> String
 splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt

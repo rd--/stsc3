@@ -16,6 +16,7 @@ The summary indicates the number of tests per section, and how many of these pas
 If the task completes a summary of total tests and total passes is printed.
 
 ```
+// String>>terseGuideSummary ; Total => 765 / 765
 "/home/rohan/sw/stsc3/help/terse/terse.scd".terseGuideSummary
 ```
 

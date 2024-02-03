@@ -30,7 +30,7 @@ You can do math operations on unit generators and the result will be another uni
 
 Add signals, use play command:
 
-	(SinOsc(800, 0) * 0.2) + (BrownNoise() * 0.2)
+	(SinOsc(800, 0) * 0.2) + (BrownNoise() * 0.1)
 
 With _{ }.play_ written in, use evaluate command:
 
@@ -42,7 +42,10 @@ Multiply signals:
 
 ## 2.4 Signal level
 
-The output signal level of most unit generators that generate audio is from -1 to +1.  There are a few exceptions like COsc which ranges from -2 to +2, or _LfPulse_ which ranges from 0 to +1. You can use the Synth plot method to check the range of any Ugen.
+The output signal level of most unit generators that generate audio is from -1 to +1.
+There are a few exceptions like COsc which ranges from -2 to +2,
+or _LfPulse_ which ranges from 0 to +1.
+You can use the Synth plot method to check the range of any Ugen.
 
 A 200 Hz sine wave:
 
@@ -56,7 +59,7 @@ Brown noise:
 
 	(BrownNoise() * 0.1).plot(0.01)
 
-Pink noise is capable of -1 to +1 but is statistically unlikely to acheive it
+Pink noise is capable of -1 to +1 but is statistically unlikely to acheive it:
 
 	(PinkNoise() * 0.1).plot(0.01)
 
@@ -70,15 +73,15 @@ The output signal level of Ugens that process their input such as filters and de
 
 Many unit generators have inputs named mul and add which allow you to multiply and add signals to the output of that Ugen. Using mul and add is more efficient that using an explicit * or + operator.  Also it is often desirable to scale and offset the values of control Ugens to match some specific range for purposes of modulation.  The values for mul and add default to 1 and 0 respectively, which leaves the output unchanged.  With these defaults, the multiply and add are optimized out and there is no computational cost for them.  Plot the below to see multiply and add operators changing the output range of an oscillator:
 
-	FSinOsc(200, 0) (* a 200 Hz sine wave *)
+	FSinOsc(200, 0) {- a 200 Hz sine wave -}
 
-	FSinOsc(200, 0) * 0.2 (* 200 Hz sine wave with mul=0.2 *)
+	FSinOsc(200, 0) * 0.2 {- 200 Hz sine wave with mul=0.2 -}
 
-	FSinOsc(200, 0) * 0.2 + 0.2 (* 200 Hz sine wave with mul=0.2 and add=0.2 *)
+	FSinOsc(200, 0) * 0.2 + 0.2 {- 200 Hz sine wave with mul=0.2 and add=0.2 -}
 
-	FSinOsc(200, 0) * 0.5 + 0.5 (* 200 Hz sine wave with mul=0.5 and add=0.5 *)
+	FSinOsc(200, 0) * 0.5 + 0.5 {- 200 Hz sine wave with mul=0.5 and add=0.5 -}
 
-	FSinOsc(200, 0) * 0.5 + -0.5 (* 200 Hz sine wave with mul=0.5 and add=-0.5 *)
+	FSinOsc(200, 0) * 0.5 + -0.5 {- 200 Hz sine wave with mul=0.5 and add=-0.5 -}
 
 Add can be used to mix signals.  This example is equivalent to one given in 2.3 above.  The noise generator is plugged into the add input of FSinOsc
 
@@ -96,14 +99,14 @@ The signal inputs of a unit generator can be other unit generators, scalars, or 
 
 This example modulates the frequency of a sine oscillator with a linear function, a simple frequency sweep:
 
-	SinOsc( (* create a sine oscillator *)
-		Line( (* modulate the frequency with a Line unit generator *)
-			2000, (* the line begins at 2000 *)
-			300, (* and ends at 300 *)
-			10 (* in 10 seconds *)
+	SinOsc( {- create a sine oscillator -}
+		Line( {- modulate the frequency with a Line unit generator -}
+			2000, {- the line begins at 2000 -}
+			300, {- and ends at 300 -}
+			10 {- in 10 seconds -}
 		),
-		0 (* zero phase *)
-	) * 0.1 (* amplitude 0.1 *)
+		0 {- zero phase input -}
+	) * 0.1 {- scale amplitude -}
 
 The short version of the above:
 
@@ -111,52 +114,52 @@ The short version of the above:
 
 In the following example the frequency modulator is changed from a line to a sine oscillator.
 
-	SinOsc( (* create a sine oscillator *)
-		SinOsc( (* modulate the frequency with another sine oscillator *)
-			0.5, (* the modulating sine freq is 1 cycle per 2 seconds *)
-			0 (* zero phase *)
-		) * 300 (* mul = 300 *)
-		+ 700, (* add = 700 *)
-		(* These settings of mul and add will cause the
+	SinOsc( {- create a sine oscillator -}
+		SinOsc( {- modulate the frequency with another sine oscillator -}
+			0.5, {- the modulating sine freq is 1 cycle per 2 seconds -}
+			0 {- zero phase -}
+		) * 300 {- mul = 300 -}
+		+ 700, {- add = 700 -}
+		{- These settings of mul and add will cause the
 		frequency to vary from -300+700 to +300+700 Hz
-		which equals from 400 to 1000 Hz *)
-		0) (* zero phase *)
-	* 0.1 (* amplitude 0.1 *)
+		which equals from 400 to 1000 Hz -}
+		0) {- zero phase -}
+	* 0.1 {- amplitude 0.1 -}
 
 Now we will modulate the modulator to cause the frequency modulation to speed up over time, i.e. sweep the frequency of an _Lfo_
 
-	SinOsc( (* create a sine oscillator *)
+	SinOsc( {- create a sine oscillator -}
 		SinOsc(
-			(* modulate the frequency with another sine oscillator
+			{- modulate the frequency with another sine oscillator
 			make the freq modulator speed up exponentially
-			by modulating its frequency with another Ugen *)
-			XLine( (* make an exponential line generator *)
-				0.5, (* begin at 0.5 Hz *)
-				100, (* end at 100 Hz *)
-				30 (* in 30 seconds *)
+			by modulating its frequency with another Ugen -}
+			XLine( {- make an exponential line generator -}
+				0.5, {- begin at 0.5 Hz -}
+				100, {- end at 100 Hz -}
+				30 {- in 30 seconds -}
 			),
-			0) (* zero phase *)
-		* 300 (* mul = 300 *)
-		+ 700, (* add = 700 *)
-		(* These settings of mul and add will cause the
+			0) {- zero phase -}
+		* 300 {- mul = 300 -}
+		+ 700, {- add = 700 -}
+		{- These settings of mul and add will cause the
 		frequency to vary from -300+700 to +300+700 Hz
-		which equals from 400 to 1000 Hz *)
-		0) (* zero phase *)
-	* 0.1 (* amplitude 0.1 *)
+		which equals from 400 to 1000 Hz -}
+		0) {- zero phase -}
+	* 0.1 {- amplitude 0.1 -}
 
 The nested style used above can become hard to read, so often it is preferable to use variables to make it more readable.
 
-	let lfoFreq = XLine( (* make an exponential line generator *)
-		0.5, (* begin at 0.5 Hz *)
-		100, (* end at 100 Hz *)
-		30 (* in 30 seconds *)
+	let lfoFreq = XLine( {- make an exponential line generator -}
+		0.5, {- begin at 0.5 Hz -}
+		100, {- end at 100 Hz -}
+		30 {- in 30 seconds -}
 	);
-	let freq = SinOsc( (* modulate the frequency with another sine oscillator *)
-		lfoFreq, (* use exponential line to modulate the lfo freq *)
-		0) (* zero phase *)
-	* 300 (* mul = 300 *)
-	+ 700; (* add = 700 *)
-	SinOsc( (* create a sine oscillator *)
-		freq, (* frequency modulator *)
-		0) (* zero phase *)
-	* 0.1 (* amplitude 0.1 *)
+	let freq = SinOsc( {- modulate the frequency with another sine oscillator -}
+		lfoFreq, {- use exponential line to modulate the lfo freq -}
+		0) {- zero phase -}
+	* 300 {- mul = 300 -}
+	+ 700; {- add = 700 -}
+	SinOsc( {- create a sine oscillator -}
+		freq, {- frequency modulator -}
+		0) {- zero phase -}
+	* 0.1 {- amplitude 0.1 -}

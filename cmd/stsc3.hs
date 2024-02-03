@@ -18,7 +18,8 @@ import qualified Language.Smalltalk.Som as Som {- stsc3 -}
 import qualified Language.Smalltalk.Stc.Ast as Stc {- stsc3 -}
 import qualified Language.Smalltalk.Stc.Ast.Print as Stc {- stsc3 -}
 import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
---import qualified Language.Smalltalk.Stc.Ndef as Sc {- stsc3 -}
+-- import qualified Language.Smalltalk.Stc.Ndef as Sc {- stsc3 -}
+
 import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
 import qualified Language.Smalltalk.Stc.Translate as Stc {- stsc3 -}
 

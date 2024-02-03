@@ -128,7 +128,7 @@ Array.exprand(4, 1, 9).size == 4                            // array of random n
 var c = [1, 2]; c.reverse; c == [1, 2]                      // reverse is not in place
 var x = [1, 2], y = x.reverse; x + y == [3, 3]              // reverse is not in place
 [1, 3, 7, 9].rand.maxItem < 9                               // collect with .rand
-[[1], [[2]], [[[3]]]].collect('rank') == [1, 2, 3]          // rank
+[[1], [[2]], [[[3]]]].collect(_.rank) == [1, 2, 3]          // rank
 [[1, 2, 3], [4, 5, 6]].shape == [2, 3]                      // size of shape is rank
 [[1, 2], [3, 4], [5, 6]].shape == [3, 2]                    // size of each element is size at depth
 [[[1], [2]], [[3], [4]], [[5], [6]]].shape == [3, 2, 1]     // rank and shape both assume regularity
@@ -199,7 +199,7 @@ Association.new('x', 1).class == Association                // associate key wit
 
 'Bag'
 Bag(4).class == Bag                                         // Bag, multi-set, counted-set
-[1, 2, 3, 3].asBag.contents.isDictionary                    // the contents of a Bag is a Dictionary
+[1, 2, 3, 3].asBag.contents.class == Dictionary             // the contents of a Bag is a Dictionary
 [1, 2, 3, 3].asBag.itemCount(3) == 2                        // number of occurrences of indicated item
 [1, 2, 3, 3].asBag.remove(3).itemCount(3) == 1              // remove one occurrence of indicated item from Bag
 [1, 2, 3, 3].asBag.includes(3)                              // predicate to determine if a Bag contains an item
@@ -645,7 +645,7 @@ Pdup(2, Pseries(1, 2, 3)).asStream.all == [1, 1, 3, 3, 5, 5]         // repeat i
 Pgeom(1, 2, 5).asStream.all == [1, 2, 4, 8, 16]                      // geometric series
 Place([1, [2, 5], [3, 6]], 2).asStream.all == [1, 2, 3, 1, 5, 6]     // lace (interleave)
 Pn(Pseries(1, 2, 3), 2).asStream.all == [1, 3, 5, 1, 3, 5]           // repeat pattern
-Ppatlace([Pseries(3, 2, 3), Pgeom(2, 2, 3)], 3).asStream.all == [2, 3, 5, 4, 7, 8]
+Ppatlace([Pseries(3, 2, 3), Pgeom(2, 2, 3)], 3).asStream.all == [3, 2, 5, 4, 7, 8]
 Preject(_.odd, Pseries(1, 1, 5)).asStream.all == [2, 4]              // reject
 Pseed(1234, Pwhite(1, 9, 3)).asStream.nextN(6) == [5, 7, 9, 5, 7, 9] // seed enclosed random number generator
 Pselect(_.even, Pseries(1, 1, 5)).asStream.all == [2, 4]             // select
@@ -656,6 +656,7 @@ Pslide((1 .. 4), 2, 3, 1).asStream.all == [1, 2, 3, 2, 3, 4]         // sliding 
 Pswitch([5, Pn(4, 2)], Pseq([0, 1], 2)).asStream.all == [5, 4, 4, 5, 4, 4]
 Pswitch1([5, Pn(4, 2)], Pseq([0, 1], 2)).asStream.all == [5, 4, 5, 4]
 Ptuple([Pseries(3, 2, 3), Pgeom(2, 2, 3)], 1).asStream.all == [[3, 2], [5, 4], [7, 8]]
+Pdiff(Pgeom(1, 2, 9)).asStream.all == [1, 2, 4, 8, 16, 32, 64, 128]
 
 'Point'
 200 @ 100 == Point.new(200, 100)                            // obtain a new point
@@ -814,7 +815,7 @@ Set.new(3).addAll([1, 2, 3]) == [1, 2, 3].asSet             // add all elements 
 "text".copyRange(2,2) == "x"                                // substring (single character)
 "% string % interpolation".format('format', 'with').isString// format string with interpolation
 { "string".add($!) }.try { "oh oh..." } == "oh oh..."       // literal strings are immutable arrayed collections
-["", "string"].collect('maxSize') == [16, 64]               // of minimum maxSize 16
+["", "string"].collect(_.maxSize) == [16, 64]               // of minimum maxSize 16
 var s = "string".copy; s.add($!); s.at(6) == $!             // copied string literals inherit maxSize
 "String".asArray.class != Array                             // https://github.com/supercollider/supercollider/issues/5658
 
@@ -833,7 +834,7 @@ var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce
 var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
 
 'Tuning'
-t = Tuning.at('wcAlpha')                                    // lookup tuning by name
+t = Tuning.at('wcAlpha'); t.class == Tuning                 // lookup tuning by name
 t.cents.keep(7).round == [0, 78, 156, 234, 312, 390, 468]   // tuning intervals in cents, includes zero (reference pitch)
 t.ratios.keep(4).round(0.001) == [1, 1.046, 1.094, 1.145]   // tuning interval as ratios, includes one (reference pitch)
 t.octaveRatio.round(0.001) == 1.966                         // tuning octave ratio

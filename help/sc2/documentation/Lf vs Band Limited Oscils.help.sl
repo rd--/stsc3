@@ -1,6 +1,9 @@
 # LfPulse vs. Pulse and LfSaw vs. Saw
 
-In different situations you will want to use different versions of these unit generators. The _Lf_ versions are faster but are not band limited.  That means that they can fold over the Nyquist frequency and cause aliased frequencies. For example here is the same frequency sweep using both kinds of oscillators:
+In different situations you will want to use different versions of these unit generators.
+The _Lf_ versions are faster but are not band limited.
+That means that they can fold over the Nyquist frequency and cause aliased frequencies.
+For example here is the same frequency sweep using both kinds of oscillators:
 
 _LfPulse_ will alias at high frequencies.
 
@@ -42,7 +45,7 @@ and LfSaw:
 
 	LfSaw(SinOsc(0.75, 0) * 5800 + 6000, 0) * 0.2
 
-LfSaw is better to use as a low frequency controller because it is truely a sawtooth shape,
+LfSaw is better to use as a low frequency controller because it is truly a sawtooth shape,
 plot the below to see the difference,
 note also phase offset for LfSaw,
 and that it is ascending where Saw is descending,

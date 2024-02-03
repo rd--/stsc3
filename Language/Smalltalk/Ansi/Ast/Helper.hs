@@ -208,7 +208,6 @@ classDefinitionGraphSort (g, f, _) = reverse (map ((\(cd, _, _) -> cd) . f) (Gra
 
 -- * 3.4.2
 
-
 isMethodFor :: MethodDescriptor -> MethodDefinition -> Bool
 isMethodFor (classSide, selector) m = (classSide == isClassMethod m) && (selector == methodSelector m)
 
