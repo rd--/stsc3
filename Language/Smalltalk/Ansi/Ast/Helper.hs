@@ -275,6 +275,7 @@ methodDefinitionDuplicateTemporaries m =
 {- | Derive method selector from Pattern.
      Return is either Identifier or BinarySelector (both Strings).
 
+>>> import Language.Smalltalk.Ansi.Parser.Parsec
 >>> let p = stParse messagePattern
 >>> patternSelector (p "midicps")
 UnarySelector "midicps"

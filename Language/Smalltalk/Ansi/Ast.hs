@@ -315,6 +315,7 @@ data Selector
 {- | Parse Squeak/Gnu type Vm primitive. (Non-Ansi).
 Allow unquoted symbol, which will be printed back unquoted (as would a quoted symbol).
 
+>>> import Language.Smalltalk.Ansi.Parser.Parsec
 >>> stParse primitive "<primitive: 63>"
 Primitive {primitiveLabel = NumberLiteral (Int 63)}
 

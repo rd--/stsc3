@@ -31,12 +31,12 @@ Tested with:
  [Gnu Smalltalk](http://www.gnu.org/software/smalltalk/) 3.2.92;
  [Cuis](http://cuis-smalltalk.org/) 5.0
 
-© [Rohan Drape](http://rohandrape.net/), 2019-2023, [Gpl](http://gnu.org/copyleft/)
+© [Rohan Drape](http://rohandrape.net/), 2019-2024, [Gpl](http://gnu.org/copyleft/)
 
 * * *
 
 ```
 $ make doctest
-Examples: 225  Tried: 225  Errors: 0  Failures: 0
+Examples: 227  Tried: 227  Errors: 0  Failures: 0
 $
 ```
