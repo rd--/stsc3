@@ -44,12 +44,13 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
 
       binary_selector { BinarySelector $$ }
       double_quoted_string { DoubleQuotedString $$ }
-      float { Float $$ }
+      decimal_float { Float $$ }
       identifier { Identifier $$ }
-      integer { Integer $$ }
+      radix_integer { Integer $$ }
+      decimal_integer { Integer $$ }
       keyword { Keyword $$ }
       keyword_selector { KeywordSelector $$ }
-      quoted_char { QuotedChar $$ }
+      quoted_character { QuotedCharacter $$ }
       single_quoted_string { SingleQuotedString $$ }
 
 %%
@@ -272,10 +273,11 @@ return_statement :: { StcStatements }
     : '^' expression opt_semicolon { StcStatementsReturn (StcReturnStatement $2) }
 
 literal :: { St.Literal }
-    : integer { St.NumberLiteral (St.Int $1) }
-    | float { St.NumberLiteral (St.Float $1) }
+    : radix_integer { St.NumberLiteral (St.Int $1) }
+    | decimal_integer { St.NumberLiteral (St.Int $1) }
+    | decimal_float { St.NumberLiteral (St.Float $1) }
     | double_quoted_string { St.StringLiteral $1 }
-    | quoted_char { St.CharacterLiteral $1 }
+    | quoted_character { St.CharacterLiteral $1 }
     | single_quoted_string { St.SymbolLiteral $1 }
     | '#[' array_literal ']' { St.ArrayLiteral $2 }
 

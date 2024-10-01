@@ -26,7 +26,7 @@ data Token
   | LeftParen
   | NilIdentifier
   | Plus
-  | QuotedChar Char
+  | QuotedCharacter Char
   | ReturnOperator
   | RightBrace
   | RightBracket

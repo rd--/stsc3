@@ -84,17 +84,11 @@ stcRewriteViewer =
 
 {-
 
-rw = stcRewriteViewer False
+rw = stcRewriteViewer
 rw "p.q" == "p.q\n"
 rw "p.q.r" == "p.q.r\n"
 rw "p.q + r" == "p.q + r\n"
 rw "p.q(x)" == "p.q(x)\n"
 rw "p.q(x) + r" == "(p.q(x)) + r\n"
-
-rw = stcRewriteViewer True
-rw "p.q(x)" == "p.q([x])" -- only one message, can be keyword
-rw "p.q(x).r(y)" == "(p.q([x])).r([y])" -- nested trailing
-rw "p.q(x) + r" == "(p.q([x])) + r" -- parens ; singular requires if initial of binary, c.f. p.q(a)
-rw "p.q + r" == "(p.q([])) + r" -- unary is the same
 
 -}

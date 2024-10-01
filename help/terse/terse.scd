@@ -893,13 +893,13 @@ Platform.hasQt.if { Server.default.inspect }; true          // open object inspe
 Platform.hasQt.if { String.methods.inspect }; true          // methods for class (Ui)
 
 'Plotting - Qt - !'
-Platform.hasQt.if { Env.sine.plot(size: 400) }; true        // Env ; plot
+Platform.hasQt.if { Env.sine.plot(400) }; true              // Env ; plot
 Platform.hasQt.if { Env.sine.asSignal(400).plot }; true     // Env as discrete array ; plot
 1.to(9).asArray.mirror.plot                                 // Array ; plot
 [1, 3, 2, 6, 5, 4, 7].pyramid(9).mirror.plot                // Array ; plot
 1.to(99).collect { arg n; n.asBinaryDigits(8) }.flat.plot   // Array ; plot
 { SinOsc.ar(100, 0) }.plot(1 / 100)                         // Synthesis function ; plot
-{ | x | x.sin }.plotGraph(n: 400, from: 0, to: 2 * pi)      // Unary function ; plot
+{ | x | x.sin }.plotGraph(400, 0, 2 * pi)                   // Unary function ; plot
 { 99.0.rand }.dup(9999).histo.plot                          // uniform distribution between zero and n
 { 99.0.linrand }.dup(9999).histo.plot                       // linear distribution between zero and n biased to zero
 { 99.0.bilinrand }.dup(9999).histo.plot                     // bilinear distribution between -n and n, biased to zero

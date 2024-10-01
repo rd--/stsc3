@@ -48,7 +48,7 @@ import           Language.Smalltalk.Stc.Token {- stsc3 -}
       integer { Integer $$ }
       keyword { Keyword $$ }
       keyword_selector { KeywordSelector $$ }
-      quoted_char { QuotedChar $$ }
+      quoted_char { QuotedCharacter $$ }
       single_quoted_string { SingleQuotedString $$ }
 
 %%
