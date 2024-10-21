@@ -1,4 +1,20 @@
-Parsed all graphs at ~/sw/slp/help/SuperColldider/Graph (371) except the below, which were modified to pass.
+```
+cd ~/sw/spl/help/SuperCollider/Graph
+for i in *.sl ; do echo $i ; stsc3 translate spl st "$i" "/tmp/$i.st" ; done
+```
+
+Fails to parse
+
+- 1:9 [ADDED]
+- p # q [ADDED]
+- p.!(q) [ADDED, does renamer run?]
+- p.++ [ADDED, does renamer run?]
+- 1:k
+- (1, 3 .. 33)
+
+The operator methods require a translation function, i.e. ! -> exclamationMark, i.e. sw/spl/ts/operator.ts
+
+Parsed all graphs at ~/sw/spl/help/SuperCollider/Graph (371) except the below, which were modified to pass.
 
 - Dcv - Time varying feedback delay network.sl
   + s.Neg -> [[]]

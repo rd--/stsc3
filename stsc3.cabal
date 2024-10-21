@@ -49,6 +49,7 @@ library
                         Language.Smalltalk.Som,
                         Language.Smalltalk.Spl.Ast,
                         Language.Smalltalk.Spl.Lexer,
+                        Language.Smalltalk.Spl.Operator,
                         Language.Smalltalk.Spl.Parser,
                         Language.Smalltalk.Spl.Token,
                         Language.Smalltalk.Stc.Ast,

@@ -5,6 +5,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import           Language.Smalltalk.Stc.Ast {- stsc3 -}
 import           Language.Smalltalk.Spl.Ast {- stsc3 -}
 import           Language.Smalltalk.Spl.Lexer {- stsc3 -}
+import           Language.Smalltalk.Spl.Operator {- stsc3 -}
 import           Language.Smalltalk.Spl.Token {- stsc3 -}
 }
 
@@ -103,8 +104,10 @@ dot_message_seq :: { [StcDotMessage] }
 
 dot_message :: { StcDotMessage }
     : '.' identifier { StcDotMessage $2 []}
+    | '.' extended_binary_selector { StcDotMessage (resolveMethodName $2) []}
     | '.' identifier blockexpression_seq { StcDotMessage $2 $3}
     | '.' identifier message_param { StcDotMessage $2 $3}
+    | '.' extended_binary_selector message_param { StcDotMessage (resolveMethodName $2) $3 }
     | '.' identifier message_param blockexpression_seq { StcDotMessage $2 ($3 ++ $4) }
     | syntax_at { $1 }
 
@@ -154,6 +157,7 @@ primary :: { StcPrimary }
     | '[' matrix_expression ']' { splMatrixExpression $2 }
     | '(' expression '..' expression ')' { stcIntervalRange $2 $4 }
     | '[' expression '..' expression ']' { stcArrayRange $2 $4 }
+    | integer ':' integer { stcIntervalRange (intExpr $1) (intExpr $3) }
     | identifier '(' expression_seq ')' { StcPrimaryImplicitMessageSend $1 $3 }
     | identifier '(' expression_seq ')' blockexpression_seq { StcPrimaryImplicitMessageSend $1 ($3 ++ $5) }
 
@@ -258,4 +262,7 @@ literal :: { St.Literal }
 {
 parseError :: [Token] -> a
 parseError t = error ("Parse error: " ++ show t)
+
+intExpr :: Integer -> StcExpression
+intExpr = StcExprBasic . stcLiteralToBasicExpression . St.NumberLiteral . St.Int
 }

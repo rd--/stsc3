@@ -71,7 +71,7 @@ stc_parse_class_extension_seq = Stc.parseClassExtensionSeq . Stc.alexScanTokens
 {- | Read and print extensions.
 
 > stc_cat_extensions "/home/rohan/sw/stsc3/help/expr/extensions.sc"
-> stc_cat_extensions "/home/rohan/sw/sc3-rdl/sc/Bag.ext.sc"
+> stc_cat_extensions "/home/rohan/sw/sc3-rdl/q/Smalltalk.quark/Bag.ext.sc"
 -}
 stc_cat_extensions :: FilePath -> IO ()
 stc_cat_extensions fn =

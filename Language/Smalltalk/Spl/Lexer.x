@@ -12,7 +12,7 @@ $upper = A-Z -- 3.5.1 lowercaseAlphabetic
 $underscore = _ -- 3.5.1 nonCaseLetter
 $letter = [a-z A-Z _] -- 3.5.1 letter
 $letter_or_digit = [a-z A-Z _ 0-9]
-$binary_char = [\!\@\%\&\*\-\+\=\|\<\>\?\/\~\^] -- !@%&*-+=|<>?/~
+$binary_char = [\! \@ \% \& \* \- \+ \= \| \< \> \? \/ \~ \^ \#] -- !@%&*-+=|<>?/~^#
 $graphic = $printable # $white
 
 @identifier = $letter $letter_or_digit*
@@ -23,7 +23,7 @@ $graphic = $printable # $white
 tokens :-
 
   $white+                                ;
-  "{-" ($printable # \})* "-}"           ;
+  "/*" ($printable # \*)* "*/"           ;
 
   "("                                    { \_ -> LeftParen }
   ")"                                    { \_ -> RightParen }
