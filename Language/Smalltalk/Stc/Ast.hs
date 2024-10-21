@@ -182,19 +182,20 @@ stcPrimaryKeywordMessageSend receiver parameters =
       arguments = map snd parameters
   in stcBasicExpressionToPrimary (stcConstructDotMessageSend receiver selector arguments)
 
-stcIntervalRange :: StcExpression -> StcExpression -> StcPrimary
-stcIntervalRange from to =
+stcMethodCall :: StcExpression -> [St.LowercaseIdentifier] -> [StcExpression] -> StcPrimary
+stcMethodCall receiver messageParts arguments =
   stcPrimaryKeywordMessageSend
-    (StcPrimaryExpression from)
-    [("to", StcBasicExpression (StcPrimaryExpression to) Nothing)]
+    (StcPrimaryExpression receiver)
+    (zip messageParts (map (\x -> StcBasicExpression (StcPrimaryExpression x) Nothing) arguments))
+
+stcIntervalRange :: StcExpression -> StcExpression -> StcPrimary
+stcIntervalRange from to = stcMethodCall from ["to"] [to]
 
 stcFromThenTo :: StcExpression -> StcExpression -> StcExpression -> StcPrimary
-stcFromThenTo from andThen to =
-  stcPrimaryKeywordMessageSend
-    (StcPrimaryExpression from)
-    [ ("then", StcBasicExpression (StcPrimaryExpression andThen) Nothing)
-    , ("to", StcBasicExpression (StcPrimaryExpression to) Nothing)
-    ]
+stcFromThenTo from andThen to = stcMethodCall from ["then", "to"] [andThen, to]
+
+stcFromToBy :: StcExpression -> StcExpression -> StcExpression -> StcPrimary
+stcFromToBy from to by = stcMethodCall from ["to", "by"] [to, by]
 
 stcArrayRange :: StcExpression -> StcExpression -> StcPrimary
 stcArrayRange from to = stcBasicExpressionToPrimary (stcConstructDotMessageSend (stcIntervalRange from to) "asArray" [])

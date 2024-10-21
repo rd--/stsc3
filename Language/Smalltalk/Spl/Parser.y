@@ -158,6 +158,7 @@ primary :: { StcPrimary }
     | '(' expression '..' expression ')' { stcIntervalRange $2 $4 }
     | '[' expression '..' expression ']' { stcArrayRange $2 $4 }
     | integer ':' integer { stcIntervalRange (intExpr $1) (intExpr $3) }
+    | integer ':' integer ':' integer { stcFromToBy (intExpr $1) (intExpr $5) (intExpr $3) }
     | identifier '(' expression_seq ')' { StcPrimaryImplicitMessageSend $1 $3 }
     | identifier '(' expression_seq ')' blockexpression_seq { StcPrimaryImplicitMessageSend $1 ($3 ++ $5) }
 
