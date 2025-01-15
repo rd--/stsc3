@@ -8,6 +8,7 @@
 (5 / 3).class == Float                                      // division with fractional result
 5.0 / 2.0 == 2.5                                            // division with float result
 5.0.div(3.0) == 1                                           // integer divide
+[8.div(7), -8.div(7)] == [1, -2]                            // integer divide (note not truncating)
 5 % 3 == 2                                                  // modulo
 5.0 % 3.0 == 2.0                                            // float modulo
 -5 == 5.neg                                                 // unary minus
