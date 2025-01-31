@@ -60,6 +60,7 @@ var n = 98.rand + 1; n.exclusivelyBetween(0, 100)           // random number in 
 4 + 5 * 6 == 54                                             // operators are evaluated left to right
 300.nextPowerOfTwo == 512                                   // next power of two
 300.previousPowerOf(2) == 256                               // previous power of two
+60.factors == [2, 2, 3, 5]                                  // prime factors
 
 'Array'
 Array.new.isKindOf(Collection) == true                      // c.f. Collection
@@ -479,6 +480,7 @@ var s = ""; [1, 3, 5].do { | x | s = s ++ x }; s == "135"   // for loop (collect
 var s = ""; 1.for(5) { | x | s = s ++ x }; s == "12345"     // for loop
 var s = ""; 1.forBy(9, 2) { | x | s = s ++ x }; s == "13579"// for by loop
 var n = 9; { n > 3 }.while { n = n - 1 }; n == 3            // while loop
+{ |f| { 0.5.coin.if { f.value(true) } }.loop }.block        // repeat forever (until non-local exit)
 
 'Files'
 File.open("/tmp/x", "w").put('x').close.class == File       // open file, put value, close file
@@ -710,6 +712,7 @@ true.class == True                                          // constant (instanc
 { 0.3.rrand(0.9) }.dup(23).maxItem < 0.9                    // random float in range
 ([0, 1, 2, 3, 4, 4, 3, 2].asRandomTable * 100).round == [0, 23, 35, 44, 53, 61, 72, 88]
 ([0, 1, 2, 3, 2].asRandomTable * 100).round == [0, 30, 47, 60, 80]
+0.coin == false && { 1.coin == true }                       // answer either true or false with indicated probablity
 
 'Routine'
 f = { | x | var y = x * 2, z = y.yield; f.value(z) }; true  // yield the receiver to the coroutine (received by next)
@@ -833,6 +836,10 @@ Symbol.superclass == Object                                 // Symbol is not a s
 var x; x == nil                                             // uninitialised variables are nil
 var x = 1, y = 2; [x, y] == [1, 2]                          // var can introduce multiple temporaries
 var x; var y = 0, z; [x, y, z] == [nil, 0, nil]             // there can be multiple var sequences
+
+'Time'
+Main.elapsedTime.isNumber                                   // time interpreter has been running (in seconds)
+{ 1000000.do { 1.0.rand } }.bench.isNumber                  // time execution of function (in seconds)
 
 'Tuning'
 t = Tuning.at('wcAlpha'); t.class == Tuning                 // lookup tuning by name
