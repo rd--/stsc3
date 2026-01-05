@@ -1,16 +1,16 @@
 Cabal-Version:      2.4
 Name:               stsc3
-Version:            0.22
+Version:            0.23
 Synopsis:           Smalltalk SuperCollider
 Description:        Smalltalk SuperCollider
 License:            GPL-3.0-only
 Category:           Sound
-Copyright:          (c) Rohan Drape, 2019-2025
+Copyright:          (c) Rohan Drape, 2019-2026
 Author:             Rohan Drape
 Maintainer:         rd@rohandrape.net
 Stability:          Experimental
 Homepage:           http://rohandrape.net/t/stsc3
-Tested-With:        GHC == 9.12.1
+Tested-With:        GHC == 9.14.1
 Build-Type:         Simple
 
 Data-files:         README.md
@@ -20,7 +20,7 @@ library
                         base >= 4.7 && < 5,
                         containers,
                         filepath,
-                        hmt-base == 0.22.*,
+                        hmt-base == 0.23.*,
                         parsec,
                         split
   default-language:     Haskell2010
@@ -67,8 +67,8 @@ library
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
-                    hmt-base == 0.22.*,
-                    hsc3 == 0.22.*,
+                    hmt-base == 0.23.*,
+                    hsc3 == 0.23.*,
                     stsc3
   hs-source-dirs:   cmd
   main-is:          stsc3.hs

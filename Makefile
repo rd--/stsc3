@@ -1,6 +1,9 @@
 all:
 	echo "stsc3"
 
+install:
+	cabal v1-install --allow-newer
+
 clean:
 	rm -Rf dist dist-newstyle cabal.project.local *~
 	(cd cmd ; make clean)
