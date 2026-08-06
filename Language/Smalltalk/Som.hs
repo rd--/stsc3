@@ -6,9 +6,9 @@
 -}
 module Language.Smalltalk.Som where
 
-import Data.Char {- base -}
-import Data.List {- base -}
-import Data.Maybe {- base -}
+import qualified Data.Char {- base -}
+import qualified Data.List {- base -}
+import qualified Data.Maybe {- base -}
 
 import System.FilePath {- filepath -}
 
@@ -24,11 +24,20 @@ import qualified Language.Smalltalk.Ansi.Annotate as Annotate {- stsc3 -}
 {- | String parsing in SOM has alternate rules, see also somEscapedString.
      The ANSI parser could be modified to have a selectable rule for this.
 
-> rewriteSomQuotingToSmalltalk "\\'" == "''" -- quoted '
-> rewriteSomQuotingToSmalltalk "'\\''" == "''''" -- quoted ' in string
-> rewriteSomQuotingToSmalltalk "'\\\\\''" == "'\\\\\''" -- quoted \ and quoted ' in string
-> rewriteSomQuotingToSmalltalk "Lexing = ( f = ( ^['\\'', '\\\\'] ) )"
-> rewriteSomQuotingToSmalltalk "''" == "''" -- empty string
+>>> rewriteSomQuotingToSmalltalk "\\'" -- quoted '
+"''"
+
+>>> rewriteSomQuotingToSmalltalk "'\\''" -- quoted ' in string
+"''''"
+
+>>> rewriteSomQuotingToSmalltalk "'\\\\\''" -- quoted \ and quoted ' in string
+"'\\\\''"
+
+>>> rewriteSomQuotingToSmalltalk "Lexing = ( f = ( ^['\\'', '\\\\'] ) )"
+"Lexing = ( f = ( ^['''', '\\\\'] ) )"
+
+>>> rewriteSomQuotingToSmalltalk "''" -- empty string
+"''"
 -}
 rewriteSomQuotingToSmalltalk :: String -> String
 rewriteSomQuotingToSmalltalk =
@@ -56,7 +65,7 @@ parseSomClassDefinition = St.stParse classDefinition . rewriteSomQuotingToSmallt
      For Ansi "nil" becomes Nothing and empty becomes "Object".
      Note: fails if the first method definition is for '|' and there are no variables.
 
-> St.stParse classDefinition "Boolean = ( | aBoolean = ( ^self or: aBoolean ) )"
+> St.stParse classDefinition "Boolean = ( | aBoolean = ( ^self or: aBoolean ) )" -- error
 > St.stParse classDefinition "Empty = ()"
 > St.stParse classDefinition "" -- error
 -}
@@ -143,7 +152,9 @@ somPrimitive = do
      It can therefore form the start of a Smalltalk method definition.
      This parser must disallow this, which is done using notFollowedBy as a prefix rule.
 
-> St.stParse separator "-----------" == "----"
+>>> St.stParse separator "-----------"
+"----"
+
 > St.stParse (methodDefinition "") "---- new = (| t | q. r. ^s)" -- fail
 -}
 separator :: St.P String
@@ -174,11 +185,18 @@ equalSign = St.lexeme (P.char '=')
      In Som '\'' is a string with a single quote character.
      In Smalltalk it is an unterminated string.
 
-> p = St.stParse escapedChar
-> p "\\n" == '\n'
-> p "\\0" == '\0'
-> p "\\'" == '\''
-> p "\\\\" == '\\'
+>>> let p = St.stParse escapedChar
+>>> p "\\n"
+'\n'
+
+>>> p "\\0"
+'\NUL'
+
+>>> p "\\'"
+'\''
+
+>>> p "\\\\"
+'\\'
 -}
 escapedChar :: St.P Char
 escapedChar = do
@@ -191,10 +209,15 @@ escapedChar = do
      The implementation here uses an Ansi Smalltalk parser, so the input may include unquoted quotes.
      For this reason they are allowed.
 
-> p = St.stParse nonEscapedChar
-> p "x" == 'x'
-> p "\n" == '\n'
-> p "'" == '\''
+>>> let p = St.stParse nonEscapedChar
+>>> p "x"
+'x'
+
+>>> p "\n"
+'\n'
+
+>>> p "'"
+'\''
 -}
 nonEscapedChar :: St.P Char
 nonEscapedChar = P.noneOf "\t\b\r\f\\\0" -- '
@@ -205,20 +228,32 @@ stringCharacter = nonEscapedChar P.<|> escapedChar
 
 {- | Parse an escaped string body.
 
-> p = St.stParse escapedStringBody
-> p "\\n" == "\n"
-> p "x\\'" == "x'"
-> p "'" == "'"
+>>> let p = St.stParse escapedStringBody
+>>> p "\\n"
+"\n"
+
+>>> p "x\\'"
+"x'"
+
+>>> p "'"
+"'"
 -}
 escapedStringBody :: St.P String
 escapedStringBody = P.many stringCharacter
 
 {- | In Som this should be run on the string literals that are derived by the Smalltalk parser.
 
-> somEscapedString "\\t" == "\t"
-> somEscapedString "\'" == "'" -- single quote character in Som
-> somEscapedString "''" == "''" -- single quote character in Smalltalk
-> somEscapedString "\\\\"
+>>> somEscapedString "\\t"
+"\t"
+
+>>> somEscapedString "\'" -- single quote character in Som
+"'"
+
+>>> somEscapedString "''" -- single quote character in Smalltalk
+"''"
+
+>>> somEscapedString "\\\\"
+"\\"
 -}
 somEscapedString :: String -> String
 somEscapedString = St.stParse escapedStringBody
@@ -268,7 +303,7 @@ somLoadClassDefinitionFromFile fn = do
   txt <- readFile fn
   let cd = parseSomClassDefinition txt
       emptyErr = error ("somLoadClassDefinitionFromFile: empty file: " ++ fn)
-  if all isSpace txt then emptyErr else return (cd)
+  if all Data.Char.isSpace txt then emptyErr else return (cd)
 
 somLoadClassDefinitionFromClassFile :: FilePath -> IO St.ClassDefinition
 somLoadClassDefinitionFromClassFile fn = do
@@ -290,7 +325,7 @@ somLoadClassDefinition recurse cp nm = do
 
 somLoadClassDefinitionOrError :: Bool -> [FilePath] -> St.Identifier -> IO St.ClassDefinition
 somLoadClassDefinitionOrError recurse cp nm =
-  let err = error ("somLoadClassDefinition: not found: " ++ nm ++ " on: " ++ intercalate ":" cp)
+  let err = error ("somLoadClassDefinition: not found: " ++ nm ++ " on: " ++ Data.List.intercalate ":" cp)
   in somLoadClassDefinition recurse cp nm >>= maybe err return
 
 somLoadClassList :: Bool -> [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
@@ -320,7 +355,7 @@ somClassDefinitionFindFilesFor recurse cp nm = do
   c <- get "som"
   e <- get "ext.som"
   m <- get "mod.som"
-  if length c /= 1 then return Nothing else return (Just (head c, e, sort m))
+  if length c /= 1 then return Nothing else return (Just (head c, e, Data.List.sort m))
 
 somLoadClassDefinitionFromFiles :: SomDefinitionFiles -> IO St.ClassDefinition
 somLoadClassDefinitionFromFiles (c, e, m) = do
@@ -343,7 +378,7 @@ somLoadClassDefinitionExtModOrError :: Bool -> [FilePath] -> String -> IO St.Cla
 somLoadClassDefinitionExtModOrError recurse cp nm = do
   let err = error ("somLoadClassDefinitionExtMod: not singular class file: " ++ nm)
   maybeCd <- somLoadClassDefinitionExtMod recurse cp nm
-  return (fromMaybe err maybeCd)
+  return (Data.Maybe.fromMaybe err maybeCd)
 
 somLoadClassListExtMod :: Bool -> [FilePath] -> [St.Identifier] -> IO [St.ClassDefinition]
 somLoadClassListExtMod recurse cp = mapM (somLoadClassDefinitionExtModOrError recurse cp)

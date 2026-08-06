@@ -1,8 +1,8 @@
 -- | Rewriter for a simple class of Ugen graphs as Ndef graphs.
 module Language.Smalltalk.SuperCollider.Ndef where
 
-import Data.Char {- base -}
-import Data.List {- base -}
+import qualified Data.Char {- base -}
+import qualified Data.List {- base -}
 
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
@@ -46,7 +46,9 @@ to_ndef :: Expr -> Expr
 to_ndef expr =
   case expr of
     Identifier i ->
-      if isLower (head i) && i `notElem` scPseudoVariables then ndef_ref_rt i else Identifier i
+      if Data.Char.isLower (head i) && i `notElem` scPseudoVariables
+      then ndef_ref_rt i
+      else Identifier i
     Assignment p q ->
       implicitSend "Ndef" [symbolLiteral p, inLambda q]
     _ -> expr
@@ -55,7 +57,7 @@ to_ndef expr =
 stcUgenToNdef :: String -> String
 stcUgenToNdef =
   (++ "\n")
-    . intercalate ";\n"
+    . Data.List.intercalate ";\n"
     . map (St.exprPrintStc True)
     . map (expr_map to_ndef)
     . with_assign_and_play

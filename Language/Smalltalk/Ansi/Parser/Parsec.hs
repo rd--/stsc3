@@ -1,11 +1,11 @@
 -- | Parsec parser for a subset of ANSI Smalltalk.
 module Language.Smalltalk.Ansi.Parser.Parsec where
 
-import Control.Monad {- base -}
-import Data.Char {- base -}
+import qualified Control.Monad {- base -}
+import qualified Data.Char {- base -}
 import qualified Data.Functor.Identity as Identity {- base -}
-import Data.Maybe {- base -}
-import Numeric {- base -}
+import qualified Data.Maybe {- base -}
+import qualified Numeric {- base -}
 
 import qualified Text.Parsec as P {- parsec -}
 import qualified Text.Parsec.Language as Language {- parsec -}
@@ -62,7 +62,7 @@ stParseMaybe p = either (\_ -> Nothing) Just . P.parse p ""
 -- | Delete leading spaces and run stParse.
 stParseInitial :: P t -> String -> t
 stParseInitial p =
-  let deleteLeadingSpaces = dropWhile isSpace
+  let deleteLeadingSpaces = dropWhile Data.Char.isSpace
   in stParse p . deleteLeadingSpaces
 
 -- * 3.3 Smalltalk Abstract Program Grammar
@@ -138,13 +138,14 @@ globalDefinition = do
 
 {- | <<program initializer definition >> ::= <initializer definition>
 
->>> p = stParse programInitializerDefinition
-
-> p "|t| t + 1"
-> p "\"x\" |t| t + 1"
-
+>>> let p = stParse programInitializerDefinition
 >>> p ""
 InitializerDefinition Nothing Nothing Nothing
+
+>>> p "\"x\" |t| t + 1"
+InitializerDefinition Nothing Nothing Nothing
+
+> p "|t| t + 1"
 -}
 programInitializerDefinition :: P ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
@@ -156,7 +157,7 @@ nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 -- * 3.4.2
 
 duplicateNamesError :: [LowercaseIdentifier] -> P ()
-duplicateNamesError dup = when (not (null dup)) (P.unexpected ("Name already used: " ++ show dup))
+duplicateNamesError dup = Control.Monad.when (not (null dup)) (P.unexpected ("Name already used: " ++ show dup))
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -1095,7 +1096,7 @@ integer = P.try radixInteger P.<|> decimalInteger
 [23,23,23,23]
 -}
 radixInteger :: P Integer
-radixInteger = fmap (fromMaybe (error "radixInteger?")) radixIntegerMaybe
+radixInteger = fmap (Data.Maybe.fromMaybe (error "radixInteger?")) radixIntegerMaybe
 
 radixIntegerMaybe :: P (Maybe Integer)
 radixIntegerMaybe = do
@@ -1108,10 +1109,10 @@ radixIntegerMaybe = do
           _ -> Nothing
       n =
         case rs of
-          2 -> get (readBin rd) -- base=4.16.1
-          8 -> get (readOct rd)
-          10 -> get (readDec rd)
-          16 -> get (readHex rd)
+          2 -> get (Numeric.readBin rd) -- base=4.16.1
+          8 -> get (Numeric.readOct rd)
+          10 -> get (Numeric.readDec rd)
+          16 -> get (Numeric.readHex rd)
           _ -> Nothing
   return n
 
