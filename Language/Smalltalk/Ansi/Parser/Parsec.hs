@@ -3,20 +3,20 @@ module Language.Smalltalk.Ansi.Parser.Parsec where
 
 import qualified Control.Monad {- base -}
 import qualified Data.Char {- base -}
-import qualified Data.Functor.Identity as Identity {- base -}
+import qualified Data.Functor.Identity {- base -}
 import qualified Data.Maybe {- base -}
 import qualified Numeric {- base -}
 
-import qualified Text.Parsec as P {- parsec -}
-import qualified Text.Parsec.Language as Language {- parsec -}
-import qualified Text.Parsec.String as String {- parsec -}
-import qualified Text.Parsec.Token as Token {- parsec -}
+import qualified Text.Parsec as Parsec {- parsec -}
+import qualified Text.Parsec.Language as Parsec.Language {- parsec -}
+import qualified Text.Parsec.String as Parsec.String {- parsec -}
+import qualified Text.Parsec.Token as Parsec.Token {- parsec -}
 
-import Language.Smalltalk.Ansi.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Ast as Ast {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Ast.Helper as Helper {- stsc3 -}
 
 -- | A 'Char' parser with no user state.
-type P a = String.GenParser Char () a
+type P a = Parsec.String.GenParser Char () a
 
 -- | Run p then q, returning result of p.
 (>>~) :: Monad m => m t -> m u -> m t
@@ -24,32 +24,32 @@ p >>~ q = p >>= \x -> q >> return x
 
 -- | /p/ consuming any trailing separators.
 lexeme :: P t -> P t
-lexeme = Token.lexeme stLexer
+lexeme = Parsec.Token.lexeme stLexer
 
 -- | Smalltalk language definition (for token parser)
-stLanguageDef :: Language.GenLanguageDef String () Identity.Identity
+stLanguageDef :: Parsec.Language.GenLanguageDef String () Data.Functor.Identity.Identity
 stLanguageDef =
-  Token.LanguageDef
-    { Token.commentStart = "\""
-    , Token.commentEnd = "\""
-    , Token.commentLine = "" -- NIL
-    , Token.nestedComments = False
-    , Token.identStart = letter
-    , Token.identLetter = letter P.<|> P.digit
-    , Token.opStart = binaryCharacter
-    , Token.opLetter = binaryCharacter
-    , Token.reservedNames = Helper.stReservedIdentifiers
-    , Token.reservedOpNames = []
-    , Token.caseSensitive = True
+  Parsec.Token.LanguageDef
+    { Parsec.Token.commentStart = "\""
+    , Parsec.Token.commentEnd = "\""
+    , Parsec.Token.commentLine = "" -- NIL
+    , Parsec.Token.nestedComments = False
+    , Parsec.Token.identStart = letter
+    , Parsec.Token.identLetter = letter Parsec.<|> Parsec.digit
+    , Parsec.Token.opStart = binaryCharacter
+    , Parsec.Token.opLetter = binaryCharacter
+    , Parsec.Token.reservedNames = Helper.stReservedIdentifiers
+    , Parsec.Token.reservedOpNames = []
+    , Parsec.Token.caseSensitive = True
     }
 
 -- | Lexer
-stLexer :: Token.GenTokenParser String () Identity.Identity
-stLexer = Token.makeTokenParser stLanguageDef
+stLexer :: Parsec.Token.GenTokenParser String () Data.Functor.Identity.Identity
+stLexer = Parsec.Token.makeTokenParser stLanguageDef
 
 -- | Run parser and return either an error string or an answer.
 stParseEither :: P t -> String -> Either String t
-stParseEither p = either (\m -> Left ("stParse: " ++ show m)) Right . P.parse p ""
+stParseEither p = either (\m -> Left ("stParse: " ++ show m)) Right . Parsec.parse p ""
 
 -- | Run parser and report any error.  Does not delete leading spaces.
 stParse :: P t -> String -> t
@@ -57,7 +57,7 @@ stParse p = either (\e -> error e) id . stParseEither p
 
 -- | Run parser and report maybe give answer.
 stParseMaybe :: P t -> String -> Maybe t
-stParseMaybe p = either (\_ -> Nothing) Just . P.parse p ""
+stParseMaybe p = either (\_ -> Nothing) Just . Parsec.parse p ""
 
 -- | Delete leading spaces and run stParse.
 stParseInitial :: P t -> String -> t
@@ -77,15 +77,15 @@ True
 
 > p "self ifNil:" -- ? error
 -}
-smalltalkProgram :: P SmalltalkProgram
+smalltalkProgram :: P Ast.SmalltalkProgram
 smalltalkProgram = do
-  P.optional separator
-  fmap SmalltalkProgram (P.many1 nonEmptyProgramElement P.<|> (P.eof >> return []))
+  Parsec.optional separator
+  fmap Ast.SmalltalkProgram (Parsec.many1 nonEmptyProgramElement Parsec.<|> (Parsec.eof >> return []))
 
 {-
 import Control.Monad.Loops {- monad-loops -}
 
-{- | P.many1 cannot accept a parser that can match an empty string, which programElement can.
+{- | Parsec.many1 cannot accept a parser that can match an empty string, which programElement can.
      This attempts parse ProgramElements until eof.
      However in the case of a syntax error this will not halt.
 -}
@@ -93,7 +93,7 @@ programElementSequence :: P [ProgramElement]
 programElementSequence = Control.Monad.Loops.unfoldM maybeProgramElement
 
 maybeProgramElement :: P (Maybe ProgramElement)
-maybeProgramElement = (P.eof >> return Nothing) P.<|> fmap Just programElement
+maybeProgramElement = (Parsec.eof >> return Nothing) Parsec.<|> fmap Just programElement
 -}
 
 {- | <<program element>> ::= <<class definition>>
@@ -101,18 +101,18 @@ maybeProgramElement = (P.eof >> return Nothing) P.<|> fmap Just programElement
                            | <<pool definition>>
                            | <<program initializer definition>>
 -}
-programElement :: P ProgramElement
+programElement :: P Ast.ProgramElement
 programElement =
-  P.choice
-    [ fmap ProgramInitializer programInitializerDefinition
-    , fmap ProgramGlobal globalDefinition
+  Parsec.choice
+    [ fmap Ast.ProgramInitializer programInitializerDefinition
+    , fmap Ast.ProgramGlobal globalDefinition
     ]
 
-nonEmptyProgramElement :: P ProgramElement
+nonEmptyProgramElement :: P Ast.ProgramElement
 nonEmptyProgramElement =
-  P.choice
-    [ fmap ProgramInitializer nonEmptyProgramInitializerDefinition
-    , fmap ProgramGlobal globalDefinition
+  Parsec.choice
+    [ fmap Ast.ProgramInitializer nonEmptyProgramInitializerDefinition
+    , fmap Ast.ProgramGlobal globalDefinition
     ]
 
 -- * 3.3.2 Class Definition
@@ -127,12 +127,12 @@ GlobalDefinition "g" (Just (InitializerDefinition Nothing Nothing Nothing))
 
 > p "g g := 0"
 -}
-globalDefinition :: P GlobalDefinition
+globalDefinition :: P Ast.GlobalDefinition
 globalDefinition = do
   -- constant designator
   n <- identifier
-  v <- P.optionMaybe initializerDefinition
-  return (GlobalDefinition n v)
+  v <- Parsec.optionMaybe initializerDefinition
+  return (Ast.GlobalDefinition n v)
 
 -- * 3.3.5 Program Initializer Definition
 
@@ -147,17 +147,17 @@ InitializerDefinition Nothing Nothing Nothing
 
 > p "|t| t + 1"
 -}
-programInitializerDefinition :: P ProgramInitializerDefinition
+programInitializerDefinition :: P Ast.ProgramInitializerDefinition
 programInitializerDefinition = initializerDefinition
 
 -- | A variant that does will not match the empty string.
-nonEmptyProgramInitializerDefinition :: P ProgramInitializerDefinition
+nonEmptyProgramInitializerDefinition :: P Ast.ProgramInitializerDefinition
 nonEmptyProgramInitializerDefinition = nonEmptyInitializerDefinition
 
 -- * 3.4.2
 
-duplicateNamesError :: [LowercaseIdentifier] -> P ()
-duplicateNamesError dup = Control.Monad.when (not (null dup)) (P.unexpected ("Name already used: " ++ show dup))
+duplicateNamesError :: [Ast.LowercaseIdentifier] -> P ()
+duplicateNamesError dup = Control.Monad.when (not (null dup)) (Parsec.unexpected ("Name already used: " ++ show dup))
 
 {- | <method definition> ::= <message pattern> [<temporaries>] [<statements>]
 
@@ -182,14 +182,14 @@ duplicateNamesError dup = Control.Monad.when (not (null dup)) (P.unexpected ("Na
 > p "p <primitive: 0> |tmp| self primitiveFailed" -- this should fail, instead it discards statements!
 > p "p: q | q | ^q" -- duplicate name error
 -}
-methodDefinition :: Maybe String -> (UppercaseIdentifier, Bool) -> P MethodDefinition
+methodDefinition :: Maybe String -> (Ast.UppercaseIdentifier, Bool) -> P Ast.MethodDefinition
 methodDefinition src cl = do
   pat <- messagePattern -- messagePattern is a token and consumes trailing comments
-  cmt <- P.optionMaybe comment -- this is always Nothing
-  tmp <- P.optionMaybe temporaries
-  prm <- P.optionMaybe primitive -- primitive comes after temporaries
-  stm <- P.optionMaybe statements
-  let def = MethodDefinition cl Nothing pat tmp stm prm cmt src
+  cmt <- Parsec.optionMaybe comment -- this is always Nothing
+  tmp <- Parsec.optionMaybe temporaries
+  prm <- Parsec.optionMaybe primitive -- primitive comes after temporaries
+  stm <- Parsec.optionMaybe statements
+  let def = Ast.MethodDefinition cl Nothing pat tmp stm prm cmt src
       dup = Helper.methodDefinitionDuplicateTemporaries def
   duplicateNamesError dup
   return def
@@ -213,14 +213,14 @@ True
 >>> p "k: v x" == p "k:v"
 True
 -}
-messagePattern :: P Pattern
+messagePattern :: P Ast.Pattern
 messagePattern =
-  P.choice
-    [ P.try keywordPattern
-    , P.try binaryPattern
+  Parsec.choice
+    [ Parsec.try keywordPattern
+    , Parsec.try binaryPattern
     , unaryPattern
     ]
-    P.<?> "messagePattern"
+    Parsec.<?> "messagePattern"
 
 {- | <unary pattern> ::= unarySelector
 
@@ -229,19 +229,19 @@ UnaryPattern "p"
 
 > stParse unaryPattern "p:" -- error
 -}
-unaryPattern :: P Pattern
-unaryPattern = fmap (UnaryPattern . Helper.selectorIdentifier) unarySelector -- lexeme
+unaryPattern :: P Ast.Pattern
+unaryPattern = fmap (Ast.UnaryPattern . Helper.selectorIdentifier) unarySelector -- lexeme
 
 {- | <binary pattern> ::= binarySelector <method argument>
 
 >>> stParse binaryPattern "+p" == stParse binaryPattern "+ p"
 True
 -}
-binaryPattern :: P Pattern
+binaryPattern :: P Ast.Pattern
 binaryPattern = do
-  BinarySelector sel <- binarySelector
+  Ast.BinarySelector sel <- binarySelector
   arg <- identifier
-  return (BinaryPattern sel arg)
+  return (Ast.BinaryPattern sel arg)
 
 {- | <keyword pattern> ::= (keyword <method argument>)+
 
@@ -254,20 +254,20 @@ KeywordPattern [("k1:","p1"),("k2:","p2")]
 >>> stParse keywordPattern "k1: p1 ..."
 KeywordPattern [("k1:","p1")]
 -}
-keywordPattern :: P Pattern
+keywordPattern :: P Ast.Pattern
 keywordPattern = do
   let f = do
         kw <- keyword
         arg <- identifier
         return (kw, arg)
-  fmap KeywordPattern (P.many1 (P.try f))
+  fmap Ast.KeywordPattern (Parsec.many1 (Parsec.try f))
 
 -- | Vertical bar as lexeme (token).
 verticalBar :: P Char
-verticalBar = lexeme (P.char '|')
+verticalBar = lexeme (Parsec.char '|')
 
-temporariesIdentifierSequence :: P [LowercaseIdentifier]
-temporariesIdentifierSequence = P.between verticalBar verticalBar temporary_variable_list
+temporariesIdentifierSequence :: P [Ast.LowercaseIdentifier]
+temporariesIdentifierSequence = Parsec.between verticalBar verticalBar temporary_variable_list
 
 {- | <temporaries> ::= '|' <temporary variable list> '|'
 
@@ -284,8 +284,8 @@ True
 >>> p "|p q r|"
 Temporaries {temporariesIdentifiers = ["p","q","r"]}
 -}
-temporaries :: P Temporaries
-temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporaries"
+temporaries :: P Ast.Temporaries
+temporaries = Parsec.label (fmap Ast.Temporaries temporariesIdentifierSequence) "temporaries"
 
 {- | <temporary variable list> ::= identifier*
 
@@ -302,8 +302,8 @@ temporaries = P.label (fmap Temporaries temporariesIdentifierSequence) "temporar
 >>> p "p q r" == p "p q r +"
 True
 -}
-temporary_variable_list :: P [LowercaseIdentifier]
-temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
+temporary_variable_list :: P [Ast.LowercaseIdentifier]
+temporary_variable_list = Parsec.many identifier Parsec.<?> "temporary_variable_list"
 
 -- * 3.4.3
 
@@ -318,18 +318,18 @@ temporary_variable_list = P.many identifier P.<?> "temporary_variable_list"
 > p "[:x | x * x] value: Float pi * 2"
 > p ""
 -}
-initializerDefinition :: P InitializerDefinition
+initializerDefinition :: P Ast.InitializerDefinition
 initializerDefinition = do
-  t <- P.optionMaybe temporaries
-  s <- P.optionMaybe statements
-  return (InitializerDefinition Nothing t s)
+  t <- Parsec.optionMaybe temporaries
+  s <- Parsec.optionMaybe statements
+  return (Ast.InitializerDefinition Nothing t s)
 
-nonEmptyInitializerDefinition :: P InitializerDefinition
+nonEmptyInitializerDefinition :: P Ast.InitializerDefinition
 nonEmptyInitializerDefinition = do
-  InitializerDefinition c t s <- initializerDefinition
+  Ast.InitializerDefinition c t s <- initializerDefinition
   case (t, s) of
-    (Nothing, Nothing) -> P.unexpected "nonEmptyInitializerDefinition: empty"
-    _ -> return (InitializerDefinition c t s)
+    (Nothing, Nothing) -> Parsec.unexpected "nonEmptyInitializerDefinition: empty"
+    _ -> return (Ast.InitializerDefinition c t s)
 
 -- * 3.4.4
 
@@ -343,7 +343,7 @@ nonEmptyInitializerDefinition = do
 > p "[:a| |t u| t := [:b| |v w| z] . x . y]"
 > p "[:ignored]"
 -}
-blockConstructor :: P BlockBody
+blockConstructor :: P Ast.BlockBody
 blockConstructor = inBrackets blockBody
 
 {- | <block body> ::= [<block argument>* '|'] [<temporaries>] [<statements>]
@@ -361,12 +361,12 @@ blockConstructor = inBrackets blockBody
 > p ":ignored"
 > p ":a| | a | a + 1" -- duplicate name error
 -}
-blockBody :: P BlockBody
+blockBody :: P Ast.BlockBody
 blockBody = do
-  a <- P.optionMaybe (P.try (P.many1 blockArgument >>~ verticalBar))
-  t <- P.optionMaybe temporaries
-  s <- P.optionMaybe statements
-  let blk = BlockBody Nothing a t s
+  a <- Parsec.optionMaybe (Parsec.try (Parsec.many1 blockArgument >>~ verticalBar))
+  t <- Parsec.optionMaybe temporaries
+  s <- Parsec.optionMaybe statements
+  let blk = Ast.BlockBody Nothing a t s
       dup = Helper.blockBodyDuplicateTemporaries blk
   duplicateNamesError dup
   return blk
@@ -376,8 +376,8 @@ blockBody = do
 > p = stParse blockArgument
 > p ":a" == p ": a"
 -}
-blockArgument :: P BlockArgument
-blockArgument = lexeme (P.char ':') >> identifier
+blockArgument :: P Ast.BlockArgument
+blockArgument = lexeme (Parsec.char ':') >> identifier
 
 -- * 3.4.5
 
@@ -386,7 +386,7 @@ blockArgument = lexeme (P.char ':') >> identifier
 > stParse period "." == "."
 -}
 period :: P String
-period = Token.dot stLexer
+period = Parsec.Token.dot stLexer
 
 {- | <statements> ::= (<return statement> ['.']) | (<expression> ['.' [<statements>]])
 
@@ -402,16 +402,16 @@ period = Token.dot stLexer
 > p "^ 440 * (2 ** ((self - 69) * (1 / 12)))"
 > p "p. q." == p "p. q"
 -}
-statements :: P Statements
+statements :: P Ast.Statements
 statements = do
   let rhs = do
         e <- expression
-        p <- P.optionMaybe period
+        p <- Parsec.optionMaybe period
         s <- case p of
           Nothing -> return Nothing
-          Just _ -> P.optionMaybe statements
-        return (StatementsExpression e s)
-  P.choice [fmap StatementsReturn (returnStatement >>~ P.optional period), rhs]
+          Just _ -> Parsec.optionMaybe statements
+        return (Ast.StatementsExpression e s)
+  Parsec.choice [fmap Ast.StatementsReturn (returnStatement >>~ Parsec.optional period), rhs]
 
 {- | <return statement> ::= returnOperator <expression>
 
@@ -423,8 +423,8 @@ statements = do
 > p "^ a value + b value + c value"
 > p "^ self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
-returnStatement :: P ReturnStatement
-returnStatement = fmap ReturnStatement (returnOperator >> expression)
+returnStatement :: P Ast.ReturnStatement
+returnStatement = fmap Ast.ReturnStatement (returnOperator >> expression)
 
 {- | <expression> ::= <assignment> | <basic expression>
 
@@ -447,8 +447,8 @@ returnStatement = fmap ReturnStatement (returnOperator >> expression)
 > p "o m: true"
 > p "self < 0.0 ifTrue: [0.0 - self] ifFalse: [self]"
 -}
-expression :: P Expression
-expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicExpression
+expression :: P Ast.Expression
+expression = fmap Ast.ExprAssignment (Parsec.try assignment) Parsec.<|> fmap Ast.ExprBasic basicExpression
 
 {- | <assignment> ::= <assignment target> assignmentOperator <expression>
 
@@ -461,12 +461,12 @@ expression = fmap ExprAssignment (P.try assignment) P.<|> fmap ExprBasic basicEx
 > p "p := 8 mixFill: [:i| |n trigger pluck freq z metal| n := 15 ]"
 > p "p := q := r := nil"
 -}
-assignment :: P Assignment
+assignment :: P Ast.Assignment
 assignment = do
   a <- assignmentTarget
   _ <- assignmentOperator
   e <- expression
-  return (Assignment a e)
+  return (Ast.Assignment a e)
 
 {- | <basic expression> ::= <primary> [<messages> <cascaded messages>]
 
@@ -488,29 +488,29 @@ assignment = do
 > p "Point new x: 25 y: 35; isZero"
 > p "self ifNil:" -- error
 -}
-basicExpression :: P BasicExpression
+basicExpression :: P Ast.BasicExpression
 basicExpression = do
   p <- primary
-  m <- P.optionMaybe messages
+  m <- Parsec.optionMaybe messages
   c <- cascadedMessages
-  return (BasicExpression p m (if null c then Nothing else Just c))
+  return (Ast.BasicExpression p m (if null c then Nothing else Just c))
 
 {- | <assignment target> := identifier
 
 > p = stParse assignmentTarget
 > p "self" -- ? ; error ; reserved words cannot be assigned to
 -}
-assignmentTarget :: P Identifier
-assignmentTarget = P.label identifier "assignmentTarget"
+assignmentTarget :: P Ast.Identifier
+assignmentTarget = Parsec.label identifier "assignmentTarget"
 
 inParentheses :: P t -> P t
-inParentheses = Token.parens stLexer
+inParentheses = Parsec.Token.parens stLexer
 
 inBraces :: P t -> P t
-inBraces = Token.braces stLexer
+inBraces = Parsec.Token.braces stLexer
 
 inBrackets :: P t -> P t
-inBrackets = Token.brackets stLexer
+inBrackets = Parsec.Token.brackets stLexer
 
 {- | <primary> ::= identifier | <literal> | <block constructor> | ( '(' <expression> ')' )
 
@@ -525,17 +525,17 @@ inBrackets = Token.brackets stLexer
 > map p ["{p.q.r}", "{p. q. r}", "{ p . q . r }", "{ p . q . r . }", "{p.q.r.}"]
 > map p ["{p. {q. r} }", "{p. {q. r.} .}"]
 -}
-primary :: P Primary
+primary :: P Ast.Primary
 primary =
   lexeme
-    ( P.choice
-        [ fmap PrimaryBlock blockConstructor
-        , fmap PrimaryExpression (inParentheses expression)
-        , fmap PrimaryArrayExpression (inBraces (P.sepEndBy basicExpression period)) -- allow ending period?
-        , fmap PrimaryIdentifier identifier
-        , fmap PrimaryLiteral literal
+    ( Parsec.choice
+        [ fmap Ast.PrimaryBlock blockConstructor
+        , fmap Ast.PrimaryExpression (inParentheses expression)
+        , fmap Ast.PrimaryArrayExpression (inBraces (Parsec.sepEndBy basicExpression period)) -- allow ending period?
+        , fmap Ast.PrimaryIdentifier identifier
+        , fmap Ast.PrimaryLiteral literal
         ]
-        P.<?> "primary"
+        Parsec.<?> "primary"
     )
 
 {- | <unary message>+ <binary message>* [<keyword message>]
@@ -550,19 +550,19 @@ primary =
 > p "abs square +p +q k1:p1 k2:p2" == p "abs square + p + q k1: p1 k2: p2"
 > p "q r:x" == p "q r: x"
 -}
-unaryMessages :: P Messages
+unaryMessages :: P Ast.Messages
 unaryMessages = do
-  u <- P.many1 (P.try unaryMessage)
-  b <- P.many binaryMessage
-  k <- P.optionMaybe keywordMessage
-  return (MessagesUnary u (if null b then Nothing else Just b) k)
+  u <- Parsec.many1 (Parsec.try unaryMessage)
+  b <- Parsec.many binaryMessage
+  k <- Parsec.optionMaybe keywordMessage
+  return (Ast.MessagesUnary u (if null b then Nothing else Just b) k)
 
 -- | <binary message>+ [<keyword message>]
-binaryMessages :: P Messages
+binaryMessages :: P Ast.Messages
 binaryMessages = do
-  b <- P.many1 binaryMessage
-  k <- P.optionMaybe keywordMessage
-  return (MessagesBinary b k)
+  b <- Parsec.many1 binaryMessage
+  k <- Parsec.optionMaybe keywordMessage
+  return (Ast.MessagesBinary b k)
 
 {- | <messages> ::= (<unary message>+ <binary message>* [<keyword message>] )
                   | (<binary message>+ [<keyword message>] )
@@ -584,16 +584,16 @@ binaryMessages = do
 > p "< 0 ifTrue: [0 - self] ifFalse: [self]" == p "<0ifTrue:[0-self]ifFalse:[self]"
 > p "x perform: #y: with: z" -- error
 -}
-messages :: P Messages
-messages = P.choice [P.try binaryMessages, P.try (fmap MessagesKeyword keywordMessage), unaryMessages]
+messages :: P Ast.Messages
+messages = Parsec.choice [Parsec.try binaryMessages, Parsec.try (fmap Ast.MessagesKeyword keywordMessage), unaryMessages]
 
 {- | <unary message> ::= unarySelector
 
 > stParse unaryMessage "p" == UnaryMessage "p"
 > stParse unaryMessage "" -- FAIL
 -}
-unaryMessage :: P UnaryMessage
-unaryMessage = fmap (UnaryMessage . Helper.selectorIdentifier) unarySelector -- lexeme
+unaryMessage :: P Ast.UnaryMessage
+unaryMessage = fmap (Ast.UnaryMessage . Helper.selectorIdentifier) unarySelector -- lexeme
 
 {- | <binary message> ::= binarySelector <binary argument>
 
@@ -602,11 +602,11 @@ unaryMessage = fmap (UnaryMessage . Helper.selectorIdentifier) unarySelector -- 
 > stParse binaryMessage "+1.0" == stParse binaryMessage "+ 1.0"
 > stParse binaryMessage "+ 1 k:" -- + 1
 -}
-binaryMessage :: P BinaryMessage
+binaryMessage :: P Ast.BinaryMessage
 binaryMessage = do
-  BinarySelector sel <- binarySelector
+  Ast.BinarySelector sel <- binarySelector
   arg <- binaryArgument
-  return (BinaryMessage sel arg)
+  return (Ast.BinaryMessage sel arg)
 
 {- | <binary argument> ::= <primary> <unary message>*
 
@@ -615,11 +615,11 @@ binaryMessage = do
 > stParse binaryArgument "p q r"
 > stParse binaryArgument "p q r s:" -- p q r
 -}
-binaryArgument :: P BinaryArgument
+binaryArgument :: P Ast.BinaryArgument
 binaryArgument = do
   p <- primary
-  u <- P.optionMaybe (P.many (P.try unaryMessage))
-  return (BinaryArgument p u)
+  u <- Parsec.optionMaybe (Parsec.many (Parsec.try unaryMessage))
+  return (Ast.BinaryArgument p u)
 
 {- | <keyword message> ::= (keyword <keyword argument>)+
 
@@ -629,13 +629,13 @@ binaryArgument = do
 > p "k1: #p1:"
 > p "k1: #p1: k2: #p2"
 -}
-keywordMessage :: P KeywordMessage
+keywordMessage :: P Ast.KeywordMessage
 keywordMessage = do
   let f = do
         kw <- keyword
         arg <- keywordArgument
         return (kw, arg)
-  fmap KeywordMessage (P.many1 f)
+  fmap Ast.KeywordMessage (Parsec.many1 f)
 
 {- | <keyword argument> ::= <primary> <unary message>* <binary message>*
 
@@ -649,19 +649,19 @@ keywordMessage = do
 > p "#m: w:" == p "#m:"
 > p "p k:" == p "p"
 -}
-keywordArgument :: P KeywordArgument
+keywordArgument :: P Ast.KeywordArgument
 keywordArgument = do
   p <- primary
-  u <- P.optionMaybe (P.many1 (P.try unaryMessage))
-  b <- P.optionMaybe (P.many1 (P.try binaryMessage))
-  return (KeywordArgument p u b)
+  u <- Parsec.optionMaybe (Parsec.many1 (Parsec.try unaryMessage))
+  b <- Parsec.optionMaybe (Parsec.many1 (Parsec.try binaryMessage))
+  return (Ast.KeywordArgument p u b)
 
 cascadeSeparator :: P String
-cascadeSeparator = Token.semi stLexer
+cascadeSeparator = Parsec.Token.semi stLexer
 
 -- | <cascaded messages> ::= (';' <messages>)*
-cascadedMessages :: P CascadedMessages
-cascadedMessages = P.many (cascadeSeparator >> messages)
+cascadedMessages :: P Ast.CascadedMessages
+cascadedMessages = Parsec.many (cascadeSeparator >> messages)
 
 -- * 3.4.6
 
@@ -709,14 +709,14 @@ SelectorLiteral (BinarySelector "+")
 
 > p "x"
 -}
-literal :: P Literal
+literal :: P Ast.Literal
 literal =
-  P.choice
+  Parsec.choice
     [ numberLiteral
     , stringLiteral
     , characterLiteral
-    , P.try arrayLiteral
-    , P.try symbolLiteral
+    , Parsec.try arrayLiteral
+    , Parsec.try symbolLiteral
     , selectorLiteral -- lexeme
     ]
 
@@ -737,12 +737,12 @@ NumberLiteral (Float (-123.456))
 >>> stParse numberLiteral "1e-2"
 NumberLiteral (Float 1.0e-2)
 -}
-numberLiteral :: P Literal
+numberLiteral :: P Ast.Literal
 numberLiteral = do
-  n <- P.optionMaybe (P.char '-')
+  n <- Parsec.optionMaybe (Parsec.char '-')
   let rw :: Num n => n -> n
       rw = maybe id (const negate) n
-  fmap (NumberLiteral . Helper.numberCase (Int . rw) (Float . rw)) number -- lexeme
+  fmap (Ast.NumberLiteral . Helper.numberCase (Ast.Int . rw) (Ast.Float . rw)) number -- lexeme
 
 {- | <number> ::= integer | float | scaledDecimal
 
@@ -751,12 +751,12 @@ numberLiteral = do
 
 > map (stParse number) (words "-1 -1.2") -- FAIL
 -}
-number :: P Number
-number = fmap Float (P.try float) P.<|> fmap Int integer -- lexeme
+number :: P Ast.Number
+number = fmap Ast.Float (Parsec.try float) Parsec.<|> fmap Ast.Int integer -- lexeme
 
 -- | <character literal> ::= quotedCharacter
-characterLiteral :: P Literal
-characterLiteral = fmap CharacterLiteral quotedCharacter
+characterLiteral :: P Ast.Literal
+characterLiteral = fmap Ast.CharacterLiteral quotedCharacter
 
 {- | <string literal> ::= quotedString
 
@@ -767,26 +767,26 @@ StringLiteral "x"
 >>> p "'\\n'"
 StringLiteral "\\n"
 -}
-stringLiteral :: P Literal
-stringLiteral = fmap StringLiteral quotedString
+stringLiteral :: P Ast.Literal
+stringLiteral = fmap Ast.StringLiteral quotedString
 
 -- | <symbol literal> ::= hashedString
-symbolLiteral :: P Literal
-symbolLiteral = fmap SymbolLiteral hashedString
+symbolLiteral :: P Ast.Literal
+symbolLiteral = fmap Ast.SymbolLiteral hashedString
 
 -- | <selector literal> ::= quotedSelector
-selectorLiteral :: P Literal
-selectorLiteral = fmap SelectorLiteral quotedSelector
+selectorLiteral :: P Ast.Literal
+selectorLiteral = fmap Ast.SelectorLiteral quotedSelector
 
 -- | #( is the start token for literal arrays.
 hashOpenParen :: P String
-hashOpenParen = lexeme (P.string "#(")
+hashOpenParen = lexeme (Parsec.string "#(")
 
 openParen :: P Char
-openParen = lexeme (P.char '(')
+openParen = lexeme (Parsec.char '(')
 
 closeParen :: P Char
-closeParen = lexeme (P.char ')')
+closeParen = lexeme (Parsec.char ')')
 
 {- | 3.4.6.6
      <array literal> ::= '#(' <array element>* ')'
@@ -813,15 +813,15 @@ True
 >>> p "#(x x: #x: nil)" == p "#(#'x' #'x:' #x: nil)"
 True
 -}
-arrayLiteral :: P Literal
-arrayLiteral = fmap ArrayLiteral (P.between hashOpenParen closeParen (P.many arrayElement))
+arrayLiteral :: P Ast.Literal
+arrayLiteral = fmap Ast.ArrayLiteral (Parsec.between hashOpenParen closeParen (Parsec.many arrayElement))
 
 {- | Allow array elements within literal arrays to elide the # at the opening parenthesis.
       This is the rule in the ST-80 sources.
       Non-Ansi.
 -}
-interiorArrayLiteral :: P Literal
-interiorArrayLiteral = fmap ArrayLiteral (P.between openParen closeParen (P.many arrayElement))
+interiorArrayLiteral :: P Ast.Literal
+interiorArrayLiteral = fmap Ast.ArrayLiteral (Parsec.between openParen closeParen (Parsec.many arrayElement))
 
 {- | Allow identifiers (both ordinary and keyword) within literal arrays to elide the #.
       This is the rule in the ST-80 sources.
@@ -829,8 +829,8 @@ interiorArrayLiteral = fmap ArrayLiteral (P.between openParen closeParen (P.many
 
 > map (stParse interiorSymbol) (words "x y: #z:")
 -}
-interiorSymbol :: P Literal
-interiorSymbol = fmap SymbolLiteral (P.try keyword P.<|> identifier)
+interiorSymbol :: P Ast.Literal
+interiorSymbol = fmap Ast.SymbolLiteral (Parsec.try keyword Parsec.<|> identifier)
 
 {- | <array element> ::= <literal> | identifier
 
@@ -866,11 +866,13 @@ Left (SymbolLiteral "x:")
 >>> p "#x:"
 Left (SelectorLiteral (KeywordSelector "x:" 1))
 
->>> stParse (P.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
+>>> stParse (Parsec.many arrayElement) "1 '2' 3.14 x #'y' -1 #z: -2"
 [Left (NumberLiteral (Int 1)),Left (StringLiteral "2"),Left (NumberLiteral (Float 3.14)),Left (SymbolLiteral "x"),Left (SymbolLiteral "y"),Left (NumberLiteral (Int (-1))),Left (SelectorLiteral (KeywordSelector "z:" 1)),Left (NumberLiteral (Int (-2)))]
 -}
-arrayElement :: P (Either Literal Identifier)
-arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> interiorArrayLiteral P.<|> interiorSymbol) -- lexeme
+arrayElement :: P (Either Ast.Literal Ast.Identifier)
+arrayElement =
+  fmap Right reservedIdentifier
+    Parsec.<|> fmap Left (literal Parsec.<|> interiorArrayLiteral Parsec.<|> interiorSymbol) -- lexeme
 
 -- * 3.4.7 Reserved Identifiers
 
@@ -878,27 +880,27 @@ arrayElement = fmap Right reservedIdentifier P.<|> fmap Left (literal P.<|> inte
 
 -- | character ::= "Any character in the implementation-defined character set"
 character :: P Char
-character = P.anyChar
+character = Parsec.anyChar
 
 -- | whitespace ::= "Any non-printing character interpreted as white space including spaces, tabs, and line breaks"
 whitespace :: P Char
-whitespace = P.space
+whitespace = Parsec.space
 
 -- | digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 digit :: P Char
-digit = P.digit
+digit = Parsec.digit
 
 -- | uppercaseAlphabetic ::= 'A' .. 'Z'
 uppercaseAlphabetic :: P Char
-uppercaseAlphabetic = P.upper
+uppercaseAlphabetic = Parsec.upper
 
 -- | lowercaseAlphabetic ::= 'a' .. 'z'
 lowercaseAlphabetic :: P Char
-lowercaseAlphabetic = P.lower
+lowercaseAlphabetic = Parsec.lower
 
 -- | nonCaseLetter ::= '_'
 nonCaseLetter :: P Char
-nonCaseLetter = P.char '_'
+nonCaseLetter = Parsec.char '_'
 
 {- | letter ::= uppercaseAlphabetic
               | lowercaseAlphabetic
@@ -906,13 +908,13 @@ nonCaseLetter = P.char '_'
               | "implementation defined letters"
 -}
 letter :: P Char
-letter = P.choice [uppercaseAlphabetic, lowercaseAlphabetic, nonCaseLetter]
+letter = Parsec.choice [uppercaseAlphabetic, lowercaseAlphabetic, nonCaseLetter]
 
 -- * 3.5.2
 
 -- | commentDelimiter ::= '"'
 commentDelimiter :: P Char
-commentDelimiter = P.char '"' -- non-lexeme (the lhs comment marker is not a lexeme, the rhs is)
+commentDelimiter = Parsec.char '"' -- non-lexeme (the lhs comment marker is not a lexeme, the rhs is)
 
 {- | nonCommentDelimiter::= "any character that is not a commentDelimiter "
 
@@ -922,7 +924,7 @@ commentDelimiter = P.char '"' -- non-lexeme (the lhs comment marker is not a lex
 > stParse nonCommentDelimiter "\"" -- FAIL
 -}
 nonCommentDelimiter :: P Char
-nonCommentDelimiter = P.noneOf ['"']
+nonCommentDelimiter = Parsec.noneOf ['"']
 
 {- | comment := commentDelimiter nonCommentDelimiter * commentDelimiter
 
@@ -939,7 +941,7 @@ nonCommentDelimiter = P.noneOf ['"']
 "analog bubbles (jmcc) #1"
 -}
 comment :: P String
-comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommentDelimiter)
+comment = Parsec.between commentDelimiter (lexeme commentDelimiter) (Parsec.many nonCommentDelimiter)
 
 -- * 3.5.3
 
@@ -951,8 +953,8 @@ comment = P.between commentDelimiter (lexeme commentDelimiter) (P.many nonCommen
 
 > p "x" -- error
 -}
-reservedIdentifier :: P ReservedIdentifier
-reservedIdentifier = lexeme (P.choice (map (P.try . P.string) Helper.stReservedIdentifiers))
+reservedIdentifier :: P Ast.ReservedIdentifier
+reservedIdentifier = lexeme (Parsec.choice (map (Parsec.try . Parsec.string) Helper.stReservedIdentifiers))
 
 {- | An identifier that is not a reserved identifier
 
@@ -968,13 +970,13 @@ reservedIdentifier = lexeme (P.choice (map (P.try . P.string) Helper.stReservedI
 
 > p "self" -- error
 -}
-ordinaryIdentifier :: P OrdinaryIdentifier
-ordinaryIdentifier = Token.identifier stLexer
+ordinaryIdentifier :: P Ast.OrdinaryIdentifier
+ordinaryIdentifier = Parsec.Token.identifier stLexer
 
---  if token `elem` stReservedIdentifiers then P.unexpected ("reservedIdentifier: " ++ token) else return token
+--  if token `elem` stReservedIdentifiers then Parsec.unexpected ("reservedIdentifier: " ++ token) else return token
 
 underscore :: P Char
-underscore = P.char '_'
+underscore = Parsec.char '_'
 
 {- | A non-lexeme variant of ordinaryIdentifier.  For keyword.
 
@@ -988,10 +990,10 @@ underscore = P.char '_'
 >>> p "super" -- super: as part of a keyword is allowed, &etc.
 "super"
 -}
-identifierNonLexemeForKeyword :: P OrdinaryIdentifier
+identifierNonLexemeForKeyword :: P Ast.OrdinaryIdentifier
 identifierNonLexemeForKeyword = do
-  c0 <- P.letter
-  cN <- P.many (P.letter P.<|> underscore P.<|> P.digit)
+  c0 <- Parsec.letter
+  cN <- Parsec.many (Parsec.letter Parsec.<|> underscore Parsec.<|> Parsec.digit)
   return (c0 : cN)
 
 {- | identifier ::= letter (letter | digit)*
@@ -1023,16 +1025,16 @@ Ansi doesn't allow underscore but Squeak does, also some Sc Ugens have underscor
 
 > p "#y:" -- error
 -}
-identifier :: P Identifier
-identifier = ordinaryIdentifier P.<|> reservedIdentifier
+identifier :: P Ast.Identifier
+identifier = ordinaryIdentifier Parsec.<|> reservedIdentifier
 
 -- * 3.5.4
 
 -- | A keyword parser that is not a lexeme.  A keyword selector is a sequence of non-lexeme keywords.
-keywordNotLexeme :: P Keyword
+keywordNotLexeme :: P Ast.Keyword
 keywordNotLexeme = do
-  cs <- P.label identifierNonLexemeForKeyword "keyword"
-  c <- P.label (P.char ':') "keyword"
+  cs <- Parsec.label identifierNonLexemeForKeyword "keyword"
+  c <- Parsec.label (Parsec.char ':') "keyword"
   return (cs ++ [c])
 
 {- | keyword ::= identifier ':'
@@ -1045,7 +1047,7 @@ keywordNotLexeme = do
 > p "kw :" -- error
 > p "kw" -- error
 -}
-keyword :: P Keyword
+keyword :: P Ast.Keyword
 keyword = lexeme keywordNotLexeme
 
 -- * 3.5.5
@@ -1054,7 +1056,7 @@ keyword = lexeme keywordNotLexeme
                        | '<' | '=' | '>' | '?' | '@' | '\' | '~' | '|' | '-'
 -}
 binaryCharacter :: P Char
-binaryCharacter = P.oneOf Helper.binaryCharacterSet
+binaryCharacter = Parsec.oneOf Helper.binaryCharacterSet
 
 {- | binarySelector ::= binaryCharacter+
 
@@ -1064,16 +1066,16 @@ BinarySelector "&"
 >>> stParse binarySelector "+p" -- +1 must parse as selector=+ argument=1
 BinarySelector "+"
 -}
-binarySelector :: P Selector
-binarySelector = fmap BinarySelector (Token.operator stLexer)
+binarySelector :: P Ast.Selector
+binarySelector = fmap Ast.BinarySelector (Parsec.Token.operator stLexer)
 
 -- | returnOperator ::= '^'
 returnOperator :: P Char
-returnOperator = lexeme (P.char '^')
+returnOperator = lexeme (Parsec.char '^')
 
 -- | assignmentOperator ::= ':='
 assignmentOperator :: P String
-assignmentOperator = lexeme (P.string ":=")
+assignmentOperator = lexeme (Parsec.string ":=")
 
 -- * 3.5.6
 
@@ -1084,7 +1086,7 @@ assignmentOperator = lexeme (P.string ":=")
 [63,63,99,99,255,255]
 -}
 integer :: P Integer
-integer = P.try radixInteger P.<|> decimalInteger
+integer = Parsec.try radixInteger Parsec.<|> decimalInteger
 
 {- | radixInteger ::= radixSpecifier 'r' radixDigits
 
@@ -1101,7 +1103,7 @@ radixInteger = fmap (Data.Maybe.fromMaybe (error "radixInteger?")) radixIntegerM
 radixIntegerMaybe :: P (Maybe Integer)
 radixIntegerMaybe = do
   rs <- radixSpecifier
-  _ <- P.char 'r'
+  _ <- Parsec.char 'r'
   rd <- lexeme radixDigits
   let get x =
         case x of
@@ -1122,7 +1124,7 @@ radixSpecifier = fmap read digits
 
 -- | radixDigits ::= (digit | uppercaseAlphabetic)+
 radixDigits :: P String
-radixDigits = P.many1 (digit P.<|> uppercaseAlphabetic)
+radixDigits = Parsec.many1 (digit Parsec.<|> uppercaseAlphabetic)
 
 -- | decimalInteger ::= digits
 decimalInteger :: P Integer
@@ -1130,11 +1132,11 @@ decimalInteger = fmap read digits
 
 -- | digits ::= digit+
 digits :: P String
-digits = lexeme (P.many1 P.digit)
+digits = lexeme (Parsec.many1 Parsec.digit)
 
 -- | float ::= mantissa [exponentLetter exponent]
 float :: P Double
-float = Token.float stLexer
+float = Parsec.Token.float stLexer
 
 -- * 3.5.7
 
@@ -1144,7 +1146,7 @@ float = Token.float stLexer
 'x'
 -}
 quotedCharacter :: P Char
-quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
+quotedCharacter = Parsec.label (Parsec.char '$' >> lexeme Parsec.anyChar) "quotedCharacter"
 
 -- * 3.5.8
 
@@ -1178,8 +1180,8 @@ quotedCharacter = P.label (P.char '$' >> lexeme P.anyChar) "quotedCharacter"
 >>> p "'\\n'"
 "\\n"
 -}
-quotedString :: P QuotedString
-quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- lexeme
+quotedString :: P Ast.QuotedString
+quotedString = Parsec.between stringDelimiter (lexeme stringDelimiter) stringBody -- lexeme
 
 {- | stringBody ::= (nonStringDelimiter | (stringDelimiter stringDelimiter)*)
 
@@ -1200,15 +1202,15 @@ quotedString = P.between stringDelimiter (lexeme stringDelimiter) stringBody -- 
 "x"
 -}
 stringBody :: P String
-stringBody = P.many (P.try escapedStringDelimiter P.<|> nonStringDelimiter)
+stringBody = Parsec.many (Parsec.try escapedStringDelimiter Parsec.<|> nonStringDelimiter)
 
 -- | stringDelimiter ::= ''' "a single quote"
 stringDelimiter :: P Char
-stringDelimiter = P.char '\'' -- non-lexeme (the lhs is not a lexeme, the rhs is)
+stringDelimiter = Parsec.char '\'' -- non-lexeme (the lhs is not a lexeme, the rhs is)
 
 -- | nonStringDelimiter ::= "any character except stringDelimiter"
 nonStringDelimiter :: P Char
-nonStringDelimiter = P.noneOf "'"
+nonStringDelimiter = Parsec.noneOf "'"
 
 -- | Ansi escaped quote (quote quote).
 escapedStringDelimiter :: P Char
@@ -1221,8 +1223,8 @@ escapedStringDelimiter = stringDelimiter >> stringDelimiter
 >>> stParse hashedString "#'x'"
 "x"
 -}
-hashedString :: P HashedString
-hashedString = (P.char '#' >> quotedString) P.<?> "hashedString"
+hashedString :: P Ast.HashedString
+hashedString = (Parsec.char '#' >> quotedString) Parsec.<?> "hashedString"
 
 -- * 3.5.10
 
@@ -1233,10 +1235,10 @@ UnarySelector "p"
 
 > stParse unarySelector "p:" -- FAIL
 -}
-unarySelector :: P Selector
+unarySelector :: P Ast.Selector
 unarySelector =
-  (identifier >>= \u -> P.notFollowedBy (P.char ':') >> return (UnarySelector u))
-    P.<?> "unarySelector"
+  (identifier >>= \u -> Parsec.notFollowedBy (Parsec.char ':') >> return (Ast.UnarySelector u))
+    Parsec.<?> "unarySelector"
 
 {- | quotedSelector ::= '#' (unarySelector | binarySelector | keywordSelector)
 
@@ -1261,10 +1263,10 @@ True
 
 > p "#'class'" -- error
 -}
-quotedSelector :: P Selector
+quotedSelector :: P Ast.Selector
 quotedSelector =
-  let sel = P.choice [binarySelector, P.try keywordSelector, unarySelector]
-  in P.label (P.char '#' >> sel) "quotedSelector" -- lexeme
+  let sel = Parsec.choice [binarySelector, Parsec.try keywordSelector, unarySelector]
+  in Parsec.label (Parsec.char '#' >> sel) "quotedSelector" -- lexeme
 
 {- | keywordSelector ::= keyword+
 
@@ -1280,11 +1282,11 @@ KeywordSelector "p:" 1
 
 > p "freq:iphase:x" -- error
 -}
-keywordSelectorNotLexeme :: P Selector
+keywordSelectorNotLexeme :: P Ast.Selector
 keywordSelectorNotLexeme =
-  fmap (Helper.asKeywordSelector . concat) (P.many1 keywordNotLexeme) P.<?> "keywordSelector"
+  fmap (Helper.asKeywordSelector . concat) (Parsec.many1 keywordNotLexeme) Parsec.<?> "keywordSelector"
 
-keywordSelector :: P Selector
+keywordSelector :: P Ast.Selector
 keywordSelector = lexeme keywordSelectorNotLexeme
 
 -- * 3.5.11
@@ -1315,15 +1317,15 @@ keywordSelector = lexeme keywordSelectorNotLexeme
 > stParse separator "" -- FAIL
 -}
 separator :: P String
-separator = fmap concat (P.many1 (fmap return P.space P.<|> comment) P.<?> "separator")
+separator = fmap concat (Parsec.many1 (fmap return Parsec.space Parsec.<|> comment) Parsec.<?> "separator")
 
 -- * Primitive
 
-primitive :: P Primitive
+primitive :: P Ast.Primitive
 primitive = do
-  _ <- lexeme (P.char '<')
-  _ <- lexeme (P.string "primitive")
-  _ <- lexeme (P.char ':')
-  l <- literal P.<|> interiorSymbol
-  _ <- lexeme (P.char '>')
-  return (Primitive l)
+  _ <- lexeme (Parsec.char '<')
+  _ <- lexeme (Parsec.string "primitive")
+  _ <- lexeme (Parsec.char ':')
+  l <- literal Parsec.<|> interiorSymbol
+  _ <- lexeme (Parsec.char '>')
+  return (Ast.Primitive l)

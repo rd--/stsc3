@@ -47,8 +47,8 @@ to_ndef expr =
   case expr of
     Identifier i ->
       if Data.Char.isLower (head i) && i `notElem` scPseudoVariables
-      then ndef_ref_rt i
-      else Identifier i
+        then ndef_ref_rt i
+        else Identifier i
     Assignment p q ->
       implicitSend "Ndef" [symbolLiteral p, inLambda q]
     _ -> expr
