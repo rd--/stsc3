@@ -1,6 +1,6 @@
 prefix = ~/opt
 
-cmd = js-to-stc stc-to-js stc-to-sc stc-to-scm stc-to-st stc-to-st-pfm
+cmd = js-to-spl spl-to-js spl-to-sc spl-to-scm spl-to-st spl-to-st-pfm
 
 include ~/sw/hsc3-meta/mk/cmd.mk
 

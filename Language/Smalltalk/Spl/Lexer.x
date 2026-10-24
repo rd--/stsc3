@@ -17,6 +17,7 @@ $graphic = $printable # $white
 $commentary = [a-z A-Z 0-9 \( \) \[ \] \' \" \. \; \= \, \: \_ \  \t \n \! \@ \% \& \* \- \+ \= \| \< \> \? \/ \~ \^ \#]
 
 @identifier = $letter $letter_or_digit*
+@uppercaseIdentifier = $upper $letter_or_digit*
 @decimal = $digit+
 @integer = \-? @decimal
 @float = \-? @decimal \. @decimal
@@ -49,6 +50,7 @@ tokens :-
   <0> "true"                                 { \_ -> TrueIdentifier }
 
   <0> @identifier                            { \s -> Identifier s }
+  <0> @uppercaseIdentifier                   { \s -> UppercaseIdentifier s }
   <0> @identifier ":/" @integer              { \s -> ArityQualifiedIdentifier s }
   <0> $binary_char+                          { \s -> BinarySelector s }
   <0> @float                                 { \s -> Float (read s) }

@@ -36,7 +36,7 @@ data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable 
 data InstanceState = InstanceState Indexable [Identifier] deriving (Eq, Show)
 
 {- | Smalltalk has conventions regarding identifier case, but not strict rules.
-In .stc it would be nice to allow p.Q to mean Q(p), ie. distinguishing between q and Q.
+In .spl it would be nice to allow p.Q to mean Q(p), ie. distinguishing between q and Q.
 The types here are used to indicate where there is an ordinary case for a particular identifier.
 -}
 type LowercaseIdentifier = Identifier

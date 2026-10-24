@@ -8,7 +8,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Expr.Print as St {- stsc3 -}
 
-import qualified Language.Smalltalk.Stc.Translate as Stc {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Translate as Spl {- stsc3 -}
 
 -- | x -> Ndef('x')
 ndef_ref :: St.Symbol -> Expr
@@ -53,14 +53,14 @@ to_ndef expr =
       implicitSend "Ndef" [symbolLiteral p, inLambda q]
     _ -> expr
 
--- | Rewrite simple .stc Ugen graph as Ndef graph.
-stcUgenToNdef :: String -> String
-stcUgenToNdef =
+-- | Rewrite simple .spl Ugen graph as Ndef graph.
+splUgenToNdef :: String -> String
+splUgenToNdef =
   (++ "\n")
     . Data.List.intercalate ";\n"
-    . map (St.exprPrintStc True)
+    . map (St.exprPrintSpl True)
     . map (expr_map to_ndef)
     . with_assign_and_play
     . initStatements
     . initializerDefinitionExpr
-    . Stc.stcParseToSt
+    . Spl.splParseToSt

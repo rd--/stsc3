@@ -29,5 +29,6 @@ data Token
   | SemiColon
   | SingleQuotedString String
   | TrueIdentifier
+  | UppercaseIdentifier String
   | VerticalBar
   deriving (Eq, Show)

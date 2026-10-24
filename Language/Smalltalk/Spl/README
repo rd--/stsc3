@@ -1,8 +1,10 @@
+Initial pass at `List Constructor Syntax` is not working. (2026-10-24)
+
 Parses 384 of 387 graphs at ~/sw/spl/help/SuperCollider/Graph
 
 ```
 cd ~/sw/spl/help/SuperCollider/Graph
-for i in [A-Z]*.sl ; do echo $i ; stsc3 translate spl st "$i" "/tmp/$i.st" ; done
+for i in [A-Z]*.sp ; do echo $i ; stsc3 translate spl st "$i" "/tmp/$i.st" ; done
 ```
 
 Failures are related to comments.
@@ -18,7 +20,7 @@ Previously failed to parse:
 
 The rule for (p, q .. r) introduces a shift-reduce conflict:
 
-    | '(' expression ',' expression '..' expression ')' { stcFromThenTo $2 $4 $6 }
+    | '(' expression ',' expression '..' expression ')' { splFromThenTo $2 $4 $6 }
 
 The operator methods require a translation function, i.e. ! -> exclamationMark, i.e. sw/spl/ts/operator.ts
 
@@ -36,3 +38,17 @@ Modified to pass:
 
 p.q in vector_item introduces a shift/reduce conflict
 ctl::
+
+* * *
+
+Block comments do not allow either nested comments or the * character.
+
+There could be a distinct comment format that is part of the Ast and may only appear as either:
+
+- class comments (preceding class definition)
+- method comments (first element of method body)
+
+"Any kind of sequence can be defined using either left recursion or
+right recursion, but you should always use left recursion, because it
+can parse a sequence of any number of elements with bounded stack
+space."

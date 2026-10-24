@@ -1,4 +1,4 @@
-{- | Printer from Ansi Smalltalk Ast to .stc & .spl & .sc
+{- | Printer from Ansi Smalltalk Ast to .spl & .spl & .sc
 
 Notes:
 
@@ -12,7 +12,7 @@ Notes:
   - class variable, unary and keyword names, assignment targets
   - if the Smalltalk file contains such names the translation may contain errors, i.e. ^Name would not be rewritten
 -}
-module Language.Smalltalk.Ansi.Print.Stc where
+module Language.Smalltalk.Ansi.Print.Spl where
 
 import Data.Char {- base -}
 import Data.List {- base -}
@@ -290,7 +290,7 @@ sc_basicExpression_pp spl (St.BasicExpression p m c) =
       , maybe "" sc_cascadedMessages_pp c
       ]
 
-{- | In .stc keyword patterns bind more closely than binary patterns.
+{- | In .spl keyword patterns bind more closely than binary patterns.
 
 >>> let p = sc_messages_pp False True . stParse messages
 >>> p "min: 2 * 3"

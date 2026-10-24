@@ -9,10 +9,10 @@ import sys
 sys.stdout.write("Content-type: text/plain; charset=utf-8\n\n")
 dir = os.path.dirname(os.path.realpath(__file__))
 fs = cgi.FieldStorage()
-cmdText = fs.getvalue('cmd', 'stc-to-js');
-stcText = fs.getvalue('stc');
+cmdText = fs.getvalue('cmd', 'spl-to-js');
+splText = fs.getvalue('spl');
 process = subprocess.Popen([dir + '/' + cmdText], stdin=subprocess.PIPE, stdout=subprocess.PIPE, universal_newlines=True)
-process.stdin.write(stcText);
+process.stdin.write(splText);
 jsText = process.communicate()[0]
 sys.stdout.write(jsText)
 sys.stdout.flush()

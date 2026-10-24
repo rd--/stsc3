@@ -8,7 +8,6 @@ clean:
 	rm -Rf dist dist-newstyle cabal.project.local *~
 	(cd cmd ; make clean)
 	(cd Language/Smalltalk/Spl ; make clean)
-	(cd Language/Smalltalk/Stc ; make clean)
 	(cd Language/Smalltalk/SuperCollider ; make clean)
 	(cd som ; make clean)
 	(cd st ; make clean)

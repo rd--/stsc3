@@ -1,4 +1,4 @@
-cmd = stc-to-st stc-to-js
+cmd = spl-to-st spl-to-js
 
 % : %.hs
 	ghc -Wall -fwarn-tabs -O2 --make $<

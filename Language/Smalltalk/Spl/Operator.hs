@@ -1,6 +1,6 @@
 module Language.Smalltalk.Spl.Operator where
 
-import qualified Data.Char
+import qualified Data.Char {- base -}
 
 import qualified Music.Theory.List as List {- hmt-base -}
 

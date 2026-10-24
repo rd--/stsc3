@@ -1,6 +1,6 @@
 {- | Keyword parameter re-writing.
 
-.stc no longer supports keyword arguments, and this module is not included in stsc3.
+.spl no longer supports keyword arguments, and this module is not included in stsc3.
 
 There are different ways this could be approached.
 

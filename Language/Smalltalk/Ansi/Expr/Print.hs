@@ -1,4 +1,4 @@
--- | Printers (.st, .stc, .js and s-expression) for the Ansi.Expr Ast type.
+-- | Printers (.st, .spl, .js and s-expression) for the Ansi.Expr Ast type.
 module Language.Smalltalk.Ansi.Expr.Print where
 
 import Data.List {- base -}
@@ -12,45 +12,45 @@ import qualified Music.Theory.List as List {- hmt-base -}
 import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Ansi.Expr {- stsc3 -}
 import qualified Language.Smalltalk.Ansi.Print as St {- stsc3 -}
-import qualified Language.Smalltalk.Ansi.Print.Stc as St {- stsc3 -}
+import qualified Language.Smalltalk.Ansi.Print.Spl as St {- stsc3 -}
 
--- * .stc
+-- * .spl
 
 {- | Check that selector has correct arity, and split into parts.
 
->>> zipWith3 stcSelectorParts (words "* + pi apply: at:put:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+>>> zipWith3 splSelectorParts (words "* + pi apply: at:put:") [True, True, False, False, False] [1, 1, 0, 1, 2]
 [["*"],["+"],["pi"],["apply"],["at","put"]]
 -}
-stcSelectorParts :: String -> Bool -> Int -> [String]
-stcSelectorParts sel isBinOp arity =
+splSelectorParts :: String -> Bool -> Int -> [String]
+splSelectorParts sel isBinOp arity =
   let parts = if isBinOp then [sel] else Split.splitOn ":" sel
       degree = if isBinOp then 1 else length parts - 1
   in if arity /= degree
-      then error (show ("stcSelectorParts: illegal arity", sel, arity))
+      then error (show ("splSelectorParts: illegal arity", sel, arity))
       else if isBinOp || arity == 0 then parts else init parts
 
-{- | The apply message is elided in .stc, it's singular array argument is unpacked.
-     It is an option here so the .stc printer can also print .sc code.
+{- | The apply message is elided in .spl, it's singular array argument is unpacked.
+     It is an option here so the .spl printer can also print .sc code.
 -}
-messagePrintStc :: Bool -> Message -> String
-messagePrintStc elideApply (Message sel arg) =
+messagePrintSpl :: Bool -> Message -> String
+messagePrintSpl elideApply (Message sel arg) =
   let isBinOp = St.isBinarySelector sel
       selId = St.selectorIdentifier sel
-      selParts = stcSelectorParts selId isBinOp (length arg)
-      selStc = case uncons selParts of
-        Nothing -> error "messagePrintStc"
+      selParts = splSelectorParts selId isBinOp (length arg)
+      selSpl = case uncons selParts of
+        Nothing -> error "messagePrintSpl"
         Just (h, t) -> intercalate ":" (h : takeWhile (/= "value") t)
-  in case (selStc, arg) of
-      (_, []) -> printf ".%s" selStc
+  in case (selSpl, arg) of
+      (_, []) -> printf ".%s" selSpl
       ("apply", [Array p]) ->
         if elideApply
-          then printf "(%s)" (intercalate ", " (map (exprPrintStc elideApply) p))
-          else printf ".apply([%s])" (intercalate ", " (map (exprPrintStc elideApply) p))
+          then printf "(%s)" (intercalate ", " (map (exprPrintSpl elideApply) p))
+          else printf ".apply([%s])" (intercalate ", " (map (exprPrintSpl elideApply) p))
       (_, [arg1]) ->
-        let p1 = exprPrintStc elideApply arg1
-        in if isBinOp then printf " %s %s" selId p1 else printf ".%s(%s)" selStc p1
+        let p1 = exprPrintSpl elideApply arg1
+        in if isBinOp then printf " %s %s" selId p1 else printf ".%s(%s)" selSpl p1
       _ ->
-        printf ".%s(%s)" selStc (intercalate ", " (map (exprPrintStc elideApply) arg))
+        printf ".%s(%s)" selSpl (intercalate ", " (map (exprPrintSpl elideApply) arg))
 
 primitive_pp :: LambdaDefinition -> String
 primitive_pp = maybe "" ((++ " ") . St.primitive_pp) . lambdaDefinitionPrimitive
@@ -58,25 +58,25 @@ primitive_pp = maybe "" ((++ " ") . St.primitive_pp) . lambdaDefinitionPrimitive
 {- | Parenthesise all binary operator sends.
      A more elaborate rule could be written if required.
 -}
-exprPrintStc :: Bool -> Expr -> String
-exprPrintStc elideApply expr =
+exprPrintSpl :: Bool -> Expr -> String
+exprPrintSpl elideApply expr =
   case expr of
     Identifier i -> i
     Literal l -> St.sc_literal_pp l
-    Assignment i e -> printf "%s = %s" i (exprPrintStc elideApply e)
+    Assignment i e -> printf "%s = %s" i (exprPrintSpl elideApply e)
     Send e m ->
       let template = if exprIsBinaryMessageSend expr then "(%s%s)" else "%s%s"
-      in printf template (exprPrintStc elideApply e) (messagePrintStc elideApply m)
+      in printf template (exprPrintSpl elideApply e) (messagePrintSpl elideApply m)
     Lambda ld arg tmp (e, r) ->
-      let r' = maybe [] (return . printf "^%s" . exprPrintStc elideApply) r
-          x = primitive_pp ld ++ intercalate "; " (map (exprPrintStc elideApply) e ++ r')
+      let r' = maybe [] (return . printf "^%s" . exprPrintSpl elideApply) r
+          x = primitive_pp ld ++ intercalate "; " (map (exprPrintSpl elideApply) e ++ r')
       in case (arg, tmp) of
           ([], []) -> printf "{ %s }" x
           (_, []) -> printf "{ arg %s; %s }" (intercalate ", " arg) x
           _ -> printf "{ arg %s; var %s; %s }" (intercalate ", " arg) (intercalate ", " tmp) x
-    Array e -> printf "[%s]" (intercalate ", " (map (exprPrintStc elideApply) e))
+    Array e -> printf "[%s]" (intercalate ", " (map (exprPrintSpl elideApply) e))
     Init c tmp e ->
-      let x = intercalate "; " (map (exprPrintStc elideApply) e)
+      let x = intercalate "; " (map (exprPrintSpl elideApply) e)
           r = case (tmp, e) of
             ([], _) -> x
             _ -> printf "var %s; %s" (intercalate ", " tmp) x
@@ -91,13 +91,13 @@ messagePrintSt (Message sel arg) =
       then " " ++ selId
       else
         let isBinOp = St.isBinarySelector sel
-            selParts = map (\x -> x ++ ":") (stcSelectorParts selId isBinOp (length arg))
+            selParts = map (\x -> x ++ ":") (splSelectorParts selId isBinOp (length arg))
             interleave p = concat . zipWith (\i j -> [i, j]) p
         in if isBinOp
             then printf " %s %s" selId (exprPrintSt (arg !! 0))
             else " " ++ unwords (interleave selParts (map exprPrintSt arg))
 
-{- | In St precedence is unary then binary then keyword, in Stc it is unary & keyword then binary.
+{- | In St precedence is unary then binary then keyword, in Spl it is unary & keyword then binary.
      Parenthesise all keyword and binary sends.
      A more elaborate rule could be written if required.
 -}
@@ -173,7 +173,7 @@ exprPrintLisp expr =
 
 -- * Js
 
-{- | Js operators are not extensible, therefore .stc operators, which are, must be re-written as functions.
+{- | Js operators are not extensible, therefore .spl operators, which are, must be re-written as functions.
 Logical operators however cannot be written as functions.
 This table gives names to standard operators, however it is not generic, c.f. jsCharRenamingTable.
 -}
@@ -254,25 +254,25 @@ jsRenamerFromTable maybePrefix tbl nm = fromMaybe "" maybePrefix ++ fromMaybe nm
 {- | Checks that the arity agrees (which should be correct by construction)
      and that all subsequent keyword parts are "value".
 
-"at:put:" is currently handled specially because in .stc "p[q] := r" is syntax for "p.at(q, put:r)".
+"at:put:" is currently handled specially because in .spl "p[q] := r" is syntax for "p.at(q, put:r)".
 There could also be a more general rewrite rule, so that "at:put:" was returned as "atPut",
 or there could be a rewrite table with entries of the form ("at:put:", "put").
 
->>> zipWith3 stcSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
+>>> zipWith3 splSelectorJsForm (words "* + pi apply: value:value:") [True, True, False, False, False] [1, 1, 0, 1, 2]
 ["*","+","pi","apply","value"]
 
->>> stcSelectorJsForm "at:put:" False 2
+>>> splSelectorJsForm "at:put:" False 2
 "put"
 -}
-stcSelectorJsForm :: String -> Bool -> Int -> String
-stcSelectorJsForm sel isBinOp arity =
-  let parts = stcSelectorParts sel isBinOp arity -- performs arity check
+splSelectorJsForm :: String -> Bool -> Int -> String
+splSelectorJsForm sel isBinOp arity =
+  let parts = splSelectorParts sel isBinOp arity -- performs arity check
   in if isBinOp || all (== "value") (List.tail_err parts)
       then List.head_err parts
       else
         if sel == "at:put:"
           then "put"
-          else error ("stcSelectorJsForm: not binary operator and not all value: " ++ sel)
+          else error ("splSelectorJsForm: not binary operator and not all value: " ++ sel)
 
 literalPrintJs :: St.Literal -> String
 literalPrintJs l =
@@ -286,7 +286,7 @@ literalPrintJs l =
 {- | Print Js notation of Expr.
 
 >>> import Language.Smalltalk.Spl.Translate
->>> let rw = exprPrintJs (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
+>>> let rw = exprPrintJs (jsRenamerFromTable Nothing jsDefaultRenamingTable) . splToExpr
 >>> map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 ["p(q)","p(q, r)","p(q, r, s)","p(q)"]
 
@@ -324,7 +324,7 @@ exprPrintJs rw expr =
     Literal x -> literalPrintJs x
     Assignment lhs rhs -> printf "%s = %s" lhs (exprPrintJs rw rhs)
     Send rcv (Message sel arg) ->
-      case (rcv, stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg), arg) of
+      case (rcv, splSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg), arg) of
         (_, "apply", [Array p]) ->
           let rcv' = case rcv of
                 Identifier msg -> Identifier (rw msg)
@@ -375,7 +375,7 @@ exprTmpStmScheme rw tmp (stm, ret) =
 {- | Print scheme (lisp) notation of Expr.  Use the Js renaming tables.
 
 >>> import Language.Smalltalk.Spl.Translate
->>> let rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . stcToExpr
+>>> let rw = exprPrintScheme (jsRenamerFromTable Nothing jsDefaultRenamingTable) . splToExpr
 >>> map rw (words "q.p q.p(r) q.p(r,s) p(q)")
 ["(p q)","(p q r)","(p q r s)","(p q)"]
 
@@ -413,7 +413,7 @@ exprPrintScheme rw expr =
     Literal x -> literalPrintScheme x
     Assignment lhs rhs -> printf "(set! %s %s)" lhs (exprPrintScheme rw rhs)
     Send rcv (Message sel arg) ->
-      case (rcv, rw (stcSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
+      case (rcv, rw (splSelectorJsForm (St.selectorIdentifier sel) (St.isBinarySelector sel) (length arg)), arg) of
         (_, "apply", [Array p]) -> printf "(%s %s)" (exprPrintScheme rw rcv) (unwords (map (exprPrintScheme rw) p))
         (_, "value", _) -> printf "(%s %s)" (exprPrintScheme rw rcv) (unwords (map (exprPrintScheme rw) arg))
         (Identifier "Float", "pi", []) -> "pi"

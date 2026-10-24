@@ -4,11 +4,11 @@ The three main tasks are:
 
 - changing the precedence rules
 - rewriting variable declarations
-- packaging method parameters into a dictionary (array of associations) (not required for .stc -> .st)
+- packaging method parameters into a dictionary (array of associations) (not required for .spl -> .st)
 
-The Stc message precedence rule is Dot > Binary.
+The Spl message precedence rule is Dot > Binary.
 The Smalltalk message precedence rule is Unary > Binary > Keyword.
-A Stc Dot message is either Unary or Keyword.
+A Spl Dot message is either Unary or Keyword.
 To translate, a Dot message sequence has parentheses inserted after each Keyword element.
 
 - p.q(a).r          => (p q: a) r                  <= p q: a r   ==> p q: (a r)
@@ -25,7 +25,7 @@ This transformation at the Sc Ast.
 - p.q(a).r + s      => (p.q(a)).r + s
 - p + q.r(a)        => p + (q.r(a))
 
-Temporary variables in Stc may have initialisers and there may be multiple sets.
+Temporary variables in Spl may have initialisers and there may be multiple sets.
 These must be rewritten to as a single set of names and a sequence of assignments.
 
 - var p, q = a;     => |p q| q := a.
@@ -46,45 +46,45 @@ This transformation at the Sc Ast.
 - p.q(a,b)          => p.q([a,b])
 - p.q(x: a, b)      => p.q([\x: -> a,b])
 -}
-module Language.Smalltalk.Stc.Rewrite where
+module Language.Smalltalk.Spl.Rewrite where
 
-import Language.Smalltalk.Stc.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Ast.Print as Stc
-import qualified Language.Smalltalk.Stc.Lexer as Stc {- stsc3 -}
-import qualified Language.Smalltalk.Stc.Parser as Stc {- stsc3 -}
+import Language.Smalltalk.Spl.Ast {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Ast.Print as Spl
+import qualified Language.Smalltalk.Spl.Lexer as Spl {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Spl {- stsc3 -}
 
-import Language.Smalltalk.Stc.Rewrite.Precedence
-import Language.Smalltalk.Stc.Rewrite.Temporaries
+import Language.Smalltalk.Spl.Rewrite.Precedence
+import Language.Smalltalk.Spl.Rewrite.Temporaries
 
-stcExpressionRewrite :: StcExpression -> StcExpression
-stcExpressionRewrite =
-  stcExpressionRewritePrecedence
-    . stcExpressionRewriteTemporaries
+splExpressionRewrite :: SplExpression -> SplExpression
+splExpressionRewrite =
+  splExpressionRewritePrecedence
+    . splExpressionRewriteTemporaries
 
-stcBlockBodyRewrite :: StcBlockBody -> StcBlockBody
-stcBlockBodyRewrite =
-  stcBlockBodyRewritePrecedence
-    . stcBlockBodyRewriteTemporaries
+splBlockBodyRewrite :: SplBlockBody -> SplBlockBody
+splBlockBodyRewrite =
+  splBlockBodyRewritePrecedence
+    . splBlockBodyRewriteTemporaries
 
 {- | Option to rewrite n-ary expressions as arrays.
      Else N-ary expressions will be an error on translation.
 -}
-stcInitializerDefinitionRewrite :: StcInitializerDefinition -> StcInitializerDefinition
-stcInitializerDefinitionRewrite =
-  stcInitializerDefinitionRewritePrecedence
-    . stcInitializerDefinitionRewriteTemporaries
+splInitializerDefinitionRewrite :: SplInitializerDefinition -> SplInitializerDefinition
+splInitializerDefinitionRewrite =
+  splInitializerDefinitionRewritePrecedence
+    . splInitializerDefinitionRewriteTemporaries
 
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
-stcRewriteViewer :: String -> String
-stcRewriteViewer =
-  Stc.stcInitializerDefinitionPrint
-    . stcInitializerDefinitionRewrite
-    . Stc.parseInitializerDefinition
-    . Stc.alexScanTokens
+splRewriteViewer :: String -> String
+splRewriteViewer =
+  Spl.splInitializerDefinitionPrint
+    . splInitializerDefinitionRewrite
+    . Spl.parseInitializerDefinition
+    . Spl.alexScanTokens
 
 {-
 
-rw = stcRewriteViewer
+rw = splRewriteViewer
 rw "p.q" == "p.q\n"
 rw "p.q.r" == "p.q.r\n"
 rw "p.q + r" == "p.q + r\n"

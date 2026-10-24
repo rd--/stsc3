@@ -191,18 +191,18 @@ jsBinOpString op =
     Js.JSBinOpTimes _ -> "*"
     Js.JSBinOpUrsh _ -> ">>>"
 
-{- | Js to Stc
+{- | Js to Spl
 
->>> jsToStc "1 + 2"
+>>> jsToSpl "1 + 2"
 "(1.0 + 2.0)"
 
->>> jsToStc "a + b"
+>>> jsToSpl "a + b"
 "(a + b)"
 
->>> jsToStc "p.q"
+>>> jsToSpl "p.q"
 "p.q"
 
->>> jsToStc "p.q.r"
+>>> jsToSpl "p.q.r"
 "p.q.r"
 
 >>> "(a + b).m"
@@ -211,77 +211,77 @@ jsBinOpString op =
 >>> "p.q(r)"
 "p.q(r)"
 
->>> jsToStc "p.q.r(s)"
+>>> jsToSpl "p.q.r(s)"
 "p.q.r(s)"
 
->>> jsToStc "p.q(r, s)"
+>>> jsToSpl "p.q(r, s)"
 "p.q(r, s)"
 
->>> jsToStc "f(x)"
+>>> jsToSpl "f(x)"
 "f(x)"
 
->>> jsToStc "x => x"
+>>> jsToSpl "x => x"
 "{ arg x; x }"
 
->>> jsToStc "(x, y) => (x * x) + (y * y)"
+>>> jsToSpl "(x, y) => (x * x) + (y * y)"
 "{ arg x, y; ((x * x) + (y * y)) }"
 
->>> jsToStc "function(x) { x * x }"
+>>> jsToSpl "function(x) { x * x }"
 "{ arg x; (x * x) }"
 
->>> jsToStc "function(x) { return x * x; }"
+>>> jsToSpl "function(x) { return x * x; }"
 "{ arg x; ^(x * x) }"
 
->>> jsToStc "function(x) { var y; y = x * x; return y; }"
+>>> jsToSpl "function(x) { var y; y = x * x; return y; }"
 "{ arg x; var y; y = (x * x); ^y }"
 
->>> jsToStc "function(x) { var y = x * x; return y; }"
+>>> jsToSpl "function(x) { var y = x * x; return y; }"
 "{ arg x; var y; y = (x * x); ^y }"
 
->>> jsToStc "function(x) { var y = x * x; var z = y * y; return z; }"
+>>> jsToSpl "function(x) { var y = x * x; var z = y * y; return z; }"
 "{ arg x; var y, z; y = (x * x); z = (y * y); ^z }"
 
->>> jsToStc "function(x) { var y = x * x, z = y * y; return z; }"
+>>> jsToSpl "function(x) { var y = x * x, z = y * y; return z; }"
 "{ arg x; var y, z; y = (x * x); z = (y * y); ^z }"
 
->>> jsToStc "function (x, y) { var p = x * x; var q = y * y; return p + q; }"
+>>> jsToSpl "function (x, y) { var p = x * x; var q = y * y; return p + q; }"
 "{ arg x, y; var p, q; p = (x * x); q = (y * y); ^(p + q) }"
 
->>> jsToStc "'x'"
+>>> jsToSpl "'x'"
 "\"x\""
 
->>> jsToStc "x[y]"
+>>> jsToSpl "x[y]"
 "x.at(y)"
 
->>> jsToStc "[1, 2, 3]"
+>>> jsToSpl "[1, 2, 3]"
 "[1.0, 2.0, 3.0]"
 
->>> jsToStc "[1, 2, 3, 4, 5].find(x => x > 3)"
+>>> jsToSpl "[1, 2, 3, 4, 5].find(x => x > 3)"
 "[1.0, 2.0, 3.0, 4.0, 5.0].find({ arg x; (x > 3.0) })"
 
->>> jsToStc "true"
+>>> jsToSpl "true"
 "true"
 
-> jsToStc "var x = 5; x"
+> jsToSpl "var x = 5; x"
 "var x = 5.0; x"
 
->>> jsToStc "f(g(h(x)))"
+>>> jsToSpl "f(g(h(x)))"
 "f(g(h(x)))"
 
->>> jsToStc "MulAdd(SinOsc(((MulAdd(Rand(36, 72), 1, 0)).midiCps), 0), 0.1, 0)"
+>>> jsToSpl "MulAdd(SinOsc(((MulAdd(Rand(36, 72), 1, 0)).midiCps), 0), 0.1, 0)"
 "MulAdd(SinOsc(MulAdd(Rand(36.0, 72.0), 1.0, 0.0).midiCps, 0.0), 0.1, 0.0)"
 
->>> jsToStc "-3"
+>>> jsToSpl "-3"
 "3.0.negated"
 
->>> jsToStc "Math.abs(-3)"
+>>> jsToSpl "Math.abs(-3)"
 "Math.abs(3.0.negated)"
 -}
-jsToStc :: String -> String
-jsToStc = exprPrintStc True . jsAstToExpr . Js.readJs
+jsToSpl :: String -> String
+jsToSpl = exprPrintSpl True . jsAstToExpr . Js.readJs
 
 main :: IO ()
-main = interact jsToStc
+main = interact jsToSpl
 
 {-
 

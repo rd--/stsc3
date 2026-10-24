@@ -41,29 +41,25 @@ library
                         Language.Smalltalk.Ansi.Parser.Parsec,
                         Language.Smalltalk.Ansi.Print,
                         Language.Smalltalk.Ansi.Print.Som,
-                        Language.Smalltalk.Ansi.Print.Stc,
+                        Language.Smalltalk.Ansi.Print.Spl,
                         Language.Smalltalk.Ansi.Query,
                         Language.Smalltalk.Ansi.Rewrite,
                         Language.Smalltalk.FileOut,
                         Language.Smalltalk.Organisation,
                         Language.Smalltalk.Som,
                         Language.Smalltalk.Spl.Ast,
+                        Language.Smalltalk.Spl.Ast.Print,
                         Language.Smalltalk.Spl.Lexer,
                         Language.Smalltalk.Spl.Operator,
                         Language.Smalltalk.Spl.Parser,
+                        Language.Smalltalk.Spl.Rewrite,
+                        Language.Smalltalk.Spl.Rewrite.Implicit,
+                        Language.Smalltalk.Spl.Rewrite.Precedence,
+                        Language.Smalltalk.Spl.Rewrite.Temporaries,
                         Language.Smalltalk.Spl.Token,
-                        Language.Smalltalk.Stc.Ast,
-                        Language.Smalltalk.Stc.Ast.Print,
-                        Language.Smalltalk.Stc.Lexer,
-                        Language.Smalltalk.Stc.Parser,
-                        Language.Smalltalk.Stc.Rewrite,
-                        Language.Smalltalk.Stc.Rewrite.Implicit,
-                        Language.Smalltalk.Stc.Rewrite.Precedence,
-                        Language.Smalltalk.Stc.Rewrite.Temporaries,
-                        Language.Smalltalk.Stc.Token,
-                        Language.Smalltalk.Stc.Translate
-                        Language.Smalltalk.SuperCollider.Ndef,
-                        Language.Smalltalk.SuperCollider.Parser
+                        Language.Smalltalk.Spl.Translate
+                        --Language.Smalltalk.SuperCollider.Ndef,
+                        --Language.Smalltalk.SuperCollider.Parser
 
 executable stsc3
   build-depends:    base >= 4.8 && < 5,
@@ -75,11 +71,11 @@ executable stsc3
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded
 
-executable stc-to-js
+executable spl-to-js
   build-depends:    base >= 4.8 && < 5,
                     stsc3
   hs-source-dirs:   cgi-bin
-  main-is:          stc-to-js.hs
+  main-is:          spl-to-js.hs
   default-language: Haskell2010
   ghc-options:      -Wall -fno-warn-orphans -fwarn-tabs -threaded
 
