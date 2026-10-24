@@ -59,10 +59,10 @@ extended_binary_selector :: { String }
 
 expression :: { StcExpression }
     : identifier ':=' expression { StcExprAssignment $1 $3 }
-    | syntax_at_put { StcExprBasic $1 }
+    | syntax_put { StcExprBasic $1 }
     | basic_expression { StcExprBasic $1 }
 
-syntax_at_put :: { StcBasicExpression }
+syntax_put :: { StcBasicExpression }
     : primary '[' basic_expression ']' ':=' basic_expression { StcBasicExpression $1 (Just (stcConstructDotMessage "at:put" [$3, $6])) }
 
 syntax_quoted_at :: { StcBasicExpression }

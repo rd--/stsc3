@@ -4,13 +4,13 @@ The Sc3 Ugen help files have been moved to the help/sc directory.
 
 Analysis:
 
-- [Amplitude](?t=spl&e=help/Reference/Amplitude.help.sl)
-- [Compander](?t=spl&e=help/Reference/Compander.help.sl)
+- [Amplitude](?t=spl&e=Help/Reference/Amplitude.help.sl)
+- [Compander](?t=spl&e=Help/Reference/Compander.help.sl)
 
 Chaos:
 
-- [CuspL](?t=spl&e=help/Reference/CuspL.help.sl)
+- [CuspL](?t=spl&e=Help/Reference/CuspL.help.sl)
 
 Physical models:
 
-- [Spring](?t=spl&e=help/Reference/Spring.help.sl)
+- [Spring](?t=spl&e=Help/Reference/Spring.help.sl)

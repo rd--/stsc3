@@ -18,7 +18,10 @@ Control rate unit generators produce only a single sample per buffer and therefo
 
 The input parameters for a unit generator are given in the documentation for that class.
 
-	SinOsc(800, 0) * 0.1 {- create a sine oscillator at 800 Hz, amplitude 0.1 -}
+~~~spl
+/* create a sine oscillator at 800 Hz, amplitude 0.1 */
+SinOsc(800, 0) * 0.1
+~~~
 
 A signal inputs of a unit generator can be other unit generators, scalars, or arrays of unit generators and scalars.
 
@@ -28,9 +31,11 @@ In order to play a unit generator one needs to install it in a Synth object.
 A Synth is a container for one or more unit generators that execute as a group.
 The Synth new method evaluates a function passed in as an argument to create a unit generator network.
 
-The 'play' method of class Function will create and play a synth using the function for you:
+The `play` method of class Function will create and play a synth using the function for you:
 
-	FSinOsc(800, 0).Mul(0.1).play
+~~~spl
+FSinOsc(800, 0).Times(0.1).play
+~~~
 
 ## Building Patches
 
@@ -40,7 +45,10 @@ This is the essential thing to understand: Synthesis networks, or in other words
 The following expression creates a flow graph whose root is an instance of BinaryOpUGen which performs the '+' operation.
 Its inputs are the FSinOsc and BrownNoise unit generators.
 
-	(SinOsc(800, 0) * 0.1) + (BrownNoise() * 0.1) {- use cmd-P -}
+~~~spl
+/* use cmd-P */
+(SinOsc(800, 0) * 0.1) + (BrownNoise() * 0.1)
+~~~
 
 You can find out what unit generators are in a Synth by dumping the Array stored in the 'ugens' instance variable.
 The unit generators are listed in the order they will be executed.

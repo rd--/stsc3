@@ -1,8 +1,0 @@
-(* https://sccode.org/1-4Qy ; f0 ; 0004 *)
-{
-	let z = 20.atRandom + 6;
-	let d = 26 - z;
-	let y = LfTri(z, 0).Abs / 9 / z;
-	Release(Pan2(Rlpf(TDmdFor(y, 0, y), z * 600, 0.06), 0, 9) * 0.5, d, 0, z).play;
-	d.seconds.wait
-}.loop

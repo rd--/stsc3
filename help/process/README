@@ -1,3 +1,7 @@
+These files have been moved to `spl/Program/SuperCollider/Scheduler`.
+
+They are obsolete and are deleted here.
+
 Notes:
 
 Simple _program_ files require an editor command to bracket the program text as _{ ... }.fork_ (c.f. stc-fork-region in Emacs)
@@ -6,3 +10,7 @@ Sclang requires synthesis graphs to be written in enclosing functions, stsc3 doe
 If programs are to be compatible they should follow the sclang rule.
 
 There are _texture_ forms of these graphs at _../texture_.
+
+~~~sh
+for i in *.stc ; do stsc3 translate stc sc < $i ; done
+~~~

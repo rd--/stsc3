@@ -6,17 +6,23 @@ The AudioIn unit generator gets a channel of audio from the currently active sou
 
 To prevent feedback you may want to use headphones.  Play audio from channel 1.
 
-	AudioIn(1)
+~~~spl
+AudioIn(1)
+~~~
 
 Play audio from channels 1 & 2.  The array [1, 2] causes multichannel expansion resulting in an array of two AudioIn ugens.
 
-	AudioIn([1, 2])
+~~~spl
+AudioIn([1, 2])
+~~~
 
 ## 6.2 How to play audio files from disk.
 
 The DiskIn unit generator can stream audio from a disk file. It can be used in a number of ways.  For more information look at the DiskIn help file.
 
-	-- ...
+~~~spl
+-- ...
+~~~
 
 ## 6.3 How to play audio files in RAM
 
@@ -24,25 +30,29 @@ Files loaded in RAM can be processed in more ways because the entire file is acc
 
 Normal playback at same speed of recording:
 
-	let filename = 'floating_1'; {- the path name of the file -}
-	let file = SfAcquireMono(filename); {- create a SoundFile object -}
-	SfPlay(
-		file, {- sample buffer -}
-		1, {- playback rate -}
-		1, {- trigger playback -}
-		0, {- starting offset sample -}
-		1 {- loop -}
-	)
+~~~spl
+let filename = 'floating_1'; /* the path name of the file */
+let file = SfAcquireMono(filename); /* create a SoundFile object */
+SfPlay(
+	file, /* sample buffer */
+	1, /* playback rate */
+	1, /* trigger playback */
+	0, /* starting offset sample */
+	1 /* loop */
+)
+~~~
 
 Mouse controls playback rate:
 
-	let filename = 'floating_1'; {- the file's path name -}
-	let file = SfAcquireMono(filename); {- create a SoundFile object -}
-	let rateMultiplier = MouseX(0.25, 4, 1, 0.2);
-	SfPlay(
-		file, {- sample buffer -}
-		rateMultiplier, {- playback rate -}
-		1, {- trigger playback -}
-		0, {- starting offset sample -}
-		1 {- loop -}
-	)
+~~~spl
+let filename = 'floating_1'; /* the file's path name */
+let file = SfAcquireMono(filename); /* create a SoundFile object */
+let rateMultiplier = MouseX(0.25, 4, 1, 0.2);
+SfPlay(
+	file, /* sample buffer */
+	rateMultiplier, /* playback rate */
+	1, /* trigger playback */
+	0, /* starting offset sample */
+	1 /* loop */
+)
+~~~

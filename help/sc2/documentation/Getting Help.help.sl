@@ -1,6 +1,6 @@
 # Getting Help
 
-You can double click on a class name like _PitchShift_ and then type cmd-H to get help for that class.
+You can double click on a class name like `PitchShift` and then type cmd-H to get help for that class.
 (All classes are not yet documented in this version.)
 Or you can choose Open Class Definition (cmd-J) from the Lang menu to open the file that contains the definition of that class and its methods.
 
