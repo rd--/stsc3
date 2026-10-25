@@ -11,6 +11,8 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
 
 %name parseInitializerDefinition initializer_definition
 %tokentype { Token }
+%monad { Alex } { >>= } { return }
+%lexer { lexer } { EOF }
 %error { parseError }
 
 %token
@@ -34,12 +36,15 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       let { Let }
       nil { NilIdentifier }
       true { TrueIdentifier }
+      NaN { NaNIdentifier }
+      Infinity { InfinityIdentifier }
 
-      arity_qualified_identifier { ArityQualifiedIdentifier $$ }
+      arity_qualified_lowercaseIdentifier { ArityQualifiedLowercaseIdentifier $$ }
+      arity_qualified_uppercaseIdentifier { ArityQualifiedUppercaseIdentifier $$ }
       binary_selector { BinarySelector $$ }
       double_quoted_string { DoubleQuotedString $$ }
       float { Float $$ }
-      identifier { Identifier $$ }
+      lowercaseIdentifier { LowercaseIdentifier $$ }
       uppercaseIdentifier { UppercaseIdentifier $$ }
       integer { Integer $$ }
       single_quoted_string { SingleQuotedString $$ }
@@ -49,9 +54,17 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
 initializer_definition :: { SplInitializerDefinition }
     : maybe_temporaries_seq maybe_statements { SplInitializerDefinition Nothing $1 $2 }
 
+identifier :: { String }
+    : lowercaseIdentifier { $1 }
+    | uppercaseIdentifier { $1 }
+
+arity_qualified_identifier :: { String }
+    : arity_qualified_lowercaseIdentifier { $1 }
+    | arity_qualified_uppercaseIdentifier { $1 }
+
 binary_operator :: { (String, Maybe String) }
     : extended_binary_selector { ($1, Nothing) }
-    | extended_binary_selector '.' identifier { ($1, Just $3) }
+    | extended_binary_selector '.' lowercaseIdentifier { ($1, Just $3) }
     | '=' { ("=", Nothing) }
 
 extended_binary_selector :: { String }
@@ -59,7 +72,7 @@ extended_binary_selector :: { String }
     | '|' { "|" }
 
 expression :: { SplExpression }
-    : identifier ':=' expression { SplExprAssignment $1 $3 }
+    : lowercaseIdentifier ':=' expression { SplExprAssignment $1 $3 }
     | syntax_put { SplExprBasic $1 }
     | basic_expression { SplExprBasic $1 }
 
@@ -74,15 +87,12 @@ basic_expression :: { SplBasicExpression }
     | dictionary_expression maybe_messages { SplBasicExpression $1 $2 }
 
 dictionary_expression :: { SplPrimary }
-    : '(' dictionary_item_seq ')' { SplPrimaryDictionaryExpression $2 }
-
-dictionary_item_seq :: { [(St.Identifier, SplBasicExpression)] }
-    : { [] }
-    | non_empty_dictionary_item_seq { $1 }
+    : '(' ':' ')' { SplPrimaryDictionaryExpression [] }
+    | '(' non_empty_dictionary_item_seq ')' { SplPrimaryDictionaryExpression $2 }
 
 non_empty_dictionary_item_seq :: { [(St.Identifier, SplBasicExpression)] }
     : dictionary_item { [$1] }
-    | dictionary_item ',' dictionary_item_seq { $1 : $3 }
+    | dictionary_item ',' non_empty_dictionary_item_seq { $1 : $3 }
 
 dictionary_item :: { (St.Identifier, SplBasicExpression) }
     : identifier ':' basic_expression { ($1, $3) }
@@ -145,7 +155,7 @@ binary_argument :: { SplBinaryArgument }
 
 primary :: { SplPrimary }
     : syntax_quoted_at { SplPrimaryExpression (SplExprBasic $1) }
-    | identifier { SplPrimaryIdentifier $1 }
+    | lowercaseIdentifier { SplPrimaryIdentifier $1 }
     | arity_qualified_identifier { SplPrimaryIdentifier $1 }
     | binary_selector { SplPrimaryIdentifier $1 }
     | reserved_identifier { SplPrimaryIdentifier $1 }
@@ -158,7 +168,11 @@ primary :: { SplPrimary }
     | '[' matrix_expression ']' { splMatrixExpression $2 }
     | '(' expression '..' expression ')' { splIntervalRange $2 $4 }
     | '[' expression '..' expression ']' { splArrayRange $2 $4 }
-    | uppercaseIdentifier '[' expression_seq ']' { splListConstructorSyntax $1 $3 }
+    | '(' expression '..' expression ';' expression ')' { splFromToBy $2 $4 $6 }
+    | '[' expression '..' expression ';' expression ']' { splArrayFromToBy $2 $4 $6 }
+    | uppercaseIdentifier '[' expression_seq ']' { splListConstructorSyntax $1 (SplPrimaryArrayExpression $3) }
+    | uppercaseIdentifier '[' vector_expression ']' { splListConstructorSyntax $1 (SplPrimaryArrayExpression $3) }
+    | uppercaseIdentifier '[' matrix_expression ']' { splListConstructorSyntax $1 (splMatrixExpression $3) }
     | integer ':' integer { splIntervalRange (intExpr $1) (intExpr $3) }
     | integer ':' integer ':' integer { splFromToBy (intExpr $1) (intExpr $5) (intExpr $3) }
     | identifier '(' expression_seq ')' { SplPrimaryImplicitMessageSend $1 $3 }
@@ -168,13 +182,15 @@ reserved_identifier :: { St.Identifier }
     : nil { "nil" }
     | true { "true" }
     | false { "false" }
+    | NaN { "NaN" }
+    | Infinity { "Infinity" }
 
 vector_expression :: { [SplBasicExpression] }
     : vector_item vector_item { [$1, $2] }
     | vector_item vector_expression { $1 : $2 }
 
 vector_item :: { SplBasicExpression }
-    : identifier { splIdentifierToBasicExpression $1 }
+    : lowercaseIdentifier { splIdentifierToBasicExpression $1 }
     | literal { splLiteralToBasicExpression $1 }
 
 matrix_expression :: { [[SplBasicExpression]] }
@@ -218,7 +234,8 @@ arg_name_seq :: { [SplBlockArgument] }
     | arg_name arg_name_seq { $1 : $2 }
 
 arg_name :: { SplBlockArgument }
-    : ':' identifier { ($2,Nothing) }
+    : ':' arity_qualified_lowercaseIdentifier { ($2,Nothing) }
+    | ':' lowercaseIdentifier { ($2,Nothing) }
 
 maybe_temporaries_seq :: { Maybe [SplTemporaries] }
     : { Nothing }
@@ -233,20 +250,20 @@ temporaries :: { SplTemporaries }
     | '|' temporary_name_seq '|'{ $2 }
 
 temporary_name_seq :: { SplTemporaries }
-    : identifier { [($1, Nothing)] }
-    | identifier temporary_name_seq { ($1, Nothing) : $2 }
+    : lowercaseIdentifier { [($1, Nothing)] }
+    | lowercaseIdentifier temporary_name_seq { ($1, Nothing) : $2 }
 
 temporary_seq :: { SplTemporaries }
     : temporary { [$1] }
     | temporary ',' temporary_seq { $1 : $3 }
 
 temporary :: { SplTemporary }
-    : identifier_or_arity_qualified_identifier { ($1,Nothing) }
-    | identifier_or_arity_qualified_identifier '=' basic_expression { ($1,Just $3) }
+    : lowercaseIdentifier_maybe_arity_qualified { ($1,Nothing) }
+    | lowercaseIdentifier_maybe_arity_qualified '=' basic_expression { ($1,Just $3) }
 
-identifier_or_arity_qualified_identifier :: { St.Identifier }
-    : identifier { $1 }
-    | arity_qualified_identifier { $1 }
+lowercaseIdentifier_maybe_arity_qualified :: { St.Identifier }
+    : lowercaseIdentifier { $1 }
+    | arity_qualified_lowercaseIdentifier { $1 }
 
 maybe_statements :: { Maybe SplStatements }
     : { Nothing }
@@ -263,8 +280,13 @@ literal :: { St.Literal }
     | single_quoted_string { St.StringLiteral $1 }
 
 {
-parseError :: [Token] -> a
-parseError t = error ("Parse error: " ++ show t)
+parseError :: Token -> Alex a
+parseError t = do
+  ((AlexPn _ line column), _, _, _) <- alexGetInput
+  alexError ("Parse error at line " ++ (show line) ++ ", column " ++ (show column) ++ ", token" ++ (show t))
+
+lexer :: (Token -> Alex a) -> Alex a
+lexer = (alexMonadScan >>=)
 
 intExpr :: Integer -> SplExpression
 intExpr = SplExprBasic . splLiteralToBasicExpression . St.NumberLiteral . St.Int

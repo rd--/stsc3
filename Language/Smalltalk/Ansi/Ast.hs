@@ -31,17 +31,24 @@ data ProgramElement
 
 -- * 3.3.2 Class Definition
 
-data Indexable = ByteIndexable | NonIndexable | ObjectIndexable | WordIndexable deriving (Eq, Show)
-
-data InstanceState = InstanceState Indexable [Identifier] deriving (Eq, Show)
+type Identifier = String
 
 {- | Smalltalk has conventions regarding identifier case, but not strict rules.
-In .spl it would be nice to allow p.Q to mean Q(p), ie. distinguishing between q and Q.
+In .spl there are strict rules.
 The types here are used to indicate where there is an ordinary case for a particular identifier.
 -}
 type LowercaseIdentifier = Identifier
 
 type UppercaseIdentifier = Identifier
+
+data Indexable
+  = ByteIndexable
+  | NonIndexable
+  | ObjectIndexable
+  | WordIndexable
+  deriving (Eq, Show)
+
+data InstanceState = InstanceState Indexable [Identifier] deriving (Eq, Show)
 
 {- | A class definition defines the behavior and encapsulated state of objects.
 
@@ -264,8 +271,6 @@ data Number = Int Integer | Float Double deriving (Eq, Show)
 type ReservedIdentifier = Identifier
 
 type OrdinaryIdentifier = String
-
-type Identifier = String
 
 -- * 3.5.4
 

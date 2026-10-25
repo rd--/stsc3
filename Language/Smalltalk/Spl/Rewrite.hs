@@ -51,7 +51,7 @@ module Language.Smalltalk.Spl.Rewrite where
 import Language.Smalltalk.Spl.Ast {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Ast.Print as Spl
 import qualified Language.Smalltalk.Spl.Lexer as Spl {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Spl {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
 
 import Language.Smalltalk.Spl.Rewrite.Precedence
 import Language.Smalltalk.Spl.Rewrite.Temporaries
@@ -74,6 +74,7 @@ splInitializerDefinitionRewrite =
   splInitializerDefinitionRewritePrecedence
     . splInitializerDefinitionRewriteTemporaries
 
+{-
 -- | Viewer for rewriter. Reads, rewrites and prints Sc expression.
 splRewriteViewer :: String -> String
 splRewriteViewer =
@@ -81,6 +82,7 @@ splRewriteViewer =
     . splInitializerDefinitionRewrite
     . Spl.parseInitializerDefinition
     . Spl.alexScanTokens
+-}
 
 {-
 

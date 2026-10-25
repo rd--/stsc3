@@ -12,7 +12,7 @@ import qualified Language.Smalltalk.Ansi as St {- stsc3 -}
 import Language.Smalltalk.Spl.Ast {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Ast.Print as Spl {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Lexer as Spl {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Spl {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
 
 -- | Get initialiser lifted to an Assignment expression.
 splTemporaryInitialiser :: SplTemporary -> Maybe SplExpression
@@ -105,13 +105,14 @@ splPrimaryRewriteTemporaries p =
     SplPrimaryDictionaryExpression x -> SplPrimaryDictionaryExpression (map (\(k, v) -> (k, splBasicExpressionRewriteTemporaries v)) x)
     SplPrimaryImplicitMessageSend x a -> SplPrimaryImplicitMessageSend x (map splBasicExpressionRewriteTemporaries a)
 
--- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
+{- | Viewer for temporaries rewriter.  Reads, rewrites and prints Sc expression.
 splRewriteTemporariesViewer :: String -> String
 splRewriteTemporariesViewer =
   Spl.splInitializerDefinitionPrint
     . splInitializerDefinitionRewriteTemporaries
-    . Spl.parseInitializerDefinition
+    . Spl.Parser.parseInitializerDefinition
     . Spl.alexScanTokens
+-}
 
 {-
 rw = splRewriteTemporariesViewer

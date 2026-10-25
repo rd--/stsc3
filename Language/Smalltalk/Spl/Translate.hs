@@ -210,9 +210,15 @@ splInitializerDefinitionSt (SplInitializerDefinition cmt tmp stm) =
 --splLeadingComment :: String -> (String, String)
 --splLeadingComment = bimap (unlines . map (drop 3)) unlines . span (isPrefixOf "// ") . lines
 
+splMaybeParseToSpl :: String -> Either String SplInitializerDefinition
+splMaybeParseToSpl x = Spl.Lexer.runAlex x Spl.Parser.parseInitializerDefinition
+
 -- | Spl parse
 splParseToSpl :: String -> SplInitializerDefinition
-splParseToSpl = Spl.Parser.parseInitializerDefinition . Spl.Lexer.alexScanTokens
+splParseToSpl x =
+  case splMaybeParseToSpl x of
+    Left l -> error l
+    Right r -> r
 
 -- | Sc parse
 --scParseToSpl :: String -> SplInitializerDefinition
@@ -233,6 +239,12 @@ splParseToSt = parseToSt splParseToSpl
 --scParseToSt = parseToSt scParseToSpl
 
 {- | Translate Spl program text to Smalltalk.
+
+>>> splToSt "(p .. q)"
+"((p) to: (q)) .\n"
+
+>>> splToSt "[p .. q]"
+"(((p) to: (q)) asArray) .\n"
 
 >>> splToSt "p := q"
 "p := q .\n"
@@ -296,6 +308,9 @@ splParseToSt = parseToSt splParseToSpl
 
 >>> splToSt "c.at(i, put: x)"
 "c at: i put: x .\n"
+
+>>> splToSt "/* # x\n `$` */ x"
+"x .\n"
 
 > splToSt "f.m(p: x, q: y)" -- error
 -}
@@ -431,6 +446,33 @@ splRewriteBinaryOperators txt =
 
 {- | Spl to St
 
+>>> splToSt "x := 0" -- Assignment
+"x := 0 .\n"
+
+>>> splToSt "let x = 0; x" -- Let binding
+"| x |\n x := 0 .\n x .\n"
+
+>>> splToSt "let x = 0; let y = 0; x + y" -- Let binding
+"| x y |\n x := 0 .\n y := 0 .\n x + y .\n"
+
+>>> splToSt "{ :x | x }" -- Block
+"[ :x | x .\n ] .\n"
+
+>>> splToSt "{ :f/0 | f() }" -- Block arity qualified argument
+"[ :f/0 | (f apply: {}) .\n ] .\n"
+
+>>> splToSt "f(x, y)" -- Apply syntax
+"(f apply: {x. y}) .\n"
+
+>>> splToSt "x" -- Variable reference
+"x .\n"
+
+>>> splToSt "+" -- Operator reference
+"+ .\n"
+
+>>> splToSt "f/1" -- Arity-qualified variable reference
+"f/1 .\n"
+
 >>> splToSt "{ Rand(0, 1) } !^ 4" -- Hat operator
 "[ (Rand apply: {0. 1}) .\n ] %~ 4 .\n"
 
@@ -467,7 +509,7 @@ splRewriteBinaryOperators txt =
 >>> splToSt "f(+)" -- Operator identifier
 "(f apply: {+}) .\n"
 
->>> splToSt "()" -- Empty dictionary
+>>> splToSt "(:)" -- Empty dictionary
 "(Dictionary newFromPairs: {}) .\n"
 
 >>> splToSt "(k: v)" -- Dictionary
@@ -481,6 +523,15 @@ splRewriteBinaryOperators txt =
 
 >>> splToSt "(1, 2)" -- Tuple expression
 "({1. 2} asTuple) .\n"
+
+>>> splToSt "L[1,2,3]" -- List constructor syntax
+"(L apply: {{1. 2. 3}}) .\n"
+
+>>> splToSt "L[1 2 3]" -- List constructor syntax
+"(L apply: {{1. 2. 3}}) .\n"
+
+>>> splToSt "L[1 2 3; 4 5 6]" -- List constructor syntax
+"(L apply: {{{1. 2. 3}. {4. 5. 6}}}) .\n"
 -}
 --splToSt :: String -> String
 --splToSt = Ansi.Print.initializerDefinition_pp . splParseToSt

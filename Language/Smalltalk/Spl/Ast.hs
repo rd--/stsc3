@@ -129,6 +129,9 @@ data SplExpression
 splPrimaryToBasicExpression :: SplPrimary -> SplBasicExpression
 splPrimaryToBasicExpression p = SplBasicExpression p Nothing
 
+splPrimaryToExpression :: SplPrimary -> SplExpression
+splPrimaryToExpression p = SplExprBasic (splPrimaryToBasicExpression p)
+
 -- | 3.4.5.2
 data SplBasicExpression
   = SplBasicExpression SplPrimary (Maybe SplMessages)
@@ -200,6 +203,9 @@ splFromToBy from to by = splMethodCall from ["to", "by"] [to, by]
 splArrayRange :: SplExpression -> SplExpression -> SplPrimary
 splArrayRange from to = splBasicExpressionToPrimary (splConstructDotMessageSend (splIntervalRange from to) "asArray" [])
 
+splArrayFromToBy :: SplExpression -> SplExpression -> SplExpression -> SplPrimary
+splArrayFromToBy from to by = splBasicExpressionToPrimary (splConstructDotMessageSend (splFromToBy from to by) "asArray" [])
+
 {- | 3.4.5.2 Reuse the Smalltalk Literal type.
      The Sc notation "x(...)" is an implicit message send.
 -}
@@ -254,5 +260,8 @@ splMatrixExpression =
   SplPrimaryArrayExpression
     . map (splPrimaryToBasicExpression . SplPrimaryArrayExpression)
 
-splListConstructorSyntax :: St.UppercaseIdentifier -> [SplBasicExpression] -> SplPrimary
-splListConstructorSyntax = undefined
+splListConstructorSyntax :: St.UppercaseIdentifier -> SplPrimary -> SplPrimary
+splListConstructorSyntax nm itm =
+  SplPrimaryImplicitMessageSend
+  nm
+  [splPrimaryToBasicExpression itm]

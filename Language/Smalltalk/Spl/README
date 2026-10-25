@@ -1,6 +1,6 @@
-Initial pass at `List Constructor Syntax` is not working. (2026-10-24)
+`List Constructor Syntax` is working (2026-10-25)
 
-Parses 384 of 387 graphs at ~/sw/spl/help/SuperCollider/Graph
+Parses all 402 graphs at ~/sw/spl/help/SuperCollider/Graph
 
 ```
 cd ~/sw/spl/help/SuperCollider/Graph

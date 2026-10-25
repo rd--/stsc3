@@ -2,7 +2,8 @@
 module Language.Smalltalk.Spl.Token where
 
 data Token
-  = ArityQualifiedIdentifier String
+  = ArityQualifiedLowercaseIdentifier String
+  | ArityQualifiedUppercaseIdentifier String
   | BinarySelector String
   | Colon
   | ColonColon
@@ -11,21 +12,23 @@ data Token
   | Dot
   | DotDot
   | DoubleQuotedString String
+  | EOF
   | Equals
   | FalseIdentifier
   | Float Double
-  | Identifier String
+  | InfinityIdentifier
   | Integer Integer
   | Keyword String
   | LeftBrace
   | LeftBracket
   | LeftParen
   | Let
+  | LowercaseIdentifier String
+  | NaNIdentifier
   | NilIdentifier
   | RightBrace
   | RightBracket
   | RightParen
-  | SelfIdentifier
   | SemiColon
   | SingleQuotedString String
   | TrueIdentifier

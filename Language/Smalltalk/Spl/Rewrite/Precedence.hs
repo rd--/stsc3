@@ -7,7 +7,7 @@ module Language.Smalltalk.Spl.Rewrite.Precedence where
 import Language.Smalltalk.Spl.Ast {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Ast.Print as Spl {- stsc3 -}
 import qualified Language.Smalltalk.Spl.Lexer as Spl {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Spl {- stsc3 -}
+import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
 
 {- | This is for parenthesising.
      It places the initial nary selector at the end of the lhs, not the start of the rhs.
@@ -185,13 +185,15 @@ splPrimaryRewritePrecedence p =
     SplPrimaryDictionaryExpression x -> SplPrimaryDictionaryExpression (map (\(k, v) -> (k, splBasicExpressionRewritePrecedence True v)) x)
     SplPrimaryImplicitMessageSend x a -> SplPrimaryImplicitMessageSend x (map (splBasicExpressionRewritePrecedence True) a)
 
+{-
 -- | Viewer for precedence rewriter. Reads, rewrites and prints Sc expression.
 splRewritePrecedenceViewer :: String -> String
 splRewritePrecedenceViewer =
   Spl.splInitializerDefinitionPrint
     . splInitializerDefinitionRewritePrecedence
-    . Spl.parseInitializerDefinition
+    . Spl.Parser.parseInitializerDefinition
     . Spl.alexScanTokens
+-}
 
 {-
 
