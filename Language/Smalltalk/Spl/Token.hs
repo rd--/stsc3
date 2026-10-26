@@ -18,7 +18,7 @@ data Token
   | Float Double
   | InfinityIdentifier
   | Integer Integer
-  | Keyword String
+  | KeywordIdentifier String
   | LeftBrace
   | LeftBracket
   | LeftParen

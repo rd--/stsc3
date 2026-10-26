@@ -206,6 +206,8 @@ splArrayRange from to = splBasicExpressionToPrimary (splConstructDotMessageSend 
 splArrayFromToBy :: SplExpression -> SplExpression -> SplExpression -> SplPrimary
 splArrayFromToBy from to by = splBasicExpressionToPrimary (splConstructDotMessageSend (splFromToBy from to by) "asArray" [])
 
+type SplDictionaryItems = [(St.LowercaseIdentifier, SplBasicExpression)]
+
 {- | 3.4.5.2 Reuse the Smalltalk Literal type.
      The Sc notation "x(...)" is an implicit message send.
 -}
@@ -215,7 +217,7 @@ data SplPrimary
   | SplPrimaryBlock SplBlockBody
   | SplPrimaryExpression SplExpression
   | SplPrimaryArrayExpression [SplBasicExpression]
-  | SplPrimaryDictionaryExpression [(St.LowercaseIdentifier, SplBasicExpression)]
+  | SplPrimaryDictionaryExpression SplDictionaryItems
   | SplPrimaryImplicitMessageSend St.Identifier [SplBasicExpression]
   deriving (Eq, Show)
 
@@ -271,3 +273,9 @@ splNegatedIdentifier x =
   SplPrimaryImplicitMessageSend
   "negate"
   [splPrimaryToBasicExpression (SplPrimaryIdentifier (drop 1 x))]
+
+splRecordConstructorSyntax :: St.Identifier -> SplDictionaryItems -> SplPrimary
+splRecordConstructorSyntax nm itm =
+  SplPrimaryImplicitMessageSend
+  nm
+  [splPrimaryToBasicExpression (SplPrimaryDictionaryExpression itm)]

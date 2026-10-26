@@ -4,6 +4,8 @@ Parses all 402 graphs at ~/sw/spl/help/SuperCollider/Graph
 
 Parses all 70 graphs at ~/sw/spl/help/SuperCollider/Texture
 
+Parses all 19 programs at ~/sw/spl/help/SuperCollider/Scheduler
+
 ```
 cd ~/sw/spl/help/SuperCollider/Graph
 for i in [A-Z]*.sp ; do echo $i ; stsc3 translate spl st "$i" "/tmp/$i.st" ; done

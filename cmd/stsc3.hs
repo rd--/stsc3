@@ -184,7 +184,10 @@ help =
   , " translate class [opt] { fileout | som } { fileout | som } <input-file> <output-file>"
   , " translate directory [opt] som fileout <input-directory> <output-file>"
   , " translate library [opt] fileout som <input-file> <output-directory>"
-  , " translate [ stream ] { spl | spl } { js | sc | scm | st | ast } [ <input-file> <output-file> ]"
+  , " translate paragraphs spl scm"
+  , " translate [ paragraphs stream ] input-type output-type [ <input-file> <output-file> ]"
+  , "   input-type = spl | spl"
+  , "   output-type = js | sc | scm | st | ast"
   ]
 
 main :: IO ()
@@ -199,6 +202,7 @@ main = do
           ("spl", "scm") -> Spl.splToScheme
           ("spl", "ast") -> Spl.splToAst
           _ -> error "stsc3: unknown translation"
+      par_trs i o = String.unparagraphs . map (trs i o) . String.paragraphs
   case a of
     -- ["rewrite", "ndef"] -> interact Spl.splUgenToNdef
     "som" : "cat" : fn_seq ->
@@ -250,6 +254,8 @@ main = do
       ext_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_fn
     ["translate", "library", "fileout", "som", fileout_fn, som_dir] ->
       lib_fileout_to_som (Opt.opt_read o "sort", Opt.opt_read o "tidy") fileout_fn som_dir
+    ["translate", "paragraphs", in_ty, out_ty, inFile, outFile] ->
+      Music.Theory.Io.interactWithFiles inFile outFile (par_trs in_ty out_ty)
     ["translate", "stream", in_ty, out_ty] ->
       Music.Theory.Io.interactWithStdio (trs in_ty out_ty)
     _ ->

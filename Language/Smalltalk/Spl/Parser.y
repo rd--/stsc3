@@ -47,6 +47,7 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       lowercaseIdentifier { LowercaseIdentifier $$ }
       uppercaseIdentifier { UppercaseIdentifier $$ }
       negatedIdentifier { NegatedIdentifier $$ }
+      keywordIdentifier { KeywordIdentifier $$ }
       integer { Integer $$ }
       single_quoted_string { SingleQuotedString $$ }
 
@@ -96,7 +97,7 @@ non_empty_dictionary_item_seq :: { [(St.Identifier, SplBasicExpression)] }
     | dictionary_item ',' non_empty_dictionary_item_seq { $1 : $3 }
 
 dictionary_item :: { (St.Identifier, SplBasicExpression) }
-    : identifier ':' basic_expression { ($1, $3) }
+    : keywordIdentifier basic_expression { ($1, $2) }
 
 maybe_messages :: { Maybe SplMessages }
     : { Nothing }
@@ -172,6 +173,7 @@ primary :: { SplPrimary }
     | '[' expression '..' expression ']' { splArrayRange $2 $4 }
     | '(' expression '..' expression ';' expression ')' { splFromToBy $2 $4 $6 }
     | '[' expression '..' expression ';' expression ']' { splArrayFromToBy $2 $4 $6 }
+    -- | uppercaseIdentifier '(' non_empty_dictionary_item_seq ')' { splRecordConstructorSyntax $1 $3 }
     | uppercaseIdentifier '[' expression_seq ']' { splListConstructorSyntax $1 (SplPrimaryArrayExpression $3) }
     | uppercaseIdentifier '[' vector_expression ']' { splListConstructorSyntax $1 (SplPrimaryArrayExpression $3) }
     | uppercaseIdentifier '[' matrix_expression ']' { splListConstructorSyntax $1 (splMatrixExpression $3) }
