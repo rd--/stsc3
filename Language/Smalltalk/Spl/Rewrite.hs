@@ -49,9 +49,9 @@ This transformation at the Sc Ast.
 module Language.Smalltalk.Spl.Rewrite where
 
 import Language.Smalltalk.Spl.Ast {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Ast.Print as Spl
-import qualified Language.Smalltalk.Spl.Lexer as Spl {- stsc3 -}
-import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
+--import qualified Language.Smalltalk.Spl.Ast.Print as Spl
+--import qualified Language.Smalltalk.Spl.Lexer as Spl.Lexer {- stsc3 -}
+--import qualified Language.Smalltalk.Spl.Parser as Spl.Parser {- stsc3 -}
 
 import Language.Smalltalk.Spl.Rewrite.Precedence
 import Language.Smalltalk.Spl.Rewrite.Temporaries

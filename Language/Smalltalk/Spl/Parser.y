@@ -46,6 +46,7 @@ import           Language.Smalltalk.Spl.Token {- stsc3 -}
       float { Float $$ }
       lowercaseIdentifier { LowercaseIdentifier $$ }
       uppercaseIdentifier { UppercaseIdentifier $$ }
+      negatedIdentifier { NegatedIdentifier $$ }
       integer { Integer $$ }
       single_quoted_string { SingleQuotedString $$ }
 
@@ -156,6 +157,7 @@ binary_argument :: { SplBinaryArgument }
 primary :: { SplPrimary }
     : syntax_quoted_at { SplPrimaryExpression (SplExprBasic $1) }
     | lowercaseIdentifier { SplPrimaryIdentifier $1 }
+    | negatedIdentifier { splNegatedIdentifier $1 }
     | arity_qualified_identifier { SplPrimaryIdentifier $1 }
     | binary_selector { SplPrimaryIdentifier $1 }
     | reserved_identifier { SplPrimaryIdentifier $1 }

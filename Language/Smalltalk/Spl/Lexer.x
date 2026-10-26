@@ -19,8 +19,9 @@ $binary_char = [\! \@ \% \& \* \- \+ \= \| \< \> \? \/ \~ \^ \#] -- !@%&*-+=|<>?
 $graphic = $printable # $white
 $commentary = [a-z A-Z 0-9 \( \) \[ \] \' \" \` \. \; \= \, \: \_ \  \t \n \! \@ \% \& \* \- \+ \= \| \< \> \? \/ \~ \^ \# \$]
 
-@lowercaseIdentifier = $lower $letter_or_digit*
+@lowercaseIdentifier = $lower $letter_or_digit* \!?
 @uppercaseIdentifier = $upper $letter_or_digit*
+@negatedIdentifier = \- @lowercaseIdentifier
 @decimal = $digit+
 @integer = \-? @decimal
 @float = \-? @decimal \. @decimal
@@ -60,6 +61,7 @@ tokens :-
 
   <0> @lowercaseIdentifier                   { splStringToken LowercaseIdentifier }
   <0> @uppercaseIdentifier                   { splStringToken UppercaseIdentifier }
+  <0> @negatedIdentifier                     { splStringToken NegatedIdentifier }
   <0> @lowercaseIdentifier "/" @integer      { splStringToken ArityQualifiedLowercaseIdentifier }
   <0> @uppercaseIdentifier "/" @integer      { splStringToken ArityQualifiedUppercaseIdentifier }
   <0> $binary_char+                          { splStringToken BinarySelector }

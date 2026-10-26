@@ -265,3 +265,9 @@ splListConstructorSyntax nm itm =
   SplPrimaryImplicitMessageSend
   nm
   [splPrimaryToBasicExpression itm]
+
+splNegatedIdentifier :: St.LowercaseIdentifier -> SplPrimary
+splNegatedIdentifier x =
+  SplPrimaryImplicitMessageSend
+  "negate"
+  [splPrimaryToBasicExpression (SplPrimaryIdentifier (drop 1 x))]

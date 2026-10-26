@@ -25,6 +25,7 @@ data Token
   | Let
   | LowercaseIdentifier String
   | NaNIdentifier
+  | NegatedIdentifier String
   | NilIdentifier
   | RightBrace
   | RightBracket
